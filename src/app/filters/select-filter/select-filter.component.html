@@ -1,0 +1,17 @@
+<mat-form-field class="card-filter">
+
+  <ng-container *ngIf="multiple; else elseTemplate">
+    <mat-select placeholder="{{placeholder}}" [(ngModel)]="selectValue" multiple>
+        <mat-option *ngFor="let topping of toppingList" [value]="topping" (click)="optionSelect()">{{topping}}</mat-option>
+      </mat-select>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <mat-select placeholder="{{placeholder}}" [(ngModel)]="selectValue">
+        <mat-option *ngFor="let topping of toppingList" [value]="topping" (click)="optionSelect()">{{topping}}</mat-option>
+      </mat-select>
+  </ng-template>
+
+  <button mat-icon-button color="accent" class="delete-filter" (click)="remove_component()">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>

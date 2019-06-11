@@ -1,0 +1,44 @@
+<!-- {# <mat-progress-bar mode="indeterminate" color="accent" *ngIf="loading"></mat-progress-bar> #}
+
+{# <h1>{{journal.title}}</h1>
+<h2>Revista Científica</h2>
+<mat-card>
+
+    <mat-card-header>
+
+
+
+        <mat-card-title *ngIf="journal.institution">
+                {{journal.institution}}
+        </mat-card-title>
+
+        <mat-card-subtitle>
+                <div>
+                    <label>ISSN: </label>
+                    <p *ngIf="journal.issn.p">
+                        <label>Impreso: </label> {{journal.issn.p}}
+                    </p>
+                    <p *ngIf="journal.issn.e">
+                        <label>Electrónico</label> {{journal.issn.e}}
+                    </p>
+                    <p *ngIf="journal.issn.l">
+                        <label>De enlace</label> {{journal.issn.l}}
+                    </p>
+                </div>
+                <div *ngIf="journal.rnps">RNPS: {{journal.rnps}}</div>
+        </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content *ngIf="journal.description">
+        <div class="e2e-inner-html-bound  text-align-justify" [innerHTML]="journal.description"></div>
+
+    </mat-card-content>
+
+
+    <ng-container *ngIf="journal.logo; else elseTemplate">
+            <img mat-card-image src="/assets/images/journals/{{journal.logo}}">
+        </ng-container>
+        <ng-template #elseTemplate>
+            <img mat-card-image src="/assets/images/no-image.png">
+        </ng-template>
+</mat-card> -->

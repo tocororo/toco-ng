@@ -1,0 +1,23 @@
+<mat-toolbar color="primary">
+
+  <mat-toolbar-row *ngFor="let item of info; index as i" >
+    <!--
+      la condicion especifica q-> si quiero mostrar el icono y es la primera iteracion entonces se muestra
+      esto evita que se repita el icono por cada row del componente
+    -->
+    <div *ngIf="is_show_icon && i ==0; then block"></div>
+    <!--
+      en la sintaxis del "if" donde dice "then block" quiere decir q cuando se pumpla la condicion ira a ese blocque
+       q esta en otra etiqueta y q se tiene q llamar "<ng-template #block >"
+    -->
+    <ng-template #block >
+      <mat-icon class="icon-position change-cursor" (click)="function()">menu</mat-icon>
+    </ng-template>
+
+    <h1><strong>{{item}}</strong></h1>
+
+  </mat-toolbar-row>
+
+
+
+</mat-toolbar>

@@ -1,0 +1,21 @@
+<!-- <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutAlign.xs="center center" fxLayoutGap="1em" fxLayoutGap.xs="0"> -->
+
+  <ng-template toco-Filter></ng-template>
+
+<!-- </div> -->
+
+<button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>add</mat-icon>
+</button>
+  <mat-menu #menu="matMenu" >
+    <ng-container *ngFor="let item of filters_data,let i=index">
+        <ng-container *ngIf="item.is_enabled">
+          <button mat-menu-item (click)="addFilter(i)">
+            {{item.name}}
+          </button>
+        </ng-container>
+    </ng-container>
+    
+
+    
+  </mat-menu>

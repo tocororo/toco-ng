@@ -1,0 +1,20 @@
+
+@import '~@angular/material/theming';
+
+@mixin toco-boolean-filter-component-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);   
+    
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+    .interruptor-selector-down, .interruptor-selector-up{
+        background-color: mat-color($accent);
+    }
+    .mat-interruptor-selector-down, .mat-interruptor-selector-up, .mat-interruptor-selector-up-horizontal, .mat-interruptor-selector-down-horizontal{
+        background-color: mat-color($accent);
+    }
+    .mat-interruptor-background{
+        background-color: mat-color($accent);
+    }
+}

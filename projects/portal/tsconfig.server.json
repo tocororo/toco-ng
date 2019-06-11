@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/app-server",
+    "baseUrl": ".",
+    "module": "commonjs",
+    "paths": {
+      "@toco/*": ["../../src/app/*"],
+      "@tocoenv/*": ["../../src/environments/*"]
+    },
+  },
+  "angularCompilerOptions": {
+    "entryModule": "src/app/app.server.module#AppServerModule"
+  }
+}

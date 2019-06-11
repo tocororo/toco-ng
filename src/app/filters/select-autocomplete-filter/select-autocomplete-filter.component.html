@@ -1,0 +1,18 @@
+<div class="card-filter" >
+  <mat-form-field style="width: 100%;">
+    
+    <input type="text" placeholder="{{placeholder}}" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" id="{{inputId}}">
+    <mat-autocomplete #auto="matAutocomplete" >
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name" (click)="addChips(option)" title="{{option.value}}">
+        {{option.name}}
+      </mat-option>
+    </mat-autocomplete>
+
+    <button mat-icon-button color="accent" class="delete-filter" (click)="remove_component()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <mat-chip-list fxLayout="row" fxLayoutAlign="start center" style="margin-bottom: .5em" id="chiplist">
+    <mat-chip *ngFor="let item of chipsList; let i=index" (click)="removeChip(i)">{{item.name}}</mat-chip>
+  </mat-chip-list>
+</div>

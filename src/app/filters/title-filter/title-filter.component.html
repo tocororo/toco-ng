@@ -1,0 +1,6 @@
+<mat-form-field class="card-filter">
+  <input matInput type="{{type}}" placeholder="{{placeholder}}" [(ngModel)]="data.value" required (keyup)="onChange()">
+  <button mat-icon-button color="accent" class="delete-filter" (click)="remove_component()">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>

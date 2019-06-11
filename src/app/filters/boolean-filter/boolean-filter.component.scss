@@ -1,0 +1,87 @@
+.interruptor-background{
+    width: 1.01em;
+    height: 2.3em;
+    border: 0.1em solid black; 
+    border-radius: 1em; 
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background: transparent;
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
+}
+.interruptor-selector-down, .interruptor-selector-up{
+    width: .9em; 
+    height: .9em; 
+    border-radius: 50%; 
+    position: absolute; 
+    left: .07em; 
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
+}
+.interruptor-selector-up{
+    top: .05em;
+}
+.interruptor-selector-down{
+    bottom: .05em;
+}
+
+
+.mat-interruptor-background, .mat-interruptor-background-horizontal{
+    width: .875em;
+    height: 2.3em;
+    background-color: rgba(248, 56, 33, 0.5);
+    background-color: rgba(100, 97, 96, 0.5); 
+    border-radius: 1em; 
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: transparent;
+    //box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
+}
+.mat-interruptor-background-horizontal{
+    height: .875em;
+    width: 2.3em;
+}
+.mat-interruptor-selector-down, .mat-interruptor-selector-up, .mat-interruptor-selector-up-horizontal, .mat-interruptor-selector-down-horizontal{
+    width: 1.3em; 
+    height: 1.3em; 
+    border-radius: 50%; 
+    position: absolute;
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);
+}
+.mat-interruptor-selector-up{
+    top: -.1em;
+}
+.mat-interruptor-selector-down{
+    bottom: -.1em;
+}
+.mat-interruptor-selector-up-horizontal{
+    left: -.1em;
+    top: -.22em;
+}
+.mat-interruptor-selector-down-horizontal{
+    right: -.1em;
+    top: -.22em;
+}
+.mat-interruptor-selector-up:hover , .mat-interruptor-selector-down:hover, .mat-interruptor-selector-up-horizontal:hover , .mat-interruptor-selector-down-horizontal:hover{
+    cursor: pointer;
+}
+.mat-interruptor-selector-up:active , .mat-interruptor-selector-down:active, .mat-interruptor-selector-up-horizontal:active, .mat-interruptor-selector-down-horizontal:active{
+    cursor: grabbing;  
+    transition-duration: 1s;
+    //transition: all 80ms linear;  
+    box-shadow: 0 0 2px 8px rgba(248, 55, 33, 0.26);
+}
+.mat-interruptor-selector-up:active{
+    transform: translate3d(0,16px,0);
+}
+.interruptor-selector-down:active{
+    transform: translate3d(0,0 ,16px);
+}
+.mat-interruptor-selector-up-horizontal:active{
+    transform: translate3d(16px,0,0 );
+} 
+.mat-interruptor-selector-down-horizontal:active{
+    transform: translate3d(0,0,0 );
+}

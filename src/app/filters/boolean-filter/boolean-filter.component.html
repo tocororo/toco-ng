@@ -1,0 +1,19 @@
+<!-- <mat-slide-toggle [checked]="operator" [(ngModel)]="operator" (click)="change_operator_name()">{{operator_name}}</mat-slide-toggle>
+
+<div class="interruptor-background">
+    <div class="interruptor-selector-down"></div>
+</div>
+<br> -->
+<div fxLayout="{{direction}}" fxLayoutAlign="center center" fxLayoutGap="5px">
+    <label>{{data.name[0]}}</label>
+    <div class="mat-interruptor-background{{classDireccion}}">
+        <div *ngIf="!operator;then content else other_content"></div>
+        <ng-template #content>
+            <div class="mat-interruptor-selector-up{{classDireccion}}" (click)="changeInterruptor()"></div>
+        </ng-template>
+        <ng-template #other_content>
+            <div class="mat-interruptor-selector-down{{classDireccion}}" (click)="changeInterruptor()"></div>
+        </ng-template>
+    </div>
+    <label>{{data.name[1]}}</label>
+</div>
