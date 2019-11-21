@@ -8,13 +8,15 @@ import { FiltersModule } from '@toco/filters/filters.module';
 import { CatalogComponent } from './catalog/catalog.component';
 import { CatalogService } from './catalog.service';
 import { CatalogFiltersComponent } from './catalog-filters/catalog-filters.component';
+import { AuthenticateModule } from '../authenticate/authenticate.module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     ReactiveFormsModule,
-    FiltersModule
+    FiltersModule,
+    AuthenticateModule
   ],
   exports: [
     CatalogComponent
