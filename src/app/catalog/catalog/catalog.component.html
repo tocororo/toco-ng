@@ -4,11 +4,11 @@
 
     <!-- <toco-page-header [info]="['Catálogo de Revistas Científicas Cubanas']">
     </toco-page-header> --> 
-
+    <toco-authenticate></toco-authenticate>
 
     <div fxLayoutAlign="end center" fxLayout="row">
       <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon>dashboard</mat-icon>
+        <mat-icon>view_quilt</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="changeLayoutPosition(0)">
