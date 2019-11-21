@@ -4,6 +4,7 @@ El README internamente deberia estar escrito en castellano
 # TocoNg
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
+Fue migrado a angular 8
 
 ## Development server
 
