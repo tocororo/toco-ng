@@ -10,5 +10,6 @@ export class EnvService {
   public appHost = '';
   public appName = '';
   public pagesApi = '';
+  
   constructor() { }
 }

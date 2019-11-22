@@ -6,7 +6,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { FormFieldsComponent } from './form-fields/form-fields.component';
 import { SharedModule } from './shared/shared.module';
-import { FormContainerComponent } from './form-container/form-container.component';
+import { FormContainerComponent } from '@toco/form-container/form-container.component';
 
 @NgModule({
   declarations: [
@@ -14,10 +14,12 @@ import { FormContainerComponent } from './form-container/form-container.componen
     FormFieldsComponent,
     FormContainerComponent
   ],
-  imports:[
- CommonModule,
- SharedModule
+  imports: [
+    CommonModule,
+    SharedModule,
+    BrowserModule
   ],
-  providers: [],
+  providers: [
+  ],
 })
 export class AppModule { }

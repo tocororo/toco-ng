@@ -1,18 +1,21 @@
 <div fxLayout="column" fxLayoutAlign="space-evenly stretch">
-    <mat-form-field *ngFor="let field of fields" [ngSwitch]="field.type">
-        <!-- <textarea matInput *ngSwitchCase="type.textarea" placeholder="{{field.placeholder}}"
-            name="{{field.name}}"></textarea> -->
-            
-        <!-- <ng-container *ngSwitchCase="type.datepicker">
-            <input matInput [matDatepicker]="picker" placeholder="{{field.placeholder}}" name="{{field.name}}">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </ng-container> -->
-        
-        <mat-checkbox *ngSwitchCase="'checkbox'" name="{{field.name}}"> {{ field.placeholder }} </mat-checkbox>
+	<ng-container *ngFor="let field of fields" [ngSwitch]="field.type">
 
-        <input matInput *ngSwitchDefault placeholder="{{field.placeholder}}"
-        name="{{field.name}}">
-    
-    </mat-form-field>
+		<mat-form-field *ngSwitchCase="formFieldType.textarea">
+			<textarea matInput  placeholder="{{field.placeholder}}" name="{{field.name}}"></textarea>
+		</mat-form-field>
+
+		<mat-form-field *ngSwitchCase="formFieldType.datepicker">
+			<input matInput [matDatepicker]="picker" placeholder="{{field.placeholder}}" name="{{field.name}}">
+			<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+			<mat-datepicker #picker></mat-datepicker>
+		</mat-form-field>
+
+		<mat-checkbox *ngSwitchCase="formFieldType.checkbox" name="{{field.name}}"> {{ field.placeholder }} </mat-checkbox>
+
+		<mat-form-field *ngSwitchDefault>
+			<input matInput placeholder="{{field.placeholder}}" name="{{field.name}}">
+		</mat-form-field>
+
+	</ng-container>
 </div>
