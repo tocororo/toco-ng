@@ -2,31 +2,31 @@ import { Entity } from "./entity";
 import { JournalReference } from "./journal_reference.entity";
 import { Term } from "./terms.entity";
 
-
-export class Journal extends Entity {
+export class Journal extends Entity
+{
     tocoID: string;
-    jinformation:   JournalInformation;
+    jinformation: JournalInformation;
     jreference?: Array<JournalReference>;
     terms?: Array<Term>;
     source_type: string;
     harvest_type: string;
     harvest_endpoint: string;
     
-    
     /**
      * r: length of journal reference 
      * t: length of Term
      */
-    constructor(r: number,t:number){
+    constructor(r: number,t:number)
+    {
         super();
         this.jreference = new Array<JournalReference>(r);
         this.terms = new Array<Term>(t);
     };
-
 }
 
 
-export class JournalInformation {
+export class JournalInformation
+{
     title: string;
     subtitle: string;
     shortname: string;
@@ -37,14 +37,15 @@ export class JournalInformation {
     purpose: string;
     description: string;
 
-    getISSN(){
+    getISSN()
+    {
         return this.issn.p;
     }
 }
 
-export class ISSN {
+export class ISSN
+{
     p: string;
     e: string;
     l: string;
 }
-
