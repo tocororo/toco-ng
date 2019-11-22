@@ -153,10 +153,14 @@ export class FormContainerComponent implements OnInit {
 	 */
 	public addData() {
 		/* Preparing all data */
-		let data = []
+		let data = [];
 		this.panels.forEach(panel => {
 			panel.formField.forEach( form => {
-				data.push( { name: form.name, value: form.value });
+				let obj = {};
+				Object.defineProperty(obj, form.name, {
+					value: form.value
+				  });
+				data.push( obj);
 			})
 		});
 		console.log(data);

@@ -6,5 +6,6 @@ export class Entity{
     raw_data: String;
     created_at: String;
     updated_at: String;
+    
     constructor(){}
 }

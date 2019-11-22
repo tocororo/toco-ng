@@ -10,12 +10,16 @@ export class Journal extends Entity
     terms?: Array<Term>;
     source_type: string;
     harvest_type: string;
+    /**
+     * The OAI protocol URL.
+     */ 
     harvest_endpoint: string;
     
-    /**
-     * r: length of journal reference 
-     * t: length of Term
-     */
+     /**
+      * Create a new instance of `Journal` class.
+      * @param r Length of journal reference.
+      * @param t Length of `terms`.
+      */
     constructor(r: number,t:number)
     {
         super();

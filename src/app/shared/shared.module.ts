@@ -9,21 +9,24 @@ import { RouterModule } from '@angular/router';
 import { JournalCardComponent } from './journal-card/journal-card.component';
 import { FormsModule } from '@angular/forms';
 import { BodyComponent } from './body/body.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule,
-    FlexLayoutModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    MaterialModule,
+    FlexLayoutModule
   ],
   exports: [
+    HttpClientModule,
+    FormsModule,
     MaterialModule,
     FlexLayoutModule,
     PageHeaderComponent,
-    InfoCardComponent,
-    FormsModule,
+    InfoCardComponent,    
     BodyComponent
   ],
   declarations: [
