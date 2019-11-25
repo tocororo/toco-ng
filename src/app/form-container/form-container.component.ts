@@ -20,6 +20,9 @@ export enum FormFieldType {
 
 	/** A checkbox control. */
 	checkbox = "checkbox",
+
+	/** A url control. */
+	url= "url",
 };
 
 /**
@@ -36,7 +39,11 @@ export interface FormField{
 	/** A form field type. */
 	type: FormFieldType;
 
-	value?: string
+	/** A form field value. */
+	value?: string;
+
+	/** If it is true the form field is required; otherwise, false. */
+	required: boolean;
 }
 
 /**
@@ -70,42 +77,9 @@ export class FormContainerComponent implements OnInit {
 	public token: string;
 	
 	public step = 0;
-	
-	public panels: Panel[] = [
-		{
-			title: 'panel1',
-			description: "este es el panel 1",
-			iconName: "account_circle",
-			formField : [
-				{name: 'paco', placeholder: 'paco', type: FormFieldType.textarea}, 
-				{name: 'pedro', placeholder: 'data', type: FormFieldType.datepicker}, 
-				{name: 'juan', placeholder: 'juan', type: FormFieldType.input},
-				{name: 'check', placeholder: 'check', type: FormFieldType.checkbox}	
-			]
-		},
-		{
-			title: 'panel2',
-			description: "este es el panel 2",
-			iconName: "account_circle",
-			formField : [
-				{name: 'paco', placeholder: 'paco', type: FormFieldType.textarea}, 
-				{name: 'pedro', placeholder: 'data', type: FormFieldType.datepicker}, 
-				{name: 'juan', placeholder: 'juan', type: FormFieldType.input},
-				{name: 'check', placeholder: 'check', type: FormFieldType.checkbox}
-			]
-		},
-		{
-			title: 'panel3',
-			description: "este es el panel 3",
-			iconName: "account_circle",
-			formField : [
-				{name: 'paco', placeholder: 'paco', type: FormFieldType.textarea}, 
-				{name: 'pedro', placeholder: 'data', type: FormFieldType.datepicker}, 
-				{name: 'juan', placeholder: 'juan', type: FormFieldType.input},
-				{name: 'check', placeholder: 'check', type: FormFieldType.checkbox}
-			]
-		},
-	];
+
+	@Input() 
+	public panels: Panel[] = [];
 
 	public constructor(
 		private formContainerService: FormContainerService
