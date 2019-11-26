@@ -12,16 +12,18 @@ import { FormFieldType, FormField } from '@toco/form-container/form-container.co
 })
 export class FormFieldsComponent implements OnInit {
 
-	@Input() 
-	public fields: Array<FormField>;
+	@Input() public fields: Array<FormField>;
 	
 	public readonly formFieldType: typeof FormFieldType = FormFieldType;
 
-	public constructor() { }
+	public constructor()
+	{ }
 
-	public ngOnInit() {
+	public ngOnInit(): void
+	{
 		if (!this.fields)
+		{
 			this.fields = [];
+		}
 	}
-
 }

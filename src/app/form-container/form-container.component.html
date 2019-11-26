@@ -1,25 +1,27 @@
+
 <mat-accordion>
 
-  <mat-expansion-panel *ngFor="let panel of panels; let i=index; let l = count" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
+	<mat-expansion-panel *ngFor="let panel of panels; let i = index; let l = count" 
+		[expanded]="step === i" (opened)="setStep(i)" hideToggle>
 
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{ panel.title }}
-      </mat-panel-title>
-      <mat-panel-description>
-          {{ panel.description }}
-        <mat-icon>{{panel.iconName}}</mat-icon>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
+		<mat-expansion-panel-header>
+			<mat-panel-title>
+				{{ panel.title }}
+			</mat-panel-title>
+			<mat-panel-description>
+				{{ panel.description }}
+				<mat-icon>{{ panel.iconName }}</mat-icon>
+			</mat-panel-description>
+		</mat-expansion-panel-header>
 
-    <toco-form-fields [fields]="panel.formField"></toco-form-fields>
+		<toco-form-fields [fields]="panel.formField"></toco-form-fields>
 
-    <mat-action-row>
-      <button mat-button *ngIf="i > 0" color="warn" (click)="prevStep()">Previous</button>
-      <button mat-button *ngIf="i != l-1" color="primary" (click)="nextStep()">Next</button>
-      <button mat-button *ngIf="i == l-1" color="warn" (click)="addData()">Add</button>
-    </mat-action-row>
-  
-  </mat-expansion-panel>
+		<mat-action-row>
+			<button mat-button *ngIf="i > 0" color="warn" (click)="prevStep()">Previous</button>
+			<button mat-button *ngIf="i != l-1" color="primary" (click)="nextStep()">Next</button>
+			<button mat-button *ngIf="i == l-1" color="warn" (click)="addData()">Add</button>
+		</mat-action-row>
+	
+	</mat-expansion-panel>
 
 </mat-accordion>

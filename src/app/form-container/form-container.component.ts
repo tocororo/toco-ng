@@ -1,19 +1,22 @@
-import { Component, OnInit, Input } from '@angular/core';
+
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { PartialObserver, Subscription, of } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+
 import { FormContainerService } from './form-container.service';
-import { PartialObserver } from 'rxjs';
 import { Response } from '@toco/entities/response';
-import { JournalInformation, Journal } from '@toco/entities/journal.entity';
+import { catchError } from 'rxjs/operators';
 
 /**
  * Represents a form field type.
  */
-export enum FormFieldType {
+export enum FormFieldType
+{
+	/** An input control. */
+	input = "input",
 
 	/** A texarea control. */
 	textarea = "textarea",
-
-	/** An input control. */
-	input = "input",
 
 	/** A datapicker control. */
 	datepicker = "datepicker",
@@ -28,8 +31,8 @@ export enum FormFieldType {
 /**
  * Represents a form field interface.
  */
-export interface FormField{
-
+export interface FormField
+{
 	/** A form field name. */
 	name: string;
 
@@ -39,18 +42,19 @@ export interface FormField{
 	/** A form field type. */
 	type: FormFieldType;
 
-	/** A form field value. */
-	value?: string;
-
 	/** If it is true the form field is required; otherwise, false. */
 	required: boolean;
+
+	/** A form field value. */
+	value?: string;
 }
 
 /**
  * Represents a panel interface.
  * @description Represents the information shown in the expansion control.
  */
-export interface Panel{
+export interface Panel
+{
 	title: string;
 
 	description: string;
@@ -69,80 +73,113 @@ export interface Panel{
 	templateUrl: './form-container.component.html',
 	styleUrls: ['./form-container.component.scss']
 })
-export class FormContainerComponent implements OnInit {
-
+export class FormContainerComponent implements OnInit, OnDestroy
+{
 	// TODO: in the future validate the token with a module or something
 	/** The autorization token. */
-	@Input() 
-	public token: string;
+	@Input() public token: string;
 	
-	public step = 0;
+	@Input() public panels: Panel[] = [];
 
-	@Input() 
-	public panels: Panel[] = [];
+	public step: number = 0;
 
-	public constructor(
-		private formContainerService: FormContainerService
-	) { }
+	public constructor(private formContainerService: FormContainerService)
+	{ }
 
-	public ngOnInit() {
+	public ngOnInit(): void
+	{ }
+
+	public ngOnDestroy(): void
+	{
+		this.sendDataUnsubscribe();
 	}
 
 	/**
 	 * Sets a new current panel to expand.
 	 * @param index The new position
 	 */	
-	public setStep(index: number) {
+	public setStep(index: number): void {
 		this.step = index;
 	}
 
 	/**
 	 * Sets the next panel to expand.
 	 */
-	public nextStep() {
+	public nextStep(): void {
 		this.step++;
 	}
 
 	/**
 	 * Sets the previous panel to expand.
 	 */
-	public prevStep() {
+	public prevStep(): void {
 		this.step--;
 	}
 
 	private sendDataObserver: PartialObserver<Response<any>> = {
-			next: (response: Response<any>) => {
-				/**
-				 * TODO: make somthing with response
-				 */
-			},
-			error: (err: Response<any>) => {
-				 console.log('The observable got an error notification: ' + err.message + '.'); 
-			},
-			complete: () => { console.log('The observable got a complete notification.'); }
-		};
+		next: (response: Response<any>) => {
+			/**
+			 * TODO: make somthing with response
+			 */
+		},
+
+		error: (err: any) => {
+				console.log('The observable got an error notification: ' + err + '.'); 
+		},
+
+		complete: () => {
+			console.log('The observable got a complete notification.');
+		}
+	};
+
+	private sendDataSubscription: Subscription = null;
 
 	/**
 	 * Sends data to the server. Collects all added information from the component.
 	 */
-	public addData() {
-		/* Preparing all data */
-		let data = [];
-		this.panels.forEach(panel => {
-			panel.formField.forEach( form => {
-				let obj = {};
-				Object.defineProperty(obj, form.name, {
-					value: form.value
-				  });
-				data.push( obj);
-			})
-		});
-		console.log(data);
-		
+	public addData(): void
+	{
 		if(this.token)
-			this.formContainerService.sendPostData('/inclusin', this.token, data)
+		{
+			/* Preparing all data. */
+			let data = [];
+
+			this.panels.forEach(panel => {
+				panel.formField.forEach( form => {
+					let obj = {};
+					Object.defineProperty(obj, form.name, {
+						value: form.value
+					});
+					data.push( obj);
+				})
+			});
+			console.log(data);  /* Test only. */
+			
+			this.sendDataUnsubscribe();
+			this.sendDataSubscription = this.formContainerService
+				.sendPostData('/inclusin', this.token, data).pipe(
+					catchError((err: HttpErrorResponse) =>
+					{
+						const message = (err.error instanceof ErrorEvent)
+							? err.error.message
+							: `server returned code '${ err.status }' with body '${ err.error }'`;
+		
+						/* Transforms error for user consumption. */
+						console.warn(`${ FormContainerService.name }: 'sendData' operation failed: ${ message }.`);  /* Logs to console instead. */
+
+						//TODO: Maybe you must set a better return.
+						return of(null);
+					})
+				)
 				.subscribe(this.sendDataObserver);
+		}
 	}
 
-	
+	private sendDataUnsubscribe(): void
+	{
+		if (this.sendDataSubscription)
+		{
+			this.sendDataSubscription.unsubscribe();
+		}
+	}
 }

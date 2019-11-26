@@ -543,7 +543,7 @@
               "projects/testing/src/assets"
             ],
             "styles": [
-              "projects/testing/src/styles.css"
+              "projects/testing/src/styles.scss"
             ],
             "scripts": []
           },
@@ -603,7 +603,7 @@
               "projects/testing/src/assets"
             ],
             "styles": [
-              "projects/testing/src/styles.css"
+              "projects/testing/src/styles.scss"
             ],
             "scripts": []
           }
