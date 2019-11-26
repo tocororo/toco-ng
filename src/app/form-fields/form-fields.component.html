@@ -19,6 +19,10 @@
 			<input matInput type="url" [(ngModel)]="field.value" placeholder="{{field.placeholder}}" name="{{field.name}}" required="{{ field.required }}">
 		</mat-form-field>
 
+		<mat-form-field *ngSwitchCase="formFieldType.email">
+			<input matInput type="email" [(ngModel)]="field.value" placeholder="{{field.placeholder}}" name="{{field.name}}" required="{{ field.required }}">
+		</mat-form-field>		
+
 		<mat-form-field *ngSwitchDefault>
 			<input matInput [(ngModel)]="field.value" placeholder="{{field.placeholder}}" name="{{field.name}}" required="{{ field.required }}">
 		</mat-form-field>

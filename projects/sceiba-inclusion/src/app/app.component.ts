@@ -10,36 +10,43 @@ export class AppComponent {
 	title = 'sceiba-inclusion';
 
 	public panels: Panel[] = [{
-		title: 'Información Primaria',
+		title: "Identificadores de la Revista",
 		description: "",
 		iconName: "",
 		formField : [
-			{name: 'url', placeholder: 'URL', type: FormFieldType.url, required: true }, 
-			{name: 'pedro', placeholder: 'data', type: FormFieldType.datepicker, required: false }, 
-			{name: 'juan', placeholder: 'juan', type: FormFieldType.input, required: true },
-			{name: 'check', placeholder: 'check', type: FormFieldType.checkbox, required: true }	
+			{name: 'issn_p', placeholder: 'ISSN Impreso', type: FormFieldType.input, required: false }, 
+			{name: 'issn_e', placeholder: 'ISSN Electrónico', type: FormFieldType.input, required: false }, 
+			{name: 'issn_l', placeholder: 'ISSN de Enlace', type: FormFieldType.input, required: false }, 
+			{name: 'rnps', placeholder: 'RNPS', type: FormFieldType.input, required: false }
 		]
 	},
 	{
-		title: 'panel2',
-		description: "este es el panel 2",
-		iconName: "account_circle",
+	title: "Información de la Revista",
+	description: "",
+	iconName: "",
+	formField : [
+		{name: 'title', placeholder: 'Título', type: FormFieldType.input, required: false },
+		{name: 'description', placeholder: 'Descripción', type: FormFieldType.textarea, required: false},
+		{name: 'url', placeholder: 'URL', type: FormFieldType.url, required: false},
+		{name: 'email', placeholder: 'Correo Electrónico', type: FormFieldType.email, required: false},
+		{name: 'institution', placeholder: 'Institución', type: FormFieldType.input, required: false},
+	]
+	},
+	{
+		title: 'Impacto de la Revista',
+		description: "",
+		iconName: "",
 		formField : [
-			{name: 'paco', placeholder: 'paco', type: FormFieldType.textarea, required: true }, 
-			{name: 'pedro', placeholder: 'data', type: FormFieldType.datepicker, required: true }, 
-			{name: 'juan', placeholder: 'juan', type: FormFieldType.input, required: true },
-			{name: 'check', placeholder: 'check', type: FormFieldType.checkbox, required: true }
+			{name: 'databases', placeholder: 'Bases de Datos', type: FormFieldType.textarea, required: false}, 
 		]
 	},
 	{
-		title: 'panel3',
-		description: "este es el panel 3",
-		iconName: "account_circle",
+		title: 'Acuerdo Legal',
+		description: "",
+		iconName: "",
 		formField : [
-			{name: 'paco', placeholder: 'paco', type: FormFieldType.textarea, required: true }, 
-			{name: 'pedro', placeholder: 'data', type: FormFieldType.datepicker, required: true }, 
-			{name: 'juan', placeholder: 'juan', type: FormFieldType.input, required: true },
-			{name: 'check', placeholder: 'check', type: FormFieldType.checkbox, required: true }
+			{name: 'licence', placeholder: 'Acuerdo Legal', type: FormFieldType.textarea, required: false }, 
+			{name: 'pedro', placeholder: 'Acepto', type: FormFieldType.checkbox, required: false },
 		]
 	}];
 

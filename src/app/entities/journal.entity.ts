@@ -37,6 +37,7 @@ export class JournalInformation
     issn: ISSN;
     rnps: string;
     url: string;
+    email: string;
     logo: string;
     purpose: string;
     description: string;

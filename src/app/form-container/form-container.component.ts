@@ -26,6 +26,9 @@ export enum FormFieldType
 
 	/** A url control. */
 	url= "url",
+
+	/** An email control. */
+	email= "email",
 };
 
 /**
