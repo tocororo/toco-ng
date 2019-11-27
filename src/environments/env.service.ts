@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class EnvService {
 
-  public sceibaApi = 'https://localhost:5000/api';
+  public sceibaApi = 'https://sceiba-lab.upr.edu.cu/api';
   public sceibaHost = '';
   public appHost = '';
   public appName = '';

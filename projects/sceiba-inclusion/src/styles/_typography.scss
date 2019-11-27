@@ -46,19 +46,19 @@
 $toco-typography: mat-typography-config(
     $font-family: '"MyriadPro Regular", "Helvetica Neue", sans-serif',
 
-    $display-4: mat-typography-level(32px, 48px, 500),
-    $display-3: mat-typography-level(28px, 44px, 500),
-    $display-2: mat-typography-level(24px, 40px, 500),
-    $display-1: mat-typography-level(20px, 36px, 500),
+    $display-4: mat-typography-level(24px, 48px, 500),
+    $display-3: mat-typography-level(20px, 36px, 500),
+    $display-2: mat-typography-level(16px, 32px, 500),
+    $display-1: mat-typography-level(12px, 28px, 500),
 
-    $headline: mat-typography-level(36px, 52px, 400),
-    $title: mat-typography-level(32px, 48px, 400),
-    $subheading-2: mat-typography-level(28px, 44px, 400),
-    $subheading-1: mat-typography-level(24px, 40px, 400),
-    $body-2: mat-typography-level(22px, 36px, 400),
-    $body-1: mat-typography-level(20px, 36px, 400),
-    $caption: mat-typography-level(16px, 32px, 400),
-    $button: mat-typography-level(20px, 36px, 400)
+    $headline: mat-typography-level(28px, 44px, 400),
+    $title: mat-typography-level(24px, 40px, 400),
+    $subheading-2: mat-typography-level(20px, 36px, 400),
+    $subheading-1: mat-typography-level(16px, 32px, 400),
+    $body-2: mat-typography-level(14px, 28px, 400),
+    $body-1: mat-typography-level(14px, 28px, 400),
+    $caption: mat-typography-level(10px, 24px, 400),
+    $button: mat-typography-level(12px, 28px, 400)
 
 );
   // Override typography CSS classes (e.g., mat-h1, mat-display-1, mat-typography, etc.).

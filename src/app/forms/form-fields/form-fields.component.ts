@@ -1,5 +1,5 @@
 import { Component, OnInit,  Input } from '@angular/core';
-import { FormFieldType, FormField } from '@toco/form-container/form-container.component';
+import { FormFieldType, FormField } from '@toco/forms/form-container/form-container.component';
 
 /**
  * This componente defines a form fields collection.

@@ -2,6 +2,11 @@ import { Entity } from "./entity";
 import { JournalReference } from "./journal_reference.entity";
 import { Term } from "./terms.entity";
 
+
+//TODO: En algun momento refactorizar...
+    // todo lo que se llama Journal deberia llamarse source
+    
+    
 export class Journal extends Entity
 {
     tocoID: string;
