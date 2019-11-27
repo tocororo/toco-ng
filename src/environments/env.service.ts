@@ -5,11 +5,11 @@ import { Injectable } from '@angular/core';
 })
 export class EnvService {
 
-  public sceibaApi = '';
+  public sceibaApi = 'https://localhost:5000/api';
   public sceibaHost = '';
   public appHost = '';
   public appName = '';
   public pagesApi = '';
-  
+
   constructor() { }
 }

@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { FormContainerComponent } from '@toco/form-container/form-container.component';
 import { FormFieldsComponent } from '@toco/form-fields/form-fields.component';
 
+import { CatalogModule } from '@toco/catalog/catalog.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FormFieldsComponent } from '@toco/form-fields/form-fields.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    CatalogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

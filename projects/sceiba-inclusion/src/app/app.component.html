@@ -1,13 +1,15 @@
 
-<mat-toolbar color="primary">Sceiba Inclusión</mat-toolbar>
+<mat-toolbar color="primary">{{title}}</mat-toolbar>
 
 <mat-tab-group mat-align-tabs="center">
 
-	<mat-tab label="Listar"> Content 1 </mat-tab>
-	
-	<mat-tab label="Adicionar">
-		<toco-form-container [panels]="panels" fxLayout="row" fxLayoutAlign="center center" style="padding-bottom: 1em;"></toco-form-container>
-	</mat-tab>
-	
-	<mat-tab label="Editar"> Content 3 </mat-tab>
+  <mat-tab label="Listar">
+      <toco-sources-list></toco-sources-list>
+ </mat-tab>
+
+  <mat-tab label="Adicionar">
+    <toco-form-container [panels]="panels" fxLayout="row" fxLayoutAlign="center center" style="padding-bottom: 1em;"></toco-form-container>
+  </mat-tab>
+
+  <mat-tab label="Editar"> Content 3 </mat-tab>
 </mat-tab-group>

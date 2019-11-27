@@ -9,6 +9,7 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { CatalogService } from './catalog.service';
 import { CatalogFiltersComponent } from './catalog-filters/catalog-filters.component';
 import { AuthenticateModule } from '../authenticate/authenticate.module';
+import { SourcesListComponent } from './sources-list/sources-list.component';
 
 @NgModule({
   imports: [
@@ -19,11 +20,13 @@ import { AuthenticateModule } from '../authenticate/authenticate.module';
     AuthenticateModule
   ],
   exports: [
-    CatalogComponent
+    CatalogComponent,
+    SourcesListComponent
   ],
   declarations: [
     CatalogComponent,
-    CatalogFiltersComponent
+    CatalogFiltersComponent,
+    SourcesListComponent
   ],
   providers: [
     CatalogService
