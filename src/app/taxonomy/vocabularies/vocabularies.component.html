@@ -1,4 +1,5 @@
 
-<mat-action-list>
+<mat-action-list>  
   <button *ngFor="let item of vocabularies" mat-list-item (click)="showTerms(item.name)"> {{item.name}} </button>
+  <button mat-stroked-button color="primary" (click)="addVocabularyDialog()"> Add </button>
 </mat-action-list>

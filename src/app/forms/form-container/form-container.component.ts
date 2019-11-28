@@ -84,6 +84,8 @@ export class FormContainerComponent implements OnInit, OnDestroy
 	
 	@Input() public panels: Panel[] = [];
 
+	@Input() public endpoint: string;
+
 	public step: number = 0;
 
 	public constructor(private formContainerService: FormContainerService)
@@ -145,22 +147,18 @@ export class FormContainerComponent implements OnInit, OnDestroy
 		if(this.token)
 		{
 			/* Preparing all data. */
-			let data = [];
+			let data = {};
 
 			this.panels.forEach(panel => {
 				panel.formField.forEach( form => {
-					let obj = {};
-					Object.defineProperty(obj, form.name, {
-						value: form.value
-					});
-					data.push( obj);
+					data[form.name] = form.value;
 				})
 			});
 			console.log(data);  /* Test only. */
 			
 			this.sendDataUnsubscribe();
 			this.sendDataSubscription = this.formContainerService
-				.sendPostData('/inclusin', this.token, data).pipe(
+				.sendPostData(this.endpoint, this.token, data).pipe(
 					catchError((err: HttpErrorResponse) =>
 					{
 						const message = (err.error instanceof ErrorEvent)
