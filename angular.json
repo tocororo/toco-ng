@@ -752,6 +752,128 @@
           }
         }
       }
+    },
+    "taxonomy": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/taxonomy",
+      "sourceRoot": "projects/taxonomy/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/taxonomy",
+            "index": "projects/taxonomy/src/index.html",
+            "main": "projects/taxonomy/src/main.ts",
+            "polyfills": "projects/taxonomy/src/polyfills.ts",
+            "tsConfig": "projects/taxonomy/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/taxonomy/src/favicon.ico",
+              "projects/taxonomy/src/assets"
+            ],
+            "styles": [
+              "projects/taxonomy/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/taxonomy/src/environments/environment.ts",
+                  "with": "projects/taxonomy/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "taxonomy:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "taxonomy:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "taxonomy:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/taxonomy/src/test.ts",
+            "polyfills": "projects/taxonomy/src/polyfills.ts",
+            "tsConfig": "projects/taxonomy/tsconfig.spec.json",
+            "karmaConfig": "projects/taxonomy/karma.conf.js",
+            "assets": [
+              "projects/taxonomy/src/favicon.ico",
+              "projects/taxonomy/src/assets"
+            ],
+            "styles": [
+              "projects/taxonomy/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/taxonomy/tsconfig.app.json",
+              "projects/taxonomy/tsconfig.spec.json",
+              "projects/taxonomy/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/taxonomy/e2e/protractor.conf.js",
+            "devServerTarget": "taxonomy:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "taxonomy:serve:production"
+            }
+          }
+        }
+      }
     }
   },
   "defaultProject": "toco-ng"

@@ -1,6 +1,6 @@
 import { Entity } from "./entity";
 import { JournalReference } from "./journal_reference.entity";
-import { Term } from "./terms.entity";
+import { Term } from "./taxonomy.entity";
 
 
 //TODO: En algun momento refactorizar...

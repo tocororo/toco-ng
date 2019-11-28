@@ -15,39 +15,49 @@ export class JournalEditComponent {
     public journal: Journal;
 
     public panels: Panel[] = [{
-        title: 'Identificadores',
+        title: 'Revista',
         description: '',
         iconName: '',
         formField : [
+            {name: 'title', placeholder: 'Título', type: FormFieldType.input, required: false },
+            {name: 'subtitle', placeholder: 'Subtítulo', type: FormFieldType.input, required: false },
+            {name: 'abbreviation', placeholder: 'Título abreviado', type: FormFieldType.input, required: false },
+            {name: 'url', placeholder: 'URL', type: FormFieldType.url, required: false},
+            {name: 'email', placeholder: 'Correo Electrónico', type: FormFieldType.email, required: false},
+            {name: 'source_type', placeholder: 'Tipo de revista', type: FormFieldType.url, required: false},
+            {name: 'source_app', placeholder: 'Sistema', type: FormFieldType.url, required: false},
+            {name: 'start_year', placeholder: 'Año de inicio', type: FormFieldType.url, required: false},
+            {name: 'frequency', placeholder: 'Año de inicio', type: FormFieldType.url, required: false},
             {name: 'issn_p', placeholder: 'ISSN Impreso', type: FormFieldType.input, required: false },
             {name: 'issn_e', placeholder: 'ISSN Electrónico', type: FormFieldType.input, required: false },
             {name: 'issn_l', placeholder: 'ISSN de Enlace', type: FormFieldType.input, required: false },
-            {name: 'rnps', placeholder: 'RNPS', type: FormFieldType.input, required: false }
+            {name: 'rnps', placeholder: 'RNPS', type: FormFieldType.input, required: false },
+            {name: 'subjects', placeholder: 'Materias', type: FormFieldType.input, required: false},
+            {name: 'description', placeholder: 'Descripción', type: FormFieldType.textarea, required: false},
+            {name: 'licence', placeholder: 'Licencia', type: FormFieldType.input, required: false},
+            {name: 'social_networks', placeholder: 'Redes Sociales', type: FormFieldType.input, required: false},
         ]
     },
     {
-      title: 'Información',
+      title: 'Institución',
       description: '',
       iconName: '',
       formField : [
-          {name: 'title', placeholder: 'Título', type: FormFieldType.input, required: false },
-          {name: 'description', placeholder: 'Descripción', type: FormFieldType.textarea, required: false},
-          {name: 'url', placeholder: 'URL', type: FormFieldType.url, required: false},
-          {name: 'email', placeholder: 'Correo Electrónico', type: FormFieldType.email, required: false},
+        {name: 'institution', placeholder: 'Instutuciones', type: FormFieldType.input, required: false},
+        {name: 'custom', placeholder: 'Hacer el formulario para Terminos', type: FormFieldType.input, required: false},
       ]
     },
     {
-      title: 'Clasificaciones',
+      title: 'Indizaciones',
       description: '',
       iconName: '',
       formField : [
-        {name: 'institution', placeholder: 'Institución', type: FormFieldType.input, required: false},
-        {name: 'subjects', placeholder: 'Materias', type: FormFieldType.input, required: false},
-        {name: 'licence', placeholder: 'Licencia', type: FormFieldType.input, required: false},
+        {name: 'data_bases', placeholder: 'Dases de Datos', type: FormFieldType.input, required: false},
+
       ]
     },    
     {
-        title: 'Impacto',
+        title: 'Persona',
         description: '',
         iconName: '',
         formField : [
