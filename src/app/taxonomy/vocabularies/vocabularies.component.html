@@ -1,5 +1,31 @@
 
-<mat-action-list>  
-  <button *ngFor="let item of vocabularies" mat-list-item (click)="showTerms(item.name)"> {{item.name}} </button>
-  <button mat-stroked-button color="primary" (click)="addVocabularyDialog()"> Add </button>
-</mat-action-list>
+<!-- <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+
+ -->
+
+
+<ng-container *ngIf="loading; else elseTemplate">
+  <mat-spinner></mat-spinner>
+</ng-container>
+<ng-template #elseTemplate>
+  <button  mat-raised-button color="primary" (click)="addVocabularyDialog()"> Add </button>
+  <mat-list>
+      <mat-list-item *ngFor="let item of vocabularies">
+          <h4 mat-line>{{item.name}}</h4>
+          <p mat-line> {{item.description}} </p>
+          <button mat-icon-button (click)="showTerms(item.name)">
+              <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="showTerms(item.name)">
+              <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button (click)="showTerms(item.name)">
+            <mat-icon>list</mat-icon>
+          </button>
+        </mat-list-item>
+    <!-- <button *ngFor="let item of vocabularies" mat-list-item (click)="showTerms(item.name)"> {{item.name}} </button> -->
+  </mat-list>
+
+</ng-template>
+
+

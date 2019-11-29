@@ -11,7 +11,7 @@ export class JournalEditComponent {
 
     //TODO: Idea del componente:
     // trabajan internamente con un journal, si recibe null entonces es un nuevo, si recibe un journal entonces es editar.
-    // en ambos casos devuelve el journal editado, o sea el contenido, listo para hacer post en el backend. 
+    // en ambos casos devuelve el journal editado, o sea el contenido, listo para hacer post en el backend.
     public journal: Journal;
 
     public panels: Panel[] = [{
@@ -55,7 +55,7 @@ export class JournalEditComponent {
         {name: 'data_bases', placeholder: 'Dases de Datos', type: FormFieldType.input, required: false},
 
       ]
-    },    
+    },
     {
         title: 'Persona',
         description: '',
@@ -70,7 +70,7 @@ export class JournalEditComponent {
         iconName: '',
         formField : [
             {name: 'licence', placeholder: 'Acuerdo Legal', type: FormFieldType.textarea, required: false },
-            {name: 'pedro', placeholder: 'Acepto', type: FormFieldType.checkbox, required: false },
+            {name: 'accepted', placeholder: 'Acepto', type: FormFieldType.checkbox, required: false },
         ]
     }];
 
