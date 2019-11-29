@@ -1,5 +1,5 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Taxonomy</h1>
+  <h1 class="mat-h1">Taxonomía</h1>
 
   <mat-grid-list cols="2" rowHeight="350px">
 
@@ -11,7 +11,7 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content" [style.overflow]="'auto'">
-            <toco-vocabularies></toco-vocabularies>
+            <toco-vocabularies (emiterShowTerms)="showTerms($event)"></toco-vocabularies>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
@@ -20,7 +20,7 @@
         <mat-card class="dashboard-card">
           <mat-card-header>
             <mat-card-title>
-                {{terms.title}}
+                {{terms.title }} {{ current_vocab.name}}
             </mat-card-title>
           </mat-card-header>
           <mat-card-content class="dashboard-card-content" [style.overflow]="'auto'">
