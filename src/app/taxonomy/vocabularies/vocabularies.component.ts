@@ -1,11 +1,14 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Output } from '@angular/core';
 import { TaxonomyService } from '../taxonomy.service';
-import { Vocabulary } from '@toco/entities/taxonomy.entity';
+import { Vocabulary, Term } from '@toco/entities/taxonomy.entity';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, finalize } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, Subscription, PartialObserver } from 'rxjs';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { FormContainerComponent, Panel, FormFieldType } from '@toco/forms/form-container/form-container.component';
+import { EventEmitter } from '@angular/core';
+import { Response } from '@toco/entities/response';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'toco-vocabularies',
@@ -13,6 +16,26 @@ import { FormContainerComponent, Panel, FormFieldType } from '@toco/forms/form-c
   styleUrls: ['./vocabularies.component.scss']
 })
 export class VocabulariesComponent implements OnInit {
+
+  private vocabAddSuscription: Subscription = null;
+  private vocabAddObserver: PartialObserver<Response<any>> = {
+    next: (result: Response<any>) => {
+      this.dialog.closeAll();
+      this.loadVocabularies();
+      this._snackBar.open(result.message, null, {
+        duration: 2000,
+      });
+    },
+
+    error: (err: any) => {
+        console.log('The observable got an error notification: ' + err + '.');
+    },
+
+    complete: () => {
+      console.log('The observable got a complete notification.');
+    }
+  };
+
 
   // tslint:disable-next-line: max-line-length
   vocabularies: Vocabulary[] = [{name: 'list1', description: 'aaa'}, {name: 'list2', description: 'aaa'}, {name: 'list3', description: 'aaa'}];
@@ -26,17 +49,21 @@ export class VocabulariesComponent implements OnInit {
     ]
   }];
   loading = false;
+  
+  @Output() emiterShowTerms: EventEmitter<Vocabulary> = new EventEmitter();
 
   constructor(private service: TaxonomyService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.loadVocabularies();
-    this.service.vocabularyAdded.subscribe(result => {
-      console.log(result);
-      this.dialog.closeAll();
-      this.loadVocabularies();
-    });
+    this.vocabAddSuscription = this.service.vocabularyAddedObservable.subscribe(this.vocabAddObserver);
+  }
+  ngOnDestroy(): void {
+    if (this.vocabAddSuscription){
+      this.vocabAddSuscription.unsubscribe();
+    }
   }
 
   loadVocabularies() {
@@ -63,9 +90,17 @@ export class VocabulariesComponent implements OnInit {
     });
   }
 
+  editVocab( vocab: Vocabulary ) {
+    console.log(vocab);
+  }
 
-  showTerms( vname: String ) {
-    console.log(vname);
+  deleteVocab( vocab: Vocabulary ) {
+    console.log(vocab);
+  }
+
+  showTerms( vocab: Vocabulary ) {
+    // console.log(vocab);
+    this.service.vocabChanged(vocab);
   }
 
   addVocabularyDialog(): void {

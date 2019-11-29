@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { of as observableOf } from 'rxjs';
+import { of as observableOf, PartialObserver, Subscription } from 'rxjs';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { files } from './example-data';
+import { Vocabulary, Term } from '@toco/entities/taxonomy.entity';
+import { TaxonomyService } from '../taxonomy.service';
+import { Response } from '@toco/entities/response';
 
 /** File node data with possible child nodes. */
-export interface FileNode {
-  name: string;
-  type: string;
-  children?: FileNode[];
+export interface TermNode {
+  term: Term;
+  children?: TermNode[];
 }
 
 /**
@@ -17,7 +18,6 @@ export interface FileNode {
  */
 export interface FlatTreeNode {
   name: string;
-  type: string;
   level: number;
   expandable: boolean;
 }
@@ -27,18 +27,56 @@ export interface FlatTreeNode {
   templateUrl: './terms.component.html',
   styleUrls: ['./terms.component.scss']
 })
-export class TermsComponent {
+export class TermsComponent implements OnInit, OnDestroy{
+
+  vocab: Vocabulary = null;
+
+  loading: Boolean = false;
 
   /** The TreeControl controls the expand/collapse state of tree nodes.  */
   treeControl: FlatTreeControl<FlatTreeNode>;
 
   /** The TreeFlattener is used to generate the flat list of items from hierarchical data. */
-  treeFlattener: MatTreeFlattener<FileNode, FlatTreeNode>;
+  treeFlattener: MatTreeFlattener<TermNode, FlatTreeNode>;
 
   /** The MatTreeFlatDataSource connects the control and flattener to provide data. */
-  dataSource: MatTreeFlatDataSource<FileNode, FlatTreeNode>;
+  dataSource: MatTreeFlatDataSource<TermNode, FlatTreeNode>;
 
-  constructor() {
+  private termsTreeObserver: PartialObserver<Response<any>> = {
+    next: (response: Response<any>) => {
+      this.dataSource.data = response.data.terms.terms
+      this.loading = !this.loading;
+    },
+
+    error: (err: any) => {
+        console.log('The observable got an error notification: ' + err + '.');
+    },
+
+    complete: () => {
+      console.log('The observable got a complete notification.');
+    }
+  };
+
+  private currentVocabSuscription: Subscription = null;
+  private currentVocabObserver: PartialObserver<Vocabulary> = {
+    next: (vocab: Vocabulary) => {
+      if( !this.vocab || this.vocab.name != vocab.name){
+        this.loading = !this.loading;
+        this.service.getTermsTreeByVocab(vocab.name).subscribe(this.termsTreeObserver);
+        this.vocab = vocab;
+      }
+    },
+
+    error: (err: any) => {
+        console.log('The observable got an error notification: ' + err + '.');
+    },
+
+    complete: () => {
+      console.log('The observable got a complete notification.');
+    }
+  };
+
+  constructor(private service: TaxonomyService) {
     this.treeFlattener = new MatTreeFlattener(
       this.transformer,
       this.getLevel,
@@ -47,16 +85,25 @@ export class TermsComponent {
 
     this.treeControl = new FlatTreeControl(this.getLevel, this.isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-    this.dataSource.data = files;
+    this.dataSource.data;
+  }
+  
+  ngOnInit(): void {
+    this.currentVocabSuscription = this.service.currentVocabObservable.subscribe(this.currentVocabObserver);
+  }
+
+  ngOnDestroy(): void {
+    if (this.currentVocabSuscription){
+      this.currentVocabSuscription.unsubscribe();
+    }
   }
 
   /** Transform the data to something the tree can read. */
-  transformer(node: FileNode, level: number) {
+  transformer(node: TermNode, level: number) {
     return {
-      name: node.name,
-      type: node.type,
+      name: node.term.name,
       level: level,
-      expandable: !!node.children
+      expandable: (node.children.length > 0)
     };
   }
 
@@ -76,7 +123,7 @@ export class TermsComponent {
   }
 
   /** Get the children for the node. */
-  getChildren(node: FileNode) {
+  getChildren(node: TermNode) {
     return observableOf(node.children);
   }
 }

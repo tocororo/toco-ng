@@ -4,22 +4,21 @@
  -->
 
 
-<ng-container *ngIf="loading; else elseTemplate">
-  <mat-spinner></mat-spinner>
-</ng-container>
+<mat-spinner *ngIf="loading; else elseTemplate"></mat-spinner>
+
 <ng-template #elseTemplate>
   <button  mat-raised-button color="primary" (click)="addVocabularyDialog()"> Add </button>
   <mat-list>
       <mat-list-item *ngFor="let item of vocabularies">
           <h4 mat-line>{{item.name}}</h4>
           <p mat-line> {{item.description}} </p>
-          <button mat-icon-button (click)="showTerms(item.name)">
+          <button mat-icon-button (click)="editVocab(item)">
               <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button (click)="showTerms(item.name)">
+          <button mat-icon-button (click)="deleteVocab(item)">
               <mat-icon>delete</mat-icon>
           </button>
-          <button mat-icon-button (click)="showTerms(item.name)">
+          <button mat-icon-button (click)="showTerms(item)">
             <mat-icon>list</mat-icon>
           </button>
         </mat-list-item>
