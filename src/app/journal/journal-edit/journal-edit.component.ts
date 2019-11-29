@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Panel, FormFieldType } from '@toco/forms/form-container/form-container.component';
 import {Journal} from '@toco/entities/journal.entity.ts'
+import { JournalService } from '../journal.service';
 
 @Component({
     selector: 'toco-journal-edit',
@@ -73,5 +74,7 @@ export class JournalEditComponent {
             {name: 'accepted', placeholder: 'Acepto', type: FormFieldType.checkbox, required: false },
         ]
     }];
+
+    constructor(private service: JournalService) { }
 
 }
