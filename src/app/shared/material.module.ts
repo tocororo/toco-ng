@@ -26,12 +26,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 
 @NgModule({
   imports: [
-    BrowserAnimationsModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatMenuModule,
@@ -61,7 +58,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatNativeDateModule
   ],
   exports: [
-    BrowserAnimationsModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatMenuModule,
@@ -91,4 +87,4 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatNativeDateModule
   ]
 })
-export class MaterialModule {}
+export class MaterialModule { }

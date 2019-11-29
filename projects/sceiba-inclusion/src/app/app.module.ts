@@ -9,17 +9,17 @@ import { CatalogModule } from '@toco/catalog/catalog.module';
 import { JournalModule } from '@toco/journal/journal.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    SharedModule,
-    CatalogModule, 
-    JournalModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent
+	],
+	imports: [
+		BrowserModule,
+		HttpClientModule,
+		SharedModule,
+		CatalogModule, 
+		JournalModule
+	],
+	providers: [],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }
