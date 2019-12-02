@@ -4,7 +4,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 
 import { FormContainerComponent, Panel, FormFieldType, FormContainerAction} from '@toco/forms/form-container/form-container.component';
 import { Term } from '@toco/entities/taxonomy.entity';
-import { TermActionEdit } from '../terms/terms.component';
+import { TermActionEdit, TermActionNew } from '../terms/terms.component';
 
 @Component({
   selector: 'toco-term-generic',
@@ -33,7 +33,7 @@ export class TermGenericComponent implements OnInit {
           this.panels[0].formField[1].value = data.term.description;
           this.action = new TermActionEdit(data.service, data.term);
         } else {
-          this.action = new TermActionEdit(data.service, data.term);
+          this.action = new TermActionNew(data.service);
         }
       }
 

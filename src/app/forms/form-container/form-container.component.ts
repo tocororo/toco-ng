@@ -155,7 +155,6 @@ export class FormContainerComponent implements OnInit, OnDestroy {
 
     this.action.doit(data);
 
-    this.action.doit(data);
     this.panels.forEach(panel => {
       panel.formField.forEach( form => {
         form.value = null;
