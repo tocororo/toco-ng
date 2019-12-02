@@ -7,6 +7,11 @@ import { Response } from '@toco/entities/response';
 import { FormSuscriberInterface } from '@toco/forms/forms.service';
 import { Vocabulary, Term } from '@toco/entities/taxonomy.entity';
 
+// TODO: Esto esta bastante feo... hay que agregarle a vocabulario un nombre inmutable y referirse a este por aqui, no por los ids
+export enum VocabulariesInmutableNames{
+  INTITUTION = 1,
+  DATABASES = 4
+}
 
 @Injectable()
 export class TaxonomyService {

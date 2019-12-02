@@ -5,6 +5,7 @@ export class Term extends Entity {
     uuid: string;
     name: string;
     description: string;
+    data: any;
     vocabulary: Vocabulary;
 }
 
