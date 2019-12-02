@@ -5,11 +5,13 @@ import {Observable, PartialObserver, Subject} from 'rxjs';
 import { EnvService } from '@tocoenv/env.service';
 import { Response } from '@toco/entities/response';
 import { FormSuscriberInterface } from '@toco/forms/forms.service';
-import { Vocabulary } from '@toco/entities/taxonomy.entity';
+import { Vocabulary, Term } from '@toco/entities/taxonomy.entity';
 
 
 @Injectable()
-export class TaxonomyService implements FormSuscriberInterface{
+export class TaxonomyService {
+
+  constructor(private env: EnvService, private http: HttpClient) { }
 
   private httpOptions = {
     headers: new HttpHeaders(
@@ -20,22 +22,18 @@ export class TaxonomyService implements FormSuscriberInterface{
   };
   token = '';
 
+  private currentVocabularyChangedSource = new Subject<Vocabulary>();
+  currentVocabularyObservable = this.currentVocabularyChangedSource.asObservable();
 
-  private currentVocabChangedSource = new Subject<Vocabulary>();
-  currentVocabObservable = this.currentVocabChangedSource.asObservable();
-  vocabChanged(vocab: Vocabulary) {
-    this.currentVocabChangedSource.next(vocab);
-  }
+  private vocabulariesChangeSource = new Subject<Response<any>>();
+  vocabulariesChangeObservable = this.vocabulariesChangeSource.asObservable();
 
-  private vocabularyAddedSource = new Subject<Response<any>>();
-  vocabularyAddedObservable = this.vocabularyAddedSource.asObservable();
-  vocabularyAdded(resp: Response<any>) {
-    this.vocabularyAddedSource.next(resp);
-  }
+  private termChangeSource = new Subject<Response<any>>();
+  termChangeObservable = this.termChangeSource.asObservable();
 
-  private addDataObserver: PartialObserver<Response<any>> = {
+  private vocabulariesChangeObserver: PartialObserver<Response<any>> = {
     next: (resp: Response<any>) => {
-      this.vocabularyAdded(resp);
+      this.vocabulariesChange(resp);
     },
 
     error: (err: any) => {
@@ -47,24 +45,70 @@ export class TaxonomyService implements FormSuscriberInterface{
     }
   };
 
-  addData(data: any): void{
+  private termChangeObserver: PartialObserver<Response<any>> = {
+    next: (resp: Response<any>) => {
+      this.termChange(resp);
+    },
+
+    error: (err: any) => {
+        console.log('The observable got an error notification: ' + err + '.');
+    },
+
+    complete: () => {
+      console.log('The observable got a complete notification.');
+    }
+  };
+
+  vocabularyChanged(vocab: Vocabulary) {
+    this.currentVocabularyChangedSource.next(vocab);
+  }
+  vocabulariesChange(resp: Response<any>) {
+    this.vocabulariesChangeSource.next(resp);
+  }
+
+  termChange(resp: Response<any>) {
+    this.termChangeSource.next(resp);
+  }
+
+  newVocabulary(data: any): void {
     console.log(data);
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
 
     // tslint:disable-next-line: max-line-length
-    this.http.post<Response<any>>( this.env.sceibaApi + '/vocabulary/new', data, this.httpOptions ).pipe().subscribe(this.addDataObserver);
+    this.http.post<Response<any>>( this.env.sceibaApi + '/vocabulary/new', data, this.httpOptions ).pipe().subscribe(this.vocabulariesChangeObserver);
   }
 
-  constructor(private env: EnvService, private http: HttpClient) { }
+  editVocabulary(data: any, vocab: Vocabulary): void {
+    console.log(data);
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
 
+    // tslint:disable-next-line: max-line-length
+    this.http.post<Response<any>>( this.env.sceibaApi + '/vocabulary/' + vocab.id + '/edit', data, this.httpOptions ).pipe().subscribe(this.vocabulariesChangeObserver);
+  }
 
   getVocabularies():Observable<Response<any>>{
     let req = this.env.sceibaApi + '/vocabularies';
     return this.http.get<Response<any>>(req);
   }
 
-  getTermsTreeByVocab(name: string):Observable<Response<any>>{
-    let req = this.env.sceibaApi + '/terms/'+name+'/tree';
+  newTerm(data: any): void {
+    console.log(data);
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
+
+    // tslint:disable-next-line: max-line-length
+    this.http.post<Response<any>>( this.env.sceibaApi + '/term/new', data, this.httpOptions ).pipe().subscribe(this.termChangeObserver);
+  }
+
+  editTerm(data: any, term: Term): void {
+    console.log(data);
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
+
+    // tslint:disable-next-line: max-line-length
+    this.http.post<Response<any>>( this.env.sceibaApi + '/term/' + term.uuid + '/edit', data, this.httpOptions ).pipe().subscribe(this.termChangeObserver);
+  }
+
+  getTermsTreeByVocab(vocab: Vocabulary):Observable<Response<any>>{
+    let req = this.env.sceibaApi + '/vocabulary/' + vocab.id + '/terms/tree';
     return this.http.get<Response<any>>(req);
   }
 }

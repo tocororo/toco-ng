@@ -8,7 +8,7 @@ export class Term extends Entity {
     vocabulary: Vocabulary;
 }
 
-export class Vocabulary {
+export class Vocabulary extends Entity {
     name: string;
     description: string;
 }

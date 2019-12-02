@@ -3,7 +3,7 @@ import { Injectable, Output, EventEmitter } from '@angular/core';
 
 
 export interface FormSuscriberInterface {
-  addData(data: any): void ;
+  newEntity(data: any): void ;
 }
 
 
