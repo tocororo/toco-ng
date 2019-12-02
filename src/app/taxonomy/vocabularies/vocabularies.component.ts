@@ -59,7 +59,7 @@ export class VocabulariesComponent implements OnInit {
 
 
   // tslint:disable-next-line: max-line-length
-  vocabularies: Vocabulary[] = [{id: 0, created_at: '', updated_at: '', raw_data: '' , name: 'No Vocabularies', description: ''}];
+  vocabularies: Vocabulary[];
   public panels: Panel[] = [{
     title: 'Vocabulario',
     description: '',

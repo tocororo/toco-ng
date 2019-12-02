@@ -178,7 +178,14 @@ export class TermsComponent implements OnInit, OnDestroy{
   getChildren(node: TermNode) {
     return observableOf(node.children);
   }
-
+  addTerm(node: TermNode){
+    const dialogRef = this.dialog.open(TermGenericComponent, {
+      data: { service: this.service }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
   editTerm(node: TermNode) {
     const dialogRef = this.dialog.open(TermGenericComponent, {
       data: { term: node.term, service: this.service }
