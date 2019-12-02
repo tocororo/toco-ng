@@ -3,33 +3,15 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 import { of as observableOf, PartialObserver, Subscription } from 'rxjs';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Vocabulary, Term } from '@toco/entities/taxonomy.entity';
-import { TaxonomyService } from '../taxonomy.service';
+import { TaxonomyService, VocabulariesInmutableNames } from '../taxonomy.service';
 import { Response } from '@toco/entities/response';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TermGenericComponent } from '../term-generic/term-generic.component';
 import { FormContainerAction } from '@toco/forms/form-container/form-container.component';
+import { TermInstitutionsComponent } from '../term-institutions/term-institutions.component';
 
 
-export class TermActionNew implements FormContainerAction {
-  doit(data: any): void {
-    console.log(this);
-    this.service.newTerm(data);
-  }
-  constructor(private service: TaxonomyService) {
-
-  }
-}
-
-export class TermActionEdit implements FormContainerAction {
-  doit(data: any): void {
-    console.log(this);
-    this.service.editTerm(data, this.term);
-  }
-  constructor(private service: TaxonomyService, private term: Term) {
-
-  }
-}
 
 /** File node data with possible child nodes. */
 export interface TermNode {
@@ -180,12 +162,20 @@ export class TermsComponent implements OnInit, OnDestroy{
   }
 
   editTerm(node: TermNode) {
-    const dialogRef = this.dialog.open(TermGenericComponent, {
-      data: { term: node.term, service: this.service }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    switch (this.vocab.id) {
+      case VocabulariesInmutableNames.INTITUTION:
+        this.dialog.open(TermInstitutionsComponent, {
+          data: { term: node.term, service: this.service }
+        });
+        break;
+    
+      default:
+        const dialogRef = this.dialog.open(TermGenericComponent, {
+          data: { term: node.term, service: this.service }
+        });
+    }
+    
+
   }
 
   deleteTerm(node: TermNode) {

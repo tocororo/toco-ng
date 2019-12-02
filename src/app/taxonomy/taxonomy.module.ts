@@ -15,6 +15,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { LayoutModule } from '@angular/cdk/layout';
 import { TermGenericComponent } from './term-generic/term-generic.component';
+import { TermInstitutionsComponent } from './term-institutions/term-institutions.component';
 
 
 
@@ -24,11 +25,13 @@ import { TermGenericComponent } from './term-generic/term-generic.component';
     VocabularyDialogComponent,
     TermsComponent,
     TaxonomyComponent,
-    TermGenericComponent
+    TermGenericComponent,
+    TermInstitutionsComponent
   ],
   entryComponents: [
     VocabularyDialogComponent,
-    TermGenericComponent
+    TermGenericComponent,
+    TermInstitutionsComponent
   ],
   imports: [
     CommonModule,
