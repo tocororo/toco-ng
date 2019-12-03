@@ -3,8 +3,15 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 import { of as observableOf, PartialObserver, Subscription } from 'rxjs';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Vocabulary, Term } from '@toco/entities/taxonomy.entity';
-import { TaxonomyService } from '../taxonomy.service';
+import { TaxonomyService, VocabulariesInmutableNames } from '../taxonomy.service';
 import { Response } from '@toco/entities/response';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TermGenericComponent } from '../term-generic/term-generic.component';
+import { FormContainerAction } from '@toco/forms/form-container/form-container.component';
+import { TermInstitutionsComponent } from '../term-institutions/term-institutions.component';
+
+
 
 /** File node data with possible child nodes. */
 export interface TermNode {
@@ -44,8 +51,28 @@ export class TermsComponent implements OnInit, OnDestroy{
 
   private termsTreeObserver: PartialObserver<Response<any>> = {
     next: (response: Response<any>) => {
-      this.dataSource.data = response.data.terms.terms
+      this.dataSource.data = response.data.terms.terms;
       this.loading = !this.loading;
+    },
+
+    error: (err: any) => {
+        console.log('The observable got an error notification: ' + err + '.');
+    },
+
+    complete: () => {
+      console.log('The observable got a complete notification.');
+    }
+  };
+
+  private termChangeSuscription: Subscription = null;
+  private termChangeObserver: PartialObserver<Response<any>> = {
+    next: (response: Response<any>) => {
+      this.loading = !this.loading;
+      this.service.getTermsTreeByVocab(this.vocab).subscribe(this.termsTreeObserver);
+      this.dialog.closeAll();
+      this._snackBar.open(response.message, null, {
+        duration: 2000,
+      });
     },
 
     error: (err: any) => {
@@ -60,9 +87,9 @@ export class TermsComponent implements OnInit, OnDestroy{
   private currentVocabSuscription: Subscription = null;
   private currentVocabObserver: PartialObserver<Vocabulary> = {
     next: (vocab: Vocabulary) => {
-      if( !this.vocab || this.vocab.name != vocab.name){
+      if ( !this.vocab || this.vocab.name !== vocab.name) {
         this.loading = !this.loading;
-        this.service.getTermsTreeByVocab(vocab.name).subscribe(this.termsTreeObserver);
+        this.service.getTermsTreeByVocab(vocab).subscribe(this.termsTreeObserver);
         this.vocab = vocab;
       }
     },
@@ -76,7 +103,9 @@ export class TermsComponent implements OnInit, OnDestroy{
     }
   };
 
-  constructor(private service: TaxonomyService) {
+  constructor(private service: TaxonomyService,
+              public dialog: MatDialog,
+              private _snackBar: MatSnackBar) {
     this.treeFlattener = new MatTreeFlattener(
       this.transformer,
       this.getLevel,
@@ -87,14 +116,18 @@ export class TermsComponent implements OnInit, OnDestroy{
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
     this.dataSource.data;
   }
-  
+
   ngOnInit(): void {
-    this.currentVocabSuscription = this.service.currentVocabObservable.subscribe(this.currentVocabObserver);
+    this.currentVocabSuscription = this.service.currentVocabularyObservable.subscribe(this.currentVocabObserver);
+    this.termChangeSuscription = this.service.termChangeObservable.subscribe(this.termChangeObserver);
   }
 
   ngOnDestroy(): void {
-    if (this.currentVocabSuscription){
+    if (this.currentVocabSuscription) {
       this.currentVocabSuscription.unsubscribe();
+    }
+    if (this.termChangeSuscription) {
+      this.termChangeSuscription.unsubscribe();
     }
   }
 
@@ -102,6 +135,7 @@ export class TermsComponent implements OnInit, OnDestroy{
   transformer(node: TermNode, level: number) {
     return {
       name: node.term.name,
+      term: node.term,
       level: level,
       expandable: (node.children.length > 0)
     };
@@ -125,5 +159,37 @@ export class TermsComponent implements OnInit, OnDestroy{
   /** Get the children for the node. */
   getChildren(node: TermNode) {
     return observableOf(node.children);
+  }
+  addTerm(node: TermNode){
+    const dialogRef = this.dialog.open(TermGenericComponent, {
+      data: { service: this.service }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+  editTerm(node: TermNode) {
+    switch (this.vocab.id) {
+      case VocabulariesInmutableNames.INTITUTION:
+        this.dialog.open(TermInstitutionsComponent, {
+          data: { term: node.term, service: this.service }
+        });
+        break;
+    
+      default:
+        const dialogRef = this.dialog.open(TermGenericComponent, {
+          data: { term: node.term, service: this.service }
+        });
+    }
+    
+
+  }
+
+  deleteTerm(node: TermNode) {
+    console.log(node);
+  }
+
+  addChild(node: TermNode) {
+    console.log(node);
   }
 }

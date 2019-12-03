@@ -7,6 +7,7 @@ import { FormContainerService } from './form-container.service';
 import { Response } from '@toco/entities/response';
 import { catchError } from 'rxjs/operators';
 import { FormSuscriberInterface } from '../forms.service';
+import { Entity } from '@toco/entities/entity';
 
 /**
  * Represents a form field type.
@@ -66,6 +67,10 @@ export interface Panel {
   formField: FormField[];
 }
 
+export interface FormContainerAction {
+  doit(data: any): void ;
+}
+
 /**
  * Represents a form container.
  * @description Creates a form to show the panels Array and sends that information to server.
@@ -77,16 +82,13 @@ export interface Panel {
 })
 export class FormContainerComponent implements OnInit, OnDestroy {
 
-  public constructor(private formContainerService: FormContainerService) { }
-  // TODO: in the future validate the token with a module or something
-  /** The autorization token. */
-  @Input() public token: string;
+  public constructor() { }
 
   @Input() public panels: Panel[] = [];
 
-  @Input() public endpoint: string;
+  @Input() public action: FormContainerAction;
 
-  @Input() public suscriber: FormSuscriberInterface;
+  @Input() public entity: Entity;
 
   public step = 0;
 
@@ -142,37 +144,22 @@ export class FormContainerComponent implements OnInit, OnDestroy {
    * Sends data to the server. Collects all added information from the component.
    */
   public addData(): void {
-    if (this.token) {
-      /* Preparing all data. */
-      const data = {};
+    /* Preparing all data. */
+    const data = {};
 
-      this.panels.forEach(panel => {
-        panel.formField.forEach( form => {
-          data[form.name] = form.value;
-          form.value = null;
-        });
+    this.panels.forEach(panel => {
+      panel.formField.forEach( form => {
+        data[form.name] = form.value;
       });
-      console.log(data);  /* Test only. */
+    });
 
-      this.suscriber.addData(data);
+    this.action.doit(data);
 
-      // this.sendDataUnsubscribe();
-      // this.sendDataSubscription = this.formContainerService
-      //   .sendPostData(this.endpoint, this.token, data).pipe(
-      //     catchError((err: HttpErrorResponse) => {
-      //       const message = (err.error instanceof ErrorEvent)
-      //         ? err.error.message
-      //         : `server returned code '${ err.status }' with body '${ err.error }'`;
-
-      //       /* Transforms error for user consumption. */
-      //       console.warn(`${ FormContainerService.name }: 'sendData' operation failed: ${ message }.`);  /* Logs to console instead. */
-
-      //       // TODO: Maybe you must set a better return.
-      //       return of(null);
-      //     })
-      //   )
-      //   .subscribe(this.sendDataObserver);
-    }
+    this.panels.forEach(panel => {
+      panel.formField.forEach( form => {
+        form.value = null;
+      });
+    });
   }
 
   private sendDataUnsubscribe(): void {

@@ -13,7 +13,7 @@ export class TaxonomyComponent implements OnInit, OnDestroy{
   vocabs = { title: 'Vocabularios', cols: 1, rows: 1 };
   terms = { title: 'Terminos de', cols: 1, rows: 2 };
 
-  current_vocab: Vocabulary = {name: '', description:''};
+  current_vocab = {name: '', description: ''};
 
   private currentVocabSuscription: Subscription = null;
   private currentVocabObserver: PartialObserver<Vocabulary> = {
@@ -33,7 +33,7 @@ export class TaxonomyComponent implements OnInit, OnDestroy{
   constructor(private service: TaxonomyService) {}
 
   ngOnInit(): void {
-    this.currentVocabSuscription = this.service.currentVocabObservable.subscribe(this.currentVocabObserver);
+    this.currentVocabSuscription = this.service.currentVocabularyObservable.subscribe(this.currentVocabObserver);
   }
 
   ngOnDestroy(): void {

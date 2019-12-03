@@ -1,33 +1,7 @@
 <div class="grid-container">
   <h1 class="mat-h1">Taxonomía</h1>
-
-  <mat-grid-list cols="2" rowHeight="350px">
-
-    <mat-grid-tile [colspan]="vocabs.cols" [rowspan]="vocabs.rows">
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-              {{vocabs.title}}
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="dashboard-card-content" [style.overflow]="'auto'">
-            <toco-vocabularies (emiterShowTerms)="showTerms($event)"></toco-vocabularies>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-
-    <mat-grid-tile [colspan]="terms.cols" [rowspan]="terms.rows">
-        <mat-card class="dashboard-card">
-          <mat-card-header>
-            <mat-card-title>
-                {{terms.title }} {{ current_vocab.name}}
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content class="dashboard-card-content" [style.overflow]="'auto'">
-              <toco-terms></toco-terms>
-          </mat-card-content>
-        </mat-card>
-    </mat-grid-tile>
-
-  </mat-grid-list>
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap=”32px” fxLayoutAlign="space-around none">
+    <toco-vocabularies fxFlex="38%"  (emiterShowTerms)="showTerms($event)"></toco-vocabularies>
+    <toco-terms fxFlex="58%" ></toco-terms>
+  </div>
 </div>

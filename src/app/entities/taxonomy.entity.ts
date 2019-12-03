@@ -5,10 +5,11 @@ export class Term extends Entity {
     uuid: string;
     name: string;
     description: string;
+    data: any;
     vocabulary: Vocabulary;
 }
 
-export class Vocabulary {
+export class Vocabulary extends Entity {
     name: string;
     description: string;
 }

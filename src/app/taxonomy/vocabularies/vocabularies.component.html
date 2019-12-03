@@ -1,30 +1,36 @@
 
-<!-- <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <div  fxLayout="row" fxLayoutAlign="space-between none">
+        Vocabularios
+        <button  mat-raised-button color="primary" (click)="addVocabularyDialog()"> Add </button>
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content [style.overflow]="'auto'" [style.height]="'25em'">
+    <mat-spinner *ngIf="loading; else elseTemplate"></mat-spinner>
+    <ng-template #elseTemplate>
+      <mat-list>
+          <mat-list-item *ngFor="let item of vocabularies">
+              <h4 mat-line>{{item.name}}</h4>
+              <p mat-line> {{item.description}} </p>
+              <button mat-icon-button (click)="editVocab(item)">
+                  <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button (click)="deleteVocab(item)">
+                  <mat-icon>delete</mat-icon>
+              </button>
+              <button mat-icon-button (click)="showTerms(item)">
+                <mat-icon>list</mat-icon>
+              </button>
+            </mat-list-item>
+        <!-- <button *ngFor="let item of vocabularies" mat-list-item (click)="showTerms(item.name)"> {{item.name}} </button> -->
+      </mat-list>
+    
+    </ng-template>
+  </mat-card-content>
+</mat-card>
 
- -->
-
-
-<mat-spinner *ngIf="loading; else elseTemplate"></mat-spinner>
-
-<ng-template #elseTemplate>
-  <button  mat-raised-button color="primary" (click)="addVocabularyDialog()"> Add </button>
-  <mat-list>
-      <mat-list-item *ngFor="let item of vocabularies">
-          <h4 mat-line>{{item.name}}</h4>
-          <p mat-line> {{item.description}} </p>
-          <button mat-icon-button (click)="editVocab(item)">
-              <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button (click)="deleteVocab(item)">
-              <mat-icon>delete</mat-icon>
-          </button>
-          <button mat-icon-button (click)="showTerms(item)">
-            <mat-icon>list</mat-icon>
-          </button>
-        </mat-list-item>
-    <!-- <button *ngFor="let item of vocabularies" mat-list-item (click)="showTerms(item.name)"> {{item.name}} </button> -->
-  </mat-list>
-
-</ng-template>
 
 
