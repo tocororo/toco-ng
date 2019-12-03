@@ -1,8 +1,8 @@
 
-<div [formGroup]="parts" class="example-tel-input-container">
-    <input class="example-tel-input-element" formControlName="area" size="3" aria-label="Area code" (input)="_handleInput()" />
-    <span class="example-tel-input-spacer">&ndash;</span>
-    <input class="example-tel-input-element" formControlName="exchange" size="3" aria-label="Exchange code" (input)="_handleInput()" />
-    <span class="example-tel-input-spacer">&ndash;</span>
-    <input class="example-tel-input-element" formControlName="subscriber" size="4" aria-label="Subscriber number" (input)="_handleInput()" />
-</div>
+<mat-form-field class="issn-mat-form-field">
+    <issn-form-field-internal placeholder="{{ placeholder }}" required="{{ required }}"></issn-form-field-internal>
+    <mat-icon class="issn-mat-icon" matSuffix>bar_chart</mat-icon>
+    <!-- <mat-icon matSuffix>bar_chart equalizer</mat-icon> -->
+    <mat-hint>The check digit is autocompleted.</mat-hint>
+    <mat-error *ngIf="errorState">{{ getErrorMessage() }}</mat-error>
+</mat-form-field>
