@@ -1,0 +1,94 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~@angular/material/theming';
+
+@import './styles/typography';
+@import './styles/app-theme';
+//@import './styles/general'
+
+$mat-my-red: (
+    50: #ffeaed,
+    100: #ffcbce,
+    200: #f49793,
+    300: #eb6d68,
+    400: #f44b41,
+    500: #f83821,
+    600: #ea2c22,
+    700: #d81f1d,
+    800: #cb1515,
+    900: #bd0004,
+    A100: #ff8a80,
+    A200: #ff5252,
+    A400: #ff1744,
+    A700: #d50000,
+    contrast: (
+      50: $black-87-opacity,
+      100: $black-87-opacity,
+      200: $black-87-opacity,
+      300: $black-87-opacity,
+      400: $black-87-opacity,
+      500: white,
+      600: white,
+      700: white,
+      800: $white-87-opacity,
+      900: $white-87-opacity,
+      A100: $black-87-opacity,
+      A200: white,
+      A400: white,
+      A700: white,
+    )
+  );
+
+  $mat-my-blue: (
+    50: #e6e8f5,
+    100: #c0c6e7,
+    200: #96a1d7,
+    300: #6c7dc7,
+    400: #4b61bc,
+    500: #2446b0,
+    600: #1e3ea6,
+    700: #10359b,
+    800: #002b8f,
+    900: #00197b,
+    A100: #8C9EFF,
+    A200: #536DFE,
+    A400: #3D5AFE,
+    A700: #304FFE,
+    contrast: (
+      50: $black-87-opacity,
+      100: $black-87-opacity,
+      200: $black-87-opacity,
+      300: $black-87-opacity,
+      400: $black-87-opacity,
+      500: white,
+      600: white,
+      700: white,
+      800: $white-87-opacity,
+      900: $white-87-opacity,
+      A100: $black-87-opacity,
+      A200: white,
+      A400: white,
+      A700: white,
+    )
+  );
+
+
+
+/* - colors - */
+$toco-primary: mat-palette($mat-my-blue, 800, 300, 900);
+$toco-accent: mat-palette($mat-my-red);
+$toco-warn: mat-palette($mat-deep-purple, 600);
+
+$toco-theme: mat-light-theme($toco-primary, $toco-accent, $toco-warn);
+
+
+@include angular-material-theme($toco-theme);
+@include toco-app-theme($toco-theme);
+
+html, body { height: 100%; }
+body { margin: 0; /*font-family: Roboto, "Helvetica Neue", sans-serif; */}
+
+/* this class is to quit padding in a dialog, must to be here, globally */
+.mat-dialog-container{
+  padding: 0 !important;
+}
