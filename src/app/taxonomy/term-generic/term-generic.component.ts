@@ -3,6 +3,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 import { FormContainerComponent, Panel, FormFieldType, FormContainerAction} from '@toco/forms/form-container/form-container.component';
+import { TaxonomyService } from '../taxonomy.service';
+import { Term } from '@toco/entities/taxonomy.entity';
 
 
 export class TermActionNew implements FormContainerAction {
