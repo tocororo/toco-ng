@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PageHeaderComponent } from './page-header/page-header.component';
@@ -13,12 +14,14 @@ import { BodyComponent } from './body/body.component';
 @NgModule({
   imports: [
     CommonModule,
+    BrowserAnimationsModule,
     RouterModule,
     FormsModule,
     MaterialModule,
     FlexLayoutModule
   ],
   exports: [
+    BrowserAnimationsModule,
     FormsModule,
     MaterialModule,
     FlexLayoutModule,

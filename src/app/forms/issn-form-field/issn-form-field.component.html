@@ -1,0 +1,8 @@
+
+<mat-form-field class="issn-mat-form-field">
+    <issn-form-field-internal placeholder="{{ placeholder }}" required="{{ required }}"></issn-form-field-internal>
+    <mat-icon class="issn-mat-icon" matSuffix>bar_chart</mat-icon>
+    <!-- <mat-icon matSuffix>bar_chart equalizer</mat-icon> -->
+    <mat-hint>The check digit is autocompleted.</mat-hint>
+    <mat-error *ngIf="errorState">{{ getErrorMessage() }}</mat-error>
+</mat-form-field>

@@ -1,4 +1,6 @@
-import { Component, OnInit,  Input } from '@angular/core';
+
+import { Component, OnInit, Input } from '@angular/core';
+
 import { FormFieldType, FormField } from '@toco/forms/form-container/form-container.component';
 
 /**
@@ -10,8 +12,8 @@ import { FormFieldType, FormField } from '@toco/forms/form-container/form-contai
 	templateUrl: './form-fields.component.html',
 	styleUrls: ['./form-fields.component.scss']
 })
-export class FormFieldsComponent implements OnInit {
-
+export class FormFieldsComponent implements OnInit
+{
 	@Input() public fields: Array<FormField>;
 	
 	public readonly formFieldType: typeof FormFieldType = FormFieldType;
