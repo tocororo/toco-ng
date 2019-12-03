@@ -3,27 +3,27 @@
  fxLayoutGap="1em">
 	<ng-container *ngFor="let field of fields" [ngSwitch]="field.type">
 
-		<mat-form-field *ngSwitchCase="formFieldType.textarea">
+		<mat-form-field *ngSwitchCase="formFieldType.textarea" [style.width]="field.width">
 			<textarea matInput [(ngModel)]="field.value" placeholder="{{field.placeholder}}" name="{{field.name}}" required="{{ field.required }}"></textarea>
 		</mat-form-field>
 
-		<mat-form-field *ngSwitchCase="formFieldType.datepicker">
+		<mat-form-field *ngSwitchCase="formFieldType.datepicker" [style.width]="field.width">
 			<input matInput [(ngModel)]="field.value" [matDatepicker]="picker" placeholder="{{field.placeholder}}" name="{{field.name}}" required="{{ field.required }}">
 			<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 			<mat-datepicker #picker></mat-datepicker>
 		</mat-form-field>
 
-		<mat-checkbox *ngSwitchCase="formFieldType.checkbox" [(ngModel)]="field.value" name="{{field.name}}" required="{{ field.required }}"> {{ field.placeholder }} </mat-checkbox>
+		<mat-checkbox *ngSwitchCase="formFieldType.checkbox" [(ngModel)]="field.value" name="{{field.name}}" required="{{ field.required }}" [style.width]="field.width"> {{ field.placeholder }} </mat-checkbox>
 
-		<mat-form-field *ngSwitchCase="formFieldType.url">
+		<mat-form-field *ngSwitchCase="formFieldType.url" [style.width]="field.width">
 			<input matInput type="url" [(ngModel)]="field.value" placeholder="{{field.placeholder}}" name="{{field.name}}" required="{{ field.required }}">
 		</mat-form-field>
 
-		<mat-form-field *ngSwitchCase="formFieldType.email">
+		<mat-form-field *ngSwitchCase="formFieldType.email" [style.width]="field.width">
 			<input matInput type="email" [(ngModel)]="field.value" placeholder="{{field.placeholder}}" name="{{field.name}}" required="{{ field.required }}">
 		</mat-form-field>		
 
-		<mat-form-field *ngSwitchDefault>
+		<mat-form-field *ngSwitchDefault [style.width]="field.width">
 			<input matInput [(ngModel)]="field.value" placeholder="{{field.placeholder}}" name="{{field.name}}" required="{{ field.required }}">
 		</mat-form-field>
 

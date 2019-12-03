@@ -1,20 +1,15 @@
 import { Component, OnInit, Inject } from '@angular/core';
-
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { FormContainerComponent, Panel, FormFieldType, FormContainerAction} from '@toco/forms/form-container/form-container.component';
 import { TaxonomyService } from '../taxonomy.service';
 import { Term } from '@toco/entities/taxonomy.entity';
-
 
 export class TermActionNew implements FormContainerAction {
   doit(data: any): void {
     console.log(this);
     this.service.newTerm(data);
   }
-  constructor(private service: TaxonomyService) {
-
-  }
+  constructor(private service: TaxonomyService) {}
 }
 
 export class TermActionEdit implements FormContainerAction {
@@ -22,9 +17,7 @@ export class TermActionEdit implements FormContainerAction {
     console.log(this);
     this.service.editTerm(data, this.term);
   }
-  constructor(private service: TaxonomyService, private term: Term) {
-
-  }
+  constructor(private service: TaxonomyService, private term: Term) {}
 }
 
 @Component({
@@ -44,6 +37,7 @@ export class TermGenericComponent implements OnInit {
     ]
   }];
   public action: FormContainerAction;
+  
   constructor(
     public dialogRef: MatDialogRef<FormContainerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {

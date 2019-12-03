@@ -50,6 +50,8 @@ export interface FormField {
 
   /** A form field value. */
   value?: string;
+
+  width?: string;
 }
 
 /**

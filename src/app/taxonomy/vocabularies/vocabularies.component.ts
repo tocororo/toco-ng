@@ -9,6 +9,7 @@ import { FormContainerComponent, Panel, FormFieldType, FormContainerAction} from
 import { EventEmitter } from '@angular/core';
 import { Response } from '@toco/entities/response';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MessageHandler, StatusCode } from '@toco/core/utils/message-handler';
 
 
 class ActionNew implements FormContainerAction {
@@ -43,9 +44,8 @@ export class VocabulariesComponent implements OnInit {
     next: (result: Response<any>) => {
       this.dialog.closeAll();
       this.loadVocabularies();
-      this._snackBar.open(result.message, null, {
-        duration: 2000,
-      });
+      const m  = new MessageHandler(this._snackBar);
+      m.showMessage(StatusCode.OK, result.message)
     },
 
     error: (err: any) => {
@@ -65,8 +65,8 @@ export class VocabulariesComponent implements OnInit {
     description: '',
     iconName: '',
     formField : [
-        {name: 'name', placeholder: 'Nombre', type: FormFieldType.input, required: true },
-        {name: 'description', placeholder: 'Descripción', type: FormFieldType.textarea, required: false },
+        {name: 'name', placeholder: 'Nombre', type: FormFieldType.input, required: true, width: '100%' },
+        {name: 'description', placeholder: 'Descripción', type: FormFieldType.textarea, required: false, width: '100%' },
     ]
   }];
   loading = false;
@@ -92,20 +92,14 @@ export class VocabulariesComponent implements OnInit {
     this.loading = true;
     this.service.getVocabularies().pipe(
       catchError((err: HttpErrorResponse) => {
-        const message = (err.error instanceof ErrorEvent)
-          ? err.error.message
-          : `server returned code '${ err.status }' with body '${ err.error }'`;
-
-        /* Transforms error for user consumption. */
-        console.warn(`${ TaxonomyService.name }: 'sendData' operation failed: ${ message }.`);  /* Logs to console instead. */
-
+        const m  = new MessageHandler(this._snackBar);
+        m.showMessage(StatusCode.serverError)
         // TODO: Maybe you must set a better return.
         return of(null);
       }),
       finalize(() => this.loading = false)
     )
     .subscribe(response => {
-      console.log(response);
       if (response) {
         this.vocabularies = response.data.vocabularies;
       }

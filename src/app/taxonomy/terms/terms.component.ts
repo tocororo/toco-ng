@@ -8,9 +8,8 @@ import { Response } from '@toco/entities/response';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TermGenericComponent } from '../term-generic/term-generic.component';
-import { FormContainerAction } from '@toco/forms/form-container/form-container.component';
 import { TermInstitutionsComponent } from '../term-institutions/term-institutions.component';
-
+import { MessageHandler, StatusCode } from '@toco/core/utils/message-handler';
 
 
 /** File node data with possible child nodes. */
@@ -20,7 +19,7 @@ export interface TermNode {
 }
 
 /**
- * Flattened tree node that has been created from a FileNode through the flattener. Flattened
+ * Flattened tree node that has been created from a TermNode through the flattener. Flattened
  * nodes include level index and whether they can be expanded or not.
  */
 export interface FlatTreeNode {
@@ -70,9 +69,8 @@ export class TermsComponent implements OnInit, OnDestroy{
       this.loading = !this.loading;
       this.service.getTermsTreeByVocab(this.vocab).subscribe(this.termsTreeObserver);
       this.dialog.closeAll();
-      this._snackBar.open(response.message, null, {
-        duration: 2000,
-      });
+      const m  = new MessageHandler(this._snackBar);
+      m.showMessage(StatusCode.OK, response.message)
     },
 
     error: (err: any) => {
@@ -160,7 +158,7 @@ export class TermsComponent implements OnInit, OnDestroy{
   getChildren(node: TermNode) {
     return observableOf(node.children);
   }
-  addTerm(node: TermNode){
+  addTerm(){
     const dialogRef = this.dialog.open(TermGenericComponent, {
       data: { service: this.service }
     });
