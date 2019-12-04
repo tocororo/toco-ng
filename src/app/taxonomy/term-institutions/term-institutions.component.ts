@@ -63,7 +63,7 @@ export class TermInstitutionsComponent implements OnInit {
     {name: 'website', placeholder: 'Sitio Web Oficial', type: FormFieldType.textarea, required: false },
     {name: 'role', placeholder: 'Rol (Select, patrocinador, co-patrocinador...)', type: FormFieldType.textarea, required: false },
   ];
-  
+
   public action: FormContainerAction;
   constructor(
     public dialogRef: MatDialogRef<FormContainerComponent>,
@@ -80,7 +80,7 @@ export class TermInstitutionsComponent implements OnInit {
           {name: 'role', placeholder: 'Rol (Select, patrocinador, co-patrocinador...)', type: FormFieldType.textarea, required: false, value: (data.term.data.role)? data.term.data.role: null },
         ];
         this.panels[0].formField = this.formFields;
-        
+
         if (data.term) {
           this.action = new InstitutionActionEdit(data.service, data.term);
         } else {

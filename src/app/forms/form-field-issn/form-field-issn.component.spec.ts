@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IssnFormFieldComponent } from './issn-form-field.component';
+import { FormFieldIssnComponent } from './form-field-issn.component';
 
-describe('IssnFormFieldComponent', () => {
-  let component: IssnFormFieldComponent;
-  let fixture: ComponentFixture<IssnFormFieldComponent>;
+describe('FormFieldIssnComponent', () => {
+  let component: FormFieldIssnComponent;
+  let fixture: ComponentFixture<FormFieldIssnComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IssnFormFieldComponent ]
+      declarations: [ FormFieldIssnComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IssnFormFieldComponent);
+    fixture = TestBed.createComponent(FormFieldIssnComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -172,16 +172,16 @@ export class TermsComponent implements OnInit, OnDestroy{
     switch (this.vocab.id) {
       case VocabulariesInmutableNames.INTITUTION:
         this.dialog.open(TermInstitutionsComponent, {
-          data: { term: node.term, service: this.service }
+          data: { term: node.term, service: this.service, terms: this.dataSource.data }
         });
         break;
-    
+
       default:
         const dialogRef = this.dialog.open(TermGenericComponent, {
-          data: { term: node.term, service: this.service }
+          data: { term: node.term, service: this.service, terms: this.dataSource.data }
         });
     }
-    
+
 
   }
 

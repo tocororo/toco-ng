@@ -30,6 +30,10 @@ export enum FormFieldType {
 
   /** An email control. */
   email= 'email',
+
+  issn= 'issn',
+
+  vocabulary= 'vocabulary'
 }
 
 /**
@@ -50,6 +54,9 @@ export interface FormField {
 
   /** A form field value. */
   value?: string;
+
+  /** For any other input needed by an specific FormField */
+  input?: any;
 }
 
 /**
