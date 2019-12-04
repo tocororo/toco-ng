@@ -109,7 +109,7 @@ export class VocabulariesComponent implements OnInit {
     this.service.getVocabularies().pipe(
       catchError((err: HttpErrorResponse) => {
         const m  = new MessageHandler(this._snackBar);
-        m.showMessage(StatusCode.serverError)
+        m.showMessage(StatusCode.serverError);
         // TODO: Maybe you must set a better return.
         return of(null);
       }),

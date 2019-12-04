@@ -7,6 +7,7 @@ export class Term extends Entity {
     description: string;
     data: any;
     vocabulary: Vocabulary;
+    parent_id: number;
 }
 
 export class Vocabulary extends Entity {
