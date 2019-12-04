@@ -57,6 +57,7 @@ export interface FormField {
 
   /** For any other input needed by an specific FormField */
   input?: any;
+  width?: string;
 }
 
 /**

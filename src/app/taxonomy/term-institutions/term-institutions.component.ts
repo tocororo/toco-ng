@@ -56,7 +56,7 @@ export class TermInstitutionsComponent implements OnInit {
   }];
   formFields: FormField[] = [
     {name: 'name', placeholder: 'Nombre', type: FormFieldType.input, required: true },
-    {name: 'description', placeholder: 'Descripción', type: FormFieldType.textarea, required: false },
+    {name: 'description', placeholder: 'Descripción', type: FormFieldType.textarea, required: false , width:'100%' },
     {name: 'identifiers', placeholder: 'Identificadores', type: FormFieldType.textarea, required: false },
     {name: 'email', placeholder: 'Email', type: FormFieldType.textarea, required: false },
     {name: 'address', placeholder: 'Dirección', type: FormFieldType.textarea, required: false },

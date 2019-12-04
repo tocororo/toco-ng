@@ -56,7 +56,7 @@ export class TaxonomyService {
     },
 
     error: (err: any) => {
-        console.log('The observable got an error notification: ' + err + '.');
+        console.log('The observable got an error notification: ' + err.message + '.');
     },
 
     complete: () => {
