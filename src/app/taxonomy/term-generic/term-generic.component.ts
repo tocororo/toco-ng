@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { FormContainerComponent, Panel, FormFieldType, FormContainerAction} from '@toco/forms/form-container/form-container.component';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormContainerComponent, Panel, FormFieldType, FormContainerAction } from '@toco/forms/form-container/form-container.component';
 import { TaxonomyService } from '../taxonomy.service';
 import { Term } from '@toco/entities/taxonomy.entity';
 
@@ -9,7 +9,7 @@ export class TermActionNew implements FormContainerAction {
     console.log(this);
     this.service.newTerm(data);
   }
-  constructor(private service: TaxonomyService) {}
+  constructor(private service: TaxonomyService) { }
 }
 
 export class TermActionEdit implements FormContainerAction {
@@ -17,7 +17,7 @@ export class TermActionEdit implements FormContainerAction {
     console.log(this);
     this.service.editTerm(data, this.term);
   }
-  constructor(private service: TaxonomyService, private term: Term) {}
+  constructor(private service: TaxonomyService, private term: Term) { }
 }
 
 @Component({
@@ -29,9 +29,9 @@ export class TermGenericComponent implements OnInit {
 
   public panels: Panel[];
   public action: FormContainerAction;
+  public actionLabel: string = 'Adicionar';
 
   constructor(
-    public dialogRef: MatDialogRef<FormContainerComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any) {
   }
 
@@ -42,16 +42,34 @@ export class TermGenericComponent implements OnInit {
         description: '',
         iconName: '',
         formField: [
-          { name: 'name', placeholder: 'Nombre', type: FormFieldType.input, required: true },
-          { name: 'description', placeholder: 'Descripción', type: FormFieldType.textarea, required: false },
           {
-            name: 'parent', placeholder: 'Término Padre', type: FormFieldType.vocabulary, required: false,
-            input: { multiple: false, terms: this.data.terms }
+            name: 'name',
+            placeholder: 'Nombre',
+            type: FormFieldType.input,
+            required: true,
+            width: '100%'
+          },
+          {
+            name: 'description',
+            placeholder: 'Descripción',
+            type: FormFieldType.textarea,
+            required: false,
+            width: '100%'
+          },
+          {
+            name: 'parent',
+            placeholder: 'Término Padre',
+            type: FormFieldType.vocabulary,
+            required: false,
+            input: { multiple: false, terms: this.data.terms },
+            width: '50%'
           },
         ],
       }];
 
+      // if a term is comming, then we are updating it
       if (this.data.term) {
+        this.actionLabel = 'Actualizar';
         this.panels[0].title = 'Editar Término';
         this.panels[0].formField[0].value = this.data.term.name;
         this.panels[0].formField[1].value = this.data.term.description;

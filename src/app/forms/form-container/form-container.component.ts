@@ -98,6 +98,8 @@ export class FormContainerComponent implements OnInit, OnDestroy {
 
   @Input() public entity: Entity;
 
+  @Input() public addActionLabel = 'Adicionar';
+
   public step = 0;
 
   // tslint:disable-next-line: member-ordering

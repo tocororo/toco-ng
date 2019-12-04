@@ -24,13 +24,9 @@
       <input matInput type="email" [(ngModel)]="field.value" placeholder="{{field.placeholder}}" name="{{field.name}}" required="{{ field.required }}">
     </mat-form-field>
 
-    <mat-form-field *ngSwitchDefault [style.width]="field.width">
-      <input matInput [(ngModel)]="field.value" placeholder="{{field.placeholder}}" name="{{field.name}}" required="{{ field.required }}">
-    </mat-form-field>
-
     <toco-form-field-vocabulary  *ngSwitchCase="formFieldType.vocabulary" [formField]='field' [style.width]="field.width"></toco-form-field-vocabulary>
 
-    <mat-form-field *ngSwitchDefault>
+    <mat-form-field *ngSwitchDefault [style.width]="field.width">
       <input matInput [(ngModel)]="field.value" placeholder="{{field.placeholder}}" name="{{field.name}}" required="{{ field.required }}">
     </mat-form-field>
 
