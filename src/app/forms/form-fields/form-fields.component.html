@@ -26,6 +26,8 @@
 
     <toco-form-field-vocabulary  *ngSwitchCase="formFieldType.vocabulary" [formField]='field' [style.width]="field.width"></toco-form-field-vocabulary>
 
+    <toco-form-field-term-parent  *ngSwitchCase="formFieldType.term_parent" [formField]='field' [style.width]="field.width"></toco-form-field-term-parent>
+
     <mat-form-field *ngSwitchDefault [style.width]="field.width">
       <input matInput [(ngModel)]="field.value" placeholder="{{field.placeholder}}" name="{{field.name}}" required="{{ field.required }}">
     </mat-form-field>

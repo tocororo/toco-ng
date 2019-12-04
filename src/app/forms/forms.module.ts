@@ -8,6 +8,7 @@ import { FormFieldVocabularyComponent } from './form-field-vocabulary/form-field
 import { FormFieldIssnComponent } from './form-field-issn/form-field-issn.component';
 import { IssnFormFieldInternalComponent } from './form-field-issn/issn-form-field-internal/issn-form-field-internal.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormFieldTermParentComponent } from './form-field-term-parent/form-field-term-parent.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -17,7 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     FormFieldsComponent,
     FormContainerComponent,
-    FormFieldVocabularyComponent
+    FormFieldVocabularyComponent,
+    FormFieldTermParentComponent
   ],
   exports: [
     FormFieldsComponent,

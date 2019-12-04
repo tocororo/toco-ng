@@ -57,11 +57,11 @@ export class TermGenericComponent implements OnInit {
             width: '100%'
           },
           {
-            name: 'parent',
+            name: 'parent_id',
             placeholder: 'Término Padre',
-            type: FormFieldType.vocabulary,
+            type: FormFieldType.term_parent,
             required: false,
-            input: { multiple: false, terms: this.data.terms },
+            input: { terms: this.data.terms },
             width: '50%'
           },
         ],
