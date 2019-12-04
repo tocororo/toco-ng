@@ -3,8 +3,7 @@
     <mat-card-title>
       <div fxLayout="row" fxLayoutAlign="space-between none">
         Términos<ng-container *ngIf="vocab"> de {{ vocab.name}} </ng-container>
-        <button mat-raised-button color="primary" *ngIf="vocab" (click)="addTerm()"> Add
-        </button>
+        <button mat-raised-button color="primary" *ngIf="vocab" (click)="addTerm()">Adicionar</button>
       </div>
     </mat-card-title>
   </mat-card-header>
@@ -17,10 +16,10 @@
           fxLayoutAlign="space-between center">
           {{ node.name }}
           <div>
-            <button mat-icon-button (click)="editTerm(node)">
+            <button mat-icon-button (click)="editTerm(node)" matTooltip="Editar">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button (click)="deleteTerm(node)">
+            <button mat-icon-button (click)="deleteTerm(node)" matTooltip="Eliminar">
               <mat-icon>delete</mat-icon>
             </button>
           </div>
@@ -36,10 +35,10 @@
           <div class="item-width" fxLayout="row" fxLayoutAlign="space-between center">
             {{ node.name }}
             <div>
-              <button mat-icon-button (click)="editTerm(node)">
+              <button mat-icon-button (click)="editTerm(node)" matTooltip="Editar">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-icon-button (click)="deleteTerm(node)">
+              <button mat-icon-button (click)="deleteTerm(node)" matTooltip="Eliminar">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>

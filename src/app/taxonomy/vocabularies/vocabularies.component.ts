@@ -2,14 +2,15 @@ import { Component, OnInit, Inject, Output } from '@angular/core';
 import { TaxonomyService } from '../taxonomy.service';
 import { Vocabulary, Term } from '@toco/entities/taxonomy.entity';
 import { HttpErrorResponse } from '@angular/common/http';
-import { catchError, finalize } from 'rxjs/operators';
-import { of, Subscription, PartialObserver } from 'rxjs';
+import { catchError, finalize, startWith, map } from 'rxjs/operators';
+import { of, Subscription, PartialObserver, Observable } from 'rxjs';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { FormContainerComponent, Panel, FormFieldType, FormContainerAction} from '@toco/forms/form-container/form-container.component';
 import { EventEmitter } from '@angular/core';
 import { Response } from '@toco/entities/response';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageHandler, StatusCode } from '@toco/core/utils/message-handler';
+import { FormControl } from '@angular/forms';
 
 
 class ActionNew implements FormContainerAction {
@@ -57,7 +58,9 @@ export class VocabulariesComponent implements OnInit {
     }
   };
 
-
+  vocabCtrl = new FormControl();
+  filteredVocabularies: Observable<Vocabulary[]>;
+  currentVocab: Vocabulary = null
   // tslint:disable-next-line: max-line-length
   vocabularies: Vocabulary[];
   public panels: Panel[] = [{
@@ -75,7 +78,15 @@ export class VocabulariesComponent implements OnInit {
 
   constructor(private service: TaxonomyService,
               public dialog: MatDialog,
-              private _snackBar: MatSnackBar) { }
+              private _snackBar: MatSnackBar) {
+    this.filteredVocabularies = this.vocabCtrl.valueChanges
+      .pipe<string,Vocabulary[]>(
+        startWith(''),
+        map(value => {
+          return this.vocabularies.filter(vocab => vocab.name.toLowerCase().includes(value.toLowerCase()));
+          })
+      );
+  }
 
   ngOnInit() {
     this.loadVocabularies();
@@ -86,6 +97,11 @@ export class VocabulariesComponent implements OnInit {
     if (this.vocabulariesChangeSuscription) {
       this.vocabulariesChangeSuscription.unsubscribe();
     }
+  }
+
+  selectVocab(item: Vocabulary){
+    this.currentVocab = item;
+    this.showTerms(item);
   }
 
   loadVocabularies() {
