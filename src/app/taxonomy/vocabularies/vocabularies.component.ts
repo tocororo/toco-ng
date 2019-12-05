@@ -118,11 +118,13 @@ export class VocabulariesComponent implements OnInit {
     .subscribe(response => {
       if (response) {
         this.vocabularies = response.data.vocabularies;
+      } else {
+        this.vocabularies = [];
       }
     });
   }
 
-  editVocab( vocab: Vocabulary ) {
+  editVocab( vocab: any ) {
     this.panels[0].formField[0].value = vocab.name;
     this.panels[0].formField[1].value = vocab.description;
     const dialogRef = this.dialog.open(VocabularyDialogComponent, {
