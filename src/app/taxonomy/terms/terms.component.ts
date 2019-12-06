@@ -159,28 +159,25 @@ export class TermsComponent implements OnInit, OnDestroy{
     return observableOf(node.children);
   }
   addTerm(){
-    const dialogRef = this.dialog.open(TermGenericComponent, {
-      data: { service: this.service }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    this.openTermDialog(null);
   }
   editTerm(node: TermNode) {
+    this.openTermDialog(node.term);
+  }
+
+  private openTermDialog(term: Term) {
     switch (this.vocab.id) {
       case VocabulariesInmutableNames.INTITUTION:
         this.dialog.open(TermInstitutionsComponent, {
-          data: { term: node.term, service: this.service, terms: this.dataSource.data }
+          data: { term: term, service: this.service, terms: this.dataSource.data, vocab: this.vocab }
         });
         break;
 
       default:
         const dialogRef = this.dialog.open(TermGenericComponent, {
-          data: { term: node.term, service: this.service, terms: this.dataSource.data }
+          data: { term: term, service: this.service, terms: this.dataSource.data, vocab: this.vocab }
         });
     }
-
-
   }
 
   deleteTerm(node: TermNode) {

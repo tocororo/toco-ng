@@ -3,7 +3,9 @@
     <mat-card-title>
       <div fxLayout="row" fxLayoutAlign="space-between none">
         Términos<ng-container *ngIf="vocab"> de {{ vocab.name}} </ng-container>
-        <button mat-raised-button color="primary" *ngIf="vocab" (click)="addTerm()">Adicionar</button>
+        <button mat-icon-button (click)="addTerm()" matTooltip="Adicionar Término">
+          <mat-icon>library_add</mat-icon>
+        </button>
       </div>
     </mat-card-title>
   </mat-card-header>

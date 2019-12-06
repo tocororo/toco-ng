@@ -2,14 +2,15 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormContainerComponent, Panel, FormFieldType, FormContainerAction } from '@toco/forms/form-container/form-container.component';
 import { TaxonomyService } from '../taxonomy.service';
-import { Term } from '@toco/entities/taxonomy.entity';
+import { Term, Vocabulary } from '@toco/entities/taxonomy.entity';
 
 export class TermActionNew implements FormContainerAction {
   doit(data: any): void {
     console.log(this);
+    data['vocabulary_id'] = this.vocab.id;
     this.service.newTerm(data);
   }
-  constructor(private service: TaxonomyService) { }
+  constructor(private service: TaxonomyService, private vocab: Vocabulary) { }
 }
 
 export class TermActionEdit implements FormContainerAction {
@@ -36,7 +37,7 @@ export class TermGenericComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.data.service && this.data.terms) {
+    if (this.data.service && this.data.terms && this.data.vocab) {
       this.panels = [{
         title: 'Nuevo Término',
         description: '',
@@ -76,8 +77,9 @@ export class TermGenericComponent implements OnInit {
         this.panels[0].formField[2].input.currentTerm = this.data.term;
         this.action = new TermActionEdit(this.data.service, this.data.term);
       } else {
-        this.action = new TermActionNew(this.data.service);
+        this.action = new TermActionNew(this.data.service, this.data.vocab);
       }
+      console.log(this.panels);
     }
   }
 

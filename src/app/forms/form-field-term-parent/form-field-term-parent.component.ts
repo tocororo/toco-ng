@@ -19,9 +19,8 @@ export class FormFieldTermParentComponent implements OnInit {
   inputId: string;
   filteredOptions: Observable<Term[]>;
   selectOptions: Term[] = [];
-  currentTerm: Term;
+  currentTerm: Term = null;
   parentTerm: Term = null;
-  value = null;
   constructor() { }
 
   ngOnInit() {
@@ -52,11 +51,15 @@ export class FormFieldTermParentComponent implements OnInit {
 
   private _get_terms(node: TermNode): Term[] {
     let result: Term[] = [];
-    if (!this.currentTerm || (this.currentTerm && this.currentTerm.id !== node.term.id)) {
-      if (this.currentTerm.parent_id && this.currentTerm.parent_id === node.term.id) {
-        this.parentTerm = node.term;
-      } else {
-        result.push(node.term);
+    if (!this.currentTerm) {
+      result.push(node.term);
+    } else{
+      if ( this.currentTerm.id !== node.term.id) {
+        if (this.currentTerm.parent_id && this.currentTerm.parent_id === node.term.id) {
+          this.parentTerm = node.term;
+        } else {
+          result.push(node.term);
+        }
       }
     }
 
@@ -77,7 +80,7 @@ export class FormFieldTermParentComponent implements OnInit {
     document.getElementById(this.inputId).blur();
 
     this.formField.value = this.parentTerm.id;
-    this.currentTerm.parent_id = this.parentTerm.id;
+    (this.currentTerm)? this.currentTerm.parent_id = this.parentTerm.id : this.parentTerm.id;
 
   }
 
