@@ -10,7 +10,9 @@ import { Vocabulary, Term } from '@toco/entities/taxonomy.entity';
 // TODO: Esto esta bastante feo... hay que agregarle a vocabulario un nombre inmutable y referirse a este por aqui, no por los ids
 export enum VocabulariesInmutableNames{
   INTITUTION = 1,
-  DATABASES = 4
+  DATABASES = 4, 
+  DB_GROUPS = 5,
+  PROVINCES = 3
 }
 
 @Injectable()
@@ -73,6 +75,11 @@ export class TaxonomyService {
 
   termChange(resp: Response<any>) {
     this.termChangeSource.next(resp);
+  }
+
+  getVocabulary(id):Observable<Response<any>>{
+    let req = this.env.sceibaApi + '/vocabulary' + id;
+    return this.http.get<Response<any>>(req);
   }
 
   newVocabulary(data: any): void {

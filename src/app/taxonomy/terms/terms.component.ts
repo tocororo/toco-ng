@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { of as observableOf, PartialObserver, Subscription } from 'rxjs';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Vocabulary, Term } from '@toco/entities/taxonomy.entity';
+import { Vocabulary, Term, TermNode } from '@toco/entities/taxonomy.entity';
 import { TaxonomyService, VocabulariesInmutableNames } from '../taxonomy.service';
 import { Response } from '@toco/entities/response';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,11 +12,6 @@ import { TermInstitutionsComponent } from '../term-institutions/term-institution
 import { MessageHandler, StatusCode } from '@toco/core/utils/message-handler';
 
 
-/** File node data with possible child nodes. */
-export interface TermNode {
-  term: Term;
-  children?: TermNode[];
-}
 
 /**
  * Flattened tree node that has been created from a TermNode through the flattener. Flattened

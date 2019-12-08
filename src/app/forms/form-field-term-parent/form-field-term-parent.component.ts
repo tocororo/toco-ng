@@ -3,8 +3,7 @@ import { FormField } from '../form-container/form-container.component';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { TermNode } from '@toco/taxonomy/terms/terms.component';
-import { Term } from '@toco/entities/taxonomy.entity';
+import { Term, TermNode } from '@toco/entities/taxonomy.entity';
 
 @Component({
   selector: 'toco-form-field-term-parent',
