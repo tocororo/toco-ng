@@ -1,21 +1,31 @@
+
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
-import {Observable, Observer, from} from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
 import { Journal } from '../entities/journal.entity';
 import { EnvService } from '@tocoenv/env.service';
 import { FormSuscriberInterface } from '@toco/forms/forms.service';
+
 @Injectable()
-export class JournalService implements FormSuscriberInterface{
-  
-  addData(data: any): void {
-    throw new Error("Method not implemented.");
-  }
+export class JournalService implements FormSuscriberInterface
+{
+    public constructor(private env: EnvService, private http: HttpClient)
+    { }
 
+    public getJournalsById(id: string):Observable<Journal>
+    {
+        let req = this.env.sceibaApi + '/sources/' + id;
 
-  constructor(private env: EnvService, private http: HttpClient) { }
+        return this.http.get<Journal>(req);
+    }
 
-  getJournalsById(id: string):Observable<Journal>{
-    let req = this.env.sceibaApi + '/sources/' + id;
-    return this.http.get<Journal>(req);
-  }
+    public addData(data: any): void
+    {
+        throw new Error("'addData' method not implemented.");
+    }
+
+    public newEntity(data: any): void
+    {
+        throw new Error("'newEntity' method not implemented.");
+    }
 }

@@ -1,12 +1,8 @@
 
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { PartialObserver, Subscription, of } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { PartialObserver, Subscription } from 'rxjs';
 
-import { FormContainerService } from './form-container.service';
 import { Response } from '@toco/entities/response';
-import { catchError } from 'rxjs/operators';
-import { FormSuscriberInterface } from '../forms.service';
 import { Entity } from '@toco/entities/entity';
 
 /**
@@ -31,10 +27,16 @@ export enum FormFieldType {
   /** An email control. */
   email= 'email',
 
+  /** An issn control. */
   issn= 'issn',
+  
+  /** An rnps control. */
+  rnps= 'rnps',
 
+  /** An vocabulary control. */
   vocabulary= 'vocabulary',
 
+  /** An term parent control. */
   term_parent= 'term_parent',
 }
 
