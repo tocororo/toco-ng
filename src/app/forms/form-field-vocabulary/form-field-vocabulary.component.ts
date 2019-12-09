@@ -19,6 +19,8 @@ export class FormFieldVocabularyComponent implements OnInit {
 
   @Input() public formField: FormField;
 
+  // en this.formField.value va un arreglo con los ids seleccionados. 
+
   formControl = new FormControl();
   inputId: string;
   filteredOptions: Observable<Term[]>;
@@ -85,7 +87,7 @@ export class FormFieldVocabularyComponent implements OnInit {
 
   private _get_terms(node: TermNode): Term[] {
     let result: Term[] = [];
-    if ( !this.formField.value.some(id => id === node.term.id)){
+    if ( (this.formField.value as []).some(id => id === node.term.id)){
       this.chipsList.push(node.term);
     }else{
       result.push(node.term);
