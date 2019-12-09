@@ -30,6 +30,12 @@ export enum FormFieldType {
 
   /** An email control. */
   email= 'email',
+
+  issn= 'issn',
+
+  vocabulary= 'vocabulary',
+
+  term_parent= 'term_parent',
 }
 
 /**
@@ -49,7 +55,11 @@ export interface FormField {
   required: boolean;
 
   /** A form field value. */
-  value?: string;
+  value?: any;
+
+  /** For any other input needed by an specific FormField */
+  input?: any;
+  width?: string;
 }
 
 /**
@@ -89,6 +99,8 @@ export class FormContainerComponent implements OnInit, OnDestroy {
   @Input() public action: FormContainerAction;
 
   @Input() public entity: Entity;
+
+  @Input() public addActionLabel = 'Adicionar';
 
   public step = 0;
 
@@ -142,6 +154,7 @@ export class FormContainerComponent implements OnInit, OnDestroy {
 
   /**
    * Sends data to the server. Collects all added information from the component.
+   * Create a json object based on form.name fields and form.value
    */
   public addData(): void {
     /* Preparing all data. */

@@ -56,14 +56,14 @@ export class TermInstitutionsComponent implements OnInit {
   }];
   formFields: FormField[] = [
     {name: 'name', placeholder: 'Nombre', type: FormFieldType.input, required: true },
-    {name: 'description', placeholder: 'Descripción', type: FormFieldType.textarea, required: false },
+    {name: 'description', placeholder: 'Descripción', type: FormFieldType.textarea, required: false , width:'100%' },
     {name: 'identifiers', placeholder: 'Identificadores', type: FormFieldType.textarea, required: false },
     {name: 'email', placeholder: 'Email', type: FormFieldType.textarea, required: false },
     {name: 'address', placeholder: 'Dirección', type: FormFieldType.textarea, required: false },
     {name: 'website', placeholder: 'Sitio Web Oficial', type: FormFieldType.textarea, required: false },
     {name: 'role', placeholder: 'Rol (Select, patrocinador, co-patrocinador...)', type: FormFieldType.textarea, required: false },
   ];
-  
+
   public action: FormContainerAction;
   constructor(
     public dialogRef: MatDialogRef<FormContainerComponent>,
@@ -80,7 +80,7 @@ export class TermInstitutionsComponent implements OnInit {
           {name: 'role', placeholder: 'Rol (Select, patrocinador, co-patrocinador...)', type: FormFieldType.textarea, required: false, value: (data.term.data.role)? data.term.data.role: null },
         ];
         this.panels[0].formField = this.formFields;
-        
+
         if (data.term) {
           this.action = new InstitutionActionEdit(data.service, data.term);
         } else {

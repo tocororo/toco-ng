@@ -2,13 +2,15 @@ import { Component, OnInit, Inject, Output } from '@angular/core';
 import { TaxonomyService } from '../taxonomy.service';
 import { Vocabulary, Term } from '@toco/entities/taxonomy.entity';
 import { HttpErrorResponse } from '@angular/common/http';
-import { catchError, finalize } from 'rxjs/operators';
-import { of, Subscription, PartialObserver } from 'rxjs';
+import { catchError, finalize, startWith, map } from 'rxjs/operators';
+import { of, Subscription, PartialObserver, Observable } from 'rxjs';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { FormContainerComponent, Panel, FormFieldType, FormContainerAction} from '@toco/forms/form-container/form-container.component';
 import { EventEmitter } from '@angular/core';
 import { Response } from '@toco/entities/response';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MessageHandler, StatusCode } from '@toco/core/utils/message-handler';
+import { FormControl } from '@angular/forms';
 
 
 class ActionNew implements FormContainerAction {
@@ -43,9 +45,8 @@ export class VocabulariesComponent implements OnInit {
     next: (result: Response<any>) => {
       this.dialog.closeAll();
       this.loadVocabularies();
-      this._snackBar.open(result.message, null, {
-        duration: 2000,
-      });
+      const m  = new MessageHandler(this._snackBar);
+      m.showMessage(StatusCode.OK, result.message)
     },
 
     error: (err: any) => {
@@ -57,7 +58,9 @@ export class VocabulariesComponent implements OnInit {
     }
   };
 
-
+  vocabCtrl = new FormControl();
+  filteredVocabularies: Observable<Vocabulary[]>;
+  currentVocab: Vocabulary = null
   // tslint:disable-next-line: max-line-length
   vocabularies: Vocabulary[];
   public panels: Panel[] = [{
@@ -65,8 +68,8 @@ export class VocabulariesComponent implements OnInit {
     description: '',
     iconName: '',
     formField : [
-        {name: 'name', placeholder: 'Nombre', type: FormFieldType.input, required: true },
-        {name: 'description', placeholder: 'Descripción', type: FormFieldType.textarea, required: false },
+        {name: 'name', placeholder: 'Nombre', type: FormFieldType.input, required: true, width: '100%' },
+        {name: 'description', placeholder: 'Descripción', type: FormFieldType.textarea, required: false, width: '100%' },
     ]
   }];
   loading = false;
@@ -75,7 +78,15 @@ export class VocabulariesComponent implements OnInit {
 
   constructor(private service: TaxonomyService,
               public dialog: MatDialog,
-              private _snackBar: MatSnackBar) { }
+              private _snackBar: MatSnackBar) {
+    this.filteredVocabularies = this.vocabCtrl.valueChanges
+      .pipe<string,Vocabulary[]>(
+        startWith(''),
+        map(value => {
+          return this.vocabularies.filter(vocab => vocab.name.toLowerCase().includes(value.toLowerCase()));
+          })
+      );
+  }
 
   ngOnInit() {
     this.loadVocabularies();
@@ -88,31 +99,32 @@ export class VocabulariesComponent implements OnInit {
     }
   }
 
+  selectVocab(item: Vocabulary){
+    this.currentVocab = item;
+    this.showTerms(item);
+  }
+
   loadVocabularies() {
     this.loading = true;
     this.service.getVocabularies().pipe(
       catchError((err: HttpErrorResponse) => {
-        const message = (err.error instanceof ErrorEvent)
-          ? err.error.message
-          : `server returned code '${ err.status }' with body '${ err.error }'`;
-
-        /* Transforms error for user consumption. */
-        console.warn(`${ TaxonomyService.name }: 'sendData' operation failed: ${ message }.`);  /* Logs to console instead. */
-
+        const m  = new MessageHandler(this._snackBar);
+        m.showMessage(StatusCode.serverError);
         // TODO: Maybe you must set a better return.
         return of(null);
       }),
       finalize(() => this.loading = false)
     )
     .subscribe(response => {
-      console.log(response);
       if (response) {
         this.vocabularies = response.data.vocabularies;
+      } else {
+        this.vocabularies = [];
       }
     });
   }
 
-  editVocab( vocab: Vocabulary ) {
+  editVocab( vocab: any ) {
     this.panels[0].formField[0].value = vocab.name;
     this.panels[0].formField[1].value = vocab.description;
     const dialogRef = this.dialog.open(VocabularyDialogComponent, {

@@ -1,36 +1,53 @@
-
 <mat-card>
   <mat-card-header>
     <mat-card-title>
-      <div  fxLayout="row" fxLayoutAlign="space-between none">
+      <div fxLayout="row" fxLayoutAlign="space-between none">
         Vocabularios
-        <button  mat-raised-button color="primary" (click)="addVocabularyDialog()"> Add </button>
+        <button mat-icon-button (click)="addVocabularyDialog()" matTooltip="Adicionar Vocabulario">
+          <mat-icon>library_add</mat-icon>
+        </button>
       </div>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content [style.overflow]="'auto'" [style.height]="'25em'">
     <mat-spinner *ngIf="loading; else elseTemplate"></mat-spinner>
     <ng-template #elseTemplate>
-      <mat-list>
+
+      <!-- <mat-list>
           <mat-list-item *ngFor="let item of vocabularies">
               <h4 mat-line>{{item.name}}</h4>
               <p mat-line> {{item.description}} </p>
-              <button mat-icon-button (click)="editVocab(item)">
+              <button mat-icon-button (click)="editVocab(item)" matTooltip="Editar">
                   <mat-icon>edit</mat-icon>
               </button>
-              <button mat-icon-button (click)="deleteVocab(item)">
+              <button mat-icon-button (click)="deleteVocab(item)" matTooltip="Eliminar">
                   <mat-icon>delete</mat-icon>
               </button>
-              <button mat-icon-button (click)="showTerms(item)">
+              <button mat-icon-button (click)="showTerms(item)" matTooltip="Listar">
                 <mat-icon>list</mat-icon>
               </button>
             </mat-list-item>
-        <!-- <button *ngFor="let item of vocabularies" mat-list-item (click)="showTerms(item.name)"> {{item.name}} </button> -->
-      </mat-list>
-    
+         
+      </mat-list> -->
+
+      <mat-form-field>
+        <input matInput placeholder="Vocabularios" aria-label="Vocabularios" [matAutocomplete]="auto"
+          [formControl]="vocabCtrl">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let item of filteredVocabularies | async" [value]="item.name" (click)=selectVocab(item)>
+            {{item.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <div *ngIf="currentVocab">
+        <button mat-icon-button (click)="editVocab(currentVocab)" matTooltip="Editar">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="deleteVocab(currentVocab)" matTooltip="Eliminar">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <p>{{ currentVocab.description }}</p>
+      </div>
     </ng-template>
   </mat-card-content>
 </mat-card>
-
-
-

@@ -32,10 +32,10 @@ import { FilterContainerComponent } from './filter-container/filter-container.co
     TitleFilterComponent,
     BooleanFilterComponent,
     SelectFilterComponent,
-    SelectAutocompleteFilterComponent    
+    SelectAutocompleteFilterComponent
   ],
   providers: [
-    FiltersService, 
+    FiltersService,
     FilterContainerService
   ]
 })

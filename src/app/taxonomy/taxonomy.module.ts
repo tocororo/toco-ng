@@ -16,6 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { LayoutModule } from '@angular/cdk/layout';
 import { TermGenericComponent } from './term-generic/term-generic.component';
 import { TermInstitutionsComponent } from './term-institutions/term-institutions.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -44,7 +45,8 @@ import { TermInstitutionsComponent } from './term-institutions/term-institutions
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
-    LayoutModule
+    LayoutModule,
+    ReactiveFormsModule
   ],
   exports: [
     TaxonomyComponent,
