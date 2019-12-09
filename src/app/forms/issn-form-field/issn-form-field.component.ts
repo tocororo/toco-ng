@@ -22,15 +22,17 @@ export class IssnFormFieldComponent implements OnInit
 
 	/**
 	 * Input field that represents the placeholder for this control. 
+	 * By default, its value is 'ISSN'. 
 	 */
 	@Input()
-	public placeholder: string;
+	public placeholder: string = 'ISSN';
 
 	/**
 	 * Input field that contains true if the control is required; otherwise, false. 
+	 * By default, its value is true. 
 	 */
 	@Input()
-	public required: boolean;
+	public required: boolean = true;
 
 	public constructor()
 	{ }
