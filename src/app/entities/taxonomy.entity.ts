@@ -14,3 +14,10 @@ export class Vocabulary extends Entity {
     name: string;
     description: string;
 }
+
+
+/** File node data with possible child nodes. */
+export interface TermNode {
+    term: Term;
+    children?: TermNode[];
+  }

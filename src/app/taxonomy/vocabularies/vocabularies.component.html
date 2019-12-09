@@ -13,28 +13,11 @@
     <mat-spinner *ngIf="loading; else elseTemplate"></mat-spinner>
     <ng-template #elseTemplate>
 
-      <!-- <mat-list>
-          <mat-list-item *ngFor="let item of vocabularies">
-              <h4 mat-line>{{item.name}}</h4>
-              <p mat-line> {{item.description}} </p>
-              <button mat-icon-button (click)="editVocab(item)" matTooltip="Editar">
-                  <mat-icon>edit</mat-icon>
-              </button>
-              <button mat-icon-button (click)="deleteVocab(item)" matTooltip="Eliminar">
-                  <mat-icon>delete</mat-icon>
-              </button>
-              <button mat-icon-button (click)="showTerms(item)" matTooltip="Listar">
-                <mat-icon>list</mat-icon>
-              </button>
-            </mat-list-item>
-         
-      </mat-list> -->
-
       <mat-form-field>
         <input matInput placeholder="Vocabularios" aria-label="Vocabularios" [matAutocomplete]="auto"
           [formControl]="vocabCtrl">
         <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let item of filteredVocabularies | async" [value]="item.name" (click)=selectVocab(item)>
+          <mat-option *ngFor="let item of filteredVocabularies | async" [value]="item.name" (click)=selectVocab(item) (keydown.enter)=selectVocab(item)>
             {{item.name}}
           </mat-option>
         </mat-autocomplete>

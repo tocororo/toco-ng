@@ -1,4 +1,6 @@
-<div class="card-filter" *ngIf="formField.input" >
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+<div class="card-filter" *ngIf="formField.input && !loading" >
     <mat-form-field style="width: 100%;">
 
       <input type="text" placeholder="{{formField.placeholder}}" aria-label="Number" matInput [formControl]="formControl" [matAutocomplete]="auto" id="{{inputId}}">
