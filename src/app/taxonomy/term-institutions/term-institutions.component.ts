@@ -11,16 +11,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 class InstitutionAction implements FormContainerAction {
 
   doit(data: any): void {
-    console.log(data);
     this.term.name = data.name;
+    this.term.parent_id = data.parent_id;
     this.term.description = data.description;
-    this.term.class_ids = data.province;
     this.term.data = {
       'identifiers': data.identifiers,
       'email': data.email,
       'address': data.address,
-      'website': data.website,
-      'role': data.role,
+      'website': data.website
     };
 
     if (this.is_new_term) {
@@ -53,112 +51,106 @@ export class TermInstitutionsComponent implements OnInit {
     iconName: '',
     formField : []
   }];
-  formFields: FormField[] = [
-    {name: 'name', placeholder: 'Nombre', type: FormFieldType.input, required: true },
-    {name: 'description', placeholder: 'Descripción', type: FormFieldType.textarea, required: false , width:'100%' },
-    {name: 'identifiers', placeholder: 'Identificadores', type: FormFieldType.textarea, required: false },
-    {name: 'email', placeholder: 'Email', type: FormFieldType.textarea, required: false },
-    {name: 'address', placeholder: 'Dirección', type: FormFieldType.textarea, required: false },
-    {name: 'website', placeholder: 'Sitio Web Oficial', type: FormFieldType.textarea, required: false },
-    {name: 'role', placeholder: 'Rol (Select, patrocinador, co-patrocinador...)', type: FormFieldType.textarea, required: false },
-  ];
+  formFields: FormField[];
+  actionLabel: string;
 
   public action: FormContainerAction;
-  constructor(
-    public dialogRef: MatDialogRef<FormContainerComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-
-      if (data.service) {
-        console.log('if (data.service) {');
-        (data.service as TaxonomyService).getVocabulary(VocabulariesInmutableNames.PROVINCES).pipe(
-          catchError((err: HttpErrorResponse) => {
-            // const m  = new MessageHandler(this._snackBar);
-            // m.showMessage(StatusCode.serverError);
-            // TODO: Maybe you must set a better return.
-            return of(null);
-          }),
-          finalize(() => this.loading = false)
-        )
-        .subscribe(response => {
-          console.log('.subscribe(response => {');
-          if (response) {
-            console.log(data.term);
-            const provocab = response.data.vocabulary;
-            data.term.data = (data.term.data) ? data.term.data : {};
-            this.formFields = [
-              {
-                name: 'name', placeholder: 'Nombre',
-                type: FormFieldType.input,
-                required: true,
-                value: (data.term.name) ? data.term.name : null
-              },
-              {
-                name: 'description',
-                placeholder: 'Descripción',
-                type: FormFieldType.textarea,
-                required: false,
-                value: (data.term.description) ? data.term.description : null
-              },
-              {
-                name: 'identifiers',
-                placeholder: 'Identificadores',
-                type: FormFieldType.textarea,
-                required: false,
-                value: (data.term.data.identifiers) ? data.term.data.identifiers : null
-              },
-              {
-                name: 'email',
-                placeholder: 'Email',
-                type: FormFieldType.textarea,
-                required: false,
-                value: (data.term.data.email) ? data.term.data.email : null
-              },
-              {
-                name: 'address',
-                placeholder: 'Dirección',
-                type: FormFieldType.textarea,
-                required: false,
-                value: (data.term.data.address) ? data.term.data.address : null
-              },
-              {
-                name: 'website',
-                placeholder: 'Sitio Web Oficial',
-                type: FormFieldType.textarea,
-                required: false,
-                value: (data.term.data.website) ? data.term.data.website : null
-              },
-              {
-                name: 'role',
-                placeholder: 'Rol (Select, patrocinador, co-patrocinador...)',
-                type: FormFieldType.textarea,
-                required: false,
-                value: (data.term.data.role) ? data.term.data.role : null
-              },
-              {
-                name: 'province',
-                placeholder: 'Provincia',
-                type: FormFieldType.vocabulary,
-                required: false,
-                input: {
-                  multiple: false,
-                  selectedTermsIds: (data.term.class_ids) ? data.term.class_ids : [],
-                  vocab: provocab
-                },
-              },
-            ];
-            this.panels[0].formField = this.formFields;
-
-            if (data.term) {
-              this.action = new InstitutionAction(data.service, data.term, false);
-            } else {
-              this.action = new InstitutionAction(data.service, new Term(), true);
-            }
-          }
-        });
-      }
-    }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {
+    if (this.data.service) {
+      console.log('if (this.data.service) {');
+      (this.data.service as TaxonomyService).getVocabulary(VocabulariesInmutableNames.PROVINCES).pipe(
+        catchError((err: HttpErrorResponse) => {
+          // const m  = new MessageHandler(this._snackBar);
+          // m.showMessage(StatusCode.serverError);
+          // TODO: Maybe you must set a better return.
+          return of(null);
+        }),
+        finalize(() => this.loading = false)
+      )
+      .subscribe(response => {
+        console.log('.subscribe(response => {');
+        if (response) {
+          if (this.data.term) {
+            this.action = new InstitutionAction(this.data.service, this.data.term, false);
+            this.actionLabel = 'Actualizar';
+            this.panels[0].title = 'Editar ' + this.data.term.name;
+          } else {
+            let term: Term = new Term();
+            term.vocabulary_id = this.data.vocab.id;
+            this.data['term'] = term;
+            
+            this.action = new InstitutionAction(this.data.service, this.data.term, true);
+            this.actionLabel = 'Adicionar';
+            this.panels[0].title = 'Nuevo Término de ' + this.data.vocab.human_name;
+          }
+
+          this.data.term.this.data = (this.data.term.this.data) ? this.data.term.this.data : {};
+          this.formFields = [
+            {
+              name: 'name', placeholder: 'Nombre',
+              type: FormFieldType.input,
+              required: true,
+              value: (this.data.term.name) ? this.data.term.name : null,
+              width: '45%'
+            },
+            {
+              name: 'description',
+              placeholder: 'Descripción',
+              type: FormFieldType.textarea,
+              required: false,
+              value: (this.data.term.description) ? this.data.term.description : null,
+              width: '45%'
+            },
+            {
+              name: 'identifiers',
+              placeholder: 'Identificadores',
+              type: FormFieldType.textarea,
+              required: false,
+              value: (this.data.term.this.data.identifiers) ? this.data.term.this.data.identifiers : null,
+              width: '30%'
+            },
+            {
+              name: 'email',
+              placeholder: 'Email',
+              type: FormFieldType.email,
+              required: true,
+              value: (this.data.term.this.data.email) ? this.data.term.this.data.email : null,
+              width: '30%'
+            },
+            {
+              name: 'website',
+              placeholder: 'Sitio Web Oficial',
+              type: FormFieldType.url,
+              required: false,
+              value: (this.data.term.this.data.website) ? this.data.term.this.data.website : null,
+              width: '30%'
+            },
+            {
+              name: 'address',
+              placeholder: 'Dirección',
+              type: FormFieldType.textarea,
+              required: false,
+              value: (this.data.term.this.data.address) ? this.data.term.this.data.address : null,
+              width: '100%'
+            },
+            {
+              name: 'parent_id',
+              placeholder: 'Jerarquía Institucional (Institución Superior)',
+              type: FormFieldType.term_parent,
+              required: false,
+              input: {
+                currentTerm: (this.data.term) ? this.data.term : null,
+                terms: (this.data.terms) ? this.data.terms : null
+              },
+              width: '30%'
+            },
+          ];
+          this.panels[0].formField = this.formFields;
+        }
+      });
+    }
   }
 
 }

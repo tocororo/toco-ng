@@ -15,6 +15,7 @@ export class Term extends Entity {
 export class Vocabulary extends Entity {
     name: string;
     description: string;
+    human_name:string;
 }
 
 

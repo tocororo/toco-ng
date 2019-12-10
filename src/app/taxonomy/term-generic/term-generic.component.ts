@@ -13,12 +13,19 @@ export class TermActionNew implements FormContainerAction {
   constructor(private service: TaxonomyService, private vocab: Vocabulary) { }
 }
 
-export class TermActionEdit implements FormContainerAction {
+export class TermAction implements FormContainerAction {
   doit(data: any): void {
-    console.log(this);
-    this.service.editTerm(this.term);
+    this.term.name = data.name;
+    this.term.parent_id = data.parent_id;
+    this.term.description = data.description;
+
+    if (this.is_new_term){
+      this.service.newTerm(data);
+    } else{
+      this.service.editTerm(this.term);
+    }
   }
-  constructor(private service: TaxonomyService, private term: Term) { }
+  constructor(private service: TaxonomyService, private term: Term, private is_new_term: boolean) { }
 }
 
 @Component({
@@ -38,6 +45,20 @@ export class TermGenericComponent implements OnInit {
 
   ngOnInit() {
     if (this.data.service && this.data.terms && this.data.vocab) {
+
+      // if a term is comming, then we are updating it
+      if (this.data.term) {
+        this.actionLabel = 'Actualizar';
+        this.panels[0].title = 'Editar ' + this.data.term.name;
+        this.action = new TermAction(this.data.service, this.data.term, false);
+      } else {
+        let term: Term = new Term();
+        term.vocabulary_id = this.data.vocab.id;
+        this.action = new TermAction(this.data.service, this.data.vocab, true);
+        this.actionLabel = 'Adicionar';
+        this.panels[0].title = 'Nuevo Término de ' + this.data.vocab.human_name;
+      }
+
       this.panels = [{
         title: 'Nuevo Término',
         description: '',
@@ -48,38 +69,31 @@ export class TermGenericComponent implements OnInit {
             placeholder: 'Nombre',
             type: FormFieldType.input,
             required: true,
-            width: '100%'
+            width: '100%',
+            value: (this.data.term.name) ? this.data.term.name : null,
           },
           {
             name: 'description',
             placeholder: 'Descripción',
             type: FormFieldType.textarea,
             required: false,
-            width: '100%'
+            width: '100%',
+            value: (this.data.term.description) ? this.data.term.description : null,
           },
           {
             name: 'parent_id',
             placeholder: 'Término Padre',
             type: FormFieldType.term_parent,
             required: false,
-            input: { terms: this.data.terms },
+            input: { 
+              terms: this.data.terms,
+              currentTerm: (this.data.term) ? this.data.term : null,
+            },
             width: '50%'
           },
         ],
       }];
 
-      // if a term is comming, then we are updating it
-      if (this.data.term) {
-        this.actionLabel = 'Actualizar';
-        this.panels[0].title = 'Editar Término';
-        this.panels[0].formField[0].value = this.data.term.name;
-        this.panels[0].formField[1].value = this.data.term.description;
-        this.panels[0].formField[2].input.currentTerm = this.data.term;
-        this.action = new TermActionEdit(this.data.service, this.data.term);
-      } else {
-        this.action = new TermActionNew(this.data.service, this.data.vocab);
-      }
-      console.log(this.panels);
     }
   }
 
