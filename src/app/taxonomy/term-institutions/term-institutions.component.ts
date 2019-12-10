@@ -16,7 +16,8 @@ function get_institution_data(data: any){
       'email':data.email,
       'address':data.address,
       'website':data.website,
-      'role':data.role
+      'role':data.role,
+      'class_ids': data.province
     }
   };
 }
@@ -73,7 +74,8 @@ export class TermInstitutionsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) {
       console.log(data);
       if (data.service) {
-        data.service.getVocabulary(VocabulariesInmutableNames.PROVINCES).pipe(
+        console.log('if (data.service) {');
+        (data.service as TaxonomyService).getVocabulary(VocabulariesInmutableNames.PROVINCES).pipe(
           catchError((err: HttpErrorResponse) => {
             // const m  = new MessageHandler(this._snackBar);
             // m.showMessage(StatusCode.serverError);
@@ -83,7 +85,9 @@ export class TermInstitutionsComponent implements OnInit {
           finalize(() => this.loading = false)
         )
         .subscribe(response => {
+          console.log('.subscribe(response => {');
           if (response) {
+            console.log('if (response) {');
             const provocab = response.data.vocabulary;
             data.term.data = (data.term.data)? data.term.data : {}
             this.formFields = [
@@ -141,10 +145,10 @@ export class TermInstitutionsComponent implements OnInit {
                 type: FormFieldType.vocabulary, 
                 required: false, 
                 input: { multiple: false, selectedTermsIds: [], vocab: provocab },
-                
                 // value: (data.term.data.role)? data.term.data.role: null 
               },
             ];
+            console.log(this.formFields)
             this.panels[0].formField = this.formFields;
     
             if (data.term) {
@@ -154,11 +158,7 @@ export class TermInstitutionsComponent implements OnInit {
             }
           }
         });
-
-
-
       }
-
     }
 
   ngOnInit() {
