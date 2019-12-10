@@ -1,16 +1,13 @@
-<div class="card-filter" *ngIf="formField.input" >
+<div class="card-filter" *ngIf="formFieldContent.input" >
     <mat-form-field style="width: 100%;">
 
-      <input type="text" placeholder="{{formField.placeholder}}" aria-label="Number" matInput [formControl]="formControl" [matAutocomplete]="auto" id="{{inputId}}">
+      <input type="text" placeholder="{{formFieldContent.placeholder}}" aria-label="Number" matInput [formControl]="formControl" [matAutocomplete]="auto" id="{{inputId}}">
       <mat-autocomplete #auto="matAutocomplete" >
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name" (click)="addParent(option)" title="{{option.name}}">
           {{option.name}}
         </mat-option>
       </mat-autocomplete>
-
-      <!-- <button mat-icon-button color="accent" class="delete-filter" (click)="remove_component()">
-        <mat-icon>close</mat-icon>
-      </button> -->
+      
     </mat-form-field>
     <mat-chip-list fxLayout="row" fxLayoutAlign="start center" style="margin-bottom: .5em" id="chiplist">
       <mat-chip (click)="removeParent()" *ngIf="parentTerm">{{parentTerm.name}}</mat-chip>

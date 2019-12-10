@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormFieldContent } from '../form-container/form-container.component';
+import { FormField } from '../form-container/form-container.component';
 import { FormControl } from '@angular/forms';
 import { Observable, PartialObserver } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
@@ -15,11 +15,9 @@ import { Response } from '@toco/entities/response';
   templateUrl: './form-field-vocabulary.component.html',
   styleUrls: ['./form-field-vocabulary.component.scss']
 })
-export class FormFieldVocabularyComponent implements OnInit {
+export class FormFieldVocabularyComponent extends FormField implements OnInit {
 
-  @Input() public formField: FormFieldContent;
 
-  // en this.formField.value va un arreglo con los ids seleccionados.
 
   formControl = new FormControl();
   inputId: string;
@@ -53,22 +51,24 @@ export class FormFieldVocabularyComponent implements OnInit {
     }
   };
 
-  constructor(private service: TaxonomyService) { }
+  constructor(private service: TaxonomyService) { 
+    super()
+  }
 
   ngOnInit() {
-    this.inputId = this.formField.placeholder.trim().toLowerCase();
-    if (this.formField.input) {
-      if (this.formField.input.multiple !== null) {
-        this.multiple = this.formField.input.multiple;
+    this.inputId = this.formFieldContent.placeholder.trim().toLowerCase();
+    if (this.formFieldContent.input) {
+      if (this.formFieldContent.input.multiple !== null) {
+        this.multiple = this.formFieldContent.input.multiple;
       }
-      if (this.formField.input.selectedTermsIds) {
-        this.formField.value = this.formField.input.selectedTermsIds;
+      if (this.formFieldContent.input.selectedTermsIds) {
+        this.formFieldContent.value = this.formFieldContent.input.selectedTermsIds;
       } else {
-        this.formField.value = [];
+        this.formFieldContent.value = [];
       }
 
-      if (this.formField.input.vocab ) {
-        this.vocab = this.formField.input.vocab;
+      if (this.formFieldContent.input.vocab ) {
+        this.vocab = this.formFieldContent.input.vocab;
         this.service.getTermsTreeByVocab(this.vocab).subscribe(this.termsTreeObserver);
       }
       this._updateFilteredOptions();
@@ -87,7 +87,7 @@ export class FormFieldVocabularyComponent implements OnInit {
 
   private _get_terms(node: TermNode): Term[] {
     let result: Term[] = [];
-    if ( (this.formField.value as []).some(id => id === node.term.id)){
+    if ( (this.formFieldContent.value as []).some(id => id === node.term.id)){
       this.chipsList.push(node.term);
     }else{
       result.push(node.term);
@@ -102,10 +102,10 @@ export class FormFieldVocabularyComponent implements OnInit {
   addChips(value: Term) {
     if (this.multiple) {
       this.chipsList.unshift(value);
-      this.formField.value.unshift(value.id);
+      this.formFieldContent.value.unshift(value.id);
     } else {
       this.chipsList = [value];
-      this.formField.value = [value.id];
+      this.formFieldContent.value = [value.id];
     }
     this.selectOptions = this.selectOptions.filter(option => option.id !== value.id);
 
@@ -118,7 +118,7 @@ export class FormFieldVocabularyComponent implements OnInit {
   removeChip(index: number) {
     this.selectOptions.push(this.chipsList[index]);
     this._updateFilteredOptions();
-    this.formField.value = (this.formField.value as []).filter(id => id !== this.chipsList[index].id);
+    this.formFieldContent.value = (this.formFieldContent.value as []).filter(id => id !== this.chipsList[index].id);
     this.chipsList.splice(index, 1);
   }
 
