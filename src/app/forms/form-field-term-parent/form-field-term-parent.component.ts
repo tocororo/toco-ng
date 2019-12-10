@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormField } from '../form-container/form-container.component';
+import { FormFieldContent } from '../form-container/form-container.component';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
@@ -12,7 +12,8 @@ import { Term, TermNode } from '@toco/entities/taxonomy.entity';
 })
 export class FormFieldTermParentComponent implements OnInit {
 
-  @Input() public formField: FormField;
+  @Input()
+  public formField: FormFieldContent;
 
   formControl = new FormControl();
   inputId: string;

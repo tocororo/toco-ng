@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 
 import { IssnFormFieldInternalComponent } from './issn-form-field-internal/issn-form-field-internal.component';
 import { IssnType_Abbreviation } from './issn-value';
+import { FormField } from '../form-container/form-container.component';
 
 /**
  * Custom `MatFormFieldControl` for ISSN input, i.e., a control that represents an 
@@ -16,7 +17,7 @@ import { IssnType_Abbreviation } from './issn-value';
 	templateUrl: './form-field-issn.component.html',
 	styleUrls: ['./form-field-issn.component.scss']
 })
-export class FormFieldIssnComponent implements OnInit
+export class FormFieldIssnComponent extends FormField implements OnInit
 {
 	@ViewChild(IssnFormFieldInternalComponent, { static: true })
 	private _issnFormFieldInternalComponent: IssnFormFieldInternalComponent;
@@ -43,14 +44,19 @@ export class FormFieldIssnComponent implements OnInit
 	public hintValue: string;
 
 	public constructor()
-	{ }
+	{
+		super();
+	}
 
 	public ngOnInit(): void
 	{
+		this.placeholder = this.formFieldContent.placeholder;
 		if (this.placeholder == undefined) this.placeholder = IssnType_Abbreviation.ISSN;
 
+		this.required = this.formFieldContent.required;
 		if (this.required == undefined) this.required = true;
 
+		this.hintValue = this.formFieldContent.hintValue;
 		if (this.hintValue == undefined) this.hintValue = `Write a valid ${ IssnType_Abbreviation.ISSN }.`;
 	}
 

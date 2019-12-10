@@ -43,18 +43,21 @@ export enum FormFieldType {
 /**
  * Represents a form field interface.
  */
-export interface FormField {
+export interface FormFieldContent {
+    /** The form field type. */
+    type: FormFieldType;
+
     /** The form field name. */
     name: string;
 
     /** The form field placeholder. */
     placeholder: string;
 
-    /** The form field type. */
-    type: FormFieldType;
-
     /** If it is true the form field is required; otherwise, false. */
     required: boolean;
+
+	/** The form field hint text. */
+    hintValue?: string;
 
     /** The form field value. */
     value?: any;
@@ -62,8 +65,17 @@ export interface FormField {
     /** The form field width. */
     width?: string;
 
-    /** For any other input needed by an specific `FormField`. */
+    /** For any other input needed by an specific `FormFieldContent`. */
     input?: any;
+}
+
+/**
+ * Represents a base class for a control that is treated as a form field. 
+ */
+export abstract class FormField
+{
+    @Input()
+    public formFieldContent: FormFieldContent;
 }
 
 /**
@@ -78,11 +90,12 @@ export interface Panel {
     // tslint:disable-next-line: indent
     iconName: string;
 
-    formField: FormField[];
+    formField: FormFieldContent[];
 }
 
-export interface FormContainerAction {
-    doit(data: any): void ;
+export interface FormContainerAction
+{
+    doit(data: any): void;
 }
 
 /**

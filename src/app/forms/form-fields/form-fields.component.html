@@ -24,10 +24,10 @@
       <input matInput type="email" [(ngModel)]="field.value" name="{{ field.name }}" placeholder="{{ field.placeholder }}" required="{{ field.required }}">
     </mat-form-field>
 
-    <toco-form-field-issn *ngSwitchCase="formFieldType.issn" [placeholder]="field.placeholder" [required]="field.required"></toco-form-field-issn>
+    <toco-form-field-issn *ngSwitchCase="formFieldType.issn" [formFieldContent]='field'></toco-form-field-issn>
 
-    <toco-form-field-rnps *ngSwitchCase="formFieldType.rnps" [placeholder]="field.placeholder" [required]="field.required"></toco-form-field-rnps>
-    
+    <toco-form-field-rnps *ngSwitchCase="formFieldType.rnps" [formFieldContent]='field'></toco-form-field-rnps>
+
     <toco-form-field-vocabulary *ngSwitchCase="formFieldType.vocabulary" [formField]='field' [style.width]="field.width"></toco-form-field-vocabulary>
 
     <toco-form-field-term-parent *ngSwitchCase="formFieldType.term_parent" [formField]='field' [style.width]="field.width"></toco-form-field-term-parent>

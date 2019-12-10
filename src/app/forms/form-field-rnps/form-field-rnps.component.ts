@@ -4,6 +4,7 @@ import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
 import { RnpsValue } from './rnps-value';
 import { ExtraValidators } from '../../core/utils/validator';
+import { FormField } from '../form-container/form-container.component';
 
 /**
  * Custom `MatFormFieldControl` for RNPS input, i.e., a control that represents an 
@@ -17,7 +18,7 @@ import { ExtraValidators } from '../../core/utils/validator';
     templateUrl: './form-field-rnps.component.html',
     styleUrls: ['./form-field-rnps.component.scss']
 })
-export class FormFieldRnpsComponent implements OnInit
+export class FormFieldRnpsComponent extends FormField implements OnInit
 {
 	/**
 	 * Tracks the value and validity state of the control that contains the code. 
@@ -48,6 +49,8 @@ export class FormFieldRnpsComponent implements OnInit
 
     public constructor()
     {
+        super();
+
         /* Constructs a new `FormControl` instance. */
         this.code = new FormControl((this._codeOldValue = ''), [
             ExtraValidators.equalLength(RnpsValue.codeLength),
@@ -57,10 +60,13 @@ export class FormFieldRnpsComponent implements OnInit
 
     public ngOnInit(): void
     {
+        this.placeholder = this.formFieldContent.placeholder;
         if (this.placeholder == undefined) this.placeholder = RnpsValue.rnps_Abbreviation;
 
+        this.required = this.formFieldContent.required;
         if (this.required == undefined) this.required = true;
 
+        this.hintValue = this.formFieldContent.hintValue;
         if (this.hintValue == undefined) this.hintValue = `Write a valid ${ RnpsValue.rnps_Abbreviation }.`;
     }
 
