@@ -42,7 +42,6 @@ class InstitutionAction implements FormContainerAction {
 })
 export class TermInstitutionsComponent implements OnInit {
 
-
   loading = true;
 
   public panels: Panel[] = [{
@@ -55,12 +54,14 @@ export class TermInstitutionsComponent implements OnInit {
   actionLabel: string;
 
   public action: FormContainerAction;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {
     if (this.data.service) {
       console.log('if (this.data.service) {');
-      (this.data.service as TaxonomyService).getVocabulary(VocabulariesInmutableNames.PROVINCES).pipe(
+      (this.data.service as TaxonomyService).getVocabulary(VocabulariesInmutableNames.PROVINCES)
+      .pipe(
         catchError((err: HttpErrorResponse) => {
           // const m  = new MessageHandler(this._snackBar);
           // m.showMessage(StatusCode.serverError);
