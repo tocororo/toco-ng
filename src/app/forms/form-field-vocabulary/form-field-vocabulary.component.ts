@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormField } from '../form-container/form-container.component';
+import { FormFieldContent } from '../form-container/form-container.component';
 import { FormControl } from '@angular/forms';
 import { Observable, PartialObserver } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
@@ -17,7 +17,7 @@ import { Response } from '@toco/entities/response';
 })
 export class FormFieldVocabularyComponent implements OnInit {
 
-  @Input() public formField: FormField;
+  @Input() public formField: FormFieldContent;
 
   // en this.formField.value va un arreglo con los ids seleccionados.
 

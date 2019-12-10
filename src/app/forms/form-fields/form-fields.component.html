@@ -5,31 +5,35 @@
   <ng-container *ngFor="let field of fields" [ngSwitch]="field.type">
 
     <mat-form-field *ngSwitchCase="formFieldType.textarea" [style.width]="field.width">
-      <textarea matInput [(ngModel)]="field.value" placeholder="{{field.placeholder}}" name="{{field.name}}" required="{{ field.required }}"></textarea>
+      <textarea matInput [(ngModel)]="field.value" name="{{ field.name }}" placeholder="{{ field.placeholder }}" required="{{ field.required }}"></textarea>
     </mat-form-field>
 
     <mat-form-field *ngSwitchCase="formFieldType.datepicker" [style.width]="field.width">
-      <input matInput [(ngModel)]="field.value" [matDatepicker]="picker" placeholder="{{field.placeholder}}" name="{{field.name}}" required="{{ field.required }}">
+      <input matInput [(ngModel)]="field.value" [matDatepicker]="picker" name="{{ field.name }}" placeholder="{{ field.placeholder }}" required="{{ field.required }}">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
-    <mat-checkbox *ngSwitchCase="formFieldType.checkbox" [(ngModel)]="field.value" name="{{field.name}}" required="{{ field.required }}" [style.width]="field.width"> {{ field.placeholder }} </mat-checkbox>
+    <mat-checkbox *ngSwitchCase="formFieldType.checkbox" [(ngModel)]="field.value" name="{{ field.name }}" required="{{ field.required }}" [style.width]="field.width"> {{ field.placeholder }} </mat-checkbox>
 
     <mat-form-field *ngSwitchCase="formFieldType.url" [style.width]="field.width">
-      <input matInput type="url" [(ngModel)]="field.value" placeholder="{{field.placeholder}}" name="{{field.name}}" required="{{ field.required }}">
+      <input matInput type="url" [(ngModel)]="field.value" name="{{ field.name }}" placeholder="{{ field.placeholder }}" required="{{ field.required }}">
     </mat-form-field>
 
     <mat-form-field *ngSwitchCase="formFieldType.email" [style.width]="field.width">
-      <input matInput type="email" [(ngModel)]="field.value" placeholder="{{field.placeholder}}" name="{{field.name}}" required="{{ field.required }}">
+      <input matInput type="email" [(ngModel)]="field.value" name="{{ field.name }}" placeholder="{{ field.placeholder }}" required="{{ field.required }}">
     </mat-form-field>
 
-    <toco-form-field-vocabulary  *ngSwitchCase="formFieldType.vocabulary" [formField]='field' [style.width]="field.width"></toco-form-field-vocabulary>
+    <toco-form-field-issn *ngSwitchCase="formFieldType.issn" [formFieldContent]='field'></toco-form-field-issn>
 
-    <toco-form-field-term-parent  *ngSwitchCase="formFieldType.term_parent" [formField]='field' [style.width]="field.width"></toco-form-field-term-parent>
+    <toco-form-field-rnps *ngSwitchCase="formFieldType.rnps" [formFieldContent]='field'></toco-form-field-rnps>
+
+    <toco-form-field-vocabulary *ngSwitchCase="formFieldType.vocabulary" [formField]='field' [style.width]="field.width"></toco-form-field-vocabulary>
+
+    <toco-form-field-term-parent *ngSwitchCase="formFieldType.term_parent" [formField]='field' [style.width]="field.width"></toco-form-field-term-parent>
 
     <mat-form-field *ngSwitchDefault [style.width]="field.width">
-      <input matInput [(ngModel)]="field.value" placeholder="{{field.placeholder}}" name="{{field.name}}" required="{{ field.required }}">
+      <input matInput [(ngModel)]="field.value" name="{{ field.name }}" placeholder="{{ field.placeholder }}" required="{{ field.required }}" />
     </mat-form-field>
 
   </ng-container>

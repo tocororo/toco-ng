@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Panel, FormFieldType, FormContainerAction, FormContainerComponent, FormField } from '@toco/forms/form-container/form-container.component';
+import { Panel, FormFieldType, FormContainerAction, FormContainerComponent, FormFieldContent } from '@toco/forms/form-container/form-container.component';
 import { TaxonomyService, VocabulariesInmutableNames } from '../taxonomy.service';
 import { Term } from '@toco/entities/taxonomy.entity';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -50,7 +50,7 @@ export class TermInstitutionsComponent implements OnInit {
     iconName: '',
     formField : []
   }];
-  formFields: FormField[];
+  formFields: FormFieldContent[];
   actionLabel: string;
 
   public action: FormContainerAction;

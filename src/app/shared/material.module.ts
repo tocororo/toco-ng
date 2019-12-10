@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -90,4 +91,5 @@ import { MatListModule } from '@angular/material/list';
     MatListModule
   ]
 })
-export class MaterialModule { }
+export class MaterialModule
+{ }
