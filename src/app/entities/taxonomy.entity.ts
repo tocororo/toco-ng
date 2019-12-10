@@ -2,12 +2,14 @@ import { Entity } from './entity';
 
 
 export class Term extends Entity {
-    uuid: string;
-    name: string;
-    description: string;
-    data: any;
-    vocabulary: Vocabulary;
-    parent_id: number;
+  uuid: string;
+  name: string;
+  description: string;
+  data: any;
+  vocabulary_id: number;
+  parent_id: number;
+  clasified_ids: [];
+  class_ids: [];
 }
 
 export class Vocabulary extends Entity {

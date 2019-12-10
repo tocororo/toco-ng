@@ -7,41 +7,34 @@ import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
-function get_institution_data(data: any){
-  return {
-    'name': data.name,
-    'description': data.description,
-    'data': {
-      'identifiers': data.identifiers,
-      'email':data.email,
-      'address':data.address,
-      'website':data.website,
-      'role':data.role,
-      'class_ids': data.province
-    }
-  };
-}
 
-class InstitutionActionNew implements FormContainerAction {
-  doit(data: any): void {
-    const idata = get_institution_data(data);
-    this.service.newTerm(idata);
-  }
-  constructor(private service: TaxonomyService) {
+class InstitutionAction implements FormContainerAction {
 
-  }
-}
-
-class InstitutionActionEdit implements FormContainerAction {
   doit(data: any): void {
     console.log(data);
-    const idata = get_institution_data(data);
-    this.service.editTerm(idata, this.term);
-  }
-  constructor(private service: TaxonomyService, private term: Term) {
+    this.term.name = data.name;
+    this.term.description = data.description;
+    this.term.class_ids = data.province;
+    this.term.data = {
+      'identifiers': data.identifiers,
+      'email': data.email,
+      'address': data.address,
+      'website': data.website,
+      'role': data.role,
+    };
 
+    if (this.is_new_term) {
+      this.service.newTerm(this.term);
+    } else {
+      this.service.editTerm(this.term);
+    }
   }
+
+  constructor(private service: TaxonomyService, private term: Term, private is_new_term: boolean) {
+  }
+
 }
+
 
 
 @Component({
@@ -51,7 +44,9 @@ class InstitutionActionEdit implements FormContainerAction {
 })
 export class TermInstitutionsComponent implements OnInit {
 
+
   loading = true;
+
   public panels: Panel[] = [{
     title: 'Término',
     description: '',
@@ -72,7 +67,7 @@ export class TermInstitutionsComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<FormContainerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-      console.log(data);
+
       if (data.service) {
         console.log('if (data.service) {');
         (data.service as TaxonomyService).getVocabulary(VocabulariesInmutableNames.PROVINCES).pipe(
@@ -87,74 +82,76 @@ export class TermInstitutionsComponent implements OnInit {
         .subscribe(response => {
           console.log('.subscribe(response => {');
           if (response) {
-            console.log('if (response) {');
+            console.log(data.term);
             const provocab = response.data.vocabulary;
-            data.term.data = (data.term.data)? data.term.data : {}
+            data.term.data = (data.term.data) ? data.term.data : {};
             this.formFields = [
               {
-                name: 'name', placeholder: 'Nombre', 
-                type: FormFieldType.input, 
-                required: true, 
-                value: (data.term.name)? data.term.name : null 
+                name: 'name', placeholder: 'Nombre',
+                type: FormFieldType.input,
+                required: true,
+                value: (data.term.name) ? data.term.name : null
               },
               {
-                name: 'description', 
-                placeholder: 'Descripción', 
-                type: FormFieldType.textarea, 
-                required: false, 
-                value: (data.term.description)? data.term.description : null 
+                name: 'description',
+                placeholder: 'Descripción',
+                type: FormFieldType.textarea,
+                required: false,
+                value: (data.term.description) ? data.term.description : null
               },
               {
-                name: 'identifiers', 
-                placeholder: 'Identificadores', 
-                type: FormFieldType.textarea, 
-                required: false, 
-                value: (data.term.data.identifiers)? data.term.data.identifiers: null
+                name: 'identifiers',
+                placeholder: 'Identificadores',
+                type: FormFieldType.textarea,
+                required: false,
+                value: (data.term.data.identifiers) ? data.term.data.identifiers : null
               },
               {
-                name: 'email', 
-                placeholder: 'Email', 
-                type: FormFieldType.textarea, 
-                required: false, 
-                value: (data.term.data.email)? data.term.data.email: null 
+                name: 'email',
+                placeholder: 'Email',
+                type: FormFieldType.textarea,
+                required: false,
+                value: (data.term.data.email) ? data.term.data.email : null
               },
               {
-                name: 'address', 
-                placeholder: 'Dirección', 
-                type: FormFieldType.textarea, 
-                required: false, 
-                value: (data.term.data.address)? data.term.data.address: null 
+                name: 'address',
+                placeholder: 'Dirección',
+                type: FormFieldType.textarea,
+                required: false,
+                value: (data.term.data.address) ? data.term.data.address : null
               },
               {
-                name: 'website', 
-                placeholder: 'Sitio Web Oficial', 
-                type: FormFieldType.textarea, 
-                required: false, 
-                value: (data.term.data.website)? data.term.data.website: null 
+                name: 'website',
+                placeholder: 'Sitio Web Oficial',
+                type: FormFieldType.textarea,
+                required: false,
+                value: (data.term.data.website) ? data.term.data.website : null
               },
               {
-                name: 'role', 
-                placeholder: 'Rol (Select, patrocinador, co-patrocinador...)', 
-                type: FormFieldType.textarea, 
-                required: false, 
-                value: (data.term.data.role)? data.term.data.role: null 
+                name: 'role',
+                placeholder: 'Rol (Select, patrocinador, co-patrocinador...)',
+                type: FormFieldType.textarea,
+                required: false,
+                value: (data.term.data.role) ? data.term.data.role : null
               },
               {
-                name: 'province', 
-                placeholder: 'Provincia', 
-                type: FormFieldType.vocabulary, 
-                required: false, 
-                input: { multiple: false, selectedTermsIds: [], vocab: provocab },
-                // value: (data.term.data.role)? data.term.data.role: null 
+                name: 'province',
+                placeholder: 'Provincia',
+                type: FormFieldType.vocabulary,
+                required: false,
+                input: {
+                  multiple: false,
+                  selectedTermsIds: (data.term.class_ids) ? data.term.class_ids : [],
+                  vocab: provocab
+                },
               },
             ];
-            console.log(this.formFields)
             this.panels[0].formField = this.formFields;
-    
+
             if (data.term) {
-              this.action = new InstitutionActionEdit(data.service, data.term);
+              this.action = new InstitutionAction(data.service, data.term, false);
             } else {
-              this.action = new InstitutionActionNew(data.service);
+              this.action = new InstitutionAction(data.service, new Term(), true);
             }
           }
         });
@@ -162,11 +159,6 @@ export class TermInstitutionsComponent implements OnInit {
     }
 
   ngOnInit() {
-  }
-
-  loadVocabularies() {
-    this.loading = true;
-    
   }
 
 }

@@ -16,7 +16,7 @@ export class TermActionNew implements FormContainerAction {
 export class TermActionEdit implements FormContainerAction {
   doit(data: any): void {
     console.log(this);
-    this.service.editTerm(data, this.term);
+    this.service.editTerm(this.term);
   }
   constructor(private service: TaxonomyService, private term: Term) { }
 }

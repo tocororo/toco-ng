@@ -10,7 +10,7 @@ import { Vocabulary, Term } from '@toco/entities/taxonomy.entity';
 // TODO: Esto esta bastante feo... hay que agregarle a vocabulario un nombre inmutable y referirse a este por aqui, no por los ids
 export enum VocabulariesInmutableNames{
   INTITUTION = 1,
-  DATABASES = 4, 
+  DATABASES = 4,
   DB_GROUPS = 5,
   PROVINCES = 3
 }
@@ -55,6 +55,7 @@ export class TaxonomyService {
   private termChangeObserver: PartialObserver<Response<any>> = {
     next: (resp: Response<any>) => {
       this.termChange(resp);
+      console.log(resp);
     },
 
     error: (err: any) => {
@@ -103,24 +104,25 @@ export class TaxonomyService {
     return this.http.get<Response<any>>(req);
   }
 
-  newTerm(data: any): void {
-    console.log(data);
+  newTerm(term: Term): void {
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
 
     // tslint:disable-next-line: max-line-length
-    this.http.post<Response<any>>( this.env.sceibaApi + '/term/new', data, this.httpOptions ).pipe().subscribe(this.termChangeObserver);
+    this.http.post<Response<any>>( this.env.sceibaApi + '/term/new', JSON.stringify(term), this.httpOptions ).
+    pipe().subscribe(this.termChangeObserver);
   }
 
-  editTerm(data: any, term: Term): void {
-    console.log(data);
+  editTerm(term: Term): void {
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
 
-    // tslint:disable-next-line: max-line-length
-    this.http.post<Response<any>>( this.env.sceibaApi + '/term/' + term.uuid + '/edit', data, this.httpOptions ).pipe().subscribe(this.termChangeObserver);
+    console.log(term);
+
+    this.http.post<Response<any>>( this.env.sceibaApi + '/term/' + term.uuid + '/edit', JSON.stringify(term), this.httpOptions ).
+    pipe().subscribe(this.termChangeObserver);
   }
 
   getTermsTreeByVocab(vocab: Vocabulary):Observable<Response<any>>{
-    let req = this.env.sceibaApi + '/vocabulary/' + vocab.id + '/terms/tree';
+    const req = this.env.sceibaApi + '/vocabulary/' + vocab.id + '/terms/tree';
     return this.http.get<Response<any>>(req);
   }
 }
