@@ -19,7 +19,7 @@ export class FormFieldVocabularyComponent implements OnInit {
 
   @Input() public formField: FormField;
 
-  // en this.formField.value va un arreglo con los ids seleccionados. 
+  // en this.formField.value va un arreglo con los ids seleccionados.
 
   formControl = new FormControl();
   inputId: string;
@@ -27,7 +27,7 @@ export class FormFieldVocabularyComponent implements OnInit {
   chipsList: Term[] = [];
   selectOptions: Term[] = [];
   multiple = true;
-  
+
   terms: TermNode[];
   vocab: Vocabulary;
   loading = true;
@@ -37,7 +37,7 @@ export class FormFieldVocabularyComponent implements OnInit {
   private termsTreeObserver: PartialObserver<Response<any>> = {
     next: (response: Response<any>) => {
       this.terms = response.data.terms.terms;
-      
+
       this.terms.forEach(element => {
         this.selectOptions = this.selectOptions.concat(this._get_terms(element));
       });
@@ -62,9 +62,9 @@ export class FormFieldVocabularyComponent implements OnInit {
         this.multiple = this.formField.input.multiple;
       }
       if (this.formField.input.selectedTermsIds) {
-        this.formField.value = this.formField.input.selectedTermsIds
-      }else{
-        this.formField.value = []
+        this.formField.value = this.formField.input.selectedTermsIds;
+      } else {
+        this.formField.value = [];
       }
 
       if (this.formField.input.vocab ) {
@@ -102,8 +102,10 @@ export class FormFieldVocabularyComponent implements OnInit {
   addChips(value: Term) {
     if (this.multiple) {
       this.chipsList.unshift(value);
+      this.formField.value.unshift(value.id);
     } else {
       this.chipsList = [value];
+      this.formField.value = [value.id];
     }
     this.selectOptions = this.selectOptions.filter(option => option.id !== value.id);
 
@@ -111,7 +113,6 @@ export class FormFieldVocabularyComponent implements OnInit {
     this._updateFilteredOptions();
     document.getElementById(this.inputId).blur();
 
-    this.formField.value.push(value.id);
   }
 
   removeChip(index: number) {

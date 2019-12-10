@@ -17,6 +17,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { TermGenericComponent } from './term-generic/term-generic.component';
 import { TermInstitutionsComponent } from './term-institutions/term-institutions.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TermIndexerComponent } from './term-indexer/term-indexer.component';
 
 
 
@@ -27,7 +28,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     TermsComponent,
     TaxonomyComponent,
     TermGenericComponent,
-    TermInstitutionsComponent
+    TermInstitutionsComponent,
+    TermIndexerComponent
   ],
   entryComponents: [
     VocabularyDialogComponent,

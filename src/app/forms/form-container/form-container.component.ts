@@ -104,7 +104,7 @@ export class FormContainerComponent implements OnInit, OnDestroy {
 
     @Input() public entity: Entity;
 
-    @Input() public addActionLabel = 'Adicionar';
+    @Input() public actionLabel = 'Adicionar';
 
     public step = 0;
 
