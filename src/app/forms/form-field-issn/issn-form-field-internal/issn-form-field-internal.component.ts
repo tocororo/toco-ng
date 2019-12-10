@@ -6,32 +6,8 @@ import { MatFormFieldControl } from '@angular/material/form-field';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
-import { ExtraValidators } from '@toco/core/utils/validator';
-
-/**
- * Data structure for holding an ISSN. 
- * An ISSN (International Standard Serial Number) is an 8-digit code used to identify 
- * newspapers, journals, magazines and periodicals of all kinds and on all media–print 
- * and electronic. For more information follow the link: https://www.issn.org/understanding-the-issn/what-is-an-issn/. 
- */
-export class IssnData
-{
-	/**
-	 * The first group of four digits.
-	 */
-	public firstGroup: string;
-
-	/**
-	 * The second group of four digits.
-	 */
-	public secondGroup: string;
-
-	constructor(fg: string, sg: string)
-	{
-		this.firstGroup = fg;
-		this.secondGroup = sg;
-	}
-}
+import { IssnValue } from '../issn-value';
+import { ExtraValidators } from '../../../core/utils/validator';
 
 /**
  * Custom `MatFormFieldControl` for ISSN input, i.e., a control that represents an 
@@ -57,7 +33,7 @@ export class IssnData
 	}
 })
 export class IssnFormFieldInternalComponent implements OnDestroy, 
-	MatFormFieldControl<IssnData>, ControlValueAccessor
+	MatFormFieldControl<IssnValue>, ControlValueAccessor
 {
 	/**
 	 * Returns the next Id. 
@@ -70,11 +46,13 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 	private static readonly _controlNameWithDash: string = 'issn-form-field';
 
 	/**
-	 * Tracks the value and validity state of a group of `FormControl` instances. 
+	 * Tracks the value and validity state of the control that contains the code. 
 	 */
 	public readonly parts: FormGroup;
 	private readonly _firstGroup: FormControl;
+	private _firstGroupOldValue: string;   /* It is used by '_handleInput' method. */
 	private readonly _secondGroup: FormControl;
+	private _secondGroupOldValue: string;  /* It is used by '_handleInput' method. */
 
     /**
      * Stream that emits whenever the state of the control changes such that the parent `MatFormField` 
@@ -106,11 +84,6 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 	 * Returns true if the control is disabled; otherwise, false. 
 	 */
 	private _disabled: boolean;
-
-	/**
-	 * Returns true if the control is in an error state; otherwise, false. 
-	 */
-	public _errorState: boolean;
 
     /**
      * Returns an optional name for the control type that can be used to distinguish `mat-form-field` elements 
@@ -154,8 +127,6 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 
 		this._disabled= false;
 	
-		this._errorState = false;
-
 		this.controlType = IssnFormFieldInternalComponent._controlNameWithDash;
 
 		this.describedBy = '';
@@ -166,15 +137,16 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 
 		/* Constructs a new `FormGroup` instance. */
 		this.parts = new FormGroup({
-			'First Group': this._firstGroup = new FormControl('', [
-				ExtraValidators.equalLength(4),
+			'fg': this._firstGroup = new FormControl((this._firstGroupOldValue = ''), [
+				ExtraValidators.equalLength(IssnValue.groupLength),
 				Validators.pattern('^[0-9]*$')]
 				),
-			'Second Group': this._secondGroup = new FormControl('', [
-				ExtraValidators.equalLength(4),
-				Validators.pattern('^[0-9]*$')]
+			'sg': this._secondGroup = new FormControl((this._secondGroupOldValue = ''), [
+				ExtraValidators.equalLength(IssnValue.groupLength),
+				Validators.pattern('^[0-9]*[0-9xX]$')]
 				),
-		});
+		}, ExtraValidators.issnConfirmCheckDigit('fg', 'sg')
+		);
 
 		/* Monitors focus on the element and applies appropriate CSS classes. */
 		_focusMonitor.monitor(_elementRef, true).subscribe(origin => {
@@ -205,30 +177,32 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 	}
 
 	/**
-	 * Returns the value of the control. 
+	 * Returns the value of the control. The value can be checked using the `isComplete` instance method. 
 	 */
 	@Input()
-	public get value(): IssnData | null
+	public get value(): IssnValue | null
 	{
-		if ((this._firstGroup.value.length == 4) && (this._secondGroup.value.length == 4))
-		{
-			//TODO: Test to 'return this.parts.value;' variable directamente y no crea una nueva (lo puedo hacer por como funciona este control). 
-			//return issn;
-			return new IssnData(this._firstGroup.value, this._secondGroup.value);
-		}
-		return null;
+		console.log(`Set Get 'value' method 123.`);
+
+		//return new IssnValue(this._firstGroup.value, this._secondGroup.value);
+		//return this.parts.value;
+		return this.value;
 	}
 
 	/**
-	 * Sets the value of the control. 
+	 * Sets the value of the control. If the value is null, sets an empty ISSN. 
+	 * It does not check if the value is complete. 
 	 * @param newIssn The new ISSN to set. 
 	 */
-	public set value(newIssn: IssnData | null)
+	public set value(newIssn: IssnValue | null)
 	{
-		newIssn = newIssn || new IssnData('', '');
+		console.log(`Set 'value' method 123.`);
 
-		//TODO: this.parts.setValue(newIssn);
-		this.parts.setValue({ 'First Group': newIssn.firstGroup, 'Second Group': newIssn.secondGroup });
+		newIssn = newIssn || new IssnValue('', '');
+
+		//this.parts.setValue({ 'fg': newIssn.firstGroup, 'sg': newIssn.secondGroup });
+		//this.parts.setValue(newIssn);
+		this.value = newIssn;
 
 		this.stateChanges.next();
 	}
@@ -315,7 +289,7 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 	 */
 	public get errorState(): boolean
 	{
-		/*You may not want your application to display errors before the user has a 
+		/* The control does not display errors before the user has a 
 		 * chance to edit the form. The checks for dirty and touched prevent errors 
 		 * from showing until the user does one of two things: changes the value, 
 		 * turning the control dirty; or blurs the form control element, setting the 
@@ -341,7 +315,7 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 
 			if (validationErrors[ExtraValidators.equalLength.name])
 			{
-				result += ' Its length must be 4';
+				result += ' Its length must be ' + IssnValue.groupLengthAsString;
 				result_alreadyHaveErrorInfo = true;
 			}
 
@@ -349,11 +323,11 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 			{
 				if (result_alreadyHaveErrorInfo)
 				{
-					result += ', and it can only have digits';
+					result += ', and all positions have digits';
 				}
 				else
 				{
-					result += ' It can only have digits';
+					result += ' All positions must have digits';
 				}
 
 				result_alreadyHaveErrorInfo = true;
@@ -373,7 +347,7 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 
 				if (validationErrors[ExtraValidators.equalLength.name])
 				{
-					result += ' Its length must be 4';
+					result += ' Its length must be ' + IssnValue.groupLengthAsString;
 					result_alreadyHaveErrorInfo = true;
 				}
 
@@ -381,11 +355,11 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 				{
 					if (result_alreadyHaveErrorInfo)
 					{
-						result += ', and it can only have digits';
+						result += ', and all positions have digits (the last one can also have x or X)';
 					}
 					else
 					{
-						result += ' It can only have digits';
+						result += ' All positions must have digits (the last one can also have x or X)';
 					}
 
 					result_alreadyHaveErrorInfo = true;
@@ -395,7 +369,33 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 			}
 		}
 
+		/* Only shows the `issnConfirmCheckDigit` error if there isn't any error in the first and second group. */
+		if (!result_alreadyHaveErrorInfo)
+		{
+			validationErrors = this.parts.errors;
+
+			if (validationErrors)
+			{
+				if (validationErrors[ExtraValidators.issnConfirmCheckDigit.name])
+				{
+					result += 'There is some wrong digit';
+					result_alreadyHaveErrorInfo = true;
+				}
+
+				result += '.';
+			}
+		}
+
 		return result;
+	}
+
+	/**
+     * Returns true if the input is currently in an autofilled state; otherwise, false. This property 
+	 * is not present on the control, then it returns false. 
+     */
+	public get autofilled(): boolean
+	{
+		return false;
 	}
 
 	/**
@@ -416,11 +416,11 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 	{
 		if (((event.target as Element).tagName.toLowerCase() != 'input') || (this.empty))
 		{
-			this._elementRef.nativeElement.querySelector('input')!.focus();
+			this._elementRef.nativeElement.querySelector<HTMLElement>('#first-group')!.focus();
 		}
 	}
 
-	public writeValue(issn: IssnData | null): void
+	public writeValue(issn: IssnValue | null): void
 	{
 		this.value = issn;
 	}
@@ -443,10 +443,44 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 	}
 
 	/**
-	 * Handler function that is called when the control's value changes in the UI. 
+	 * Handler function that is called when the control's value changes in the UI. For internal use only. 
 	 */
 	public _handleInput(): void
 	{
+		let firstGroupValue: string = this._firstGroup.value;
+		let secondGroupValue: string = this._secondGroup.value;
+
+		if (firstGroupValue.length == IssnValue.groupLength)
+		{
+			/* Sets the focus to the second group. */
+			if (this._firstGroup.valid) this._elementRef.nativeElement.querySelector<HTMLElement>('#second-group')!.focus();
+		}
+		else if (firstGroupValue.length > IssnValue.groupLength)
+		{
+			/* Sets the old value. */
+			this._firstGroup.setValue(this._firstGroupOldValue);
+			/* Sets the focus to the second group. */
+			if (this._firstGroup.valid) this._elementRef.nativeElement.querySelector<HTMLElement>('#second-group')!.focus();
+		}
+
+		if (secondGroupValue.length == IssnValue.groupLength)
+		{
+			if (secondGroupValue[IssnValue.groupLength - 1] === 'x')
+			{
+				/* Sets the 'x' value to upper case. */
+				if (this._secondGroup.valid) this._secondGroup.setValue((secondGroupValue = secondGroupValue.replace('x', 'X')));
+			}
+		}
+		else if (secondGroupValue.length > IssnValue.groupLength)
+		{
+			/* Sets the old value. */
+			this._secondGroup.setValue(this._secondGroupOldValue);
+		}
+
+		/* Updates the old values. */
+		this._firstGroupOldValue = this._firstGroup.value;
+		this._secondGroupOldValue = this._secondGroup.value;
+
 		this._onChange(this.parts.value);
 	}
 }

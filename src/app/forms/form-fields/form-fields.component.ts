@@ -8,20 +8,25 @@ import { FormFieldType, FormField } from '@toco/forms/form-container/form-contai
  * @description  `fields` is an input atribute, that represents a `FormField` interface Array.
  */
 @Component({
-  selector: 'toco-form-fields',
-  templateUrl: './form-fields.component.html',
-  styleUrls: ['./form-fields.component.scss']
+    selector: 'toco-form-fields',
+    templateUrl: './form-fields.component.html',
+    styleUrls: ['./form-fields.component.scss']
 })
-export class FormFieldsComponent implements OnInit {
-  @Input() public fields: Array<FormField>;
+export class FormFieldsComponent implements OnInit
+{
+    @Input()
+    public fields: Array<FormField>;
 
-  public readonly formFieldType: typeof FormFieldType = FormFieldType;
+    public readonly formFieldType: typeof FormFieldType = FormFieldType;
 
-  public constructor() { }
+    public constructor()
+    { }
 
-  public ngOnInit(): void {
-    if (!this.fields) {
-      this.fields = [];
+    public ngOnInit(): void
+    {
+        if (!this.fields)
+        {
+            this.fields = [];
+        }
     }
-  }
 }
