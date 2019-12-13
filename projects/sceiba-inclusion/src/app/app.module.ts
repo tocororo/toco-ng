@@ -1,5 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
+
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '@toco/shared/shared.module';
 
@@ -12,6 +13,7 @@ import { JournalModule } from '@toco/journal/journal.module';
 	declarations: [
 		AppComponent
 	],
+
 	imports: [
 		BrowserModule,
 		HttpClientModule,
@@ -19,7 +21,10 @@ import { JournalModule } from '@toco/journal/journal.module';
 		CatalogModule, 
 		JournalModule
 	],
+
 	providers: [],
+	
 	bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule
+{ }

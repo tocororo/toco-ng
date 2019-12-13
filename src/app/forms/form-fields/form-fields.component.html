@@ -20,9 +20,7 @@
       <input matInput type="url" [(ngModel)]="field.value" name="{{ field.name }}" placeholder="{{ field.placeholder }}" required="{{ field.required }}">
     </mat-form-field>
 
-    <mat-form-field *ngSwitchCase="formFieldType.email" [style.width]="field.width">
-      <input matInput type="email" [(ngModel)]="field.value" name="{{ field.name }}" placeholder="{{ field.placeholder }}" required="{{ field.required }}">
-    </mat-form-field>
+    <toco-form-field-email *ngSwitchCase="formFieldType.email" [formFieldContent]='field'></toco-form-field-email>
 
     <toco-form-field-issn *ngSwitchCase="formFieldType.issn" [formFieldContent]='field'></toco-form-field-issn>
 

@@ -12,6 +12,7 @@ import { IssnFormFieldInternalComponent } from './form-field-issn/issn-form-fiel
 import { FormFieldIssnComponent } from './form-field-issn/form-field-issn.component';
 import { FormFieldRnpsComponent } from './form-field-rnps/form-field-rnps.component';
 
+import { FormFieldEmailComponent } from './form-field-email/form-field-email.component';
 import { FormFieldVocabularyComponent } from './form-field-vocabulary/form-field-vocabulary.component';
 import { FormFieldTermParentComponent } from './form-field-term-parent/form-field-term-parent.component';
 
@@ -19,6 +20,7 @@ import { FormFieldTermParentComponent } from './form-field-term-parent/form-fiel
   declarations: [
     FormFieldsComponent,
     FormContainerComponent,
+    FormFieldEmailComponent,
     IssnFormFieldInternalComponent,
     FormFieldIssnComponent,
     FormFieldRnpsComponent,
@@ -34,6 +36,7 @@ import { FormFieldTermParentComponent } from './form-field-term-parent/form-fiel
   exports: [
     FormFieldsComponent,
     FormContainerComponent,
+    FormFieldEmailComponent,
     FormFieldIssnComponent,
     FormFieldRnpsComponent,
     FormFieldVocabularyComponent,
