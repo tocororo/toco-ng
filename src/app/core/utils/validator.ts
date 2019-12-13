@@ -1,8 +1,17 @@
 
 import { Directive, OnChanges, Input, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormGroup, ValidatorFn, ValidationErrors, Validator, NG_VALIDATORS } from '@angular/forms';
+import { AbstractControl, FormControl, ValidatorFn, ValidationErrors, Validator, NG_VALIDATORS } from '@angular/forms';
 
-import { IssnValue } from '../../forms/form-field-issn/issn-value';
+/**
+ * Represents a class that contains a boolean property named `required`. 
+ */
+export interface RequiredProperty
+{
+    /**
+     * Returns true if the control is required; otherwise, false. 
+     */
+    readonly required: boolean;
+}
 
 /**
  * @description
@@ -41,9 +50,9 @@ export class ExtraValidators
     public static equalLength(equalLength: number): ValidatorFn
     {
         return (control: AbstractControl): ValidationErrors | null => {
-            const len = control.value ? control.value.length : 0;
+            const len: number = control.value ? control.value.length : 0;
 
-            return (len != equalLength) 
+            return ((len != 0) && (len != equalLength)) 
                 ? { 'equalLength': { 'requiredLength': equalLength, 'actualLength': len } } 
                 : null;
         };
@@ -51,9 +60,82 @@ export class ExtraValidators
 
     /**
      * @description
+     * Validator that is applied to a control that has an array of child controls. 
+     * It receives an object that fits the `RequiredProperty` interface and an array of child controls. 
+     * The behavior of the validator is the following: 
+     * If the control's value is required, then 
+     *   - all child controls must be different of empty. 
+     * If the control's value is not required, then 
+     *   - all child controls can be empty. 
+     *   - if there is at least one child control not empty, then all child controls must be different of empty. 
+     * The validator exists only as a function and not as a directive. 
+     *
+     * @usageNotes
+     *
+     * ### Validates that the control does not have an empty child control: 
+     *
+     * ```typescript 
+     * const control = new FormGroup({
+     *     'fg': (firstGroup = new FormControl('2049')), 
+     *     'sg': (secondGroup = new FormControl(''))}, 
+     *     ExtraValidators.requiredAndNotEmpty(this, [firstGroup, secondGroup])); 
+     *
+     * console.log(control.errors); // { requiredAndNotEmpty: { required: true, pos: 1 } } 
+     * ``` 
+     *
+     * @returns A validator function that returns an error map with the `requiredAndNotEmpty` 
+     * if the validation check fails, otherwise `null`. 
+     */
+    public static requiredAndNotEmpty(requiredProperty: RequiredProperty, childControls: FormControl[]): ValidatorFn
+    {
+        return (control: AbstractControl): ValidationErrors | null => {
+            let i: number = 0;
+            let controlsGroupLength: number = childControls.length;
+
+            if (requiredProperty.required)
+            {
+                /* Only iterates to the first empty element. */
+                for (; i < controlsGroupLength; i++)
+                {
+                    if (!childControls[i].value) break;
+                }
+
+                return (i == controlsGroupLength) 
+                    ? null 
+                    : { 'requiredAndNotEmpty': { 'required': true, 'pos': i } };
+            }
+            else
+            {
+                let hasControlNotEmpty: boolean = false;
+                let minEmptyPos: number = -1;
+
+                /* Iterates to the first empty element. */
+                for (; i < controlsGroupLength; i++)
+                {
+                    if (childControls[i].value)
+                    {
+                        if (minEmptyPos != -1) break;
+                        hasControlNotEmpty = true;
+                    }
+                    else
+                    {
+                        if (minEmptyPos == -1) minEmptyPos = i;
+                        if (hasControlNotEmpty) break;
+                    }
+                }
+
+                return (i == controlsGroupLength)
+                    ? null
+                    : { 'requiredAndNotEmpty': { 'required': true, 'pos': minEmptyPos } };
+            }
+        };
+    }
+
+    /**
+     * @description
      * Validator that requires the control's value pass an ISSN validation test (confirm the check digit). 
-     * The ISSN value is divided in two groups, therefore the control has two child controls and its names 
-     * are arguments of the validator method. 
+     * The ISSN value is divided in two groups, therefore the control has two child controls and they are 
+     * arguments of the validator method. 
      * The validator exists only as a function and not as a directive. 
      *
      * @usageNotes
@@ -62,9 +144,9 @@ export class ExtraValidators
      *
      * ```typescript 
      * const control = new FormGroup({
-     *     'fg': new FormControl('2049'), 
-     *     'sg': new FormControl('3635')}, 
-     *     ExtraValidators.issnConfirmCheckDigit('fg', 'sg')); 
+     *     'fg': (firstGroup = new FormControl('2049')), 
+     *     'sg': (secondGroup = new FormControl('3635'))}, 
+     *     ExtraValidators.issnConfirmCheckDigit(firstGroup, secondGroup, 4)); 
      *
      * console.log(control.errors); // { issnConfirmCheckDigit: true } 
      * ``` 
@@ -72,19 +154,19 @@ export class ExtraValidators
      * @returns A validator function that returns an error map with the `issnConfirmCheckDigit` 
      * if the validation check fails, otherwise `null`. 
      */
-    public static issnConfirmCheckDigit(controlName_firstGroup: string, controlName_secondGroup: string): ValidatorFn
+    public static issnConfirmCheckDigit(firstGroup: FormControl, secondGroup: FormControl, groupLength: number): ValidatorFn
     {
-        return (control: FormGroup): ValidationErrors | null => {
-            if ((control.get(controlName_firstGroup).value.length == IssnValue.groupLength) && (control.get(controlName_secondGroup).value.length == IssnValue.groupLength))
+        return (control: AbstractControl): ValidationErrors | null => {
+            if ((firstGroup.value.length == groupLength) && (secondGroup.value.length == groupLength))
             {
-                let groupValue: string = control.get(controlName_firstGroup).value;
+                let groupValue: string = firstGroup.value;
 
                 let result: number = (groupValue.charCodeAt(0) - 48) * 8;
                 result += (groupValue.charCodeAt(1) - 48) * 7;
                 result += (groupValue.charCodeAt(2) - 48) * 6;
                 result += (groupValue.charCodeAt(3) - 48) * 5;
 
-                result += ((groupValue = control.get(controlName_secondGroup).value).charCodeAt(0) - 48) * 4;
+                result += ((groupValue = secondGroup.value).charCodeAt(0) - 48) * 4;
                 result += (groupValue.charCodeAt(1) - 48) * 3;
                 result += (groupValue.charCodeAt(2) - 48) * 2;
                 result += ((groupValue[3] == 'x') || (groupValue[3] == 'X')) ? 10 : groupValue.charCodeAt(3) - 48;
@@ -132,7 +214,8 @@ export class EqualLengthDirective implements OnChanges, Validator
      * @description
      * Input variable that contains the length to check. 
      */
-    @Input() public equalLength: string;
+    @Input()
+    public equalLength: string;
 
     private _validator: ValidatorFn;
     private _onChange: () => void;

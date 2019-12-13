@@ -1,6 +1,6 @@
 
 import { Component, OnDestroy, Input, ElementRef, Optional, Self } from '@angular/core';
-import { ControlValueAccessor, NgControl, FormControl, FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
+import { ControlValueAccessor, NgControl, FormControl, FormGroup, FormBuilder, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { FocusMonitor } from '@angular/cdk/a11y';
@@ -139,13 +139,15 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 		this.parts = new FormGroup({
 			'fg': this._firstGroup = new FormControl((this._firstGroupOldValue = ''), [
 				ExtraValidators.equalLength(IssnValue.groupLength),
-				Validators.pattern('^[0-9]*$')]
-				),
+				Validators.pattern('^[0-9]*$')]),
 			'sg': this._secondGroup = new FormControl((this._secondGroupOldValue = ''), [
 				ExtraValidators.equalLength(IssnValue.groupLength),
-				Validators.pattern('^[0-9]*[0-9xX]$')]
-				),
-		}, ExtraValidators.issnConfirmCheckDigit('fg', 'sg')
+				Validators.pattern('^[0-9]*[0-9xX]$')])
+		},
+		[
+			ExtraValidators.requiredAndNotEmpty(this, [this._firstGroup, this._secondGroup]),
+			ExtraValidators.issnConfirmCheckDigit(this._firstGroup, this._secondGroup, IssnValue.groupLength)
+		]
 		);
 
 		/* Monitors focus on the element and applies appropriate CSS classes. */
@@ -166,7 +168,7 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 			ngControl.valueAccessor = this;
 		}
 	}
-	
+
 	public ngOnDestroy(): void
 	{
 		/* Completes `stateChanges` when the control is destroyed. */
@@ -304,6 +306,10 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 	 */
 	public getErrorMessage(): string
 	{
+		console.log(this._firstGroup.errors);
+		console.log(this._secondGroup.errors);
+		console.log(this.parts.errors);
+
 		let result: string = '';
 		let result_alreadyHaveErrorInfo: boolean = false;
 		let validationErrors: ValidationErrors = this._firstGroup.errors;
@@ -376,6 +382,20 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 
 			if (validationErrors)
 			{
+				if (validationErrors[ExtraValidators.requiredAndNotEmpty.name])
+				{
+					if (validationErrors[ExtraValidators.requiredAndNotEmpty.name].pos == 0)
+					{
+						result += 'First Group: Its length must be ' + IssnValue.groupLengthAsString;
+					}
+					else
+					{
+						result += 'Second Group: Its length must be ' + IssnValue.groupLengthAsString;
+					}
+
+					result_alreadyHaveErrorInfo = true;
+				}
+
 				if (validationErrors[ExtraValidators.issnConfirmCheckDigit.name])
 				{
 					result += 'There is some wrong digit';

@@ -70,18 +70,34 @@ export class FormFieldRnpsComponent extends FormField implements OnInit
         if (this.hintValue == undefined) this.hintValue = `Write a valid ${ RnpsValue.rnps_Abbreviation }.`;
     }
 
+	/**
+	 * Returns true if the control is empty; otherwise, false. 
+	 */
+	public get empty(): boolean
+	{
+		return (!this.code.value);
+    }
+
+    /**
+     * Returns true if the control is in a hint state; otherwise, false. 
+     */
+    public get hintState(): boolean
+    {
+        return this.empty;
+    }
+
     /**
      * Returns true if the control is in an error state; otherwise, false. 
      */
     public get errorState(): boolean
     {
-		/* The control does not display errors before the user has a 
-		 * chance to edit the form. The checks for dirty and touched prevent errors 
-		 * from showing until the user does one of two things: changes the value, 
-		 * turning the control dirty; or blurs the form control element, setting the 
-		 * control to touched. 
-		 * Thus, it reveals an error message only if the control is invalid and 
-		 * the control is either dirty or touched. */
+        /* The control does not display errors before the user has a 
+         * chance to edit the form. The checks for dirty and touched prevent errors 
+         * from showing until the user does one of two things: changes the value, 
+         * turning the control dirty; or blurs the form control element, setting the 
+         * control to touched. 
+         * Thus, it reveals an error message only if the control is invalid and 
+         * the control is either dirty or touched. */
         return ((this.code.invalid) && (this.code.dirty || this.code.touched));
     }
 
@@ -90,34 +106,34 @@ export class FormFieldRnpsComponent extends FormField implements OnInit
      */
     public getErrorMessage(): string
     {
-		let result: string = '';
-		let result_alreadyHaveErrorInfo: boolean = false;
-		let validationErrors: ValidationErrors = this.code.errors;
+        let result: string = '';
+        let result_alreadyHaveErrorInfo: boolean = false;
+        let validationErrors: ValidationErrors = this.code.errors;
 
-		/* Shows the code errors. */
-		if (validationErrors)
-		{
-			if (validationErrors[ExtraValidators.equalLength.name])
-			{
-				result += 'Its length must be ' + RnpsValue.codeLengthAsString;
-				result_alreadyHaveErrorInfo = true;
-			}
+        /* Shows the code errors. */
+        if (validationErrors)
+        {
+            if ((validationErrors[ExtraValidators.equalLength.name]) || (validationErrors[Validators.required.name]))
+            {
+                result += 'Its length must be ' + RnpsValue.codeLengthAsString;
+                result_alreadyHaveErrorInfo = true;
+            }
 
-			if (validationErrors[Validators.pattern.name])
-			{
-				if (result_alreadyHaveErrorInfo)
-				{
-					result += ', and all positions have digits';
-				}
-				else
-				{
-					result += 'All positions must have digits';
-				}
+            if (validationErrors[Validators.pattern.name])
+            {
+                if (result_alreadyHaveErrorInfo)
+                {
+                    result += ', and all positions have digits';
+                }
+                else
+                {
+                    result += 'All positions must have digits';
+                }
 
-				result_alreadyHaveErrorInfo = true;
-			}
+                result_alreadyHaveErrorInfo = true;
+            }
 
-			result += '.';
+            result += '.';
         }
 
         return result;
@@ -128,8 +144,6 @@ export class FormFieldRnpsComponent extends FormField implements OnInit
 	 */
 	public _handleInput(): void
 	{
-        this.hintValue = '';
-
 		if (this.code.value.length > RnpsValue.codeLength)
 		{
 			/* Sets the old value. */

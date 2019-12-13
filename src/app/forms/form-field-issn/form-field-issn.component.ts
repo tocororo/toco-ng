@@ -61,6 +61,22 @@ export class FormFieldIssnComponent extends FormField implements OnInit
 	}
 
 	/**
+	 * Returns true if the control is empty; otherwise, false. 
+	 */
+	public get empty(): boolean
+	{
+		return this._issnFormFieldInternalComponent.empty;
+    }
+
+    /**
+     * Returns true if the control is in a hint state; otherwise, false. 
+     */
+    public get hintState(): boolean
+    {
+        return this.empty;
+	}
+
+	/**
 	 * Returns true if the control is in an error state; otherwise, false. 
 	 */
 	public get errorState(): boolean
@@ -73,8 +89,6 @@ export class FormFieldIssnComponent extends FormField implements OnInit
 	 */
 	public getErrorMessage(): string
 	{
-		this.hintValue = '';
-
 		return this._issnFormFieldInternalComponent.getErrorMessage();
 	}
 }

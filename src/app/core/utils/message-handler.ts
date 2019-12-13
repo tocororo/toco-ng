@@ -21,10 +21,10 @@ export class MessageHandler {
                     this.componentHandler( message ? message : 'No se pudo conectar al servidor', component )
                 break;
             case StatusCode.notFound:
-                    this.componentHandler( message ? message : 'Peración extraviada, no se pudo realizar', component )
+                    this.componentHandler( message ? message : 'Operación extraviada, no se pudo realizar', component )
                 break;
             default:
-                    this.componentHandler( message ? message : 'Oeración realizada con éxito', component )
+                    this.componentHandler( message ? message : 'Operación realizada con éxito', component )
                 break;
         }
     }
