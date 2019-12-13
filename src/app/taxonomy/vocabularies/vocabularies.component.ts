@@ -13,22 +13,21 @@ import { MessageHandler, StatusCode } from '@toco/core/utils/message-handler';
 import { FormControl } from '@angular/forms';
 
 
-class ActionNew implements FormContainerAction {
-  doit(data: any): void {
-    console.log(this);
-    this.service.newVocabulary(data);
-  }
-  constructor(private service: TaxonomyService) {
 
-  }
-}
 
-class ActionEdit implements FormContainerAction {
+class VocabAction implements FormContainerAction {
   doit(data: any): void {
-    console.log(this);
-    this.service.editVocabulary(data, this.vocab);
+    this.vocab.name = data.name;
+    this.vocab.human_name = data.human_name;
+    this.vocab.description = data.description;
+
+    if (this.is_new) {
+      this.service.newVocabulary(this.vocab);
+    } else {
+      this.service.editVocabulary(this.vocab);
+    }
   }
-  constructor(private service: TaxonomyService, private vocab: Vocabulary) {
+  constructor(private service: TaxonomyService, private vocab: Vocabulary, private is_new: boolean) {
 
   }
 }
@@ -38,13 +37,61 @@ class ActionEdit implements FormContainerAction {
   selector: 'toco-vocabulary-dialog',
   templateUrl: './vocabulary-dialog.html'
 })
-export class VocabularyDialogComponent {
+export class VocabularyDialogComponent implements OnInit {
+
+  public panels: Panel[];
+  public action: FormContainerAction;
+  public actionLabel = 'Adicionar';
 
   constructor(
     public dialogRef: MatDialogRef<FormContainerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {}
 
-  onNoClick(): void {
+    ngOnInit(): void {
+      if (this.data.service) {
+        if (this.data.vocab) {
+          this.actionLabel = 'Actualizar';
+          this.action = new VocabAction(this.data.service, this.data.vocab, false);
+        } else {
+          this.data.vocab = new Vocabulary();
+          this.actionLabel = 'Adicionar';
+          this.action = new VocabAction(this.data.service, this.data.vocab, true);
+        }
+        this.panels = [{
+          title: 'Vocabulario',
+          description: '',
+          iconName: '',
+          formField : [
+            {
+              name: 'name',
+              placeholder: 'Identificador',
+              type: FormFieldType.input,
+              required: true,
+              width: '100%',
+              value: this.data.vocab.name,
+            },
+            {
+              name: 'human_name',
+              placeholder: 'Nombre',
+              type: FormFieldType.input,
+              required: true,
+              width: '100%',
+              value: this.data.vocab.human_name,
+            },
+            {
+              name: 'description',
+              placeholder: 'Descripción',
+              type: FormFieldType.textarea,
+              required: false,
+              width: '100%',
+              value: this.data.vocab.description,
+            },
+          ]
+        }];
+      }
+    }
+
+    onNoClick(): void {
     this.dialogRef.close();
   }
 
@@ -63,7 +110,7 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
       this.dialog.closeAll();
       this.loadVocabularies();
       const m  = new MessageHandler(this._snackBar);
-      m.showMessage(StatusCode.OK, result.message)
+      m.showMessage(StatusCode.OK, result.message);
     },
 
     error: (err: any) => {
@@ -75,20 +122,11 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
     }
   };
 
-  vocabCtrl = new FormControl();
-  filteredVocabularies: Observable<Vocabulary[]>;
-  currentVocab: Vocabulary = null
-  // tslint:disable-next-line: max-line-length
-  vocabularies: Vocabulary[];
-  public panels: Panel[] = [{
-    title: 'Vocabulario',
-    description: '',
-    iconName: '',
-    formField : [
-        {name: 'name', placeholder: 'Nombre', type: FormFieldType.input, required: true, width: '100%' },
-        {name: 'description', placeholder: 'Descripción', type: FormFieldType.textarea, required: false, width: '100%' },
-    ]
-  }];
+  public vocabCtrl = new FormControl();
+  public filteredVocabularies: Observable<Vocabulary[]>;
+  public currentVocab: Vocabulary = null;
+  public vocabularies: Vocabulary[] = [];
+
   loading = false;
 
   @Output() emiterShowTerms: EventEmitter<Vocabulary> = new EventEmitter();
@@ -96,13 +134,7 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
   constructor(private service: TaxonomyService,
               public dialog: MatDialog,
               private _snackBar: MatSnackBar) {
-    this.filteredVocabularies = this.vocabCtrl.valueChanges
-      .pipe<string, Vocabulary[]>(
-        startWith(''),
-        map(value => {
-          return this.vocabularies.filter(vocab => vocab.name.toLowerCase().includes(value.toLowerCase()));
-          })
-      );
+
   }
 
   ngOnInit() {
@@ -116,7 +148,7 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectVocab(item: Vocabulary){
+  selectVocab(item: Vocabulary) {
     this.currentVocab = item;
     this.showTerms(item);
   }
@@ -135,19 +167,34 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
     .subscribe(response => {
       if (response) {
         this.vocabularies = response.data.vocabularies;
+        this.filteredVocabularies = this.vocabCtrl.valueChanges
+        .pipe<string, Vocabulary[]>(
+          startWith(''),
+          map(value => {
+            return this.vocabularies.filter(vocab => vocab.name.toLowerCase().includes(value.toLowerCase()));
+            })
+        );
       } else {
         this.vocabularies = [];
       }
     });
   }
 
-  editVocab( vocab: any ) {
-    this.panels[0].formField[0].value = vocab.name;
-    this.panels[0].formField[1].value = vocab.description;
+  newVocab(): void {
     const dialogRef = this.dialog.open(VocabularyDialogComponent, {
-      data: { panel: this.panels, action: new ActionEdit(this.service, vocab)}
+      data: { vocab: null, service: this.service}
     });
     dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  editVocab( vocab: any ) {
+    const dialogRef = this.dialog.open(VocabularyDialogComponent, {
+      data: { vocab: vocab, service: this.service }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadVocabularies();
       console.log('The dialog was closed');
     });
   }
@@ -161,14 +208,6 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
     this.service.vocabularyChanged(vocab);
   }
 
-  addVocabularyDialog(): void {
-    const dialogRef = this.dialog.open(VocabularyDialogComponent, {
-      data: { panel: this.panels, action: new ActionNew(this.service)}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
 }
 
 

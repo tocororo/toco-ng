@@ -174,7 +174,7 @@ export class TermsComponent implements OnInit, OnDestroy{
         break;
       default:
         const dialogRef = this.dialog.open(TermGenericComponent, {
-          data: { term: term, service: this.service, terms: this.dataSource.data, vocab: this.vocab }
+          data: { term: term, terms: this.dataSource.data, vocab: this.vocab, service: this.service }
         });
     }
   }
@@ -183,7 +183,4 @@ export class TermsComponent implements OnInit, OnDestroy{
     console.log(node);
   }
 
-  addChild(node: TermNode) {
-    console.log(node);
-  }
 }

@@ -18,7 +18,7 @@ export class FormFieldTermParentComponent extends FormField implements OnInit {
   selectOptions: Term[] = [];
   currentTerm: Term = null;
   parentTerm: Term = null;
-  
+
   constructor() {
     super();
    }

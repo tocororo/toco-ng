@@ -61,11 +61,15 @@ export class FormFieldVocabularyComponent extends FormField implements OnInit {
       if (this.formFieldContent.input.multiple !== null) {
         this.multiple = this.formFieldContent.input.multiple;
       }
-      if (this.formFieldContent.input.selectedTermsIds) {
-        this.formFieldContent.value = this.formFieldContent.input.selectedTermsIds;
-      } else {
-        this.formFieldContent.value = [];
+      // if (this.formFieldContent.input.selectedTermsIds) {
+      //   this.formFieldContent.value = this.formFieldContent.input.selectedTermsIds;
+      // } else {
+      //   this.formFieldContent.value = [];
+      // }
+      if (!this.formFieldContent.input.selectedTermsIds) {
+        this.formFieldContent.input.selectedTermsIds = [];
       }
+      this.formFieldContent.value = [];
 
       if (this.formFieldContent.input.vocab ) {
         this.vocab = this.formFieldContent.input.vocab;
@@ -87,9 +91,10 @@ export class FormFieldVocabularyComponent extends FormField implements OnInit {
 
   private _get_terms(node: TermNode): Term[] {
     let result: Term[] = [];
-    if ( (this.formFieldContent.value as []).some(id => id === node.term.id)){
+    if ( ( this.formFieldContent.input.selectedTermsIds as []).some(id => id === node.term.id)) {
+      this.formFieldContent.value.push(node.term.id);
       this.chipsList.push(node.term);
-    }else{
+    } else {
       result.push(node.term);
     }
     node.children.forEach(child => {
@@ -104,6 +109,11 @@ export class FormFieldVocabularyComponent extends FormField implements OnInit {
       this.chipsList.unshift(value);
       this.formFieldContent.value.unshift(value.id);
     } else {
+      // if not is multiple, then the element in the chipsList goes back to the options
+      if (this.chipsList.length > 0) {
+        this.selectOptions.push(this.chipsList[0]);
+      }
+
       this.chipsList = [value];
       this.formFieldContent.value = [value.id];
     }

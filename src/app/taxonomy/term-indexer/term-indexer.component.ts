@@ -15,8 +15,7 @@ class IndexerAction implements FormContainerAction {
     this.term.name = data.name;
     this.term.parent_id = data.parent_id;
     this.term.description = data.description;
-    let class_ids  = (data.miar_class as []);
-    class_ids.concat(data.group_mes);
+    const class_ids  = (data.miar_class as []).concat(data.group_mes);
     this.term.class_ids = class_ids;
     this.term.data = {
       'abrev': data.abrev,
@@ -173,7 +172,7 @@ export class TermIndexerComponent implements OnInit {
                     selectedTermsIds : (this.term.class_ids) ? this.term.class_ids : null,
                     vocab: response_miar.data.vocabulary
                   },
-                  width: '30%'
+                  width: '48%'
                 },
                 {
                   name: 'group_mes',
@@ -185,7 +184,7 @@ export class TermIndexerComponent implements OnInit {
                     selectedTermsIds : (this.term.class_ids) ? this.term.class_ids : null,
                     vocab: response_group.data.vocabulary
                   },
-                  width: '30%'
+                  width: '48%'
                 },
               ];
               this.panels[0].formField = this.formFieldsContent;

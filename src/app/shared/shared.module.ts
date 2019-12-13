@@ -1,5 +1,5 @@
 
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
@@ -20,7 +20,9 @@ import { BodyComponent } from './body/body.component';
     JournalCardComponent,
     BodyComponent
   ],
-
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
   imports: [
     CommonModule,
     BrowserAnimationsModule,
@@ -35,11 +37,10 @@ import { BodyComponent } from './body/body.component';
     FormsModule,
     MaterialModule,
     FlexLayoutModule,
-    
+
     PageHeaderComponent,
-    InfoCardComponent,    
+    InfoCardComponent,
     BodyComponent
   ],
 })
-export class SharedModule
-{ }
+export class SharedModule { }
