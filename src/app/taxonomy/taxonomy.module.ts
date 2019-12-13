@@ -34,7 +34,8 @@ import { TermIndexerComponent } from './term-indexer/term-indexer.component';
   entryComponents: [
     VocabularyDialogComponent,
     TermGenericComponent,
-    TermInstitutionsComponent
+    TermInstitutionsComponent,
+    TermIndexerComponent
   ],
   imports: [
     CommonModule,

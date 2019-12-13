@@ -8,14 +8,14 @@ export class Term extends Entity {
   data: any;
   vocabulary_id: number;
   parent_id: number;
-  clasified_ids: [];
-  class_ids: [];
+  clasified_ids: number[];
+  class_ids: number[];
 }
 
 export class Vocabulary extends Entity {
     name: string;
     description: string;
-    human_name:string;
+    human_name: string;
 }
 
 

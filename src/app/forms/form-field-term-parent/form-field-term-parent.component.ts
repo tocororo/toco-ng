@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormFieldContent } from '../form-container/form-container.component';
+import { FormField } from '../form-container/form-container.component';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
@@ -10,10 +10,7 @@ import { Term, TermNode } from '@toco/entities/taxonomy.entity';
   templateUrl: './form-field-term-parent.component.html',
   styleUrls: ['./form-field-term-parent.component.scss']
 })
-export class FormFieldTermParentComponent implements OnInit {
-
-  @Input()
-  public formField: FormFieldContent;
+export class FormFieldTermParentComponent extends FormField implements OnInit {
 
   formControl = new FormControl();
   inputId: string;
@@ -21,17 +18,20 @@ export class FormFieldTermParentComponent implements OnInit {
   selectOptions: Term[] = [];
   currentTerm: Term = null;
   parentTerm: Term = null;
-  constructor() { }
+
+  constructor() {
+    super();
+   }
 
   ngOnInit() {
-    this.inputId = this.formField.placeholder.trim().toLowerCase();
-    if (this.formField.input && this.formField.input.terms ) {
+    this.inputId = this.formFieldContent.placeholder.trim().toLowerCase();
+    if (this.formFieldContent.input && this.formFieldContent.input.terms ) {
 
-        if (this.formField.input.currentTerm) {
-          this.currentTerm = this.formField.input.currentTerm;
+        if (this.formFieldContent.input.currentTerm) {
+          this.currentTerm = this.formFieldContent.input.currentTerm;
         }
 
-        (this.formField.input.terms as TermNode[]).forEach(element => {
+        (this.formFieldContent.input.terms as TermNode[]).forEach(element => {
           this.selectOptions = this.selectOptions.concat(this._get_terms(element));
         });
 
@@ -79,7 +79,7 @@ export class FormFieldTermParentComponent implements OnInit {
     this._updateFilteredOptions();
     document.getElementById(this.inputId).blur();
 
-    this.formField.value = this.parentTerm.id;
+    this.formFieldContent.value = this.parentTerm.id;
     (this.currentTerm)? this.currentTerm.parent_id = this.parentTerm.id : this.parentTerm.id;
 
   }

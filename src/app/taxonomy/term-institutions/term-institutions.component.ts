@@ -6,6 +6,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MessageHandler, StatusCode } from '@toco/core/utils/message-handler';
 
 
 class InstitutionAction implements FormContainerAction {
@@ -42,7 +44,6 @@ class InstitutionAction implements FormContainerAction {
 })
 export class TermInstitutionsComponent implements OnInit {
 
-
   loading = true;
 
   public panels: Panel[] = [{
@@ -51,19 +52,21 @@ export class TermInstitutionsComponent implements OnInit {
     iconName: '',
     formField : []
   }];
-  formFields: FormFieldContent[];
+  formFieldsContent: FormFieldContent[];
   actionLabel: string;
 
   public action: FormContainerAction;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public _snackBar: MatSnackBar) {}
 
   ngOnInit() {
     if (this.data.service) {
       console.log('if (this.data.service) {');
-      (this.data.service as TaxonomyService).getVocabulary(VocabulariesInmutableNames.PROVINCES).pipe(
+      (this.data.service as TaxonomyService).getVocabulary(VocabulariesInmutableNames.PROVINCES)
+      .pipe(
         catchError((err: HttpErrorResponse) => {
-          // const m  = new MessageHandler(this._snackBar);
-          // m.showMessage(StatusCode.serverError);
+          const m  = new MessageHandler(this._snackBar);
+          m.showMessage(StatusCode.serverError);
           // TODO: Maybe you must set a better return.
           return of(null);
         }),
@@ -86,8 +89,9 @@ export class TermInstitutionsComponent implements OnInit {
             this.panels[0].title = 'Nuevo Término de ' + this.data.vocab.human_name;
           }
 
-          this.data.term.this.data = (this.data.term.this.data) ? this.data.term.this.data : {};
-          this.formFields = [
+          this.data.term.data = (this.data.term.data) ? this.data.term.data : {};
+          
+          this.formFieldsContent = [
             {
               name: 'name', placeholder: 'Nombre',
               type: FormFieldType.input,
@@ -108,7 +112,7 @@ export class TermInstitutionsComponent implements OnInit {
               placeholder: 'Identificadores',
               type: FormFieldType.textarea,
               required: false,
-              value: (this.data.term.this.data.identifiers) ? this.data.term.this.data.identifiers : null,
+              value: (this.data.term.data.identifiers) ? this.data.term.data.identifiers : null,
               width: '30%'
             },
             {
@@ -116,7 +120,7 @@ export class TermInstitutionsComponent implements OnInit {
               placeholder: 'Email',
               type: FormFieldType.email,
               required: true,
-              value: (this.data.term.this.data.email) ? this.data.term.this.data.email : null,
+              value: (this.data.term.data.email) ? this.data.term.data.email : null,
               width: '30%'
             },
             {
@@ -124,7 +128,7 @@ export class TermInstitutionsComponent implements OnInit {
               placeholder: 'Sitio Web Oficial',
               type: FormFieldType.url,
               required: false,
-              value: (this.data.term.this.data.website) ? this.data.term.this.data.website : null,
+              value: (this.data.term.data.website) ? this.data.term.data.website : null,
               width: '30%'
             },
             {
@@ -132,7 +136,7 @@ export class TermInstitutionsComponent implements OnInit {
               placeholder: 'Dirección',
               type: FormFieldType.textarea,
               required: false,
-              value: (this.data.term.this.data.address) ? this.data.term.this.data.address : null,
+              value: (this.data.term.data.address) ? this.data.term.data.address : null,
               width: '100%'
             },
             {
@@ -147,7 +151,7 @@ export class TermInstitutionsComponent implements OnInit {
               width: '30%'
             },
           ];
-          this.panels[0].formField = this.formFields;
+          this.panels[0].formField = this.formFieldsContent;
         }
       });
     }
