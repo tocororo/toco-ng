@@ -28,9 +28,9 @@
 
     <toco-form-field-rnps *ngSwitchCase="formFieldType.rnps" [formFieldContent]='field'></toco-form-field-rnps>
 
-    <toco-form-field-vocabulary *ngSwitchCase="formFieldType.vocabulary" [formField]='field' [style.width]="field.width"></toco-form-field-vocabulary>
+    <toco-form-field-vocabulary *ngSwitchCase="formFieldType.vocabulary" [formFieldContent]='field' [style.width]="field.width"></toco-form-field-vocabulary>
 
-    <toco-form-field-term-parent *ngSwitchCase="formFieldType.term_parent" [formField]='field' [style.width]="field.width"></toco-form-field-term-parent>
+    <toco-form-field-term-parent *ngSwitchCase="formFieldType.term_parent" [formFieldContent]='field' [style.width]="field.width"></toco-form-field-term-parent>
 
     <mat-form-field *ngSwitchDefault [style.width]="field.width">
       <input matInput [(ngModel)]="field.value" name="{{ field.name }}" placeholder="{{ field.placeholder }}" required="{{ field.required }}" />

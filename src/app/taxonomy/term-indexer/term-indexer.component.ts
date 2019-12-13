@@ -36,7 +36,16 @@ class IndexerAction implements FormContainerAction {
   }
 
 }
-
+/***
+ * Componente para editar un termino del vocabulario Bases de Datos
+ * En data espera recibir:
+ * data: {
+ *  term: El termino que esta siendo editado
+ *  service: TaxonomyService
+ *  terms: Los terminos del Vocabulario
+ *  vocab: El vocabulario
+ * }
+ */
 @Component({
   selector: 'toco-term-indexer',
   templateUrl: './term-indexer.component.html',
@@ -56,7 +65,7 @@ export class TermIndexerComponent implements OnInit {
   actionLabel: string;
 
   public action: FormContainerAction;
-  
+
   term: Term;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public _snackBar: MatSnackBar) {}
@@ -86,7 +95,9 @@ export class TermIndexerComponent implements OnInit {
             }),
             finalize(() => this.loading = false)
           ).subscribe(response_group => {
-            if(response_group.data){
+            if (response_group.data) {
+              console.log(response_miar.data);
+              console.log(response_group.data);
               if (this.data.term) {
                 this.term = this.data.term;
                 this.action = new IndexerAction(this.data.service, this.term, false);
@@ -96,7 +107,7 @@ export class TermIndexerComponent implements OnInit {
                 this.term = new Term();
                 this.term.vocabulary_id = this.data.vocab.id;
                 this.data['term'] = this.term;
-                
+
                 this.action = new IndexerAction(this.data.service, this.term, true);
                 this.actionLabel = 'Adicionar';
                 this.panels[0].title = 'Nuevo Término de ' + this.data.vocab.human_name;
@@ -160,7 +171,7 @@ export class TermIndexerComponent implements OnInit {
                   input: {
                     multiple : false,
                     selectedTermsIds : (this.term.class_ids) ? this.term.class_ids : null,
-                    vocab: response_miar.data
+                    vocab: response_miar.data.vocabulary
                   },
                   width: '30%'
                 },
@@ -172,7 +183,7 @@ export class TermIndexerComponent implements OnInit {
                   input: {
                     multiple : false,
                     selectedTermsIds : (this.term.class_ids) ? this.term.class_ids : null,
-                    vocab: response_group.data
+                    vocab: response_group.data.vocabulary
                   },
                   width: '30%'
                 },

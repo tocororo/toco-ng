@@ -51,8 +51,8 @@ export class FormFieldVocabularyComponent extends FormField implements OnInit {
     }
   };
 
-  constructor(private service: TaxonomyService) { 
-    super()
+  constructor(private service: TaxonomyService) {
+    super();
   }
 
   ngOnInit() {

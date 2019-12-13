@@ -45,5 +45,4 @@ import { FormFieldTermParentComponent } from './form-field-term-parent/form-fiel
     FormsService
   ]
 })
-export class FormsModule
-{ }
+export class FormsModule { }

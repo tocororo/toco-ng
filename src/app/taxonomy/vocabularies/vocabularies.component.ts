@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Output } from '@angular/core';
+import { Component, OnInit, Inject, Output, OnDestroy } from '@angular/core';
 import { TaxonomyService } from '../taxonomy.service';
 import { Vocabulary, Term } from '@toco/entities/taxonomy.entity';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -33,12 +33,29 @@ class ActionEdit implements FormContainerAction {
   }
 }
 
+
+@Component({
+  selector: 'toco-vocabulary-dialog',
+  templateUrl: './vocabulary-dialog.html'
+})
+export class VocabularyDialogComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<FormContainerComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
+
 @Component({
   selector: 'toco-vocabularies',
   templateUrl: './vocabularies.component.html',
   styleUrls: ['./vocabularies.component.scss']
 })
-export class VocabulariesComponent implements OnInit {
+export class VocabulariesComponent implements OnInit, OnDestroy {
 
   private vocabulariesChangeSuscription: Subscription = null;
   private vocabulariesChangeObserver: PartialObserver<Response<any>> = {
@@ -80,7 +97,7 @@ export class VocabulariesComponent implements OnInit {
               public dialog: MatDialog,
               private _snackBar: MatSnackBar) {
     this.filteredVocabularies = this.vocabCtrl.valueChanges
-      .pipe<string,Vocabulary[]>(
+      .pipe<string, Vocabulary[]>(
         startWith(''),
         map(value => {
           return this.vocabularies.filter(vocab => vocab.name.toLowerCase().includes(value.toLowerCase()));
@@ -154,19 +171,4 @@ export class VocabulariesComponent implements OnInit {
   }
 }
 
-@Component({
-  selector: 'toco-vocabulary-dialog',
-  templateUrl: './vocabulary-dialog.html'
-})
-export class VocabularyDialogComponent {
-
-  constructor(
-    public dialogRef: MatDialogRef<FormContainerComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-}
 

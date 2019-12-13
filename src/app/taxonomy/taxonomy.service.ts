@@ -78,7 +78,7 @@ export class TaxonomyService {
     this.termChangeSource.next(resp);
   }
 
-  getVocabulary(id):Observable<Response<any>>{
+  getVocabulary(id):Observable<Response<any>> {
     let req = this.env.sceibaApi + '/vocabulary/' + id;
     return this.http.get<Response<any>>(req);
   }

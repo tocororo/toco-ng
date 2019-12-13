@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TermGenericComponent } from '../term-generic/term-generic.component';
 import { TermInstitutionsComponent } from '../term-institutions/term-institutions.component';
 import { MessageHandler, StatusCode } from '@toco/core/utils/message-handler';
+import { TermIndexerComponent } from '../term-indexer/term-indexer.component';
 
 
 
@@ -107,7 +108,6 @@ export class TermsComponent implements OnInit, OnDestroy{
 
     this.treeControl = new FlatTreeControl(this.getLevel, this.isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-    this.dataSource.data;
   }
 
   ngOnInit(): void {
@@ -167,7 +167,11 @@ export class TermsComponent implements OnInit, OnDestroy{
           data: { term: term, service: this.service, terms: this.dataSource.data, vocab: this.vocab }
         });
         break;
-
+      case VocabulariesInmutableNames.DATABASES:
+        this.dialog.open(TermIndexerComponent, {
+          data: { term: term, service: this.service, terms: this.dataSource.data, vocab: this.vocab }
+        });
+        break;
       default:
         const dialogRef = this.dialog.open(TermGenericComponent, {
           data: { term: term, service: this.service, terms: this.dataSource.data, vocab: this.vocab }
