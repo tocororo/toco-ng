@@ -5,3 +5,11 @@
 .item-width{
   width: 100%;
 }
+.padd{
+  padding: .7em;
+}
+.hover:hover{
+  transform: scale(1.02);
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.4);
+  border-radius: 3px;
+}
