@@ -12,7 +12,7 @@ import { JournalService } from '../journal.service';
 })
 export class JournalEditComponent
 {
-    //TODO: Idea del componente:
+    // TODO: Idea del componente:
     // trabajan internamente con un journal, si recibe null entonces es uno nuevo, si recibe un journal entonces es editar.
     // en ambos casos devuelve el journal editado, o sea el contenido, listo para hacer post en el backend.
     public journal: Journal;
@@ -79,7 +79,6 @@ export class JournalEditComponent
             ]
         }
     ];
-        
-    public constructor(private service: JournalService)
-    { }
+
+    public constructor(private service: JournalService) { }
 }

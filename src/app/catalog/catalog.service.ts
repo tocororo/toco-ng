@@ -25,7 +25,7 @@ export class CatalogService extends HttpService {
       const options = {
         params: params.set('count', count.toString()).set('page', (page).toString())
       };
-      return this.http.get<Response<any>>(this.env.sceibaApi + '/sources', options);
+      return this.http.get<Response<any>>(this.env.sceibaApi + '/source/journals', options);
     }
     catch (error) {
     }
@@ -33,7 +33,7 @@ export class CatalogService extends HttpService {
 
   getJournalsCount(): Observable<any> {
     try {
-      return this.http.get<Response<any>>(this.env.sceibaApi + '/sources/count');
+      return this.http.get<Response<any>>(this.env.sceibaApi + '/source/count');
     } catch (error) {
 
     }
@@ -41,6 +41,7 @@ export class CatalogService extends HttpService {
 
   getJournalsVocab(): Observable<Response<any>> {
     try {
+      console.log(this.env);
       return this.http.get<Response<any>>(this.env.sceibaApi + '/vocabularies');
     } catch (error) {
 
@@ -48,7 +49,7 @@ export class CatalogService extends HttpService {
   }
   getTerminosByVocab(vocabId: string): Observable<any> {
     try {
-      return this.http.get<any>(this.env.sceibaApi + '/terms/' + vocabId);
+      return this.http.get<any>(this.env.sceibaApi + '/vocabulary/' + vocabId+ '/terms/tree');
       // return  this.http.get<any>(sceibaApi+'/terminos?search=id_vocabulario:'+vocabId+'&filter=id;value');
     } catch (error) {
 

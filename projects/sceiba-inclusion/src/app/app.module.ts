@@ -8,23 +8,23 @@ import { AppComponent } from './app.component';
 
 import { CatalogModule } from '@toco/catalog/catalog.module';
 import { JournalModule } from '@toco/journal/journal.module';
+import { EnvServiceProvider } from '@tocoenv/env.service.provider';
 
 @NgModule({
-	declarations: [
-		AppComponent
-	],
+  declarations: [
+    AppComponent
+  ],
 
-	imports: [
-		BrowserModule,
-		HttpClientModule,
-		SharedModule,
-		CatalogModule, 
-		JournalModule
-	],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    SharedModule,
+    CatalogModule,
+    JournalModule
+  ],
 
-	providers: [],
-	
-	bootstrap: [AppComponent]
+  providers: [EnvServiceProvider],
+
+  bootstrap: [AppComponent]
 })
-export class AppModule
-{ }
+export class AppModule { }
