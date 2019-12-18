@@ -13,27 +13,27 @@ import { FilterContainerService } from '../filter-container.service';
 })
 export class SelectAutocompleteFilterComponent implements OnInit, FilterComponent {
   @Input() data: any;
-  type: string = '';
-  placeholder:  string = '';
-  text:string = '';
+  type = '';
+  placeholder = '';
+  text = '';
   multiple = false;
-  selectValue:string
+  selectValue: string;
   selectOptions: ValueInformation[] = [];
   myControl = new FormControl();
   filteredOptions: Observable<ValueInformation[]>;
   chipsList: ValueInformation[] = [];
   inputId: string;
-  
-  constructor(private filterService : FiltersService,
-    private filterContainerService: FilterContainerService  ) {}  
+
+  constructor(private filterService: FiltersService,
+    private filterContainerService: FilterContainerService  ) {}
 
   ngOnInit() {
-    if(this.data.type)          this.type = this.data.type;
-    if(this.data.placeholder)   this.placeholder = this.data.placeholder;
-    if(this.multiple)           this.multiple = true;
-    if(this.data.selectOptions) this.selectOptions = this.data.selectOptions;
-    this.data.value='';
-    this.filteredOptions = this.myControl.valueChanges.pipe<string,ValueInformation[]>(
+    if (this.data.type) {          this.type = this.data.type; }
+    if (this.data.placeholder) {   this.placeholder = this.data.placeholder; }
+    if (this.multiple) {           this.multiple = true; }
+    if (this.data.selectOptions) { this.selectOptions = this.data.selectOptions; }
+    this.data.value = '';
+    this.filteredOptions = this.myControl.valueChanges.pipe<string, ValueInformation[]>(
       startWith(''),
       map(value => this._filter(value))
     );
@@ -43,19 +43,19 @@ export class SelectAutocompleteFilterComponent implements OnInit, FilterComponen
     const filterValue = value.toLowerCase();
     return this.selectOptions.filter(option => option.name.toLowerCase().includes(filterValue));
   }
-  remove_component(){
+  remove_component() {
     this.filterService.deleteParameter(this.data.field);
-    this.filterContainerService.filterDeleted(this.data.index)
+    this.filterContainerService.filterDeleted(this.data.index);
     this.filterService.changeAutocompleteFilter(this.data.idVocab, 'OR');
   }
-  optionSelect(){
-    var valueEmiter ='OR';
-    this.chipsList.forEach(chip =>{
-      valueEmiter= valueEmiter+','+chip.id;
+  optionSelect() {
+    let valueEmiter = 'OR';
+    this.chipsList.forEach(chip => {
+      valueEmiter = valueEmiter + ',' + chip.id;
     });
     this.filterService.changeAutocompleteFilter(this.data.idVocab, valueEmiter);
   }
-  addChips(value: ValueInformation){
+  addChips(value: ValueInformation) {
     this.chipsList.unshift(value);
     this.myControl.setValue('');
     this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -63,15 +63,15 @@ export class SelectAutocompleteFilterComponent implements OnInit, FilterComponen
       map(value => this._filter(value))
     );
     document.getElementById(this.inputId).blur();
-    this.optionSelect()
+    this.optionSelect();
   }
-  removeChip(index: number){
-    this.chipsList.splice(index,1);
+  removeChip(index: number) {
+    this.chipsList.splice(index, 1);
     this.optionSelect();
   }
 
 }
-export interface ValueInformation{
+export interface ValueInformation {
   id: string;
-  name:string;
+  name: string;
 }

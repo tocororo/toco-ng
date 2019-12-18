@@ -79,8 +79,7 @@ export class TermIndexerComponent implements OnInit {
           m.showMessage(StatusCode.serverError);
           // TODO: Maybe you must set a better return.
           return of(null);
-        }),
-        finalize(() => this.loading = false)
+        })
       )
       .subscribe(response_miar => {
         if (response_miar.data) {

@@ -19,7 +19,7 @@ export class CatalogService extends HttpService {
       let params = new HttpParams();
       if (parameters) {
         for (let i = 0; i < parameters.length; i++) {
-          params = params.set(parameters[i].field, parameters[i].value)
+          params = params.set(parameters[i].field, parameters[i].value);
         }
       }
       const options = {
@@ -49,7 +49,7 @@ export class CatalogService extends HttpService {
   }
   getTerminosByVocab(vocabId: string): Observable<any> {
     try {
-      return this.http.get<any>(this.env.sceibaApi + '/vocabulary/' + vocabId+ '/terms/tree');
+      return this.http.get<any>(this.env.sceibaApi + '/vocabulary/' + vocabId+ '/terms');
       // return  this.http.get<any>(sceibaApi+'/terminos?search=id_vocabulario:'+vocabId+'&filter=id;value');
     } catch (error) {
 

@@ -10,12 +10,14 @@ import { JournalEditComponent } from './journal-edit/journal-edit.component';
 import { FormFieldsComponent } from '@toco/forms/form-fields/form-fields.component';
 import { FormContainerComponent } from '@toco/forms/form-container/form-container.component';
 import { FormsModule } from '@toco/forms/forms.module';
+import { TaxonomyService } from '@toco/taxonomy/taxonomy.service';
+import { CatalogService } from '@toco/catalog/catalog.service';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    JournalRoutingModule, 
+    JournalRoutingModule,
     FormsModule
   ],
   exports: [
@@ -23,12 +25,14 @@ import { FormsModule } from '@toco/forms/forms.module';
     JournalEditComponent
   ],
   declarations: [
-    JournalComponent, 
+    JournalComponent,
     JournalViewComponent,
     JournalEditComponent
   ],
   providers: [
-    JournalService
+    JournalService,
+    TaxonomyService,
+    CatalogService
   ]
 })
 export class JournalModule { }

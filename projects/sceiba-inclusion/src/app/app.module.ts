@@ -19,7 +19,6 @@ import { EnvServiceProvider } from '@tocoenv/env.service.provider';
     BrowserModule,
     HttpClientModule,
     SharedModule,
-    CatalogModule,
     JournalModule
   ],
 
