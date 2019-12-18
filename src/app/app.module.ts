@@ -5,22 +5,20 @@ import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { FormsModule } from './forms/forms.module';
 import { AppComponent } from './app.component';
-import { FormContainerComponent } from '@toco/forms/form-container/form-container.component';
-import { FormFieldsComponent } from './forms/form-fields/form-fields.component';
 
 @NgModule({
 	declarations: [
-		AppComponent,
-		FormContainerComponent,
-		FormFieldsComponent
+		AppComponent
 	],
 
 	imports: [
 		CommonModule,
 		SharedModule,
 		HttpClientModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		FormsModule
 	],
 
 	providers: [

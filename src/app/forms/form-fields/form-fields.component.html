@@ -16,10 +16,8 @@
 
     <mat-checkbox *ngSwitchCase="formFieldType.checkbox" [(ngModel)]="field.value" name="{{ field.name }}" required="{{ field.required }}" [style.width]="field.width"> {{ field.placeholder }} </mat-checkbox>
 
-    <mat-form-field *ngSwitchCase="formFieldType.url" [style.width]="field.width">
-      <input matInput type="url" [(ngModel)]="field.value" name="{{ field.name }}" placeholder="{{ field.placeholder }}" required="{{ field.required }}">
-    </mat-form-field>
-
+    <toco-form-field-url *ngSwitchCase="formFieldType.url" [formFieldContent]='field'></toco-form-field-url>
+    
     <toco-form-field-email *ngSwitchCase="formFieldType.email" [formFieldContent]='field'></toco-form-field-email>
 
     <toco-form-field-issn *ngSwitchCase="formFieldType.issn" [formFieldContent]='field'></toco-form-field-issn>

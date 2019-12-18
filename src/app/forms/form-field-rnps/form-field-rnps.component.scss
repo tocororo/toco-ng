@@ -1,11 +1,19 @@
 
-.rnps-mat-form-field
+#rnps-mat-form-field
 {
-    width: 130px;
-    padding-left: .5em;
+	//width: 130px;
+	width: 285px;
+	padding-left: .5em;
+	cursor: text;
 }
 
-.rnps-input-element
+#rnps-mat-form-field[appearance="fill"],
+#rnps-mat-form-field[appearance="outline"]
+{
+    width: 310px;
+}
+
+#rnps-input-element
 {
 	background: none;
 	border: none;
@@ -15,7 +23,7 @@
 	text-align: center;
 }
 
-.rnps-mat-icon
+#rnps-mat-icon
 {
     vertical-align: bottom;
 }

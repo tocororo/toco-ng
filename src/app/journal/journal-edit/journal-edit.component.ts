@@ -179,6 +179,7 @@ export class JournalEditComponent implements OnInit {
               placeholder: 'URL',
               type: FormFieldType.url,
               required: true,
+              hintValue: 'Escriba un URL válido.',
               width: '50%'
             },
             {
