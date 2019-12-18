@@ -32,7 +32,7 @@ export class CatalogFiltersComponent extends FilterContainerComponent{
 
     this.service.getJournalsVocab().subscribe(response =>{
       response.data.vocabularies.forEach(vocab =>{
-        this.service.getTerminosByVocab(vocab.name).subscribe(termsResponse => {
+        this.service.getTerminosByVocab(vocab.id).subscribe(termsResponse => {
           this.filters_data.push(
           {
             index: this.filters_data.length,

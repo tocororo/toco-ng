@@ -22,7 +22,7 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-      <div *ngIf="currentVocab">
+      <ng-container *ngIf="currentVocab">
         <button mat-icon-button (click)="editVocab(currentVocab)" matTooltip="Editar">
           <mat-icon>edit</mat-icon>
         </button>
@@ -30,7 +30,7 @@
           <mat-icon>delete</mat-icon>
         </button>
         <p>{{ currentVocab.description }}</p>
-      </div>
+      </ng-container>
     </ng-template>
   </mat-card-content>
 </mat-card>

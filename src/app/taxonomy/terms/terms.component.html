@@ -3,7 +3,7 @@
     <mat-card-title>
       <div fxLayout="row" fxLayoutAlign="space-between none">
         Términos<ng-container *ngIf="vocab"> de {{ vocab.human_name}} </ng-container>
-        <button mat-icon-button (click)="addTerm()" matTooltip="Adicionar Término">
+        <button mat-icon-button *ngIf="vocab" (click)="addTerm()" matTooltip="Adicionar Término">
           <mat-icon>library_add</mat-icon>
         </button>
       </div>
@@ -13,8 +13,8 @@
     <mat-spinner *ngIf="loading; else elseTemplate"></mat-spinner>
 
     <ng-template #elseTemplate>
-      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding fxLayout="row"
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="padd">
+        <mat-tree-node class="hover" *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding fxLayout="row"
           fxLayoutAlign="space-between center">
           {{ node.name }}
           <div>
@@ -28,7 +28,7 @@
 
         </mat-tree-node>
 
-        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+        <mat-tree-node class="hover" *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
           <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
             <mat-icon class="mat-icon-rtl-mirror">
               {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}

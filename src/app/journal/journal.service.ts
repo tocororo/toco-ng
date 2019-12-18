@@ -12,9 +12,9 @@ export class JournalService implements FormSuscriberInterface
     public constructor(private env: EnvService, private http: HttpClient)
     { }
 
-    public getJournalsById(id: string):Observable<Journal>
+    public getJournalsById(uuid: string):Observable<Journal>
     {
-        let req = this.env.sceibaApi + '/sources/' + id;
+        let req = this.env.sceibaApi + '/source/' + uuid;
 
         return this.http.get<Journal>(req);
     }
