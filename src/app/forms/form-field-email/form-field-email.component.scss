@@ -1,11 +1,19 @@
 
-.email-mat-form-field
+#email-mat-form-field
 {
-    //width: 130px;
-    padding-left: .5em;
+	//width: 130px;
+	width: 285px;
+	padding-left: .5em;
+	cursor: text;
 }
 
-.email-input-element
+#email-mat-form-field[appearance="fill"],
+#email-mat-form-field[appearance="outline"]
+{
+    width: 310px;
+}
+
+#email-input-element
 {
 	background: none;
 	border: none;
@@ -15,7 +23,7 @@
 	text-align: center;
 }
 
-.email-mat-icon
+#email-mat-icon
 {
     //font-family: "Material Icons Outlined";
     vertical-align: bottom;

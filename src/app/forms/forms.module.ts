@@ -8,11 +8,11 @@ import { FormFieldsComponent } from './form-fields/form-fields.component';
 import { FormContainerComponent } from './form-container/form-container.component';
 import { FormsService } from './forms.service';
 
+import { FormFieldUrlComponent } from './form-field-url/form-field-url.component';
+import { FormFieldEmailComponent } from './form-field-email/form-field-email.component';
 import { IssnFormFieldInternalComponent } from './form-field-issn/issn-form-field-internal/issn-form-field-internal.component';
 import { FormFieldIssnComponent } from './form-field-issn/form-field-issn.component';
 import { FormFieldRnpsComponent } from './form-field-rnps/form-field-rnps.component';
-
-import { FormFieldEmailComponent } from './form-field-email/form-field-email.component';
 import { FormFieldVocabularyComponent } from './form-field-vocabulary/form-field-vocabulary.component';
 import { FormFieldTermParentComponent } from './form-field-term-parent/form-field-term-parent.component';
 
@@ -20,6 +20,7 @@ import { FormFieldTermParentComponent } from './form-field-term-parent/form-fiel
   declarations: [
     FormFieldsComponent,
     FormContainerComponent,
+    FormFieldUrlComponent,
     FormFieldEmailComponent,
     IssnFormFieldInternalComponent,
     FormFieldIssnComponent,
@@ -36,6 +37,7 @@ import { FormFieldTermParentComponent } from './form-field-term-parent/form-fiel
   exports: [
     FormFieldsComponent,
     FormContainerComponent,
+    FormFieldUrlComponent,
     FormFieldEmailComponent,
     FormFieldIssnComponent,
     FormFieldRnpsComponent,

@@ -1,11 +1,19 @@
 
-.issn-mat-form-field
+#issn-mat-form-field
 {
-    width: 130px;
+    //width: 130px;
+    width: 285px;
     padding-left: .5em;
+    cursor: text;
 }
 
-.issn-mat-icon
+#issn-mat-form-field[appearance="fill"],
+#issn-mat-form-field[appearance="outline"]
+{
+    width: 310px;
+}
+
+#issn-mat-icon
 {
     vertical-align: bottom;
 }

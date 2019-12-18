@@ -31,7 +31,7 @@ export class JournalEditComponent
                 { name: 'title', placeholder: 'Título', type: FormFieldType.input, required: false },
                 { name: 'subtitle', placeholder: 'Subtítulo', type: FormFieldType.input, required: false },
                 { name: 'abbreviation', placeholder: 'Título abreviado', type: FormFieldType.input, required: false },
-                { name: 'url', placeholder: 'URL', type: FormFieldType.url, required: false },
+                { name: 'url', placeholder: 'URL', type: FormFieldType.url, required: false, hintValue: 'Escriba un url válido.' },
                 { name: 'email', placeholder: 'Correo Electrónico', type: FormFieldType.email, required: false, hintValue: 'Escriba un email válido.' },
                 { name: 'source_type', placeholder: 'Tipo de revista', type: FormFieldType.url, required: false },
                 { name: 'source_app', placeholder: 'Sistema', type: FormFieldType.url, required: false },
