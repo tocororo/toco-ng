@@ -110,6 +110,9 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 	 */
 	public _onTouched: () => void;
 
+	//TODO: esta forma de enlace será mejorado en el futuro. 
+	public thereWasInput: () => void;
+
 	constructor(private _formBuilder: FormBuilder, private _focusMonitor: FocusMonitor,
 		private _elementRef: ElementRef<HTMLElement>, @Optional() @Self() public ngControl: NgControl)
 	{
@@ -184,11 +187,10 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 	@Input()
 	public get value(): IssnValue | null
 	{
-		console.log(`Set Get 'value' method 123.`);
+		//console.log(this._firstGroup.value + this._secondGroup.value);
+		//console.log(`Set Get 'value' method 123.`);
 
-		//return new IssnValue(this._firstGroup.value, this._secondGroup.value);
-		//return this.parts.value;
-		return this.value;
+		return new IssnValue(this._firstGroup.value, this._secondGroup.value);
 	}
 
 	/**
@@ -198,13 +200,11 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 	 */
 	public set value(newIssn: IssnValue | null)
 	{
-		console.log(`Set 'value' method 123.`);
+		//console.log(`Set 'value' method 123.`);
 
 		newIssn = newIssn || new IssnValue('', '');
 
-		//this.parts.setValue({ 'fg': newIssn.firstGroup, 'sg': newIssn.secondGroup });
-		//this.parts.setValue(newIssn);
-		this.value = newIssn;
+		this.parts.setValue({ 'fg': newIssn.firstGroup, 'sg': newIssn.secondGroup });
 
 		this.stateChanges.next();
 	}
@@ -306,9 +306,9 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 	 */
 	public getErrorMessage(): string
 	{
-		console.log(this._firstGroup.errors);
-		console.log(this._secondGroup.errors);
-		console.log(this.parts.errors);
+		//console.log(this._firstGroup.errors);
+		//console.log(this._secondGroup.errors);
+		//console.log(this.parts.errors);
 
 		let result: string = '';
 		let result_alreadyHaveErrorInfo: boolean = false;
@@ -500,6 +500,9 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 		/* Updates the old values. */
 		this._firstGroupOldValue = this._firstGroup.value;
 		this._secondGroupOldValue = this._secondGroup.value;
+
+		//TODO: esta forma de enlace será mejorado en el futuro. 
+		this.thereWasInput();
 
 		this._onChange(this.parts.value);
 	}

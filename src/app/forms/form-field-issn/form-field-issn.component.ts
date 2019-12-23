@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 
 import { IssnFormFieldInternalComponent } from './issn-form-field-internal/issn-form-field-internal.component';
-import { IssnType_Abbreviation } from './issn-value';
+import { IssnType_Abbreviation, IssnValue } from './issn-value';
 import { FormField } from '../form-container/form-container.component';
 
 /**
@@ -50,6 +50,27 @@ export class FormFieldIssnComponent extends FormField implements OnInit
 
 	public ngOnInit(): void
 	{
+		//console.log(this.formFieldContent.value);
+
+		//TODO: esta forma de enlace será mejorado en el futuro. 
+		this._issnFormFieldInternalComponent.thereWasInput = () => {
+			//console.log('Bien');
+
+			let temp: string = '';
+
+			temp = temp.concat(this._issnFormFieldInternalComponent.value.firstGroup, this._issnFormFieldInternalComponent.value.secondGroup);
+
+			this.formFieldContent.value = temp;
+		};
+
+		if (this.formFieldContent.value != undefined)
+		{
+			this._issnFormFieldInternalComponent.value = new IssnValue(
+				this.formFieldContent.value.substr(0, IssnValue.groupLength),
+				this.formFieldContent.value.substr(IssnValue.groupLength, IssnValue.groupLength)
+			);
+		}
+
 		this.placeholder = this.formFieldContent.placeholder;
 		if (this.placeholder == undefined) this.placeholder = IssnType_Abbreviation.ISSN;
 

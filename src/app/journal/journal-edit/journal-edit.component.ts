@@ -23,7 +23,7 @@ export class JournalEditComponent
             description: '',
             iconName: '',
             formField : [
-                { name: 'issn_p', placeholder: 'ISSN Impreso', type: FormFieldType.issn, required: false, hintValue: 'Escriba un ISSN Impreso válido.' },
+                { name: 'issn_p', placeholder: 'ISSN Impreso', type: FormFieldType.issn, required: false, hintValue: 'Escriba un ISSN Impreso válido.', value: '12345678' },
                 { name: 'issn_e', placeholder: 'ISSN Electrónico', type: FormFieldType.issn, required: false, hintValue: 'Escriba un ISSN Electrónico válido.' },
                 { name: 'issn_l', placeholder: 'ISSN de Enlace', type: FormFieldType.issn, required: false, hintValue: 'Escriba un ISSN de Enlace válido.' },
                 { name: 'rnps', placeholder: 'RNPS', type: FormFieldType.rnps, required: true, hintValue: 'Escriba un RNPS válido.' },

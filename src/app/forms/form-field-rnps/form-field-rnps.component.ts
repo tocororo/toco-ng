@@ -60,6 +60,8 @@ export class FormFieldRnpsComponent extends FormField implements OnInit
 
     public ngOnInit(): void
     {
+        if (this.formFieldContent.value == undefined) this.formFieldContent.value = '';
+
         this.placeholder = this.formFieldContent.placeholder;
         if (this.placeholder == undefined) this.placeholder = RnpsValue.rnps_Abbreviation;
 
@@ -154,6 +156,9 @@ export class FormFieldRnpsComponent extends FormField implements OnInit
             /* Updates the old values. */
             this._codeOldValue = this.code.value;
         }
+
+        /* Sets the new value of the control in the `formFieldContent`. */
+        this.formFieldContent.value = this.code.value;
 
         /* Marks the control as `touched`. */
         this.code.markAsTouched({

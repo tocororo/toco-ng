@@ -55,6 +55,8 @@ export class FormFieldUrlComponent extends FormField implements OnInit
 
     public ngOnInit(): void
     {
+        if (this.formFieldContent.value == undefined) this.formFieldContent.value = '';
+
         this.placeholder = this.formFieldContent.placeholder;
         if (this.placeholder == undefined) this.placeholder = UrlValue.url_Label;
 
@@ -101,7 +103,7 @@ export class FormFieldUrlComponent extends FormField implements OnInit
      */
     public getErrorMessage(): string
     {
-        console.log(this.url.errors);
+        //console.log(this.url.errors);
 
         let validationErrors: ValidationErrors = this.url.errors;
 
@@ -127,6 +129,9 @@ export class FormFieldUrlComponent extends FormField implements OnInit
 	 */
 	public _handleInput(): void
 	{
+        /* Sets the new value of the control in the `formFieldContent`. */
+        this.formFieldContent.value = this.url.value;
+
         /* Marks the control as `touched`. */
         this.url.markAsTouched({
             onlySelf: true

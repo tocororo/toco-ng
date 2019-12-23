@@ -53,6 +53,8 @@ export class FormFieldEmailComponent extends FormField implements OnInit
 
     public ngOnInit(): void
     {
+        if (this.formFieldContent.value == undefined) this.formFieldContent.value = '';
+
         this.placeholder = this.formFieldContent.placeholder;
         if (this.placeholder == undefined) this.placeholder = EmailValue.email_Label;
 
@@ -99,7 +101,7 @@ export class FormFieldEmailComponent extends FormField implements OnInit
      */
     public getErrorMessage(): string
     {
-        console.log(this.email.errors);
+        //console.log(this.email.errors);
 
         let validationErrors: ValidationErrors = this.email.errors;
 
@@ -125,6 +127,11 @@ export class FormFieldEmailComponent extends FormField implements OnInit
 	 */
 	public _handleInput(): void
 	{
+        //console.log(this.email.value);
+
+        /* Sets the new value of the control in the `formFieldContent`. */
+        this.formFieldContent.value = this.email.value;
+
         /* Marks the control as `touched`. */
         this.email.markAsTouched({
             onlySelf: true
