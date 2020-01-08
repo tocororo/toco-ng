@@ -447,6 +447,8 @@ export class IssnFormFieldInternalComponent implements OnDestroy,
 	
 	public registerOnChange(fn: any): void
 	{
+		console.log('12345');
+
 		/* Saves a callback function that is called when the control's value changes in the UI. */
 		this._onChange = fn;
 	}
