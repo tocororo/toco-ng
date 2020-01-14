@@ -1,7 +1,0 @@
-
-<mat-form-field id="email-mat-form-field">
-    <input matInput id="email-input-element" [formControl]="email" placeholder="{{ placeholder }}" required="{{ required }}" [value]="formFieldContent.value" (input)="_handleInput()" aria-label="Email" />
-    <mat-icon id="email-mat-icon" matSuffix>email</mat-icon>
-    <mat-hint *ngIf="hintState">{{ hintValue }}</mat-hint>
-    <mat-error *ngIf="errorState">{{ getErrorMessage() }}</mat-error>
-</mat-form-field>

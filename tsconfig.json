@@ -1,24 +1,37 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./src",
-    "paths": {
-      "@toco/*": ["app/*"],
-      "@tocoenv/*": ["environments/*"]
-    },
+    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "es2017",
+      "es2018",
       "dom"
-    ]
+    ],
+    // "paths": {
+    //   "tools": ["dist/tools"],
+    //   "tools/*": ["dist/tools/*"]
+    // }
+    "paths": {
+      "@toco/tools": ["./projects/tools/src/lib"],
+      "@toco/tools/*": ["./projects/tools/src/lib/*"],
+      "@tocoenv/tools": ["./projects/tools/src/environments"],
+      "@tocoenv/tools/*": ["./projects/tools/src/environments/*"]
+    }
+    
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
   }
 }
