@@ -5,7 +5,7 @@ import { AbstractControl, Validators, ValidationErrors } from '@angular/forms';
 import { IconService } from '@toco/tools/core';
 import { Common } from '@toco/tools/core';
 
-import { FormField } from '../form-container/form-container.component';
+import { FormFieldContent, FormFieldControl } from '../form-container/form-container.component';
 
 /**
  * An enum that describes how inline contents of a block are horizontally aligned if the contents 
@@ -236,7 +236,7 @@ export class HintValue
 /**
  * An interface that represents the content of a `TextInputControl`. 
  */
-export interface TextInputContent
+export interface TextInputContent extends FormFieldContent
 {
     /**
      * Returns the control's type. 
@@ -412,7 +412,7 @@ export interface IInternalComponent
 /**
  * Represents the base abstract class for a control that allows the writing of a text.
  */
-export abstract class TextInputControl extends FormField
+export abstract class TextInputControl extends FormFieldControl
 {
     /**
      * Represents the `ContentPosition` enum for internal use. 

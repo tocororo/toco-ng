@@ -31,6 +31,12 @@
     font-feature-settings: 'liga';
 }
 
+/** Change font size to mat-autocomplete component  */
+.mat-option{
+    font-size: 16px !important;
+}
+
+
 /* - typography - */
 // @font-face {
 //     font-family: 'MyriadPro Regular';

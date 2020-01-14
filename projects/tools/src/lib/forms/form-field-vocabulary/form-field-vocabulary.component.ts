@@ -8,7 +8,7 @@ import { Response } from '@toco/tools/entities';
 import { Term, Vocabulary, TermNode } from '@toco/tools/entities';
 import { TaxonomyService } from '@toco/tools/taxonomy';
 
-import { FormField } from '../form-container/form-container.component';
+import { FormFieldControl } from '../form-container/form-container.component';
 
 /***
  * A control to select a term or terms in a vocabulary
@@ -18,7 +18,7 @@ import { FormField } from '../form-container/form-container.component';
     templateUrl: './form-field-vocabulary.component.html',
     styleUrls: ['./form-field-vocabulary.component.scss']
 })
-export class FormFieldVocabularyComponent extends FormField implements OnInit {
+export class FormFieldVocabularyComponent extends FormFieldControl implements OnInit {
 
     formControl = new FormControl();
     inputId: string;

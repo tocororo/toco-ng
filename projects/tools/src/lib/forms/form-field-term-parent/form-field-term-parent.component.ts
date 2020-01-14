@@ -6,14 +6,14 @@ import { startWith, map } from 'rxjs/operators';
 
 import { Term, TermNode } from '@toco/tools/entities';
 
-import { FormField } from '../form-container/form-container.component';
+import { FormFieldControl } from '../form-container/form-container.component';
 
 @Component({
     selector: 'toco-form-field-term-parent',
     templateUrl: './form-field-term-parent.component.html',
     styleUrls: ['./form-field-term-parent.component.scss']
 })
-export class FormFieldTermParentComponent extends FormField implements OnInit {
+export class FormFieldTermParentComponent extends FormFieldControl implements OnInit {
 
     formControl = new FormControl();
     inputId: string;

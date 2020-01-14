@@ -2,8 +2,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { PartialObserver, Subscription } from 'rxjs';
 
-import { Response } from '@toco/tools/entities';
-import { Entity } from '@toco/tools/entities';
+import { Entity, Response } from '@toco/tools/entities';
 
 /**
  * Represents a form field type.
@@ -41,9 +40,10 @@ export enum FormFieldType {
 }
 
 /**
- * Represents a form field interface. 
+ * An interface that represents the content of a `FormFieldControl`. 
  */
-export interface FormFieldContent {
+export interface FormFieldContent
+{
     /** The form field type. */
     type: FormFieldType;
 
@@ -72,7 +72,7 @@ export interface FormFieldContent {
 /**
  * Represents the base abstract class for a control that is treated as a form field.  
  */
-export abstract class FormField
+export abstract class FormFieldControl
 {
     /**
      * Input field that contains the content of this class. 
