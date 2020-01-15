@@ -3,11 +3,10 @@
     window.__env = window.__env || { };
 
     // API url
-    window.__env.sceibaApi = "https://sceiba-lab.upr.edu.cu/api";
-    window.__env.sceibaHost = "https://sceiba-lab.upr.edu.cu";
+    //window.__env.sceibaApi = "https://sceiba-lab.upr.edu.cu/api";
+    //window.__env.sceibaHost = "https://sceiba-lab.upr.edu.cu";
 
-    // window.__env.sceibaApi = "https://sceiba-lab.upr.edu.cu/api";
-    // window.__env.sceibaHost = "https://sceiba-lab.upr.edu.cu";
+    window.__env.sceibaApi = "https://10.2.83.160:5000/api";
 
     window.__env.appHost = '';
     window.__env.appName = '';

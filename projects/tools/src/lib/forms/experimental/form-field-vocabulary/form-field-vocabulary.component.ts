@@ -4,11 +4,10 @@ import { FormControl } from '@angular/forms';
 import { Observable, PartialObserver } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
-import { Response } from '@toco/tools/entities';
-import { Term, Vocabulary, TermNode } from '@toco/tools/entities';
+import { Term, Vocabulary, TermNode, Response } from '@toco/tools/entities';
 import { TaxonomyService } from '@toco/tools/taxonomy';
 
-import { FormFieldControl } from '../form-container/form-container.component';
+import { FormFieldControl } from '../../form-field.control';
 
 /***
  * A control to select a term or terms in a vocabulary
@@ -57,23 +56,23 @@ export class FormFieldVocabularyComponent extends FormFieldControl implements On
     }
 
     ngOnInit() {
-        this.inputId = this.content.placeholder.trim().toLowerCase();
-        if (this.content.input) {
-            if (this.content.input.multiple !== null) {
-                this.multiple = this.content.input.multiple;
+        this.inputId = this.content.label.trim().toLowerCase();
+        if (this.content.extraContent) {
+            if (this.content.extraContent.multiple !== null) {
+                this.multiple = this.content.extraContent.multiple;
             }
-            // if (this.content.input.selectedTermsIds) {
-            //   this.content.value = this.content.input.selectedTermsIds;
+            // if (this.content.extraContent.selectedTermsIds) {
+            //   this.content.value = this.content.extraContent.selectedTermsIds;
             // } else {
             //   this.content.value = [];
             // }
-            if (!this.content.input.selectedTermsIds) {
-                this.content.input.selectedTermsIds = [];
+            if (!this.content.extraContent.selectedTermsIds) {
+                this.content.extraContent.selectedTermsIds = [];
             }
             this.content.value = [];
 
-            if (this.content.input.vocab ) {
-                this.vocab = this.content.input.vocab;
+            if (this.content.extraContent.vocab ) {
+                this.vocab = this.content.extraContent.vocab;
                 this.service.getTermsTreeByVocab(this.vocab).subscribe(this.termsTreeObserver);
             }
             this._updateFilteredOptions();
@@ -91,7 +90,7 @@ export class FormFieldVocabularyComponent extends FormFieldControl implements On
 
     private _get_terms(node: TermNode): Term[] {
         let result: Term[] = [];
-        if ( ( this.content.input.selectedTermsIds as []).some(id => id === node.term.id)) {
+        if ( ( this.content.extraContent.selectedTermsIds as []).some(id => id === node.term.id)) {
             this.content.value.push(node.term.id);
             this.chipsList.push(node.term);
         } else {

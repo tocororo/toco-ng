@@ -39,7 +39,7 @@ export class JournalEditComponent
                 { name: 'start_year', label: 'Año de inicio', type: FormFieldType.url, required: false },
                 { name: 'frequency', label: 'Año de inicio', type: FormFieldType.url, required: false },
                 { name: 'subjects', label: 'Materias', type: FormFieldType.text, required: false },
-                { name: 'description', placeholder: 'Descripción', type: FormFieldType.textarea, required: false },
+                { name: 'description', label: 'Descripción', type: FormFieldType.textarea, required: false },
                 { name: 'licence', label: 'Licencia', type: FormFieldType.text, required: false },
                 { name: 'social_networks', label: 'Redes Sociales', type: FormFieldType.text, required: false },
             ]
@@ -67,7 +67,7 @@ export class JournalEditComponent
             description: '',
             iconName: '',
             content : [
-                { name: 'databases', placeholder: 'Bases de Datos', type: FormFieldType.textarea, required: false },
+                { name: 'databases', label: 'Bases de Datos', type: FormFieldType.textarea, required: false },
             ]
         },
         {
@@ -75,8 +75,8 @@ export class JournalEditComponent
             description: '',
             iconName: '',
             content : [
-                { name: 'licence', placeholder: 'Acuerdo Legal', type: FormFieldType.textarea, required: false },
-                { name: 'accepted', placeholder: 'Acepto', type: FormFieldType.checkbox, required: false },
+                { name: 'licence', label: 'Acuerdo Legal', type: FormFieldType.textarea, required: false },
+                { name: 'accepted', label: 'Acepto', type: FormFieldType.checkbox, required: false },
             ]
         }
     ];

@@ -93,7 +93,7 @@ export class TermInstitutionsComponent implements OnInit {
                     
                     this.formFieldsContent = [
                         {
-                            name: 'name', placeholder: 'Nombre',
+                            name: 'name', label: 'Nombre',
                             type: FormFieldType.text,
                             required: true,
                             value: (this.data.term.name) ? this.data.term.name : null,
@@ -101,7 +101,7 @@ export class TermInstitutionsComponent implements OnInit {
                         },
                         {
                             name: 'description',
-                            placeholder: 'Descripción',
+                            label: 'Descripción',
                             type: FormFieldType.textarea,
                             required: false,
                             value: (this.data.term.description) ? this.data.term.description : null,
@@ -109,7 +109,7 @@ export class TermInstitutionsComponent implements OnInit {
                         },
                         {
                             name: 'identifiers',
-                            placeholder: 'Identificadores',
+                            label: 'Identificadores',
                             type: FormFieldType.textarea,
                             required: false,
                             value: (this.data.term.data.identifiers) ? this.data.term.data.identifiers : null,
@@ -117,7 +117,7 @@ export class TermInstitutionsComponent implements OnInit {
                         },
                         {
                             name: 'email',
-                            placeholder: 'Email',
+                            label: 'Email',
                             type: FormFieldType.email,
                             required: true,
                             value: (this.data.term.data.email) ? this.data.term.data.email : null,
@@ -125,7 +125,7 @@ export class TermInstitutionsComponent implements OnInit {
                         },
                         {
                             name: 'website',
-                            placeholder: 'Sitio Web Oficial',
+                            label: 'Sitio Web Oficial',
                             type: FormFieldType.url,
                             required: false,
                             value: (this.data.term.data.website) ? this.data.term.data.website : null,
@@ -133,7 +133,7 @@ export class TermInstitutionsComponent implements OnInit {
                         },
                         {
                             name: 'address',
-                            placeholder: 'Dirección',
+                            label: 'Dirección',
                             type: FormFieldType.textarea,
                             required: false,
                             value: (this.data.term.data.address) ? this.data.term.data.address : null,
@@ -141,10 +141,10 @@ export class TermInstitutionsComponent implements OnInit {
                         },
                         {
                             name: 'parent_id',
-                            placeholder: 'Jerarquía Institucional (Institución Superior)',
+                            label: 'Jerarquía Institucional (Institución Superior)',
                             type: FormFieldType.term_parent,
                             required: false,
-                            input: {
+                            extraContent: {
                                 currentTerm: (this.data.term) ? this.data.term : null,
                                 terms: (this.data.terms) ? this.data.terms : null
                             },

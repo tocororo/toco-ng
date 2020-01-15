@@ -1,11 +1,11 @@
 
 <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
-<div class="card-filter" *ngIf="content.input && !loading">
+<div class="card-filter" *ngIf="content.extraContent && !loading">
 
   <mat-form-field style="width: 100%;">
 
-    <input matInput [id]="inputId" type="text" [formControl]="formControl" [placeholder]="content.placeholder" [matAutocomplete]="auto" aria-label="Number" />
+    <input matInput [id]="inputId" type="text" [formControl]="formControl" [placeholder]="content.label" [matAutocomplete]="auto" aria-label="Number" />
 
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name" (click)="addChips(option)" [title]="option.name">

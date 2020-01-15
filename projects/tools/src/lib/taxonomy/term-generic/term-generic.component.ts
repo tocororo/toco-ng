@@ -63,7 +63,7 @@ export class TermGenericComponent implements OnInit{
             this.panels[0].content = [
                 {
                     name: 'name',
-                    placeholder: 'Nombre',
+                    label: 'Nombre',
                     type: FormFieldType.text,
                     required: true,
                     width: '100%',
@@ -71,7 +71,7 @@ export class TermGenericComponent implements OnInit{
                 },
                 {
                     name: 'description',
-                    placeholder: 'Descripción',
+                    label: 'Descripción',
                     type: FormFieldType.textarea,
                     required: false,
                     width: '100%',
@@ -79,10 +79,10 @@ export class TermGenericComponent implements OnInit{
                 },
                 {
                     name: 'parent_id',
-                    placeholder: 'Término Padre',
+                    label: 'Término Padre',
                     type: FormFieldType.term_parent,
                     required: false,
-                    input: {
+                    extraContent: {
                         terms: this.data.terms,
                         currentTerm: (this.data.term) ? this.data.term : null,
                     },

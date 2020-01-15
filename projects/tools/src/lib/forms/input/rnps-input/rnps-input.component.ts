@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
-import { TextInputControl } from '../text-input/text-input.control';
+import { InputControl } from '../input.control';
 import { RnpsValue } from './rnps-value';
 import { ExtraValidators } from '@toco/tools/core';
 import { Common } from '@toco/tools/core';
@@ -18,7 +18,7 @@ import { Common } from '@toco/tools/core';
     templateUrl: '../text-input/text-input.component.html',
     styleUrls: ['../text-input/text-input.component.scss']
 })
-export class RnpsInputComponent extends TextInputControl implements OnInit
+export class RnpsInputComponent extends InputControl implements OnInit
 {
 	/**
 	 * It is used by `handleSpecificInput` method. 

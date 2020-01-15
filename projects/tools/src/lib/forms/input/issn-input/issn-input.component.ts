@@ -1,7 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 
-import { TextInputControl } from '../text-input/text-input.control';
+import { InputControl } from '../input.control';
 import { IssnType_Abbreviation, IssnValue } from './issn-value';
 
 /**
@@ -15,7 +15,7 @@ import { IssnType_Abbreviation, IssnValue } from './issn-value';
 	templateUrl: './issn-input.component.html',
 	styleUrls: ['./issn-input.component.scss']
 })
-export class IssnInputComponent extends TextInputControl implements OnInit
+export class IssnInputComponent extends InputControl implements OnInit
 {
 	public constructor()
 	{

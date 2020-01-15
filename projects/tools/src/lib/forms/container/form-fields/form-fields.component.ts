@@ -1,7 +1,7 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 
-import { FormFieldType, FormFieldContent } from '../form-container/form-container.component';
+import { FormFieldType, FormFieldContent } from '../../form-field.control';
 
 /**
  * @description

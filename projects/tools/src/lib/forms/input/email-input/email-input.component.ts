@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
-import { TextInputControl } from '../text-input/text-input.control';
+import { InputControl } from '../input.control';
 import { EmailValue } from './email-value';
 import { Common } from '@toco/tools/core';
 
@@ -14,7 +14,7 @@ import { Common } from '@toco/tools/core';
     templateUrl: '../text-input/text-input.component.html',
     styleUrls: ['../text-input/text-input.component.scss']
 })
-export class EmailInputComponent extends TextInputControl implements OnInit
+export class EmailInputComponent extends InputControl implements OnInit
 {
     public constructor()
     {

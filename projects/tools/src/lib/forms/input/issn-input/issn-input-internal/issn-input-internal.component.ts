@@ -6,7 +6,7 @@ import { MatFormFieldControl } from '@angular/material/form-field';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
-import { IInternalComponent } from '../../text-input/text-input.control';
+import { IInternalComponent } from '../../input.control';
 import { IssnValue } from '../issn-value';
 import { ExtraValidators } from '@toco/tools/core';
 import { Common } from '@toco/tools/core';

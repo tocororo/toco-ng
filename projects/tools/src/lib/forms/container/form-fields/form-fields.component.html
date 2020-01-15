@@ -6,16 +6,16 @@ fxLayoutGap="1em">
     <ng-container *ngFor="let field of fields" [ngSwitch]="field.type">
 
         <mat-form-field *ngSwitchCase="formFieldType.textarea" [style.width]="field.width">
-            <textarea matInput [(ngModel)]="field.value" name="{{ field.name }}" placeholder="{{ field.placeholder }}" required="{{ field.required }}"></textarea>
+            <textarea matInput [(ngModel)]="field.value" name="{{ field.name }}" placeholder="{{ field.label }}" required="{{ field.required }}"></textarea>
         </mat-form-field>
 
         <mat-form-field *ngSwitchCase="formFieldType.datepicker" [style.width]="field.width">
-            <input matInput [(ngModel)]="field.value" [matDatepicker]="picker" name="{{ field.name }}" placeholder="{{ field.placeholder }}" required="{{ field.required }}">
+            <input matInput [(ngModel)]="field.value" [matDatepicker]="picker" name="{{ field.name }}" placeholder="{{ field.label }}" required="{{ field.required }}">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
-        <mat-checkbox *ngSwitchCase="formFieldType.checkbox" [(ngModel)]="field.value" name="{{ field.name }}" required="{{ field.required }}" [style.width]="field.width"> {{ field.placeholder }} </mat-checkbox>
+        <mat-checkbox *ngSwitchCase="formFieldType.checkbox" [(ngModel)]="field.value" name="{{ field.name }}" required="{{ field.required }}" [style.width]="field.width"> {{ field.label }} </mat-checkbox>
 
         <url-input *ngSwitchCase="formFieldType.url" [content]="field"></url-input>
         

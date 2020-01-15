@@ -6,7 +6,7 @@ import { startWith, map } from 'rxjs/operators';
 
 import { Term, TermNode } from '@toco/tools/entities';
 
-import { FormFieldControl } from '../form-container/form-container.component';
+import { FormFieldControl } from '../../form-field.control';
 
 @Component({
     selector: 'toco-form-field-term-parent',
@@ -28,15 +28,15 @@ export class FormFieldTermParentComponent extends FormFieldControl implements On
 
     ngOnInit()
     {
-        this.inputId = this.content.placeholder.trim().toLowerCase();
-        if (this.content.input && this.content.input.terms )
+        this.inputId = this.content.label.trim().toLowerCase();
+        if (this.content.extraContent && this.content.extraContent.terms )
         {
 
-            if (this.content.input.currentTerm) {
-                this.currentTerm = this.content.input.currentTerm;
+            if (this.content.extraContent.currentTerm) {
+                this.currentTerm = this.content.extraContent.currentTerm;
             }
 
-            (this.content.input.terms as TermNode[]).forEach(element => {
+            (this.content.extraContent.terms as TermNode[]).forEach(element => {
                 this.selectOptions = this.selectOptions.concat(this._get_terms(element));
             });
 

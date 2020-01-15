@@ -64,7 +64,7 @@ export class VocabularyDialogComponent implements OnInit {
                 content : [
                     {
                         name: 'name',
-                        placeholder: 'Identificador',
+                        label: 'Identificador',
                         type: FormFieldType.text,
                         required: true,
                         width: '100%',
@@ -72,7 +72,7 @@ export class VocabularyDialogComponent implements OnInit {
                     },
                     {
                         name: 'human_name',
-                        placeholder: 'Nombre',
+                        label: 'Nombre',
                         type: FormFieldType.text,
                         required: true,
                         width: '100%',
@@ -80,7 +80,7 @@ export class VocabularyDialogComponent implements OnInit {
                     },
                     {
                         name: 'description',
-                        placeholder: 'Descripción',
+                        label: 'Descripción',
                         type: FormFieldType.textarea,
                         required: false,
                         width: '100%',

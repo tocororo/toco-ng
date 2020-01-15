@@ -5,19 +5,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { IconService } from '@toco/tools/core';
 
-import { FormFieldsComponent } from './form-fields/form-fields.component';
-import { FormContainerComponent } from './form-container/form-container.component';
+import { FormFieldsComponent } from './container/form-fields/form-fields.component';
+import { FormContainerComponent } from './container/form-container/form-container.component';
 import { FormsService } from './forms.service';
 
-import { TextInputComponent } from './text-input/text-input.component';
-import { EmailInputComponent } from './email-input/email-input.component';
-import { IssnInputInternalComponent } from './issn-input/issn-input-internal/issn-input-internal.component';
-import { IssnInputComponent } from './issn-input/issn-input.component';
-import { RnpsInputComponent } from './rnps-input/rnps-input.component';
-import { UrlInputComponent } from './url-input/url-input.component';
+import { TextInputComponent } from './input/text-input/text-input.component';
+import { EmailInputComponent } from './input/email-input/email-input.component';
+import { IssnInputInternalComponent } from './input/issn-input/issn-input-internal/issn-input-internal.component';
+import { IssnInputComponent } from './input/issn-input/issn-input.component';
+import { RnpsInputComponent } from './input/rnps-input/rnps-input.component';
+import { UrlInputComponent } from './input/url-input/url-input.component';
 
-import { FormFieldVocabularyComponent } from './form-field-vocabulary/form-field-vocabulary.component';
-import { FormFieldTermParentComponent } from './form-field-term-parent/form-field-term-parent.component';
+import { FormFieldVocabularyComponent } from './experimental/form-field-vocabulary/form-field-vocabulary.component';
+import { FormFieldTermParentComponent } from './experimental/form-field-term-parent/form-field-term-parent.component';
 
 @NgModule({
     declarations: [

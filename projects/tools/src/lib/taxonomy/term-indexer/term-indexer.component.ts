@@ -120,7 +120,7 @@ export class TermIndexerComponent implements OnInit {
 
                             this.formFieldsContent = [
                                 {
-                                    name: 'name', placeholder: 'Nombre',
+                                    name: 'name', label: 'Nombre',
                                     type: FormFieldType.text,
                                     required: true,
                                     value: (this.term.name) ? this.term.name : null,
@@ -128,7 +128,7 @@ export class TermIndexerComponent implements OnInit {
                                 },
                                 {
                                     name: 'abrev',
-                                    placeholder: 'Identificadores',
+                                    label: 'Identificadores',
                                     type: FormFieldType.textarea,
                                     required: false,
                                     value: (this.term.data.abrev) ? this.term.data.abrev : null,
@@ -136,7 +136,7 @@ export class TermIndexerComponent implements OnInit {
                                 },
                                 {
                                     name: 'description',
-                                    placeholder: 'Descripción',
+                                    label: 'Descripción',
                                     type: FormFieldType.textarea,
                                     required: false,
                                     value: (this.term.description) ? this.term.description : null,
@@ -144,7 +144,7 @@ export class TermIndexerComponent implements OnInit {
                                 },
                                 {
                                     name: 'url',
-                                    placeholder: 'URL',
+                                    label: 'URL',
                                     type: FormFieldType.url,
                                     required: false,
                                     value: (this.term.data.url) ? this.term.data.url : null,
@@ -152,7 +152,7 @@ export class TermIndexerComponent implements OnInit {
                                 },
                                 {
                                     name: 'initial_cover',
-                                    placeholder: 'Cobertura inicio',
+                                    label: 'Cobertura inicio',
                                     type: FormFieldType.datepicker,
                                     required: false,
                                     value: (this.term.data.initial_cover) ? this.term.data.initial_cover : null,
@@ -160,7 +160,7 @@ export class TermIndexerComponent implements OnInit {
                                 },
                                 {
                                     name: 'end_cover',
-                                    placeholder: 'Cobertura',
+                                    label: 'Cobertura',
                                     type: FormFieldType.datepicker,
                                     required: false,
                                     value: (this.term.data.end_cover) ? this.term.data.end_cover : null,
@@ -168,10 +168,10 @@ export class TermIndexerComponent implements OnInit {
                                 },
                                 {
                                     name: 'miar_class',
-                                    placeholder: 'Tipología de sistemas de indización',
+                                    label: 'Tipología de sistemas de indización',
                                     type: FormFieldType.vocabulary,
                                     required: false,
-                                    input: {
+                                    extraContent: {
                                         multiple : false,
                                         selectedTermsIds : (this.term.class_ids) ? this.term.class_ids : null,
                                         vocab: response_miar.data.vocabulary
@@ -180,10 +180,10 @@ export class TermIndexerComponent implements OnInit {
                                 },
                                 {
                                     name: 'group_mes',
-                                    placeholder: 'Grupos, Categorías según criterios de “calidad” de las publicaciones ',
+                                    label: 'Grupos, Categorías según criterios de “calidad” de las publicaciones ',
                                     type: FormFieldType.vocabulary,
                                     required: false,
-                                    input: {
+                                    extraContent: {
                                         multiple : false,
                                         selectedTermsIds : (this.term.class_ids) ? this.term.class_ids : null,
                                         vocab: response_group.data.vocabulary
