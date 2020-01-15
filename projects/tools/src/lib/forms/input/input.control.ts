@@ -4,7 +4,7 @@ import { AbstractControl, Validators, ValidationErrors } from '@angular/forms';
 
 import { Common } from '@toco/tools/core';
 
-import { TextAlign, ContentPosition, IconValue, HintPosition, HintValue,
+import { ContentPosition, IconValue, HintPosition, HintValue,
     FormFieldContent, FormFieldControl, defaultFormFieldContent } from '../form-field.control';
 
 /**
@@ -199,40 +199,13 @@ export abstract class InputControl extends FormFieldControl
 
         /* Sets the default values. */
 
-        if (this.content == undefined) this.content = { };
+        super.init(label, isAbbreviation, alwaysHint);
 
-        if (label == undefined)
-        {
-            if (this.content.label == undefined) throw new Error("The control's label is not specified.");
-
-            label = this.content.label;
-        }
-
-        let temp: string = (isAbbreviation) ? label : label.toLowerCase();
+        let temp: string = (isAbbreviation) ? this.content.label : this.content.label.toLowerCase();
         this.validationError_required = `You must write a valid ${ temp }.`;
 
         /************************** `mat-form-field` properties. **************************/
-        if (this.content.width == undefined) this.content.width = '310px';
         if (this.content.appearance == undefined) this.content.appearance = TextInputAppearance.standard;
-
-        /**************************** `mat-label` properties. *****************************/
-        if (this.content.label == undefined) this.content.label = label;
-
-        /************************** Internal control properties. **************************/
-        if (this.content.required == undefined) this.content.required = false;
-        if (this.content.textAlign == undefined) this.content.textAlign = TextAlign.left;
-        if (this.content.ariaLabel == undefined) this.content.ariaLabel = label;
-        if (this.content.value != undefined)  /* It does not set the default value here (does not call `getDefaultValue` method here) because in this way it is more consistent. */
-        {
-            /* In this way, checks if the specified `content.value` is correct. */
-
-            this.internalControl.setValue(this.content.value);
-
-            /* Marks the control as `touched`. */
-            this.internalControl.markAsTouched({
-                onlySelf: true
-            });
-        }
 
         /***************************** `mat-icon` properties. *****************************/
         if (this.content.prefixIcon != undefined) this.content.prefixIcon.setDefaultValueIfUndefined_setPosition(ContentPosition.prefix);
@@ -248,10 +221,22 @@ export abstract class InputControl extends FormFieldControl
             if (this.content.startHint != undefined) this.content.startHint.setDefaultValueIfUndefined_setPosition(HintPosition.start);
             if (this.content.endHint != undefined) this.content.endHint.setDefaultValueIfUndefined_setPosition(HintPosition.end);
         }
-
-        /******************************* Other properties. ********************************/
-        if (this.content.name == undefined) this.content.name = label.toLowerCase().replace(/ /g, '_');  /* Sets the `name` in lowercase and replaces the spaces by underscores. */
     }
+
+	/**
+	 * Initializes the control's value. It uses the `content.value` and it is already different of `undefined`. 
+     * It also checks if the specified `content.value` is correct. For internal use only. 
+	 */
+	protected initValue(): void
+	{
+        /* In this way, checks if the specified `content.value` is correct. */
+        this.internalControl.setValue(this.content.value);
+
+        /* Marks the control as `touched`. */
+        this.internalControl.markAsTouched({
+            onlySelf: true
+        });
+	}
 
 	/**
 	 * Returns true if the control is empty; otherwise, false. 

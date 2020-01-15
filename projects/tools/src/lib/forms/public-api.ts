@@ -8,8 +8,8 @@ export * from './container/form-container/form-container.service';
 export * from './container/form-fields/form-fields.component';
 export * from './forms.service';
 
-export * from './experimental/form-field-term-parent/form-field-term-parent.component';
-export * from './experimental/form-field-vocabulary/form-field-vocabulary.component';
+export * from './experimental/term-parent/term-parent.component';
+export * from './experimental/vocabulary/vocabulary.component';
 
 export * from './action/action.control';
 export * from './input/email-input/email-value';

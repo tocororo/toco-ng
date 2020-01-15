@@ -9,11 +9,11 @@ import { Term, TermNode } from '@toco/tools/entities';
 import { FormFieldControl_Experimental } from '../form-field.control.experimental';
 
 @Component({
-    selector: 'toco-form-field-term-parent',
-    templateUrl: './form-field-term-parent.component.html',
-    styleUrls: ['./form-field-term-parent.component.scss']
+    selector: 'toco-term-parent',
+    templateUrl: './term-parent.component.html',
+    styleUrls: ['./term-parent.component.scss']
 })
-export class FormFieldTermParentComponent extends FormFieldControl_Experimental implements OnInit {
+export class TermParentComponent extends FormFieldControl_Experimental implements OnInit {
 
     formControl = new FormControl();
     inputId: string;
