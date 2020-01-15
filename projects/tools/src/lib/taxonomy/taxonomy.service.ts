@@ -6,6 +6,7 @@ import {Observable, PartialObserver, Subject} from 'rxjs';
 import { Vocabulary, Term, Response } from '@toco/tools/entities';
 
 import { EnvService } from '@tocoenv/tools/env.service';
+import { OAuthStorage } from 'angular-oauth2-oidc';
 
 // TODO: Esto esta bastante feo... hay que agregarle a vocabulario un nombre inmutable y referirse a este por aqui, no por los ids
 export enum VocabulariesInmutableNames
@@ -19,9 +20,6 @@ export enum VocabulariesInmutableNames
 @Injectable()
 export class TaxonomyService {
 
-    constructor(private env: EnvService, private http: HttpClient)
-    { }
-
     private httpOptions = {
         headers: new HttpHeaders(
             {
@@ -29,7 +27,7 @@ export class TaxonomyService {
                 'Authorization': 'Bearer '
             })
     };
-    token = '';
+    private token = '';
 
     private currentVocabularyChangedSource = new Subject<Vocabulary>();
     currentVocabularyObservable = this.currentVocabularyChangedSource.asObservable();
@@ -57,7 +55,6 @@ export class TaxonomyService {
     private termChangeObserver: PartialObserver<Response<any>> = {
         next: (resp: Response<any>) => {
             this.termChange(resp);
-            console.log(resp);
         },
 
         error: (err: any) => {
@@ -68,6 +65,10 @@ export class TaxonomyService {
             console.log('The observable got a complete notification.');
         }
     };
+
+    constructor(private env: EnvService, private http: HttpClient, private oauthStorage: OAuthStorage){
+        this.token = this.oauthStorage.getItem('access_token');
+    }
 
     vocabularyChanged(vocab: Vocabulary) {
         this.currentVocabularyChangedSource.next(vocab);
@@ -113,8 +114,6 @@ export class TaxonomyService {
 
     editTerm(term: Term): void {
         this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
-
-        console.log(term);
 
         this.http.post<Response<any>>( this.env.sceibaApi + '/term/' + term.uuid + '/edit', JSON.stringify(term), this.httpOptions ).
         pipe().subscribe(this.termChangeObserver);
