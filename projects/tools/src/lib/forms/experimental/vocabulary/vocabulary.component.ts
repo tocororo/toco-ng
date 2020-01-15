@@ -7,17 +7,17 @@ import { startWith, map } from 'rxjs/operators';
 import { Term, Vocabulary, TermNode, Response } from '@toco/tools/entities';
 import { TaxonomyService } from '@toco/tools/taxonomy';
 
-import { FormFieldControl } from '../../form-field.control';
+import { FormFieldControl_Experimental } from '../form-field.control.experimental';
 
-/***
- * A control to select a term or terms in a vocabulary
+/**
+ * A control to select a term or terms in a vocabulary. 
  */
 @Component({
-    selector: 'toco-form-field-vocabulary',
-    templateUrl: './form-field-vocabulary.component.html',
-    styleUrls: ['./form-field-vocabulary.component.scss']
+    selector: 'toco-vocabulary',
+    templateUrl: './vocabulary.component.html',
+    styleUrls: ['./vocabulary.component.scss']
 })
-export class FormFieldVocabularyComponent extends FormFieldControl implements OnInit {
+export class VocabularyComponent extends FormFieldControl_Experimental implements OnInit {
 
     formControl = new FormControl();
     inputId: string;

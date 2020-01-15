@@ -4,7 +4,7 @@ import { SharedModule } from '@toco/tools/shared';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { FiltersModule } from '@toco/tools/filters';
-import { AuthenticateModule } from '@toco/tools/authenticate';
+import { AuthenticationModule } from '@toco/tools/authentication';
 
 import { CatalogComponent } from './catalog/catalog.component';
 import { CatalogService } from './catalog.service';
@@ -22,7 +22,7 @@ import { SourcesListComponent } from './sources-list/sources-list.component';
         SharedModule,
         ReactiveFormsModule,
         FiltersModule,
-        AuthenticateModule
+        AuthenticationModule
     ],
 
     exports: [

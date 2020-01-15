@@ -6,22 +6,30 @@ import { TaxonomyModule } from '@toco/tools/taxonomy';
 import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider'
 
 import { AppRoutingModule } from './app-routing.module';
+import { AuthenticationModule } from '@toco/tools/authentication';
+import { TaxonomyModule } from '@toco/tools/taxonomy';
+
+import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
+
 import { AppComponent } from './app.component';
+import { FooterComponent } from '@toco/tools/core';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        FooterComponent
     ],
 
     imports: [
         BrowserModule,
         SharedModule,
-        TaxonomyModule,
-        AppRoutingModule
+        AppRoutingModule,
+        AuthenticationModule,
+        TaxonomyModule
     ],
 
     providers: [
-      EnvServiceProvider
+        EnvServiceProvider
     ],
 
     bootstrap: [AppComponent]

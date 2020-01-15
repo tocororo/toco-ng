@@ -16,8 +16,8 @@ import { IssnInputComponent } from './input/issn-input/issn-input.component';
 import { RnpsInputComponent } from './input/rnps-input/rnps-input.component';
 import { UrlInputComponent } from './input/url-input/url-input.component';
 
-import { FormFieldVocabularyComponent } from './experimental/form-field-vocabulary/form-field-vocabulary.component';
-import { FormFieldTermParentComponent } from './experimental/form-field-term-parent/form-field-term-parent.component';
+import { VocabularyComponent } from './experimental/vocabulary/vocabulary.component';
+import { TermParentComponent } from './experimental/term-parent/term-parent.component';
 
 @NgModule({
     declarations: [
@@ -29,8 +29,8 @@ import { FormFieldTermParentComponent } from './experimental/form-field-term-par
 		IssnInputComponent,
 		RnpsInputComponent,
 		UrlInputComponent,
-        FormFieldVocabularyComponent,
-        FormFieldTermParentComponent
+        VocabularyComponent,
+        TermParentComponent
 	],
 
 	imports: [
@@ -46,8 +46,8 @@ import { FormFieldTermParentComponent } from './experimental/form-field-term-par
 		IssnInputComponent,
 		RnpsInputComponent,
 		UrlInputComponent,
-        FormFieldVocabularyComponent,
-        FormFieldTermParentComponent
+        VocabularyComponent,
+        TermParentComponent
 	],
 
     providers: [
