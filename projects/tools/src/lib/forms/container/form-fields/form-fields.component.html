@@ -25,9 +25,9 @@ fxLayoutGap="1em">
 
         <rnps-input *ngSwitchCase="formFieldType.rnps" [content]="field"></rnps-input>
 
-        <toco-form-field-vocabulary *ngSwitchCase="formFieldType.vocabulary" [content]="field" [style.width]="field.width"></toco-form-field-vocabulary>
+        <toco-vocabulary *ngSwitchCase="formFieldType.vocabulary" [content]="field" [style.width]="field.width"></toco-vocabulary>
 
-        <toco-form-field-term-parent *ngSwitchCase="formFieldType.term_parent" [content]="field" [style.width]="field.width"></toco-form-field-term-parent>
+        <toco-term-parent *ngSwitchCase="formFieldType.term_parent" [content]="field" [style.width]="field.width"></toco-term-parent>
 
         <text-input *ngSwitchDefault [content]="field"></text-input>
 

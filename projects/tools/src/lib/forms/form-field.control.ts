@@ -366,6 +366,52 @@ export abstract class FormFieldControl
     }
 
     /**
+     * Initializes the `content` input property. 
+     * @param label The label to set. If the value is `undefined`, sets the label to `content.label`. 
+     * @param isAbbreviation If it is true then the `label` argument represents an abbreviation; otherwise, false. 
+     * @param alwaysHint If it is true then there is always at leat one hint start-aligned. 
+     */
+    protected init(label: string | undefined, isAbbreviation: boolean, alwaysHint: boolean): void
+    {
+        /* Sets the default values. */
+
+        if (this.content == undefined) this.content = { };
+
+        if (label == undefined)
+        {
+            if (this.content.label == undefined) throw new Error("The control's label is not specified.");
+
+            label = this.content.label;
+        }
+
+        /************************** `mat-form-field` properties. **************************/
+        if (this.content.width == undefined) this.content.width = '310px';
+
+        /**************************** `mat-label` properties. *****************************/
+        if (this.content.label == undefined) this.content.label = label;
+
+        /************************** Internal control properties. **************************/
+        if (this.content.required == undefined) this.content.required = false;
+        if (this.content.textAlign == undefined) this.content.textAlign = TextAlign.left;
+        if (this.content.ariaLabel == undefined) this.content.ariaLabel = label;
+        if (this.content.value != undefined)  /* It does not set the default value here (does not call `getDefaultValue` method here) because in this way it is more consistent. */
+        {
+            /* It also checks if the specified `content.value` is correct. */
+            this.initValue();
+        }
+
+        /******************************* Other properties. ********************************/
+        if (this.content.type == undefined) this.content.type = FormFieldType.text;
+        if (this.content.name == undefined) this.content.name = label.toLowerCase().replace(/ /g, '_');  /* Sets the `name` in lowercase and replaces the spaces by underscores. */
+    }
+
+	/**
+	 * Initializes the control's value. It uses the `content.value` and it is already different of `undefined`. 
+     * It also checks if the specified `content.value` is correct. For internal use only. 
+	 */
+	protected abstract initValue(): void;
+
+    /**
      * Returns true if the specified `IconValue` has the specified `ContentPosition` value; otherwise, false. 
      * @param icon The `IconValue` to check. 
      * @param contentPosition The `ContentPosition` value to check. 
