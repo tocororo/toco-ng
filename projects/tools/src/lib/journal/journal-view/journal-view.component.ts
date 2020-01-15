@@ -24,7 +24,7 @@ export class JournalViewComponent implements OnInit, OnChanges {
         .subscribe((data: { journal: Journal }) => {
             this.loading = false;
             this.journal = data.journal;
-            this.metadata.setTitleDescription('Revista Científica ' + this.journal.jinformation.title, this.journal.jinformation.description);
+            this.metadata.setTitleDescription('Revista Científica ' + this.journal.data.title, this.journal.data.description);
         });
     }
 

@@ -66,7 +66,7 @@ export class TermsComponent implements OnInit, OnDestroy{
             this.service.getTermsTreeByVocab(this.vocab).subscribe(this.termsTreeObserver);
             this.dialog.closeAll();
             const m  = new MessageHandler(this._snackBar);
-            m.showMessage(StatusCode.OK, response.message)
+            m.showMessage(StatusCode.OK, response.message);
         },
 
         error: (err: any) => {
@@ -154,7 +154,7 @@ export class TermsComponent implements OnInit, OnDestroy{
     getChildren(node: TermNode) {
         return observableOf(node.children);
     }
-    addTerm(){
+    addTerm() {
         this.openTermDialog(null);
     }
     editTerm(node: TermNode) {
