@@ -3,32 +3,33 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "toco-ng": {
-      "root": "",
-      "sourceRoot": "src",
+    "inclusion": {
       "projectType": "application",
-      "prefix": "toco",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "style": "scss"
         }
       },
+      "root": "projects/inclusion",
+      "sourceRoot": "projects/inclusion/src",
+      "prefix": "toco",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/browser",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "outputPath": "dist/inclusion",
+            "index": "projects/inclusion/src/index.html",
+            "main": "projects/inclusion/src/main.ts",
+            "polyfills": "projects/inclusion/src/polyfills.ts",
+            "tsConfig": "projects/inclusion/tsconfig.app.json",
+            "aot": false,
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "projects/inclusion/src/favicon.ico",
+              "projects/inclusion/src/assets"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "projects/inclusion/src/styles.scss"
             ],
             "scripts": []
           },
@@ -36,636 +37,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "toco-ng:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "toco-ng:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "toco-ng:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.js",
-            "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
-            ],
-            "scripts": [],
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/server",
-            "main": "src/main.server.ts",
-            "tsConfig": "src/tsconfig.server.json"
-          }
-        }
-      }
-    },
-    "toco-ng-e2e": {
-      "root": "e2e/",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "toco-ng:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "toco-ng:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "portal": {
-      "root": "projects/portal/",
-      "sourceRoot": "projects/portal/src",
-      "projectType": "application",
-      "prefix": "toco",
-      "schematics": {
-        "@schematics/angular:component": {
-          "styleext": "scss"
-        }
-      },
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/portal",
-            "index": "projects/portal/src/index.html",
-            "main": "projects/portal/src/main.ts",
-            "polyfills": "projects/portal/src/polyfills.ts",
-            "tsConfig": "projects/portal/tsconfig.app.json",
-            "assets": [
-              "projects/portal/src/favicon.ico",
-              "projects/portal/src/assets"
-            ],
-            "styles": [
-              "projects/portal/src/styles.scss"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/portal/src/environments/environment.ts",
-                  "with": "projects/portal/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "portal:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "portal:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "portal:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/portal/src/test.ts",
-            "polyfills": "projects/portal/src/polyfills.ts",
-            "tsConfig": "projects/portal/tsconfig.spec.json",
-            "karmaConfig": "projects/portal/karma.conf.js",
-            "styles": [
-              "projects/portal/src/styles.scss"
-            ],
-            "scripts": [],
-            "assets": [
-              "projects/portal/src/favicon.ico",
-              "projects/portal/src/assets"
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/portal/tsconfig.app.json",
-              "projects/portal/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/portal-server",
-            "main": "projects/portal/src/main.server.ts",
-            "tsConfig": "projects/portal/tsconfig.server.json"
-          }
-        },
-        "app-shell": {
-          "builder": "@angular-devkit/build-angular:app-shell",
-          "options": {
-            "browserTarget": "portal:build",
-            "serverTarget": "portal:server",
-            "route": "shell"
-          }
-        }
-      }
-    },
-    "portal-e2e": {
-      "root": "projects/portal-e2e/",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "projects/portal-e2e/protractor.conf.js",
-            "devServerTarget": "portal:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "portal:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "projects/portal-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "sceiba-catalog": {
-      "root": "projects/sceiba-catalog/",
-      "sourceRoot": "projects/sceiba-catalog/src",
-      "projectType": "application",
-      "prefix": "toco",
-      "schematics": {
-        "@schematics/angular:component": {
-          "styleext": "scss"
-        }
-      },
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/sceiba-catalog",
-            "index": "projects/sceiba-catalog/src/index.html",
-            "main": "projects/sceiba-catalog/src/main.ts",
-            "polyfills": "projects/sceiba-catalog/src/polyfills.ts",
-            "tsConfig": "projects/sceiba-catalog/tsconfig.app.json",
-            "assets": [
-              "projects/sceiba-catalog/src/favicon.ico",
-              "projects/sceiba-catalog/src/assets",
-              "projects/sceiba-catalog/src/env.js"
-            ],
-            "styles": [
-              "projects/sceiba-catalog/src/styles.scss"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/sceiba-catalog/src/environments/environment.ts",
-                  "with": "projects/sceiba-catalog/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "sceiba-catalog:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "sceiba-catalog:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "sceiba-catalog:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/sceiba-catalog/src/test.ts",
-            "polyfills": "projects/sceiba-catalog/src/polyfills.ts",
-            "tsConfig": "projects/sceiba-catalog/tsconfig.spec.json",
-            "karmaConfig": "projects/sceiba-catalog/karma.conf.js",
-            "styles": [
-              "projects/sceiba-catalog/src/styles.scss"
-            ],
-            "scripts": [],
-            "assets": [
-              "projects/sceiba-catalog/src/favicon.ico",
-              "projects/sceiba-catalog/src/assets"
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/sceiba-catalog/tsconfig.app.json",
-              "projects/sceiba-catalog/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "sceiba-catalog-e2e": {
-      "root": "projects/sceiba-catalog-e2e/",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "projects/sceiba-catalog-e2e/protractor.conf.js",
-            "devServerTarget": "sceiba-catalog:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "sceiba-catalog:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "projects/sceiba-catalog-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "sceiba-harvester": {
-      "root": "projects/sceiba-harvester/",
-      "sourceRoot": "projects/sceiba-harvester/src",
-      "projectType": "application",
-      "prefix": "toco",
-      "schematics": {
-        "@schematics/angular:component": {
-          "styleext": "scss"
-        }
-      },
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/sceiba-harvester",
-            "index": "projects/sceiba-harvester/src/index.html",
-            "main": "projects/sceiba-harvester/src/main.ts",
-            "polyfills": "projects/sceiba-harvester/src/polyfills.ts",
-            "tsConfig": "projects/sceiba-harvester/tsconfig.app.json",
-            "assets": [
-              "projects/sceiba-harvester/src/favicon.ico",
-              "projects/sceiba-harvester/src/assets"
-            ],
-            "styles": [
-              "projects/sceiba-harvester/src/styles.scss"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/sceiba-harvester/src/environments/environment.ts",
-                  "with": "projects/sceiba-harvester/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "sceiba-harvester:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "sceiba-harvester:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "sceiba-harvester:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/sceiba-harvester/src/test.ts",
-            "polyfills": "projects/sceiba-harvester/src/polyfills.ts",
-            "tsConfig": "projects/sceiba-harvester/tsconfig.spec.json",
-            "karmaConfig": "projects/sceiba-harvester/karma.conf.js",
-            "styles": [
-              "projects/sceiba-harvester/src/styles.scss"
-            ],
-            "scripts": [],
-            "assets": [
-              "projects/sceiba-harvester/src/favicon.ico",
-              "projects/sceiba-harvester/src/assets"
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/sceiba-harvester/tsconfig.app.json",
-              "projects/sceiba-harvester/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "sceiba-harvester-e2e": {
-      "root": "projects/sceiba-harvester-e2e/",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "projects/sceiba-harvester-e2e/protractor.conf.js",
-            "devServerTarget": "sceiba-harvester:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "sceiba-harvester:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "projects/sceiba-harvester-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "testing": {
-      "projectType": "application",
-      "schematics": {},
-      "root": "projects/testing",
-      "sourceRoot": "projects/testing/src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/testing",
-            "index": "projects/testing/src/index.html",
-            "main": "projects/testing/src/main.ts",
-            "polyfills": "projects/testing/src/polyfills.ts",
-            "tsConfig": "projects/testing/tsconfig.app.json",
-            "aot": false,
-            "assets": [
-              "projects/testing/src/favicon.ico",
-              "projects/testing/src/assets"
-            ],
-            "styles": [
-              "projects/testing/src/styles.scss"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/testing/src/environments/environment.ts",
-                  "with": "projects/testing/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "testing:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "testing:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "testing:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/testing/src/test.ts",
-            "polyfills": "projects/testing/src/polyfills.ts",
-            "tsConfig": "projects/testing/tsconfig.spec.json",
-            "karmaConfig": "projects/testing/karma.conf.js",
-            "assets": [
-              "projects/testing/src/favicon.ico",
-              "projects/testing/src/assets"
-            ],
-            "styles": [
-              "projects/testing/src/styles.scss"
-            ],
-            "scripts": []
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/testing/tsconfig.app.json",
-              "projects/testing/tsconfig.spec.json",
-              "projects/testing/e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "projects/testing/e2e/protractor.conf.js",
-            "devServerTarget": "testing:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "testing:serve:production"
-            }
-          }
-        }
-      }
-    },
-    "sceiba-inclusion": {
-      "projectType": "application",
-      "schematics": {},
-      "root": "projects/sceiba-inclusion",
-      "sourceRoot": "projects/sceiba-inclusion/src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/sceiba-inclusion",
-            "index": "projects/sceiba-inclusion/src/index.html",
-            "main": "projects/sceiba-inclusion/src/main.ts",
-            "polyfills": "projects/sceiba-inclusion/src/polyfills.ts",
-            "tsConfig": "projects/sceiba-inclusion/tsconfig.app.json",
-            "aot": false,
-            "assets": [
-              "projects/sceiba-inclusion/src/favicon.ico",
-              "projects/sceiba-inclusion/src/assets"
-            ],
-            "styles": [
-              "projects/sceiba-inclusion/src/styles.scss"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/sceiba-inclusion/src/environments/environment.ts",
-                  "with": "projects/sceiba-inclusion/src/environments/environment.prod.ts"
+                  "replace": "projects/inclusion/src/environments/environment.ts",
+                  "with": "projects/inclusion/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -695,33 +68,34 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sceiba-inclusion:build"
+            "browserTarget": "inclusion:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "sceiba-inclusion:build:production"
+              "browserTarget": "inclusion:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sceiba-inclusion:build"
+            "browserTarget": "inclusion:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/sceiba-inclusion/src/test.ts",
-            "polyfills": "projects/sceiba-inclusion/src/polyfills.ts",
-            "tsConfig": "projects/sceiba-inclusion/tsconfig.spec.json",
-            "karmaConfig": "projects/sceiba-inclusion/karma.conf.js",
+            "main": "projects/inclusion/src/test.ts",
+            "polyfills": "projects/inclusion/src/polyfills.ts",
+            "tsConfig": "projects/inclusion/tsconfig.spec.json",
+            "karmaConfig": "projects/inclusion/karma.conf.js",
             "assets": [
-              "projects/sceiba-inclusion/src/favicon.ico",
-              "projects/sceiba-inclusion/src/assets"
+              "projects/inclusion/src/favicon.ico",
+              "projects/inclusion/src/assets"
             ],
             "styles": [
-              "projects/sceiba-inclusion/src/styles.scss"
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/inclusion/src/styles.scss"
             ],
             "scripts": []
           }
@@ -730,9 +104,9 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/sceiba-inclusion/tsconfig.app.json",
-              "projects/sceiba-inclusion/tsconfig.spec.json",
-              "projects/sceiba-inclusion/e2e/tsconfig.json"
+              "projects/inclusion/tsconfig.app.json",
+              "projects/inclusion/tsconfig.spec.json",
+              "projects/inclusion/e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -742,12 +116,171 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "projects/sceiba-inclusion/e2e/protractor.conf.js",
-            "devServerTarget": "sceiba-inclusion:serve"
+            "protractorConfig": "projects/inclusion/e2e/protractor.conf.js",
+            "devServerTarget": "inclusion:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "sceiba-inclusion:serve:production"
+              "devServerTarget": "inclusion:serve:production"
+            }
+          }
+        }
+      }
+    },
+    "tools": {
+      "projectType": "library",
+      "root": "projects/tools",
+      "sourceRoot": "projects/tools/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/tools/tsconfig.lib.json",
+            "project": "projects/tools/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/tools/src/test.ts",
+            "tsConfig": "projects/tools/tsconfig.spec.json",
+            "karmaConfig": "projects/tools/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/tools/tsconfig.lib.json",
+              "projects/tools/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "catalog": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/catalog",
+      "sourceRoot": "projects/catalog/src",
+      "prefix": "toco",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/catalog",
+            "index": "projects/catalog/src/index.html",
+            "main": "projects/catalog/src/main.ts",
+            "polyfills": "projects/catalog/src/polyfills.ts",
+            "tsConfig": "projects/catalog/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/catalog/src/favicon.ico",
+              "projects/catalog/src/assets"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/catalog/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/catalog/src/environments/environment.ts",
+                  "with": "projects/catalog/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "catalog:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "catalog:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "catalog:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/catalog/src/test.ts",
+            "polyfills": "projects/catalog/src/polyfills.ts",
+            "tsConfig": "projects/catalog/tsconfig.spec.json",
+            "karmaConfig": "projects/catalog/karma.conf.js",
+            "assets": [
+              "projects/catalog/src/favicon.ico",
+              "projects/catalog/src/assets"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/catalog/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/catalog/tsconfig.app.json",
+              "projects/catalog/tsconfig.spec.json",
+              "projects/catalog/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/catalog/e2e/protractor.conf.js",
+            "devServerTarget": "catalog:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "catalog:serve:production"
             }
           }
         }
@@ -762,7 +295,7 @@
       },
       "root": "projects/taxonomy",
       "sourceRoot": "projects/taxonomy/src",
-      "prefix": "app",
+      "prefix": "toco",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -778,6 +311,7 @@
               "projects/taxonomy/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/taxonomy/src/styles.scss"
             ],
             "scripts": []
@@ -843,6 +377,7 @@
               "projects/taxonomy/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/taxonomy/src/styles.scss"
             ],
             "scripts": []
@@ -876,5 +411,5 @@
       }
     }
   },
-  "defaultProject": "toco-ng"
+  "defaultProject": "inclusion"
 }

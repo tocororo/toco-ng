@@ -1,19 +1,25 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { SharedModule } from '@toco/tools/shared';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TaxonomyModule } from '@toco/taxonomy/taxonomy.module';
-import { EnvServiceProvider } from '@tocoenv/env.service.provider';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    TaxonomyModule
-  ],
-  providers: [EnvServiceProvider],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent
+    ],
+
+    imports: [
+        BrowserModule,
+        SharedModule,
+        AppRoutingModule
+    ],
+
+    providers: [],
+
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule
+{ }

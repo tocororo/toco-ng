@@ -1,0 +1,20 @@
+
+<div class="card-filter" *ngIf="content.extraContent">
+
+  <mat-form-field style="width: 100%;">
+
+    <input matInput [id]="inputId" type="text" [formControl]="formControl" [placeholder]="content.label" [matAutocomplete]="auto" aria-label="Number" />
+
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name" (click)="addParent(option)" [title]="option.name">
+        {{ option.name }}
+      </mat-option>
+    </mat-autocomplete>
+
+  </mat-form-field>
+
+  <mat-chip-list fxLayout="row" fxLayoutAlign="start center" style="margin-bottom: .5em" id="chiplist">
+    <mat-chip (click)="removeParent()" *ngIf="parentTerm">{{ parentTerm.name }}</mat-chip>
+  </mat-chip-list>
+
+</div>

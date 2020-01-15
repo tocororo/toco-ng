@@ -3,28 +3,34 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>Taxonomy</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <script type="application/javascript" >
-    (function (window) {
-      window.__env = window.__env || {};
+    <meta charset="utf-8">
+    <title>Taxonomy</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-      // API url
-      window.__env.sceibaApi = "https://localhost:5000/api";
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-      // Whether or not to enable debug mode
-      // Setting this to false will disable console output
-      window.__env.enableDebug = true;
-    }(this));
+    <script type="application/javascript">
 
-  </script>
+        (function (window) {
+            window.__env = window.__env || {};
+
+            // API url
+            //window.__env.sceibaApi = "https://localhost:5000/api";
+            window.__env.sceibaApi = "https://10.2.83.160:5000/api";
+
+            // Whether or not to enable debug mode
+            // Setting this to false will disable console output
+            window.__env.enableDebug = true;
+        }(this));
+
+    </script>
 </head>
 
 <body>
-  <app-root></app-root>
+    <app-root></app-root>
 </body>
 
 </html>

@@ -1,0 +1,8 @@
+
+<toco-catalog *ngIf="isOnline;else isOffline"></toco-catalog>
+
+<ng-template #isOffline>
+    <div>
+        <p class="offline-error">is offline</p>
+    </div>
+</ng-template>
