@@ -17,19 +17,19 @@ fxLayoutGap="1em">
 
         <mat-checkbox *ngSwitchCase="formFieldType.checkbox" [(ngModel)]="field.value" name="{{ field.name }}" required="{{ field.required }}" [style.width]="field.width"> {{ field.label }} </mat-checkbox>
 
-        <url-input *ngSwitchCase="formFieldType.url" [content]="field"></url-input>
+        <url-input *ngSwitchCase="formFieldType.url" [content]="field" [style.width]="field.width"></url-input>
         
-        <email-input *ngSwitchCase="formFieldType.email" [content]="field"></email-input>
+        <email-input *ngSwitchCase="formFieldType.email" [content]="field" [style.width]="field.width"></email-input>
 
-        <issn-input *ngSwitchCase="formFieldType.issn" [content]="field"></issn-input>
+        <issn-input *ngSwitchCase="formFieldType.issn" [content]="field" [style.width]="field.width" [style.minWidth]="'15em'"></issn-input>
 
-        <rnps-input *ngSwitchCase="formFieldType.rnps" [content]="field"></rnps-input>
+        <rnps-input *ngSwitchCase="formFieldType.rnps" [content]="field" [style.width]="field.width"></rnps-input>
 
         <toco-vocabulary *ngSwitchCase="formFieldType.vocabulary" [content]="field" [style.width]="field.width"></toco-vocabulary>
 
-        <toco-term-parent *ngSwitchCase="formFieldType.term_parent" [content]="field" [style.width]="field.width"></toco-term-parent>
+        <toco-term-parent *ngSwitchCase="formFieldType.term_parent" [content]="field" [style.width]="field.width" [style.minWidth]="'15em'"></toco-term-parent>
 
-        <text-input *ngSwitchDefault [content]="field"></text-input>
+        <text-input *ngSwitchDefault [content]="field" [style.width]="field.width"></text-input>
 
     </ng-container>
 

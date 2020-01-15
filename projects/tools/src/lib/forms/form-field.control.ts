@@ -385,7 +385,7 @@ export abstract class FormFieldControl
         }
 
         /************************** `mat-form-field` properties. **************************/
-        if (this.content.width == undefined) this.content.width = '310px';
+        if (this.content.width == undefined) this.content.width = '15em'/*'310px'*/;
 
         /**************************** `mat-label` properties. *****************************/
         if (this.content.label == undefined) this.content.label = label;

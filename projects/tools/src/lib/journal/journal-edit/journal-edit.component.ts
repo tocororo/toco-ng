@@ -24,10 +24,10 @@ export class JournalEditComponent
             description: '',
             iconName: '',
             content : [
-                { name: 'issn_p', label: 'ISSN Impreso', type: FormFieldType.issn, required: false, startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Impreso válido.'), value: new IssnValue('1234', '124x') },
-                { name: 'issn_e', label: 'ISSN Electrónico', type: FormFieldType.issn, required: false, startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Electrónico válido.') },
-                { name: 'issn_l', label: 'ISSN de Enlace', type: FormFieldType.issn, required: false, startHint: new HintValue(HintPosition.start, 'Escriba un ISSN de Enlace válido.') },
-                { name: 'rnps', label: 'RNPS', type: FormFieldType.rnps, required: true, startHint: new HintValue(HintPosition.start, 'Escriba un RNPS válido.') },
+                { name: 'issn_p', width: '23%', label: 'ISSN Impreso', type: FormFieldType.issn, required: false, startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Impreso válido.'), value: new IssnValue('1234', '124x') },
+                { name: 'issn_e', width: '23%', label: 'ISSN Electrónico', type: FormFieldType.issn, required: false, startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Electrónico válido.') },
+                { name: 'issn_l', width: '23%', label: 'ISSN de Enlace', type: FormFieldType.issn, required: false, startHint: new HintValue(HintPosition.start, 'Escriba un ISSN de Enlace válido.') },
+                { name: 'rnps', width: '23%', label: 'RNPS', type: FormFieldType.rnps, required: true, startHint: new HintValue(HintPosition.start, 'Escriba un RNPS válido.') },
 
                 { name: 'title', label: 'Título', type: FormFieldType.text, required: false },
                 { name: 'subtitle', label: 'Subtítulo', type: FormFieldType.text, required: false },
