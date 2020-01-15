@@ -9,7 +9,7 @@ import { FormContainerComponent, Panel, FormFieldType, FormContainerAction} from
 import { EventEmitter } from '@angular/core';
 import { Response } from '@toco/entities/response';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MessageHandler, StatusCode } from '@toco/core/utils/message-handler';
+import { MessageHandler, StatusCode } from '@toco/shared/utils/message-handler';
 import { FormControl } from '@angular/forms';
 
 

@@ -1,7 +1,8 @@
 
 
-    <toco-form-container [panels]="[identifiersPanel]" fxLayout="row" [action]='action' [actionLabel]="'Buscar'"></toco-form-container>
+    <toco-form-container [panels]="identifiersPanel" fxLayout="row" [action]='searchJournalAction' [actionLabel]="'Buscar'" [deleteValuesAfterAction]='false'></toco-form-container>
 
-    <toco-form-container [panels]="[informationPanel]" fxLayout="row" ></toco-form-container>
+    <toco-form-container *ngIf="journal" [panels]="informationPanel" fxLayout="row" ></toco-form-container>
 
-    <toco-form-container [panels]="[socialNetworks]" fxLayout="row" ></toco-form-container>
+
+

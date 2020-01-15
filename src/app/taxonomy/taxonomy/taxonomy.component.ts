@@ -37,7 +37,7 @@ export class TaxonomyComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-    if (this.currentVocabSuscription){
+    if (this.currentVocabSuscription) {
       this.currentVocabSuscription.unsubscribe();
     }
   }

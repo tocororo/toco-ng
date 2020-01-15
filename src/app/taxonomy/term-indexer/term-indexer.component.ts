@@ -7,7 +7,7 @@ import { catchError, finalize } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MessageHandler, StatusCode } from '@toco/core/utils/message-handler';
+import { MessageHandler, StatusCode } from '@toco/shared/utils/message-handler';
 
 class IndexerAction implements FormContainerAction {
 

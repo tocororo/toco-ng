@@ -12,7 +12,8 @@ import { HomeComponent } from './home/home.component';
 import { CoreRoutingModule } from './core-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { MetadataService } from './metadata.service';
-import { EqualLengthDirective } from './utils/validator';
+import { EqualLengthDirective } from '../shared/utils/validator';
+import { DialogContentComponent } from '../shared/utils/message-handler';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,6 @@ import { EqualLengthDirective } from './utils/validator';
     FooterComponent,
     EqualLengthDirective
   ],
-
   providers: [
     MetadataService
   ]

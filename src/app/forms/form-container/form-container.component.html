@@ -18,7 +18,7 @@
         <mat-action-row>
             <button mat-button *ngIf="i > 0" color="warn" (click)="prevStep()">Anterior</button>
             <button mat-button *ngIf="i != l-1" color="primary" (click)="nextStep()">Siguente</button>
-            <button mat-button *ngIf="i == l-1" color="warn" (click)="addData()">{{actionLabel}}</button>
+            <button mat-button *ngIf="i == l-1" color="warn" (click)="doAction()">{{actionLabel}}</button>
         </mat-action-row>
 
     </mat-expansion-panel>
@@ -39,7 +39,7 @@
         <toco-form-fields [fields]="panels[0].formField"></toco-form-fields>
 
         <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
-            <button mat-button color="warn" (click)="addData()">{{actionLabel}}</button>
+            <button mat-button color="warn" (click)="doAction()">{{actionLabel}}</button>
         </mat-card-actions>
     </mat-card-content>
 </mat-card>

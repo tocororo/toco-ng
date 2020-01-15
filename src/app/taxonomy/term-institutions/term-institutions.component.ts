@@ -7,11 +7,13 @@ import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MessageHandler, StatusCode } from '@toco/core/utils/message-handler';
+import { MessageHandler, StatusCode } from '@toco/shared/utils/message-handler';
 
 
 class InstitutionAction implements FormContainerAction {
 
+  constructor(private service: TaxonomyService, private term: Term, private is_new_term: boolean) {
+  }
   doit(data: any): void {
     this.term.name = data.name;
     this.term.parent_id = data.parent_id;
@@ -29,10 +31,6 @@ class InstitutionAction implements FormContainerAction {
       this.service.editTerm(this.term);
     }
   }
-
-  constructor(private service: TaxonomyService, private term: Term, private is_new_term: boolean) {
-  }
-
 }
 
 

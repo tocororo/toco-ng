@@ -3,15 +3,15 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
 import { RnpsValue } from './rnps-value';
-import { ExtraValidators } from '../../core/utils/validator';
+import { ExtraValidators } from '../../shared/utils/validator';
 import { FormField } from '../form-container/form-container.component';
 
 /**
- * Custom `MatFormFieldControl` for RNPS input, i.e., a control that represents an 
- * RNPS input form field. 
- * An RNPS (Registro Nacional de Publicaciones Seriadas) is an 4-digit code used to control 
- * las publicaciones seriadas autorizadas a editarse, imprimirse y circular en Cuba. 
- * For more information follow the link: http://www.seriadas.cult.cu/. 
+ * Custom `MatFormFieldControl` for RNPS input, i.e., a control that represents an
+ * RNPS input form field.
+ * An RNPS (Registro Nacional de Publicaciones Seriadas) is an 4-digit code used to control
+ * las publicaciones seriadas autorizadas a editarse, imprimirse y circular en Cuba.
+ * For more information follow the link: http://www.seriadas.cult.cu/.
  */
 @Component({
     selector: 'toco-form-field-rnps',
@@ -21,28 +21,28 @@ import { FormField } from '../form-container/form-container.component';
 export class FormFieldRnpsComponent extends FormField implements OnInit
 {
 	/**
-	 * Tracks the value and validity state of the control that contains the code. 
+	 * Tracks the value and validity state of the control that contains the code.
 	 */
     public readonly code: FormControl;
     private _codeOldValue: string;  /* It is used by '_handleInput' method. */
 
     /**
-     * Input field that represents the placeholder for this control. 
-     * By default, its value is 'ISSN'. 
+     * Input field that represents the placeholder for this control.
+     * By default, its value is 'ISSN'.
      */
     @Input()
     public placeholder: string;
 
     /**
-     * Input field that contains true if the control is required; otherwise, false. 
-     * By default, its value is true. 
+     * Input field that contains true if the control is required; otherwise, false.
+     * By default, its value is true.
      */
     @Input()
     public required: boolean;
 
 	/**
-	 * Input field that contains the control's hint value to show. 
-	 * By default, its value is 'Write a valid RNPS.'. 
+	 * Input field that contains the control's hint value to show.
+	 * By default, its value is 'Write a valid RNPS.'.
 	 */
 	@Input()
     public hintValue: string;
@@ -71,7 +71,7 @@ export class FormFieldRnpsComponent extends FormField implements OnInit
     }
 
 	/**
-	 * Returns true if the control is empty; otherwise, false. 
+	 * Returns true if the control is empty; otherwise, false.
 	 */
 	public get empty(): boolean
 	{
@@ -79,7 +79,7 @@ export class FormFieldRnpsComponent extends FormField implements OnInit
     }
 
     /**
-     * Returns true if the control is in a hint state; otherwise, false. 
+     * Returns true if the control is in a hint state; otherwise, false.
      */
     public get hintState(): boolean
     {
@@ -87,22 +87,22 @@ export class FormFieldRnpsComponent extends FormField implements OnInit
     }
 
     /**
-     * Returns true if the control is in an error state; otherwise, false. 
+     * Returns true if the control is in an error state; otherwise, false.
      */
     public get errorState(): boolean
     {
-        /* The control does not display errors before the user has a 
-         * chance to edit the form. The checks for dirty and touched prevent errors 
-         * from showing until the user does one of two things: changes the value, 
-         * turning the control dirty; or blurs the form control element, setting the 
-         * control to touched. 
-         * Thus, it reveals an error message only if the control is invalid and 
+        /* The control does not display errors before the user has a
+         * chance to edit the form. The checks for dirty and touched prevent errors
+         * from showing until the user does one of two things: changes the value,
+         * turning the control dirty; or blurs the form control element, setting the
+         * control to touched.
+         * Thus, it reveals an error message only if the control is invalid and
          * the control is either dirty or touched. */
         return ((this.code.invalid) && (this.code.dirty || this.code.touched));
     }
 
     /**
-     * Returns an error string if the control is in an error state; otherwise, empty string. 
+     * Returns an error string if the control is in an error state; otherwise, empty string.
      */
     public getErrorMessage(): string
     {
@@ -138,9 +138,9 @@ export class FormFieldRnpsComponent extends FormField implements OnInit
 
         return result;
     }
-    
+
 	/**
-	 * Handler function that is called when the control's value changes in the UI. For internal use only. 
+	 * Handler function that is called when the control's value changes in the UI. For internal use only.
 	 */
 	public _handleInput(): void
 	{

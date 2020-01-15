@@ -121,7 +121,7 @@ export class RepositoriesComponent implements OnInit {
             info.logo = item.data!= null ? item.data.logo : "";
             info.purpose  = item.purpose;
             info.description  = item.data!= null ? item.data.description : "";
-          j.jinformation = info;
+          j.data = info;
           arr.push(j);
         });
         return arr;

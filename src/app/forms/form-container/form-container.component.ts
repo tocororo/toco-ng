@@ -29,7 +29,7 @@ export enum FormFieldType {
 
     /** An issn control. */
     issn= 'issn',
-    
+
     /** An rnps control. */
     rnps= 'rnps',
 
@@ -70,10 +70,9 @@ export interface FormFieldContent {
 }
 
 /**
- * Represents a base class for a control that is treated as a form field. 
+ * Represents a base class for a control that is treated as a form field.
  */
-export abstract class FormField
-{
+export abstract class FormField {
     @Input()
     public formFieldContent: FormFieldContent;
 }
@@ -93,8 +92,7 @@ export interface Panel {
     formField: FormFieldContent[];
 }
 
-export interface FormContainerAction
-{
+export interface FormContainerAction {
     doit(data: any): void;
 }
 
@@ -113,11 +111,13 @@ export class FormContainerComponent implements OnInit, OnDestroy {
 
     @Input() public panels: Panel[] = [];
 
-    @Input() public action: FormContainerAction;
+    @Input() public action: FormContainerAction = null;
 
     @Input() public entity: Entity;
 
     @Input() public actionLabel = 'Adicionar';
+
+    @Input() public deleteValuesAfterAction = true;
 
     public step = 0;
 
@@ -173,7 +173,7 @@ export class FormContainerComponent implements OnInit, OnDestroy {
      * Sends data to the server. Collects all added information from the component.
      * Create a json object based on form.name fields and form.value
      */
-    public addData(): void {
+    public doAction(): void {
         /* Preparing all data. */
         const data = {};
 
@@ -185,11 +185,13 @@ export class FormContainerComponent implements OnInit, OnDestroy {
 
         this.action.doit(data);
 
-        this.panels.forEach(panel => {
-            panel.formField.forEach( form => {
-                form.value = null;
+        if (this.deleteValuesAfterAction) {
+            this.panels.forEach(panel => {
+              panel.formField.forEach( form => {
+                  form.value = null;
+              });
             });
-        });
+        }
     }
 
     private sendDataUnsubscribe(): void {

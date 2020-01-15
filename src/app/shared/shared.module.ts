@@ -12,13 +12,15 @@ import { InfoCardComponent } from './info-card/info-card.component';
 
 import { JournalCardComponent } from './journal-card/journal-card.component';
 import { BodyComponent } from './body/body.component';
+import { DialogContentComponent } from './utils/message-handler';
 
 @NgModule({
   declarations: [
     PageHeaderComponent,
     InfoCardComponent,
     JournalCardComponent,
-    BodyComponent
+    BodyComponent,
+    DialogContentComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -31,7 +33,9 @@ import { BodyComponent } from './body/body.component';
     MaterialModule,
     FlexLayoutModule
   ],
-
+  entryComponents: [
+    DialogContentComponent
+  ],
   exports: [
     BrowserAnimationsModule,
     FormsModule,
