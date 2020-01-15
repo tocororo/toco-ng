@@ -2,12 +2,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthenticateComponent } from './authenticate.component';
+import { AuthenticationComponent } from './authentication.component';
 
 const routes: Routes = [
     {
         path: 'authorized',
-        component: AuthenticateComponent,
+        component: AuthenticationComponent,
     }
 ];
 

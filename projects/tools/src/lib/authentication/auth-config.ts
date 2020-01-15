@@ -1,4 +1,3 @@
-
 import { AuthConfig } from 'angular-oauth2-oidc';
 
 export const authConfig: AuthConfig = {
@@ -6,17 +5,19 @@ export const authConfig: AuthConfig = {
     // Url of the Identity Provider
     //issuer: 'https://sceiba-lab.upr.edu.cu',
 
-    loginUrl: 'https://sceiba-lab.upr.edu.cu/oauth/authorize',
+    loginUrl: 'https://localhost:5000/oauth/authorize',
 
-    tokenEndpoint: 'https://sceiba-lab.upr.edu.cu/oauth/token',
+    tokenEndpoint: 'https://localhost:5000/oauth/token',
 
     // URL of the SPA to redirect the user to after login
-    redirectUri: 'https://127.0.0.1:4200/authorized',
+    redirectUri: 'https://127.0.0.1:4200/',
 
     // The SPA's id. The SPA is registered with this id at the auth-server
-    clientId: 'CYwMR6XfOSim5zcTxf98mv9bYEEKNLbMRT4K9h4n',
-    
+    clientId: 'a0QpogRmC5iyrhLbfIqmDEbOhhr9nUzOYYPAhWW1',
+
     oidc: false,
+
+    // timeoutFactor: 0.05,
 
     // set the scope for the permissions the client should request
     // The first three are defined by OIDC. The 4th is a usecase-specific one
