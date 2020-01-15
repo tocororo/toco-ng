@@ -1,3 +1,46 @@
-<p>
-  footer works!
-</p>
+<mat-toolbar fxLayout='row wrap' fxLayout.mx="column" fxLayoutAlign="center center" color="warn">
+    <a href="/">
+        <img src="https://sceiba-lab.upr.edu.cu/static/images/sceiba-logo-white.png" alt="Sceiba" width="150"
+            style="padding-top: .9em; padding-bottom: .9em;">
+    </a>
+
+    <mat-toolbar-row fxLayout='row wrap' fxLayout.mx="column" fxLayoutAlign="center start">
+        <div fxFlex="30%" fxFlex.xs="100%">
+            <span>About</span>
+        </div>
+        <div fxLayout='column wrap' fxFlex="30%" fxFlex.xs="100%">
+            <span>Institution</span>
+            <a href="http://www.upr.edu.cu" style="font-size: small; color: white">
+                <p>Universidad de Pinar del Río Hermanos Saíz Montes de Oca</p>
+            </a>
+            <p style="font-size: small;">Martí Street #300 between González Alcorta and 27 de noviembre. Pinar del Río.
+                Postal Code: 20100. Pinar del Río, Cuba </p>
+        </div>
+        <div fxFlex="30%" fxFlex.xs="100%">
+            <span>Contact</span>
+        </div>
+    </mat-toolbar-row>
+
+    <mat-toolbar-row fxLayout='row wrap' fxLayout.mx="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+        <a mat-mini-fab matTooltip="Facebook" href="https://facebook.com" color="primary" style="font-size: x-large;">
+            f
+        </a>
+        <a mat-mini-fab matTooltip="Twitter" href="https://twitter.com" color="primary" style="font-size: x-large;">
+            t
+        </a>
+    </mat-toolbar-row>
+
+</mat-toolbar>
+
+
+
+
+<!-- Copyright -->
+<div class="alternate-theme">
+    <mat-toolbar class="footer-height" fxLayout='row wrap' fxLayout.mx="column" fxLayoutAlign="center center"
+        color="primary" style="font-size: small;">
+        © 2020 Copyright:
+        <a href="http://www.upr.edu.cu" target="_blank"> Universidad de Pinar del Río</a>
+    </mat-toolbar>
+</div>
+<!-- Copyright -->

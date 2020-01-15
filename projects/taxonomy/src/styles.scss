@@ -77,20 +77,31 @@ $mat-my-blue: (
 $toco-primary: mat-palette($mat-my-blue, 800, 300, 900);
 $toco-accent: mat-palette($mat-my-red);
 $toco-warn: mat-palette($mat-deep-purple, 600);
+$toco-grey: mat-palette($mat-grey, 800, 300, 900);
 
-$toco-theme: mat-light-theme($toco-primary, $toco-accent, $toco-warn);
+$toco-theme: mat-light-theme($toco-primary, $toco-accent, $toco-grey);
+
 
 @include angular-material-theme($toco-theme);
 @include toco-app-theme($toco-theme);
+
+.alternate-theme {
+  $alternate-primary: mat-palette($mat-grey);
+  $alternate-accent:  mat-palette($mat-yellow, 400);
+
+  $alternate-theme: mat-light-theme($alternate-primary, $alternate-accent);
+
+  @include angular-material-theme($alternate-theme);
+  @include toco-app-theme($toco-theme);
+}
 
 html, body { height: 100%; }
 body { margin: 0; /*font-family: Roboto, "Helvetica Neue", sans-serif; */}
 
 /* this class is to quit padding in a dialog, must to be here, globally */
 .mat-dialog-container{
-    padding: 0 !important;
+  padding: 0 !important;
 }
-
 .mat-card-header-text{
-    width: 100% !important;
+  width: 100% !important;
 }
