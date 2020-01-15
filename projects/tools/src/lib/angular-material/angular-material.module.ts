@@ -30,6 +30,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatListModule } from '@angular/material/list';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatBadgeModule } from '@angular/material/badge';
 
 /**
  * A module that contains all angular material modules that are needed. 
@@ -65,7 +66,8 @@ import { MatTreeModule } from '@angular/material/tree';
         MatDatepickerModule,
         MatNativeDateModule,
         MatListModule,
-        MatTreeModule
+        MatTreeModule,
+        MatBadgeModule
     ],
 
     exports: [
@@ -98,7 +100,8 @@ import { MatTreeModule } from '@angular/material/tree';
         MatDatepickerModule,
         MatNativeDateModule,
         MatListModule,
-        MatTreeModule
+        MatTreeModule,
+        MatBadgeModule
     ]
 })
 export class AngularMaterialModule
