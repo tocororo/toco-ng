@@ -8,16 +8,20 @@ import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AuthenticationModule } from '@toco/tools/authentication';
+import { FooterComponent } from '@toco/tools/core';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        FooterComponent
     ],
 
     imports: [
         BrowserModule,
         SharedModule,
         CatalogModule,
+        AuthenticationModule,
         AppRoutingModule
     ],
 

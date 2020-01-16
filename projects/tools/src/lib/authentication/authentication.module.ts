@@ -22,6 +22,7 @@ import { AuthenticationService } from './authentication.service'
     exports: [
         AuthenticationComponent
     ],
+
     providers: [
         AuthenticationService
       ]

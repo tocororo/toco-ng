@@ -1,5 +1,5 @@
 
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { Subscription, PartialObserver, timer } from 'rxjs';
 
 import { OAuthService, JwksValidationHandler, OAuthStorage } from 'angular-oauth2-oidc';
@@ -13,6 +13,9 @@ import { AuthenticationService } from './authentication.service';
     styleUrls: ['./authentication.component.scss']
 })
 export class AuthenticationComponent implements OnInit, AfterViewInit {
+    
+    @Input()
+    public isButtonLogin: boolean;
 
     private timerAuthenticateSuscription: Subscription = null;
     private timerAuthenticateObserver: PartialObserver<number> = {
@@ -42,7 +45,10 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+        if(this.isButtonLogin == undefined) this.isButtonLogin = false;
+
         this.configure();
+        console.log('init');
     }
 
     ngOnDestroy(): void {

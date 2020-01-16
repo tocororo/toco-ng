@@ -11,7 +11,23 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-        <script src="env.js"></script>
+        <script>
+            (function (window){
+                window.__env = window.__env || { };
+            
+                // API url
+                // window.__env.sceibaApi = "https://sceiba-lab.upr.edu.cu/api";
+                window.__env.sceibaHost = "https://sceiba-lab.upr.edu.cu";
+            
+                window.__env.sceibaApi = "https://10.2.83.160:5000/api";
+            
+                window.__env.appHost = '';
+                window.__env.appName = '';
+                // Whether or not to enable debug mode
+                // Setting this to false will disable console output
+                window.__env.enableDebug = true;
+            }(this));
+        </script>
 
         <style type="text/css">
             body, html {
@@ -73,14 +89,16 @@
     </head>
 
     <body>
+
         <toco-root>
-            <div class="app-loading">
+            <!-- <div class="app-loading">
                 <div class="logo"></div>
                 <svg class="spinner" viewBox="25 25 50 50">
                     <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
                 </svg>
-            </div>
+            </div> -->
         </toco-root>
+
     </body>
 
 </html>
