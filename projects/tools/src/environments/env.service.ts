@@ -11,7 +11,9 @@ export class EnvService {
     public appHost = '';
     public appName = '';
     public pagesApi = '';
-
+    public oauthRedirectUri = '';
+    public oauthClientId = '';
+    public oauthScope = '';
     constructor()
     { }
 }

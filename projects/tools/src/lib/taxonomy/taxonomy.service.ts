@@ -22,7 +22,7 @@ export enum VocabulariesInmutableNames
 @Injectable()
 export class TaxonomyService {
 
-    prefix = 'taxonomy';
+    private prefix = 'taxonomy';
 
     private httpOptions = {
         headers: new HttpHeaders(
@@ -124,7 +124,7 @@ export class TaxonomyService {
     }
 
     getTermsTreeByVocab(vocab: Vocabulary):Observable<Response<any>> {
-        const req = this.env.sceibaApi + '/term/tree/' + vocab.id;
+        const req = this.env.sceibaApi + this.prefix + '/term/tree/' + vocab.id;
         return this.http.get<Response<any>>(req);
     }
 }

@@ -2,10 +2,12 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { Subscription, PartialObserver, timer } from 'rxjs';
 
-import { OAuthService, JwksValidationHandler, OAuthStorage } from 'angular-oauth2-oidc';
-import { authConfig } from './auth-config';
-import { AuthenticationService } from './authentication.service';
+import { OAuthService, JwksValidationHandler, OAuthStorage, AuthConfig } from 'angular-oauth2-oidc';
 
+import { AuthenticationService } from './authentication.service';
+import { EnvService } from '@tocoenv/tools/env.service';
+
+// import { authConfig } from './auth-config';
 
 @Component({
     selector: 'toco-authentication',
@@ -13,7 +15,7 @@ import { AuthenticationService } from './authentication.service';
     styleUrls: ['./authentication.component.scss']
 })
 export class AuthenticationComponent implements OnInit, AfterViewInit {
-    
+
     @Input()
     public isButtonLogin: boolean;
 
@@ -38,6 +40,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     };
 
     constructor(
+        private env: EnvService,
         private oauthService: OAuthService,
         private oauthStorage: OAuthStorage,
         private authenticationService: AuthenticationService) {
@@ -67,6 +70,29 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
      * Configurations to authenticate
      */
     private configure() {
+        const authConfig: AuthConfig = {
+
+          // Url of the Identity Provider
+          //issuer: 'https://sceiba-lab.upr.edu.cu',
+
+          loginUrl: this.env.sceibaHost + 'oauth/authorize',
+
+          tokenEndpoint: this.env.sceibaHost + 'oauth/token',
+
+          // URL of the SPA to redirect the user to after login
+          redirectUri: this.env.oauthRedirectUri,
+
+          // The SPA's id. The SPA is registered with this id at the auth-server
+          clientId: this.env.oauthClientId,
+
+          oidc: false,
+
+          timeoutFactor: 0.80,
+
+          // set the scope for the permissions the client should request
+          // The first three are defined by OIDC. The 4th is a usecase-specific one
+          scope: this.env.oauthScope, //'openid profile email voucher',
+      };
         this.oauthService.configure(authConfig);
 
         // Store user session in storage
@@ -116,7 +142,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
      * Starts the login flow
      */
     public login() {
-        this.oauthService.initImplicitFlow()
+        this.oauthService.initImplicitFlow();
     }
 
     /**
