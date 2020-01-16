@@ -22,6 +22,8 @@ export enum VocabulariesInmutableNames
 @Injectable()
 export class TaxonomyService {
 
+    prefix = 'taxonomy';
+
     private httpOptions = {
         headers: new HttpHeaders(
             {
@@ -84,7 +86,7 @@ export class TaxonomyService {
     }
 
     getVocabulary(id):Observable<Response<any>> {
-        let req = this.env.sceibaApi + '/vocabulary/' + id;
+        let req = this.env.sceibaApi + this.prefix + '/vocabulary/' + id;
         return this.http.get<Response<any>>(req);
     }
 
@@ -92,37 +94,37 @@ export class TaxonomyService {
         this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
 
         // tslint:disable-next-line: max-line-length
-        this.http.post<Response<any>>( this.env.sceibaApi + '/vocabulary/new', JSON.stringify(vocab), this.httpOptions ).pipe().subscribe(this.vocabulariesChangeObserver);
+        this.http.post<Response<any>>( this.env.sceibaApi + this.prefix + '/vocabulary/new', JSON.stringify(vocab), this.httpOptions ).pipe().subscribe(this.vocabulariesChangeObserver);
     }
 
     editVocabulary(vocab: Vocabulary): void {
         this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
 
         // tslint:disable-next-line: max-line-length
-        this.http.post<Response<any>>( this.env.sceibaApi + '/vocabulary/' + vocab.id + '/edit', JSON.stringify(vocab), this.httpOptions ).pipe().subscribe(this.vocabulariesChangeObserver);
+        this.http.post<Response<any>>( this.env.sceibaApi + this.prefix + '/vocabulary/edit/' + vocab.id , JSON.stringify(vocab), this.httpOptions ).pipe().subscribe(this.vocabulariesChangeObserver);
     }
 
     getVocabularies(): Observable<Response<any>> {
-        return this.http.get<Response<any>>(this.env.sceibaApi + '/vocabularies');
+        return this.http.get<Response<any>>(this.env.sceibaApi + this.prefix + '/vocabulary/list');
     }
 
     newTerm(term: Term): void {
         this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
 
         // tslint:disable-next-line: max-line-length
-        this.http.post<Response<any>>( this.env.sceibaApi + '/term/new', JSON.stringify(term), this.httpOptions ).
+        this.http.post<Response<any>>( this.env.sceibaApi + this.prefix + '/term/new', JSON.stringify(term), this.httpOptions ).
         pipe().subscribe(this.termChangeObserver);
     }
 
     editTerm(term: Term): void {
         this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
 
-        this.http.post<Response<any>>( this.env.sceibaApi + '/term/' + term.uuid + '/edit', JSON.stringify(term), this.httpOptions ).
+        this.http.post<Response<any>>( this.env.sceibaApi + this.prefix + '/term/edit/' + term.uuid , JSON.stringify(term), this.httpOptions ).
         pipe().subscribe(this.termChangeObserver);
     }
 
-    getTermsTreeByVocab(vocab: Vocabulary):Observable<Response<any>>{
-        const req = this.env.sceibaApi + '/vocabulary/' + vocab.id + '/terms/tree';
+    getTermsTreeByVocab(vocab: Vocabulary):Observable<Response<any>> {
+        const req = this.env.sceibaApi + '/term/tree/' + vocab.id;
         return this.http.get<Response<any>>(req);
     }
 }
