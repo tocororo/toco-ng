@@ -1,4 +1,5 @@
-<div fxLayoutAlign="center center" fxLayout="row">
+
+<div *ngIf="!isButtonLogin;else template_buttonLogin" fxLayoutAlign="center center" fxLayout="row">
     <mat-card fxLayoutAlign="center center" fxLayout="column">
 
         <mat-card-header>
@@ -20,3 +21,10 @@
         </mat-card-content>
     </mat-card>
 </div>
+
+<ng-template #template_buttonLogin>
+    <button  mat-raised-button color="primary" (click)="login()">
+        Login
+        <mat-icon class="mat-18">lock</mat-icon>
+    </button>
+</ng-template>

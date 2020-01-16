@@ -5,7 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { CatalogComponent } from '@toco/tools/catalog';
 
 const routes: Routes = [
-    { path: '', component: CatalogComponent },
+    { 
+        path: '',
+        component: CatalogComponent 
+    },
+    {
+        path: '**',
+        redirectTo: ''
+    }
 ];
 
 @NgModule({

@@ -6,7 +6,7 @@ import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { MatPaginator,PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { MetadataService } from '@toco/tools/core';
+import { MetadataService, MessageHandler, StatusCode } from '@toco/tools/core';
 import { Journal, JournalInformation, ISSN } from '@toco/tools/entities';
 import { FilterHttpMap, FiltersService } from '@toco/tools/filters';
 
@@ -14,6 +14,7 @@ import { EnvService } from '@tocoenv/tools/env.service';
 
 import { CatalogService } from '../catalog.service';
 import { CatalogFiltersComponent } from '../catalog-filters/catalog-filters.component';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'toco-catalog',
@@ -72,7 +73,8 @@ export class CatalogComponent implements OnInit {
     constructor(private service: CatalogService,
                             private metadata: MetadataService,
                             private filterService: FiltersService,
-                            private env: EnvService) {
+                            private env: EnvService,
+                            private _snackBar: MatSnackBar) {
                                 this.sceibaHost = env.sceibaHost + '/catalog';
                             }
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -83,15 +85,41 @@ export class CatalogComponent implements OnInit {
         this.metadata.setTitleDescription('Catálogo de Revistas Científicas', '');
         this.paginator.firstPage();
         this.paginator.pageSize = 5;
-        this.service.getJournalsCount().subscribe(response => {
-            this.length = response.data.count;
-        });
-        this.fetchJournalData();
 
-        this.filterService.paramsChanged.subscribe(params => {
-            this.params = params;
+        try{
+            // this.service.getJournalsCount()
+            //     .pipe(
+            //         catchError( error =>{
+            //             const m  = new MessageHandler(this._snackBar);
+            //             m.showMessage(StatusCode.serverError, error.message);
+            //             return observableOf([]);
+            //         })
+            //     )
+            //     .subscribe(response => {
+            //         if(response)
+            //         console.log('count', response);
+                    
+            //         this.length = response.data.count;
+            //     });
+
             this.fetchJournalData();
-        });
+    
+            this.filterService.paramsChanged.pipe(
+                catchError( error =>{
+                    const m  = new MessageHandler(this._snackBar);
+                    m.showMessage(StatusCode.serverError, error.message);
+                    return observableOf([]);
+                })
+            )
+            .subscribe(params => {
+                this.params = params;
+                this.fetchJournalData();
+            });
+        }
+        catch(err){
+            const m  = new MessageHandler(this._snackBar);
+                m.showMessage(StatusCode.serverError, err.message);
+        }
 
     }
 
@@ -101,9 +129,10 @@ export class CatalogComponent implements OnInit {
     // }
 
     fetchJournalData() {
-        this.loading = true;
+        // this.loading = true;
         // this.dataSource.data = this.service.getJournalsPage(this.count, this.page);
         const arr = new Array<Journal>();
+
         merge().pipe(
             startWith({}),
             switchMap(() => {
@@ -113,8 +142,11 @@ export class CatalogComponent implements OnInit {
             map(response => {
                 // Flip flag to show that loading has finished.
                 this.loading = false;
+                
                 // this.isRateLimitReached = false;
                 // this.resultsLength = response.total_count;
+                
+                
                 this.length = response.data.sources.count;
                 response.data.sources.data.forEach(item => {
                     const j = new Journal();
@@ -140,11 +172,14 @@ export class CatalogComponent implements OnInit {
                 return arr;
             }),
             catchError(error => {
-                this.loading = false;
-                console.log('ERRORRR ' + error);
+
+                // this.loading = false;
+                const m  = new MessageHandler(this._snackBar);
+                m.showMessage(StatusCode.serverError, error.message);
                 // Catch if the GitHub API has reached its rate limit. Return empty data.
                 // this.isRateLimitReached = true;
                 return observableOf([]);
+
             })
         ).subscribe(data => this.dataSource.data = data);
 
@@ -153,9 +188,9 @@ export class CatalogComponent implements OnInit {
     onScrollUp() {
         // console.log("scrolled up!!");
     }
-    isEmpty() {
-        if (this.journalList.length === 0) {
-            this.loading = false;
+    get isEmpty() {
+        if (this.dataSource.data.length === 0) {
+            // this.loading = false;
             return true;
         }
         return false;

@@ -41,12 +41,7 @@ export class CatalogService extends HttpService {
     }
 
     getJournalsVocab(): Observable<Response<any>> {
-        try {
-            console.log(this.env);
-            return this.http.get<Response<any>>(this.env.sceibaApi + '/vocabularies');
-        } catch (error) {
-
-        }
+        return this.http.get<Response<any>>(this.env.sceibaApi + '/vocabularies');
     }
     getTerminosByVocab(vocabId: string): Observable<any> {
         try {

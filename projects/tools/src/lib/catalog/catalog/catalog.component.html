@@ -1,100 +1,102 @@
-
 <!-- <div infiniteScroll [infiniteScrollDistance]="0" [infiniteScrollUpDistance]="0.5" [infiniteScrollThrottle]="10" (scrolled)="onScrollDown()"
   (scrolledUp)="onScrollUp()"> -->
 
-    <!-- <toco-page-header [info]="['Catálogo de Revistas Científicas Cubanas']">
+<!-- <toco-page-header [info]="['Catálogo de Revistas Científicas Cubanas']">
     </toco-page-header> -->
-    <div fxLayoutAlign="end center" fxLayout="row">
-      <button mat-icon-button [matMenuTriggerFor]="menu">
+<div fxLayoutAlign="end center" fxLayout="row">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>view_quilt</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
+    </button>
+    <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="changeLayoutPosition(0)">
-          <mat-icon>arrow_forward</mat-icon>
-          <span>{{layoutPosition[0].name}}</span>
+            <mat-icon>arrow_forward</mat-icon>
+            <span>{{layoutPosition[0].name}}</span>
         </button>
         <button mat-menu-item (click)="changeLayoutPosition(1)">
-          <mat-icon>arrow_back</mat-icon>
-          <span>{{layoutPosition[1].name}}</span>
+            <mat-icon>arrow_back</mat-icon>
+            <span>{{layoutPosition[1].name}}</span>
         </button>
         <button mat-menu-item (click)="changeLayoutPosition(2)">
-          <mat-icon>arrow_upward</mat-icon>
-          <span>{{layoutPosition[2].name}}</span>
+            <mat-icon>arrow_upward</mat-icon>
+            <span>{{layoutPosition[2].name}}</span>
         </button>
         <button mat-menu-item (click)="changeLayoutPosition(3)">
-          <mat-icon>arrow_downward</mat-icon>
-          <span>{{layoutPosition[3].name}}</span>
+            <mat-icon>arrow_downward</mat-icon>
+            <span>{{layoutPosition[3].name}}</span>
         </button>
-      </mat-menu>
-    </div>
+    </mat-menu>
+</div>
 
 
-    <div fxLayout="{{currentlayout.layout}}" fxLayout.xs="column nowrap" fxLayoutAlign="{{currentlayout.aling}}">
+<div fxLayout="{{currentlayout.layout}}" fxLayout.xs="column nowrap"
+    fxLayoutAlign="{{currentlayout.aling}}">
 
-      <toco-catalog-filters-container fxLayout="row wrap" fxLayout.xs="column wrap" fxFlex="{{currentlayout.width}}" fxLayoutAlign="start center" fxLayoutAlign.xs="center center"
-        fxLayoutGap="1em" class="width-90 back-grey mat-elevation-z8">
-      </toco-catalog-filters-container>
+    <toco-catalog-filters-container *ngIf="!isEmpty" fxLayout="row wrap" fxLayout.xs="column wrap" fxFlex="{{currentlayout.width}}"
+        fxLayoutAlign="start center" fxLayoutAlign.xs="center center" fxLayoutGap="1em"
+        class="width-90 back-grey mat-elevation-z8">
+    </toco-catalog-filters-container>
 
 
 
-      <div class="mat-elevation-z8 width-90 margin1em">
-        <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
-          <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef>Titulo</th>
-            <td mat-cell *matCellDef="let element"> {{element.data.title}} </td>
-          </ng-container>
-          <ng-container matColumnDef="rnps">
-            <th mat-header-cell *matHeaderCellDef>RNPS</th>
-            <td mat-cell *matCellDef="let element"> {{element.data.rnps}} </td>
-          </ng-container>
-          <ng-container matColumnDef="p-issn">
-            <th mat-header-cell *matHeaderCellDef>P-ISSN</th>
-            <td mat-cell *matCellDef="let element"> {{element.data.issn.p}} </td>
-          </ng-container>
-          <ng-container matColumnDef="url">
-            <th mat-header-cell *matHeaderCellDef>URL</th>
-            <td mat-cell *matCellDef="let element"> {{element.data.url}} </td>
-          </ng-container>
+    <div class="mat-elevation-z8 width-90 margin1em">
+        <table *ngIf="!isEmpty" mat-table [dataSource]="dataSource" multiTemplateDataRows>
+            <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef>Titulo</th>
+                <td mat-cell *matCellDef="let element"> {{element.data.title}} </td>
+            </ng-container>
+            <ng-container matColumnDef="rnps">
+                <th mat-header-cell *matHeaderCellDef>RNPS</th>
+                <td mat-cell *matCellDef="let element"> {{element.data.rnps}} </td>
+            </ng-container>
+            <ng-container matColumnDef="p-issn">
+                <th mat-header-cell *matHeaderCellDef>P-ISSN</th>
+                <td mat-cell *matCellDef="let element"> {{element.data.issn.p}} </td>
+            </ng-container>
+            <ng-container matColumnDef="url">
+                <th mat-header-cell *matHeaderCellDef>URL</th>
+                <td mat-cell *matCellDef="let element"> {{element.data.url}} </td>
+            </ng-container>
 
-          <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-          <ng-container matColumnDef="expandedDetail">
-            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-              <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                <div class="example-element-description e2e-inner-html-bound" [innerHTML]="element.data.description"></div>
-                <div class="example-element-description" fxLayout="row" fxLayoutAlign="center end">
-                  <a mat-flat-button color="primary" href="{{sceibaHost}}/{{element.tocoID}}" >
-                    Ver
-                  </a>
-                </div>
+            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+            <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                    <div class="example-element-detail"
+                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                        <div class="example-element-description e2e-inner-html-bound"
+                            [innerHTML]="element.data.description"></div>
+                        <div class="example-element-description" fxLayout="row" fxLayoutAlign="center end">
+                            <a mat-flat-button color="primary" href="{{sceibaHost}}/{{element.tocoID}}">
+                                Ver
+                            </a>
+                        </div>
 
-              </div>
-            </td>
-          </ng-container>
+                    </div>
+                </td>
+            </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-          <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row" [class.example-expanded-row]="expandedElement === element"
-            (click)="expandedElement = element">
-          </tr>
-          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+                [class.example-expanded-row]="expandedElement === element" (click)="expandedElement = element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
         </table>
-        <mat-paginator [length]="length"
-              [pageSize]="pageSize"
-              [pageSizeOptions]="pageSizeOptions"
-              (page)="fetchJournalData()">
+
+        <h1 *ngIf="isEmpty">No hay Información para Mostrar</h1>
+
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+            (page)="fetchJournalData()">
         </mat-paginator>
-      </div>
-
-      <mat-card *ngIf="!isEmpty()" class="center-spinner" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
-        <mat-spinner></mat-spinner>
-        <!--<mat-progress-bar mode="indeterminate"></mat-progress-bar>-->
-      </mat-card>
-
-      <!-- <mat-card *ngIf="isEmpty()" class="center-spinner" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
-        <h1>No hay Información para Mostrar</h1>
-      </mat-card> -->
     </div>
 
-    <!--
+
+</div>
+<mat-card *ngIf="!isLoading()" class="center-spinner" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
+    <mat-spinner></mat-spinner>
+    <!--<mat-progress-bar mode="indeterminate"></mat-progress-bar>-->
+</mat-card>
+
+
+<!--
       </mat-drawer-content>
 
     </mat-drawer-container> -->

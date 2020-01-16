@@ -6,13 +6,14 @@ import { AuthenticationComponent } from './authentication.component';
 
 const routes: Routes = [
     {
-        path: 'authorized',
+        path: 'login',
         component: AuthenticationComponent,
     }
 ];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
+
     exports: [RouterModule],
 })
 export class AuthenticateRoutingModule

@@ -1,11 +1,15 @@
 
 import { Component, ComponentFactoryResolver } from '@angular/core';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material';
 
 import { FilterComponent } from '@toco/tools/filters';
 import { FilterItem } from '@toco/tools/filters';
 import { BooleanFilterComponent } from '@toco/tools/filters';
 import { FilterContainerService } from '@toco/tools/filters';
 import { FilterContainerComponent } from '@toco/tools/filters';
+import { MessageHandler, StatusCode } from '@toco/tools/core';
 
 import { CatalogService } from '../catalog.service';
 
@@ -18,7 +22,8 @@ export class CatalogFiltersComponent extends FilterContainerComponent{
 
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
                             protected childrenService: FilterContainerService,
-                            protected service:  CatalogService,) {
+                            protected service:  CatalogService,
+                            private _snackBar: MatSnackBar) {
                                 super(componentFactoryResolver, childrenService)
                             }
 
@@ -32,23 +37,36 @@ export class CatalogFiltersComponent extends FilterContainerComponent{
             this.filters_data.push(filter);
         });
 
-        this.service.getJournalsVocab().subscribe(response =>{
-            response.data.vocabularies.forEach(vocab =>{
-                this.service.getTerminosByVocab(vocab.id).subscribe(termsResponse => {
-                    this.filters_data.push(
-                    {
-                        index: this.filters_data.length,
-                        field: 'terms',
-                        type: 'select-autocomplete',
-                        placeholder: vocab.name,
-                        name: vocab.name,
-                        idVocab: vocab.id,
-                        selectOptions: termsResponse.data.terms,
-                        is_enabled: true
-                    }
-                );
+        this.service.getJournalsVocab().pipe(
+            catchError( error =>{
+                const m  = new MessageHandler(this._snackBar);
+                m.showMessage(StatusCode.serverError, error.message);
+                return of(null);
+            })
+        )
+        .subscribe(response =>{
+            if(response){
+                response.data.vocabularies.forEach(vocab =>{
+                    
+                    this.service.getTerminosByVocab(vocab.id).subscribe(termsResponse => {
+                        this.filters_data.push(
+                        {
+                            index: this.filters_data.length,
+                            field: 'terms',
+                            type: 'select-autocomplete',
+                            placeholder: vocab.name,
+                            name: vocab.name,
+                            idVocab: vocab.id,
+                            selectOptions: termsResponse.data.terms,
+                            is_enabled: true
+                        });
+
+                    });
                 });
-            });
+            } else {
+            const m  = new MessageHandler(this._snackBar);
+                m.showMessage(StatusCode.serverError, "No puedo cargar los vocabularios");
+            }
         });
     }
 
