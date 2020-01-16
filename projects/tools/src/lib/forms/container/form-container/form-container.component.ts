@@ -5,27 +5,27 @@ import { PartialObserver, Subscription } from 'rxjs';
 import { Entity, Response } from '@toco/tools/entities';
 
 /**
- * An interface that represents the content of an expansion control. 
+ * An interface that represents the content of an expansion control.
  */
 export interface PanelContent
 {
     /**
-     * Returns the panel's title. 
+     * Returns the panel's title.
      */
     title: string;
 
     /**
-     * Returns the panel's description. 
+     * Returns the panel's description.
      */
     description: string;
 
     /**
-     * Returns the panel's icon name. 
+     * Returns the panel's icon name.
      */
     iconName: string;
 
     /**
-     * Returns the panel's content. 
+     * Returns the panel's content.
      */
     content: any[];  /* formField: FormFieldContent[] */
 }
@@ -37,8 +37,8 @@ export interface FormContainerAction
 
 /**
  * @description
- * Represents a form container. 
- * Creates a form to show the array of panels and sends that information to the server. 
+ * Represents a form container.
+ * Creates a form to show the array of panels and sends that information to the server.
  */
 @Component({
     selector: 'toco-form-container',
@@ -48,7 +48,7 @@ export interface FormContainerAction
 export class FormContainerComponent implements OnInit, OnDestroy
 {
     /**
-     * The array of panels to show. 
+     * The array of panels to show.
      */
     @Input()
     public panels: PanelContent[];
@@ -60,10 +60,12 @@ export class FormContainerComponent implements OnInit, OnDestroy
     public entity: Entity;
 
     /**
-     * An string that represents the action label of the last panel. 
+     * An string that represents the action label of the last panel.
      */
     @Input()
     public actionLabel: string;
+
+    @Input() public deleteValuesAfterAction = true;
 
     /**
      * The current expanded panel position.
@@ -107,8 +109,8 @@ export class FormContainerComponent implements OnInit, OnDestroy
     }
 
     /**
-     * Sets the new expanded panel position. 
-     * @param newStep The new position. 
+     * Sets the new expanded panel position.
+     * @param newStep The new position.
      */
     public setStep(newStep: number): void
     {
@@ -116,7 +118,7 @@ export class FormContainerComponent implements OnInit, OnDestroy
     }
 
     /**
-     * Sets the expanded panel position to the next position. 
+     * Sets the expanded panel position to the next position.
      */
     public nextStep(): void
     {
@@ -124,7 +126,7 @@ export class FormContainerComponent implements OnInit, OnDestroy
     }
 
     /**
-     * Sets the expanded panel position to the previous position. 
+     * Sets the expanded panel position to the previous position.
      */
     public prevStep(): void
     {
@@ -132,10 +134,10 @@ export class FormContainerComponent implements OnInit, OnDestroy
     }
 
     /**
-     * Sends data to the server. Collects all added information from the component. 
-     * Creates a JSON object based on `form.name` and `form.value` fields. 
+     * Sends data to the server. Collects all added information from the component.
+     * Creates a JSON object based on `form.name` and `form.value` fields.
      */
-    public addData(): void
+    public doAction(): void
     {
         /* Preparing all data. */
 
@@ -149,11 +151,13 @@ export class FormContainerComponent implements OnInit, OnDestroy
 
         this.action.doit(data);
 
-        this.panels.forEach(panel => {
-            panel.content.forEach(form => {
-                form.value = null;
+        if (this.deleteValuesAfterAction) {
+            this.panels.forEach(panel => {
+              panel.content.forEach( form => {
+                  form.value = null;
+              });
             });
-        });
+        }
     }
 
     private sendDataUnsubscribe(): void

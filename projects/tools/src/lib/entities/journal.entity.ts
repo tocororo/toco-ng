@@ -1,56 +1,54 @@
-
-import { Entity } from './entity';
+import { Entity, EntityBase } from './entity';
 import { JournalReference } from './journal_reference.entity';
 import { Term } from './taxonomy.entity';
 
 
 // TODO: En algun momento refactorizar...
     // todo lo que se llama Journal deberia llamarse source
-
-
-export class Journal extends Entity {
-    tocoID: string;
-    jinformation: JournalInformation;
-    jreference?: Array<JournalReference>;
-    terms?: Array<Term>;
-    source_type: string;
-    harvest_type: string;
-    /**
-     * The OAI protocol URL.
-     */
-    harvest_endpoint: string;
-
-     /**
-      * Create a new instance of `Journal` class.
-      * @param r Length of journal reference.
-      * @param t Length of `terms`.
-      */
-    constructor(r: number, t: number) {
-        super();
-        this.jreference = new Array<JournalReference>(r);
-        this.terms = new Array<Term>(t);
-    }
+export class SocialNetworks  extends EntityBase {
+  facebook = '';
+  twitter = '';
+  linkedin = '';
 }
+export class ISSN {
+    p  = '';
+    e  = '';
+    l  = '';
+}
+export class JournalInformation extends EntityBase {
+    title = '';
+    subtitle  = '';
+    shortname  = '';
+    issn: ISSN = new ISSN();
+    rnps = '';
+    url = '';
+    email = '';
+    logo ? = '';
+    purpose ? = '';
+    description ? = '';
+    start_year ? = '';
+    end_year ? = '';
+    frequency ? = '';
 
-export class JournalInformation {
-    title: string;
-    subtitle: string;
-    shortname: string;
-    issn: ISSN;
-    rnps: string;
-    url: string;
-    email: string;
-    logo: string;
-    purpose: string;
-    description: string;
+    socialNetworks: SocialNetworks = new SocialNetworks();
 
     getISSN() {
         return this.issn.p;
     }
 }
 
-export class ISSN {
-    p: string;
-    e: string;
-    l: string;
+export class Journal extends Entity {
+    tocoID: string;
+    data: JournalInformation = new JournalInformation();
+    jreference?: Array<JournalReference> = new Array<JournalReference>(0);
+    terms?: Array<Term> = new Array<Term>(0);
+    source_type = '';
+    source_app = '';
+
+    /**
+     * The OAI protocol URL.
+     */
+    harvest_endpoint = '';
+    harvest_type = '';
 }
+

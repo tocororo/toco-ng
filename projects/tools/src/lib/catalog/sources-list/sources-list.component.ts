@@ -101,7 +101,7 @@ export class SourcesListComponent implements OnInit
         this.loading = true;
         // this.dataSource.data = this.service.getJournalsPage(this.count, this.page);
         const arr = new Array<Journal>();
-        
+
         merge().pipe(
             startWith({}),
             switchMap(() => {
@@ -115,7 +115,7 @@ export class SourcesListComponent implements OnInit
             // this.resultsLength = response.total_count;
             this.length = response.data.sources.count;
             response.data.sources.data.forEach(item => {
-                const j = new Journal(0, 0);
+                const j = new Journal();
                 j.id = item.id;
                 j.tocoID = item.uuid;
                 const info = new JournalInformation();
@@ -132,7 +132,7 @@ export class SourcesListComponent implements OnInit
                 info.logo = item.data != null ? item.data.logo : '';
                 info.purpose = item.purpose;
                 info.description = item.data != null ? item.data.description : '';
-                j.jinformation = info;
+                j.data = info;
                 arr.push(j);
             });
             return arr;
@@ -177,7 +177,7 @@ export class SourcesListComponent implements OnInit
         }
         return true;
     }
-    
+
     changeLayoutPosition(index: number)
     {
         this.currentlayout = this.layoutPosition[index];

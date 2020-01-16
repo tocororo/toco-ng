@@ -14,7 +14,9 @@ export enum VocabulariesInmutableNames
     INTITUTION = 1,
     DATABASES = 4,
     DB_GROUPS = 5,
-    PROVINCES = 3
+    PROVINCES = 3,
+    SUBJECTS = 2,
+    LICENCES = 6
 }
 
 @Injectable()

@@ -1,7 +1,7 @@
 
 <mat-accordion *ngIf="(panels) && (panels.length > 1)">
 
-    <mat-expansion-panel *ngFor="let panel of panels; let newStep = index; let count = count" 
+    <mat-expansion-panel *ngFor="let panel of panels; let newStep = index; let count = count"
         [expanded]="step == newStep" (opened)="setStep(newStep)" hideToggle>
 
         <mat-expansion-panel-header>
@@ -17,9 +17,9 @@
         <toco-form-fields [fields]="panel.content"></toco-form-fields>
 
         <mat-action-row>
-            <button mat-button *ngIf="newStep != 0" color="warn" (click)="prevStep()">Anterior</button>
-            <button mat-button *ngIf="newStep != count - 1" color="primary" (click)="nextStep()">Siguente</button>
-            <button mat-button *ngIf="newStep == count - 1" color="warn" (click)="addData()">{{ actionLabel }}</button>
+            <button mat-button *ngIf="i > 0" color="warn" (click)="prevStep()">Anterior</button>
+            <button mat-button *ngIf="i != l-1" color="primary" (click)="nextStep()">Siguente</button>
+            <button mat-button *ngIf="i == l-1" color="warn" (click)="doAction()">{{actionLabel}}</button>
         </mat-action-row>
 
     </mat-expansion-panel>
@@ -42,8 +42,7 @@
         <toco-form-fields [fields]="panels[0].content"></toco-form-fields>
 
         <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
-            <button mat-button color="warn" (click)="addData()">{{ actionLabel }}</button>
+            <button mat-button color="warn" (click)="doAction()">{{actionLabel}}</button>
         </mat-card-actions>
     </mat-card-content>
-
 </mat-card>

@@ -83,14 +83,14 @@ export class TermInstitutionsComponent implements OnInit {
                         let term: Term = new Term();
                         term.vocabulary_id = this.data.vocab.id;
                         this.data['term'] = term;
-                        
+
                         this.action = new InstitutionAction(this.data.service, this.data.term, true);
                         this.actionLabel = 'Adicionar';
                         this.panels[0].title = 'Nuevo Término de ' + this.data.vocab.human_name;
                     }
 
                     this.data.term.data = (this.data.term.data) ? this.data.term.data : {};
-                    
+
                     this.formFieldsContent = [
                         {
                             name: 'name', label: 'Nombre',

@@ -12,11 +12,11 @@ import { ExtraValidators } from '@toco/tools/core';
 import { Common } from '@toco/tools/core';
 
 /**
- * Custom `MatFormFieldControl` for ISSN input, i.e., a control that represents an 
- * ISSN input form field. 
- * An ISSN (International Standard Serial Number) is an 8-digit code used to identify 
- * newspapers, journals, magazines and periodicals of all kinds and on all media–print 
- * and electronic. For more information follow the link: https://www.issn.org/understanding-the-issn/what-is-an-issn/. 
+ * Custom `MatFormFieldControl` for ISSN input, i.e., a control that represents an
+ * ISSN input form field.
+ * An ISSN (International Standard Serial Number) is an 8-digit code used to identify
+ * newspapers, journals, magazines and periodicals of all kinds and on all media–print
+ * and electronic. For more information follow the link: https://www.issn.org/understanding-the-issn/what-is-an-issn/.
  */
 @Component({
 	selector: 'issn-input-internal',
@@ -30,7 +30,7 @@ import { Common } from '@toco/tools/core';
 		'[class.should-label-float]': 'shouldLabelFloat',
 		'[attr.aria-describedby]': 'describedBy',
 		'(blur)': '_onTouched()'
-		/* It does not need to do '(change/input)': '_onChange(internalControl.value)' because the `input` event 
+		/* It does not need to do '(change/input)': '_onChange(internalControl.value)' because the `input` event
 		 * is already bound. */
 	}
 })
@@ -38,17 +38,17 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	MatFormFieldControl<IssnValue>, ControlValueAccessor
 {
 	/**
-	 * Returns the next Id. 
+	 * Returns the next Id.
 	 */
 	private static _nextId: number = 0;
 
 	/**
-	 * Returns the control name with dash. 
+	 * Returns the control name with dash.
 	 */
 	private static readonly _controlNameWithDash: string = 'issn-input';
 
 	/**
-	 * Tracks the value and validity state of the internal control that contains the code. 
+	 * Tracks the value and validity state of the internal control that contains the code.
 	 */
 	public readonly internalControl: FormGroup;
 	private readonly _firstGroup: FormControl;
@@ -57,63 +57,63 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	private _secondGroupOldValue: string;  /* It is used by `handleInput_secondGroup` method. */
 
     /**
-     * Stream that emits whenever the state of the control changes such that the parent `MatFormField` 
-     * needs to run change detection. 
+     * Stream that emits whenever the state of the control changes such that the parent `MatFormField`
+     * needs to run change detection.
      */
 	public readonly stateChanges: Subject<void>;
 
 	/**
-	 * Return the element ID for this control. 
+	 * Return the element ID for this control.
 	 */
 	public readonly id: string;
 
 	/**
-	 * Returns the placeholder for this control. 
+	 * Returns the placeholder for this control.
 	 */
 	private _placeholder: string;
 
 	/**
-	 * Returns true if the control is focused; otherwise, false. 
+	 * Returns true if the control is focused; otherwise, false.
 	 */
 	public focused: boolean;
 
 	/**
-	 * Returns true if the control is required; otherwise, false. 
+	 * Returns true if the control is required; otherwise, false.
 	 */
 	private _required: boolean;
 
 	/**
-	 * Returns true if the control is disabled; otherwise, false. 
+	 * Returns true if the control is disabled; otherwise, false.
 	 */
 	private _disabled: boolean;
 
     /**
-     * Returns an optional name for the control type that can be used to distinguish `mat-form-field` elements 
-     * based on their control type. The form field will add a class, `mat-form-field-type-{{controlType}}` 
-	 * to its root element. 
+     * Returns an optional name for the control type that can be used to distinguish `mat-form-field` elements
+     * based on their control type. The form field will add a class, `mat-form-field-type-{{controlType}}`
+	 * to its root element.
      */
 	public readonly controlType: string;
 
 	/**
-	 * Returns the list of element Ids that currently describes this control. 
-	 * These Ids should be used for the `aria-describedby` attribute of the host control. 
+	 * Returns the list of element Ids that currently describes this control.
+	 * These Ids should be used for the `aria-describedby` attribute of the host control.
 	 */
 	public describedBy: string;
 
 	/**
-	 * Contains a reference to a saved callback function that is called when the control's value changes 
-	 * in the UI. 
+	 * Contains a reference to a saved callback function that is called when the control's value changes
+	 * in the UI.
 	 */
 	public _onChange: (_: any) => void;
-	
+
 	/**
-	 * Contains a reference to a saved callback function that is called when the control should be 
-	 * considered blurred or "touched". 
+	 * Contains a reference to a saved callback function that is called when the control should be
+	 * considered blurred or "touched".
 	 */
 	public _onTouched: () => void;
 
 	/**
-	 * An event that is triggered when the user introduces some input. 
+	 * An event that is triggered when the user introduces some input.
 	 */
 	@Output()
 	public input: EventEmitter<IssnValue>;
@@ -126,21 +126,21 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 		this.stateChanges = new Subject<void>();
 
 		this.id = `${ IssnInputInternalComponent._controlNameWithDash }-${ IssnInputInternalComponent._nextId++ }`;
-	
+
 		this._placeholder = Common.emptyString;
-	
+
 		this.focused = false;
 
 		this._required = false;
 
 		this._disabled= false;
-	
+
 		this.controlType = IssnInputInternalComponent._controlNameWithDash;
 
 		this.describedBy = Common.emptyString;
-	
+
 		this._onChange = (_: any) => { };
-		
+
 		this._onTouched = () => { };
 
 		this.input = new EventEmitter<IssnValue>();
@@ -166,7 +166,7 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 			{
 				this._onTouched();
 			}
-			
+
 			this.focused = !!origin;
 
 			this.stateChanges.next();
@@ -189,7 +189,7 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	}
 
 	/**
-	 * Returns the value of the control. The value can be checked using the `isComplete` instance method. 
+	 * Returns the value of the control. The value can be checked using the `isComplete` instance method.
 	 */
 	@Input()
 	public get value(): IssnValue | null
@@ -198,9 +198,9 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	}
 
 	/**
-	 * Sets the value of the control. If the value is null, sets an empty ISSN. 
-	 * It does not check if the value is complete. 
-	 * @param newIssn The new ISSN to set. 
+	 * Sets the value of the control. If the value is null, sets an empty ISSN.
+	 * It does not check if the value is complete.
+	 * @param newIssn The new ISSN to set.
 	 */
 	public set value(newIssn: IssnValue | null)
 	{
@@ -212,7 +212,7 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	}
 
 	/**
-	 * Returns the placeholder for this control. 
+	 * Returns the placeholder for this control.
 	 */
 	@Input()
 	public get placeholder(): string
@@ -221,8 +221,8 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	}
 
 	/**
-	 * Sets the placeholder for this control. 
-	 * @param value The new placeholder to set. 
+	 * Sets the placeholder for this control.
+	 * @param value The new placeholder to set.
 	 */
 	public set placeholder(value: string)
 	{
@@ -232,7 +232,7 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	}
 
 	/**
-	 * Returns true if the control is empty; otherwise, false. 
+	 * Returns true if the control is empty; otherwise, false.
 	 */
 	public get empty(): boolean
 	{
@@ -240,7 +240,7 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	}
 
 	/**
-	 * Returns true if the `MatFormField` label should try to float; otherwise, false. 
+	 * Returns true if the `MatFormField` label should try to float; otherwise, false.
 	 */
 	public get shouldLabelFloat(): boolean
 	{
@@ -248,7 +248,7 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	}
 
 	/**
-	 * Returns true if the control is required; otherwise, false. 
+	 * Returns true if the control is required; otherwise, false.
 	 */
 	@Input()
 	public get required(): boolean
@@ -257,8 +257,8 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	}
 
 	/**
-	 * Sets the required for this control. 
-	 * @param value The new required to set. 
+	 * Sets the required for this control.
+	 * @param value The new required to set.
 	 */
 	public set required(value: boolean)
 	{
@@ -268,7 +268,7 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	}
 
 	/**
-	 * Returns true if the control is disabled; otherwise, false. 
+	 * Returns true if the control is disabled; otherwise, false.
 	 */
 	@Input()
 	public get disabled(): boolean
@@ -277,8 +277,8 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	}
 
 	/**
-	 * Sets the disabled for this control. 
-	 * @param value The new disabled to set. 
+	 * Sets the disabled for this control.
+	 * @param value The new disabled to set.
 	 */
 	public set disabled(value: boolean)
 	{
@@ -289,22 +289,22 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	}
 
 	/**
-	 * Returns true if the control is in an error state; otherwise, false. 
+	 * Returns true if the control is in an error state; otherwise, false.
 	 */
 	public get errorState(): boolean
 	{
-		/* The control does not display errors before the user has a 
-		 * chance to edit the form. The checks for dirty and touched prevent errors 
-		 * from showing until the user does one of two things: changes the value, 
-		 * turning the control dirty; or blurs the form control element, setting the 
-		 * control to touched. 
-		 * Thus, it reveals an error message only if the control is invalid and 
+		/* The control does not display errors before the user has a
+		 * chance to edit the form. The checks for dirty and touched prevent errors
+		 * from showing until the user does one of two things: changes the value,
+		 * turning the control dirty; or blurs the form control element, setting the
+		 * control to touched.
+		 * Thus, it reveals an error message only if the control is invalid and
 		 * the control is either dirty or touched. */
 		return ((this.internalControl.invalid) && (this.internalControl.dirty || this.internalControl.touched));
 	}
 
 	/**
-	 * Returns an error string if the control is in an error state; otherwise, empty string. 
+	 * Returns an error string if the control is in an error state; otherwise, empty string.
 	 */
 	public getErrorMessage(): string
 	{
@@ -412,8 +412,8 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	}
 
 	/**
-     * Returns true if the input is currently in an autofilled state; otherwise, false. This property 
-	 * is not present on the control, then it returns false. 
+     * Returns true if the input is currently in an autofilled state; otherwise, false. This property
+	 * is not present on the control, then it returns false.
      */
 	public get autofilled(): boolean
 	{
@@ -421,8 +421,8 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	}
 
 	/**
-	 * Sets the list of element Ids that currently describes this control. 
-	 * @param ids The list of element Ids. 
+	 * Sets the list of element Ids that currently describes this control.
+	 * @param ids The list of element Ids.
 	 */
 	public setDescribedByIds(ids: string[]): void
 	{
@@ -430,9 +430,9 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	}
 
 	/**
-	 * Handles a click event on the control's container that occurs due to the user interacting with a pointing 
-	 * device (such as a mouse). 
-	 * @param event The event information. 
+	 * Handles a click event on the control's container that occurs due to the user interacting with a pointing
+	 * device (such as a mouse).
+	 * @param event The event information.
 	 */
 	public onContainerClick(event: MouseEvent): void
 	{
@@ -446,7 +446,7 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	{
 		this.value = issn;
 	}
-	
+
 	public registerOnChange(fn: any): void
 	{
 		console.log('call registerOnChange.');
@@ -467,7 +467,7 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	}
 
 	/**
-	 * Handler function that is called when the first group's value changes in the UI. For internal use only. 
+	 * Handler function that is called when the first group's value changes in the UI. For internal use only.
 	 */
 	public handleInput_firstGroup(): void
 	{
@@ -497,7 +497,7 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	}
 
 	/**
-	 * Handler function that is called when the second group's value changes in the UI. For internal use only. 
+	 * Handler function that is called when the second group's value changes in the UI. For internal use only.
 	 */
 	public handleInput_secondGroup(): void
 	{
@@ -528,8 +528,8 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	}
 
 	/**
-	 * Triggers when the control's value changes in the UI. For internal use only. 
-	 * @param isFirstGroup It is true if the first group's value changed in the UI; otherwise, false. 
+	 * Triggers when the control's value changes in the UI. For internal use only.
+	 * @param isFirstGroup It is true if the first group's value changed in the UI; otherwise, false.
 	 */
 	private _changedInput(isFirstGroup: boolean): void
 	{

@@ -5,13 +5,13 @@
       <button mat-mini-fab *ngIf="islogged" color="primary" matBadge="+9" matBadgeColor="accent" [matMenuTriggerFor]="notificationsMenu">
           <mat-icon>notifications</mat-icon>
       </button>
-      
+
       <button mat-stroked-button *ngIf="islogged" [matMenuTriggerFor]="menu">
           {{ user }}
           <mat-icon>person_pin</mat-icon>
       </button>
   </div>
-  
+
 </mat-toolbar>
 
 <mat-menu #menu="matMenu" >
