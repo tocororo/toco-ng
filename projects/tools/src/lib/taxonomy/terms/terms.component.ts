@@ -128,7 +128,7 @@ export class TermsComponent implements OnInit, OnDestroy{
 
     /** Transform the data to something the tree can read. */
     transformer(node: TermNode, level: number) {
-        return {
+      return {
             name: node.term.name,
             term: node.term,
             level: level,
@@ -158,8 +158,10 @@ export class TermsComponent implements OnInit, OnDestroy{
     addTerm() {
         this.openTermDialog(null);
     }
-    editTerm(node: TermNode) {
-        this.openTermDialog(node.term);
+    editTerm(node: any ) {
+        const term = new Term();
+        term.load_from_data(node.term);
+        this.openTermDialog(term);
     }
 
     private openTermDialog(term: Term) {

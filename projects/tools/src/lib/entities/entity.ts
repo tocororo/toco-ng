@@ -5,6 +5,8 @@ export class EntityBase {
 
   load_from_data(data: any) {
     const keys = Object.keys(this);
+    console.log(keys)
+    console.log(data)
     for (const key of keys) {
       if (data[key]) {
         if (this[key] instanceof EntityBase) {

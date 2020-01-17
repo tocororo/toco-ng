@@ -128,7 +128,18 @@ export class TaxonomyService {
 
     editTerm(term: Term): void {
         this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
-        let a = term.stringify()
+
+        let tt = term as Term;
+        console.log(tt)
+
+        if (tt instanceof Term) {
+          console.log("myObject *is* an instance of Type!");
+        } else {
+          console.log("Oops! myObject is not an instance of Type...");
+        }
+
+
+        let a = tt.stringify();
         console.log(a, 'edity');
 
         this.http.post<Response<any>>(

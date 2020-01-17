@@ -17,12 +17,10 @@ export class TermAction implements FormContainerAction
         this.term.name = data.name;
         this.term.parent_id = data.parent_id;
         this.term.description = data.description;
-        console.log(this.term);
-        console.log(this.is_new_term);
         if (this.is_new_term) {
-            this.service.newTerm(this.term);
+            this.service.newTerm(this.term as Term);
         } else {
-            this.service.editTerm(this.term);
+            this.service.editTerm(this.term as Term);
         }
     }
 }

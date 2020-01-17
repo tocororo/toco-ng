@@ -38,6 +38,7 @@ export class JournalInformation extends EntityBase {
 }
 
 export class Journal extends Entity {
+    // TODO: sustituir tocoID por uuid
     tocoID: string;
     data: JournalInformation = new JournalInformation();
     jreference?: Array<JournalReference> = new Array<JournalReference>(0);
