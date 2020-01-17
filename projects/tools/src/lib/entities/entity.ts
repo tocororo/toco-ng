@@ -25,7 +25,7 @@ export class EntityBase {
  * Created by Edel on 02/04/2018.
  */
 export class Entity extends EntityBase {
-    id: number;
+    id = 0;
     raw_data: String;
     created_at: String;
     updated_at: String;

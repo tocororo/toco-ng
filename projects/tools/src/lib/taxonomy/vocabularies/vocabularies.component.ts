@@ -189,8 +189,11 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
     }
 
     editVocab( vocab: any ) {
+        const voc = new Vocabulary();
+        voc.load_from_data(vocab);
+        console.log(voc)
         const dialogRef = this.dialog.open(VocabularyDialogComponent, {
-            data: { vocab: vocab, service: this.service }
+            data: { vocab: voc, service: this.service }
         });
         dialogRef.afterClosed().subscribe(result => {
             this.loadVocabularies();

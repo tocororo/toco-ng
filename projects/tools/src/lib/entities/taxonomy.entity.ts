@@ -5,7 +5,7 @@ export class Term extends Entity {
     uuid = '';
     name = '';
     description = '';
-    data = '';
+    data = new Object();
     vocabulary_id = 0;
     parent_id = 0;
     clasified_ids: number[] = [];
