@@ -29,5 +29,15 @@ export class Entity extends EntityBase {
     updated_at: String;
     constructor() { super(); }
 
+    /**
+     * return JSON.stringify, using a function to exclude object fields id and uuid
+     */
+    stringify(): string  {
+      return JSON.stringify(this, (k, v) => {
+        if (k !== 'id' && k !== 'uuid') {
+          return v;
+        }
+      });
+    }
 }
 

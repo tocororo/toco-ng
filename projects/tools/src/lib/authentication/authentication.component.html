@@ -3,16 +3,16 @@
     <mat-card fxLayoutAlign="center center" fxLayout="column">
 
         <mat-card-header>
-            <mat-card-title *ngIf="!name">Autenticación con</mat-card-title>
+            <mat-card-title *ngIf="!userName">Autenticación con</mat-card-title>
         </mat-card-header>
 
         <mat-card-content fxLayoutAlign="center center" fxLayout="column">
-            <button *ngIf="!name;else templateName" mat-raised-button color="primary" style="width: 12em" (click)="login()">
+            <button *ngIf="!userName;else templateName" mat-raised-button color="primary" style="width: 12em" (click)="login()">
                 <img src="https://sceiba-lab.upr.edu.cu/static/images/sceiba-logo-white.png" alt="Sceiba" width="100" style="padding-top: .9em; padding-bottom: .9em">
             </button>
 
             <ng-template #templateName>
-                <h1>Hola {{name}}</h1>
+                <h1>Hola {{userName}}</h1>
                 <button mat-raised-button color="primary" style="width: 12em" (click)="logoff()">
                     Salir
                 </button>

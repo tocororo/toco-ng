@@ -17,7 +17,8 @@ export class TermAction implements FormContainerAction
         this.term.name = data.name;
         this.term.parent_id = data.parent_id;
         this.term.description = data.description;
-
+        console.log(this.term);
+        console.log(this.is_new_term);
         if (this.is_new_term) {
             this.service.newTerm(this.term);
         } else {

@@ -19,6 +19,8 @@ export enum VocabulariesInmutableNames
     LICENCES = 6
 }
 
+
+
 @Injectable()
 export class TaxonomyService {
 
@@ -94,14 +96,18 @@ export class TaxonomyService {
         this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
 
         // tslint:disable-next-line: max-line-length
-        this.http.post<Response<any>>( this.env.sceibaApi + this.prefix + '/vocabulary/new', JSON.stringify(vocab), this.httpOptions ).pipe().subscribe(this.vocabulariesChangeObserver);
+        this.http.post<Response<any>>( this.env.sceibaApi + this.prefix + '/vocabulary/new', vocab.stringify(), this.httpOptions ).pipe().subscribe(this.vocabulariesChangeObserver);
     }
 
     editVocabulary(vocab: Vocabulary): void {
         this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
 
         // tslint:disable-next-line: max-line-length
-        this.http.post<Response<any>>( this.env.sceibaApi + this.prefix + '/vocabulary/edit/' + vocab.id , JSON.stringify(vocab), this.httpOptions ).pipe().subscribe(this.vocabulariesChangeObserver);
+        this.http.post<Response<any>>(
+          this.env.sceibaApi + this.prefix + '/vocabulary/edit/' + vocab.id,
+          vocab.stringify(),
+          this.httpOptions )
+        .pipe().subscribe(this.vocabulariesChangeObserver);
     }
 
     getVocabularies(): Observable<Response<any>> {
@@ -110,17 +116,26 @@ export class TaxonomyService {
 
     newTerm(term: Term): void {
         this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
-
+        let a = term.stringify()
+        console.log(a);
         // tslint:disable-next-line: max-line-length
-        this.http.post<Response<any>>( this.env.sceibaApi + this.prefix + '/term/new', JSON.stringify(term), this.httpOptions ).
-        pipe().subscribe(this.termChangeObserver);
+        this.http.post<Response<any>>(
+          this.env.sceibaApi + this.prefix + '/term/new',
+          term.stringify(),
+          this.httpOptions)
+        .pipe().subscribe(this.termChangeObserver);
     }
 
     editTerm(term: Term): void {
         this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
+        let a = term.stringify()
+        console.log(a, 'edity');
 
-        this.http.post<Response<any>>( this.env.sceibaApi + this.prefix + '/term/edit/' + term.uuid , JSON.stringify(term), this.httpOptions ).
-        pipe().subscribe(this.termChangeObserver);
+        this.http.post<Response<any>>(
+          this.env.sceibaApi + this.prefix + '/term/edit/' + term.uuid ,
+          term.stringify(),
+          this.httpOptions)
+        .pipe().subscribe(this.termChangeObserver);
     }
 
     getTermsTreeByVocab(vocab: Vocabulary):Observable<Response<any>> {

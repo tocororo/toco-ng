@@ -51,7 +51,8 @@ export class MessageHandler {
 
       default:
         this._snackBar.open(message, null, {
-          duration: 3000,
+          duration: 5000,
+          verticalPosition: 'top',
         });
         break;
     }

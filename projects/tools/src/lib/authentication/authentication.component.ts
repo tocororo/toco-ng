@@ -19,6 +19,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     @Input()
     public isButtonLogin: boolean;
 
+    public userName: string;
     private timerAuthenticateSuscription: Subscription = null;
     private timerAuthenticateObserver: PartialObserver<number> = {
         next: (_) => {
@@ -110,6 +111,8 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
 
                     // notifies user is logged
                     this.authenticationService.logguedChange(true);
+
+                    this.userName = this.oauthStorage.getItem('email');
 
                     console.debug(this.oauthStorage.getItem('access_token'));
                 });

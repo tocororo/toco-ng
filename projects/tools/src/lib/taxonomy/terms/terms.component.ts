@@ -67,6 +67,7 @@ export class TermsComponent implements OnInit, OnDestroy{
             this.dialog.closeAll();
             const m  = new MessageHandler(this._snackBar);
             m.showMessage(StatusCode.OK, response.message);
+            console.log(response);
         },
 
         error: (err: any) => {
