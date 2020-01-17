@@ -11,7 +11,7 @@ import { FilterContainerService } from '@toco/tools/filters';
 import { FilterContainerComponent } from '@toco/tools/filters';
 import { MessageHandler, StatusCode } from '@toco/tools/core';
 
-import { CatalogService } from '../catalog.service';
+import { CatalogService } from '@toco/tools/backend';
 
 @Component({
     selector: 'toco-catalog-filters-container',
@@ -47,7 +47,7 @@ export class CatalogFiltersComponent extends FilterContainerComponent{
         .subscribe(response =>{
             if(response){
                 response.data.vocabularies.forEach(vocab =>{
-                    
+
                     this.service.getTerminosByVocab(vocab.id).subscribe(termsResponse => {
                         this.filters_data.push(
                         {

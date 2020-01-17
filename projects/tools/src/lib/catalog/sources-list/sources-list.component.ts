@@ -12,7 +12,7 @@ import { FilterHttpMap, FiltersService } from '@toco/tools/filters';
 
 import { EnvService } from '@tocoenv/tools/env.service';
 
-import { CatalogService } from '../catalog.service';
+import { CatalogService } from '@toco/tools/backend';
 import { CatalogFiltersComponent } from '../catalog-filters/catalog-filters.component';
 
 @Component({

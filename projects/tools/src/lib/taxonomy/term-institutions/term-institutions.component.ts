@@ -10,7 +10,7 @@ import { MessageHandler, StatusCode } from '@toco/tools/core';
 import { Term } from '@toco/tools/entities';
 import { PanelContent, FormFieldType, FormContainerAction, FormFieldContent } from '@toco/tools/forms';
 
-import { TaxonomyService, VocabulariesInmutableNames } from '../taxonomy.service';
+import { TaxonomyService, VocabulariesInmutableNames } from '@toco/tools/backend';
 
 class InstitutionAction implements FormContainerAction {
 

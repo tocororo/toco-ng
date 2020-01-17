@@ -12,7 +12,7 @@ import { FilterHttpMap, FiltersService } from '@toco/tools/filters';
 
 import { EnvService } from '@tocoenv/tools/env.service';
 
-import { CatalogService } from '../catalog.service';
+import { CatalogService } from '@toco/tools/backend';
 import { CatalogFiltersComponent } from '../catalog-filters/catalog-filters.component';
 import { MatSnackBar } from '@angular/material';
 
@@ -98,12 +98,12 @@ export class CatalogComponent implements OnInit {
             //     .subscribe(response => {
             //         if(response)
             //         console.log('count', response);
-                    
+
             //         this.length = response.data.count;
             //     });
 
             this.fetchJournalData();
-    
+
             this.filterService.paramsChanged.pipe(
                 catchError( error =>{
                     const m  = new MessageHandler(this._snackBar);
@@ -142,11 +142,11 @@ export class CatalogComponent implements OnInit {
             map(response => {
                 // Flip flag to show that loading has finished.
                 this.loading = false;
-                
+
                 // this.isRateLimitReached = false;
                 // this.resultsLength = response.total_count;
-                
-                
+
+
                 this.length = response.data.sources.count;
                 response.data.sources.data.forEach(item => {
                     const j = new Journal();

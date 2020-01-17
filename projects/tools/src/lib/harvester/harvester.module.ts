@@ -4,7 +4,7 @@ import { SharedModule } from '@toco/tools/shared';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { FiltersModule } from '@toco/tools/filters';
-import { CatalogService } from '@toco/tools/catalog';
+import { CatalogService } from '@toco/tools/backend';
 
 import { HarvesterRoutingModule } from './harvester-routing.module';
 import { RepositoriesComponent } from './repositories/repositories.component';

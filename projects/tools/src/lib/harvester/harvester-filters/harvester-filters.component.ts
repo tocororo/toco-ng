@@ -1,7 +1,7 @@
 
 import { Component, ComponentFactoryResolver } from '@angular/core';
 
-import { CatalogService } from '@toco/tools/catalog';
+import { CatalogService } from '@toco/tools/backend';
 import { FilterContainerComponent, FilterContainerService } from '@toco/tools/filters';
 
 @Component({
@@ -14,7 +14,7 @@ export class HarvesterFiltersComponent extends FilterContainerComponent{
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
         protected childrenService: FilterContainerService,
         protected service:  CatalogService,)
-    { 
+    {
         super(componentFactoryResolver, childrenService)
     }
 

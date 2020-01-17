@@ -7,7 +7,6 @@ import { FiltersModule } from '@toco/tools/filters';
 import { AuthenticationModule } from '@toco/tools/authentication';
 
 import { CatalogComponent } from './catalog/catalog.component';
-import { CatalogService } from './catalog.service';
 import { CatalogFiltersComponent } from './catalog-filters/catalog-filters.component';
 import { SourcesListComponent } from './sources-list/sources-list.component';
 
@@ -31,7 +30,6 @@ import { SourcesListComponent } from './sources-list/sources-list.component';
     ],
 
     providers: [
-        CatalogService
     ]
 })
 export class CatalogModule

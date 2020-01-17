@@ -5,12 +5,12 @@ import { Observable, PartialObserver } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
 import { Term, Vocabulary, TermNode, Response } from '@toco/tools/entities';
-import { TaxonomyService } from '@toco/tools/taxonomy';
+import { TaxonomyService } from '@toco/tools/backend';
 
 import { FormFieldControl_Experimental } from '../form-field.control.experimental';
 
 /**
- * A control to select a term or terms in a vocabulary. 
+ * A control to select a term or terms in a vocabulary.
  */
 @Component({
     selector: 'toco-vocabulary',

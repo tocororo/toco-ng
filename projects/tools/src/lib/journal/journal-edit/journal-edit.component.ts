@@ -5,10 +5,9 @@ import { Journal, Vocabulary} from '@toco/tools/entities'
 import { PanelContent, FormFieldType, IssnValue, HintValue, HintPosition, FormContainerAction } from '@toco/tools/forms';
 
 import { JournalService } from '../journal.service';
-import { CatalogService } from '@toco/tools/catalog';
 import { FilterHttpMap } from '@toco/tools/filters';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { TaxonomyService, VocabulariesInmutableNames } from '@toco/tools/taxonomy';
+import { CatalogService, TaxonomyService, VocabulariesInmutableNames } from '@toco/tools/backend';
 import { of } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';

@@ -1,8 +1,7 @@
 
 /*
- * Public API surface of taxonomy. 
+ * Public API surface of taxonomy.
  */
 export * from './taxonomy.module';
 export * from './taxonomy/taxonomy.component';
-export * from './taxonomy.service';
 export * from './vocabularies/vocabularies.component';

@@ -10,6 +10,7 @@ import { AuthenticationModule } from '@toco/tools/authentication';
 
 import { AppComponent } from './app.component';
 import { FooterComponent } from '@toco/tools/core';
+import { TaxonomyService } from '@toco/tools/backend';
 
 @NgModule({
     declarations: [
@@ -26,7 +27,8 @@ import { FooterComponent } from '@toco/tools/core';
     ],
 
     providers: [
-        EnvServiceProvider
+        EnvServiceProvider,
+        TaxonomyService
     ],
 
     bootstrap: [AppComponent]

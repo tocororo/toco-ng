@@ -4,7 +4,7 @@ import { Subscription, PartialObserver } from 'rxjs';
 
 import { Vocabulary } from '@toco/tools/entities';
 
-import { TaxonomyService } from '../taxonomy.service';
+import { TaxonomyService } from '@toco/tools/backend';
 
 @Component({
     selector: 'toco-taxonomy',

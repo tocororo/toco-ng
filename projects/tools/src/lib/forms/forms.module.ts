@@ -20,53 +20,51 @@ import { VocabularyComponent } from './experimental/vocabulary/vocabulary.compon
 import { TermParentComponent } from './experimental/term-parent/term-parent.component';
 
 @NgModule({
-    declarations: [
-        FormFieldsComponent,
-        FormContainerComponent,
-		TextInputComponent,
-		EmailInputComponent,
-		IssnInputInternalComponent,
-		IssnInputComponent,
-		RnpsInputComponent,
-		UrlInputComponent,
-        VocabularyComponent,
-        TermParentComponent
-	],
+  declarations: [
+    FormFieldsComponent,
+    FormContainerComponent,
+    TextInputComponent,
+    EmailInputComponent,
+    IssnInputInternalComponent,
+    IssnInputComponent,
+    RnpsInputComponent,
+    UrlInputComponent,
+    VocabularyComponent,
+    TermParentComponent
+  ],
 
-	imports: [
-		SharedModule,
-		ReactiveFormsModule
-	],
-	
-	exports: [
-        FormFieldsComponent,
-        FormContainerComponent,
-		TextInputComponent,
-		EmailInputComponent,
-		IssnInputComponent,
-		RnpsInputComponent,
-		UrlInputComponent,
-        VocabularyComponent,
-        TermParentComponent
-	],
+  imports: [
+    SharedModule,
+    ReactiveFormsModule
+  ],
 
-    providers: [
-        FormsService
-    ]
+  exports: [
+    FormFieldsComponent,
+    FormContainerComponent,
+    TextInputComponent,
+    EmailInputComponent,
+    IssnInputComponent,
+    RnpsInputComponent,
+    UrlInputComponent,
+    VocabularyComponent,
+    TermParentComponent
+  ],
+
+  providers: [
+    FormsService
+  ]
 })
-export class FormsModule
-{
-	public constructor(private _iconService: IconService)
-	{
-		//console.log('Icon Service: registers icons.');
+export class FormsModule {
+  public constructor(private _iconService: IconService) {
+    //console.log('Icon Service: registers icons.');
 
-		this._iconService.registerIcons(
-			[
-				IconService.defaultIconName,  /* It is used by controls that want to have occupied the icon space, but nothing is showed. */
-				'outlined-bar_code-24px',
-				'outlined-mail-24px'
-			],
-			'../assets/svg/icons'
-		);
-	}
+    this._iconService.registerIcons(
+      [
+        IconService.defaultIconName,  /* It is used by controls that want to have occupied the icon space, but nothing is showed. */
+        'outlined-bar_code-24px',
+        'outlined-mail-24px'
+      ],
+      '../assets/svg/icons'
+    );
+  }
 }

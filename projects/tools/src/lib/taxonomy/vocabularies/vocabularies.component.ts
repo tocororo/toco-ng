@@ -11,7 +11,7 @@ import { MessageHandler, StatusCode } from '@toco/tools/core';
 import { Vocabulary, Response } from '@toco/tools/entities';
 import { FormContainerComponent, PanelContent, FormFieldType, FormContainerAction} from '@toco/tools/forms';
 
-import { TaxonomyService } from '../taxonomy.service';
+import { TaxonomyService } from '@toco/tools/backend';
 
 class VocabAction implements FormContainerAction
 {

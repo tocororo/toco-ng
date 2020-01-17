@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PanelContent, FormFieldType, FormContainerAction } from '@toco/tools/forms';
 import { Term } from '@toco/tools/entities';
 
-import { TaxonomyService } from '../taxonomy.service';
+import { TaxonomyService } from '@toco/tools/backend';
 
 export class TermAction implements FormContainerAction
 {

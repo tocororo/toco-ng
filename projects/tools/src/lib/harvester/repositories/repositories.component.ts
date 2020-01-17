@@ -6,7 +6,7 @@ import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { CatalogService } from '@toco/tools/catalog';
+import { CatalogService } from '@toco/tools/backend';
 import { MetadataService } from '@toco/tools/core';
 import { Journal, JournalInformation, ISSN } from '@toco/tools/entities';
 import { FilterHttpMap, FiltersService } from '@toco/tools/filters';
