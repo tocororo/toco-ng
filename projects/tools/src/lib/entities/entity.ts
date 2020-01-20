@@ -1,7 +1,7 @@
 
 
 /*** La idea de esta clase es tener un deserializador */
-export class EntityBase {
+export class EntityBase extends Object {
 
   load_from_data(data: any) {
     const keys = Object.keys(this);

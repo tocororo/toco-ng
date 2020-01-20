@@ -1,5 +1,5 @@
 
-import { Entity } from './entity';
+import { Entity, EntityBase } from './entity';
 
 export class Term extends Entity {
     uuid = '';
@@ -10,6 +10,22 @@ export class Term extends Entity {
     parent_id = 0;
     clasified_ids: number[] = [];
     class_ids: number[] = [];
+}
+
+
+
+export class TermInstitutionData extends EntityBase {
+    identifiers = '';
+    email = '';
+    website = '';
+    address = '';
+}
+
+export class TermIndexData extends EntityBase {
+  url = '';
+  abrev = '';
+  initial_cover = '';
+  end_cover = '';
 }
 
 export class Vocabulary extends Entity {

@@ -7,7 +7,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { MessageHandler, StatusCode } from '@toco/tools/core';
-import { Term } from '@toco/tools/entities';
+import { Term, TermInstitutionData } from '@toco/tools/entities';
 import { PanelContent, FormFieldType, FormContainerAction, FormFieldContent } from '@toco/tools/forms';
 
 import { TaxonomyService, VocabulariesInmutableNames } from '@toco/tools/backend';
@@ -22,12 +22,13 @@ class InstitutionAction implements FormContainerAction {
         this.term.name = data.name;
         this.term.parent_id = data.parent_id;
         this.term.description = data.description;
-        this.term.data = {
+        this.term.data = new TermInstitutionData();
+        (this.term.data as TermInstitutionData).load_from_data({
             'identifiers': data.identifiers,
             'email': data.email,
             'address': data.address,
             'website': data.website
-        };
+        });
 
         if (this.is_new_term) {
             this.service.newTerm(this.term);
@@ -73,7 +74,7 @@ export class TermInstitutionsComponent implements OnInit {
                 finalize(() => this.loading = false)
             )
             .subscribe(response => {
-                console.log('.subscribe(response => {');
+                console.log(this.data.term);
                 if (response) {
                     if (this.data.term) {
                         this.action = new InstitutionAction(this.data.service, this.data.term, false);
@@ -88,7 +89,11 @@ export class TermInstitutionsComponent implements OnInit {
                         this.actionLabel = 'Adicionar';
                         this.panels[0].title = 'Nuevo Término de ' + this.data.vocab.human_name;
                     }
-
+                    // TODO: usar TermInstitutionData
+                    // const instData = new TermInstitutionData();
+                    // instData.load_from_data(this.data.term.data);
+                    // this.data.term.data = instData;
+                    console.log(this.data.term.data);
                     this.data.term.data = (this.data.term.data) ? this.data.term.data : {};
 
                     this.formFieldsContent = [
