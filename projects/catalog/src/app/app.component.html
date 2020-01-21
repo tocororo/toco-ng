@@ -3,10 +3,7 @@
     {{ title }}
 
     <div fxLayoutGap="15px">
-        <button mat-mini-fab *ngIf="islogged" color="primary" matBadge="+9" matBadgeColor="accent"
-            [matMenuTriggerFor]="notificationsMenu">
-            <mat-icon>notifications</mat-icon>
-        </button>
+        <toco-notification-button *ngIf="islogged"></toco-notification-button>
 
         <button mat-stroked-button *ngIf="islogged" [matMenuTriggerFor]="menu">
             {{ user }}
@@ -26,12 +23,6 @@
     </button>
 </mat-menu>
 
-<mat-menu #notificationsMenu="matMenu">
-    <button mat-menu-item (click)="logoff()">
-        <mat-icon>lock</mat-icon>
-        notify
-    </button>
-</mat-menu>
 
 <mat-tab-group [backgroundColor]="'warn'" *ngIf="islogged">
     <mat-tab>
@@ -39,14 +30,19 @@
             <a [routerLink]="['/']" routerLinkActive="router-link-active" class="color-white"> Catálogo </a>
         </ng-template>
     </mat-tab>
-    <mat-tab>
+    <!-- <mat-tab>
         <ng-template mat-tab-label>
             <a [routerLink]="['/mysources']" class="color-white"> Mis fuentes </a>
+        </ng-template>
+    </mat-tab> -->
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <a [routerLink]="['/newsource']" class="color-white"> Nueva fuente </a>
         </ng-template>
     </mat-tab>
     <mat-tab>
         <ng-template mat-tab-label>
-            <a [routerLink]="['/ooooos']" class="color-white"> Nueva fuente </a>
+            <a [routerLink]="['/notifications']" class="color-white"> Notificaciones </a>
         </ng-template>
     </mat-tab>
 </mat-tab-group>

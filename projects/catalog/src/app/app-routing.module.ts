@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { CatalogComponent } from '@toco/tools/catalog';
-import { TaxonomyComponent } from '@toco/tools/taxonomy';
 import { AuthenticationService } from '@toco/tools/authentication/authentication.service';
+import { NotificationListComponent } from '@toco/tools/notification/notification/notification-list/notification-list.component';
 
 const routes: Routes = [
     { 
@@ -13,7 +13,12 @@ const routes: Routes = [
     },
     { 
         path: 'mysources',
-        component: TaxonomyComponent,
+        component: NotificationListComponent,
+        canActivate: [AuthenticationService]
+    },
+    {
+        path: 'notifications',
+        component: NotificationListComponent,
         canActivate: [AuthenticationService]
     },
     {
