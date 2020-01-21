@@ -1,7 +1,7 @@
 
 <mat-toolbar color="primary">{{ title }}</mat-toolbar>
 
-<mat-tab-group mat-align-tabs="center" [selectedIndex]="1">
+<mat-tab-group mat-align-tabs="center" [selectedIndex]="2">
 
     <mat-tab label="Listar">
         <toco-sources-list></toco-sources-list>
@@ -9,6 +9,15 @@
 
     <mat-tab label="Adicionar">
         <toco-journal-edit></toco-journal-edit>
+    </mat-tab>
+
+    <mat-tab label="Otro Listar">
+        <toco-journal-list
+            [dataSource]="dataSource"
+            [columnsObjectProperty]="['titulo', 'issn']"
+            [columnsHeaderText]="['Título', 'ISSN']">
+        </toco-journal-list>
+        <h3 *ngIf="isEmpty">¡No hay datos disponibles!</h3>
     </mat-tab>
 
 </mat-tab-group>

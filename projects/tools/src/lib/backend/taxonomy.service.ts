@@ -19,8 +19,6 @@ export enum VocabulariesInmutableNames
     LICENCES = 6
 }
 
-
-
 @Injectable()
 export class TaxonomyService {
 
