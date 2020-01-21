@@ -9,13 +9,15 @@ import { JournalComponent } from './journal/journal.component';
 import { JournalViewComponent } from './journal-view/journal-view.component';
 import { JournalService } from './journal.service';
 import { JournalEditComponent } from './journal-edit/journal-edit.component';
+import { JournalListComponent } from './journal-list/journal-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
         JournalComponent,
         JournalViewComponent,
-        JournalEditComponent
+        JournalEditComponent,
+        JournalListComponent
     ],
 
     imports: [
@@ -27,7 +29,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 
     exports: [
         JournalViewComponent,
-        JournalEditComponent
+        JournalEditComponent,
+        JournalListComponent
     ],
 
     providers: [
