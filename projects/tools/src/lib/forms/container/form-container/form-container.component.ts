@@ -3,6 +3,9 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { PartialObserver, Subscription } from 'rxjs';
 
 import { Entity, Response } from '@toco/tools/entities';
+import { InputContent } from '../../input/input.control';
+import { ActionContent } from '../../action/action.control';
+import { FormFieldContent_Experimental } from '../../experimental/form-field.control.experimental';
 
 /**
  * An interface that represents the content of an expansion control.
@@ -27,7 +30,7 @@ export interface PanelContent
     /**
      * Returns the panel's content.
      */
-    content: any[];  /* formField: FormFieldContent[] */
+    content: (InputContent | ActionContent | FormFieldContent_Experimental)[] | any[];  /* formField: FormFieldContent[] */
 }
 
 export interface FormContainerAction

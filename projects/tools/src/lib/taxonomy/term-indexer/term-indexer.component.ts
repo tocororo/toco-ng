@@ -7,7 +7,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { MessageHandler, StatusCode } from '@toco/tools/core';
-import { Term } from '@toco/tools/entities';
+import { Term, TermIndexData } from '@toco/tools/entities';
 import { FormContainerAction, PanelContent, FormFieldContent, FormFieldType } from '@toco/tools/forms';
 
 import { TaxonomyService, VocabulariesInmutableNames } from '@toco/tools/backend';
@@ -20,12 +20,13 @@ class IndexerAction implements FormContainerAction {
         this.term.description = data.description;
         const class_ids  = (data.miar_class as []).concat(data.group_mes);
         this.term.class_ids = class_ids;
-        this.term.data = {
+        this.term.data = new TermIndexData();
+        (this.term.data as TermIndexData).load_from_data({
             'abrev': data.abrev,
             'url': data.url,
             'initial_cover': data.initial_cover,
             'end_cover': data.end_cover,
-        };
+        });
 
         if (this.is_new_term) {
             this.service.newTerm(this.term);
@@ -103,7 +104,7 @@ export class TermIndexerComponent implements OnInit {
                             console.log(response_group.data);
                             if (this.data.term) {
                                 this.term = this.data.term;
-                                this.action = new IndexerAction(this.data.service, this.term, false);
+                                this.action = new IndexerAction(this.data.service, this.data.term, false);
                                 this.actionLabel = 'Actualizar';
                                 this.panels[0].title = 'Editar ' + this.term.name;
                             } else {
@@ -111,12 +112,16 @@ export class TermIndexerComponent implements OnInit {
                                 this.term.vocabulary_id = this.data.vocab.id;
                                 this.data['term'] = this.term;
 
-                                this.action = new IndexerAction(this.data.service, this.term, true);
+                                this.action = new IndexerAction(this.data.service, this.data.term, true);
                                 this.actionLabel = 'Adicionar';
                                 this.panels[0].title = 'Nuevo Término de ' + this.data.vocab.human_name;
                             }
+                            // TODO: usar TermIndexData instead of any
+                            // const instData = new TermIndexData();
+                            // instData.load_from_data(this.data.term.data);
+                            // this.data.term.data = instData;
 
-                            this.term.data = (this.term.data) ? this.term.data : {};
+                            this.data.term.data = (this.data.term.data) ? this.data.term.data : {};
 
                             this.formFieldsContent = [
                                 {
@@ -131,7 +136,7 @@ export class TermIndexerComponent implements OnInit {
                                     label: 'Identificadores',
                                     type: FormFieldType.textarea,
                                     required: false,
-                                    value: (this.term.data.abrev) ? this.term.data.abrev : null,
+                                    value: (this.data.term.data.abrev) ? this.data.term.data.abrev : null,
                                     width: '30%'
                                 },
                                 {
@@ -147,7 +152,7 @@ export class TermIndexerComponent implements OnInit {
                                     label: 'URL',
                                     type: FormFieldType.url,
                                     required: false,
-                                    value: (this.term.data.url) ? this.term.data.url : null,
+                                    value: (this.data.term.data.url) ? this.data.term.data.url : null,
                                     width: '50%'
                                 },
                                 {
@@ -155,7 +160,7 @@ export class TermIndexerComponent implements OnInit {
                                     label: 'Cobertura inicio',
                                     type: FormFieldType.datepicker,
                                     required: false,
-                                    value: (this.term.data.initial_cover) ? this.term.data.initial_cover : null,
+                                    value: (this.data.term.data.initial_cover) ? this.data.term.data.initial_cover : null,
                                     width: '20%'
                                 },
                                 {
@@ -163,7 +168,7 @@ export class TermIndexerComponent implements OnInit {
                                     label: 'Cobertura',
                                     type: FormFieldType.datepicker,
                                     required: false,
-                                    value: (this.term.data.end_cover) ? this.term.data.end_cover : null,
+                                    value: (this.data.term.data.end_cover) ? this.data.term.data.end_cover : null,
                                     width: '20%'
                                 },
                                 {

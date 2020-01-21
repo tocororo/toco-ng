@@ -9,13 +9,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthenticationModule } from '@toco/tools/authentication';
 
 import { AppComponent } from './app.component';
-import { FooterComponent } from '@toco/tools/core';
 import { TaxonomyService } from '@toco/tools/backend';
+import { CoreModule } from '@toco/tools/core';
 
 @NgModule({
     declarations: [
-        AppComponent,
-        FooterComponent
+        AppComponent
     ],
 
     imports: [
@@ -23,7 +22,8 @@ import { TaxonomyService } from '@toco/tools/backend';
         SharedModule,
         AppRoutingModule,
         AuthenticationModule,
-        TaxonomyModule
+        TaxonomyModule,
+        CoreModule
     ],
 
     providers: [

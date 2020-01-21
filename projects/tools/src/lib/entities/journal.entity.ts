@@ -1,22 +1,20 @@
 import { Entity, EntityBase } from './entity';
-import { JournalReference } from './journal_reference.entity';
 import { Term } from './taxonomy.entity';
+import { SourceData, Source } from './source.entity';
 
 
-// TODO: En algun momento refactorizar...
-    // todo lo que se llama Journal deberia llamarse source
 export class SocialNetworks  extends EntityBase {
   facebook = '';
   twitter = '';
   linkedin = '';
 }
-export class ISSN {
+export class ISSN extends EntityBase {
     p  = '';
     e  = '';
     l  = '';
 }
-export class JournalInformation extends EntityBase {
-    title = '';
+export class JournalData extends SourceData {
+
     subtitle  = '';
     shortname  = '';
     issn: ISSN = new ISSN();
@@ -25,7 +23,6 @@ export class JournalInformation extends EntityBase {
     email = '';
     logo ? = '';
     purpose ? = '';
-    description ? = '';
     start_year ? = '';
     end_year ? = '';
     frequency ? = '';
@@ -37,19 +34,6 @@ export class JournalInformation extends EntityBase {
     }
 }
 
-export class Journal extends Entity {
-    // TODO: sustituir tocoID por uuid
-    tocoID: string;
-    data: JournalInformation = new JournalInformation();
-    jreference?: Array<JournalReference> = new Array<JournalReference>(0);
-    terms?: Array<Term> = new Array<Term>(0);
-    source_type = '';
-    source_app = '';
-
-    /**
-     * The OAI protocol URL.
-     */
-    harvest_endpoint = '';
-    harvest_type = '';
+export class Journal extends Source {
+  data: JournalData = new JournalData();
 }
-

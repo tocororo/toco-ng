@@ -7,9 +7,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatChip, MatChipsModule } from '@angular/material/chips';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatOptionModule, MatNativeDateModule } from '@angular/material/core';
-import { MatDialogModule, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,6 +23,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -54,9 +55,10 @@ import { MatBadgeModule } from '@angular/material/badge';
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatSidenavModule,
-        MatTabsModule, 
+        MatTabsModule,
         MatChipsModule,
         MatTableModule,
+        MatSortModule,
         MatPaginatorModule,
         MatSlideToggleModule,
         MatSelectModule,
@@ -91,6 +93,7 @@ import { MatBadgeModule } from '@angular/material/badge';
         MatTabsModule,
         MatChipsModule,
         MatTableModule,
+        MatSortModule,
         MatPaginatorModule,
         MatSlideToggleModule,
         MatSelectModule,
