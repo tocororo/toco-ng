@@ -41,12 +41,11 @@ export class CatalogService extends HttpService {
     }
 
     getJournalsVocab(): Observable<Response<any>> {
-        return this.http.get<Response<any>>(this.env.sceibaApi + '/vocabularies');
+        return this.http.get<Response<any>>(this.env.sceibaApi + '/taxonomy/vocabulary/list');
     }
     getTerminosByVocab(vocabId: string): Observable<any> {
         try {
-            return this.http.get<any>(this.env.sceibaApi + '/vocabulary/' + vocabId+ '/terms/tree');
-            // return  this.http.get<any>(sceibaApi+'/terminos?search=id_vocabulario:'+vocabId+'&filter=id;value');
+            return this.http.get<any>(this.env.sceibaApi + '/taxonomy/term/list/' + vocabId);
         } catch (error) {
 
         }

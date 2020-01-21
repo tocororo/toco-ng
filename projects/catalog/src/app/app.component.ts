@@ -10,7 +10,7 @@ import { Subscription, PartialObserver } from 'rxjs';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    title = 'toco';
+    title = 'Catálogo';
     isOnline: boolean;
     islogged: boolean;
     user: any;
@@ -19,12 +19,9 @@ export class AppComponent {
     private authenticateObserver: PartialObserver<boolean> = {
         next: (islogged: boolean) => {
             this.islogged = islogged;
-            console.log(islogged);
-            
             if (this.oauthStorage.getItem('access_token')) {
                 this.user = this.oauthStorage.getItem('email');
             }
-
         },
 
         error: (err: any) => {
@@ -40,8 +37,6 @@ export class AppComponent {
         this.isOnline = true; //navigator.onLine;
     }
     ngOnInit(): void {
-        console.log('3213213213131313231');
-        
         this.authenticateSuscription = this.authenticateService.authenticationSubjectObservable
             .subscribe(this.authenticateObserver);
     }

@@ -3,7 +3,7 @@
     
     <input type="text" placeholder="{{placeholder}}" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" id="{{inputId}}">
     <mat-autocomplete #auto="matAutocomplete" >
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name" (click)="addChips(option)" title="{{option.value}}">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name" (click)="addChips(option)" title="{{option.name}}">
         {{option.name}}
       </mat-option>
     </mat-autocomplete>

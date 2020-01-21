@@ -10,6 +10,7 @@ import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationModule } from '@toco/tools/authentication';
+import { NotificationModule } from '@toco/tools/notification/notification/notification.module';
 import { FooterComponent } from '@toco/tools/core';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { FooterComponent } from '@toco/tools/core';
         SharedModule,
         CatalogModule,
         AuthenticationModule,
+        NotificationModule,
         AppRoutingModule
     ],
 

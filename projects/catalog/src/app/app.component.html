@@ -1,13 +1,12 @@
-<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
-
-    <a [routerLink]="['/']">
+<mat-toolbar class="mat-elevation-z6" color="primary" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between center">
+    <a class="color-white" [routerLink]="['/']">
         {{ title }}
     </a>
-    <div fxLayoutGap="15px">
-        <button mat-mini-fab *ngIf="islogged" color="primary" matBadge="+9" matBadgeColor="accent"
-            [matMenuTriggerFor]="notificationsMenu">
-            <mat-icon>notifications</mat-icon>
-        </button>
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="15px">
+        <a *ngIf="islogged" mat-raised-button color="primary" [routerLink]="['/']" > Mis Fuentes </a>
+        
+        
+        <toco-notification-button *ngIf="islogged"></toco-notification-button>
 
         <button mat-stroked-button *ngIf="islogged" [matMenuTriggerFor]="menu">
             {{ user }}
@@ -16,6 +15,7 @@
 
         <toco-authentication *ngIf="!islogged" [isButtonLogin]="'true'"></toco-authentication>
 
+        
     </div>
 
 </mat-toolbar>
@@ -27,12 +27,6 @@
     </button>
 </mat-menu>
 
-<mat-menu #notificationsMenu="matMenu">
-    <button mat-menu-item (click)="logoff()">
-        <mat-icon>lock</mat-icon>
-        notify
-    </button>
-</mat-menu>
 
 <router-outlet></router-outlet>
 
