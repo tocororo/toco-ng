@@ -5,13 +5,10 @@ export class EntityBase extends Object {
 
   load_from_data(data: any) {
     const keys = Object.keys(this);
-    console.log(keys)
-    console.log(data)
     for (const key of keys) {
       if (data[key]) {
         if (this[key] instanceof EntityBase) {
           this[key].load_from_data(data[key]);
-          console.log(data[key])
         } else {
           this[key] = data[key];
         }
@@ -26,9 +23,11 @@ export class EntityBase extends Object {
  */
 export class Entity extends EntityBase {
     id = 0;
-    raw_data: String;
-    created_at: String;
-    updated_at: String;
+
+    // raw_data: String;
+    // created_at: String;
+    // updated_at: String;
+
     constructor() { super(); }
 
     /**
