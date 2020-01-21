@@ -4,13 +4,14 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@toco/tools/shared';
 
 import { CatalogModule } from '@toco/tools/catalog';
-import { CatalogService } from '@toco/tools/backend';
+import { CatalogService, TaxonomyService } from '@toco/tools/backend';
 import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationModule } from '@toco/tools/authentication';
 import { FooterComponent } from '@toco/tools/core';
+import { TaxonomyModule } from '@toco/tools/taxonomy';
 
 @NgModule({
     declarations: [
@@ -22,11 +23,12 @@ import { FooterComponent } from '@toco/tools/core';
         BrowserModule,
         SharedModule,
         CatalogModule,
+        TaxonomyModule,
         AuthenticationModule,
         AppRoutingModule
     ],
 
-    providers: [CatalogService, EnvServiceProvider],
+    providers: [CatalogService, EnvServiceProvider, TaxonomyService],
 
     bootstrap: [AppComponent]
 })

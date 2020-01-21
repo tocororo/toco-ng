@@ -132,6 +132,9 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
                     console.log('token expires');
                     this.oauthService.initImplicitFlow();
                     break;
+                case 'invalid_nonce_in_state':
+                    console.log('invalid_nonce_in_state', e);
+                    break;
                 case 'logout':
                     console.log('logout');
                     break;

@@ -1,8 +1,7 @@
-<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+<mat-toolbar class="mat-elevation-z6" color="primary" fxLayout="row" fxLayoutAlign="space-between center">
 
-    <a [routerLink]="['/']">
-        {{ title }}
-    </a>
+    {{ title }}
+
     <div fxLayoutGap="15px">
         <button mat-mini-fab *ngIf="islogged" color="primary" matBadge="+9" matBadgeColor="accent"
             [matMenuTriggerFor]="notificationsMenu">
@@ -33,6 +32,24 @@
         notify
     </button>
 </mat-menu>
+
+<mat-tab-group [backgroundColor]="'warn'" *ngIf="islogged">
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <a [routerLink]="['/']" routerLinkActive="router-link-active" class="color-white"> Catálogo </a>
+        </ng-template>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <a [routerLink]="['/mysources']" class="color-white"> Mis fuentes </a>
+        </ng-template>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <a [routerLink]="['/ooooos']" class="color-white"> Nueva fuente </a>
+        </ng-template>
+    </mat-tab>
+</mat-tab-group>
 
 <router-outlet></router-outlet>
 

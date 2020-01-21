@@ -30,8 +30,9 @@ import { MatSnackBar } from '@angular/material';
 })
 export class CatalogComponent implements OnInit {
 
-    journalList: Journal[] = [];
+    // journalList: Journal[] = [];
     private loading = true;
+    private hasErrors = false;
     dataSource = new MatTableDataSource<Journal>();
     columnsToDisplay = ['title', 'rnps', 'p-issn', 'url'];
     expandedElement: Journal;
@@ -87,20 +88,6 @@ export class CatalogComponent implements OnInit {
         this.paginator.pageSize = 5;
 
         try{
-            // this.service.getJournalsCount()
-            //     .pipe(
-            //         catchError( error =>{
-            //             const m  = new MessageHandler(this._snackBar);
-            //             m.showMessage(StatusCode.serverError, error.message);
-            //             return observableOf([]);
-            //         })
-            //     )
-            //     .subscribe(response => {
-            //         if(response)
-            //         console.log('count', response);
-
-            //         this.length = response.data.count;
-            //     });
 
             this.fetchJournalData();
 
@@ -128,24 +115,18 @@ export class CatalogComponent implements OnInit {
     //   this.filterService.changeFilter('page',this.paginator.pageIndex);
     // }
 
-    fetchJournalData() {
-        // this.loading = true;
-        // this.dataSource.data = this.service.getJournalsPage(this.count, this.page);
-        const arr = new Array<Journal>();
+    public fetchJournalData() {
+       const arr = new Array<Journal>();
 
         merge().pipe(
             startWith({}),
             switchMap(() => {
-                this.loading = true;
+                //this.loading = true;
                 return this.service!.getJournalsPage(this.paginator.pageSize, this.paginator.pageIndex, this.params);
             }),
             map(response => {
                 // Flip flag to show that loading has finished.
                 this.loading = false;
-
-                // this.isRateLimitReached = false;
-                // this.resultsLength = response.total_count;
-
 
                 this.length = response.data.sources.count;
                 response.data.sources.data.forEach(item => {
@@ -172,8 +153,8 @@ export class CatalogComponent implements OnInit {
                 return arr;
             }),
             catchError(error => {
-
-                // this.loading = false;
+                this.loading = false;
+                this.hasErrors = true;
                 const m  = new MessageHandler(this._snackBar);
                 m.showMessage(StatusCode.serverError, error.message);
                 // Catch if the GitHub API has reached its rate limit. Return empty data.
@@ -185,20 +166,20 @@ export class CatalogComponent implements OnInit {
 
     }
 
-    onScrollUp() {
+    public onScrollUp() {
         // console.log("scrolled up!!");
     }
-    get isEmpty() {
-        if (this.dataSource.data.length === 0) {
-            // this.loading = false;
+    public isEmpty() {
+        if (this.dataSource.data.length === 0 && this.hasErrors) {
+            //this.loading = false;
             return true;
         }
         return false;
     }
-    isLoading() {
+    public isLoading() {
         return this.loading;
     }
-    openme(): boolean {
+    public openme(): boolean {
         const a = navigator.userAgent.match(/Android/i);
         const b = navigator.userAgent.match(/BlackBerry/i);
         const apple = navigator.userAgent.match(/iPhone|iPad|iPod/i);
@@ -208,7 +189,7 @@ export class CatalogComponent implements OnInit {
         return true;
     }
 
-    changeLayoutPosition(index: number) {
+    public changeLayoutPosition(index: number) {
         this.currentlayout = this.layoutPosition[index];
     }
 }
