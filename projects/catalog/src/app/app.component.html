@@ -1,8 +1,11 @@
-<mat-toolbar class="mat-elevation-z6" color="primary" fxLayout="row" fxLayoutAlign="space-between center">
-
-    {{ title }}
-
-    <div fxLayoutGap="15px">
+<mat-toolbar class="mat-elevation-z6" color="primary" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between center">
+    <a class="color-white" [routerLink]="['/']">
+        {{ title }}
+    </a>
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="15px">
+        <a *ngIf="islogged" mat-raised-button color="primary" [routerLink]="['/']" > Mis Fuentes </a>
+        
+        
         <toco-notification-button *ngIf="islogged"></toco-notification-button>
 
         <button mat-stroked-button *ngIf="islogged" [matMenuTriggerFor]="menu">
@@ -12,6 +15,7 @@
 
         <toco-authentication *ngIf="!islogged" [isButtonLogin]="'true'"></toco-authentication>
 
+        
     </div>
 
 </mat-toolbar>
@@ -23,29 +27,6 @@
     </button>
 </mat-menu>
 
-
-<mat-tab-group [backgroundColor]="'warn'" *ngIf="islogged">
-    <mat-tab>
-        <ng-template mat-tab-label>
-            <a [routerLink]="['/']" routerLinkActive="router-link-active" class="color-white"> Catálogo </a>
-        </ng-template>
-    </mat-tab>
-    <!-- <mat-tab>
-        <ng-template mat-tab-label>
-            <a [routerLink]="['/mysources']" class="color-white"> Mis fuentes </a>
-        </ng-template>
-    </mat-tab> -->
-    <mat-tab>
-        <ng-template mat-tab-label>
-            <a [routerLink]="['/newsource']" class="color-white"> Nueva fuente </a>
-        </ng-template>
-    </mat-tab>
-    <mat-tab>
-        <ng-template mat-tab-label>
-            <a [routerLink]="['/notifications']" class="color-white"> Notificaciones </a>
-        </ng-template>
-    </mat-tab>
-</mat-tab-group>
 
 <router-outlet></router-outlet>
 

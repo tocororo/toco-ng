@@ -7,7 +7,7 @@ import { MatPaginator,PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { MetadataService, MessageHandler, StatusCode } from '@toco/tools/core';
-import { Journal, JournalInformation, ISSN } from '@toco/tools/entities';
+import { Journal, JournalData, ISSN } from '@toco/tools/entities';
 import { FilterHttpMap, FiltersService } from '@toco/tools/filters';
 
 import { EnvService } from '@tocoenv/tools/env.service';
@@ -132,8 +132,8 @@ export class CatalogComponent implements OnInit {
                 response.data.sources.data.forEach(item => {
                     const j = new Journal();
                     j.id = item.id;
-                    j.tocoID = item.uuid;
-                        const info = new JournalInformation();
+                    j.uuid = item.uuid;
+                        const info = new JournalData();
                         info.url = item.data != null ? item.data.url : '';
                         info.title = item.name;
                         info.subtitle = item.subtitle;
