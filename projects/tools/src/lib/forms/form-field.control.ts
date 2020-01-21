@@ -246,7 +246,7 @@ export enum FormFieldType
 }
 
 /**
- * An interface that represents the content of a `FormFieldControl`. 
+ * A base interface that represents the content of a `FormFieldControl`. 
  */
 export interface FormFieldContent
 {

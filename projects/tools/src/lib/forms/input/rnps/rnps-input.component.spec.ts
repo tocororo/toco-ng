@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RnpsInputComponent } from './rnps-input.component';
+import { InputRnpsComponent } from './rnps-input.component';
 
-describe('RnpsInputComponent', () => {
-  let component: RnpsInputComponent;
-  let fixture: ComponentFixture<RnpsInputComponent>;
+describe('InputRnpsComponent', () => {
+  let component: InputRnpsComponent;
+  let fixture: ComponentFixture<InputRnpsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RnpsInputComponent ]
+      declarations: [ InputRnpsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RnpsInputComponent);
+    fixture = TestBed.createComponent(InputRnpsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

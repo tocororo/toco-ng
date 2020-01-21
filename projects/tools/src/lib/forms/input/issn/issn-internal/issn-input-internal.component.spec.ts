@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IssnInputComponent } from './issn-input.component';
+import { InputIssnInternalComponent } from './issn-input-internal.component';
 
-describe('IssnInputComponent', () => {
-  let component: IssnInputComponent;
-  let fixture: ComponentFixture<IssnInputComponent>;
+describe('InputIssnInternalComponent', () => {
+  let component: InputIssnInternalComponent;
+  let fixture: ComponentFixture<InputIssnInternalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IssnInputComponent ]
+      declarations: [ InputIssnInternalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IssnInputComponent);
+    fixture = TestBed.createComponent(InputIssnInternalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

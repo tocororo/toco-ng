@@ -3,26 +3,25 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
 import { InputControl } from '../input.control';
-import { UrlValue } from './url-value';
+import { EmailValue } from './email-value';
 import { Common } from '@toco/tools/core';
 
 /**
- * Represents a control that allows the writing of a url. 
+ * Represents a control that allows the writing of an email. 
  */
 @Component({
-    selector: 'url-input',
+    selector: 'input-email',
     templateUrl: '../text-input/text-input.component.html',
     styleUrls: ['../text-input/text-input.component.scss']
 })
-export class UrlInputComponent extends InputControl implements OnInit
+export class InputEmailComponent extends InputControl implements OnInit
 {
     public constructor()
     {
         super(
             /* Constructs a new `FormControl` instance. */
             new FormControl(Common.emptyString, [
-                Validators.pattern(/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/i)
-                //Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/i)
+                Validators.email
             ])
         );
     }
@@ -30,7 +29,7 @@ export class UrlInputComponent extends InputControl implements OnInit
     public ngOnInit(): void
     {
         /* Sets the default values. */
-        this.init(UrlValue.url_Label, false, true);
+        this.init(EmailValue.email_Label, false, true);
     }
 
     /**
@@ -40,7 +39,7 @@ export class UrlInputComponent extends InputControl implements OnInit
     {
         let validationErrors: ValidationErrors = this.internalControl.errors;
 
-        /* Shows the url errors. */
+        /* Shows the email errors. */
         if (validationErrors)
         {
             if (validationErrors[Validators.required.name])
@@ -49,8 +48,8 @@ export class UrlInputComponent extends InputControl implements OnInit
             }
             else
             {
-                /* It is `validationErrors[Validators.pattern.name]`. */
-                return 'The url is wrong.';
+                /* It is `validationErrors[Validators.email.name]`. */
+                return 'The email is wrong.';
             }
         }
 

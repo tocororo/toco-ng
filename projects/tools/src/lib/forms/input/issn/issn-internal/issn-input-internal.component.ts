@@ -19,11 +19,11 @@ import { Common } from '@toco/tools/core';
  * and electronic. For more information follow the link: https://www.issn.org/understanding-the-issn/what-is-an-issn/.
  */
 @Component({
-	selector: 'issn-input-internal',
+	selector: 'input-issn-internal',
 	templateUrl: './issn-input-internal.component.html',
 	styleUrls: ['./issn-input-internal.component.scss' ],
 	providers: [
-		{ provide: MatFormFieldControl, useExisting: IssnInputInternalComponent }
+		{ provide: MatFormFieldControl, useExisting: InputIssnInternalComponent }
 	],
 	host: {
 		'[id]': 'id',
@@ -34,7 +34,7 @@ import { Common } from '@toco/tools/core';
 		 * is already bound. */
 	}
 })
-export class IssnInputInternalComponent implements OnDestroy, IInternalComponent,
+export class InputIssnInternalComponent implements OnDestroy, IInternalComponent,
 	MatFormFieldControl<IssnValue>, ControlValueAccessor
 {
 	/**
@@ -45,7 +45,7 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 	/**
 	 * Returns the control name with dash.
 	 */
-	private static readonly _controlNameWithDash: string = 'issn-input';
+	private static readonly _controlNameWithDash: string = 'input-issn';
 
 	/**
 	 * Tracks the value and validity state of the internal control that contains the code.
@@ -125,7 +125,7 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 
 		this.stateChanges = new Subject<void>();
 
-		this.id = `${ IssnInputInternalComponent._controlNameWithDash }-${ IssnInputInternalComponent._nextId++ }`;
+		this.id = `${ InputIssnInternalComponent._controlNameWithDash }-${ InputIssnInternalComponent._nextId++ }`;
 
 		this._placeholder = Common.emptyString;
 
@@ -135,7 +135,7 @@ export class IssnInputInternalComponent implements OnDestroy, IInternalComponent
 
 		this._disabled= false;
 
-		this.controlType = IssnInputInternalComponent._controlNameWithDash;
+		this.controlType = InputIssnInternalComponent._controlNameWithDash;
 
 		this.describedBy = Common.emptyString;
 
