@@ -11,11 +11,11 @@ import { IssnType_Abbreviation, IssnValue } from './issn-value';
  * and electronic. For more information follow the link: https://www.issn.org/understanding-the-issn/what-is-an-issn/. 
  */
 @Component({
-	selector: 'issn-input',
+	selector: 'input-issn',
 	templateUrl: './issn-input.component.html',
 	styleUrls: ['./issn-input.component.scss']
 })
-export class IssnInputComponent extends InputControl implements OnInit
+export class InputIssnComponent extends InputControl implements OnInit
 {
 	public constructor()
 	{

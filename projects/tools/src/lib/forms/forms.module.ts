@@ -5,30 +5,30 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { IconService } from '@toco/tools/core';
 
-import { FormFieldsComponent } from './container/form-fields/form-fields.component';
 import { FormContainerComponent } from './container/form-container/form-container.component';
+import { FormFieldsComponent } from './container/form-fields/form-fields.component';
 import { FormsService } from './forms.service';
 
-import { TextInputComponent } from './input/text-input/text-input.component';
-import { EmailInputComponent } from './input/email-input/email-input.component';
-import { IssnInputInternalComponent } from './input/issn-input/issn-input-internal/issn-input-internal.component';
-import { IssnInputComponent } from './input/issn-input/issn-input.component';
-import { RnpsInputComponent } from './input/rnps-input/rnps-input.component';
-import { UrlInputComponent } from './input/url-input/url-input.component';
+import { InputTextComponent } from './input/text/text-input.component';
+import { InputEmailComponent } from './input/email/email-input.component';
+import { InputIssnInternalComponent } from './input/issn/issn-internal/issn-input-internal.component';
+import { InputIssnComponent } from './input/issn/issn-input.component';
+import { InputRnpsComponent } from './input/rnps/rnps-input.component';
+import { InputUrlComponent } from './input/url/url-input.component';
 
 import { VocabularyComponent } from './experimental/vocabulary/vocabulary.component';
 import { TermParentComponent } from './experimental/term-parent/term-parent.component';
 
 @NgModule({
   declarations: [
-    FormFieldsComponent,
     FormContainerComponent,
-    TextInputComponent,
-    EmailInputComponent,
-    IssnInputInternalComponent,
-    IssnInputComponent,
-    RnpsInputComponent,
-    UrlInputComponent,
+    FormFieldsComponent,
+    InputTextComponent,
+    InputEmailComponent,
+    InputIssnInternalComponent,
+    InputIssnComponent,
+    InputRnpsComponent,
+    InputUrlComponent,
     VocabularyComponent,
     TermParentComponent
   ],
@@ -39,13 +39,13 @@ import { TermParentComponent } from './experimental/term-parent/term-parent.comp
   ],
 
   exports: [
-    FormFieldsComponent,
     FormContainerComponent,
-    TextInputComponent,
-    EmailInputComponent,
-    IssnInputComponent,
-    RnpsInputComponent,
-    UrlInputComponent,
+    FormFieldsComponent,
+    InputTextComponent,
+    InputEmailComponent,
+    InputIssnComponent,
+    InputRnpsComponent,
+    InputUrlComponent,
     VocabularyComponent,
     TermParentComponent
   ],

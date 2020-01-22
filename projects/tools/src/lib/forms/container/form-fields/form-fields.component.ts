@@ -1,7 +1,10 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 
-import { FormFieldType, FormFieldContent } from '../../form-field.control';
+import { FormFieldType } from '../../form-field.control';
+import { InputContent } from '../../input/input.control';
+import { ActionContent } from '../../action/action.control';
+import { FormFieldContent_Experimental } from '../../experimental/form-field.control.experimental';
 
 /**
  * @description
@@ -16,7 +19,7 @@ import { FormFieldType, FormFieldContent } from '../../form-field.control';
 export class FormFieldsComponent implements OnInit
 {
     @Input()
-    public fields: Array<FormFieldContent>;
+    public fields: Array<InputContent | ActionContent | FormFieldContent_Experimental> | Array<any>;
 
     public readonly formFieldType: typeof FormFieldType = FormFieldType;
 

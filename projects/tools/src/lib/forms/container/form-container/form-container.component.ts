@@ -30,7 +30,7 @@ export interface PanelContent
     /**
      * Returns the panel's content.
      */
-    content: (InputContent | ActionContent | FormFieldContent_Experimental)[] | any[];  /* formField: FormFieldContent[] */
+    content: (InputContent | ActionContent | FormFieldContent_Experimental)[] | any[];
 }
 
 export interface FormContainerAction

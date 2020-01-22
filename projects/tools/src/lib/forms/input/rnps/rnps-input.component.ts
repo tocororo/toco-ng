@@ -14,11 +14,11 @@ import { Common } from '@toco/tools/core';
  * For more information follow the link: http://www.seriadas.cult.cu/. 
  */
 @Component({
-    selector: 'rnps-input',
+    selector: 'input-rnps',
     templateUrl: '../text-input/text-input.component.html',
     styleUrls: ['../text-input/text-input.component.scss']
 })
-export class RnpsInputComponent extends InputControl implements OnInit
+export class InputRnpsComponent extends InputControl implements OnInit
 {
 	/**
 	 * It is used by `handleSpecificInput` method. 

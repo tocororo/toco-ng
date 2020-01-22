@@ -143,16 +143,16 @@ export abstract class InputControl extends FormFieldControl
 	/**
 	 * Tracks the value and validity state of the internal control that contains the text input. 
      * Implementation notes: There are two cases: 
-     *  - You only have the `internalControl` field as the `EmailInputComponent` class. 
-     *  - You have the `internalControl` and `internalComponent` fields as the `IssnInputComponent` class. 
+     *  - You only have the `internalControl` field as the `InputEmailComponent` class. 
+     *  - You have the `internalControl` and `internalComponent` fields as the `InputIssnComponent` class. 
 	 */
     public internalControl: AbstractControl;
 
 	/**
 	 * Tracks the value and validity state of the internal component that contains the text input. 
      * Implementation notes: There are two cases: 
-     *  - You only have the `internalControl` field as the `EmailInputComponent` class. 
-     *  - You have the `internalControl` and `internalComponent` fields as the `IssnInputComponent` class. 
+     *  - You only have the `internalControl` field as the `InputEmailComponent` class. 
+     *  - You have the `internalControl` and `internalComponent` fields as the `InputIssnComponent` class. 
 	 */
 	@ViewChild('internalComponent', { static: true })
     protected readonly internalComponent: IInternalComponent;

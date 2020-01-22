@@ -9,11 +9,11 @@ import { Common } from '@toco/tools/core';
  * Represents a control that allows the writing of a text. 
  */
 @Component({
-    selector: 'text-input',
+    selector: 'input-text',
     templateUrl: '../text-input/text-input.component.html',
     styleUrls: ['../text-input/text-input.component.scss']
 })
-export class TextInputComponent extends InputControl implements OnInit
+export class InputTextComponent extends InputControl implements OnInit
 {
     public constructor()
     {
