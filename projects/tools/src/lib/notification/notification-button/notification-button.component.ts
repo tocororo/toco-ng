@@ -29,7 +29,7 @@ export class NotificationButtonComponent implements OnInit {
         .subscribe(response => {
 
             if (response.status == "success"){
-                this.count = response.data.notifications.total;
+                this.count = response.data.notifications.total_not_view;
                 const arr : NotificationInfo[] = response.data.notifications.data;
                 this.notifications = arr;
             }
@@ -41,8 +41,10 @@ export class NotificationButtonComponent implements OnInit {
     }
 
     notificationsCount(){
-        if (this.count > 9)
-            return '+9';
+      if(this.count == 0)
+        return '';
+      if (this.count > 10)
+            return '+10';
         return this.count;
     }
 

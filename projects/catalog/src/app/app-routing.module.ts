@@ -4,16 +4,16 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { CatalogComponent } from '@toco/tools/catalog';
 import { AuthenticationService } from '@toco/tools/authentication/authentication.service';
-import { NotificationListComponent } from '@toco/tools/notification/notification/notification-list/notification-list.component';
+import { NotificationListComponent } from '@toco/tools/notification';
 
 const routes: Routes = [
-    { 
+    {
         path: '',
-        component: CatalogComponent 
+        component: CatalogComponent
     },
-    { 
-        path: 'mysources',
-        component: NotificationListComponent,
+    {
+        path: 'journal',
+        loadChildren: () => import('@toco/tools/journal').then(mod => mod.JournalModule),
         canActivate: [AuthenticationService]
     },
     {

@@ -1,10 +1,9 @@
 
 import { Component } from '@angular/core';
 
-import { Source, Vocabulary, JournalInformation, Journal } from '@toco/tools/entities';
-import { PanelContent, FormFieldType, IssnValue, HintValue, HintPosition, FormContainerAction } from '@toco/tools/forms';
+import { Source, Vocabulary, Journal } from '@toco/tools/entities';
+import { PanelContent, FormFieldType, HintValue, HintPosition, FormContainerAction } from '@toco/tools/forms';
 
-import { JournalService } from '../journal.service';
 import { FilterHttpMap } from '@toco/tools/filters';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { CatalogService, TaxonomyService, VocabulariesInmutableNames } from '@toco/tools/backend';

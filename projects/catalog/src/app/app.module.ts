@@ -10,8 +10,9 @@ import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationModule } from '@toco/tools/authentication';
-import { NotificationModule } from '@toco/tools/notification/notification/notification.module';
+import { NotificationModule } from '@toco/tools/notification';
 import { FooterComponent } from '@toco/tools/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import { FooterComponent } from '@toco/tools/core';
 
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         SharedModule,
         CatalogModule,
         AuthenticationModule,

@@ -11,19 +11,15 @@
     <script>
         (function (window) {
             window.__env = window.__env || {};
+            // API url
+            window.__env.sceibaApi = "https://10.2.83.101:5000/api/";
 
-            window.__env.sceibaApi = "https://localhost:5000/api/";
-
-            window.__env.sceibaHost = "https://localhost:5000/";
+            window.__env.sceibaHost = "https://10.2.83.101:5000/";
 
             window.__env.oauthRedirectUri = 'https://localhost:4200/';
-            
-            window.__env.oauthClientId = 'cA5nO1zVvSyZ2BDrBczC1pHwQ5pNDk9kSYzLzZsm';
-            
+            window.__env.oauthClientId = '39rwZp78RsEOQuwonTmmEtMWYCl4aReEP2mLOv0k';
             window.__env.oauthScope = 'user:email';
-            
-            window.__env.appHost = '';
-            window.__env.appName = '';
+
             // Whether or not to enable debug mode
             // Setting this to false will disable console output
             window.__env.enableDebug = true;

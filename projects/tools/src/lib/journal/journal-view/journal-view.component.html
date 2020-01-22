@@ -1,6 +1,6 @@
-<!-- {# <mat-progress-bar mode="indeterminate" color="accent" *ngIf="loading"></mat-progress-bar> #}
+<mat-progress-bar mode="indeterminate" color="accent" *ngIf="loading"></mat-progress-bar>
 
-{# <h1>{{journal.title}}</h1>
+<h1>{{journal.name}}</h1>
 <h2>Revista Científica</h2>
 <mat-card>
 
@@ -8,37 +8,37 @@
 
 
 
-        <mat-card-title *ngIf="journal.institution">
+        <!-- <mat-card-title *ngIf="journal.data.institution">
                 {{journal.institution}}
-        </mat-card-title>
+        </mat-card-title> -->
 
         <mat-card-subtitle>
                 <div>
                     <label>ISSN: </label>
-                    <p *ngIf="journal.issn.p">
-                        <label>Impreso: </label> {{journal.issn.p}}
+                    <p *ngIf="journal.data.issn.p">
+                        <label>Impreso: </label> {{journal.data.issn.p}}
                     </p>
-                    <p *ngIf="journal.issn.e">
-                        <label>Electrónico</label> {{journal.issn.e}}
+                    <p *ngIf="journal.data.issn.e">
+                        <label>Electrónico</label> {{journal.data.issn.e}}
                     </p>
-                    <p *ngIf="journal.issn.l">
-                        <label>De enlace</label> {{journal.issn.l}}
+                    <p *ngIf="journal.data.issn.l">
+                        <label>De enlace</label> {{journal.data.issn.l}}
                     </p>
                 </div>
-                <div *ngIf="journal.rnps">RNPS: {{journal.rnps}}</div>
+                <div *ngIf="journal.data.rnps">RNPS: {{journal.data.rnps}}</div>
         </mat-card-subtitle>
     </mat-card-header>
 
-    <mat-card-content *ngIf="journal.description">
-        <div class="e2e-inner-html-bound  text-align-justify" [innerHTML]="journal.description"></div>
+    <mat-card-content *ngIf="journal.data.description">
+        <div class="e2e-inner-html-bound  text-align-justify" [innerHTML]="journal.data.description"></div>
 
     </mat-card-content>
 
 
-    <ng-container *ngIf="journal.logo; else elseTemplate">
+    <!-- <ng-container *ngIf="journal.data.logo; else elseTemplate">
             <img mat-card-image src="/assets/images/journals/{{journal.logo}}">
         </ng-container>
         <ng-template #elseTemplate>
             <img mat-card-image src="/assets/images/no-image.png">
-        </ng-template>
-</mat-card> -->
+        </ng-template> -->
+</mat-card>

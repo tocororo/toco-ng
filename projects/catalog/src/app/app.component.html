@@ -3,9 +3,9 @@
         {{ title }}
     </a>
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="15px">
-        <a *ngIf="islogged" mat-raised-button color="primary" [routerLink]="['/']" > Mis Fuentes </a>
-        
-        
+        <a *ngIf="islogged" mat-raised-button color="primary" [routerLink]="['/journal']" > Mis Revistas </a>
+
+
         <toco-notification-button *ngIf="islogged"></toco-notification-button>
 
         <button mat-stroked-button *ngIf="islogged" [matMenuTriggerFor]="menu">
@@ -15,7 +15,7 @@
 
         <toco-authentication *ngIf="!islogged" [isButtonLogin]="'true'"></toco-authentication>
 
-        
+
     </div>
 
 </mat-toolbar>

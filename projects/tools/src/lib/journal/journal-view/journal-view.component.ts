@@ -15,20 +15,24 @@ export class JournalViewComponent implements OnInit, OnChanges {
     constructor(private route: ActivatedRoute, private metadata: MetadataService)
     { }
 
-    journal:  Journal;
+    journal: Journal;
 
     loading = true;
 
     ngOnInit() {
         this.route.data
-        .subscribe((data: { journal: Journal }) => {
+        .subscribe((response) => {
             this.loading = false;
-            this.journal = data.journal;
+            console.log(response)
+
+            this.journal = new Journal();
+            this.journal.load_from_data(response.journal.data.source);
             this.metadata.setTitleDescription('Revista Científica ' + this.journal.data.title, this.journal.data.description);
-        });
+
+          });
     }
 
-    ngOnChanges(){
+    ngOnChanges() {
         // this.metadata.setTitleDescription(this.journal.title, this.journal.description);
     }
 }

@@ -1,7 +1,6 @@
 
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -9,7 +8,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularMaterialModule } from '@toco/tools/angular-material';
 
 /**
- * A module that contains all shared modules. 
+ * A module that contains all shared modules.
  */
 @NgModule({
     declarations: [
@@ -17,7 +16,6 @@ import { AngularMaterialModule } from '@toco/tools/angular-material';
 
     imports: [
         CommonModule,
-        BrowserAnimationsModule,
         HttpClientModule,
         FormsModule,
         FlexLayoutModule,
@@ -26,7 +24,6 @@ import { AngularMaterialModule } from '@toco/tools/angular-material';
 
     exports: [
         CommonModule,
-        BrowserAnimationsModule,
         HttpClientModule,
         FormsModule,
         FlexLayoutModule,

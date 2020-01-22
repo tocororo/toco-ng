@@ -26,6 +26,8 @@ export class Source extends Entity {
   source_type = '';
   source_status = '';
 
+  version_to_review = false;
+
   versions: Array<SourceVersion> = new Array<SourceVersion>();
 
   data: SourceData = new SourceData();

@@ -5,24 +5,24 @@ import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 import { Journal } from '@toco/tools/entities';
-
-import { JournalService } from './journal.service';
+import { SourceService } from '../backend/source.service';
 
 @Injectable()
 export class JournalResolver implements Resolve<Journal>
 {
-    constructor(private service: JournalService, private router: Router)
+    constructor(private service: SourceService, private router: Router)
     { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Journal> {
-        let id = route.paramMap.get('id');
-        return this.service.getJournalsById(id).pipe(
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
+        let uuid = route.paramMap.get('uuid');
+        console.log('resolve');
+        return this.service.getSourceByUUID(uuid).pipe(
             take(1),
             map(node => {
                 if (node) {
                     return node;
                 } else {
-                    this.router.navigate(['/']);
+                    this.router.navigate(['/journal']);
                 }
             })
         );

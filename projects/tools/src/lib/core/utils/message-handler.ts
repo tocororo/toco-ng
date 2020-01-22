@@ -52,7 +52,7 @@ export class MessageHandler {
       default:
         this._snackBar.open(message, null, {
           duration: 5000,
-          verticalPosition: 'top',
+          verticalPosition: 'bottom',
         });
         break;
     }

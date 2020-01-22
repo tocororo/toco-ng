@@ -6,7 +6,7 @@ import { catchError } from 'rxjs/operators';
 
 import { NotificationService } from '@toco/tools/backend';
 import { MessageHandler, StatusCode } from '@toco/tools/core';
-import { NotificationInfo } from '../notification-button/notification-button.component'
+import { NotificationInfo } from '../notification-button/notification-button.component';
 
 @Component({
     selector: 'lib-notification-list',
@@ -29,7 +29,7 @@ export class NotificationListComponent implements OnInit {
     pageSizeOptions: number[] = [5, 10, 15, 20];
 
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-    
+
     constructor(private service: NotificationService, private _snackBar: MatSnackBar) { }
 
     ngOnInit() {
@@ -53,7 +53,7 @@ export class NotificationListComponent implements OnInit {
     }
     setnotificationViewed(id: number){
         console.log(id);
-        
+
         this.service.setNotificationViewed(id)
             .pipe(
                 catchError(error => {

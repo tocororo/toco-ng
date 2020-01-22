@@ -1,6 +1,9 @@
 
 import { Component, OnInit } from '@angular/core';
 
+
+
+
 @Component({
     selector: 'toco-journal',
     templateUrl: './journal.component.html',
@@ -11,6 +14,7 @@ export class JournalComponent implements OnInit
     constructor()
     { }
 
-    ngOnInit()
-    { }
+    public ngOnInit(): void
+    {
+    }
 }
