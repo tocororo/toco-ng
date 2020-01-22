@@ -15,8 +15,8 @@ import { Common } from '@toco/tools/core';
  */
 @Component({
     selector: 'input-rnps',
-    templateUrl: '../text-input/text-input.component.html',
-    styleUrls: ['../text-input/text-input.component.scss']
+    templateUrl: '../text/text-input.component.html',
+    styleUrls: ['../text/text-input.component.scss']
 })
 export class InputRnpsComponent extends InputControl implements OnInit
 {

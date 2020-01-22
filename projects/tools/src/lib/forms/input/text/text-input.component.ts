@@ -10,8 +10,8 @@ import { Common } from '@toco/tools/core';
  */
 @Component({
     selector: 'input-text',
-    templateUrl: '../text-input/text-input.component.html',
-    styleUrls: ['../text-input/text-input.component.scss']
+    templateUrl: './text-input.component.html',
+    styleUrls: ['./text-input.component.scss']
 })
 export class InputTextComponent extends InputControl implements OnInit
 {
