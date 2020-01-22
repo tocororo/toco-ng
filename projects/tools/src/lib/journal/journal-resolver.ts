@@ -4,8 +4,8 @@ import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@a
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
+import { SourceService } from '@toco/tools/backend';
 import { Journal } from '@toco/tools/entities';
-import { SourceService } from '../backend/source.service';
 
 @Injectable()
 export class JournalResolver implements Resolve<Journal>

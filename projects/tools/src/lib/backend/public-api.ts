@@ -1,4 +1,3 @@
-import { from } from 'rxjs';
 
 /*
  * Public API surface of backend.
@@ -6,5 +5,6 @@ import { from } from 'rxjs';
 
 export * from './backend.module';
 export * from './catalog.service';
-export * from './taxonomy.service';
 export * from './notification.service';
+export * from './source.service';
+export * from './taxonomy.service';

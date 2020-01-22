@@ -1,18 +1,15 @@
 
 import { Component } from '@angular/core';
-
-import { Source, Vocabulary, Journal } from '@toco/tools/entities';
-import { PanelContent, FormFieldType, HintValue, HintPosition, FormContainerAction } from '@toco/tools/forms';
-
-import { FilterHttpMap } from '@toco/tools/filters';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { CatalogService, TaxonomyService, VocabulariesInmutableNames } from '@toco/tools/backend';
+import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MessageHandler, StatusCode, HandlerComponent } from '@toco/tools/core';
-import { SourceService } from '@toco/tools/backend/source.service';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
+import { CatalogService, TaxonomyService, VocabulariesInmutableNames, SourceService } from '@toco/tools/backend';
+import { MessageHandler, StatusCode, HandlerComponent } from '@toco/tools/core';
+import { Vocabulary, Journal } from '@toco/tools/entities';
+import { FilterHttpMap } from '@toco/tools/filters';
+import { PanelContent, FormFieldType, HintValue, HintPosition, FormContainerAction } from '@toco/tools/forms';
 
 class SearchJournalByIdentifiersAction implements FormContainerAction {
   constructor(private service: CatalogService, private journalFound: Function) { }
@@ -39,8 +36,6 @@ class SearchJournalByIdentifiersAction implements FormContainerAction {
       });
   }
 }
-
-
 
 @Component({
   selector: 'toco-journal-edit',

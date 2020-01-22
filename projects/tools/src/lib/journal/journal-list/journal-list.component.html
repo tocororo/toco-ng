@@ -7,6 +7,6 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columnsObjectProperty"></tr>
-    <tr mat-row *matRowDef="let row; columns: columnsObjectProperty;"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsObjectProperty;" [routerLink]="[row.uuid]"></tr>
 
 </table>

@@ -9,35 +9,37 @@ import { JournalEditComponent } from './journal-edit/journal-edit.component';
 import { JournalHomeComponent } from './journal-home/journal-home.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: JournalComponent,
-    children: [
-      {
-        path: 'new',
-        component: JournalEditComponent,
-      },
-      {
-        path: ':uuid',
-        component: JournalViewComponent,
-        resolve: {
-          journal: JournalResolver
-        }
-      },
-      {
+    {
         path: '',
-        component: JournalHomeComponent
-      }
-    ]
-  }
+        component: JournalComponent,
+        children: [
+            {
+                path: 'new',
+                component: JournalEditComponent,
+            },
+            {
+                path: ':uuid',
+                component: JournalViewComponent,
+                resolve: {
+                    journal: JournalResolver
+                }
+            },
+            {
+                path: '',
+                component: JournalHomeComponent
+            }
+        ]
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-  providers: [
-    JournalResolver
-  ]
+    imports: [RouterModule.forChild(routes)],
+
+    exports: [RouterModule],
+
+    providers: [
+        JournalResolver
+    ]
 })
 export class JournalRoutingModule
 { }

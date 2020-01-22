@@ -24,13 +24,16 @@ export class SourceService {
 
     constructor(private env: EnvService, private http: HttpClient, private oauthStorage: OAuthStorage) {
         this.token = this.oauthStorage.getItem('access_token');
+        
+        //TODO: Removes this print. 
+        console.log(this.token);
     }
 
     getMySources(): Observable<Response<any>>{
         this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
 
         const req = this.env.sceibaApi + this.prefix + '/me/sources/all';
-        return this.http.get<Response<any>>(req);
+        return this.http.get<Response<any>>(req, this.httpOptions);
     }
 
     newSource(source: any): void {
