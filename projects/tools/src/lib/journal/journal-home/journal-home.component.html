@@ -1,10 +1,5 @@
 
-<br />
-<a mat-stroked-button color="primary" [routerLink]="['/journal/new']">Nueva Fuente</a>
-<br />
-<br />
-
-<toco-journal-list 
+<toco-journal-list
     [dataSource]="dataSource"
     [columnsObjectProperty]="['name', 'source_status', 'version_to_review']"
     [columnsHeaderText]="['Nombre', 'Estatus', 'Cambios a Revisar']">

@@ -52,7 +52,7 @@ export class JournalEditComponent {
   informationPanel: PanelContent[] = [];
   socialNetworks: PanelContent[] = [];
 
-  searchJournalAction: SearchJournalByIdentifiersAction;
+  public searchJournalAction: SearchJournalByIdentifiersAction;
 
   public vocabularies: Vocabulary[] = [];
 
@@ -107,7 +107,7 @@ export class JournalEditComponent {
   initIdentifiersPanel(): void {
     this.identifiersPanel = [{
       title: 'Identificadores de la Revista',
-      description: 'La Revista debe tener uno de los 3 ISSN y un RNPS',
+      description: 'Introduzca alguno de los siguientes identificadores de la revista que desea incluir',
       iconName: '',
       content: [
         {
