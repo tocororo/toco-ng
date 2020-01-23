@@ -28,7 +28,6 @@ class SearchJournalByIdentifiersAction implements FormContainerAction {
     this.service.getJournalsPage(10, 0, httpParams)
       .subscribe(response => {
         if (response.data && response.data.sources.count === 1) {
-          console.log(response.data.sources.data[0].data);
           this.journalFound(response.data.sources.data[0]);
         } else {
           this.journalFound(null);
@@ -80,7 +79,7 @@ export class JournalEditComponent {
         this.vocabularies = response.data.vocabularies;
 
         this.initIdentifiersPanel();
-
+        
         this.searchJournalAction = new SearchJournalByIdentifiersAction(
           this.catalogService,
           (journalResponse) => {
@@ -147,6 +146,7 @@ export class JournalEditComponent {
   }
 
   initInformationPanel(): void {
+    console.log(this.journal)
     this.informationPanel = [{
       title: 'Informacion de la Revista',
       description: '',
@@ -181,7 +181,7 @@ export class JournalEditComponent {
           label: 'URL',
           type: FormFieldType.url,
           required: true,
-          startHint: 'Escriba un URL válido.',
+          startHint: new HintValue(HintPosition.start, 'Escriba una URL válida.'),
           width: '50%',
           value: this.journal ? this.journal.data.url : ''
         },

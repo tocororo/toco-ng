@@ -12,16 +12,19 @@ import { JournalViewComponent } from './journal-view/journal-view.component';
 import { JournalEditComponent } from './journal-edit/journal-edit.component';
 import { JournalListComponent } from './journal-list/journal-list.component';
 import { JournalHomeComponent } from './journal-home/journal-home.component';
-
+import { DialogContentComponent } from '@toco/tools/core';
 @NgModule({
     declarations: [
         JournalComponent,
         JournalViewComponent,
         JournalEditComponent,
         JournalListComponent,
-        JournalHomeComponent
+        JournalHomeComponent, 
+        DialogContentComponent
     ],
-
+    entryComponents: [
+        DialogContentComponent
+    ],
     imports: [
         SharedModule,
         ReactiveFormsModule,
