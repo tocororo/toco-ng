@@ -15,7 +15,11 @@ import { FormFieldControl_Experimental } from '../form-field.control.experimenta
 @Component({
     selector: 'toco-vocabulary',
     templateUrl: './vocabulary.component.html',
-    styleUrls: ['./vocabulary.component.scss']
+    styleUrls: ['./vocabulary.component.scss'],
+    host: {
+        '[style.minWidth]': 'content.minWidth',
+        '[style.width]': 'content.width'
+    }
 })
 export class VocabularyComponent extends FormFieldControl_Experimental implements OnInit {
 

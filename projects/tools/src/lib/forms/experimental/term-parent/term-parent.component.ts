@@ -11,7 +11,11 @@ import { FormFieldControl_Experimental } from '../form-field.control.experimenta
 @Component({
     selector: 'toco-term-parent',
     templateUrl: './term-parent.component.html',
-    styleUrls: ['./term-parent.component.scss']
+    styleUrls: ['./term-parent.component.scss'],
+    host: {
+        '[style.minWidth]': 'content.minWidth',
+        '[style.width]': 'content.width'
+    }
 })
 export class TermParentComponent extends FormFieldControl_Experimental implements OnInit {
 
