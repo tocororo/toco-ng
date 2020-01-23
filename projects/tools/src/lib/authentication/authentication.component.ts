@@ -23,8 +23,8 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     private timerAuthenticateSuscription: Subscription = null;
     private timerAuthenticateObserver: PartialObserver<number> = {
         next: (_) => {
-
-            this.oauthService.restartSessionChecksIfStillLoggedIn();
+            console.log('next');
+            // this.oauthService.setupAutomaticSilentRefresh();
             if (this.oauthStorage.getItem('access_token')) {
                 this.authenticationService.logguedChange(true);
             }
@@ -50,9 +50,8 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         if(this.isButtonLogin == undefined) this.isButtonLogin = false;
-
         this.configure();
-        console.log('init');
+        
     }
 
     ngOnDestroy(): void {
@@ -73,26 +72,28 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     private configure() {
         const authConfig: AuthConfig = {
 
-          // Url of the Identity Provider
-          //issuer: 'https://sceiba-lab.upr.edu.cu',
+        // Url of the Identity Provider
+        //issuer: 'https://sceiba-lab.upr.edu.cu',
 
-          loginUrl: this.env.sceibaHost + 'oauth/authorize',
+        loginUrl: this.env.sceibaHost + 'oauth/authorize',
 
-          tokenEndpoint: this.env.sceibaHost + 'oauth/token',
+        tokenEndpoint: this.env.sceibaHost + 'oauth/token',
 
-          // URL of the SPA to redirect the user to after login
-          redirectUri: this.env.oauthRedirectUri,
+        // URL of the SPA to redirect the user to after login
+        redirectUri: this.env.oauthRedirectUri,
 
-          // The SPA's id. The SPA is registered with this id at the auth-server
-          clientId: this.env.oauthClientId,
+        // The SPA's id. The SPA is registered with this id at the auth-server
+        clientId: this.env.oauthClientId,
 
-          oidc: false,
-
-          // timeoutFactor: 0.80,
-
-          // set the scope for the permissions the client should request
-          // The first three are defined by OIDC. The 4th is a usecase-specific one
-          scope: this.env.oauthScope, //'openid profile email voucher',
+        oidc: false,
+        silentRefreshRedirectUri: this.env.sceibaHost + 'oauth/authorize',
+        
+        timeoutFactor: 0.05,
+        
+        sessionChecksEnabled: true,
+        // set the scope for the permissions the client should request
+        // The first three are defined by OIDC. The 4th is a usecase-specific one
+        scope: this.env.oauthScope, //'openid profile email voucher',
       };
         this.oauthService.configure(authConfig);
 
@@ -135,6 +136,9 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
                 case 'invalid_nonce_in_state':
                     console.log('invalid_nonce_in_state', e);
                     break;
+                    case 'session_terminated':
+                        console.log('session_terminated', e);
+                        break;
                 case 'logout':
                     console.log('logout');
                     break;

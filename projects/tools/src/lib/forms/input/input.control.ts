@@ -188,8 +188,6 @@ export abstract class InputControl extends FormFieldControl
      */
     protected init(label: string | undefined, isAbbreviation: boolean, alwaysHint: boolean): void
     {
-        console.log(1234567);
-
         if (this.internalControl == undefined)
         {
             if (this.internalComponent == undefined) throw new Error('There is not reference to the internal control.');
