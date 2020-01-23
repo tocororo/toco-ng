@@ -24,7 +24,7 @@ class InstitutionAction implements FormContainerAction {
         this.term.description = data.description;
         this.term.data = new TermInstitutionData();
         (this.term.data as TermInstitutionData).load_from_data({
-            'identifiers': data.identifiers,
+            'grid': data.grid,
             'email': data.email,
             'address': data.address,
             'website': data.website
@@ -113,11 +113,11 @@ export class TermInstitutionsComponent implements OnInit {
                             width: '45%'
                         },
                         {
-                            name: 'identifiers',
-                            label: 'Identificadores',
-                            type: FormFieldType.textarea,
+                            name: 'grid',
+                            label: 'Identificador GRID',
+                            type: FormFieldType.text,
                             required: false,
-                            value: (this.data.term.data.identifiers) ? this.data.term.data.identifiers : null,
+                            value: (this.data.term.data.grid) ? this.data.term.data.grid : null,
                             width: '30%'
                         },
                         {

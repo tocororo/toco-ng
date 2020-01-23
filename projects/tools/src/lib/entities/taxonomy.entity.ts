@@ -15,7 +15,7 @@ export class Term extends Entity {
 
 
 export class TermInstitutionData extends EntityBase {
-    identifiers = '';
+    grid = '';
     email = '';
     website = '';
     address = '';
