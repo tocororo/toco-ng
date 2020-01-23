@@ -12,7 +12,11 @@ import { Common } from '@toco/tools/core';
 @Component({
     selector: 'input-email',
     templateUrl: '../text/text-input.component.html',
-    styleUrls: ['../text/text-input.component.scss']
+    styleUrls: ['../text/text-input.component.scss'],
+    host: {
+        '[style.minWidth]': 'content.minWidth',
+        '[style.width]': 'content.width'
+    }
 })
 export class InputEmailComponent extends InputControl implements OnInit
 {

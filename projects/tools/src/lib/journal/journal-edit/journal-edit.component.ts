@@ -113,17 +113,15 @@ export class JournalEditComponent {
         {
           name: 'issn_p',
           label: 'ISSN Impreso',
-          type: FormFieldType.text,
+          type: FormFieldType.issn,
           required: false,
           startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Impreso válido.'),
-          width: '25%',
-
-
+          width: '25%'
         },
         {
           name: 'issn_e',
           label: 'ISSN Electrónico',
-          type: FormFieldType.text,
+          type: FormFieldType.issn,
           required: false,
           startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Electrónico válido.'),
           width: '25%'
@@ -131,7 +129,7 @@ export class JournalEditComponent {
         {
           name: 'issn_l',
           label: 'ISSN de Enlace',
-          type: FormFieldType.text,
+          type: FormFieldType.issn,
           required: false,
           startHint: new HintValue(HintPosition.start, 'Escriba un ISSN de Enlace válido.'),
           width: '25%'
@@ -139,7 +137,7 @@ export class JournalEditComponent {
         {
           name: 'rnps',
           label: 'RNPS',
-          type: FormFieldType.text,
+          type: FormFieldType.rnps,
           required: false,
           startHint: new HintValue(HintPosition.start, 'Escriba un RNPS válido.'),
           width: '25%'

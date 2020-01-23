@@ -1,5 +1,5 @@
 
-<mat-form-field id="issn-mat-form-field" [style.width]="'100%'" [appearance]="content.appearance">
+<mat-form-field id="issn-mat-form-field" [appearance]="content.appearance">
     <mat-label>{{ content.label }}</mat-label>
 
     <input-issn-internal #internalComponent [required]="content.required" [style.textAlign]="content.textAlign" [attr.aria-label]="content.ariaLabel" (input)="handleInput()"></input-issn-internal>
