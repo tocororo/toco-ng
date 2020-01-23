@@ -1,18 +1,15 @@
 
 import { Component } from '@angular/core';
-
-import { Source, Vocabulary, Journal } from '@toco/tools/entities';
-import { PanelContent, FormFieldType, HintValue, HintPosition, FormContainerAction } from '@toco/tools/forms';
-
-import { FilterHttpMap } from '@toco/tools/filters';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { CatalogService, TaxonomyService, VocabulariesInmutableNames } from '@toco/tools/backend';
+import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MessageHandler, StatusCode, HandlerComponent } from '@toco/tools/core';
-import { SourceService } from '@toco/tools/backend/source.service';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
+import { CatalogService, TaxonomyService, VocabulariesInmutableNames, SourceService } from '@toco/tools/backend';
+import { MessageHandler, StatusCode, HandlerComponent } from '@toco/tools/core';
+import { Vocabulary, Journal } from '@toco/tools/entities';
+import { FilterHttpMap } from '@toco/tools/filters';
+import { PanelContent, FormFieldType, HintValue, HintPosition, FormContainerAction } from '@toco/tools/forms';
 
 class SearchJournalByIdentifiersAction implements FormContainerAction {
   constructor(private service: CatalogService, private journalFound: Function) { }
@@ -40,8 +37,6 @@ class SearchJournalByIdentifiersAction implements FormContainerAction {
   }
 }
 
-
-
 @Component({
   selector: 'toco-journal-edit',
   templateUrl: './journal-edit.component.html',
@@ -57,7 +52,7 @@ export class JournalEditComponent {
   informationPanel: PanelContent[] = [];
   socialNetworks: PanelContent[] = [];
 
-  searchJournalAction: SearchJournalByIdentifiersAction;
+  public searchJournalAction: SearchJournalByIdentifiersAction;
 
   public vocabularies: Vocabulary[] = [];
 
@@ -112,23 +107,21 @@ export class JournalEditComponent {
   initIdentifiersPanel(): void {
     this.identifiersPanel = [{
       title: 'Identificadores de la Revista',
-      description: 'La Revista debe tener uno de los 3 ISSN y un RNPS',
+      description: 'Introduzca alguno de los siguientes identificadores de la revista que desea incluir',
       iconName: '',
       content: [
         {
           name: 'issn_p',
           label: 'ISSN Impreso',
-          type: FormFieldType.text,
+          type: FormFieldType.issn,
           required: false,
           startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Impreso válido.'),
-          width: '25%',
-
-
+          width: '25%'
         },
         {
           name: 'issn_e',
           label: 'ISSN Electrónico',
-          type: FormFieldType.text,
+          type: FormFieldType.issn,
           required: false,
           startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Electrónico válido.'),
           width: '25%'
@@ -136,7 +129,7 @@ export class JournalEditComponent {
         {
           name: 'issn_l',
           label: 'ISSN de Enlace',
-          type: FormFieldType.text,
+          type: FormFieldType.issn,
           required: false,
           startHint: new HintValue(HintPosition.start, 'Escriba un ISSN de Enlace válido.'),
           width: '25%'
@@ -144,7 +137,7 @@ export class JournalEditComponent {
         {
           name: 'rnps',
           label: 'RNPS',
-          type: FormFieldType.text,
+          type: FormFieldType.rnps,
           required: false,
           startHint: new HintValue(HintPosition.start, 'Escriba un RNPS válido.'),
           width: '25%'

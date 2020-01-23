@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
+import { Subscription } from 'rxjs';
+
+import { SourceService } from '@toco/tools/backend';
+import { Common } from '@toco/tools/core';
+import { Response } from '@toco/tools/entities';
 
 export interface PeriodicElement
 {
@@ -21,19 +27,57 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 @Component({
-  selector: 'toco-journal-home',
-  templateUrl: './journal-home.component.html',
-  styleUrls: ['./journal-home.component.scss']
+    selector: 'toco-journal-home',
+    templateUrl: './journal-home.component.html',
+    styleUrls: ['./journal-home.component.scss']
 })
-export class JournalHomeComponent implements OnInit {
+export class JournalHomeComponent implements OnInit, OnDestroy
+{
+	private _journalsObserver = {
+		next: (value: Response<any>) => {
 
-  constructor() { }
-  public dataSource: MatTableDataSource<any>;
+            console.log(value);
 
-  public ngOnInit(): void
-  {
-      /* The `dataSource` */
-      if (this.dataSource == undefined) this.dataSource = new MatTableDataSource(/*[ ]*/ELEMENT_DATA);
-  }
+            /* Initializes the `dataSource`. */
+            this.dataSource = new MatTableDataSource(/*[ ]*/value.data.sources);
+		},
+        error: (err: any) => { Common.logError('initializing journals', JournalHomeComponent.name, err); },
+        complete: () => { Common.logComplete('initializing journals', JournalHomeComponent.name); }
+	};
+	
+    private _journalsSubscription: Subscription = null;
 
+    /**
+     * The journals list. 
+     */
+    public dataSource: MatTableDataSource<any>;
+
+    public constructor(private _souceService: SourceService)
+    {
+        this.dataSource = new MatTableDataSource([ ]);
+    }
+
+    public ngOnInit(): void
+    {
+        /* Gets the journals list. */
+        this._journalsSubscription = this._souceService.getMySources()
+            .subscribe(this._journalsObserver);
+    }
+
+    public ngOnDestroy(): void
+    {
+		/* Disposes the resources held by the subscription. */
+		if (this._journalsSubscription)
+		{
+			this._journalsSubscription.unsubscribe();
+		}
+    }
+
+    /**
+     * Returns true if the data source is empty; otherwise, false. 
+     */
+    public get isEmpty(): boolean
+    {
+        return (this.dataSource.data.length == 0);
+    }
 }

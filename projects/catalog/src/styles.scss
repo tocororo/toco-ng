@@ -76,7 +76,8 @@ $mat-my-red: (
 /* - colors - */
 $toco-primary: mat-palette($mat-my-blue, 800, 300, 900);
 $toco-accent: mat-palette($mat-my-red);
-$toco-warn: mat-palette($mat-grey, 200, 100, 900);
+//$toco-warn: mat-palette($mat-grey, 200, 100, 900);
+$toco-warn: mat-palette($mat-red, 600, 300, 900);
 
 $toco-theme: mat-light-theme($toco-primary, $toco-accent, $toco-warn);
 

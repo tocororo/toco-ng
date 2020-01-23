@@ -38,7 +38,7 @@ export class AppComponent implements OnInit
 
     public ngOnInit(): void
     {
-        /* The `dataSource` */
+        /* Initializes the `dataSource`. */
         if (this.dataSource == undefined) this.dataSource = new MatTableDataSource(/*[ ]*/ELEMENT_DATA);
     }
 

@@ -251,11 +251,19 @@ export enum FormFieldType
 export interface FormFieldContent
 {
     /**
+     * Returns the control's minimum width. 
+     * The minimum width of the content area, padding area or border area (depending on `box-sizing`) 
+     * of certain boxes. Allows authors to constrain content width to a centain range. 
+     * By default, its value is `'15em'`. 
+     */
+    minWidth?: string;
+
+    /**
      * Returns the control's width. 
      * The width of the content area, padding area or border area (depending on `box-sizing`) of certain boxes. 
-     * By default, its value is `'310px'`. 
+     * By default, its value is `minWidth`. 
      */
-    width?: string;  /* '285px' */
+    width?: string;
 
 
 
@@ -320,7 +328,8 @@ export interface FormFieldContent
 export function defaultFormFieldContent(): FormFieldContent
 {
     return {
-        'width': '310px',
+        'minWidth': '15em',
+        'width': '15em',
 
         'label': Common.emptyString,
 
@@ -385,7 +394,8 @@ export abstract class FormFieldControl
         }
 
         /************************** `mat-form-field` properties. **************************/
-        if (this.content.width == undefined) this.content.width = '15em'/*'310px'*/;
+        if (this.content.minWidth == undefined) this.content.minWidth = '15em';
+        if (this.content.width == undefined) this.content.width = this.content.minWidth;
 
         /**************************** `mat-label` properties. *****************************/
         if (this.content.label == undefined) this.content.label = label;

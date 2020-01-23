@@ -1,10 +1,7 @@
 
-<a mat-stroked-button color="primary" [routerLink]="['/journal/new']" >Nueva Fuente</a>
-
-
 <toco-journal-list
-[dataSource]="dataSource"
-[columnsObjectProperty]="['titulo', 'issn']"
-[columnsHeaderText]="['Título', 'ISSN']">
+    [dataSource]="dataSource"
+    [columnsObjectProperty]="['name', 'source_status', 'version_to_review']"
+    [columnsHeaderText]="['Nombre', 'Estatus', 'Cambios a Revisar']">
 </toco-journal-list>
-
+<h3 *ngIf="isEmpty">¡No hay fuente de datos disponibles!</h3>

@@ -1,5 +1,5 @@
 
-<mat-form-field id="text-mat-form-field" [style.width]="'100%'" [appearance]="content.appearance">
+<mat-form-field id="text-mat-form-field" [appearance]="content.appearance">
     <mat-label>{{ content.label }}</mat-label>
 
     <input matInput id="input-text-element" [formControl]="internalControl" [required]="content.required" [style.textAlign]="content.textAlign" [attr.aria-label]="content.ariaLabel" (input)="handleInput()" />

@@ -13,10 +13,16 @@ import { IssnType_Abbreviation, IssnValue } from './issn-value';
 @Component({
 	selector: 'input-issn',
 	templateUrl: './issn-input.component.html',
-	styleUrls: ['./issn-input.component.scss']
+	styleUrls: ['./issn-input.component.scss'],
+	host: {
+        '[style.minWidth]': 'content.minWidth',
+        '[style.width]': 'content.width'
+	}
 })
 export class InputIssnComponent extends InputControl implements OnInit
 {
+	/* Note: this control works well with a 'width' = '310px' or '285px'. */
+
 	public constructor()
 	{
 		super(null);

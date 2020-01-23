@@ -1,9 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
 
-
-
-
 @Component({
     selector: 'toco-journal',
     templateUrl: './journal.component.html',

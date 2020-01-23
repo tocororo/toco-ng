@@ -5,7 +5,10 @@ fxLayoutGap="1em">
 
     <ng-container *ngFor="let field of fields" [ngSwitch]="field.type">
 
-        <mat-form-field *ngSwitchCase="formFieldType.textarea" [style.width]="field.width">
+        <mat-checkbox *ngSwitchCase="formFieldType.checkbox" [style.width]="field.width" [style.minWidth]="field.minWidth"
+            [(ngModel)]="field.value" name="{{ field.name }}" required="{{ field.required }}">{{ field.label }}</mat-checkbox>
+
+        <mat-form-field *ngSwitchCase="formFieldType.textarea" [style.width]="field.width" [style.minWidth]="field.minWidth">
             <textarea matInput [(ngModel)]="field.value" name="{{ field.name }}" placeholder="{{ field.label }}" required="{{ field.required }}"></textarea>
         </mat-form-field>
 
@@ -15,21 +18,19 @@ fxLayoutGap="1em">
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
-        <mat-checkbox *ngSwitchCase="formFieldType.checkbox" [(ngModel)]="field.value" name="{{ field.name }}" required="{{ field.required }}" [style.width]="field.width"> {{ field.label }} </mat-checkbox>
-
-        <input-url *ngSwitchCase="formFieldType.url" [content]="field" [style.width]="field.width"></input-url>
+        <input-url *ngSwitchCase="formFieldType.url" [content]="field"></input-url>
         
-        <input-email *ngSwitchCase="formFieldType.email" [content]="field" [style.width]="field.width"></input-email>
+        <input-email *ngSwitchCase="formFieldType.email" [content]="field"></input-email>
 
-        <input-issn *ngSwitchCase="formFieldType.issn" [content]="field" [style.width]="field.width" [style.minWidth]="'15em'"></input-issn>
+        <input-issn *ngSwitchCase="formFieldType.issn" [content]="field"></input-issn>
 
-        <input-rnps *ngSwitchCase="formFieldType.rnps" [content]="field" [style.width]="field.width"></input-rnps>
+        <input-rnps *ngSwitchCase="formFieldType.rnps" [content]="field"></input-rnps>
 
-        <toco-vocabulary *ngSwitchCase="formFieldType.vocabulary" [content]="field" [style.width]="field.width"></toco-vocabulary>
+        <toco-vocabulary *ngSwitchCase="formFieldType.vocabulary" [content]="field"></toco-vocabulary>
 
-        <toco-term-parent *ngSwitchCase="formFieldType.term_parent" [content]="field" [style.width]="field.width" [style.minWidth]="'15em'"></toco-term-parent>
+        <toco-term-parent *ngSwitchCase="formFieldType.term_parent" [content]="field"></toco-term-parent>
 
-        <input-text *ngSwitchDefault [content]="field" [style.width]="field.width"></input-text>
+        <input-text *ngSwitchDefault [content]="field"></input-text>
 
     </ng-container>
 
