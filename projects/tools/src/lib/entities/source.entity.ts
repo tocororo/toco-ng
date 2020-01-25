@@ -11,7 +11,8 @@ export class TermSource extends EntityBase {
     term_id = -1;
     source_id = -1;
     data = '';
-    
+    term ? : Term  = null;
+
 }
 
 export class SourceVersion extends Entity {
