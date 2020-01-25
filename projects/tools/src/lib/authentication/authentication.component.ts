@@ -86,9 +86,9 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
         clientId: this.env.oauthClientId,
 
         oidc: false,
-        silentRefreshRedirectUri: this.env.sceibaHost + 'oauth/authorize',
+        // silentRefreshRedirectUri: this.env.sceibaHost + 'oauth/token',
         
-        timeoutFactor: 0.05,
+        timeoutFactor: 0.75,
         
         sessionChecksEnabled: true,
         // set the scope for the permissions the client should request

@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { FormControl, Validators, ValidationErrors, ControlContainer } from '@angular/forms';
 
 import { InputControl } from '../input.control';
 import { UrlValue } from './url-value';
@@ -20,7 +20,7 @@ import { Common } from '@toco/tools/core';
 })
 export class InputUrlComponent extends InputControl implements OnInit
 {
-    public constructor()
+    public constructor(private controlContainer: ControlContainer)
     {
         super(
             /* Constructs a new `FormControl` instance. */

@@ -1,5 +1,9 @@
 
-<mat-accordion class="toco-form-container" *ngIf="(panels) && (panels.length > 1)">
+<ng-container >
+    <!-- *ngFor="let item of items"
+        <toco-form-fields fields]="panel.content"></toco-form-fields> -->
+
+<mat-accordion class="toco-form-container" *ngIf="(panels) && (useAccordion)">
 
     <mat-expansion-panel *ngFor="let panel of panels; let newStep = index; let count = count"
         [expanded]="step == newStep" (opened)="setStep(newStep)" hideToggle>
@@ -19,30 +23,49 @@
         <mat-action-row>
             <button mat-button *ngIf="i > 0" color="warn" (click)="prevStep()">Anterior</button>
             <button mat-button *ngIf="i != l-1" color="primary" (click)="nextStep()">Siguente</button>
-            <button mat-button *ngIf="i == l-1" color="warn" (click)="doAction()">{{actionLabel}}</button>
+            
+            <button *ngIf="i == l-1 && actionButtonIsStepperNext" mat-button matStepperNext color="primary" (click)="doAction()">{{actionLabel}}</button>
+
+            <button *ngIf="i == l-1 && !actionButtonIsStepperNext" mat-button color="primary" (click)="doAction()">{{actionLabel}}</button>
+
+
         </mat-action-row>
 
     </mat-expansion-panel>
 
 </mat-accordion>
 
-<mat-card class="toco-form-container" *ngIf="(panels) && (panels.length == 1)">
+<div *ngIf="(panels) && (!useAccordion)">
+    <mat-card class="toco-form-container">
+        <mat-card-content>
+                <div *ngFor="let panel of panels">
+                        <mat-card-header>
+                            <mat-card-title>
+                                {{ panel.title }}
+                            </mat-card-title>
+                            <mat-card-subtitle>
+                                {{ panel.description }}
+                                <mat-icon>{{ panel.iconName }}</mat-icon>
+                            </mat-card-subtitle>
+                        </mat-card-header>
+                    
+                        <mat-card-content>
+                            <toco-form-fields [fields]="panel.content" ></toco-form-fields>
+                        </mat-card-content>
+                        <mat-divider></mat-divider>
+                </div>
+                
+            <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
+                
 
-    <mat-card-header>
-        <mat-card-title>
-            {{ panels[0].title }}
-        </mat-card-title>
-        <mat-card-subtitle>
-            {{ panels[0].description }}
-            <mat-icon>{{ panels[0].iconName }}</mat-icon>
-        </mat-card-subtitle>
-    </mat-card-header>
+                <button *ngIf="actionButtonIsStepperNext" mat-button matStepperNext color="primary" (click)="doAction()">{{actionLabel}}</button>
 
-    <mat-card-content>
-        <toco-form-fields [fields]="panels[0].content"></toco-form-fields>
+                <button *ngIf="!actionButtonIsStepperNext" mat-button color="primary" (click)="doAction()">{{actionLabel}}</button>
 
-        <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
-            <button mat-button color="primary" (click)="doAction()">{{actionLabel}}</button>
-        </mat-card-actions>
-    </mat-card-content>
-</mat-card>
+            </mat-card-actions>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+
+</ng-container>

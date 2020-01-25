@@ -1,9 +1,9 @@
 
 <div class="card-filter" *ngIf="content.extraContent">
 
-  <mat-form-field style="width: 100%;">
+  <mat-form-field style="width: 100%;" [formGroup]="controlContainer.control">
 
-    <input matInput [id]="inputId" type="text" [formControl]="formControl" [placeholder]="content.label" [matAutocomplete]="auto" aria-label="Number" />
+    <input matInput [id]="inputId" type="text" [formControl]="formControl" [placeholder]="content.label" [matAutocomplete]="auto" aria-label="Number" formControlName="{{content.name}}"/>
 
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name" (click)="addParent(option)" [title]="option.name">

@@ -37,5 +37,6 @@ export class Vocabulary extends Entity {
 /** File node data with possible child nodes. */
 export interface TermNode {
     term: Term;
+    parent: TermNode;
     children?: TermNode[];
 }

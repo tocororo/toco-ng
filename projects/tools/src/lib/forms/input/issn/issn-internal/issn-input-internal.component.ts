@@ -47,10 +47,13 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 	 */
 	private static readonly _controlNameWithDash: string = 'input-issn';
 
+	
+
 	/**
 	 * Tracks the value and validity state of the internal control that contains the code.
 	 */
-	public readonly internalControl: FormGroup;
+	public readonly internalControl: FormControl;
+	public readonly  internalFormGroup: FormGroup;
 	private readonly _firstGroup: FormControl;
 	private _firstGroupOldValue: string;   /* It is used by `handleInput_firstGroup` method. */
 	private readonly _secondGroup: FormControl;
@@ -146,7 +149,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 		this.input = new EventEmitter<IssnValue>();
 
 		/* Constructs a new `FormGroup` instance. */
-		this.internalControl = new FormGroup({
+		this.internalFormGroup = new FormGroup({
 			'firstGroup': this._firstGroup = new FormControl((this._firstGroupOldValue = Common.emptyString), [
 				ExtraValidators.equalLength(IssnValue.groupLength),
 				Validators.pattern('^[0-9]*$')]),
@@ -159,6 +162,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 			ExtraValidators.issnConfirmCheckDigit(this._firstGroup, this._secondGroup, IssnValue.groupLength)
 		]
 		);
+		this.internalControl = new FormControl();
 
 		/* Monitors focus on the element and applies appropriate CSS classes. */
 		_focusMonitor.monitor(_elementRef, true).subscribe(origin => {
@@ -206,7 +210,9 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 	{
 		newIssn = newIssn || IssnValue.defaultIssnValue;
 
-		this.internalControl.setValue({ 'firstGroup': newIssn.firstGroup, 'secondGroup': newIssn.secondGroup });
+		this.internalFormGroup.setValue({ 'firstGroup': newIssn.firstGroup, 'secondGroup': newIssn.secondGroup });
+
+		this.internalControl.setValue(newIssn.firstGroup + '-' + newIssn.secondGroup );
 
 		this.stateChanges.next();
 	}
@@ -283,7 +289,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 	public set disabled(value: boolean)
 	{
 		/* Sets the disabled state on the individual inputs that make up the control. */
-		(this._disabled = coerceBooleanProperty(value)) ? this.internalControl.disable() : this.internalControl.enable();
+		(this._disabled = coerceBooleanProperty(value)) ? this.internalFormGroup.disable() : this.internalFormGroup.enable();
 
 		this.stateChanges.next();
 	}
@@ -300,7 +306,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 		 * control to touched.
 		 * Thus, it reveals an error message only if the control is invalid and
 		 * the control is either dirty or touched. */
-		return ((this.internalControl.invalid) && (this.internalControl.dirty || this.internalControl.touched));
+		return ((this.internalFormGroup.invalid) && (this.internalFormGroup.dirty || this.internalFormGroup.touched));
 	}
 
 	/**
@@ -308,9 +314,9 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 	 */
 	public getErrorMessage(): string
 	{
-		console.log(this._firstGroup.errors);
-		console.log(this._secondGroup.errors);
-		console.log(this.internalControl.errors);
+		//console.log(this._firstGroup.errors);
+		//console.log(this._secondGroup.errors);
+		//console.log(this.internalFormGroup.errors);
 
 		let result: string = Common.emptyString;
 		let result_alreadyHaveErrorInfo: boolean = false;
@@ -380,7 +386,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 		/* Only shows the `issnConfirmCheckDigit` error if there isn't any error in the first and second group. */
 		if (!result_alreadyHaveErrorInfo)
 		{
-			validationErrors = this.internalControl.errors;
+			validationErrors = this.internalFormGroup.errors;
 
 			if (validationErrors)
 			{
@@ -447,9 +453,9 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 		this.value = issn;
 	}
 
-	public registerOnChange(fn: any): void
+	public registerOnChange(fn: (_: any) => void): void
 	{
-		console.log('call registerOnChange.');
+		//console.log('call registerOnChange.');
 
 		/* Saves a callback function that is called when the control's value changes in the UI. */
 		this._onChange = fn;
