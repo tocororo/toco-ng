@@ -4,21 +4,20 @@ import { SharedModule } from '@toco/tools/shared';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { FormsModule } from '@toco/tools/forms';
+import { DialogContentComponent } from '@toco/tools/core';
 import { SourceService } from '@toco/tools/backend';
 
 import { JournalRoutingModule } from './journal-routing.module';
 import { JournalComponent } from './journal/journal.component';
 import { JournalViewComponent } from './journal-view/journal-view.component';
 import { JournalEditComponent } from './journal-edit/journal-edit.component';
-import { JournalListComponent } from './journal-list/journal-list.component';
 import { JournalHomeComponent } from './journal-home/journal-home.component';
-import { DialogContentComponent } from '@toco/tools/core';
+
 @NgModule({
     declarations: [
         JournalComponent,
         JournalViewComponent,
         JournalEditComponent,
-        JournalListComponent,
         JournalHomeComponent, 
         DialogContentComponent
     ],
@@ -33,9 +32,10 @@ import { DialogContentComponent } from '@toco/tools/core';
     ],
 
     exports: [
+        JournalComponent,
         JournalViewComponent,
         JournalEditComponent,
-        JournalListComponent
+        JournalHomeComponent
     ],
 
     providers: [

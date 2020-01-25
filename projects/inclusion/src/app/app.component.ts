@@ -2,6 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 
+import { TableContent } from '@toco/tools/forms';
+
 export interface PeriodicElement
 {
     titulo: string;
@@ -18,7 +20,17 @@ const ELEMENT_DATA: PeriodicElement[] = [
     { titulo: 'Nitrogen', issn: 7 },
     { titulo: 'Oxygen', issn: 8 },
     { titulo: 'Fluorine', issn: 9 },
-    { titulo: 'Neon', issn: 10}
+    { titulo: 'Neon', issn: 10},
+    { titulo: 'Hydrogen', issn: 11 },
+    { titulo: 'Helium', issn: 12 },
+    { titulo: 'Lithium', issn: 13 },
+    { titulo: 'Beryllium', issn: 14 },
+    { titulo: 'Boron', issn: 15 },
+    { titulo: 'Carbon', issn: 16 },
+    { titulo: 'Nitrogen', issn: 17 },
+    { titulo: 'Oxygen', issn: 18 },
+    { titulo: 'Fluorine', issn: 19 },
+    { titulo: 'Neon', issn: 20}
 ];
 
 @Component({
@@ -34,19 +46,26 @@ export class AppComponent implements OnInit
     // superior, en principio esta app puede usarse para otros osde
     organization = 'Ministerio de Educación Superior';
 
-    public dataSource: MatTableDataSource<any>;
+    /**
+     * The journals list. 
+     */
+    public content: TableContent;
+
+    public constructor()
+    { }
 
     public ngOnInit(): void
     {
-        /* Initializes the `dataSource`. */
-        if (this.dataSource == undefined) this.dataSource = new MatTableDataSource(/*[ ]*/ELEMENT_DATA);
-    }
-
-    /**
-     * Returns true if the data source is empty; otherwise, false. 
-     */
-    public get isEmpty(): boolean
-    {
-        return (this.dataSource.data.length == 0);
+        this.content = {
+            /* Initializes the `dataSource`. */
+            //'dataSource': new MatTableDataSource([ ]),
+            'dataSource': new MatTableDataSource(ELEMENT_DATA),
+            'columnsObjectProperty': ['titulo', 'issn'],
+            'columnsHeaderText': ['Título', 'ISSN'],
+            'propertyNameToNavigate': "---"/*"uuid"*/,
+            'pageSize': 10,
+            'hidePageSize': true,
+            'showFirstLastButtons': true
+        };
     }
 }

@@ -134,8 +134,8 @@ export class TaxonomyService {
       .pipe().subscribe(this.termChangeObserver);
   }
 
-  getTermsTreeByVocab(vocab: Vocabulary): Observable<Response<any>> {
-    const req = this.env.sceibaApi + this.prefix + '/term/tree/' + vocab.id;
+  getTermsTreeByVocab(vocabId): Observable<Response<any>> {
+    const req = this.env.sceibaApi + this.prefix + '/term/tree/' + vocabId;
     return this.http.get<Response<any>>(req);
   }
 
