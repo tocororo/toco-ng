@@ -19,14 +19,16 @@ class SearchJournalByIdentifiersAction implements FormContainerAction {
   doit(data: any): void {
     const rnps = data.rnps;
     const httpParams = Array<FilterHttpMap>();
-    const issn = (data.issn_p !== '') ? data.issn_p : (data.issn_e !== '') ? data.issn_e : (data.issn_e !== '') ? data.issn_l : '';
+    
+    console.log(data)
+    
 
-    if (issn !== '') {
-      httpParams.push(new FilterHttpMap('issn', issn));
-    }
-    if (rnps !== '') {
-      httpParams.push(new FilterHttpMap('rnps', rnps));
-    }
+    httpParams.push(new FilterHttpMap('issn', data.idenfifier));
+    httpParams.push(new FilterHttpMap('rnps', data.idenfifier));
+    httpParams.push(new FilterHttpMap('url', data.idenfifier));
+    httpParams.push(new FilterHttpMap('title', data.idenfifier));
+
+    
     this.service.getJournalsPage(10, 0, httpParams)
       .subscribe(response => {
         if (response.data && response.data.sources.count === 1) {
@@ -51,12 +53,8 @@ export class JournalEditComponent {
   loading = true;
 
 
-  testPanel: PanelContent[] = [];
-  testFormGroup: FormGroup;
-
-
-  identifiersPanel: PanelContent[] = [];
-  identifiersFormGroup: FormGroup;
+  findPanel: PanelContent[] = [];
+  findFormGroup: FormGroup;
 
   informationPanel: PanelContent[] = [];
   informationFormGroup: FormGroup;
@@ -82,155 +80,61 @@ export class JournalEditComponent {
     private _formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.testFormGroup = this._formBuilder.group({
-      'datepicker': new FormControl('', Validators.required),
-      'checkbox': new FormControl('', Validators.required),
-      'textarea': new FormControl('', Validators.required)
-    });
-    this.testPanel = [
+    this.findFormGroup = this._formBuilder.group({});
+    this.findPanel = [
       {
         title: 'Inclusión de Revista',
-        description: 'Introduzca alguno de los siguientes identificadores de la revista que desea incluir',
+        description: 'Introduzca un identificador de la revista ',
         iconName: '',
-        formGroup: this.testFormGroup,
+        formGroup: this.findFormGroup,
         content: [
           {
-            name: 'textarea',
-            label: 'textarea',
-            type: FormFieldType.textarea,
-            required: false,
-            startHint: new HintValue(HintPosition.start, 'Escriba un texto.'),
-            width: '25%'
-          },
-          {
-            name: 'text',
-            label: 'text',
+            name: 'idenfifier',
+            label: 'Identificador',
             type: FormFieldType.text,
-            required: false,
-            startHint: new HintValue(HintPosition.start, 'Escriba un texto.'),
-            width: '25%'
-          },
-          {
-            name: 'rnps',
-            label: 'rnps',
-            type: FormFieldType.rnps,
-            required: false,
-            startHint: new HintValue(HintPosition.start, 'Escriba un texto.'),
-            width: '25%'
-          },
-          {
-            name: 'url',
-            label: 'url',
-            type: FormFieldType.url,
-            required: false,
-            startHint: new HintValue(HintPosition.start, 'Escriba un texto.'),
-            width: '25%'
-          },
-          {
-            name: 'email',
-            label: 'email',
-            type: FormFieldType.email,
-            required: false,
-            startHint: new HintValue(HintPosition.start, 'Escriba un texto.'),
-            width: '25%'
-          },
-          {
-            name: 'issn',
-            label: 'issn',
-            type: FormFieldType.issn,
-            required: false,
-            startHint: new HintValue(HintPosition.start, 'Escriba un texto.'),
-            width: '25%'
-          },
-          {
-            name: 'datepicker',
-            label: 'datepicker',
-            type: FormFieldType.datepicker,
-            required: false,
-            startHint: new HintValue(HintPosition.start, 'Escriba un texto.'),
-            width: '25%'
-          },
-          {
-            name: 'checkbox',
-            label: 'checkbox',
-            type: FormFieldType.checkbox,
-            required: false,
-            startHint: new HintValue(HintPosition.start, 'Escriba un texto.'),
-            width: '25%'
-          },
+            required: true,
+            startHint: new HintValue(HintPosition.start, '(ISSN, RNPS, URL, Título)'),
+            width: '100%'
+          }
         ]
       }
     ];
 
-    this.initIdentifiersPanel();
+    
+    this.searchJournalAction = new SearchJournalByIdentifiersAction(
+      this.catalogService,
+      (journalResponse) => {
+        this.journal = new Journal();
 
-        console.log(this.identifiersFormGroup)
-        
-        this.searchJournalAction = new SearchJournalByIdentifiersAction(
-          this.catalogService,
-          (journalResponse) => {
-            this.journal = new Journal();
+        let title = 'Revista NO encontrada';
+        let content = 'Complete la información de la revista...';
 
-            let title = 'Revista NO encontrada';
-            let content = 'Complete la información de la revista...';
-
-            if (journalResponse) {
-              this.journal.load_from_data(journalResponse);
-              title = 'Revista encontrada';
-              content = 'Compruebe los datos de la revista...';
-            }
-            this.initExtraPanels();
-
-            const m = new MessageHandler(null, this.dialog);
-            m.showMessage(StatusCode.OK, content, HandlerComponent.dialog, title);
-          });
-  }
-
-  initIdentifiersPanel(): void {
-    this.identifiersFormGroup = this._formBuilder.group({});
-    this.identifiersPanel = [{
-      title: 'Inclusión de Revista',
-      description: 'Introduzca alguno de los siguientes identificadores de la revista que desea incluir',
-      iconName: '',
-      formGroup: this.identifiersFormGroup,
-      content: [
-        {
-          name: 'issn_p',
-          label: 'ISSN Impreso',
-          type: FormFieldType.issn,
-          required: false,
-          startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Impreso válido.'),
-          width: '25%',
-        },
-        {
-          name: 'issn_e',
-          label: 'ISSN Electrónico',
-          type: FormFieldType.issn,
-          required: false,
-          startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Electrónico válido.'),
-          width: '25%'
-        },
-        {
-          name: 'issn_l',
-          label: 'ISSN de Enlace',
-          type: FormFieldType.issn,
-          required: false,
-          startHint: new HintValue(HintPosition.start, 'Escriba un ISSN de Enlace válido.'),
-          width: '25%'
-        },
-        {
-          name: 'rnps',
-          label: 'RNPS',
-          type: FormFieldType.rnps,
-          required: false,
-          startHint: new HintValue(HintPosition.start, 'Escriba un RNPS válido.'),
-          width: '25%'
+        if (journalResponse) {
+          this.journal.load_from_data(journalResponse);
+          title = 'Revista encontrada';
+          content = 'Compruebe los datos de la revista...';
+          console.log(journalResponse)
+          console.log(this.journal)
         }
-      ]
-    }];
+        this.initJournalPanels();
+
+        const m = new MessageHandler(null, this.dialog);
+        m.showMessage(StatusCode.OK, content, HandlerComponent.dialog, title);
+      });
   }
 
-  initExtraPanels(): void {
+  resetStepper() {
+    this.informationPanel = [];
+    this.informationFormGroup = undefined;
+  
+    this.institutionPanel = [];
+    this.institutionFormGroup = undefined;
+  
+    this.indexPanel = [];
+    this.indexFormGroup = undefined;
+  }
+
+  initJournalPanels(): void {
 
     this.informationFormGroup = this._formBuilder.group({
       'description': new FormControl(''),
@@ -239,6 +143,50 @@ export class JournalEditComponent {
     });
 
     this.informationPanel = [
+      {
+        title: 'Identificadores',
+        description: '',
+        iconName: '',
+        formGroup: this.informationFormGroup,
+        content: [
+          {
+            name: 'issn_p',
+            label: 'ISSN Impreso',
+            type: FormFieldType.issn,
+            required: false,
+            startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Impreso válido.'),
+            width: '25%',
+            value: this.journal ? this.journal.data.issn.p : ''
+          },
+          {
+            name: 'issn_e',
+            label: 'ISSN Electrónico',
+            type: FormFieldType.issn,
+            required: false,
+            startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Electrónico válido.'),
+            width: '25%',
+            value: this.journal ? this.journal.data.issn.e : ''
+          },
+          {
+            name: 'issn_l',
+            label: 'ISSN de Enlace',
+            type: FormFieldType.issn,
+            required: false,
+            startHint: new HintValue(HintPosition.start, 'Escriba un ISSN de Enlace válido.'),
+            width: '25%',
+            value: this.journal ? this.journal.data.issn.l : ''
+          },
+          {
+            name: 'rnps',
+            label: 'RNPS',
+            type: FormFieldType.rnps,
+            required: false,
+            startHint: new HintValue(HintPosition.start, 'Escriba un RNPS válido.'),
+            width: '25%',
+            value: this.journal ? this.journal.data.rnps : ''
+          }
+        ]
+      },
       {
         title: 'Informacion de la Revista',
         description: '',
@@ -340,7 +288,7 @@ export class JournalEditComponent {
             label: 'Materias',
             type: FormFieldType.vocabulary,
             required: true,
-            width: '30%',
+            width: '45%',
             extraContent: {
               multiple: true,
               selectedTermsIds: this.journal ? this.journal.terms.map(term => {return term.term_id}) : null,
@@ -348,23 +296,11 @@ export class JournalEditComponent {
             },
           },
           {
-            name: 'subjects_unesco',
-            label: 'Materias (Vocabulario UNESCO)',
-            type: FormFieldType.vocabulary,
-            required: true,
-            width: '30%',
-            extraContent: {
-              multiple: false,
-              selectedTermsIds: this.journal ? this.journal.terms.map(term => {return term.term_id}) : null,
-              vocab: VocabulariesInmutableNames.SUBJECTS_UNESCO
-            },
-          },
-          {
             name: 'licence',
             label: 'Licencia',
             type: FormFieldType.vocabulary,
             required: false,
-            width: '30%',
+            width: '45%',
             extraContent: {
               multiple: true,
               selectedTermsIds: this.journal ? this.journal.terms.map(term => {return term.term_id}) : null,
