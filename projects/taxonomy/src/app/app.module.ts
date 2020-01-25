@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { TaxonomyService } from '@toco/tools/backend';
 import { CoreModule } from '@toco/tools/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NotificationModule } from '@toco/tools/notification';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         AppRoutingModule,
         AuthenticationModule,
         TaxonomyModule,
+        NotificationModule,
         CoreModule
     ],
 

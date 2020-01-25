@@ -23,7 +23,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     private timerAuthenticateSuscription: Subscription = null;
     private timerAuthenticateObserver: PartialObserver<number> = {
         next: (_) => {
-            console.log('next');
+            // console.log('next');
             // this.oauthService.setupAutomaticSilentRefresh();
             if (this.oauthStorage.getItem('access_token')) {
                 this.authenticationService.logguedChange(true);
@@ -86,10 +86,11 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
         clientId: this.env.oauthClientId,
 
         oidc: false,
-        silentRefreshRedirectUri: this.env.sceibaHost + 'oauth/authorize',
-        
-        timeoutFactor: 0.05,
-        
+
+        // silentRefreshRedirectUri: this.env.sceibaHost + 'oauth/token',
+
+        timeoutFactor: 0.75,
+
         sessionChecksEnabled: true,
         // set the scope for the permissions the client should request
         // The first three are defined by OIDC. The 4th is a usecase-specific one
