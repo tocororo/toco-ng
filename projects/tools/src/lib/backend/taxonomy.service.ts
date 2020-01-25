@@ -138,4 +138,10 @@ export class TaxonomyService {
     const req = this.env.sceibaApi + this.prefix + '/term/tree/' + vocabId;
     return this.http.get<Response<any>>(req);
   }
+
+  getCurrentUserPermissions(): Observable<Response<any>>{
+    const req = this.env.sceibaApi + this.prefix + '/user/permissions';
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
+    return this.http.get<Response<any>>(req, this.httpOptions);
+  }
 }

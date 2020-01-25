@@ -1,7 +1,3 @@
 
-<toco-journal-list
-    [dataSource]="dataSource"
-    [columnsObjectProperty]="['name', 'source_status', 'version_to_review']"
-    [columnsHeaderText]="['Nombre', 'Estatus', 'Cambios a Revisar']">
-</toco-journal-list>
-<h3 *ngIf="isEmpty">¡No hay fuente de datos disponibles!</h3>
+<!-- <toco-table></toco-table> -->
+<toco-table [content]="content"></toco-table>

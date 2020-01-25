@@ -1,0 +1,40 @@
+
+<table mat-table matSort class="mat-elevation-z8" [dataSource]="getDataSource" multiTemplateDataRows>
+
+    <!-- The content that is showed when the `dataSource` is not empty. -->
+    <ng-container *ngFor="let column of content.columnsObjectProperty; let pos = index" [matColumnDef]="column">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ content.columnsHeaderText[pos] }}</th>
+        <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+    </ng-container>
+
+    <!-- The content that is showed when the `dataSource` is empty. The information row of empty table 
+         is made up of this one column that spans across all columns. -->
+    <ng-container [matColumnDef]="'emptyTableInformation'">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="content.columnsObjectProperty.length">
+            <div class="empty-table-information">
+                ¡No hay fuente de datos disponibles!
+            </div>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="content.columnsObjectProperty; sticky: true"></tr>
+    <ng-container *ngIf="isEmpty; then thenTemplate_EmptyTable; else elseTemplate_NotEmptyTable"></ng-container>
+
+    <ng-template #thenTemplate_EmptyTable>
+        <tr mat-row class="row-empty-table-information" *matRowDef="let row; columns: ['emptyTableInformation']"></tr>
+    </ng-template>
+    
+    <ng-template #elseTemplate_NotEmptyTable>
+        <tr mat-row class="row-hover" *matRowDef="let row; columns: content.columnsObjectProperty;" (click)="navigateTo(row)"></tr>
+    </ng-template>
+
+</table>
+
+<mat-paginator
+    [length]="content.length"
+    [pageIndex]="content.pageIndex"
+    [pageSize]="content.pageSize"
+    [pageSizeOptions]="content.pageSizeOptions"
+    [hidePageSize]="content.hidePageSize"
+    [showFirstLastButtons]="content.showFirstLastButtons">
+</mat-paginator>
