@@ -53,7 +53,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 	 * Tracks the value and validity state of the internal control that contains the code.
 	 */
 	public readonly internalControl: FormControl;
-	public readonly  internalFormGroup: FormGroup;
+	public readonly internalFormGroup: FormGroup;
 	private readonly _firstGroup: FormControl;
 	private _firstGroupOldValue: string;   /* It is used by `handleInput_firstGroup` method. */
 	private readonly _secondGroup: FormControl;
@@ -162,7 +162,9 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 			ExtraValidators.issnConfirmCheckDigit(this._firstGroup, this._secondGroup, IssnValue.groupLength)
 		]
 		);
-		this.internalControl = new FormControl();
+		this.internalControl = new FormControl(Common.emptyString, [
+			ExtraValidators.issnValidator(this.internalFormGroup)
+		]);
 
 		/* Monitors focus on the element and applies appropriate CSS classes. */
 		_focusMonitor.monitor(_elementRef, true).subscribe(origin => {
