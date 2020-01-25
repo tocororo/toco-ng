@@ -33,6 +33,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatBadgeModule } from '@angular/material/badge';
 
+import {MatStepperModule} from '@angular/material/stepper'
 /**
  * A module that contains all angular material modules that are needed. 
  */
@@ -69,7 +70,8 @@ import { MatBadgeModule } from '@angular/material/badge';
         MatNativeDateModule,
         MatListModule,
         MatTreeModule,
-        MatBadgeModule
+        MatBadgeModule,
+        MatStepperModule
     ],
 
     exports: [
@@ -104,7 +106,8 @@ import { MatBadgeModule } from '@angular/material/badge';
         MatNativeDateModule,
         MatListModule,
         MatTreeModule,
-        MatBadgeModule
+        MatBadgeModule,
+        MatStepperModule
     ]
 })
 export class AngularMaterialModule

@@ -197,6 +197,8 @@ export abstract class InputControl extends FormFieldControl
 
         /* Sets the default values. */
 
+        this.content.formGroup.addControl(this.content.name, this.internalControl);
+
         super.init(label, isAbbreviation, alwaysHint);
 
         let temp: string = (isAbbreviation) ? this.content.label : this.content.label.toLowerCase();

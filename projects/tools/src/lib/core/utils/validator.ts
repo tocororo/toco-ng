@@ -1,6 +1,6 @@
 
 import { Directive, OnChanges, Input, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormControl, ValidatorFn, ValidationErrors, Validator, NG_VALIDATORS } from '@angular/forms';
+import { AbstractControl, FormControl, ValidatorFn, ValidationErrors, Validator, NG_VALIDATORS, FormGroup } from '@angular/forms';
 
 /**
  * Represents a class that contains a boolean property named `required`. 
@@ -177,6 +177,15 @@ export class ExtraValidators
             }
 
             return null;
+        };
+    }
+
+    public static issnValidator(internalFormGroup: FormGroup): ValidatorFn
+    {
+        return (control: AbstractControl): ValidationErrors | null => {
+            return (!internalFormGroup.valid) 
+                ? { 'issnValidator': { 'requiredValid': internalFormGroup.valid } } 
+                : null;
         };
     }
 }

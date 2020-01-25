@@ -26,6 +26,7 @@ export class JournalData extends SourceData {
     start_year ? = '';
     end_year ? = '';
     frequency ? = '';
+    seriadas_cubanas ? = '';
 
     socialNetworks: SocialNetworks = new SocialNetworks();
 

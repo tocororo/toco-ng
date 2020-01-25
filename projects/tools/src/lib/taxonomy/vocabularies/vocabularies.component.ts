@@ -12,6 +12,7 @@ import { Vocabulary, Response } from '@toco/tools/entities';
 import { FormContainerComponent, PanelContent, FormFieldType, FormContainerAction} from '@toco/tools/forms';
 
 import { TaxonomyService } from '@toco/tools/backend';
+import { OAuthStorage } from 'angular-oauth2-oidc';
 
 class VocabAction implements FormContainerAction
 {
@@ -132,11 +133,13 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
     @Output() emiterShowTerms: EventEmitter<Vocabulary> = new EventEmitter();
 
     constructor(private service: TaxonomyService,
+        private oautheStorage: OAuthStorage,
         public dialog: MatDialog,
         private _snackBar: MatSnackBar)
     { }
 
     ngOnInit() {
+        this.getAuthenticatedUserPermissions();
         this.loadVocabularies();
         this.vocabulariesChangeSuscription = this.service.vocabulariesChangeObservable.subscribe(this.vocabulariesChangeObserver);
     }
@@ -208,5 +211,55 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
     showTerms( vocab: Vocabulary ) {
         // console.log(vocab);
         this.service.vocabularyChanged(vocab);
+    }
+
+    getAuthenticatedUserPermissions(){
+        this.service.getCurrentUserPermissions().pipe(
+            catchError(err => {
+                const m  = new MessageHandler(this._snackBar);
+                m.showMessage(StatusCode.serverError, err.message);
+                // TODO: Maybe you must set a better return.
+                return of(null);
+            })
+        )
+        .subscribe(request => {
+            if (request.status == 'success'){
+                var permJson = JSON.stringify(request.data.permissions.actions);
+                this.oautheStorage.setItem('user_permissions', permJson);
+            }
+        });
+    }
+
+    hasPermission(permission: string, id? :number): boolean{
+ 
+        const userPermission = JSON.parse(this.oautheStorage.getItem('user_permissions'));
+        switch (permission) {
+            case 'add':
+                if ( userPermission.taxonomy_full_editor_actions === null)
+                    return true;
+
+                return false;
+
+            case 'edit':
+                if ( userPermission.taxonomy_full_editor_actions === null)
+                    return true;
+
+                    if ( userPermission.vocabulary_editor_actions){
+                    const arr : Array<string> = userPermission.vocabulary_editor_actions;
+ 
+                    if (arr.includes( id.toString() )){
+                        return true
+                    }
+
+                }
+                else if (userPermission.taxonomy_full_editor_actions){
+                    return true;
+                }
+
+                return false;
+
+            default:
+                return false;
+        }
     }
 }

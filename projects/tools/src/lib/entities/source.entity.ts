@@ -7,6 +7,13 @@ export class SourceData extends EntityBase {
     description ? = '';
 }
 
+export class TermSource extends EntityBase {
+    term_id = -1;
+    source_id = -1;
+    data = '';
+    
+}
+
 export class SourceVersion extends Entity {
     user_id = '';
     source_id = '';
@@ -21,7 +28,7 @@ export class Source extends Entity {
     uuid = '';
     name = '';
 
-    terms?: Array<Term> = new Array<Term>(0);
+    terms?: Array<TermSource> = new Array<TermSource>(0);
 
     source_type = '';
     source_status = '';

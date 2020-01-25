@@ -21,10 +21,10 @@ const routes: Routes = [
         component: NotificationListComponent,
         canActivate: [AuthenticationService]
     },
-    {
-        path: '**',
-        redirectTo: ''
-    }
+    // {
+    //     path: '**',
+    //     redirectTo: ''
+    // }
 ];
 
 @NgModule({

@@ -7,9 +7,10 @@
         {{notification.emiter}}
         {{notification.description}}
     </button>
-    <button mat-menu-item>
-        <a [routerLink]="['/notifications']" >
-            ver todas
-        </a> 
-    </button>
+    <mat-divider></mat-divider>
+    <a [routerLink]="['/notifications']" style="text-decoration: none;">
+        <button mat-menu-item style="text-align: center;" color="accent">
+            Ver todas
+        </button>
+    </a> 
 </mat-menu>
