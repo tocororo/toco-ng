@@ -31,15 +31,19 @@ export class NotificationButtonComponent implements OnInit {
                     })
                 )
                 .subscribe(response => {
-        
-                    if (response.status == "success"){
+                    console.log(response);
+                    
+                    if (response && response.status == "success"){
                         this.count = response.data.notifications.total_not_view;
                         const arr : NotificationInfo[] = response.data.notifications.data;
                         this.notifications = arr;
                     }
-                    else{
+                    else if(response){
                         const m = new MessageHandler(this._snackBar);
                         m.showMessage(StatusCode.serverError, response.message);
+                    } else {
+                        const m = new MessageHandler(this._snackBar);
+                        m.showMessage(StatusCode.serverError, 'Notificaciones no encontradas');
                     }
                 });
             }

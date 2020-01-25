@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { SourceService } from '@toco/tools/backend';
 import { Common } from '@toco/tools/core';
 import { Response } from '@toco/tools/entities';
+import { TableContent } from '@toco/tools/forms';
 
 export interface PeriodicElement
 {
@@ -35,11 +36,20 @@ export class JournalHomeComponent implements OnInit, OnDestroy
 {
 	private _journalsObserver = {
 		next: (value: Response<any>) => {
+            console.log(value)
 
-            console.log(value);
-
-            /* Initializes the `dataSource`. */
-            this.dataSource = new MatTableDataSource(/*[ ]*/value.data.sources);
+            this.content = {
+                /* Initializes the `dataSource`. */
+                //'dataSource': new MatTableDataSource([ ]),
+                'dataSource': new MatTableDataSource(value.data.sources),
+                'columnsObjectProperty': ['name', 'source_status', 'version_to_review'],
+                'columnsHeaderText': ['Nombre', 'Estatus', 'Cambios a Revisar'],
+                'propertyNameToNavigate': "uuid",
+                'pageSize': 5,
+                'pageSizeOptions': [5, 10, 20, 50],
+                //'hidePageSize': true,
+                'showFirstLastButtons': true
+            };
 		},
         error: (err: any) => { Common.logError('initializing journals', JournalHomeComponent.name, err); },
         complete: () => { Common.logComplete('initializing journals', JournalHomeComponent.name); }
@@ -50,12 +60,10 @@ export class JournalHomeComponent implements OnInit, OnDestroy
     /**
      * The journals list. 
      */
-    public dataSource: MatTableDataSource<any>;
+    public content: TableContent;
 
     public constructor(private _souceService: SourceService)
-    {
-        this.dataSource = new MatTableDataSource([ ]);
-    }
+    { }
 
     public ngOnInit(): void
     {
@@ -71,13 +79,5 @@ export class JournalHomeComponent implements OnInit, OnDestroy
 		{
 			this._journalsSubscription.unsubscribe();
 		}
-    }
-
-    /**
-     * Returns true if the data source is empty; otherwise, false. 
-     */
-    public get isEmpty(): boolean
-    {
-        return (this.dataSource.data.length == 0);
     }
 }

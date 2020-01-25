@@ -7,6 +7,8 @@ import { Entity, Response } from '@toco/tools/entities';
 import { InputContent } from '../../input/input.control';
 import { ActionContent } from '../../action/action.control';
 import { FormFieldContent_Experimental } from '../../experimental/form-field.control.experimental';
+import { FormGroup } from '@angular/forms';
+import { FormFieldContent } from '../../form-field.control';
 
 /**
  * An interface that represents the content of an expansion control.
@@ -32,6 +34,8 @@ export interface PanelContent
      * Returns the panel's content.
      */
     content: (InputContent | ActionContent | FormFieldContent_Experimental)[] | any[];
+
+    formGroup: FormGroup;
 }
 
 export interface FormContainerAction
@@ -52,10 +56,17 @@ export interface FormContainerAction
 export class FormContainerComponent implements OnInit, OnDestroy
 {
     /**
-     * The array of panels to show.
+     * The array of panels to show. 
      */
     @Input()
     public panels: PanelContent[];
+
+    @Input()
+    public useAccordion = true;
+
+    @Input()
+    public actionButtonIsStepperNext = false;
+
 
     @Input()
     public action: FormContainerAction;
@@ -64,15 +75,16 @@ export class FormContainerComponent implements OnInit, OnDestroy
     public entity: Entity;
 
     /**
-     * An string that represents the action label of the last panel.
+     * An string that represents the action label of the last panel. 
      */
     @Input()
     public actionLabel: string;
 
-    @Input() public deleteValuesAfterAction = true;
+    @Input()
+    public deleteValuesAfterAction = true;
 
     /**
-     * The current expanded panel position.
+     * The current expanded panel position. 
      */
     public step: number;
 
@@ -104,6 +116,12 @@ export class FormContainerComponent implements OnInit, OnDestroy
     public ngOnInit(): void
     {
         if (this.actionLabel == undefined) this.actionLabel = 'Adicionar';
+
+        this.panels.forEach(panel => {
+            panel.content.forEach((element: FormFieldContent) => {
+                element.formGroup = panel.formGroup;
+            });
+        });
     }
 
     // tslint:disable-next-line: indent

@@ -15,7 +15,9 @@ export enum VocabulariesInmutableNames {
   DB_GROUPS = 5,
   PROVINCES = 3,
   SUBJECTS = 2,
-  LICENCES = 6
+  LICENCES = 6, 
+  MIAR = 7,
+  SUBJECTS_UNESCO = 8,
 }
 
 @Injectable()
@@ -132,8 +134,14 @@ export class TaxonomyService {
       .pipe().subscribe(this.termChangeObserver);
   }
 
-  getTermsTreeByVocab(vocab: Vocabulary): Observable<Response<any>> {
-    const req = this.env.sceibaApi + this.prefix + '/term/tree/' + vocab.id;
+  getTermsTreeByVocab(vocabId): Observable<Response<any>> {
+    const req = this.env.sceibaApi + this.prefix + '/term/tree/' + vocabId;
     return this.http.get<Response<any>>(req);
+  }
+
+  getCurrentUserPermissions(): Observable<Response<any>>{
+    const req = this.env.sceibaApi + this.prefix + '/user/permissions';
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
+    return this.http.get<Response<any>>(req, this.httpOptions);
   }
 }

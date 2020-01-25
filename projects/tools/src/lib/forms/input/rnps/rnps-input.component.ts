@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { FormControl, Validators, ValidationErrors, ControlContainer } from '@angular/forms';
 
 import { InputControl } from '../input.control';
 import { RnpsValue } from './rnps-value';
@@ -29,7 +29,7 @@ export class InputRnpsComponent extends InputControl implements OnInit
 	 */
     private _codeOldValue: string;
 
-    public constructor()
+    public constructor(private controlContainer: ControlContainer)
     {
         super(
             /* Constructs a new `FormControl` instance. */

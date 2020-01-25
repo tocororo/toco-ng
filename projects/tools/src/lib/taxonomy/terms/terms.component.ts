@@ -1,6 +1,7 @@
 
 import { Component,OnInit, OnDestroy } from '@angular/core';
-import { of as observableOf, PartialObserver, Subscription } from 'rxjs';
+import { of as observableOf, PartialObserver, Subscription, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
@@ -13,6 +14,8 @@ import { TaxonomyService, VocabulariesInmutableNames } from '@toco/tools/backend
 import { TermGenericComponent } from '../term-generic/term-generic.component';
 import { TermInstitutionsComponent } from '../term-institutions/term-institutions.component';
 import { TermIndexerComponent } from '../term-indexer/term-indexer.component';
+
+import { OAuthStorage } from 'angular-oauth2-oidc';
 
 /**
  * Flattened tree node that has been created from a TermNode through the flattener. Flattened
@@ -63,7 +66,7 @@ export class TermsComponent implements OnInit, OnDestroy{
     private termChangeObserver: PartialObserver<Response<any>> = {
         next: (response: Response<any>) => {
             this.loading = !this.loading;
-            this.service.getTermsTreeByVocab(this.vocab).subscribe(this.termsTreeObserver);
+            this.service.getTermsTreeByVocab(this.vocab.id).subscribe(this.termsTreeObserver);
             this.dialog.closeAll();
             const m  = new MessageHandler(this._snackBar);
             m.showMessage(StatusCode.OK, response.message);
@@ -84,7 +87,7 @@ export class TermsComponent implements OnInit, OnDestroy{
         next: (vocab: Vocabulary) => {
             if ( !this.vocab || this.vocab.name !== vocab.name) {
                 this.loading = !this.loading;
-                this.service.getTermsTreeByVocab(vocab).subscribe(this.termsTreeObserver);
+                this.service.getTermsTreeByVocab(vocab.id).subscribe(this.termsTreeObserver);
                 this.vocab = vocab;
             }
         },
@@ -99,6 +102,7 @@ export class TermsComponent implements OnInit, OnDestroy{
     };
 
     constructor(private service: TaxonomyService,
+        private oautheStorage: OAuthStorage,
         public dialog: MatDialog,
         private _snackBar: MatSnackBar)
     {
@@ -115,6 +119,10 @@ export class TermsComponent implements OnInit, OnDestroy{
     ngOnInit(): void {
         this.currentVocabSuscription = this.service.currentVocabularyObservable.subscribe(this.currentVocabObserver);
         this.termChangeSuscription = this.service.termChangeObservable.subscribe(this.termChangeObserver);
+
+        if (!this.oautheStorage.getItem('user_permission')) {
+            this.getAuthenticatedUserPermissions();
+        }
     }
 
     ngOnDestroy(): void {
@@ -185,5 +193,55 @@ export class TermsComponent implements OnInit, OnDestroy{
 
     deleteTerm(node: TermNode) {
         console.log(node);
+    }
+
+    getAuthenticatedUserPermissions(){
+        this.service.getCurrentUserPermissions().pipe(
+            catchError(err => {
+                const m  = new MessageHandler(this._snackBar);
+                m.showMessage(StatusCode.serverError, err.message);
+                // TODO: Maybe you must set a better return.
+                return of(null);
+            })
+        )
+        .subscribe(request => {
+            if (request.status == 'success'){
+                var permJson = JSON.stringify(request.data.permissions.actions);
+                this.oautheStorage.setItem('user_permissions', permJson);
+            }
+        });
+    }
+
+    hasPermission(permission: string, id? :number): boolean{
+
+        const userPermission = JSON.parse(this.oautheStorage.getItem('user_permissions'));
+        switch (permission) {
+            case 'add':
+                if ( userPermission.taxonomy_full_editor_actions === null)
+                    return true;
+
+                return false;
+
+            case 'edit':
+                if ( userPermission.taxonomy_full_editor_actions === null)
+                    return true;
+
+                    if ( userPermission.vocabulary_editor_actions){
+                    const arr : Array<string> = userPermission.vocabulary_editor_actions;
+ 
+                    if (arr.includes( id.toString() )){
+                        return true
+                    }
+
+                }
+                else if (userPermission.taxonomy_full_editor_actions){
+                    return true;
+                }
+
+                return false;
+
+            default:
+                return false;
+        }
     }
 }

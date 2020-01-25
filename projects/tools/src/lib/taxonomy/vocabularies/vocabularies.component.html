@@ -3,7 +3,7 @@
     <mat-card-title>
       <div fxLayout="row" fxLayoutAlign="space-between none">
         Vocabularios
-        <button mat-icon-button (click)="newVocab()" matTooltip="Adicionar Vocabulario">
+        <button *ngIf="hasPermission('add')" mat-icon-button (click)="newVocab()" matTooltip="Adicionar Vocabulario">
           <mat-icon>library_add</mat-icon>
         </button>
       </div>
@@ -23,12 +23,12 @@
         </mat-autocomplete>
       </mat-form-field>
       <ng-container *ngIf="currentVocab">
-        <button mat-icon-button (click)="editVocab(currentVocab)" matTooltip="Editar">
+        <button mat-icon-button *ngIf="hasPermission('edit', currentVocab.id)" (click)="editVocab(currentVocab)" matTooltip="Editar">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button (click)="deleteVocab(currentVocab)" matTooltip="Eliminar">
+        <!-- <button mat-icon-button (click)="deleteVocab(currentVocab)" matTooltip="Eliminar">
           <mat-icon>delete</mat-icon>
-        </button>
+        </button> -->
         <p>{{ currentVocab.description }}</p>
       </ng-container>
     </ng-template>

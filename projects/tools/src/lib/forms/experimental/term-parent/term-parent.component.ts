@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ControlContainer } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
@@ -26,7 +26,7 @@ export class TermParentComponent extends FormFieldControl_Experimental implement
     currentTerm: Term = null;
     parentTerm: Term = null;
 
-    constructor() {
+    constructor(private controlContainer: ControlContainer) {
         super();
      }
 

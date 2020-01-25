@@ -1,6 +1,6 @@
 
-<div id="input-issn-container" [formGroup]="internalControl">
-    <input id="first-group-input-element" [class]="'input-issn-element'" formControlName="firstGroup" size="1" [attr.aria-label]="'First group'" (input)="handleInput_firstGroup()" />
+<div id="input-issn-container" [formGroup]="internalFormGroup">
+    <input id="first-group-input-element" [class]="'input-issn-element'" formControlName="firstGroup" size="2" [attr.aria-label]="'First group'" (input)="handleInput_firstGroup()" />
     <span id="issn-span-spacer">&ndash;</span>
-    <input id="second-group-input-element" [class]="'input-issn-element'" formControlName="secondGroup" size="1" [attr.aria-label]="'Second group'" (input)="handleInput_secondGroup()" />
+    <input id="second-group-input-element" [class]="'input-issn-element'" formControlName="secondGroup" size="2" [attr.aria-label]="'Second group'" (input)="handleInput_secondGroup()" />
 </div>

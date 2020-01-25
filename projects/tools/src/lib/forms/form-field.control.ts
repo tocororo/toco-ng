@@ -3,7 +3,7 @@ import { Input } from '@angular/core';
 
 import { Common } from '@toco/tools/core';
 import { IconService } from '@toco/tools/core';
-
+import { FormGroup } from '@angular/forms';
 /**
  * An enum that describes how inline contents of a block are horizontally aligned if the contents 
  * do not completely fill the line box. 
@@ -250,6 +250,8 @@ export enum FormFieldType
  */
 export interface FormFieldContent
 {
+    formGroup?: FormGroup;
+
     /**
      * Returns the control's minimum width. 
      * The minimum width of the content area, padding area or border area (depending on `box-sizing`) 
@@ -328,6 +330,7 @@ export interface FormFieldContent
 export function defaultFormFieldContent(): FormFieldContent
 {
     return {
+        'formGroup': undefined,
         'minWidth': '15em',
         'width': '15em',
 

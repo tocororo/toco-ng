@@ -1,12 +1,14 @@
 
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@toco/tools/shared';
+import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { IconService } from '@toco/tools/core';
 
 import { FormContainerComponent } from './container/form-container/form-container.component';
 import { FormFieldsComponent } from './container/form-fields/form-fields.component';
+import { TableComponent } from './container/table/table.component';
 import { FormsService } from './forms.service';
 
 import { InputTextComponent } from './input/text/text-input.component';
@@ -23,6 +25,7 @@ import { TermParentComponent } from './experimental/term-parent/term-parent.comp
   declarations: [
     FormContainerComponent,
     FormFieldsComponent,
+    TableComponent,
     InputTextComponent,
     InputEmailComponent,
     InputIssnInternalComponent,
@@ -35,12 +38,14 @@ import { TermParentComponent } from './experimental/term-parent/term-parent.comp
 
   imports: [
     SharedModule,
+    RouterModule,
     ReactiveFormsModule
   ],
 
   exports: [
     FormContainerComponent,
     FormFieldsComponent,
+    TableComponent,
     InputTextComponent,
     InputEmailComponent,
     InputIssnComponent,
