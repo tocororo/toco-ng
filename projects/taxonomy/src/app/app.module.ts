@@ -1,6 +1,7 @@
 
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { SharedModule } from '@toco/tools/shared';
 import { TaxonomyModule } from '@toco/tools/taxonomy';
 import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider'
@@ -11,7 +12,6 @@ import { AuthenticationModule } from '@toco/tools/authentication';
 import { AppComponent } from './app.component';
 import { TaxonomyService } from '@toco/tools/backend';
 import { CoreModule } from '@toco/tools/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -19,7 +19,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ],
 
     imports: [
-        BrowserModule,
         BrowserAnimationsModule,
         SharedModule,
         AppRoutingModule,

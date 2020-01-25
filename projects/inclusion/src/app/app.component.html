@@ -12,12 +12,8 @@
     </mat-tab>
 
     <mat-tab label="Otro Listar">
-        <toco-journal-list
-            [dataSource]="dataSource"
-            [columnsObjectProperty]="['titulo', 'issn']"
-            [columnsHeaderText]="['Título', 'ISSN']">
-        </toco-journal-list>
-        <h3 *ngIf="isEmpty">¡No hay datos disponibles!</h3>
+        <!-- <toco-table></toco-table> -->
+        <toco-table [content]="content"></toco-table>
     </mat-tab>
 
 </mat-tab-group>

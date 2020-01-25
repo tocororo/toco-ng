@@ -10,7 +10,6 @@ import { JournalRoutingModule } from './journal-routing.module';
 import { JournalComponent } from './journal/journal.component';
 import { JournalViewComponent } from './journal-view/journal-view.component';
 import { JournalEditComponent } from './journal-edit/journal-edit.component';
-import { JournalListComponent } from './journal-list/journal-list.component';
 import { JournalHomeComponent } from './journal-home/journal-home.component';
 
 @NgModule({
@@ -18,7 +17,6 @@ import { JournalHomeComponent } from './journal-home/journal-home.component';
         JournalComponent,
         JournalViewComponent,
         JournalEditComponent,
-        JournalListComponent,
         JournalHomeComponent
     ],
 
@@ -30,9 +28,10 @@ import { JournalHomeComponent } from './journal-home/journal-home.component';
     ],
 
     exports: [
+        JournalComponent,
         JournalViewComponent,
         JournalEditComponent,
-        JournalListComponent
+        JournalHomeComponent
     ],
 
     providers: [

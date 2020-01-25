@@ -1,8 +1,9 @@
 
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SharedModule } from '@toco/tools/shared';
+import { FormsModule } from '@toco/tools/forms';
 import { CatalogModule } from '@toco/tools/catalog';
 import { JournalModule } from '@toco/tools/journal';
 
@@ -17,8 +18,9 @@ import { AppComponent } from './app.component';
     ],
 
     imports: [
-        BrowserModule,
+        BrowserAnimationsModule,
         SharedModule,
+        FormsModule,
         CatalogModule,
         JournalModule,
         AppRoutingModule

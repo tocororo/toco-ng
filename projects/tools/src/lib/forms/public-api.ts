@@ -6,6 +6,7 @@ export * from './forms.module';
 export * from './container/form-container/form-container.component';
 export * from './container/form-container/form-container.service';
 export * from './container/form-fields/form-fields.component';
+export * from './container/table/table.component';
 export * from './forms.service';
 
 export * from './experimental/term-parent/term-parent.component';

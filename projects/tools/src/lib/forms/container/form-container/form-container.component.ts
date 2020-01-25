@@ -52,7 +52,7 @@ export interface FormContainerAction
 export class FormContainerComponent implements OnInit, OnDestroy
 {
     /**
-     * The array of panels to show.
+     * The array of panels to show. 
      */
     @Input()
     public panels: PanelContent[];
@@ -64,15 +64,16 @@ export class FormContainerComponent implements OnInit, OnDestroy
     public entity: Entity;
 
     /**
-     * An string that represents the action label of the last panel.
+     * An string that represents the action label of the last panel. 
      */
     @Input()
     public actionLabel: string;
 
-    @Input() public deleteValuesAfterAction = true;
+    @Input()
+    public deleteValuesAfterAction = true;
 
     /**
-     * The current expanded panel position.
+     * The current expanded panel position. 
      */
     public step: number;
 
