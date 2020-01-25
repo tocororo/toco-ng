@@ -54,8 +54,8 @@ export class CatalogFiltersComponent extends FilterContainerComponent{
                             index: this.filters_data.length,
                             field: 'terms',
                             type: 'select-autocomplete',
-                            placeholder: vocab.name,
-                            name: vocab.name,
+                            placeholder: vocab.human_name,
+                            name: vocab.human_name,
                             idVocab: vocab.id,
                             selectOptions: termsResponse.data.terms,
                             is_enabled: true

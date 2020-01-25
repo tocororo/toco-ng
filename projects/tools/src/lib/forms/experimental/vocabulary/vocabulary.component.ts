@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ControlContainer } from '@angular/forms';
 import { Observable, PartialObserver } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
@@ -8,6 +8,8 @@ import { Term, Vocabulary, TermNode, Response } from '@toco/tools/entities';
 import { TaxonomyService } from '@toco/tools/backend';
 
 import { FormFieldControl_Experimental } from '../form-field.control.experimental';
+import { NullAstVisitor } from '@angular/compiler';
+
 
 /**
  * A control to select a term or terms in a vocabulary.
@@ -25,9 +27,9 @@ export class VocabularyComponent extends FormFieldControl_Experimental implement
 
     formControl = new FormControl();
     inputId: string;
-    filteredOptions: Observable<Term[]>;
-    chipsList: Term[] = [];
-    selectOptions: Term[] = [];
+    filteredOptions: Observable<TermNode[]>;
+    chipsList: TermNode[] = [];
+    selectOptions: TermNode[] = [];
     multiple = true;
 
     terms: TermNode[];
@@ -55,7 +57,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental implement
         }
     };
 
-    constructor(private service: TaxonomyService) {
+    constructor(private service: TaxonomyService, private controlContainer: ControlContainer) {
         super();
     }
 
@@ -84,33 +86,35 @@ export class VocabularyComponent extends FormFieldControl_Experimental implement
     }
 
     private _updateFilteredOptions() {
-        this.filteredOptions = this.formControl.valueChanges.pipe<string, Term[]>(
+        this.filteredOptions = this.formControl.valueChanges.pipe<string, TermNode[]>(
             startWith(''),
             map(value => {
                 const filterValue = value.toLowerCase();
-                return this.selectOptions.filter(option => option.name.toLowerCase().includes(filterValue));
+                return this.selectOptions.filter(option => option.term.name.toLowerCase().includes(filterValue));
             }));
     }
 
-    private _get_terms(node: TermNode): Term[] {
-        let result: Term[] = [];
+    private _get_terms(node: TermNode, parent: TermNode = null): TermNode[] {
+        let result: TermNode[] = [];
+        node.parent = parent;
         if ( ( this.content.extraContent.selectedTermsIds as []).some(id => id === node.term.id)) {
             this.content.value.push(node.term.id);
-            this.chipsList.push(node.term);
+            this.chipsList.push(node);
         } else {
-            result.push(node.term);
+            result.push(node);
         }
         node.children.forEach(child => {
-            result = result.concat(this._get_terms(child));
+            result = result.concat(this._get_terms(child, node));
         });
 
         return result;
     }
 
-    addChips(value: Term) {
+    addChips(value: TermNode) {
+        console.log(this.vocab.name, value.term.name)
         if (this.multiple) {
             this.chipsList.unshift(value);
-            this.content.value.unshift(value.id);
+            this.content.value.unshift(value.term.id);
         } else {
             // if not is multiple, then the element in the chipsList goes back to the options
             if (this.chipsList.length > 0) {
@@ -118,9 +122,9 @@ export class VocabularyComponent extends FormFieldControl_Experimental implement
             }
 
             this.chipsList = [value];
-            this.content.value = [value.id];
+            this.content.value = [value.term.id];
         }
-        this.selectOptions = this.selectOptions.filter(option => option.id !== value.id);
+        this.selectOptions = this.selectOptions.filter(option => option.term.id !== value.term.id);
 
         this.formControl.setValue('');
         this._updateFilteredOptions();
@@ -131,7 +135,15 @@ export class VocabularyComponent extends FormFieldControl_Experimental implement
     removeChip(index: number) {
         this.selectOptions.push(this.chipsList[index]);
         this._updateFilteredOptions();
-        this.content.value = (this.content.value as []).filter(id => id !== this.chipsList[index].id);
+        this.content.value = (this.content.value as []).filter(id => id !== this.chipsList[index].term.id);
         this.chipsList.splice(index, 1);
+    }
+
+    getTermNameInATree(node:TermNode){
+        if (node.parent != null){
+            return this.getTermNameInATree(node.parent) + ' / ' + node.term.name;
+        }else{
+            return node.term.name;
+        }
     }
 }

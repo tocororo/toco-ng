@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { InputControl } from '../input.control';
 import { IssnType_Abbreviation, IssnValue } from './issn-value';
+import { ControlContainer } from '@angular/forms';
 
 /**
  * Represents a control that allows the writing of an ISSN. 
@@ -23,7 +24,7 @@ export class InputIssnComponent extends InputControl implements OnInit
 {
 	/* Note: this control works well with a 'width' = '310px' or '285px'. */
 
-	public constructor()
+	public constructor(private controlContainer: ControlContainer)
 	{
 		super(null);
 	}
