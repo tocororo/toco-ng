@@ -32,14 +32,16 @@ export class VocabularyComponent extends FormFieldControl_Experimental implement
     selectOptions: TermNode[] = [];
     multiple = true;
 
-    terms: TermNode[];
-    vocab: Vocabulary;
+    terms: TermNode[] = [];
+    vocab;
     loading = true;
 
     selectedTermsIds = [];
 
     private termsTreeObserver: PartialObserver<Response<any>> = {
         next: (response: Response<any>) => {
+            console.log(this.vocab)
+
             this.terms = response.data.terms.terms;
 
             this.terms.forEach(element => {
@@ -62,6 +64,9 @@ export class VocabularyComponent extends FormFieldControl_Experimental implement
     }
 
     ngOnInit() {
+
+        this.content.formGroup.addControl(this.content.name, this.formControl);
+
         this.inputId = this.content.label.trim().toLowerCase();
         if (this.content.extraContent) {
             if (this.content.extraContent.multiple !== null) {

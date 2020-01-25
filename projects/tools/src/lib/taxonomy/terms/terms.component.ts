@@ -63,7 +63,7 @@ export class TermsComponent implements OnInit, OnDestroy{
     private termChangeObserver: PartialObserver<Response<any>> = {
         next: (response: Response<any>) => {
             this.loading = !this.loading;
-            this.service.getTermsTreeByVocab(this.vocab).subscribe(this.termsTreeObserver);
+            this.service.getTermsTreeByVocab(this.vocab.id).subscribe(this.termsTreeObserver);
             this.dialog.closeAll();
             const m  = new MessageHandler(this._snackBar);
             m.showMessage(StatusCode.OK, response.message);
@@ -84,7 +84,7 @@ export class TermsComponent implements OnInit, OnDestroy{
         next: (vocab: Vocabulary) => {
             if ( !this.vocab || this.vocab.name !== vocab.name) {
                 this.loading = !this.loading;
-                this.service.getTermsTreeByVocab(vocab).subscribe(this.termsTreeObserver);
+                this.service.getTermsTreeByVocab(vocab.id).subscribe(this.termsTreeObserver);
                 this.vocab = vocab;
             }
         },

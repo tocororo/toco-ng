@@ -1,12 +1,11 @@
-
+<!-- <toco-form-container [panels]="testPanel" [useAccordion]="false" fxLayout="row" [formGroup]="testFormGroup"></toco-form-container> -->
 
 <mat-vertical-stepper [linear]=true #stepper>
-    <mat-step [stepControl]="testFormGroup">
-        <form [formGroup]="testFormGroup">
+    <mat-step [stepControl]="identifiersFormGroup">
+        <form [formGroup]="identifiersFormGroup">
         <ng-template matStepLabel>Validar Identificadores</ng-template>
 
-        <toco-form-container [panels]="testPanel" [useAccordion]="false" fxLayout="row" [formGroup]="testFormGroup"></toco-form-container>
-        <!-- <toco-form-container [panels]='identifiersPanel' [useAccordion]='false' [actionButtonIsStepperNext]='true' fxLayout="row" [action]='searchJournalAction' [actionLabel]="'Buscar'" [deleteValuesAfterAction]='false' [containerFormGroup]="identifiersFormGroup" [formGroup]="identifiersFormGroup"></toco-form-container> -->
+        <toco-form-container [panels]='identifiersPanel' [useAccordion]='false' [actionButtonIsStepperNext]='true' fxLayout="row" [action]='searchJournalAction' [actionLabel]="'Buscar'" [deleteValuesAfterAction]='false' [formGroup]="identifiersFormGroup"></toco-form-container>
 
         <div>
                 <button mat-button matStepperPrevious>Atrás</button>
@@ -15,10 +14,10 @@
         </form>
     </mat-step>
     <mat-step [stepControl]="informationFormGroup">
-        <form [formGroup]="informationFormGroup">
+        <form *ngIf="journal" [formGroup]="informationFormGroup">
         <ng-template matStepLabel>Completar la Información de la Revista</ng-template>
         
-        <!-- <toco-form-container *ngIf="journal" [panels]="informationPanel" [useAccordion]="false"fxLayout="row" [containerFormGroup]="informationFormGroup" [formGroup]="informationFormGroup"></toco-form-container> -->
+        <toco-form-container [panels]="informationPanel" [useAccordion]="false"fxLayout="row" [formGroup]="informationFormGroup"></toco-form-container>
 
         <div>
             <button mat-button matStepperPrevious>Atrás</button>
@@ -28,10 +27,10 @@
     </mat-step>
 
     <mat-step [stepControl]="institutionFormGroup">
-        <form [formGroup]="institutionFormGroup">
+        <form *ngIf="journal" [formGroup]="institutionFormGroup">
         <ng-template matStepLabel>Institución de la Revista</ng-template>
         
-        <!-- <toco-form-container *ngIf="journal" [panels]="institutionPanel" [useAccordion]="false"fxLayout="row" [containerFormGroup]="institutionFormGroup" [formGroup]="institutionFormGroup" ></toco-form-container> -->
+        <toco-form-container *ngIf="journal" [panels]="institutionPanel" [useAccordion]="false"fxLayout="row" [formGroup]="institutionFormGroup" ></toco-form-container>
 
         <div>
             <button mat-button matStepperPrevious>Atrás</button>
@@ -42,10 +41,10 @@
 
 
     <mat-step [stepControl]="indexFormGroup">
-        <form [formGroup]="indexFormGroup">
+        <form *ngIf="journal" [formGroup]="indexFormGroup">
         <ng-template matStepLabel>Institución de la Revista</ng-template>
         
-        <!-- <toco-form-container *ngIf="journal" [panels]="indexPanel" [useAccordion]="false"fxLayout="row" [containerFormGroup]="indexFormGroup" [formGroup]="indexFormGroup"></toco-form-container> -->
+        <toco-form-container *ngIf="journal" [panels]="indexPanel" [useAccordion]="false"fxLayout="row" [formGroup]="indexFormGroup"></toco-form-container>
 
         <div>
             <button mat-button matStepperPrevious>Atrás</button>

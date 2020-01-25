@@ -69,7 +69,6 @@ export class JournalEditComponent {
 
   public searchJournalAction: SearchJournalByIdentifiersAction;
 
-  public vocabularies: Vocabulary[] = [];
 
   licences: Vocabulary;
   subjects: Vocabulary;
@@ -162,26 +161,10 @@ export class JournalEditComponent {
         ]
       }
     ];
-    
 
-    this.initFormGroups();
+    this.initIdentifiersPanel();
 
-    this.taxonomyService.getVocabularies()
-      .pipe(
-        catchError((err: HttpErrorResponse) => {
-          const m = new MessageHandler(this._snackBar);
-          m.showMessage(StatusCode.serverError);
-          // TODO: Maybe you must set a better return.
-          return of(null);
-        }),
-        finalize(() => this.loading = false)
-      ).subscribe(response => {
-
-        
-
-        this.vocabularies = response.data.vocabularies;
-
-        this.initIdentifiersPanel();
+        console.log(this.identifiersFormGroup)
         
         this.searchJournalAction = new SearchJournalByIdentifiersAction(
           this.catalogService,
@@ -196,44 +179,15 @@ export class JournalEditComponent {
               title = 'Revista encontrada';
               content = 'Compruebe los datos de la revista...';
             }
-
             this.initExtraPanels();
 
             const m = new MessageHandler(null, this.dialog);
             m.showMessage(StatusCode.OK, content, HandlerComponent.dialog, title);
           });
-
-      });
-
-    console.log(this.testFormGroup)
   }
-
-  initFormGroups(){
-    this.identifiersFormGroup = this._formBuilder.group({
-      issn_p: new FormControl(),
-      issn_e: new FormControl(),
-      issn_l: new FormControl(),
-    });
-
-    this.informationFormGroup = this._formBuilder.group({
-      title: new FormControl('', Validators.required),
-      url: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
-      source_type: new FormControl('', Validators.required),
-    });
-    
-    this.indexFormGroup = this._formBuilder.group({
-      indexes: new FormControl(),
-    });
-
-    this.institutionFormGroup = this._formBuilder.group({
-      institution: ['', Validators.required],
-    });
-
-  }
-
 
   initIdentifiersPanel(): void {
+    this.identifiersFormGroup = this._formBuilder.group({});
     this.identifiersPanel = [{
       title: 'Inclusión de Revista',
       description: 'Introduzca alguno de los siguientes identificadores de la revista que desea incluir',
@@ -274,10 +228,16 @@ export class JournalEditComponent {
         }
       ]
     }];
-    
   }
 
   initExtraPanels(): void {
+
+    this.informationFormGroup = this._formBuilder.group({
+      'description': new FormControl(''),
+      'start_year': new FormControl(''),
+      'end_year': new FormControl(''),
+    });
+
     this.informationPanel = [
       {
         title: 'Informacion de la Revista',
@@ -384,11 +344,11 @@ export class JournalEditComponent {
             extraContent: {
               multiple: true,
               selectedTermsIds: this.journal ? this.journal.terms.map(term => {return term.term_id}) : null,
-              vocab: this.vocabularies.filter(vocab => vocab.id === VocabulariesInmutableNames.SUBJECTS)[0]
+              vocab: VocabulariesInmutableNames.SUBJECTS
             },
           },
           {
-            name: 'subjects',
+            name: 'subjects_unesco',
             label: 'Materias (Vocabulario UNESCO)',
             type: FormFieldType.vocabulary,
             required: true,
@@ -396,7 +356,7 @@ export class JournalEditComponent {
             extraContent: {
               multiple: false,
               selectedTermsIds: this.journal ? this.journal.terms.map(term => {return term.term_id}) : null,
-              vocab: this.vocabularies.filter(vocab => vocab.id === VocabulariesInmutableNames.SUBJECTS_UNESCO)[0]
+              vocab: VocabulariesInmutableNames.SUBJECTS_UNESCO
             },
           },
           {
@@ -408,7 +368,7 @@ export class JournalEditComponent {
             extraContent: {
               multiple: true,
               selectedTermsIds: this.journal ? this.journal.terms.map(term => {return term.term_id}) : null,
-              vocab: this.vocabularies.filter(vocab => vocab.id === VocabulariesInmutableNames.LICENCES)[0]
+              vocab: VocabulariesInmutableNames.LICENCES
             },
           },
         ]
@@ -423,28 +383,28 @@ export class JournalEditComponent {
             name: 'facebook',
             label: 'Facebook',
             type: FormFieldType.url,
-            required: true,
+            required: false,
             value: this.journal ? this.journal.data.socialNetworks.facebook : ''
           },
           {
             name: 'twiter',
             label: 'Twiter',
             type: FormFieldType.url,
-            required: true,
+            required: false,
             value: this.journal ? this.journal.data.socialNetworks.twitter : ''
           },
           {
             name: 'linkedin',
             label: 'LinkedIN',
             type: FormFieldType.url,
-            required: true,
+            required: false,
             value: this.journal ? this.journal.data.socialNetworks.linkedin : ''
           },
         ]
       }
     ];
 
-
+    this.institutionFormGroup = this._formBuilder.group({});
 
     this.institutionPanel = [
       {
@@ -462,13 +422,14 @@ export class JournalEditComponent {
             extraContent: {
               multiple: false,
               selectedTermsIds: this.journal ? this.journal.terms.map(term => {return term.term_id}) : null,
-              vocab: this.vocabularies.filter(vocab => vocab.id === VocabulariesInmutableNames.INTITUTION)[0]
+              vocab: VocabulariesInmutableNames.INTITUTION
             },
           }
         ]
       }
     ];
 
+    this.indexFormGroup = this._formBuilder.group({});
 
     this.indexPanel = [
       {
@@ -486,7 +447,7 @@ export class JournalEditComponent {
             extraContent: {
               multiple: true,
               selectedTermsIds: this.journal ? this.journal.terms.map(term => {return term.term_id}) : null,
-              vocab: this.vocabularies.filter(vocab => vocab.id === VocabulariesInmutableNames.DATABASES)[0]
+              vocab: VocabulariesInmutableNames.DATABASES
             },
           }
         ]
