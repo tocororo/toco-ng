@@ -9,7 +9,7 @@ import { CatalogService, TaxonomyService, VocabulariesInmutableNames, SourceServ
 import { MessageHandler, StatusCode, HandlerComponent } from '@toco/tools/core';
 import { Vocabulary, Journal } from '@toco/tools/entities';
 import { FilterHttpMap } from '@toco/tools/filters';
-import { PanelContent, FormFieldType, HintValue, HintPosition, FormContainerAction } from '@toco/tools/forms';
+import { PanelContent, FormFieldType, HintValue, HintPosition, FormContainerAction, IssnValue } from '@toco/tools/forms';
 import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 
 
@@ -156,7 +156,7 @@ export class JournalEditComponent {
             required: false,
             startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Impreso válido.'),
             width: '25%',
-            value: this.journal ? this.journal.data.issn.p : ''
+            value: this.journal ? IssnValue.createIssnValueFromString(this.journal.data.issn.p) : null
           },
           {
             name: 'issn_e',
@@ -165,7 +165,7 @@ export class JournalEditComponent {
             required: false,
             startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Electrónico válido.'),
             width: '25%',
-            value: this.journal ? this.journal.data.issn.e : ''
+            value: this.journal ? IssnValue.createIssnValueFromString(this.journal.data.issn.e) : null
           },
           {
             name: 'issn_l',
@@ -174,7 +174,7 @@ export class JournalEditComponent {
             required: false,
             startHint: new HintValue(HintPosition.start, 'Escriba un ISSN de Enlace válido.'),
             width: '25%',
-            value: this.journal ? this.journal.data.issn.l : ''
+            value: this.journal ? IssnValue.createIssnValueFromString(this.journal.data.issn.l) : null
           },
           {
             name: 'rnps',
