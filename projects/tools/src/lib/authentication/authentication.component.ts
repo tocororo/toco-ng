@@ -6,6 +6,7 @@ import { OAuthService, JwksValidationHandler, OAuthStorage, AuthConfig } from 'a
 
 import { AuthenticationService } from './authentication.service';
 import { EnvService } from '@tocoenv/tools/env.service';
+import { Router } from '@angular/router';
 
 // import { authConfig } from './auth-config';
 
@@ -44,7 +45,8 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
         private env: EnvService,
         private oauthService: OAuthService,
         private oauthStorage: OAuthStorage,
-        private authenticationService: AuthenticationService) {
+        private authenticationService: AuthenticationService,
+        private router: Router) {
 
     }
 
@@ -126,6 +128,8 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
         });
 
         this.oauthService.events.subscribe(e => {
+            console.log(e);
+            
             switch (e.type) {
                 case 'token_received':
                     console.log('token received');
@@ -142,6 +146,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
                         break;
                 case 'logout':
                     console.log('logout');
+                    this.router.navigate(['/']);
                     break;
                 default:
                     break;

@@ -23,6 +23,7 @@ export class JournalViewComponent implements OnInit, OnChanges {
     journal: Journal;
     vocabularies: typeof VocabulariesInmutableNames;
     loading = true;
+    panelOpenState = false;
 
     defaultLogo = this.env.sceibaHost+'static/favicon.ico'
 
