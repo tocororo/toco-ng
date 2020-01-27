@@ -100,16 +100,15 @@ export class JournalEditComponent {
       }
     ];
 
-    
     this.searchJournalAction = new SearchJournalByIdentifiersAction(
       this.catalogService,
       (journalResponse) => {
-        this.journal = new Journal();
 
         let title = 'Revista NO encontrada';
         let content = 'Complete la información de la revista...';
 
         if (journalResponse) {
+          this.journal = new Journal();
           this.journal.load_from_data(journalResponse);
           title = 'Revista encontrada';
           content = 'Compruebe los datos de la revista...';
@@ -132,12 +131,18 @@ export class JournalEditComponent {
   
     this.indexPanel = [];
     this.indexFormGroup = undefined;
+    this.journal = null;
   }
-
+  nextStep(){
+    console.log(this.informationFormGroup)
+  }
   initJournalPanels(): void {
 
+    const descriptionControl = new FormControl('', Validators.required)
+    descriptionControl.setValue(this.journal ? this.journal.data.description : '');
+
     this.informationFormGroup = this._formBuilder.group({
-      'description': new FormControl(''),
+      'description': descriptionControl,
       'start_year': new FormControl(''),
       'end_year': new FormControl(''),
     });
@@ -145,50 +150,6 @@ export class JournalEditComponent {
     this.informationPanel = [
       {
         title: 'Identificadores',
-        description: '',
-        iconName: '',
-        formGroup: this.informationFormGroup,
-        content: [
-          {
-            name: 'issn_p',
-            label: 'ISSN Impreso',
-            type: FormFieldType.issn,
-            required: false,
-            startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Impreso válido.'),
-            width: '25%',
-            value: this.journal ? IssnValue.createIssnValueFromString(this.journal.data.issn.p) : null
-          },
-          {
-            name: 'issn_e',
-            label: 'ISSN Electrónico',
-            type: FormFieldType.issn,
-            required: false,
-            startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Electrónico válido.'),
-            width: '25%',
-            value: this.journal ? IssnValue.createIssnValueFromString(this.journal.data.issn.e) : null
-          },
-          {
-            name: 'issn_l',
-            label: 'ISSN de Enlace',
-            type: FormFieldType.issn,
-            required: false,
-            startHint: new HintValue(HintPosition.start, 'Escriba un ISSN de Enlace válido.'),
-            width: '25%',
-            value: this.journal ? IssnValue.createIssnValueFromString(this.journal.data.issn.l) : null
-          },
-          {
-            name: 'rnps',
-            label: 'RNPS',
-            type: FormFieldType.rnps,
-            required: false,
-            startHint: new HintValue(HintPosition.start, 'Escriba un RNPS válido.'),
-            width: '25%',
-            value: this.journal ? this.journal.data.rnps : ''
-          }
-        ]
-      },
-      {
-        title: 'Informacion de la Revista',
         description: '',
         iconName: '',
         formGroup: this.informationFormGroup,
@@ -202,20 +163,40 @@ export class JournalEditComponent {
             value: this.journal ? this.journal.data.title : ''
           },
           {
-            name: 'subtitle',
-            label: 'Subtítulo',
-            type: FormFieldType.text,
-            required: true,
-            width: '45%',
-            value: this.journal ? this.journal.data.subtitle : ''
+            name: 'issn_p',
+            label: 'ISSN Impreso',
+            type: FormFieldType.issn,
+            required: false,
+            startHint: new HintValue(HintPosition.start, 'XXXX-XXXX'),
+            width: '30%',
+            value: this.journal ? IssnValue.createIssnValueFromString(this.journal.data.issn.p) : null
           },
           {
-            name: 'abbreviation',
-            label: 'Título abreviado',
-            type: FormFieldType.text,
+            name: 'issn_e',
+            label: 'ISSN Electrónico',
+            type: FormFieldType.issn,
+            required: false,
+            startHint: new HintValue(HintPosition.start, 'XXXX-XXXX'),
+            width: '30%',
+            value: this.journal ? IssnValue.createIssnValueFromString(this.journal.data.issn.e) : null
+          },
+          {
+            name: 'issn_l',
+            label: 'ISSN de Enlace',
+            type: FormFieldType.issn,
+            required: false,
+            startHint: new HintValue(HintPosition.start, 'XXXX-XXXX'),
+            width: '30%',
+            value: this.journal ? IssnValue.createIssnValueFromString(this.journal.data.issn.l) : null
+          },
+          {
+            name: 'rnps',
+            label: 'RNPS',
+            type: FormFieldType.rnps,
             required: true,
+            startHint: new HintValue(HintPosition.start, 'Escriba un RNPS válido.'),
             width: '45%',
-            value: this.journal ? this.journal.data.shortname : ''
+            value: this.journal ? this.journal.data.rnps : ''
           },
           {
             name: 'url',
@@ -223,8 +204,33 @@ export class JournalEditComponent {
             type: FormFieldType.url,
             required: true,
             startHint: new HintValue(HintPosition.start, 'Escriba una URL válida.'),
-            width: '50%',
+            width: '45%',
             value: this.journal ? this.journal.data.url : ''
+          },
+        ]
+      },
+      {
+        title: 'Informacion de la Revista',
+        description: '',
+        iconName: '',
+        formGroup: this.informationFormGroup,
+        content: [
+          
+          {
+            name: 'subtitle',
+            label: 'Subtítulo',
+            type: FormFieldType.text,
+            required: false,
+            width: '45%',
+            value: this.journal ? this.journal.data.subtitle : ''
+          },
+          {
+            name: 'abbreviation',
+            label: 'Título abreviado',
+            type: FormFieldType.text,
+            required: false,
+            width: '45%',
+            value: this.journal ? this.journal.data.shortname : ''
           },
           {
             name: 'email',
@@ -244,26 +250,10 @@ export class JournalEditComponent {
             value: this.journal ? this.journal.data.description : ''
           },
           {
-            name: 'source_type',
-            label: 'Tipo de revista',
-            type: FormFieldType.text,
-            required: true,
-            width: '45%',
-            value: this.journal ? this.journal.source_type : ''
-          },
-          {
-            name: 'source_type',
-            label: 'Sistema',
-            type: FormFieldType.text,
-            required: true,
-            width: '45%',
-            value: this.journal ? this.journal.source_type : ''
-          },
-          {
             name: 'start_year',
             label: 'Año de inicio',
             type: FormFieldType.datepicker,
-            required: true,
+            required: false,
             width: '30%',
             value: this.journal ? this.journal.data.start_year : ''
           },
@@ -271,7 +261,7 @@ export class JournalEditComponent {
             name: 'end_year',
             label: 'Año de inicio',
             type: FormFieldType.datepicker,
-            required: true,
+            required: false,
             width: '30%',
             value: this.journal ? this.journal.data.end_year : ''
           },
@@ -279,7 +269,7 @@ export class JournalEditComponent {
             name: 'frequency',
             label: 'Frecuencia',
             type: FormFieldType.text,
-            required: true,
+            required: false,
             width: '30%',
             value: this.journal ? this.journal.data.frequency : ''
           },
@@ -381,7 +371,7 @@ export class JournalEditComponent {
             required: false,
             width: '70%',
             extraContent: {
-              multiple: true,
+              multiple: false,
               selectedTermsIds: this.journal ? this.journal.terms.map(term => {return term.term_id}) : null,
               vocab: VocabulariesInmutableNames.DATABASES
             },

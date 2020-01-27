@@ -1,6 +1,6 @@
-<toco-form-container [panels]="findPanel" [useAccordion]="false" [formGroup]="findFormGroup" [action]='searchJournalAction' [actionLabel]="'Buscar'" [deleteValuesAfterAction]='false'></toco-form-container>
+<toco-form-container   *ngIf="!journal" [panels]="findPanel" [useAccordion]="false" [formGroup]="findFormGroup" [action]='searchJournalAction' [actionLabel]="'Buscar'" [deleteValuesAfterAction]='false'></toco-form-container>
 
-<<button mat-button (click)="resetStepper()">Reset</button>>
+<button mat-button *ngIf="journal" (click)="resetStepper()">Comenzar denuevo</button>
 
 <mat-vertical-stepper *ngIf="journal" [linear]=true #stepper>
 
@@ -12,7 +12,7 @@
 
         <div>
             <button mat-button matStepperPrevious>Atrás</button>
-            <button mat-button matStepperNext>Siguiente</button>
+            <button mat-button matStepperNext (click)="nextStep()">Siguiente</button>
         </div>
         </form>
     </mat-step>

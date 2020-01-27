@@ -1,9 +1,9 @@
 
-<ng-container >
+<ng-container *ngIf="(panels)">
     <!-- *ngFor="let item of items"
         <toco-form-fields fields]="panel.content"></toco-form-fields> -->
 
-<mat-accordion class="toco-form-container" *ngIf="(panels) && (useAccordion)">
+<mat-accordion class="toco-form-container" *ngIf="(useAccordion)">
 
     <mat-expansion-panel *ngFor="let panel of panels; let newStep = index; let count = count"
         [expanded]="step == newStep" (opened)="setStep(newStep)" hideToggle>
@@ -35,8 +35,8 @@
 
 </mat-accordion>
 
-<div *ngIf="(panels) && (!useAccordion)">
-    <mat-card class="toco-form-container">
+<div *ngIf="(!useAccordion)" class="toco-form-container">
+    <mat-card>
         <mat-card-content>
                 <div *ngFor="let panel of panels">
                         <mat-card-header>

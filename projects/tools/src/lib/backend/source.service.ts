@@ -24,9 +24,6 @@ export class SourceService {
 
     constructor(private env: EnvService, private http: HttpClient, private oauthStorage: OAuthStorage) {
         this.token = this.oauthStorage.getItem('access_token');
-        
-        //TODO: Removes this print. 
-        console.log(this.token);
     }
 
     getMySources(): Observable<Response<any>>{
