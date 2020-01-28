@@ -38,6 +38,7 @@ fxLayoutGap="1em" class="form-field-component" >
             ></textarea>
         </mat-form-field>
 
+
         <mat-form-field 
             *ngSwitchCase="formFieldType.datepicker"
             [style.width]="field.width"
@@ -58,7 +59,7 @@ fxLayoutGap="1em" class="form-field-component" >
             ></mat-datepicker-toggle>
             <mat-datepicker 
                 #picker
-                startView="year"
+                startView="multi-year"
             ></mat-datepicker>
         </mat-form-field>
 

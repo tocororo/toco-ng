@@ -2,12 +2,12 @@
 
   <ng-container *ngIf="multiple; else elseTemplate">
     <mat-select placeholder="{{placeholder}}" [(ngModel)]="selectValue" multiple>
-        <mat-option *ngFor="let topping of toppingList" [value]="topping" (click)="optionSelect()">{{topping}}</mat-option>
+        <mat-option *ngFor="let topping of selectOptions" [value]="topping" (click)="optionSelect()">{{topping}}</mat-option>
       </mat-select>
   </ng-container>
   <ng-template #elseTemplate>
     <mat-select placeholder="{{placeholder}}" [(ngModel)]="selectValue">
-        <mat-option *ngFor="let topping of toppingList" [value]="topping" (click)="optionSelect()">{{topping}}</mat-option>
+        <mat-option *ngFor="let topping of selectOptions" [value]="topping" (click)="optionSelect()">{{topping}}</mat-option>
       </mat-select>
   </ng-template>
 

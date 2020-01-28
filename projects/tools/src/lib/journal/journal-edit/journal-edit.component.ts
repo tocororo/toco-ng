@@ -10,35 +10,9 @@ import { MessageHandler, StatusCode, HandlerComponent } from '@toco/tools/core';
 import { Vocabulary, Journal } from '@toco/tools/entities';
 import { FilterHttpMap } from '@toco/tools/filters';
 import { PanelContent, FormFieldType, HintValue, HintPosition, FormContainerAction, IssnValue } from '@toco/tools/forms';
-import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 
-class SearchJournalByIdentifiersAction implements FormContainerAction {
-  constructor(private service: CatalogService, private journalFound: Function) { }
-
-  doit(data: any): void {
-    const rnps = data.rnps;
-    const httpParams = Array<FilterHttpMap>();
-    
-    console.log(data)
-    
-
-    httpParams.push(new FilterHttpMap('issn', data.idenfifier));
-    httpParams.push(new FilterHttpMap('rnps', data.idenfifier));
-    httpParams.push(new FilterHttpMap('url', data.idenfifier));
-    httpParams.push(new FilterHttpMap('title', data.idenfifier));
-
-    
-    this.service.getJournalsPage(10, 0, httpParams)
-      .subscribe(response => {
-        if (response.data && response.data.sources.count === 1) {
-          this.journalFound(response.data.sources.data[0]);
-        } else {
-          this.journalFound(null);
-        }
-      });
-  }
-}
 
 @Component({
   selector: 'toco-journal-edit',
@@ -58,14 +32,18 @@ export class JournalEditComponent {
 
   informationPanel: PanelContent[] = [];
   informationFormGroup: FormGroup;
+  informationAction: FormContainerAction;
 
   institutionPanel: PanelContent[] = [];
   institutionFormGroup: FormGroup;
+  institutionAction: FormContainerAction;
 
   indexPanel: PanelContent[] = [];
   indexFormGroup: FormGroup;
+  indexAction: FormContainerAction;
 
-  public searchJournalAction: SearchJournalByIdentifiersAction;
+  public searchJournalAction: FormContainerAction;
+
 
 
   licences: Vocabulary;
@@ -80,6 +58,7 @@ export class JournalEditComponent {
     private _formBuilder: FormBuilder) { }
 
   ngOnInit() {
+
     this.findFormGroup = this._formBuilder.group({});
     this.findPanel = [
       {
@@ -100,42 +79,60 @@ export class JournalEditComponent {
       }
     ];
 
-    this.searchJournalAction = new SearchJournalByIdentifiersAction(
-      this.catalogService,
-      (journalResponse) => {
+    this.searchJournalAction = {
 
-        let title = 'Revista NO encontrada';
-        let content = 'Complete la información de la revista...';
+      doit: (data: any) => {
 
-        if (journalResponse) {
-          this.journal = new Journal();
-          this.journal.load_from_data(journalResponse);
-          title = 'Revista encontrada';
-          content = 'Compruebe los datos de la revista...';
-          console.log(journalResponse)
-          console.log(this.journal)
-        }
-        this.initJournalPanels();
+        const httpParams = [
+            new FilterHttpMap('issn', data.idenfifier),
+            new FilterHttpMap('rnps', data.idenfifier),
+            new FilterHttpMap('url', data.idenfifier),
+            new FilterHttpMap('title', data.idenfifier)
+        ];
 
-        const m = new MessageHandler(null, this.dialog);
-        m.showMessage(StatusCode.OK, content, HandlerComponent.dialog, title);
-      });
+        this.catalogService.getJournalsPage(10, 0, httpParams)
+        .subscribe(response => {
+
+          let title = 'No hemos encontrado información';
+          let content = 'Debe completar todos los datos solicitados para incluir la revista.';
+          if (response.data && response.data.sources.count === 1) {
+              console.log(response.data);
+            this.journal = new Journal();
+            this.journal.load_from_data(response.data.sources.data[0]);
+            title = 'Tenemos información sobre la revista';
+            content = 'Compruebe y complete todos los datos solicitados para incluir la revista.';
+          }
+          const m = new MessageHandler(null, this.dialog);
+          m.showMessage(StatusCode.OK, content, HandlerComponent.dialog, title);
+          this.initJournalPanels();
+        });
+      }
+    };
+
+
+    this.informationAction = {
+      doit: (data: any) => {
+        console.log(data);
+        console.log(this.informationFormGroup)
+      }
+    }
+
+
   }
 
   resetStepper() {
     this.informationPanel = [];
     this.informationFormGroup = undefined;
-  
+
     this.institutionPanel = [];
     this.institutionFormGroup = undefined;
-  
+
     this.indexPanel = [];
     this.indexFormGroup = undefined;
     this.journal = null;
   }
-  nextStep(){
-    console.log(this.informationFormGroup)
-  }
+
+
   initJournalPanels(): void {
 
     const descriptionControl = new FormControl('', Validators.required)
@@ -215,13 +212,14 @@ export class JournalEditComponent {
         iconName: '',
         formGroup: this.informationFormGroup,
         content: [
-          
+
           {
             name: 'subtitle',
             label: 'Subtítulo',
             type: FormFieldType.text,
             required: false,
             width: '45%',
+            startHint: new HintValue(HintPosition.start, ''),
             value: this.journal ? this.journal.data.subtitle : ''
           },
           {
@@ -230,6 +228,7 @@ export class JournalEditComponent {
             type: FormFieldType.text,
             required: false,
             width: '45%',
+            startHint: new HintValue(HintPosition.start, ''),
             value: this.journal ? this.journal.data.shortname : ''
           },
           {
@@ -281,7 +280,7 @@ export class JournalEditComponent {
             width: '45%',
             extraContent: {
               multiple: true,
-              selectedTermsIds: this.journal ? this.journal.terms.map(term => {return term.term_id}) : null,
+              selectedTermsIds: this.journal ? this.journal.terms.map(term => { return term.term_id }) : null,
               vocab: VocabulariesInmutableNames.SUBJECTS
             },
           },
@@ -293,7 +292,7 @@ export class JournalEditComponent {
             width: '45%',
             extraContent: {
               multiple: true,
-              selectedTermsIds: this.journal ? this.journal.terms.map(term => {return term.term_id}) : null,
+              selectedTermsIds: this.journal ? this.journal.terms.map(term => { return term.term_id }) : null,
               vocab: VocabulariesInmutableNames.LICENCES
             },
           },
@@ -347,7 +346,7 @@ export class JournalEditComponent {
             width: '70%',
             extraContent: {
               multiple: false,
-              selectedTermsIds: this.journal ? this.journal.terms.map(term => {return term.term_id}) : null,
+              selectedTermsIds: this.journal ? this.journal.terms.map(term => { return term.term_id }) : null,
               vocab: VocabulariesInmutableNames.INTITUTION
             },
           }
@@ -372,14 +371,13 @@ export class JournalEditComponent {
             width: '70%',
             extraContent: {
               multiple: false,
-              selectedTermsIds: this.journal ? this.journal.terms.map(term => {return term.term_id}) : null,
+              selectedTermsIds: this.journal ? this.journal.terms.map(term => { return term.term_id }) : null,
               vocab: VocabulariesInmutableNames.DATABASES
             },
           }
         ]
       }
     ];
-
 
   }
 }

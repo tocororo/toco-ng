@@ -10,8 +10,8 @@
     <mat-label> {{content.label}} <span *ngIf="content.required">*</span></mat-label>
     <input matInput id="'inputId-'{{content.name}}" type="text" [formControl]="formControl"  [matAutocomplete]="auto" aria-label="Number"/>
     
-    <mat-hint *ngIf="hintState && content.startHint" [align]="start">{{ content.startHint.label }}</mat-hint>
-    <mat-hint *ngIf="!content.startHint" [align]="start">{{ searchText }}</mat-hint>
+    <mat-hint *ngIf="content.startHint" [align]="'start'">{{ content.startHint.label }}</mat-hint>
+    <mat-hint *ngIf="!content.startHint" [align]="'start'">{{ searchText }}</mat-hint>
 
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option.term.name" (click)="addChips(option)" [title]="option.term.name">
@@ -25,7 +25,7 @@
   </mat-form-field>
 </mat-card-subtitle>
 <mat-card-content>
-  <mat-chip-list  class="mat-chip-list-stacked" (input)="handleInput()" fxLayout="row" fxLayoutAlign="start center" style="margin-bottom: .5em" id="chiplist-{{vocab.name}}">
+  <mat-chip-list  class="mat-chip-list-stacked" fxLayout="row" fxLayoutAlign="start center" style="margin-bottom: .5em" id="chiplist-{{vocab.name}}">
     <mat-chip *ngFor="let item of chipsList; let i=index" (removed)="removeChip(i)" [removable]="true">
       {{ getTermNameInATree(item) }} 
       <mat-icon matChipRemove>cancel</mat-icon>

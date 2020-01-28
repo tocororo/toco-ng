@@ -1,7 +1,7 @@
 
 <div class="card-filter" *ngIf="content.extraContent">
 
-  <mat-form-field style="width: 100%;" [formGroup]="controlContainer.control">
+  <mat-form-field style="width: 100%;">
 
     <input matInput [id]="inputId" type="text" [formControl]="formControl" [placeholder]="content.label" [matAutocomplete]="auto" aria-label="Number" formControlName="{{content.name}}"/>
 
