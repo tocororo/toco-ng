@@ -7,9 +7,9 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { CatalogService, TaxonomyService, VocabulariesInmutableNames, SourceService } from '@toco/tools/backend';
 import { MessageHandler, StatusCode, HandlerComponent } from '@toco/tools/core';
-import { Vocabulary, Journal } from '@toco/tools/entities';
+import { Vocabulary, Journal, SourceTypes } from '@toco/tools/entities';
 import { FilterHttpMap } from '@toco/tools/filters';
-import { PanelContent, FormFieldType, HintValue, HintPosition, FormContainerAction, IssnValue } from '@toco/tools/forms';
+import { PanelContent, FormFieldType, HintValue, HintPosition, FormContainerAction, IssnValue, SelectOption } from '@toco/tools/forms';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 
@@ -247,6 +247,36 @@ export class JournalEditComponent {
             required: true,
             width: '100%',
             value: this.journal ? this.journal.data.description : ''
+          },
+
+          {
+            name: 'source_type',
+            label: 'Tipo de Revista',
+            type: FormFieldType.select,
+            required: true,
+            width: '100%',
+            value: this.journal ? this.journal.source_type : '',
+            extraContent: {
+              getOptions: () => { 
+                console.log(this.journal.source_type)
+                console.log(SourceTypes)
+                const opts: SelectOption[] = [
+                  {
+                    value: SourceTypes["SourceTypes.JOURNAL"].value, 
+                    label: SourceTypes["SourceTypes.JOURNAL"].label, 
+                  },
+                  {
+                    value: SourceTypes["SourceTypes.STUDENT"].value, 
+                    label: SourceTypes["SourceTypes.STUDENT"].label, 
+                  },
+                  {
+                    value: SourceTypes["SourceTypes.POPULARIZATION"].value, 
+                    label: SourceTypes["SourceTypes.POPULARIZATION"].label, 
+                  },
+                ];
+                return opts;
+              }
+            }
           },
           {
             name: 'start_year',

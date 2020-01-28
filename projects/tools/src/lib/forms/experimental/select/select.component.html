@@ -1,6 +1,8 @@
-<mat-form-field [formGroup]="content.formGroup">
+<mat-progress-bar *ngIf="!selectOptions" mode="indeterminate"></mat-progress-bar>
+
+<mat-form-field [formGroup]="content.formGroup" *ngIf="selectOptions">
     <mat-label>{{content.label}}</mat-label>
-    <mat-select [formControl]="internalControl">
+    <mat-select [formControl]="internalControl" [value]="content.value">
       <mat-option *ngFor="let option of selectOptions" [value]="option.value">
         {{option.label}}
       </mat-option>

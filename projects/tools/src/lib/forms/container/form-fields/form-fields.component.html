@@ -75,7 +75,10 @@ fxLayoutGap="1em" class="form-field-component" >
 
         <toco-term-parent *ngSwitchCase="formFieldType.term_parent" [content]="field"></toco-term-parent>
 
+        <toco-select *ngSwitchCase="formFieldType.select" [content]="field"></toco-select>
+
         <input-text *ngSwitchDefault [content]="field"></input-text>
+
 
     </ng-container>
 
