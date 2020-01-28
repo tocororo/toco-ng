@@ -1,6 +1,6 @@
 
 import { Entity, EntityBase } from './entity';
-import { Term } from './taxonomy.entity';
+import { TermNode } from './taxonomy.entity';
 
 
 // TODO: las llaves raras son porque el backend lo da asi.. esto es un TODO en el backend, que cuando se resuelva hay que venir aqui.
@@ -28,6 +28,7 @@ export class TermSource extends EntityBase {
     term_id = -1;
     source_id = -1;
     data = '';
+    term ? : TermNode  = null;
 
 }
 

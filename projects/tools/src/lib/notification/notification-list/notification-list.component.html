@@ -26,6 +26,8 @@
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
 </table>
 
+<h1 *ngIf="dataSource">No hay Notificaciones para mostrar</h1>
+
 
 
 <mat-paginator [length]="paginator.length" [pageSize]="paginator.pageSize" [pageSizeOptions]="pageSizeOptions" (page)="getNotificationsListData()">
