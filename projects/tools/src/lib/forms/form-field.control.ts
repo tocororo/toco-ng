@@ -243,6 +243,9 @@ export enum FormFieldType
 
     /** An term parent control. */
     term_parent= 'term_parent',
+
+    /** Generic select control. */
+    select= 'select',
 }
 
 /**

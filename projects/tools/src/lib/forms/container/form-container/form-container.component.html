@@ -1,9 +1,9 @@
 
-<ng-container >
+<ng-container *ngIf="(panels)">
     <!-- *ngFor="let item of items"
         <toco-form-fields fields]="panel.content"></toco-form-fields> -->
 
-<mat-accordion class="toco-form-container" *ngIf="(panels) && (useAccordion)">
+<mat-accordion class="toco-form-container" *ngIf="(useAccordion)">
 
     <mat-expansion-panel *ngFor="let panel of panels; let newStep = index; let count = count"
         [expanded]="step == newStep" (opened)="setStep(newStep)" hideToggle>
@@ -21,12 +21,12 @@
         <toco-form-fields [fields]="panel.content"></toco-form-fields>
 
         <mat-action-row>
-            <button mat-button *ngIf="i > 0" color="warn" (click)="prevStep()">Anterior</button>
-            <button mat-button *ngIf="i != l-1" color="primary" (click)="nextStep()">Siguente</button>
+            <button mat-button *ngIf="newStep > 0" color="warn" (click)="prevStep()">Anterior</button>
+            <button mat-button *ngIf="newStep != count-1" color="primary" (click)="nextStep()">Siguente</button>
             
-            <button *ngIf="i == l-1 && actionButtonIsStepperNext" mat-button matStepperNext color="primary" (click)="doAction()">{{actionLabel}}</button>
+            <!-- <button *ngIf="i == l-1 && actionButtonIsStepperNext" mat-button matStepperNext color="primary" (click)="doAction()">{{actionLabel}}</button> -->
 
-            <button *ngIf="i == l-1 && !actionButtonIsStepperNext" mat-button color="primary" (click)="doAction()">{{actionLabel}}</button>
+            <button *ngIf="newStep == count-1 && actionLabel" mat-button color="primary" (click)="doAction()">{{actionLabel}}</button>
 
 
         </mat-action-row>
@@ -35,36 +35,33 @@
 
 </mat-accordion>
 
-<div *ngIf="(panels) && (!useAccordion)">
-    <mat-card class="toco-form-container">
+<div *ngIf="(!useAccordion)" class="toco-form-container">
+    <div *ngFor="let panel of panels; let i=index; let count = count">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                {{ panel.title }}
+            </mat-card-title>
+            <mat-card-subtitle>
+                {{ panel.description }}
+                <mat-icon>{{ panel.iconName }}</mat-icon>
+            </mat-card-subtitle>
+        </mat-card-header>
+    
         <mat-card-content>
-                <div *ngFor="let panel of panels">
-                        <mat-card-header>
-                            <mat-card-title>
-                                {{ panel.title }}
-                            </mat-card-title>
-                            <mat-card-subtitle>
-                                {{ panel.description }}
-                                <mat-icon>{{ panel.iconName }}</mat-icon>
-                            </mat-card-subtitle>
-                        </mat-card-header>
-                    
-                        <mat-card-content>
-                            <toco-form-fields [fields]="panel.content" ></toco-form-fields>
-                        </mat-card-content>
-                        <mat-divider></mat-divider>
-                </div>
-                
-            <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
-                
-
-                <button *ngIf="actionButtonIsStepperNext" mat-button matStepperNext color="primary" (click)="doAction()">{{actionLabel}}</button>
-
-                <button *ngIf="!actionButtonIsStepperNext" mat-button color="primary" (click)="doAction()">{{actionLabel}}</button>
-
-            </mat-card-actions>
+            <toco-form-fields [fields]="panel.content" ></toco-form-fields>
         </mat-card-content>
+
+        <mat-card-actions  *ngIf="i == count-1 && actionLabel" fxLayout="row" fxLayoutAlign="end center">
+
+            <!-- <button *ngIf="actionButtonIsStepperNext" mat-button matStepperNext color="primary" (click)="doAction()">{{actionLabel}}</button> -->
+
+            <button mat-button color="primary" (click)="doAction()">{{actionLabel}}</button>
+
+        </mat-card-actions>
     </mat-card>
+    <mat-divider></mat-divider>
+    </div>
 </div>
 
 

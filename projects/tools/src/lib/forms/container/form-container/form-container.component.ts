@@ -115,7 +115,8 @@ export class FormContainerComponent implements OnInit, OnDestroy
 
     public ngOnInit(): void
     {
-        if (this.actionLabel == undefined) this.actionLabel = 'Adicionar';
+        // if actionLabel is undefined, means that there is no actionLabel, the user must decide!!!
+        // if (this.actionLabel == undefined) this.actionLabel = 'Adicionar';
 
         this.panels.forEach(panel => {
             panel.content.forEach((element: FormFieldContent) => {
@@ -171,7 +172,9 @@ export class FormContainerComponent implements OnInit, OnDestroy
             });
         });
 
-        this.action.doit(data);
+        if (this.action) {
+            this.action.doit(data);
+        }
 
         if (this.deleteValuesAfterAction) {
             this.panels.forEach(panel => {
