@@ -1,12 +1,14 @@
 
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
-import { Subscription, PartialObserver, timer } from 'rxjs';
+import { Component, OnInit, AfterViewInit, Input, Optional } from '@angular/core';
+import { Subscription, PartialObserver, timer, Observable } from 'rxjs';
 
-import { OAuthService, JwksValidationHandler, OAuthStorage, AuthConfig } from 'angular-oauth2-oidc';
+import { OAuthService, JwksValidationHandler, OAuthStorage, AuthConfig, OAuthResourceServerErrorHandler, OAuthModuleConfig } from 'angular-oauth2-oidc';
 
 import { AuthenticationService } from './authentication.service';
 import { EnvService } from '@tocoenv/tools/env.service';
 import { Router } from '@angular/router';
+import { HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpInterceptor } from '@angular/common/http';
+import { finalize, tap } from 'rxjs/operators';
 
 // import { authConfig } from './auth-config';
 

@@ -1,7 +1,7 @@
 <mat-progress-bar mode="indeterminate" color="accent" *ngIf="loading" style="margin-bottom: 1em;"></mat-progress-bar>
 
 <div *ngIf="journal != undefined" fxLayout="row wrap" style="margin: 1em;">
-    <!-- ournal Information -->
+    <!-- Journal Information -->
     <mat-card fxFlex="1 2 calc(15em + 20px)" style="margin: .5em;">
         <mat-card-header>
 
@@ -24,7 +24,9 @@
             </mat-card-subtitle>
 
         </mat-card-header>
+
         <mat-divider [inset]="true" style="margin-bottom: 1em; margin-top: 1em;"></mat-divider>
+
         <mat-card-content>
 
             <label *ngIf="journal.data.issn" style="font-weight: bold;">ISSN: </label>
@@ -77,54 +79,54 @@
                 [innerHTML]="journal.data.description"></div>
 
         </mat-card-content>
+
         <mat-card-footer>
             <mat-divider [inset]="true" style="margin-bottom: 1em; margin-top: 1em;"></mat-divider>
-            <ng-container *ngFor="let termSource of journal.terms">
-                <p *ngIf="termSource.term.term.vocabulary_id == vocabularies.INTITUTION" style="padding-left: 1em;">
+            <ng-container *ngFor="let termSource of institutionTerms">
+                <p style="padding-left: 1em;">
                     <mat-label style="font-weight: bold;"> Institución: </mat-label> {{ termSource.term.term.name }}
                 </p>
             </ng-container>
 
-            <ng-container *ngFor="let termSource of journal.terms">
-                <p *ngIf="termSource.term.term.vocabulary_id == vocabularies.DB_GROUPS" style="padding-left: 1em;">
+            <ng-container *ngFor="let termSource of groupTerms">
+                <p style="padding-left: 1em;">
                     <mat-label style="font-weight: bold;"> Grupo: </mat-label> {{ termSource.term.term.name }}
                 </p>
             </ng-container>
 
-            <ng-container *ngFor="let termSource of journal.terms">
-                <p *ngIf="termSource.term.term.vocabulary_id == vocabularies.PROVINCES" style="padding-left: 1em;">
+            <ng-container *ngFor="let termSource of provinceTerms">
+                <p style="padding-left: 1em;">
                     <mat-label style="font-weight: bold;"> Provincia: </mat-label> {{ termSource.term.term.name }}
                 </p>
             </ng-container>
 
-            <ng-container *ngFor="let termSource of journal.terms">
-                <p *ngIf="termSource.term.term.vocabulary_id == vocabularies.LICENCES" style="padding-left: 1em;">
+            <ng-container *ngFor="let termSource of licenceTerms">
+                <p style="padding-left: 1em;">
                     <mat-label style="font-weight: bold;"> Licencia: </mat-label> {{ termSource.term.term.name }}
                 </p>
             </ng-container>
 
-            <mat-card style="margin: 1em; background-color: #e6e6e6ab;">
+            <mat-card *ngIf="subjectTerms.length > 0" style="margin: 1em; background-color: #e6e6e6ab;">
                 <mat-card-header>
                     <mat-card-title> Materias:</mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
                     <mat-chip-list aria-label="Materias" >
-                        <ng-container *ngFor="let termSource of journal.terms">
-                            <mat-chip *ngIf="termSource.term.term.vocabulary_id == vocabularies.SUBJECTS">{{ termSource.term.term.name }}</mat-chip>
+                        <ng-container *ngFor="let termSource of subjectTerms">
+                            <mat-chip>{{ termSource.term.term.name }}</mat-chip>
                         </ng-container>
                       </mat-chip-list>
                 </mat-card-content>
             </mat-card>
 
-            <mat-card style="margin: 1em; background-color: #e6e6e6ab;">
+            <mat-card *ngIf="dataBaseTerms.length > 0" style="margin: 1em; background-color: #e6e6e6ab;">
                 <mat-card-header>
                     <mat-card-title> Bases de Datos:</mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
                     <mat-accordion>
-                        <ng-container *ngFor="let termSource of journal.terms">
-                            <mat-expansion-panel *ngIf="termSource.term.term.vocabulary_id == vocabularies.DATABASES"
-                                (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                        <ng-container *ngFor="let termSource of dataBaseTerms">
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
                                         {{ termSource.term.term.name }}
@@ -146,26 +148,30 @@
 
     <!-- proves if it has version to review -->
     <!-- <div *ngIf="!journal.version_to_review"> -->
-    <mat-card
-        *ngIf="!journal.version_to_review && journal.versions != undefined && journal.versions.length != 0 && journal.versions[0].data"
-        fxFlex="1 2 calc(15em + 20px)" style="margin: .5em;">
+    <mat-card *ngIf="!journal.version_to_review && journalLastVersion != undefined && journalLastVersion.data" fxFlex="1 2 calc(15em + 20px)" style="margin: .5em;">
+
         <mat-card-header>
 
-            <!-- <img mat-card-avatar *ngIf="journal.versions[0].data.logo; else logotemplate" [style.background-size]="'cover'" src="journal.versions[0].data.logo">
+            <!-- <img mat-card-avatar *ngIf="journalLastVersion.data.logo; else logotemplate" [style.background-size]="'cover'" src="journalLastVersion.data.logo">
             <ng-template #logotemplate>
                 <img mat-card-avatar [src]="defaultLogo" alt="">
             </ng-template> -->
 
-            <mat-card-title *ngIf="journal.versions[0].data.title">
+            <mat-card-title *ngIf="journalLastVersion.data.title">
                 <ng-container *ngIf="journal.source_type == 'SourceType.JOURNAL'">
                     Revista
                 </ng-container>
-                {{journal.versions[0].data.title}}
+                {{journalLastVersion.data.title}}
+                <mat-icon class="mat-18" color="accent" *ngIf="journal.name && journal.name !== journalLastVersion.data.title" matTooltip="Tiene cambios">notifications</mat-icon>
             </mat-card-title>
 
             <mat-card-subtitle>
-                <label *ngIf="journal.versions[0].data.subtitle"> {{journal.versions[0].data.subtitle}} </label>
-                <label *ngIf="journal.versions[0].data.shortname"> {{journal.versions[0].data.shortname}} </label>
+                <!-- subtitle -->
+                <mat-label *ngIf="journalLastVersion.data.subtitle"> {{journalLastVersion.data.subtitle}} </mat-label>
+                <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.subtitle !== '' && journal.data.subtitle !== journalLastVersion.data.subtitle" matTooltip="Tiene cambios">notifications</mat-icon>
+                <!-- shortname -->
+                <mat-label *ngIf="journalLastVersion.data.shortname"> {{journalLastVersion.data.shortname}} </mat-label>
+                <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.shortname !== '' && journal.data.shortname !== journalLastVersion.data.shortname" matTooltip="Tiene cambios">notifications</mat-icon>
             </mat-card-subtitle>
 
         </mat-card-header>
@@ -173,81 +179,102 @@
 
         <mat-card-content>
 
-            <label style="font-weight: bold;">ISSN: </label>
+            <mat-label *ngIf="journalLastVersion.data.issn" style="font-weight: bold;">ISSN: </mat-label>
             <div style="margin-left: .8em;">
-                <p *ngIf="journal.versions[0].data.issn.p">
-                    <label>Impreso: </label> {{journal.versions[0].data.issn.p}}
+
+                <p *ngIf="journalLastVersion.data.issn.p">
+                    <mat-label>Impreso: </mat-label> {{journalLastVersion.data.issn.p}}
+                    <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.issn.p !== '' && journal.data.issn.p !== journalLastVersion.data.issn.p" matTooltip="Tiene cambios">notifications</mat-icon>
                 </p>
-                <p *ngIf="journal.versions[0].data.issn.e">
-                    <label>Electrónico</label> {{journal.versions[0].data.issn.e}}
+
+                <p *ngIf="journalLastVersion.data.issn.e">
+                    <mat-label>Electrónico</mat-label> {{journalLastVersion.data.issn.e}}
+                    <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.issn.e !== '' && journal.data.issn.e !== journalLastVersion.data.issn.e" matTooltip="Tiene cambios">notifications</mat-icon>
                 </p>
-                <p *ngIf="journal.versions[0].data.issn.l">
-                    <label>De enlace</label> {{journal.versions[0].data.issn.l}}
+
+
+                <p *ngIf="journalLastVersion.data.issn.l">
+                    <mat-label>De enlace</mat-label> {{journalLastVersion.data.issn.l}}
+                    <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.issn.l !== '' && journal.data.issn.l !== journalLastVersion.data.issn.l" matTooltip="Tiene cambios">notifications</mat-icon>
                 </p>
+
             </div>
 
-            <p *ngIf="journal.versions[0].data.rnps">
-                <label style="font-weight: bold;"> RNPS: </label> {{journal.versions[0].data.rnps}}
+            <p *ngIf="journalLastVersion.data.rnps">
+                <mat-label style="font-weight: bold;"> RNPS: </mat-label> {{journalLastVersion.data.rnps}}
+                <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.rnps !== '' && journal.data.rnps !== journalLastVersion.data.rnps" matTooltip="Tiene cambios">notifications</mat-icon>
             </p>
 
-            <p *ngIf="journal.versions[0].data.url">
-                <label style="font-weight: bold;"> URL: </label> {{journal.versions[0].data.url}}
+            <p *ngIf="journalLastVersion.data.url">
+                <mat-label style="font-weight: bold;"> URL: </mat-label> {{journalLastVersion.data.url}}
+                <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.url !== '' && journal.data.url !== journalLastVersion.data.url" matTooltip="Tiene cambios">notifications</mat-icon>
             </p>
 
-            <p *ngIf="journal.versions[0].data.email">
-                <label style="font-weight: bold;"> Email: </label> {{journal.versions[0].data.email}}
+            <p *ngIf="journalLastVersion.data.email">
+                <mat-label style="font-weight: bold;"> Email: </mat-label> {{journalLastVersion.data.email}}
+                <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.email !== '' && journal.data.email !== journalLastVersion.data.email" matTooltip="Tiene cambios">notifications</mat-icon>
             </p>
 
-            <p *ngIf="journal.versions[0].data.seriadas_cubanas">
-                <label style="font-weight: bold;"> Seriadas Cubanas: </label>
-                <a href="journal.versions[0].data.seriadas_cubanas">{{journal.versions[0].data.seriadas_cubanas}}</a>
+            <p *ngIf="journalLastVersion.data.seriadas_cubanas">
+                <mat-label style="font-weight: bold;"> Seriadas Cubanas: </mat-label>
+                <a href="journalLastVersion.data.seriadas_cubanas">{{journalLastVersion.data.seriadas_cubanas}}</a>
+                <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.seriadas_cubanas !== '' && journal.data.seriadas_cubanas !== journalLastVersion.data.seriadas_cubanas" matTooltip="Tiene cambios">notifications</mat-icon>
             </p>
 
-            <p *ngIf="journal.versions[0].data.purpose">
-                <label style="font-weight: bold;"> Propósito: </label> {{journal.versions[0].data.purpose}}
+            <p *ngIf="journalLastVersion.data.purpose">
+                <mat-label style="font-weight: bold;"> Propósito: </mat-label> {{journalLastVersion.data.purpose}}
+                <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.purpose !== '' && journal.data.purpose !== journalLastVersion.data.purpose" matTooltip="Tiene cambios">notifications</mat-icon>
             </p>
 
-            <p *ngIf="journal.versions[0].data.start_year">
-                <label style="font-weight: bold;"> Año de Inicio: </label> {{journal.versions[0].data.start_year}}
+            <p *ngIf="journalLastVersion.data.start_year">
+                <mat-label style="font-weight: bold;"> Año de Inicio: </mat-label> {{journalLastVersion.data.start_year}}
+                <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.start_year !== '' && journal.data.start_year !== journalLastVersion.data.start_year" matTooltip="Tiene cambios">notifications</mat-icon>
             </p>
 
-            <p *ngIf="journal.versions[0].data.end_year">
-                <label style="font-weight: bold;"> Año de Fin: </label> {{journal.versions[0].data.end_year}}
+            <p *ngIf="journalLastVersion.data.end_year">
+                <mat-label style="font-weight: bold;"> Año de Fin: </mat-label> {{journalLastVersion.data.end_year}}
+                <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.end_year !== '' && journal.data.end_year !== journalLastVersion.data.end_year" matTooltip="Tiene cambios">notifications</mat-icon>
             </p>
 
-            <p *ngIf="journal.versions[0].data.frequency">
-                <label style="font-weight: bold;"> Frecuencia de Publicación: </label>
-                {{journal.versions[0].data.frequency}}
+            <p *ngIf="journalLastVersion.data.frequency">
+                <mat-label style="font-weight: bold;"> Frecuencia de Publicación: </mat-label>
+                {{journalLastVersion.data.frequency}}
+                <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.frequency !== '' && journal.data.frequency !== journalLastVersion.data.frequency" matTooltip="Tiene cambios">notifications</mat-icon>
             </p>
 
-            <div *ngIf="journal.versions[0].data.description" class="e2e-inner-html-bound  text-align-justify"
-                [innerHTML]="journal.versions[0].data.description"></div>
+            <div *ngIf="journalLastVersion.data.description" class="e2e-inner-html-bound  text-align-justify" [innerHTML]="journalLastVersion.data.description">
+            </div>
+            <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.description !== '' && journal.data.description !== journalLastVersion.data.description" matTooltip="Tiene cambios">notifications</mat-icon>
 
         </mat-card-content>
 
-        <mat-card-footer>
+        <!-- <mat-card-footer>
             <mat-divider [inset]="true" style="margin-bottom: 1em; margin-top: 1em;"></mat-divider>
-            <ng-container *ngFor="let termSource of journal.versions[0].terms">
+            <ng-container *ngFor="let termSource of journalVersions[0].terms">
                 <p *ngIf="termSource.term.term.vocabulary_id == vocabularies.INTITUTION" style="padding-left: 1em;">
                     <mat-label style="font-weight: bold;"> Institución: </mat-label> {{ termSource.term.term.name }}
+                    <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.term.name !== '' && journal.data.term.name !== termSource.term.term.name" matTooltip="Tiene cambios">notifications</mat-icon>
                 </p>
             </ng-container>
 
-            <ng-container *ngFor="let termSource of journal.versions[0].terms">
+            <ng-container *ngFor="let termSource of journalVersions[0].terms">
                 <p *ngIf="termSource.term.term.vocabulary_id == vocabularies.DB_GROUPS" style="padding-left: 1em;">
                     <mat-label style="font-weight: bold;"> Grupo: </mat-label> {{ termSource.term.term.name }}
+                    <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.term.name !== '' && journal.data.term.name !== termSource.term.term.name" matTooltip="Tiene cambios">notifications</mat-icon>
                 </p>
             </ng-container>
 
-            <ng-container *ngFor="let termSource of journal.versions[0].terms">
+            <ng-container *ngFor="let termSource of journalVersions[0].terms">
                 <p *ngIf="termSource.term.term.vocabulary_id == vocabularies.PROVINCES" style="padding-left: 1em;">
                     <mat-label style="font-weight: bold;"> Provincia: </mat-label> {{ termSource.term.term.name }}
+                    <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.term.name !== '' && journal.data.term.name !== termSource.term.term.name" matTooltip="Tiene cambios">notifications</mat-icon>
                 </p>
             </ng-container>
 
-            <ng-container *ngFor="let termSource of journal.versions[0].terms">
+            <ng-container *ngFor="let termSource of journalVersions[0].terms">
                 <p *ngIf="termSource.term.term.vocabulary_id == vocabularies.LICENCES" style="padding-left: 1em;">
                     <mat-label style="font-weight: bold;"> Licencia: </mat-label> {{ termSource.term.term.name }}
+                    <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.term.name !== '' && journal.data.term.name !== termSource.term.term.name" matTooltip="Tiene cambios">notifications</mat-icon>
                 </p>
             </ng-container>
 
@@ -257,8 +284,10 @@
                 </mat-card-header>
                 <mat-card-content>
                     <mat-chip-list aria-label="Materias" >
-                        <ng-container *ngFor="let termSource of journal.versions[0].terms">
-                            <mat-chip *ngIf="termSource.term.term.vocabulary_id == vocabularies.SUBJECTS">{{ termSource.term.term.name }}</mat-chip>
+                        <ng-container *ngFor="let termSource of journalVersions[0].terms">
+                            <mat-chip *ngIf="termSource.term.term.vocabulary_id == vocabularies.SUBJECTS">{{ termSource.term.term.name }}
+                                <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.term.name !== '' && journal.data.term.name !==termSource.term.term.name" matTooltip="Tiene cambios">notifications</mat-icon>
+                            </mat-chip>
                         </ng-container>
                       </mat-chip-list>
                 </mat-card-content>
@@ -270,7 +299,7 @@
                 </mat-card-header>
                 <mat-card-content>
                     <mat-accordion>
-                        <ng-container *ngFor="let termSource of journal.versions[0].terms">
+                        <ng-container *ngFor="let termSource of journalVersions[0].terms">
                             <mat-expansion-panel *ngIf="termSource.term.term.vocabulary_id == vocabularies.DATABASES"
                                 (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                                 <mat-expansion-panel-header>
@@ -278,10 +307,13 @@
                                         {{ termSource.term.term.name }}
                                     </mat-panel-title>
                                     <mat-panel-description>
-
+                                        <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.term.name !== '' && journal.data.term.name !== termSource.term.term.name" matTooltip="Tiene cambios">notifications</mat-icon>
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
-                                <p *ngIf="termSource.data">{{ termSource.data.url }}</p>
+                                <p *ngIf="termSource.data">
+                                    {{ termSource.data.url }}
+                                    <mat-icon class="mat-18" color="accent" *ngIf="journal.data && journal.data.term.name !== '' && journal.data.term.name !== termSource.term.term.name" matTooltip="Tiene cambios">notifications</mat-icon>
+                                </p>
                             </mat-expansion-panel>
                         </ng-container>
                     </mat-accordion>
@@ -289,7 +321,7 @@
             </mat-card>
 
 
-        </mat-card-footer>
+        </mat-card-footer> -->
     </mat-card>
     <!-- </div> -->
 

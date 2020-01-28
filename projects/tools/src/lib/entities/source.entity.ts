@@ -1,6 +1,6 @@
 
 import { Entity, EntityBase } from './entity';
-import { Term } from './taxonomy.entity';
+import { TermNode } from './taxonomy.entity';
 
 export class SourceData extends EntityBase {
     title = '';
@@ -11,7 +11,7 @@ export class TermSource extends EntityBase {
     term_id = -1;
     source_id = -1;
     data = '';
-    term ? : Term  = null;
+    term ? : TermNode  = null;
 
 }
 
