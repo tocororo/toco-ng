@@ -2,6 +2,7 @@
 import { Entity, EntityBase } from './entity';
 import { Term } from './taxonomy.entity';
 
+
 export class SourceData extends EntityBase {
     title = '';
     description ? = '';

@@ -1,0 +1,8 @@
+<mat-form-field [formGroup]="content.formGroup">
+    <mat-label>{{content.label}}</mat-label>
+    <mat-select [formControl]="internalControl">
+      <mat-option *ngFor="let option of selectOptions" [value]="option.value">
+        {{option.label}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>

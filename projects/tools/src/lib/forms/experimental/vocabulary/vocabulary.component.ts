@@ -26,7 +26,6 @@ import { InputControl } from '../../input/input.control';
 })
 export class VocabularyComponent extends FormFieldControl_Experimental implements OnInit {
 
-    // TODO: Valid.requiered is not working.. 
     internalControl = new FormControl();
 
     //this control is used by the chips,not necessary to expose it
