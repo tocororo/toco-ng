@@ -5,17 +5,17 @@ import { TermNode } from './taxonomy.entity';
 
 // TODO: las llaves raras son porque el backend lo da asi.. esto es un TODO en el backend, que cuando se resuelva hay que venir aqui.
 export const SourceTypes = {
-    "SourceTypes.JOURNAL": { 'label': "Revista Cientifica", 'value': 'SourceTypes.JOURNAL' },
-    "SourceTypes.STUDENT": { 'label': "Revista Cientifico Estudiantil", 'value': "SourceTypes.STUDENT" },
-    "SourceTypes.POPULARIZATION": { 'label': "Revista de Divulgacion", 'value': "SourceTypes.POPULARIZATION" },
-    "SourceTypes.REPOSITORY": { 'label': "Repositorio Institucional", 'value': "SourceTypes.REPOSITORY" },
-    "SourceTypes.WEBSITE": { 'label': "Sitio Web", 'value': "SourceTypes.WEBSITE" },
+    JOURNAL: { 'label': "Revista Cientifica", 'value': 'JOURNAL' },
+    STUDENT: { 'label': "Revista Cientifico Estudiantil", 'value': 'STUDENT' },
+    POPULARIZATION: { 'label': "Revista de Divulgacion", 'value': 'POPULARIZATION' },
+    REPOSITORY: { 'label': "Repositorio Institucional", 'value': 'REPOSITORY' },
+    WEBSITE: { 'label': "Sitio Web", 'value': 'WEBSITE' },
 }
 
 export const SourceStatus = {
-    'SourceStatus.APPROVED': "Aprobado",
-    'SourceStatus.TO_REVIEW': "En revision",
-    'SourceStatus.UNOFFICIAL': "Incluida Extraoficialmente"
+    APPROVED: { 'label': "Aprobado", 'value': 'APPROVED' },
+    TO_REVIEW: { 'label': "En revision", 'value': 'TO_REVIEW'},
+    UNOFFICIAL: { 'label': "Incluida Extraoficialmente", 'value': 'UNOFFICIAL'}
 }
 
 

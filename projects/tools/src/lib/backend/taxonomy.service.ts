@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, PartialObserver, Subject } from 'rxjs';
 
 import { Vocabulary, Term, Response } from '@toco/tools/entities';
@@ -134,9 +134,13 @@ export class TaxonomyService {
       .pipe().subscribe(this.termChangeObserver);
   }
 
-  getTermsTreeByVocab(vocabId): Observable<Response<any>> {
+  getTermsTreeByVocab(vocabId, level=10): Observable<Response<any>> {
+    let params = new HttpParams();
+    const options = {
+      params: params.set('level', level.toString())
+    };
     const req = this.env.sceibaApi + this.prefix + '/term/tree/' + vocabId;
-    return this.http.get<Response<any>>(req);
+    return this.http.get<Response<any>>(req, options);
   }
 
   getCurrentUserPermissions(): Observable<Response<any>>{
