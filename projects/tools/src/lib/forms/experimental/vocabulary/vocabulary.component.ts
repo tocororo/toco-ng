@@ -46,7 +46,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental implement
 
     private termsTreeObserver: PartialObserver<Response<any>> = {
         next: (response: Response<any>) => {
-            console.log(this.vocab)
+            // console.log(this.vocab)
 
             this.terms = response.data.terms.terms;
 
