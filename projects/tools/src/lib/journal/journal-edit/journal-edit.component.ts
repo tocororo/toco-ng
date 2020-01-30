@@ -7,7 +7,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { CatalogService, TaxonomyService, VocabulariesInmutableNames, SourceService } from '@toco/tools/backend';
 import { MessageHandler, StatusCode, HandlerComponent } from '@toco/tools/core';
-import { Vocabulary, Journal, SourceTypes, Term } from '@toco/tools/entities';
+import { Vocabulary, Journal, SourceTypes, Term, TermSource } from '@toco/tools/entities';
 import { FilterHttpMap } from '@toco/tools/filters';
 import { PanelContent, FormFieldType, HintValue, HintPosition, FormContainerAction, IssnValue, SelectOption } from '@toco/tools/forms';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -29,6 +29,8 @@ export class JournalEditComponent {
 
   findPanel: PanelContent[] = [];
   findFormGroup: FormGroup;
+
+  stepperStep = 0;
 
   informationPanel: PanelContent[] = [];
   informationFormGroup: FormGroup;
@@ -104,20 +106,36 @@ export class JournalEditComponent {
           }
           const m = new MessageHandler(null, this.dialog);
           m.showMessage(StatusCode.OK, content, HandlerComponent.dialog, title);
+          this.stepperStep += 1;
           this.initJournalPanels();
         });
       }
     };
 
-
     this.informationAction = {
       doit: (data: any) => {
         console.log(data);
         console.log(this.informationFormGroup)
+        this.stepperStep += 1;
+        this.initInstitutionPanel();
       }
     }
 
+    this.institutionAction = {
+      doit: (data: any) => {
+        console.log(data);
+        console.log(this.institutionFormGroup)
+        this.stepperStep += 1;
+      }
+    }
 
+    this.indexAction = {
+      doit: (data: any) => {
+        console.log(data);
+        console.log(this.indexFormGroup)
+        this.stepperStep += 1;
+      }
+    }
   }
 
   resetStepper() {
@@ -130,6 +148,13 @@ export class JournalEditComponent {
     this.indexPanel = [];
     this.indexFormGroup = undefined;
     this.journal = null;
+    
+    this.stepperStep = 0;
+
+  }
+
+  previusStep() {
+    this.stepperStep -= 1;
   }
 
 
@@ -359,6 +384,25 @@ export class JournalEditComponent {
       }
     ];
 
+  }
+
+  initInstitutionPanel() {
+
+    const institution:Term = this.journal.terms.find((termSource:TermSource) => {
+      if(termSource.term.vocabulary_id == VocabulariesInmutableNames.INTITUTION){
+        return termSource;
+      }
+    }).term
+    const hierarchy = 
+    if (institution.parent_id != null) {
+      let institutionLevel2: Term;
+      this.taxonomyService.getTermByUUID(institution.parent_id)
+      .subscribe(response => {
+        institutionLevel2 = response.data.term;
+      });
+    }
+    
+    
     this.institutionFormGroup = this._formBuilder.group({});
 
     this.institutionPanel = [
@@ -406,6 +450,9 @@ export class JournalEditComponent {
         ]
       }
     ];
+  }
+
+  initIndexPanel() {
 
     this.indexFormGroup = this._formBuilder.group({});
 
@@ -433,4 +480,5 @@ export class JournalEditComponent {
     ];
 
   }
+
 }

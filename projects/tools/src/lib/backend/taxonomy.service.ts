@@ -134,6 +134,11 @@ export class TaxonomyService {
       .pipe().subscribe(this.termChangeObserver);
   }
 
+  getTermByUUID(termUUID, level=10): Observable<Response<any>> {
+    const req = this.env.sceibaApi + this.prefix + '/term/' + termUUID;
+    return this.http.get<Response<any>>(req);
+  }
+
   getTermsTreeByVocab(vocabId, level=10): Observable<Response<any>> {
     let params = new HttpParams();
     const options = {
