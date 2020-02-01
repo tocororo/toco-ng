@@ -21,7 +21,7 @@ fxLayoutGap="1em" class="form-field-component" >
                 {{ field.label }}
             </mat-checkbox>
         </ng-container>
-
+<!-- 
         <mat-form-field 
             *ngSwitchCase="formFieldType.textarea"
             [style.width]="field.width"
@@ -37,7 +37,7 @@ fxLayoutGap="1em" class="form-field-component" >
                 [formControlName]="field.name"
                 minRows="20"
             ></textarea>
-        </mat-form-field>
+        </mat-form-field> -->
 
 
         <mat-form-field 
@@ -63,6 +63,8 @@ fxLayoutGap="1em" class="form-field-component" >
                 startView="multi-year"
             ></mat-datepicker>
         </mat-form-field>
+
+        <toco-textarea *ngSwitchCase="formFieldType.textarea" [content]="field"></toco-textarea>
 
         <input-url *ngSwitchCase="formFieldType.url" [content]="field"></input-url>
         

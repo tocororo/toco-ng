@@ -15,8 +15,7 @@ export class JournalResolver implements Resolve<Journal>
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
         let uuid = route.paramMap.get('uuid');
-        console.log('resolve');
-        return this.service.getSourceByUUID(uuid).pipe(
+        return this.service.getSourceByUUIDWithVersions(uuid).pipe(
             take(1),
             map(node => {
                 if (node) {

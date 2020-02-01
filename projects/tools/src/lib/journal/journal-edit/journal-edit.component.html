@@ -34,25 +34,25 @@
         </form>
     </mat-step>
 
-    <mat-step [stepControl]="institutionFormGroup">
+    <mat-step [stepControl]="institutionalFormGroup">
         <ng-template matStepLabel>Institución de la Revista</ng-template>
         <form 
-            [formGroup]="institutionFormGroup"
+            [formGroup]="institutionalFormGroup"
             *ngIf="stepperStep==2"
         >
             <toco-form-container 
-                #institutionPanelContainer
-                [panels]="institutionPanel"
+                #institutionalPanelContainer
+                [panels]="institutionalPanel"
                 [useAccordion]="false"
                 fxLayout="row"
-                [formGroup]="institutionFormGroup"
-                [action]="institutionAction"
+                [formGroup]="institutionalFormGroup"
+                [action]="institutionalAction"
                 [deleteValuesAfterAction]="false"
             ></toco-form-container>
 
             <div>
                 <button mat-raised-button color="accent" matStepperPrevious>Atrás</button>
-                <button mat-raised-button color="primary" matStepperNext (click)="institutionPanelContainer.doAction()">Siguiente</button>
+                <button mat-raised-button color="primary" matStepperNext (click)="institutionalPanelContainer.doAction()">Siguiente</button>
             </div>  
         </form>
     </mat-step>

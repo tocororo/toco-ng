@@ -14,7 +14,11 @@ export interface SelectOption{
 @Component({
   selector: 'toco-select',
   templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss']
+  styleUrls: ['./select.component.scss'],
+  host: {
+    '[style.minWidth]': 'content.minWidth',
+    '[style.width]': 'content.width',
+}
 })
 export class SelectComponent extends FormFieldControl_Experimental implements OnInit {
 
@@ -36,5 +40,8 @@ export class SelectComponent extends FormFieldControl_Experimental implements On
     this.content.formGroup.addControl(this.content.name, this.internalControl);
     this.internalControl.setValue(this.content.value);
   }
-
+  onSelectionChange(){
+    if(this.content.extraContent.selectionChange)
+      this.content.extraContent.selectionChange(this.content.value)
+  }
 }

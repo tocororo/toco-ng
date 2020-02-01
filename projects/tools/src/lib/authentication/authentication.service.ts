@@ -74,6 +74,8 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
         let headers = req.headers.set('Authorization', header);
 
         req = req.clone({ headers });
+        console.log(req.url);
+        
 
         return next.handle(req).pipe(
             catchError((err: HttpErrorResponse) => {

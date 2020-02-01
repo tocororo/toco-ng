@@ -48,7 +48,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental implement
         next: (response: Response<any>) => {
             // console.log(this.vocab)
 
-            this.terms = response.data.terms.terms;
+            this.terms = response.data.tree.term_node;
 
             this.terms.forEach(element => {
                 this.selectOptions = this.selectOptions.concat(this._get_terms(element));
