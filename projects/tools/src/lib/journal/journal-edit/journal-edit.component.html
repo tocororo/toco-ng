@@ -1,22 +1,10 @@
-<toco-form-container 
-    *ngIf="stepperStep==0"
-    [panels]="findPanel"
-    [useAccordion]="false"
-    [formGroup]="findFormGroup"
-    [action]='searchJournalAction'
-    [actionLabel]="'Buscar'"
-    [deleteValuesAfterAction]='true'
-></toco-form-container>
 
-<button mat-button *ngIf="stepperStep>0" (click)="resetStepper()">Comenzar denuevo</button>
+<mat-vertical-stepper [linear]=true #stepper>
 
-<mat-vertical-stepper *ngIf="stepperStep>0" [linear]=true #stepper>
-
-    <mat-step [stepControl]="informationFormGroup">
+    <mat-step *ngIf="informationPanel" [stepControl]="informationFormGroup">
         <ng-template matStepLabel>Completar la Información de la Revista</ng-template>
         <form 
             [formGroup]="informationFormGroup"
-            *ngIf="stepperStep==1"
         >
             <toco-form-container 
                 #informationPanelContainer
@@ -24,7 +12,7 @@
                 [useAccordion]="false"
                 fxLayout="row" 
                 [formGroup]="informationFormGroup"
-                [action]="informationAction"
+                [action]="stepAction1"
                 [deleteValuesAfterAction]="false"
             ></toco-form-container>
 
@@ -34,48 +22,68 @@
         </form>
     </mat-step>
 
-    <mat-step [stepControl]="institutionalFormGroup">
+    <mat-step *ngIf="organizationPanel" [stepControl]="organizationFormGroup">
         <ng-template matStepLabel>Institución de la Revista</ng-template>
         <form 
-            [formGroup]="institutionalFormGroup"
-            *ngIf="stepperStep==2"
+            [formGroup]="organizationFormGroup"
         >
             <toco-form-container 
-                #institutionalPanelContainer
-                [panels]="institutionalPanel"
+                *ngIf="organizationPanel"
+                #organizationPanelContainer
+                [panels]="organizationPanel"
                 [useAccordion]="false"
                 fxLayout="row"
-                [formGroup]="institutionalFormGroup"
-                [action]="institutionalAction"
+                [action]="organizationAction"
                 [deleteValuesAfterAction]="false"
             ></toco-form-container>
 
+            <toco-form-container 
+                *ngIf="institutionPanel"
+                #institutionPanelContainer
+                [panels]="institutionPanel"
+                [useAccordion]="false"
+                fxLayout="row"
+                [action]="institutionAction"
+                [deleteValuesAfterAction]="false"
+            ></toco-form-container>
+
+            <toco-form-container 
+                *ngIf="entityPanel"
+                #entityPanelContainer
+                [panels]="entityPanel"
+                [useAccordion]="false"
+                fxLayout="row"
+                [action]="entityAction"
+                [deleteValuesAfterAction]="false"
+            ></toco-form-container>
+
+
             <div>
                 <button mat-raised-button color="accent" matStepperPrevious>Atrás</button>
-                <button mat-raised-button color="primary" matStepperNext (click)="institutionalPanelContainer.doAction()">Siguiente</button>
+                <button mat-raised-button color="primary" matStepperNext (click)="stepAction2.doit()">Siguiente</button>
             </div>  
         </form>
     </mat-step>
 
-    <mat-step [stepControl]="indexFormGroup">
-        <ng-template matStepLabel>Institución de la Revista</ng-template>
+    <mat-step *ngIf="indexPanel" [stepControl]="indexFormGroup">
+        <ng-template matStepLabel>Indizaciones</ng-template>
         <form 
             [formGroup]="indexFormGroup"
-            *ngIf="stepperStep==3"
         >
             <toco-form-container
                 #indexPanelContainer
                 [panels]="indexPanel"
-                [useAccordion]="false"
+                [useAccordion]="true"
                 fxLayout="row"
                 [formGroup]="indexFormGroup"
                 [action]="indexAction"
+                [actionLabel]="'Adicionar Indizacion'"
                 [deleteValuesAfterAction]="false"
             ></toco-form-container>
 
             <div>
                 <button mat-raised-button color="accent" matStepperPrevious>Atrás</button>
-                <button mat-raised-button color="primary" matStepperNext (click)="indexPanelContainer.doAction()">Siguiente</button>
+                <button mat-raised-button color="primary" matStepperNext (click)="stepAction3.doit()">Siguiente</button>
             </div>
         </form>
     </mat-step>

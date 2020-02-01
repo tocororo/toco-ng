@@ -34,11 +34,9 @@ export class SelectComponent extends FormFieldControl_Experimental implements On
   ngOnInit() {
     this.selectOptions = this.content.extraContent.getOptions();
     this.selectedValue = this.content.value;
-    console.log(this.selectOptions)
-    console.log(this.selectedValue)
-    console.log(this.content.value)
     this.content.formGroup.addControl(this.content.name, this.internalControl);
     this.internalControl.setValue(this.content.value);
+    this.onSelectionChange();
   }
   onSelectionChange(){
     if(this.content.extraContent.selectionChange)

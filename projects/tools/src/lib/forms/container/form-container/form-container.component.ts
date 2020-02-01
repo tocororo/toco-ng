@@ -1,5 +1,5 @@
 
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
 import { PartialObserver, Subscription } from 'rxjs';
 
 import { Entity, Response } from '@toco/tools/entities';
@@ -9,6 +9,7 @@ import { ActionContent } from '../../action/action.control';
 import { FormFieldContent_Experimental } from '../../experimental/form-field.control.experimental';
 import { FormGroup } from '@angular/forms';
 import { FormFieldContent } from '../../form-field.control';
+import { element } from 'protractor';
 
 /**
  * An interface that represents the content of an expansion control.
@@ -36,6 +37,12 @@ export interface PanelContent
     content: (InputContent | ActionContent | FormFieldContent_Experimental)[] | any[];
 
     formGroup: FormGroup;
+
+    /**
+     * action and action labels for each panels
+     */
+    action?: FormContainerAction;
+    actionLabel?: string;
 }
 
 export interface FormContainerAction
@@ -53,7 +60,7 @@ export interface FormContainerAction
     templateUrl: './form-container.component.html',
     styleUrls: ['./form-container.component.scss']
 })
-export class FormContainerComponent implements OnInit, OnDestroy
+export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
 {
     /**
      * The array of panels to show. 
@@ -113,11 +120,7 @@ export class FormContainerComponent implements OnInit, OnDestroy
         this.step = 0;
     }
 
-    public ngOnInit(): void
-    {
-        // if actionLabel is undefined, means that there is no actionLabel, the user must decide!!!
-        // if (this.actionLabel == undefined) this.actionLabel = 'Adicionar';
-
+    private setFormGroupToPanels(){
         this.panels.forEach(panel => {
             panel.content.forEach((element: FormFieldContent) => {
                 element.formGroup = panel.formGroup;
@@ -125,12 +128,25 @@ export class FormContainerComponent implements OnInit, OnDestroy
         });
     }
 
+    public ngOnInit(): void
+    {
+        // if actionLabel is undefined, means that there is no actionLabel, the user must decide!!!
+        // if (this.actionLabel == undefined) this.actionLabel = 'Adicionar';
+        console.log("on INIT", this.panels)
+        this.setFormGroupToPanels();
+    }
+
     // tslint:disable-next-line: indent
     public ngOnDestroy(): void
-    {
+    {   
+        console.log("on DESTROY Call", this.panels)
         this.sendDataUnsubscribe();
     }
 
+    public ngOnChanges(): void{
+        console.log("on CHANGES Call", this.panels)
+        this.setFormGroupToPanels();
+    }
     /**
      * Sets the new expanded panel position.
      * @param newStep The new position.
@@ -185,11 +201,28 @@ export class FormContainerComponent implements OnInit, OnDestroy
         }
     }
 
+
     private sendDataUnsubscribe(): void
     {
         if (this.sendDataSubscription)
         {
             this.sendDataSubscription.unsubscribe();
         }
+    }
+
+    public addPanel(panel: PanelContent){
+        panel.content.forEach( element => {
+            element.formGroup = panel.formGroup;
+        });
+        this.panels.push(panel);
+        
+    }
+    public deletePanel(panelIndex){
+        
+        this.panels[panelIndex].content.forEach( content => {
+            this.panels[panelIndex].formGroup.removeControl(content.name);
+        });
+        this.panels.splice(panelIndex, 1);
+        console.log(this.panels, panelIndex)
     }
 }

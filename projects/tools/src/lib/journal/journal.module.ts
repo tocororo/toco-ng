@@ -12,6 +12,7 @@ import { JournalComponent } from './journal/journal.component';
 import { JournalViewComponent, JournalViewTermComponent, JournalViewInfoComponent } from './journal-view/journal-view.component';
 import { JournalEditComponent } from './journal-edit/journal-edit.component';
 import { JournalHomeComponent } from './journal-home/journal-home.component';
+import { JournalInclusionComponent } from './journal-inclusion/journal-inclusion.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,7 @@ import { JournalHomeComponent } from './journal-home/journal-home.component';
         JournalViewInfoComponent,
         JournalEditComponent,
         JournalHomeComponent, 
-        DialogContentComponent
+        DialogContentComponent, JournalInclusionComponent
     ],
     entryComponents: [
         DialogContentComponent
