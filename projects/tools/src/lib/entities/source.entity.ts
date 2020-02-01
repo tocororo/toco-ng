@@ -27,7 +27,7 @@ export class SourceData extends EntityBase {
 export class TermSource extends EntityBase {
     term_id = -1;
     source_id = -1;
-    data = '';
+    data =  new Object();
     term ? : Term  = null;
 }
 

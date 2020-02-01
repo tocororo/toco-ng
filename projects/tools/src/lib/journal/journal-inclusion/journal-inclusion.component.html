@@ -1,0 +1,13 @@
+<toco-form-container 
+    *ngIf="!journal"
+    [panels]="findPanel"
+    [useAccordion]="false"
+    [formGroup]="findFormGroup"
+    [action]='searchJournalAction'
+    [actionLabel]="'Buscar'"
+    [deleteValuesAfterAction]='true'
+></toco-form-container>
+
+<button mat-button *ngIf="journal" (click)="resetEdit()">Comenzar de nuevo</button>
+
+<toco-journal-edit *ngIf="journal" [journal]="journal"></toco-journal-edit>
