@@ -1,4 +1,8 @@
-echo project name?
-
+echo dame el nombre del proyecto project name?
 read project
-ng build  $project --aot --preserve-symlinks --build-optimizer=true  --verbose  --baseHref https://tocororo.upr.edu.cu/$project --deploy-url https://tocororo.upr.edu.cu/$project/
+
+echo deploy url?
+read url
+
+
+ng build  $project --prod --aot --preserve-symlinks --build-optimizer=true  --verbose  --baseHref $url/$project --deploy-url $url/$project/

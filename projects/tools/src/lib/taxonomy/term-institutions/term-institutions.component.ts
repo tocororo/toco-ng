@@ -11,6 +11,7 @@ import { Term, TermInstitutionData } from '@toco/tools/entities';
 import { PanelContent, FormFieldType, FormContainerAction, FormFieldContent } from '@toco/tools/forms';
 
 import { TaxonomyService, VocabulariesInmutableNames } from '@toco/tools/backend';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 class InstitutionAction implements FormContainerAction {
 
@@ -47,20 +48,34 @@ export class TermInstitutionsComponent implements OnInit {
 
     loading = true;
 
-    public panels: PanelContent[] = [{
-        title: 'Término',
-        description: '',
-        iconName: '',
-        content: []
-    }];
+    public panels: PanelContent[];
+    public formGroup: FormGroup;
     formFieldsContent: FormFieldContent[];
     actionLabel: string;
 
     public action: FormContainerAction;
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: any, public _snackBar: MatSnackBar) {}
+    constructor(
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        public _snackBar: MatSnackBar,
+        private _formBuilder: FormBuilder) {}
 
     ngOnInit() {
+
+        // TODO: esto esta aqui porque tenemos que acabar de manejar los textarea y datepicker
+        this.formGroup = this._formBuilder.group({
+          'description': new FormControl(''),
+          'address': new FormControl(''),
+        });
+
+        this.panels = [{
+            title: 'Término',
+            description: '',
+            iconName: '',
+            formGroup: this.formGroup,
+            content: []
+        }];
+
         if (this.data.service) {
             console.log('if (this.data.service) {');
             (this.data.service as TaxonomyService).getVocabulary(VocabulariesInmutableNames.PROVINCES)

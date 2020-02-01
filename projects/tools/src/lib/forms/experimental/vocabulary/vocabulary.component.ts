@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl, ControlContainer } from '@angular/forms';
+import { FormControl, ControlContainer, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Observable, PartialObserver } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
@@ -9,6 +9,7 @@ import { TaxonomyService } from '@toco/tools/backend';
 
 import { FormFieldControl_Experimental } from '../form-field.control.experimental';
 import { NullAstVisitor } from '@angular/compiler';
+import { InputControl } from '../../input/input.control';
 
 
 /**
@@ -25,6 +26,9 @@ import { NullAstVisitor } from '@angular/compiler';
 })
 export class VocabularyComponent extends FormFieldControl_Experimental implements OnInit {
 
+    internalControl = new FormControl();
+
+    //this control is used by the chips,not necessary to expose it
     formControl = new FormControl();
     inputId: string;
     filteredOptions: Observable<TermNode[]>;
@@ -38,9 +42,11 @@ export class VocabularyComponent extends FormFieldControl_Experimental implement
 
     selectedTermsIds = [];
 
+    searchText = 'Seleccione las opciones';
+
     private termsTreeObserver: PartialObserver<Response<any>> = {
         next: (response: Response<any>) => {
-            console.log(this.vocab)
+            // console.log(this.vocab)
 
             this.terms = response.data.terms.terms;
 
@@ -65,7 +71,15 @@ export class VocabularyComponent extends FormFieldControl_Experimental implement
 
     ngOnInit() {
 
-        this.content.formGroup.addControl(this.content.name, this.formControl);
+        this.content.formGroup.addControl(this.content.name, this.internalControl);
+
+        if (this.content.required) {
+            this.internalControl.setValidators((control: AbstractControl): ValidationErrors | null => {
+                return this.content.value.length == 0 
+                    ? { 'requiredTerms': 'No Terms Selected' } 
+                    : null;
+            });
+        }
 
         this.inputId = this.content.label.trim().toLowerCase();
         if (this.content.extraContent) {
@@ -90,11 +104,33 @@ export class VocabularyComponent extends FormFieldControl_Experimental implement
         }
     }
 
+    private setValidation(){
+        if (this.internalControl.valid){
+            this.formControl.setErrors(null);
+        }else{
+            this.formControl.setErrors({requiered:true});
+        }
+    }
+    private addTermToValue(termId: number){
+        if (this.multiple) {
+            this.content.value.unshift(termId);
+        } else {
+            this.content.value = [termId];
+        }
+        this.internalControl.setValue(this.content.value);
+        this.setValidation();
+    }
+    private removeTermFromValue(termId: number){
+        this.content.value = (this.content.value as []).filter(id => id !== termId);
+        this.internalControl.setValue(this.content.value);
+        this.setValidation();
+    }
+
     private _updateFilteredOptions() {
         this.filteredOptions = this.formControl.valueChanges.pipe<string, TermNode[]>(
             startWith(''),
             map(value => {
-                const filterValue = value.toLowerCase();
+                const filterValue = (value)? value.toLowerCase() : '';
                 return this.selectOptions.filter(option => option.term.name.toLowerCase().includes(filterValue));
             }));
     }
@@ -103,7 +139,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental implement
         let result: TermNode[] = [];
         node.parent = parent;
         if ( ( this.content.extraContent.selectedTermsIds as []).some(id => id === node.term.id)) {
-            this.content.value.push(node.term.id);
+            this.addTermToValue(node.term.id);
             this.chipsList.push(node);
         } else {
             result.push(node);
@@ -116,32 +152,29 @@ export class VocabularyComponent extends FormFieldControl_Experimental implement
     }
 
     addChips(value: TermNode) {
-        console.log(this.vocab.name, value.term.name)
         if (this.multiple) {
             this.chipsList.unshift(value);
-            this.content.value.unshift(value.term.id);
         } else {
             // if not is multiple, then the element in the chipsList goes back to the options
             if (this.chipsList.length > 0) {
                 this.selectOptions.push(this.chipsList[0]);
             }
-
             this.chipsList = [value];
-            this.content.value = [value.term.id];
         }
+        this.addTermToValue(value.term.id);
         this.selectOptions = this.selectOptions.filter(option => option.term.id !== value.term.id);
 
         this.formControl.setValue('');
+        // document.getElementById(this.inputId).blur();
         this._updateFilteredOptions();
-        document.getElementById(this.inputId).blur();
 
     }
 
     removeChip(index: number) {
         this.selectOptions.push(this.chipsList[index]);
-        this._updateFilteredOptions();
-        this.content.value = (this.content.value as []).filter(id => id !== this.chipsList[index].term.id);
+        this.removeTermFromValue(this.chipsList[index].term.id)
         this.chipsList.splice(index, 1);
+        this._updateFilteredOptions();
     }
 
     getTermNameInATree(node:TermNode){

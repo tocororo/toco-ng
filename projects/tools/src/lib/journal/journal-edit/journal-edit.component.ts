@@ -7,38 +7,12 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { CatalogService, TaxonomyService, VocabulariesInmutableNames, SourceService } from '@toco/tools/backend';
 import { MessageHandler, StatusCode, HandlerComponent } from '@toco/tools/core';
-import { Vocabulary, Journal } from '@toco/tools/entities';
+import { Vocabulary, Journal, SourceTypes, Term, TermSource } from '@toco/tools/entities';
 import { FilterHttpMap } from '@toco/tools/filters';
-import { PanelContent, FormFieldType, HintValue, HintPosition, FormContainerAction } from '@toco/tools/forms';
-import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+import { PanelContent, FormFieldType, HintValue, HintPosition, FormContainerAction, IssnValue, SelectOption } from '@toco/tools/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 
-class SearchJournalByIdentifiersAction implements FormContainerAction {
-  constructor(private service: CatalogService, private journalFound: Function) { }
-
-  doit(data: any): void {
-    const rnps = data.rnps;
-    const httpParams = Array<FilterHttpMap>();
-    
-    console.log(data)
-    
-
-    httpParams.push(new FilterHttpMap('issn', data.idenfifier));
-    httpParams.push(new FilterHttpMap('rnps', data.idenfifier));
-    httpParams.push(new FilterHttpMap('url', data.idenfifier));
-    httpParams.push(new FilterHttpMap('title', data.idenfifier));
-
-    
-    this.service.getJournalsPage(10, 0, httpParams)
-      .subscribe(response => {
-        if (response.data && response.data.sources.count === 1) {
-          this.journalFound(response.data.sources.data[0]);
-        } else {
-          this.journalFound(null);
-        }
-      });
-  }
-}
 
 @Component({
   selector: 'toco-journal-edit',
@@ -56,16 +30,22 @@ export class JournalEditComponent {
   findPanel: PanelContent[] = [];
   findFormGroup: FormGroup;
 
+  stepperStep = 0;
+
   informationPanel: PanelContent[] = [];
   informationFormGroup: FormGroup;
+  informationAction: FormContainerAction;
 
   institutionPanel: PanelContent[] = [];
   institutionFormGroup: FormGroup;
+  institutionAction: FormContainerAction;
 
   indexPanel: PanelContent[] = [];
   indexFormGroup: FormGroup;
+  indexAction: FormContainerAction;
 
-  public searchJournalAction: SearchJournalByIdentifiersAction;
+  public searchJournalAction: FormContainerAction;
+
 
 
   licences: Vocabulary;
@@ -80,6 +60,7 @@ export class JournalEditComponent {
     private _formBuilder: FormBuilder) { }
 
   ngOnInit() {
+
     this.findFormGroup = this._formBuilder.group({});
     this.findPanel = [
       {
@@ -100,44 +81,90 @@ export class JournalEditComponent {
       }
     ];
 
-    
-    this.searchJournalAction = new SearchJournalByIdentifiersAction(
-      this.catalogService,
-      (journalResponse) => {
-        this.journal = new Journal();
+    this.searchJournalAction = {
 
-        let title = 'Revista NO encontrada';
-        let content = 'Complete la información de la revista...';
+      doit: (data: any) => {
 
-        if (journalResponse) {
-          this.journal.load_from_data(journalResponse);
-          title = 'Revista encontrada';
-          content = 'Compruebe los datos de la revista...';
-          console.log(journalResponse)
-          console.log(this.journal)
-        }
-        this.initJournalPanels();
+        const httpParams = [
+            new FilterHttpMap('issn', data.idenfifier),
+            new FilterHttpMap('rnps', data.idenfifier),
+            new FilterHttpMap('url', data.idenfifier),
+            new FilterHttpMap('title', data.idenfifier)
+        ];
 
-        const m = new MessageHandler(null, this.dialog);
-        m.showMessage(StatusCode.OK, content, HandlerComponent.dialog, title);
-      });
+        this.catalogService.getJournalsPage(10, 0, httpParams)
+        .subscribe(response => {
+
+          let title = 'No hemos encontrado información';
+          let content = 'Debe completar todos los datos solicitados para incluir la revista.';
+          if (response.data && response.data.sources.count === 1) {
+              console.log(response.data);
+            this.journal = new Journal();
+            this.journal.load_from_data(response.data.sources.data[0]);
+            title = 'Tenemos información sobre la revista';
+            content = 'Compruebe y complete todos los datos solicitados para incluir la revista.';
+          }
+          const m = new MessageHandler(null, this.dialog);
+          m.showMessage(StatusCode.OK, content, HandlerComponent.dialog, title);
+          this.stepperStep += 1;
+          this.initJournalPanels();
+        });
+      }
+    };
+
+    this.informationAction = {
+      doit: (data: any) => {
+        console.log(data);
+        console.log(this.informationFormGroup)
+        this.stepperStep += 1;
+        this.initInstitutionPanel();
+      }
+    }
+
+    this.institutionAction = {
+      doit: (data: any) => {
+        console.log(data);
+        console.log(this.institutionFormGroup)
+        this.stepperStep += 1;
+      }
+    }
+
+    this.indexAction = {
+      doit: (data: any) => {
+        console.log(data);
+        console.log(this.indexFormGroup)
+        this.stepperStep += 1;
+      }
+    }
   }
 
   resetStepper() {
     this.informationPanel = [];
     this.informationFormGroup = undefined;
-  
+
     this.institutionPanel = [];
     this.institutionFormGroup = undefined;
-  
+
     this.indexPanel = [];
     this.indexFormGroup = undefined;
+    this.journal = null;
+    
+    this.stepperStep = 0;
+
   }
+
+  previusStep() {
+    this.stepperStep -= 1;
+  }
+
 
   initJournalPanels(): void {
 
+    const descriptionControl = new FormControl('', Validators.required)
+    descriptionControl.setValue(this.journal ? this.journal.data.description : '');
+
     this.informationFormGroup = this._formBuilder.group({
-      'description': new FormControl(''),
+      'description': descriptionControl,
       'start_year': new FormControl(''),
       'end_year': new FormControl(''),
     });
@@ -145,50 +172,6 @@ export class JournalEditComponent {
     this.informationPanel = [
       {
         title: 'Identificadores',
-        description: '',
-        iconName: '',
-        formGroup: this.informationFormGroup,
-        content: [
-          {
-            name: 'issn_p',
-            label: 'ISSN Impreso',
-            type: FormFieldType.issn,
-            required: false,
-            startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Impreso válido.'),
-            width: '25%',
-            value: this.journal ? this.journal.data.issn.p : ''
-          },
-          {
-            name: 'issn_e',
-            label: 'ISSN Electrónico',
-            type: FormFieldType.issn,
-            required: false,
-            startHint: new HintValue(HintPosition.start, 'Escriba un ISSN Electrónico válido.'),
-            width: '25%',
-            value: this.journal ? this.journal.data.issn.e : ''
-          },
-          {
-            name: 'issn_l',
-            label: 'ISSN de Enlace',
-            type: FormFieldType.issn,
-            required: false,
-            startHint: new HintValue(HintPosition.start, 'Escriba un ISSN de Enlace válido.'),
-            width: '25%',
-            value: this.journal ? this.journal.data.issn.l : ''
-          },
-          {
-            name: 'rnps',
-            label: 'RNPS',
-            type: FormFieldType.rnps,
-            required: false,
-            startHint: new HintValue(HintPosition.start, 'Escriba un RNPS válido.'),
-            width: '25%',
-            value: this.journal ? this.journal.data.rnps : ''
-          }
-        ]
-      },
-      {
-        title: 'Informacion de la Revista',
         description: '',
         iconName: '',
         formGroup: this.informationFormGroup,
@@ -202,20 +185,40 @@ export class JournalEditComponent {
             value: this.journal ? this.journal.data.title : ''
           },
           {
-            name: 'subtitle',
-            label: 'Subtítulo',
-            type: FormFieldType.text,
-            required: true,
-            width: '45%',
-            value: this.journal ? this.journal.data.subtitle : ''
+            name: 'issn_p',
+            label: 'ISSN Impreso',
+            type: FormFieldType.issn,
+            required: false,
+            startHint: new HintValue(HintPosition.start, 'XXXX-XXXX'),
+            width: '30%',
+            value: this.journal ? IssnValue.createIssnValueFromString(this.journal.data.issn.p) : null
           },
           {
-            name: 'abbreviation',
-            label: 'Título abreviado',
-            type: FormFieldType.text,
+            name: 'issn_e',
+            label: 'ISSN Electrónico',
+            type: FormFieldType.issn,
+            required: false,
+            startHint: new HintValue(HintPosition.start, 'XXXX-XXXX'),
+            width: '30%',
+            value: this.journal ? IssnValue.createIssnValueFromString(this.journal.data.issn.e) : null
+          },
+          {
+            name: 'issn_l',
+            label: 'ISSN de Enlace',
+            type: FormFieldType.issn,
+            required: false,
+            startHint: new HintValue(HintPosition.start, 'XXXX-XXXX'),
+            width: '30%',
+            value: this.journal ? IssnValue.createIssnValueFromString(this.journal.data.issn.l) : null
+          },
+          {
+            name: 'rnps',
+            label: 'RNPS',
+            type: FormFieldType.rnps,
             required: true,
+            startHint: new HintValue(HintPosition.start, 'Escriba un RNPS válido.'),
             width: '45%',
-            value: this.journal ? this.journal.data.shortname : ''
+            value: this.journal ? this.journal.data.rnps : ''
           },
           {
             name: 'url',
@@ -223,8 +226,35 @@ export class JournalEditComponent {
             type: FormFieldType.url,
             required: true,
             startHint: new HintValue(HintPosition.start, 'Escriba una URL válida.'),
-            width: '50%',
+            width: '45%',
             value: this.journal ? this.journal.data.url : ''
+          },
+        ]
+      },
+      {
+        title: 'Informacion de la Revista',
+        description: '',
+        iconName: '',
+        formGroup: this.informationFormGroup,
+        content: [
+
+          {
+            name: 'subtitle',
+            label: 'Subtítulo',
+            type: FormFieldType.text,
+            required: false,
+            width: '45%',
+            startHint: new HintValue(HintPosition.start, ''),
+            value: this.journal ? this.journal.data.subtitle : ''
+          },
+          {
+            name: 'abbreviation',
+            label: 'Título abreviado',
+            type: FormFieldType.text,
+            required: false,
+            width: '45%',
+            startHint: new HintValue(HintPosition.start, ''),
+            value: this.journal ? this.journal.data.shortname : ''
           },
           {
             name: 'email',
@@ -243,27 +273,41 @@ export class JournalEditComponent {
             width: '100%',
             value: this.journal ? this.journal.data.description : ''
           },
+
           {
             name: 'source_type',
-            label: 'Tipo de revista',
-            type: FormFieldType.text,
+            label: 'Tipo de Revista',
+            type: FormFieldType.select,
             required: true,
-            width: '45%',
-            value: this.journal ? this.journal.source_type : ''
-          },
-          {
-            name: 'source_type',
-            label: 'Sistema',
-            type: FormFieldType.text,
-            required: true,
-            width: '45%',
-            value: this.journal ? this.journal.source_type : ''
+            width: '100%',
+            value: this.journal ? this.journal.source_type : '',
+            extraContent: {
+              getOptions: () => { 
+                console.log(this.journal.source_type)
+                console.log(SourceTypes[this.journal.source_type])
+                const opts: SelectOption[] = [
+                  {
+                    value: SourceTypes.JOURNAL.value, 
+                    label: SourceTypes.JOURNAL.label, 
+                  },
+                  {
+                    value: SourceTypes.STUDENT.value, 
+                    label: SourceTypes.STUDENT.label, 
+                  },
+                  {
+                    value: SourceTypes.POPULARIZATION.value, 
+                    label: SourceTypes.POPULARIZATION.label, 
+                  },
+                ];
+                return opts;
+              }
+            }
           },
           {
             name: 'start_year',
             label: 'Año de inicio',
             type: FormFieldType.datepicker,
-            required: true,
+            required: false,
             width: '30%',
             value: this.journal ? this.journal.data.start_year : ''
           },
@@ -271,7 +315,7 @@ export class JournalEditComponent {
             name: 'end_year',
             label: 'Año de inicio',
             type: FormFieldType.datepicker,
-            required: true,
+            required: false,
             width: '30%',
             value: this.journal ? this.journal.data.end_year : ''
           },
@@ -279,7 +323,7 @@ export class JournalEditComponent {
             name: 'frequency',
             label: 'Frecuencia',
             type: FormFieldType.text,
-            required: true,
+            required: false,
             width: '30%',
             value: this.journal ? this.journal.data.frequency : ''
           },
@@ -291,7 +335,7 @@ export class JournalEditComponent {
             width: '45%',
             extraContent: {
               multiple: true,
-              selectedTermsIds: this.journal ? this.journal.terms.map(term => {return term.term_id}) : null,
+              selectedTermsIds: this.journal ? this.journal.terms.map(term => { return term.term_id }) : null,
               vocab: VocabulariesInmutableNames.SUBJECTS
             },
           },
@@ -303,7 +347,7 @@ export class JournalEditComponent {
             width: '45%',
             extraContent: {
               multiple: true,
-              selectedTermsIds: this.journal ? this.journal.terms.map(term => {return term.term_id}) : null,
+              selectedTermsIds: this.journal ? this.journal.terms.map(term => { return term.term_id }) : null,
               vocab: VocabulariesInmutableNames.LICENCES
             },
           },
@@ -340,6 +384,25 @@ export class JournalEditComponent {
       }
     ];
 
+  }
+
+  initInstitutionPanel() {
+
+    const institution:Term = this.journal.terms.find((termSource:TermSource) => {
+      if(termSource.term.vocabulary_id == VocabulariesInmutableNames.INTITUTION){
+        return termSource;
+      }
+    }).term
+    const hierarchy = 
+    if (institution.parent_id != null) {
+      let institutionLevel2: Term;
+      this.taxonomyService.getTermByUUID(institution.parent_id)
+      .subscribe(response => {
+        institutionLevel2 = response.data.term;
+      });
+    }
+    
+    
     this.institutionFormGroup = this._formBuilder.group({});
 
     this.institutionPanel = [
@@ -350,6 +413,29 @@ export class JournalEditComponent {
         formGroup: this.institutionFormGroup,
         content: [
           {
+            name: 'instFirsLevel',
+            label: 'Organismo',
+            type: FormFieldType.select,
+            required: true,
+            width: '100%',
+            // value: this.journal ? this.journal.source_type : '',
+            extraContent: {
+              getOptions: () => {
+                const opts: SelectOption[] = []
+                this.taxonomyService.getTermsTreeByVocab(VocabulariesInmutableNames.INTITUTION, 0)
+                .subscribe(response => {
+                  response.data.terms.terms.forEach((term: Term) => {
+                    opts.push( {
+                        value: term.id, 
+                        label: term.name, 
+                      });
+                  });
+                });
+                return opts;
+              }
+            }
+          },
+          {
             name: 'institution',
             label: 'Institución',
             type: FormFieldType.vocabulary,
@@ -357,13 +443,16 @@ export class JournalEditComponent {
             width: '70%',
             extraContent: {
               multiple: false,
-              selectedTermsIds: this.journal ? this.journal.terms.map(term => {return term.term_id}) : null,
+              selectedTermsIds: this.journal ? this.journal.terms.map(term => { return term.term_id }) : null,
               vocab: VocabulariesInmutableNames.INTITUTION
             },
           }
         ]
       }
     ];
+  }
+
+  initIndexPanel() {
 
     this.indexFormGroup = this._formBuilder.group({});
 
@@ -381,8 +470,8 @@ export class JournalEditComponent {
             required: false,
             width: '70%',
             extraContent: {
-              multiple: true,
-              selectedTermsIds: this.journal ? this.journal.terms.map(term => {return term.term_id}) : null,
+              multiple: false,
+              selectedTermsIds: this.journal ? this.journal.terms.map(term => { return term.term_id }) : null,
               vocab: VocabulariesInmutableNames.DATABASES
             },
           }
@@ -390,6 +479,6 @@ export class JournalEditComponent {
       }
     ];
 
-
   }
+
 }

@@ -20,6 +20,7 @@ import { InputUrlComponent } from './input/url/url-input.component';
 
 import { VocabularyComponent } from './experimental/vocabulary/vocabulary.component';
 import { TermParentComponent } from './experimental/term-parent/term-parent.component';
+import { SelectComponent } from './experimental/select/select.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { TermParentComponent } from './experimental/term-parent/term-parent.comp
     InputRnpsComponent,
     InputUrlComponent,
     VocabularyComponent,
-    TermParentComponent
+    TermParentComponent,
+    SelectComponent
   ],
 
   imports: [
@@ -52,7 +54,8 @@ import { TermParentComponent } from './experimental/term-parent/term-parent.comp
     InputRnpsComponent,
     InputUrlComponent,
     VocabularyComponent,
-    TermParentComponent
+    TermParentComponent,
+    SelectComponent
   ],
 
   providers: [
