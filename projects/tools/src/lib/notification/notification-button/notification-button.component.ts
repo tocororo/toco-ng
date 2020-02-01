@@ -20,8 +20,7 @@ export class NotificationButtonComponent implements OnInit {
     private timerSuscription: Subscription = null;
     private timerObserver: PartialObserver<number> = {
         next: (_) => {
-            console.log('token',this.oauthStorage);
-            
+
             if (this.oauthStorage.getItem('access_token')){
                 this.service.getNotificationsList(5,0).pipe(
                     catchError(error => {
@@ -31,8 +30,7 @@ export class NotificationButtonComponent implements OnInit {
                     })
                 )
                 .subscribe(response => {
-                    console.log(response);
-                    
+
                     if (response && response.status == "success"){
                         this.count = response.data.notifications.total_not_view;
                         const arr : NotificationInfo[] = response.data.notifications.data;

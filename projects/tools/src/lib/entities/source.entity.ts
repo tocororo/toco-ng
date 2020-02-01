@@ -1,18 +1,18 @@
 
 import { Entity, EntityBase } from './entity';
-import { TermNode } from './taxonomy.entity';
+import { TermNode, Term } from './taxonomy.entity';
 
 export class SourceData extends EntityBase {
     title = '';
     description ? = '';
+    
 }
 
 export class TermSource extends EntityBase {
     term_id = -1;
     source_id = -1;
     data = '';
-    term ? : TermNode  = null;
-
+    term ? : Term  = null;
 }
 
 export class SourceVersion extends Entity {
@@ -21,6 +21,9 @@ export class SourceVersion extends Entity {
     comment = '';
     created_at = new Date();
     is_current = false;
+    reviewed = false;
+    
+    terms ? : Array<Term> = new Array<Term>();
 
     data: SourceData = new SourceData();
 }
