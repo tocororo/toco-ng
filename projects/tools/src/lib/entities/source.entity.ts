@@ -46,7 +46,7 @@ export class Source extends Entity {
     uuid = '';
     name = '';
 
-    terms?: Array<TermSource> = new Array<TermSource>(0);
+    term_sources?: Array<TermSource> = new Array<TermSource>(0);
 
     source_type = '';
     source_status = '';

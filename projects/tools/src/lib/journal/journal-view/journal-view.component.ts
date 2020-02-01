@@ -83,12 +83,12 @@ export class JournalViewComponent implements OnInit, OnChanges {
 
                 this.metadata.setTitleDescription('Revista Científica ' + this.journal.data.title, this.journal.data.description);
 
-                if ( this.journal.terms ){
+                if ( this.journal.term_sources ){
 
-                    this.journal.terms.forEach( ( term: TermSource ) => {
+                    this.journal.term_sources.forEach( ( term: TermSource ) => {
                         console.log(term.term);
                         
-                        switch (term.term.term.vocabulary_id) {
+                        switch (term.term.vocabulary_id) {
                             case this.vocabularies.INTITUTION:
                                 this.institutionTerms.push(term);
                                 break;
