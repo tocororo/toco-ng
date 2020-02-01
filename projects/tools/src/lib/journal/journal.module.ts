@@ -9,7 +9,7 @@ import { SourceService } from '@toco/tools/backend';
 
 import { JournalRoutingModule } from './journal-routing.module';
 import { JournalComponent } from './journal/journal.component';
-import { JournalViewComponent } from './journal-view/journal-view.component';
+import { JournalViewComponent, JournalViewTermComponent, JournalViewInfoComponent } from './journal-view/journal-view.component';
 import { JournalEditComponent } from './journal-edit/journal-edit.component';
 import { JournalHomeComponent } from './journal-home/journal-home.component';
 
@@ -17,6 +17,8 @@ import { JournalHomeComponent } from './journal-home/journal-home.component';
     declarations: [
         JournalComponent,
         JournalViewComponent,
+        JournalViewTermComponent,
+        JournalViewInfoComponent,
         JournalEditComponent,
         JournalHomeComponent, 
         DialogContentComponent

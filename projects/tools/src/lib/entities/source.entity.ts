@@ -29,7 +29,6 @@ export class TermSource extends EntityBase {
     source_id = -1;
     data = '';
     term ? : Term  = null;
-
 }
 
 export class SourceVersion extends Entity {
@@ -38,6 +37,9 @@ export class SourceVersion extends Entity {
     comment = '';
     created_at = new Date();
     is_current = false;
+    reviewed = false;
+    
+    terms ? : Array<Term> = new Array<Term>();
 
     data: SourceData = new SourceData();
 }

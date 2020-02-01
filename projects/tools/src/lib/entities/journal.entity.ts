@@ -1,6 +1,6 @@
 import { Entity, EntityBase } from './entity';
 import { Term } from './taxonomy.entity';
-import { SourceData, Source } from './source.entity';
+import { SourceData, Source, SourceVersion } from './source.entity';
 
 
 export class SocialNetworks  extends EntityBase {
@@ -35,6 +35,12 @@ export class JournalData extends SourceData {
     }
 }
 
+
 export class Journal extends Source {
+  data: JournalData = new JournalData();
+  versions: Array<JournalVersion> = new Array<JournalVersion>();
+}
+
+export class JournalVersion extends SourceVersion {
   data: JournalData = new JournalData();
 }
