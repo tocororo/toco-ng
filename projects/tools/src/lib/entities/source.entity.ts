@@ -3,20 +3,26 @@ import { Entity, EntityBase } from './entity';
 import { TermNode, Term } from './taxonomy.entity';
 
 
-// TODO: las llaves raras son porque el backend lo da asi.. esto es un TODO en el backend, que cuando se resuelva hay que venir aqui.
+
 export const SourceTypes = {
     JOURNAL: { 'label': "Revista Cientifica", 'value': 'JOURNAL' },
     STUDENT: { 'label': "Revista Cientifico Estudiantil", 'value': 'STUDENT' },
     POPULARIZATION: { 'label': "Revista de Divulgacion", 'value': 'POPULARIZATION' },
     REPOSITORY: { 'label': "Repositorio Institucional", 'value': 'REPOSITORY' },
     WEBSITE: { 'label': "Sitio Web", 'value': 'WEBSITE' },
-}
+};
+
+export const SourcePersonRole = {
+  EDITOR: { 'label': "Editor", 'value': 'EDITOR' },
+  MANAGER: { 'label': "Gestor", 'value': 'MANAGER'},
+  DIRECTOR: { 'label': "Director", 'value': 'DIRECTOR'}
+};
 
 export const SourceStatus = {
     APPROVED: { 'label': "Aprobado", 'value': 'APPROVED' },
     TO_REVIEW: { 'label': "En revision", 'value': 'TO_REVIEW'},
     UNOFFICIAL: { 'label': "Incluida Extraoficialmente", 'value': 'UNOFFICIAL'}
-}
+};
 
 
 export class SourceData extends EntityBase {
@@ -38,7 +44,7 @@ export class SourceVersion extends Entity {
     created_at = new Date();
     is_current = false;
     reviewed = false;
-    
+
     terms ? : Array<Term> = new Array<Term>();
 
     data: SourceData = new SourceData();

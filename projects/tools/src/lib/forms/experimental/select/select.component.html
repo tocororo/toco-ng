@@ -1,8 +1,8 @@
 
 <mat-form-field [formGroup]="content.formGroup" *ngIf="selectOptions" [ngStyle]="{'width': '100%'}">
     <mat-label>{{content.label}}</mat-label>
-    <mat-select 
-      [formControl]="internalControl" 
+    <mat-select
+      [formControl]="internalControl"
       [(value)]="content.value"
       (selectionChange)="onSelectionChange()"
     >

@@ -6,6 +6,7 @@ import { MatOption } from '@angular/material';
 export interface SelectOption{
   value: any;
   label: string;
+  // selected?: boolean;
 }
 
 /***
@@ -17,8 +18,8 @@ export interface SelectOption{
   styleUrls: ['./select.component.scss'],
   host: {
     '[style.minWidth]': 'content.minWidth',
-    '[style.width]': 'content.width',
-}
+    '[style.width]': 'content.width'
+  }
 })
 export class SelectComponent extends FormFieldControl_Experimental implements OnInit {
 
@@ -27,19 +28,27 @@ export class SelectComponent extends FormFieldControl_Experimental implements On
   public selectOptions: SelectOption[] = null;
   selectedValue: any;
   algo: MatOption;
-  constructor() { 
+  constructor() {
     super();
   }
 
   ngOnInit() {
     this.selectOptions = this.content.extraContent.getOptions();
     this.selectedValue = this.content.value;
+    // this.selectOptions.forEach(opt => {
+    //   if (opt.value === this.selectedValue) {
+    //     opt.selected = true;
+    //   } else {
+    //     opt.selected = false;
+    //   }
+    // });
     this.content.formGroup.addControl(this.content.name, this.internalControl);
     this.internalControl.setValue(this.content.value);
     this.onSelectionChange();
   }
-  onSelectionChange(){
-    if(this.content.extraContent.selectionChange)
-      this.content.extraContent.selectionChange(this.content.value)
+  onSelectionChange() {
+    if (this.content.extraContent.selectionChange) {
+        this.content.extraContent.selectionChange(this.content.value);
+      }
   }
 }

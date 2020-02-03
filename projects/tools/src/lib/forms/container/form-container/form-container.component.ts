@@ -1,5 +1,5 @@
 
-import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { PartialObserver, Subscription } from 'rxjs';
 
 import { Entity, Response } from '@toco/tools/entities';
@@ -43,6 +43,11 @@ export interface PanelContent
      */
     action?: FormContainerAction;
     actionLabel?: string;
+
+    /**
+     * In case you need an extra value associated with the panel, to identify it or whathever
+     */
+    value?: any;
 }
 
 export interface FormContainerAction
@@ -63,7 +68,7 @@ export interface FormContainerAction
 export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
 {
     /**
-     * The array of panels to show. 
+     * The array of panels to show. TODO: this should be an observable?, any changes in the panels
      */
     @Input()
     public panels: PanelContent[];
@@ -82,7 +87,7 @@ export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
     public entity: Entity;
 
     /**
-     * An string that represents the action label of the last panel. 
+     * An string that represents the action label of the last panel.
      */
     @Input()
     public actionLabel: string;
@@ -91,7 +96,7 @@ export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
     public deleteValuesAfterAction = true;
 
     /**
-     * The current expanded panel position. 
+     * The current expanded panel position.
      */
     public step: number;
 
@@ -138,13 +143,14 @@ export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
 
     // tslint:disable-next-line: indent
     public ngOnDestroy(): void
-    {   
+    {
         console.log("on DESTROY Call", this.panels)
         this.sendDataUnsubscribe();
     }
 
     public ngOnChanges(): void{
         console.log("on CHANGES Call", this.panels)
+
         this.setFormGroupToPanels();
     }
     /**
@@ -215,10 +221,10 @@ export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
             element.formGroup = panel.formGroup;
         });
         this.panels.push(panel);
-        
+
     }
     public deletePanel(panelIndex){
-        
+
         this.panels[panelIndex].content.forEach( content => {
             this.panels[panelIndex].formGroup.removeControl(content.name);
         });
