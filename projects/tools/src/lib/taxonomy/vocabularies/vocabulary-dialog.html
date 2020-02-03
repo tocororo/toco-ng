@@ -1,3 +1,10 @@
+
+
+
+
+<form
+[formGroup]="formGroup"
+>
 <toco-form-container 
     [panels]='panels' 
     [action]='action' 
@@ -5,3 +12,8 @@
     [formGroup]='formGroup'
     [useAccordion]="false"
 ></toco-form-container>
+
+<div>
+    <button mat-raised-button color="primary" (click)="acceptAction()">{{actionLabel}}</button>
+</div>
+</form>

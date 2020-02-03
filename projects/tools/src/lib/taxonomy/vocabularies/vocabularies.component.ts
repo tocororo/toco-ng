@@ -14,27 +14,7 @@ import { FormContainerComponent, PanelContent, FormFieldType, FormContainerActio
 import { TaxonomyService } from '@toco/tools/backend';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 
-class VocabAction implements FormContainerAction {
-    constructor(private service: TaxonomyService, private vocab: Vocabulary, private is_new: boolean, public _snackBar: MatSnackBar) { }
 
-    doit(data: any): void {
-        if (data.name && data.name.trim().length > 0) {
-            this.vocab.name = data.name;
-            this.vocab.human_name = data.human_name;
-            this.vocab.description = data.description;
-            console.log(this.vocab);
-            
-            if (this.is_new) {
-                this.service.newVocabulary(this.vocab);
-            } else {
-                this.service.editVocabulary(this.vocab);
-            }
-        } else {
-            const m = new MessageHandler(this._snackBar);
-            m.showMessage(StatusCode.OK, 'No puede dejar el Identificador con caracteres vacíos.')
-        }
-    }
-}
 
 @Component({
     selector: 'toco-vocabulary-dialog',
@@ -46,6 +26,7 @@ export class VocabularyDialogComponent implements OnInit {
     public formGroup: FormGroup;
     public action: FormContainerAction;
     public actionLabel = 'Adicionar';
+    private isNew = false;
 
     constructor(
         private _formBuilder: FormBuilder,
@@ -55,87 +36,119 @@ export class VocabularyDialogComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.data.service) {
+            this.formGroup = this._formBuilder.group({});
             if (this.data.vocab != null) {
-                this.actionLabel = 'Actualizar';
-                this.action = {
-                    doit(data: any): void {
-                        // const name = this.data.name.trim()
-                        if ((this.formGroup as FormGroup).valid){
-                            this.data.vocab.name = data.name;
-                            this.data.vocab.human_name = data.human_name;
-                            this.data.vocab.description = data.description;
-                            console.log(this.data.vocab);
-                            
-                            this.data.service.editVocabulary(this.data.vocab);
-                        } else {
-                            const m = new MessageHandler(this._snackBar);
-                            m.showMessage(StatusCode.OK, 'No puede dejar el Identificador con caracteres vacíos.')
-                        }
-                    }
-                }; 
+                this.panels = [{
+                    title: 'Vocabulario',
+                    description: '',
+                    iconName: '',
+                    formGroup: this.formGroup,
+                    content: this.getContent(),
+                    // actionLabel: 'Actualizar',
+                    // action: {
+                    //     doit: (d: any) => {
+                    //         // const name = this.data.name.trim()
+    
+                    //         if (this.formGroup.valid){
+                    //             this.data.vocab.name = d.name;
+                    //             this.data.vocab.human_name = d.human_name;
+                    //             this.data.vocab.description = d.description;
+                    //             console.log(this.data.vocab);
+                                
+                    //             this.data.service.editVocabulary(this.data.vocab);
+                    //         } else {
+                    //             const m = new MessageHandler(this._snackBar);
+                    //             m.showMessage(StatusCode.OK, 'No puede dejar el Identificador con caracteres vacíos.')
+                    //         }
+                    //     }
+                    // }
+                    
+                }];
             } else {
                 this.data.vocab = new Vocabulary();
-                this.actionLabel = 'Adicionar';
-                this.action = new VocabAction(this.data.service, this.data.vocab, true, this._snackBar);
-                this.action = {
-                    doit(data: any): void {
-                        // const name = this.data.name.trim()
-                        if ((this.formGroup as FormGroup).valid){
-                            this.data.vocab.name = data.name;
-                            this.data.vocab.human_name = data.human_name;
-                            this.data.vocab.description = data.description;
-                            console.log(this.data.vocab);
-                            
-                            this.data.service.newVocabulary(this.data.vocab);
-                        } else {
-                            const m = new MessageHandler(this._snackBar);
-                            m.showMessage(StatusCode.OK, 'No puede dejar el Identificador con caracteres vacíos.')
-                        }
-                    }
-                };
+                this.isNew = true;
+                this.panels = [{
+                    title: 'Vocabulario',
+                    description: '',
+                    iconName: '',
+                    formGroup: this.formGroup,
+                    content: this.getContent(),
+                    // actionLabel: 'Adicionar',
+                    // action: {
+                    //     doit: (d: any) => {
+                    //         // const name = this.data.name.trim()
+    
+                    //         if (this.formGroup.valid){
+                    //             this.data.vocab.name = d.name;
+                    //             this.data.vocab.human_name = d.human_name;
+                    //             this.data.vocab.description = d.description;
+                    //             console.log(this.data.vocab);
+                                
+                    //             this.data.service.newVocabulary(this.data.vocab);
+                    //         } else {
+                    //             const m = new MessageHandler(this._snackBar);
+                    //             m.showMessage(StatusCode.OK, 'No puede dejar el Identificador con caracteres vacíos.')
+                    //         }
+                    //     }
+                    // }
+                    
+                }];
             }
-            this.formGroup = this._formBuilder.group({});
-            this.panels = [{
-                title: 'Vocabulario',
-                description: '',
-                iconName: '',
-                formGroup: this.formGroup,
-                content: [
-                    {
-                        name: 'name',
-                        label: 'Identificador',
-                        type: FormFieldType.identifier,
-                        required: true,
-                        width: '100%',
-                        value: this.data.vocab.name,
-                        startHint: new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
-                    },
-                    {
-                        name: 'human_name',
-                        label: 'Nombre',
-                        type: FormFieldType.text,
-                        required: false,
-                        width: '100%',
-                        value: this.data.vocab.human_name,
-                        startHint: new HintValue(HintPosition.start, '')
-                    },
-                    {
-                        name: 'description',
-                        label: 'Descripción',
-                        type: FormFieldType.textarea,
-                        required: false,
-                        width: '100%',
-                        value: this.data.vocab.description,
-                        startHint: new HintValue(HintPosition.start, '')
-                    },
-                ]
-            }];
 
         }
     }
-
+    private getContent(){
+        return [
+            {
+                name: 'name',
+                label: 'Identificador',
+                type: FormFieldType.identifier,
+                required: true,
+                width: '100%',
+                value: this.data.vocab.name,
+                startHint: new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
+            },
+            {
+                name: 'human_name',
+                label: 'Nombre',
+                type: FormFieldType.text,
+                required: false,
+                width: '100%',
+                value: this.data.vocab.human_name,
+                startHint: new HintValue(HintPosition.start, '')
+            },
+            {
+                name: 'description',
+                label: 'Descripción',
+                type: FormFieldType.textarea,
+                required: false,
+                width: '100%',
+                value: this.data.vocab.description,
+                startHint: new HintValue(HintPosition.start, '')
+            },
+        ]
+    }
     onNoClick(): void {
         this.dialogRef.close();
+    }
+
+    acceptAction(){
+        if(this.formGroup.valid){
+            console.log('VALID');
+            this.data.vocab.name = this.formGroup.value['name'];
+            this.data.vocab.human_name = this.formGroup['human_name'];
+            this.data.vocab.description = this.formGroup['description'];
+            if (this.isNew) {
+                this.data.service.newVocabulary(this.data.vocab);
+            }else{
+                this.data.service.editVocabulary(this.data.vocab);
+            }
+        }else{
+            console.log('INVALKID');
+            const m = new MessageHandler(this._snackBar);
+            m.showMessage(StatusCode.OK, 'No puede dejar el Identificador con caracteres vacíos.')
+        }
+        
     }
 }
 
