@@ -132,9 +132,39 @@ export class JournalEditComponent implements OnInit {
             // value: this.journal ? IssnValue.createIssnValueFromString(this.journal.data.issn.p) : null
           },
           {
+<<<<<<< HEAD
+            name: 'rnps',
+            label: 'rnps',
+            type: FormFieldType.rnps,
+            required: false,
+            startHint: new HintValue(HintPosition.start, 'Escriba un texto.'),
+            width: '25%'
+          },
+          {
+            name: 'url',
+            label: 'url',
+            type: FormFieldType.url,
+            required: true,
+            startHint: new HintValue(HintPosition.start, 'Escriba un texto.'),
+            width: '25%'
+          },
+          {
+            name: 'email',
+            label: 'email',
+            type: FormFieldType.email,
+            required: false,
+            startHint: new HintValue(HintPosition.start, 'Escriba un texto.'),
+            width: '25%'
+          },
+          {
+            name: 'issn',
+            label: 'issn',
+            type: FormFieldType.issn,
+=======
             name: 'e',
             label: 'ISSN Electrónico',
             type: FormFieldType.text,
+>>>>>>> 581246cf14fe328fd698d5f60e08b865388311c2
             required: false,
             startHint: new HintValue(HintPosition.start, 'XXXX-XXXX'),
             width: '23%',

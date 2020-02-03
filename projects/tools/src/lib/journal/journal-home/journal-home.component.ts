@@ -1,12 +1,12 @@
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { Subscription } from 'rxjs';
 
 import { SourceService } from '@toco/tools/backend';
 import { Common } from '@toco/tools/core';
 import { Response } from '@toco/tools/entities';
-import { TableContent } from '@toco/tools/forms';
+import { TableContent, TableComponent } from '@toco/tools/forms';
 
 export interface PeriodicElement
 {
@@ -38,10 +38,11 @@ export class JournalHomeComponent implements OnInit, OnDestroy
 		next: (value: Response<any>) => {
             console.log(value)
 
+            console.log(value.data);
+
             this.content = {
-                /* Initializes the `dataSource`. */
-                //'dataSource': new MatTableDataSource([ ]),
-                'dataSource': new MatTableDataSource(value.data.sources),
+                'dataSource': new MatTableDataSource([]),
+                //'dataSource': new MatTableDataSource(value.data.sources),
                 'columnsObjectProperty': ['name', 'source_status', 'version_to_review'],
                 'columnsHeaderText': ['Nombre', 'Estatus', 'Cambios a Revisar'],
                 'propertyNameToNavigate': "uuid",
@@ -50,12 +51,34 @@ export class JournalHomeComponent implements OnInit, OnDestroy
                 //'hidePageSize': true,
                 'showFirstLastButtons': true
             };
+
+            /* Initializes the `dataSource`. */
+            //this.content.dataSource = new MatTableDataSource([]);
+            //this.content.dataSource = new MatTableDataSource(value.data.sources);
 		},
         error: (err: any) => { Common.logError('initializing journals', JournalHomeComponent.name, err); },
-        complete: () => { Common.logComplete('initializing journals', JournalHomeComponent.name); }
+        complete: () => {
+            /* It finished the loading of the data. */
+            this._tableControl.loading = false;
+
+            // this.content = {
+            //     'dataSource': this.content.dataSource,
+            //     'columnsObjectProperty': this.content.columnsObjectProperty,
+            //     'columnsHeaderText': this.content.columnsHeaderText,
+            //     'propertyNameToNavigate': this.content.propertyNameToNavigate,
+            //     'pageSize': this.content.pageSize,
+            //     //'hidePageSize': true,
+            //     'showFirstLastButtons': this.content.showFirstLastButtons
+            // };
+
+            Common.logComplete('initializing journals', JournalHomeComponent.name);
+        }
 	};
 	
     private _journalsSubscription: Subscription = null;
+
+    @ViewChild(TableComponent, { static: true })
+    private _tableControl: TableComponent;
 
     /**
      * The journals list. 
@@ -67,6 +90,18 @@ export class JournalHomeComponent implements OnInit, OnDestroy
 
     public ngOnInit(): void
     {
+        /* It begins the loading of the data. */
+        this._tableControl.loading = true;
+
+        // this.content = {
+        //     'columnsObjectProperty': ['name', 'source_status', 'version_to_review'],
+        //     'columnsHeaderText': ['Nombre', 'Estatus', 'Cambios a Revisar'],
+        //     'propertyNameToNavigate': "uuid",
+        //     'pageSize': 10,
+        //     //'hidePageSize': true,
+        //     'showFirstLastButtons': true
+        // };
+
         /* Gets the journals list. */
         this._journalsSubscription = this._souceService.getMySources()
             .subscribe(this._journalsObserver);

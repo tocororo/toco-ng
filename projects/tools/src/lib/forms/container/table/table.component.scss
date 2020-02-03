@@ -2,22 +2,162 @@
 table
 {
     width: 100%;
+    padding: 2em 1em 0 1em;
+    //min-width: 400px;
 }
 
-.row-empty-table-information, .row-hover
+tr.mat-header-row
+{
+    height: 54px;
+}
+
+tr.mat-row,
+tr.mat-footer-row
+{
+    height: 46px;
+}
+
+.mat-cell-mat-icon
+{
+    vertical-align: middle;
+}
+
+th
+{
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+    background-color: rgba(245, 247, 247, 1) !important;
+    border-top: 1px solid rgba(189, 195, 199, 1)/*green*/;
+    border-bottom: 1px solid transparent /*rgba(189, 195, 199, 1)*//*green*/;
+}
+
+th:first-of-type
+{
+    border-left: 1px solid rgba(189, 195, 199, 1)/*green*/;
+}
+
+th:last-of-type
+{
+    border-right: 1px solid rgba(189, 195, 199, 1)/*green*/;
+}
+
+th:not(:last-of-type)::before
+{
+    content: " ";
+    position: absolute;
+    top: 0;
+    right: 0;
+    //box-sizing: border-box;
+    height: 28px;
+    margin-top: 12px;
+    text-indent: -2000px;
+    //border-right: 1px solid rgba(217, 221, 223, 1);
+    border-right: 1px solid rgba(189, 195, 199, 1);
+    outline: none;
+}
+
+td
+{
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+
+    /* Resolves the trembling problem. */
+    border-top: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-left: 1px solid transparent;
+    border-bottom: 1px solid rgba(217, 220, 222, 1)/*red*/;
+
+    transition: all .3s ease-out;
+}
+
+td:first-of-type
+{
+    border-left: 1px solid rgba(189, 195, 199, 1)/*green*/;
+}
+
+tr:first-of-type td
+{
+    border-top: 1px solid rgba(189, 195, 199, 1)/*green*/;
+}
+
+td:last-of-type
+{
+    border-right: 1px solid rgba(189, 195, 199, 1)/*green*/;
+}
+
+tr:last-of-type td
+{
+    border-bottom: 1px solid rgba(189, 195, 199, 1)/*green*/;
+}
+
+td.new-release
+{
+    color: rgba(248, 56, 33, 1);
+}
+
+td.selected-row
+{
+    background-color: rgba(215, 215, 215, 1) !important;
+    color: rgba(17, 0, 255, 1) !important;
+
+    border-top: 1px solid rgba(17, 0, 255, 1) !important;
+    border-right: 1px solid rgba(17, 0, 255, 1) !important;
+    border-bottom: 1px solid rgba(17, 0, 255, 1) !important;
+}
+
+td.selected-row:first-of-type
+{
+    border-left: 1px solid rgba(17, 0, 255, 1) !important;
+}
+
+.loading-table-information
+{
+    margin: 3em auto;
+    cursor: default;
+}
+
+.empty-table-information
+{
+    margin: 6em 0;
+    text-align: center;
+    cursor: default;
+}
+
+tr.row-data
 {
     cursor: pointer;
 }
 
-.row-hover:hover
+tr.row-data:hover td
 {
-    background-color: rgba(119, 119, 119, .8);
+    background-color: rgba(238, 238, 238, 1);
+
+    border-top: 1px solid rgba(17, 0, 255, 1);
+    border-right: 1px solid rgba(17, 0, 255, 1);
+    border-bottom: 1px solid rgba(17, 0, 255, 1);
 }
 
-.row-hover:active
+tr.row-data:hover td:first-of-type
 {
-    background-color: rgba(200, 200, 200, 1);
+    border-left: 1px solid rgba(17, 0, 255, 1);
 }
+
+tr.row-data:active
+{
+    background-color: rgba(238, 238, 238, 1);
+}
+
+/* Cetres the columns. */
+// :host ::ng-deep .mat-sort-header-container
+// { 
+//     display: flex;  
+//     justify-content: center; 
+// }
+
+// th, td
+// {
+//     text-align: center !important;
+// }
 
 th.mat-sort-header-sorted
 {
