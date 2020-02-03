@@ -3,7 +3,7 @@
         {{ title }}
     </a>
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="15px">
-      <a   mat-raised-button color="primary" [routerLink]="['/journal/new']">Adicionar Revista</a>
+      
         <a *ngIf="islogged" mat-raised-button color="primary" [routerLink]="['/journal/new']">Adicionar Revista</a>
 
         <a *ngIf="islogged" mat-raised-button color="primary" [routerLink]="['/journal']" > Mis Revistas </a>

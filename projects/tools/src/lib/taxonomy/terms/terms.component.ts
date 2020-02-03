@@ -49,7 +49,7 @@ export class TermsComponent implements OnInit, OnDestroy{
 
     private termsTreeObserver: PartialObserver<Response<any>> = {
         next: (response: Response<any>) => {
-            this.dataSource.data = response.data.terms.terms;
+            this.dataSource.data = response.data.tree.term_node;
             this.loading = !this.loading;
         },
 
