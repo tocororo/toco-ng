@@ -70,6 +70,8 @@ fxLayoutGap="1em" class="form-field-component" >
         
         <input-email *ngSwitchCase="formFieldType.email" [content]="field"></input-email>
 
+        <input-identifier *ngSwitchCase="formFieldType.identifier" [content]="field"></input-identifier>
+
         <input-issn *ngSwitchCase="formFieldType.issn" [content]="field"></input-issn>
 
         <input-rnps *ngSwitchCase="formFieldType.rnps" [content]="field"></input-rnps>

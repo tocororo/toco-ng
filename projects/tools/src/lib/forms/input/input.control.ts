@@ -197,7 +197,28 @@ export abstract class InputControl extends FormFieldControl
 
         /* Sets the default values. */
 
+        // this.internalControl.setValidators((control: AbstractControl): ValidationErrors | null => {
+        //     console.log((control.value || ''))
+        //     const isWhitespace = (control.value || '').trim().length === 0;
+        //     const isValid = !isWhitespace;
+        //     console.log(isValid)
+        //     return isValid ? null : { 'whitespace': true };
+
+        //     console.log((this.internalControl.value === '' && this.internalControl.value.trim() === ''))
+        //     console.log(this.internalControl.value )
+        //     console.log(this.internalControl.value.trim() )
+        //     const contrim = this.internalControl.value.trim();
+
+        //     console.log(this.internalControl.value.split(' ').length)
+        //     return (this.internalControl.value === '' && this.internalControl.value.trim() === '')
+        //         ? { 'whitespaces': 'If not is empty dont put only spaces.' }
+        //         : null;
+        // });
+        
         this.content.formGroup.addControl(this.content.name, this.internalControl);
+
+
+        
 
         super.init(label, isAbbreviation, alwaysHint);
 

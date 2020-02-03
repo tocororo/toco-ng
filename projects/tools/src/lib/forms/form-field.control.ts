@@ -232,6 +232,9 @@ export enum FormFieldType
     /** An email control. */
     email= 'email',
 
+    /** An identifier control. */
+    identifier= 'identifier',
+
     /** An issn control. */
     issn= 'issn',
     

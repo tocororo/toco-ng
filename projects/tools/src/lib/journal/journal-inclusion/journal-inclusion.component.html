@@ -1,16 +1,22 @@
 <mat-progress-bar mode="indeterminate" *ngIf="loading" color="accent">
 </mat-progress-bar>
 
-<h1>Inclusión de Revista</h1>
+<div style="margin: 1em">
 
-<button
-  mat-raised-button
-  color="accent"
-  *ngIf="!isStartProcess"
-  (click)="resetEdit()"
->
-  Comenzar de nuevo
-</button>
+<div fxLayout="row wrap" fxLayoutAlign="space-between center">
+  <h1>Inclusión de Revista</h1>
+  
+  <button
+    mat-raised-button
+    color="accent"
+    *ngIf="!isStartProcess"
+    (click)="resetEdit()"
+  >
+    Comenzar de nuevo
+  </button>
+
+</div>
+
 
 <toco-form-container
   *ngIf="isStartProcess"
@@ -110,4 +116,5 @@
       </form>
     </mat-step>
   </mat-horizontal-stepper>
+</div>
 </div>

@@ -391,7 +391,7 @@ export class JournalViewComponent implements OnInit {
                     termSouce.term = term;
                     termSouce.data = term.data;
 
-                    this.journal.terms.push(termSouce);
+                    this.journal.term_sources.push(termSouce);
                 }
             });
 
@@ -465,6 +465,7 @@ export class JournalViewInfoComponent implements OnInit{
     }
 
     ngOnInit(): void {
+        console.log(this.journal)
         if ( this.journal == undefined ) this.journal = new Journal();
         
         this.dataBaseTerms = new Array<TermSource>();
@@ -534,7 +535,7 @@ export class JournalViewFieldComponent implements OnInit{
         if ( this.currentJournal == undefined ) this.currentJournal = new JournalVersion();
 
         if ( this.type == undefined ) this.type = JournalDataType.default;
-
+        console.log(this.journal)
     }
 
         /**
@@ -667,7 +668,7 @@ export class JournalViewFieldComponent implements OnInit{
                     termSouce.term = term;
                     termSouce.data = term.data;
 
-                    this.journal.terms.push(termSouce);
+                    this.journal.term_sources.push(termSouce);
                 }
             });
 
