@@ -3,7 +3,7 @@ import { Component, OnInit, Inject, Output, OnDestroy, EventEmitter } from '@ang
 import { HttpErrorResponse } from '@angular/common/http';
 import { of, Subscription, PartialObserver, Observable } from 'rxjs';
 import { catchError, finalize, startWith, map } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -40,10 +40,12 @@ class VocabAction implements FormContainerAction
 export class VocabularyDialogComponent implements OnInit {
 
     public panels: PanelContent[];
+    public formGroup: FormGroup;
     public action: FormContainerAction;
     public actionLabel = 'Adicionar';
 
     constructor(
+      private _formBuilder: FormBuilder,
         public dialogRef: MatDialogRef<FormContainerComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any)
     { }
@@ -58,10 +60,12 @@ export class VocabularyDialogComponent implements OnInit {
                 this.actionLabel = 'Adicionar';
                 this.action = new VocabAction(this.data.service, this.data.vocab, true);
             }
+            this.formGroup = this._formBuilder.group({});
             this.panels = [{
                 title: 'Vocabulario',
                 description: '',
                 iconName: '',
+                formGroup: this.formGroup,
                 content : [
                     {
                         name: 'name',
@@ -231,7 +235,7 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
     }
 
     hasPermission(permission: string, id? :number): boolean{
- 
+
         const userPermission = JSON.parse(this.oautheStorage.getItem('user_permissions'));
         switch (permission) {
             case 'add':
@@ -246,7 +250,7 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
 
                     if ( userPermission.vocabulary_editor_actions){
                     const arr : Array<string> = userPermission.vocabulary_editor_actions;
- 
+
                     if (arr.includes( id.toString() )){
                         return true
                     }
