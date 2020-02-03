@@ -1,31 +1,44 @@
 
-<table mat-table matSort class="mat-elevation-z8" [dataSource]="getDataSource" multiTemplateDataRows>
+<table mat-table matSort class="mat-elevation-z8" [dataSource]="_getDataSource" multiTemplateDataRows>
 
     <!-- The content that is showed when the `dataSource` is not empty. -->
     <ng-container *ngFor="let column of content.columnsObjectProperty; let pos = index" [matColumnDef]="column">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ content.columnsHeaderText[pos] }}</th>
-        <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ content.columnsHeaderText[pos] }}
+        </th>
+        <td mat-cell [ngClass]="content.createCssClassesForRow(element)" *matCellDef="let element">
+            {{ element[column] }}
+            <mat-icon *ngIf="column == 'status' && element[column]" class="mat-cell-mat-icon">new_releases</mat-icon>
+        </td>
     </ng-container>
 
-    <!-- The content that is showed when the `dataSource` is empty. The information row of empty table 
-         is made up of this one column that spans across all columns. -->
-    <ng-container [matColumnDef]="'emptyTableInformation'">
+    <!-- The `otherInformation` represents the content that is showed when the `dataSource` is empty 
+         or the `dataSource` is loading. The information row is made up of this one column that spans 
+         across all columns. -->
+    <ng-container [matColumnDef]="'otherInformation'">
         <td mat-cell *matCellDef="let element" [attr.colspan]="content.columnsObjectProperty.length">
-            <div class="empty-table-information">
-                ¡No hay fuente de datos disponibles!
-            </div>
+            <ng-container *ngIf="isLoading; then thenTemplate_IsLoading; else elseTemplate_IsEmpty"></ng-container>
+            
+            <ng-template #thenTemplate_IsLoading>
+                <mat-progress-spinner class="loading-table-information" mode="indeterminate"></mat-progress-spinner>
+            </ng-template>
+
+            <ng-template #elseTemplate_IsEmpty>
+                <div class="empty-table-information">There is not any data source!</div>
+            </ng-template>
         </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="content.columnsObjectProperty; sticky: true"></tr>
-    <ng-container *ngIf="isEmpty; then thenTemplate_EmptyTable; else elseTemplate_NotEmptyTable"></ng-container>
+    <!-- When it is `loading`, it is `empty`, too. -->
+    <ng-container *ngIf="isEmpty; then thenTemplate_OtherInformation; else elseTemplate_IsNotEmpty"></ng-container>
 
-    <ng-template #thenTemplate_EmptyTable>
-        <tr mat-row class="row-empty-table-information" *matRowDef="let row; columns: ['emptyTableInformation']"></tr>
+    <ng-template #thenTemplate_OtherInformation>
+        <tr mat-row class="row-other-information" *matRowDef="let row; columns: ['otherInformation']"></tr>
     </ng-template>
-    
-    <ng-template #elseTemplate_NotEmptyTable>
-        <tr mat-row class="row-hover" *matRowDef="let row; columns: content.columnsObjectProperty;" (click)="navigateTo(row)"></tr>
+
+    <ng-template #elseTemplate_IsNotEmpty>
+        <tr mat-row class="row-data" *matRowDef="let row; columns: content.columnsObjectProperty;" (click)="navigateTo(row)"></tr>
     </ng-template>
 
 </table>

@@ -32,6 +32,6 @@ export class FormFieldsComponent implements OnInit
 
     public ngOnInit(): void
     {
-        if (this.fields == undefined) this.fields = [ ];
+        if (this.fields == undefined) this.fields = [];
     }
 }

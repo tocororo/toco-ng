@@ -88,6 +88,7 @@ export class JournalEditComponent {
       'checkbox': new FormControl('', Validators.required),
       'textarea': new FormControl('', Validators.required)
     });
+
     this.testPanel = [
       {
         title: 'Inclusión de Revista',
@@ -123,7 +124,7 @@ export class JournalEditComponent {
             name: 'url',
             label: 'url',
             type: FormFieldType.url,
-            required: false,
+            required: true,
             startHint: new HintValue(HintPosition.start, 'Escriba un texto.'),
             width: '25%'
           },

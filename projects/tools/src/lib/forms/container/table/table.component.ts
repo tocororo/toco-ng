@@ -10,7 +10,7 @@ export interface TableContent
 {
     /**
      * Returns the data source. 
-     * By default, its value is `MatTableDataSource([ ])`. 
+     * By default, its value is `MatTableDataSource([])`. 
      */
     dataSource?: MatTableDataSource<any>;
 
@@ -18,21 +18,35 @@ export interface TableContent
 
     /**
      * Returns the array of strings that indicates the object property name of the columns. 
-     * By default, its value is `['column1', 'column2', 'column3']`. 
+     * By default, its value is `[]`. 
      */
     columnsObjectProperty?: string[];
 
     /**
      * Returns the array of strings that indicates the header text of the columns. 
-     * By default, its value is `['Column 1', 'Column 2', 'Column 3']`. 
+     * By default, its value is `[]`. 
      */
     columnsHeaderText?: string[];
+
+    /**
+     * Returns a function that creates the list of CSS classes to apply to the table rows. 
+     * In order to take effect these classes, the table CSS file must have defined these classes. 
+     * By default, its value is `undefined`. 
+     * @param rowData The data that is contained in the row. 
+     */
+    createCssClassesForRow?: (rowData: any) => { [className: string]: boolean; };
 
 
 
     /**
-     * Returns the property name of the data contained in `dataSource`; it is used to navigate 
-     * to the view that shows information about that data. 
+     * Returns the property name of the data contained in `dataSource` that is used to identify that data. 
+     * By default, its value is `''`. 
+     */
+    propertyNameToIdentify?: string;
+
+    /**
+     * Returns the property name of the data contained in `dataSource` that is used to navigate 
+     * to the view and shows information about that data. 
      * By default, its value is `''`. 
      */
     propertyNameToNavigate?: string;
@@ -82,11 +96,13 @@ export interface TableContent
 export function defaultTableContent(): TableContent
 {
     return {
-        'dataSource': new MatTableDataSource([ ]),  /* The default data source does not contain element. */
+        'dataSource': new MatTableDataSource([]),  /* The default data source does not contain element. */
 
-        'columnsObjectProperty': ['column1', 'column2', 'column3'],  /* Contains three possible columns. */
-        'columnsHeaderText': ['Column 1', 'Column 2', 'Column 3'],  /* Contains three possible columns. */
+        'columnsObjectProperty': [],
+        'columnsHeaderText': [],
+        'createCssClassesForRow': undefined,
 
+        'propertyNameToIdentify': '',
         'propertyNameToNavigate': '',
 
         'length': 0,
@@ -109,8 +125,15 @@ export function defaultTableContent(): TableContent
 })
 export class TableComponent implements OnInit
 {
+    /**
+     * Returns true if it is loading the data source; otherwise, false. 
+     * By default, its value is `false`. 
+     */
+    public loading: boolean;
+
     private _content: TableContent;
     private static readonly _defaultDataSource: MatTableDataSource<any> = new MatTableDataSource([ { } ]);  /* Returns a data source with only one empty element. */
+    private _selectedRow: number;  /* Represents the selected row. */
 
     /**
      * Returns true if the data source is empty; otherwise, false. 
@@ -118,10 +141,10 @@ export class TableComponent implements OnInit
     public isEmpty: boolean;
 
     @ViewChild(MatSort, { static: true })
-    private sort: MatSort;
+    private _sort: MatSort;
 
     @ViewChild(MatPaginator, { static: true })
-    private paginator: MatPaginator;
+    private _paginator: MatPaginator;
 
     public constructor(private _router: Router, private _activatedRoute: ActivatedRoute)
     { }
@@ -149,18 +172,13 @@ export class TableComponent implements OnInit
 
         if (this._content == undefined) this._content = { };  /* This code line must be here. */
 
-        /**************************** `mat-table` properties. *****************************/
-        if (this._content.dataSource == undefined) this._content.dataSource = new MatTableDataSource([ ]);  /* The default data source does not contain element. */
-        this._content.dataSource.sort = this.sort;
-        this._content.dataSource.paginator = this.paginator;
-        /* Sets the `isEmpty` field depending on the `_content.dataSource` value. */
-        this.isEmpty = this._isEmpty;
-
         /**************************** `mat-cell` properties. ******************************/
-        if (this._content.columnsObjectProperty == undefined) this._content.columnsObjectProperty = ['column1', 'column2', 'column3'];  /* Contains three possible columns. */
-        if (this._content.columnsHeaderText == undefined) this._content.columnsHeaderText = ['Column 1', 'Column 2', 'Column 3'];  /* Contains three possible columns. */
+        if (this._content.columnsObjectProperty == undefined) this._content.columnsObjectProperty = [];
+        if (this._content.columnsHeaderText == undefined) this._content.columnsHeaderText = [];
+        if (this._content.createCssClassesForRow == undefined) this._content.createCssClassesForRow = this.defaultCreateCssClassesForRow.bind(this);
 
         /**************************** `mat-row` properties. *******************************/
+        if (this._content.propertyNameToIdentify == undefined) this._content.propertyNameToIdentify = '';
         if (this._content.propertyNameToNavigate == undefined) this._content.propertyNameToNavigate = '';
 
         /************************* `mat-paginator` properties. ****************************/
@@ -174,6 +192,38 @@ export class TableComponent implements OnInit
         /************************** Internal control properties. **************************/
 
         /******************************* Other properties. ********************************/
+
+        /*********** (Must be the last initialization) `mat-table` properties. ************/
+        this.data = (this._content.dataSource && this._content.dataSource.data);  /* By default, its value is set to `[]` because the default data does not contain element. */
+    }
+
+    /**
+     * Returns the list of CSS classes to apply to the table rows. This method must be only overwrite, 
+     * but must never be called for performance reason; it is called in the correct places internally. 
+     * In order to take effect these classes, the table CSS file must have defined these classes. 
+     * @param rowData The data that is contained in the row. 
+     */
+    protected defaultCreateCssClassesForRow(rowData: any): { [className: string]: boolean; }
+    {
+        return {
+            'selected-row': (rowData[this._content.propertyNameToIdentify]) == this._selectedRow
+        };
+    }
+
+    /**
+     * Returns true if it is loading the data source; otherwise, false. 
+     */
+    public get isLoading(): boolean
+    {
+        return this.loading;
+    }
+
+    /**
+     * Returns the selected row. 
+     */
+    public get selectedRow(): number
+    {
+        return this._selectedRow;
     }
 
     /**
@@ -187,8 +237,8 @@ export class TableComponent implements OnInit
 
 	/**
 	 * Sets the input field that contains the content of this class (the table control content to show). 
+     * @param newContent The new content to set. 
      * If the value is null, sets the `defaultTableContent`. 
-	 * @param newContent The new content to set. 
 	 */
     public set content(newContent: TableContent | null)
     {
@@ -197,15 +247,56 @@ export class TableComponent implements OnInit
     }
 
     /**
+     * Returns the array of data that should be rendered by the table, where each object represents one row. 
+     * By default, its value is `[]`. 
+     */
+    public get data(): any[]
+    {
+        return this._content.dataSource.data;
+    }
+
+	/**
+	 * Sets the array of data that should be rendered by the table, where each object represents one row. 
+     * If the value is null, sets the `[]`. 
+     * @param newData The new data to set. 
+	 */
+    public set data(newData: any[] | null)
+    {
+        newData = newData || [];  /* The default data does not contain element. */
+
+        if (this._content.dataSource == undefined) this._content.dataSource = new MatTableDataSource(newData);
+        else this._content.dataSource.data = newData;
+
+        if (this._content.dataSource.sort == undefined) this._content.dataSource.sort = this._sort;
+        if (this._content.dataSource.paginator == undefined) this._content.dataSource.paginator = this._paginator;
+
+        this.checkColumn();
+
+        /* Sets the `isEmpty` field depending on the `_content.dataSource` value. */
+        this.isEmpty = this._isEmpty;
+    }
+
+    /**
      * Returns the data source. If the data source is empty, then returns the default data source 
      * that contains only one empty element (it is used to show one row that contains the empty 
-     * table information). 
+     * table information). For internal use only. 
      */
-    public get getDataSource(): MatTableDataSource<any>
+    public get _getDataSource(): MatTableDataSource<any>
     {
         if (this.isEmpty) return TableComponent._defaultDataSource;
 
         return this._content.dataSource;
+    }
+
+    /**
+     * Checks column. Logs a warn to the console is the array of columns is empty. 
+     */
+    public checkColumn(): void
+    {
+        if ((this._content.columnsObjectProperty.length == 0) || (this._content.columnsHeaderText.length == 0))
+        {
+            console.warn("The 'columnsObjectProperty' or 'columnsHeaderText' fields are empty.");
+        }
     }
 
     /**
@@ -214,6 +305,10 @@ export class TableComponent implements OnInit
      */
     public navigateTo(rowData: any): void
     {
+        /* Saves the selected row. */
+        this._selectedRow = rowData[this._content.propertyNameToIdentify];
+
+        /* Navigates to the specified view. */
         this._router.navigate([ rowData[this._content.propertyNameToNavigate] ], { relativeTo: this._activatedRoute });
     }
 }
