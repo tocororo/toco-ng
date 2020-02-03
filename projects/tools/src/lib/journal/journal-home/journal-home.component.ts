@@ -36,6 +36,7 @@ export class JournalHomeComponent implements OnInit, OnDestroy
 {
 	private _journalsObserver = {
 		next: (value: Response<any>) => {
+            console.log(value)
 
             console.log(value.data);
 
@@ -45,7 +46,8 @@ export class JournalHomeComponent implements OnInit, OnDestroy
                 'columnsObjectProperty': ['name', 'source_status', 'version_to_review'],
                 'columnsHeaderText': ['Nombre', 'Estatus', 'Cambios a Revisar'],
                 'propertyNameToNavigate': "uuid",
-                'pageSize': 10,
+                'pageSize': 5,
+                'pageSizeOptions': [5, 10, 20, 50],
                 //'hidePageSize': true,
                 'showFirstLastButtons': true
             };

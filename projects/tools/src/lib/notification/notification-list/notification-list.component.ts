@@ -47,8 +47,15 @@ export class NotificationListComponent implements OnInit {
                 })
             )
             .subscribe(response =>{
-                this.paginator.length = response.data.notifications.total;
-                this.dataSource.data = response.data.notifications.data
+                if (response){
+                    this.paginator.length = response.data.notifications.total;
+                    this.dataSource.data = response.data.notifications.data
+                }
+                else {
+                    this.paginator.length = 0;
+                    this.dataSource.data = null
+                }
+
             });
     }
     setnotificationViewed(id: number){
@@ -65,6 +72,8 @@ export class NotificationListComponent implements OnInit {
             .subscribe(response =>{
                 if (response.status == "success"){
                     this.getNotificationsListData();
+                    const m = new MessageHandler(this._snackBar);
+                    m.showMessage(StatusCode.OK, "La notificación fue marcada como leída");
                 } else {
                     const m = new MessageHandler(this._snackBar);
                     m.showMessage(StatusCode.serverError, response.message);

@@ -80,6 +80,16 @@ export class IssnValue
 	 */
 	public static readonly defaultIssnValue: IssnValue = new IssnValue(Common.emptyString, Common.emptyString);
 
+	public static createIssnValueFromString(value: string) {
+		try {
+			const parts = value.split('-');
+			return new IssnValue(parts[0].trim(), parts[1].trim());
+		} catch (error) {
+			return undefined;
+		}
+		
+	}
+	
 	/**
 	 * The first group of `IssnValue.groupLength` digits.
 	 */

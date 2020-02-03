@@ -11,17 +11,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationModule } from '@toco/tools/authentication';
 import { NotificationModule } from '@toco/tools/notification';
-import { FooterComponent } from '@toco/tools/core';
+import { CoreModule } from '@toco/tools/core';
 
 @NgModule({
     declarations: [
-        AppComponent,
-        FooterComponent
+        AppComponent
     ],
 
     imports: [
         BrowserAnimationsModule,
         SharedModule,
+        CoreModule,
         CatalogModule,
         AuthenticationModule,
         NotificationModule,

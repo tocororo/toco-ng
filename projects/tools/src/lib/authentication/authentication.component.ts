@@ -1,11 +1,14 @@
 
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
-import { Subscription, PartialObserver, timer } from 'rxjs';
+import { Component, OnInit, AfterViewInit, Input, Optional } from '@angular/core';
+import { Subscription, PartialObserver, timer, Observable } from 'rxjs';
 
-import { OAuthService, JwksValidationHandler, OAuthStorage, AuthConfig } from 'angular-oauth2-oidc';
+import { OAuthService, JwksValidationHandler, OAuthStorage, AuthConfig, OAuthResourceServerErrorHandler, OAuthModuleConfig } from 'angular-oauth2-oidc';
 
 import { AuthenticationService } from './authentication.service';
 import { EnvService } from '@tocoenv/tools/env.service';
+import { Router } from '@angular/router';
+import { HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpInterceptor } from '@angular/common/http';
+import { finalize, tap } from 'rxjs/operators';
 
 // import { authConfig } from './auth-config';
 
@@ -44,7 +47,8 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
         private env: EnvService,
         private oauthService: OAuthService,
         private oauthStorage: OAuthStorage,
-        private authenticationService: AuthenticationService) {
+        private authenticationService: AuthenticationService,
+        private router: Router) {
 
     }
 
@@ -126,6 +130,8 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
         });
 
         this.oauthService.events.subscribe(e => {
+            console.log(e);
+            
             switch (e.type) {
                 case 'token_received':
                     console.log('token received');
@@ -142,6 +148,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
                         break;
                 case 'logout':
                     console.log('logout');
+                    this.router.navigate(['/']);
                     break;
                 default:
                     break;

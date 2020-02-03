@@ -24,12 +24,9 @@ export class SourceService {
 
     constructor(private env: EnvService, private http: HttpClient, private oauthStorage: OAuthStorage) {
         this.token = this.oauthStorage.getItem('access_token');
-        
-        //TODO: Removes this print. 
-        console.log(this.token);
     }
 
-    getMySources(): Observable<Response<any>>{
+    getMySources(): Observable<Response<any>> {
         this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
 
         const req = this.env.sceibaApi + this.prefix + '/me/sources/all';
@@ -44,9 +41,19 @@ export class SourceService {
 
     }
 
+    getIssnInfo(issn): Observable<Response<any>> {
+      const req = this.env.sceibaApi + this.prefix + '/journal/issn/' + issn;
+      return this.http.get<Response<any>>(req);
+  }
+
     getSourceByUUID(uuid): Observable<Response<any>> {
-        console.log('getSourceByUUID');
         const req = this.env.sceibaApi + this.prefix + '/' + uuid;
         return this.http.get<Response<any>>(req);
+    }
+
+    getSourceByUUIDWithVersions(uuid): Observable<Response<any>> {
+        this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
+        const req = this.env.sceibaApi + this.prefix + '/' + uuid + '/versions';
+        return this.http.get<Response<any>>(req,this.httpOptions );
     }
 }

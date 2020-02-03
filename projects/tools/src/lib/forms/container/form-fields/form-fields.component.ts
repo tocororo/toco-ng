@@ -19,6 +19,8 @@ import { FormGroup, ControlContainer } from '@angular/forms';
 })
 export class FormFieldsComponent implements OnInit
 {
+    // TODO: for datepicker, !!!! use https://stackblitz.com/edit/angular-material2-year-picker-7z9k4t?file=app%2Fcustom-datepicker%2Fyear-picker-component%2Fyear-picker.component.html
+
     @Input()
     public fields: Array<InputContent | ActionContent | FormFieldContent_Experimental> | Array<any>;
 

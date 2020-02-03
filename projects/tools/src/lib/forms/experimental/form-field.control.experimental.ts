@@ -2,11 +2,12 @@
 import { Input } from '@angular/core';
 
 import { FormFieldType, FormFieldContent } from '../form-field.control';
+import { InputContent } from '../input/input.control';
 
 /**
  * Represents a form field interface.
  */
-export interface FormFieldContent_Experimental extends FormFieldContent
+export interface FormFieldContent_Experimental extends InputContent
 {
 
 }

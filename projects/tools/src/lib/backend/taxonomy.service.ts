@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, PartialObserver, Subject } from 'rxjs';
 
 import { Vocabulary, Term, Response } from '@toco/tools/entities';
@@ -19,6 +19,9 @@ export enum VocabulariesInmutableNames {
   MIAR = 7,
   SUBJECTS_UNESCO = 8,
 }
+
+// TODO: Poner todos los tipos de datos de retorno de Response. 
+// No puede haber en ningun servicio del backend un Response<any>
 
 @Injectable()
 export class TaxonomyService {
@@ -134,9 +137,22 @@ export class TaxonomyService {
       .pipe().subscribe(this.termChangeObserver);
   }
 
-  getTermsTreeByVocab(vocab: Vocabulary): Observable<Response<any>> {
-    const req = this.env.sceibaApi + this.prefix + '/term/tree/' + vocab.id;
-    return this.http.get<Response<any>>(req);
+  getTermByUUID(termUUID, level=10): Observable<Response<any>> {
+    let params = new HttpParams();
+    const options = {
+      params: params.set('level', level.toString())
+    };
+    const req = this.env.sceibaApi + this.prefix + '/term/' + termUUID;
+    return this.http.get<Response<any>>(req, options);
+  }
+
+  getTermsTreeByVocab(vocabId, level=10): Observable<Response<any>> {
+    let params = new HttpParams();
+    const options = {
+      params: params.set('level', level.toString())
+    };
+    const req = this.env.sceibaApi + this.prefix + '/term/tree/' + vocabId;
+    return this.http.get<Response<any>>(req, options);
   }
 
   getCurrentUserPermissions(): Observable<Response<any>>{

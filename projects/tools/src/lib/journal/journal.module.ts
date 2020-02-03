@@ -9,20 +9,28 @@ import { SourceService } from '@toco/tools/backend';
 
 import { JournalRoutingModule } from './journal-routing.module';
 import { JournalComponent } from './journal/journal.component';
-import { JournalViewComponent } from './journal-view/journal-view.component';
-import { JournalEditComponent } from './journal-edit/journal-edit.component';
+import { JournalViewComponent, JournalViewTermComponent, JournalViewInfoComponent, JournalViewFieldComponent } from './journal-view/journal-view.component';
+import { JournalEditComponent, JournalEditAddIndexComponent } from './journal-edit/journal-edit.component';
 import { JournalHomeComponent } from './journal-home/journal-home.component';
+import { JournalInclusionComponent } from './journal-inclusion/journal-inclusion.component';
 
 @NgModule({
     declarations: [
         JournalComponent,
         JournalViewComponent,
+        JournalViewTermComponent,
+        JournalViewInfoComponent,
+        JournalViewFieldComponent,
         JournalEditComponent,
-        JournalHomeComponent, 
-        DialogContentComponent
+        JournalHomeComponent,
+        DialogContentComponent,
+        JournalInclusionComponent,
+        JournalEditAddIndexComponent
+
     ],
     entryComponents: [
-        DialogContentComponent
+        DialogContentComponent,
+        JournalEditAddIndexComponent
     ],
     imports: [
         SharedModule,

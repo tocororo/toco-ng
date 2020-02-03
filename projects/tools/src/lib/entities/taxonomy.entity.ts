@@ -10,6 +10,7 @@ export class Term extends Entity {
     parent_id = 0;
     clasified_ids: number[] = [];
     class_ids: number[] = [];
+    children ? : Array<Term> = new Array<Term>(0);
 }
 
 
