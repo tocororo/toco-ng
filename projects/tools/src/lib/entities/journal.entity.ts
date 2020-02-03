@@ -8,10 +8,15 @@ export class SocialNetworks  extends EntityBase {
   twitter = '';
   linkedin = '';
 }
+export class IssnOrg extends EntityBase {
+  issn: '';
+  title: '';
+}
 export class ISSN extends EntityBase {
     p  = '';
     e  = '';
     l  = '';
+    issn_org = new IssnOrg();
 }
 export class JournalData extends SourceData {
 
@@ -39,6 +44,13 @@ export class JournalData extends SourceData {
 export class Journal extends Source {
   data: JournalData = new JournalData();
   versions: Array<JournalVersion> = new Array<JournalVersion>();
+
+  /** WARNING: helper variable in the client side. Do not rely on this unless you know what you are doing */
+  organization?: Term = null;
+  /** WARNING: helper variable in the client side. Do not rely on this unless you know what you are doing */
+  institution?: Term = null;
+  /** WARNING: helper variable in the client side. Do not rely on this unless you know what you are doing */
+  entity?: Term = null;
 }
 
 export class JournalVersion extends SourceVersion {

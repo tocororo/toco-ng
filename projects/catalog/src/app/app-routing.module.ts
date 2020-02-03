@@ -14,7 +14,7 @@ const routes: Routes = [
     {
         path: 'journal',
         loadChildren: () => import('@toco/tools/journal').then(mod => mod.JournalModule),
-        canActivate: [AuthenticationService]
+        // canActivate: [AuthenticationService]
     },
     {
         path: 'notifications',

@@ -476,9 +476,9 @@ export class JournalViewInfoComponent implements OnInit{
 
         this.vocabularies = VocabulariesInmutableNames;
 
-        if ( this.journal.terms ){
+        if ( this.journal.term_sources ){
 
-            this.journal.terms.forEach( ( term: TermSource ) => {
+            this.journal.term_sources.forEach( ( term: TermSource ) => {
                 
                 switch (term.term.vocabulary_id) {
                     case VocabulariesInmutableNames.INTITUTION:

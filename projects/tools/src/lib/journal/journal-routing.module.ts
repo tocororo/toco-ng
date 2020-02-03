@@ -7,6 +7,7 @@ import { JournalResolver } from './journal-resolver';
 import { JournalComponent } from './journal/journal.component';
 import { JournalEditComponent } from './journal-edit/journal-edit.component';
 import { JournalHomeComponent } from './journal-home/journal-home.component';
+import { JournalInclusionComponent } from './journal-inclusion/journal-inclusion.component';
 
 const routes: Routes = [
     {
@@ -15,7 +16,7 @@ const routes: Routes = [
         children: [
             {
                 path: 'new',
-                component: JournalEditComponent,
+                component: JournalInclusionComponent,
             },
             {
                 path: ':uuid',
