@@ -2,17 +2,19 @@
 <mat-card style="margin: 1em; background-color: whitesmoke;">
 
     <mat-card-header>
-        <mat-card-title> {{ title }}</mat-card-title>
+        <mat-card-title>
+            {{ title }}
+        </mat-card-title>
         <mat-label *ngIf="terms.length == 0" class="text-muted text-through">Vacío</mat-label>
     </mat-card-header>
 
     <mat-card-content>
 
-        <mat-chip-list>
+        <mat-chip-list class="mat-chip-list-stacked" fxLayout="row" fxLayoutAlign="start center">
 
             <ng-container *ngFor="let termSource of terms">
 
-                <mat-chip *ngIf="termSource.term.vocabulary_id == vocab_id">
+                <mat-chip *ngIf="termSource.term.vocabulary_id == vocab_id" [removable]="true">
                     {{ termSource.term.name }}
                 </mat-chip>
 

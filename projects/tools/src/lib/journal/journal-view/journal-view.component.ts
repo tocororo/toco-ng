@@ -10,6 +10,31 @@ import { Journal, TermSource, SourceVersion, JournalVersion, Term} from '@toco/t
 import { EnvService } from '@tocoenv/tools/env.service';
 import { VocabulariesInmutableNames } from '@toco/tools/backend';
 
+enum JournalDataType{
+    /** is used by default, `Journal` have not that type of data. */
+    default = 0,
+    title = 1,
+    subtitle = 2,
+    shortname = 3,
+    issnP = 4,
+    issnE = 5,
+    issnL = 6,
+    rnps = 7,
+    url = 8,
+    email = 9,
+    logo = 10,
+    purpose = 11,
+    start_year = 12,
+    end_year = 13,
+    frequency = 14,
+    seriadas_cubanas = 15,
+    facebook = 16,
+    twitter = 17,
+    linkedin = 18,
+    description = 19,
+    term = 20
+}
+
 @Component({
     selector: 'toco-journal-view',
     templateUrl: './journal-view.component.html',
@@ -68,6 +93,10 @@ export class JournalViewComponent implements OnInit {
     private currentVersion: number;
     private lengthVersion: number;
 
+    /**
+     * Inmutables data types of Journal
+     */
+    journalDataType = JournalDataType;
 
     constructor(
         private route: ActivatedRoute,
@@ -231,6 +260,146 @@ export class JournalViewComponent implements OnInit {
         });
         return count;
     }
+
+    /**
+     * Replaces a `Journal` property by a equal property in `JournalVersion`.
+     * @param type is a `JournalDataType` enum, that means, `type` has all properties of a `Journal` enumerated as identifyer.
+     * @param concat is a `boolean`, by default in `false`. If his value is `true` means the fields will be concated and not replaced.
+     * @NOTE The `terms` of a `Journal` can NOT replace because will be the same information and not have sense, only we can merge.
+     */
+    public replace( type : JournalDataType, concat: boolean = false ) {
+        switch (type) {
+            case JournalDataType.description:
+                concat ? 
+                    this.journal.data.description += ' ' + this.currentJournal.data.description :
+                    this.journal.data.description  = this.currentJournal.data.description;
+                break;
+            case JournalDataType.email:
+                concat ? 
+                    this.journal.data.email += ' ' + this.currentJournal.data.email : 
+                    this.journal.data.email  = this.currentJournal.data.email;
+                break;
+            case JournalDataType.end_year:
+                concat ? 
+                    this.journal.data.end_year += ' ' + this.currentJournal.data.end_year : 
+                    this.journal.data.end_year  = this.currentJournal.data.end_year;
+                break;
+            case JournalDataType.facebook:
+                concat ?
+                    this.journal.data.socialNetworks.facebook += ' ' + this.currentJournal.data.socialNetworks.facebook:
+                    this.journal.data.socialNetworks.facebook  = this.currentJournal.data.socialNetworks.facebook;
+                break;
+            case JournalDataType.frequency:
+                concat ? 
+                    this.journal.data.frequency += ' ' + this.currentJournal.data.frequency :
+                    this.journal.data.frequency  = this.currentJournal.data.frequency;
+                break;
+            case JournalDataType.issnE:
+                concat ?
+                    this.journal.data.issn.e += ' ' + this.currentJournal.data.issn.e :
+                    this.journal.data.issn.e  = this.currentJournal.data.issn.e;
+                break;
+            case JournalDataType.issnL:
+                concat ?
+                    this.journal.data.issn.l += ' ' + this.currentJournal.data.issn.l :
+                    this.journal.data.issn.l  = this.currentJournal.data.issn.l;
+                break;
+            case JournalDataType.end_year:
+                concat ?
+                    this.journal.data.end_year += ' ' + this.currentJournal.data.end_year :
+                    this.journal.data.end_year  = this.currentJournal.data.end_year;
+                break;
+            case JournalDataType.issnP:
+                concat ?
+                    this.journal.data.issn.p += ' ' + this.currentJournal.data.issn.p :
+                    this.journal.data.issn.p  = this.currentJournal.data.issn.p;
+                break;
+            case JournalDataType.linkedin:
+                concat ?
+                    this.journal.data.socialNetworks.linkedin += ' ' + this.currentJournal.data.socialNetworks.linkedin:
+                    this.journal.data.socialNetworks.linkedin  = this.currentJournal.data.socialNetworks.linkedin;
+                break;
+            case JournalDataType.logo:
+                concat ?
+                    this.journal.data.logo += ' ' + this.currentJournal.data.logo:
+                    this.journal.data.logo  = this.currentJournal.data.logo;
+                break;
+            case JournalDataType.purpose:
+                concat ?
+                    this.journal.data.purpose += ' ' + this.currentJournal.data.purpose:
+                    this.journal.data.purpose  = this.currentJournal.data.purpose;
+                break;
+            case JournalDataType.rnps:
+                concat ?
+                    this.journal.data.rnps += ' ' + this.currentJournal.data.rnps:
+                    this.journal.data.rnps  = this.currentJournal.data.rnps;
+                break;
+            case JournalDataType.seriadas_cubanas:
+                concat ?
+                    this.journal.data.seriadas_cubanas += ' ' + this.currentJournal.data.seriadas_cubanas:
+                    this.journal.data.seriadas_cubanas  = this.currentJournal.data.seriadas_cubanas;
+                break;
+            case JournalDataType.shortname:
+                concat ?
+                    this.journal.data.shortname += ' ' + this.currentJournal.data.shortname:
+                    this.journal.data.shortname  = this.currentJournal.data.shortname;
+                break;
+            case JournalDataType.start_year:
+                concat ?
+                    this.journal.data.start_year += ' ' + this.currentJournal.data.start_year: 
+                    this.journal.data.start_year  = this.currentJournal.data.start_year;
+                break;
+            case JournalDataType.subtitle:
+                concat ?
+                    this.journal.data.subtitle += ' ' + this.currentJournal.data.subtitle: 
+                    this.journal.data.subtitle  = this.currentJournal.data.subtitle;
+                break;
+            case JournalDataType.title:
+                concat ?
+                    this.journal.name += ' ' + this.currentJournal.data.title:
+                    this.journal.name  = this.currentJournal.data.title;
+                break;
+            case JournalDataType.twitter:
+                concat ?
+                    this.journal.data.socialNetworks.twitter += ' ' + this.currentJournal.data.socialNetworks.twitter:
+                    this.journal.data.socialNetworks.twitter  = this.currentJournal.data.socialNetworks.twitter;
+                break;
+            case JournalDataType.url:
+                concat ?
+                    this.journal.data.url += ' ' + this.currentJournal.data.url:
+                    this.journal.data.url  = this.currentJournal.data.url;
+                break;
+        }
+    }
+
+    /**
+     * Concats a `Journal` property by a equal property in `JournalVersion`.
+     * @param type is a `JournalDataType` enum, that means, `type` has all properties of a `Journal` enumerated as identifyer.
+     * @param termId is a `Term` identifyer, only needs if `type` is `JournalDataType.term`.
+     * @NOTE this function call `replace(..., true)` 
+     */
+    public concat( type : JournalDataType, termId ? : number ) {
+        if (type == this.journalDataType.term){
+
+            this.currentJournal.terms.forEach( (term : Term) => {
+                if ( term.id == termId ){
+
+                    const termSouce = new TermSource()
+
+                    termSouce.source_id = this.currentJournal.source_id;
+                    termSouce.term_id = term.id;
+                    termSouce.term = term;
+                    termSouce.data = term.data;
+
+                    this.journal.terms.push(termSouce);
+                }
+            });
+
+        }
+        else {
+            this.replace(type, true);
+        }
+    }
 }
 
 /**
@@ -266,7 +435,7 @@ export class JournalViewTermComponent implements OnInit{
 
 /**
  * This component share the same scss that `JournalViewComponent`.
- * His goal is show a Journal
+ * His goal, shows a Journal
  */
 @Component({
     selector: 'toco-journal-view-info',
@@ -332,6 +501,179 @@ export class JournalViewInfoComponent implements OnInit{
                         break;
                 }
             });
+        }
+    }
+}
+
+/**
+ * This component share the same scss that `JournalViewComponent`.
+ * His goal, handle the actions and how show a specific data of a `JournalVersion`
+ */
+@Component({
+    selector: 'toco-journal-view-field',
+    templateUrl: './journal-view-field.component.html',
+    styleUrls: ['./journal-view.component.scss']
+})
+export class JournalViewFieldComponent implements OnInit{
+
+    @Input() public journal: Journal;
+
+    @Input() public currentJournal: JournalVersion;
+
+    @Input() public type: number;
+
+    public journalDataType = JournalDataType;
+
+    constructor() {
+
+    }
+
+    ngOnInit(): void {
+        if ( this.journal == undefined ) this.journal = new Journal()
+
+        if ( this.currentJournal == undefined ) this.currentJournal = new JournalVersion();
+
+        if ( this.type == undefined ) this.type = JournalDataType.default;
+
+    }
+
+        /**
+     * Replaces a `Journal` property by a equal property in `JournalVersion`.
+     * @param type is a `JournalDataType` enum, that means, `type` has all properties of a `Journal` enumerated as identifyer.
+     * @param concat is a `boolean`, by default in `false`. If his value is `true` means the fields will be concated and not replaced.
+     * @NOTE The `terms` of a `Journal` can NOT replace because will be the same information and not have sense, only we can merge.
+     */
+    public replace( type : number, concat: boolean = false ) {
+        switch (type) {
+            case JournalDataType.description:
+                concat ? 
+                    this.journal.data.description += ' ' + this.currentJournal.data.description :
+                    this.journal.data.description  = this.currentJournal.data.description;
+                break;
+            case JournalDataType.email:
+                concat ? 
+                    this.journal.data.email += ' ' + this.currentJournal.data.email : 
+                    this.journal.data.email  = this.currentJournal.data.email;
+                break;
+            case JournalDataType.end_year:
+                concat ? 
+                    this.journal.data.end_year += ' ' + this.currentJournal.data.end_year : 
+                    this.journal.data.end_year  = this.currentJournal.data.end_year;
+                break;
+            case JournalDataType.facebook:
+                concat ?
+                    this.journal.data.socialNetworks.facebook += ' ' + this.currentJournal.data.socialNetworks.facebook:
+                    this.journal.data.socialNetworks.facebook  = this.currentJournal.data.socialNetworks.facebook;
+                break;
+            case JournalDataType.frequency:
+                concat ? 
+                    this.journal.data.frequency += ' ' + this.currentJournal.data.frequency :
+                    this.journal.data.frequency  = this.currentJournal.data.frequency;
+                break;
+            case JournalDataType.issnE:
+                concat ?
+                    this.journal.data.issn.e += ' ' + this.currentJournal.data.issn.e :
+                    this.journal.data.issn.e  = this.currentJournal.data.issn.e;
+                break;
+            case JournalDataType.issnL:
+                concat ?
+                    this.journal.data.issn.l += ' ' + this.currentJournal.data.issn.l :
+                    this.journal.data.issn.l  = this.currentJournal.data.issn.l;
+                break;
+            case JournalDataType.end_year:
+                concat ?
+                    this.journal.data.end_year += ' ' + this.currentJournal.data.end_year :
+                    this.journal.data.end_year  = this.currentJournal.data.end_year;
+                break;
+            case JournalDataType.issnP:
+                concat ?
+                    this.journal.data.issn.p += ' ' + this.currentJournal.data.issn.p :
+                    this.journal.data.issn.p  = this.currentJournal.data.issn.p;
+                break;
+            case JournalDataType.linkedin:
+                concat ?
+                    this.journal.data.socialNetworks.linkedin += ' ' + this.currentJournal.data.socialNetworks.linkedin:
+                    this.journal.data.socialNetworks.linkedin  = this.currentJournal.data.socialNetworks.linkedin;
+                break;
+            case JournalDataType.logo:
+                concat ?
+                    this.journal.data.logo += ' ' + this.currentJournal.data.logo:
+                    this.journal.data.logo  = this.currentJournal.data.logo;
+                break;
+            case JournalDataType.purpose:
+                concat ?
+                    this.journal.data.purpose += ' ' + this.currentJournal.data.purpose:
+                    this.journal.data.purpose  = this.currentJournal.data.purpose;
+                break;
+            case JournalDataType.rnps:
+                concat ?
+                    this.journal.data.rnps += ' ' + this.currentJournal.data.rnps:
+                    this.journal.data.rnps  = this.currentJournal.data.rnps;
+                break;
+            case JournalDataType.seriadas_cubanas:
+                concat ?
+                    this.journal.data.seriadas_cubanas += ' ' + this.currentJournal.data.seriadas_cubanas:
+                    this.journal.data.seriadas_cubanas  = this.currentJournal.data.seriadas_cubanas;
+                break;
+            case JournalDataType.shortname:
+                concat ?
+                    this.journal.data.shortname += ' ' + this.currentJournal.data.shortname:
+                    this.journal.data.shortname  = this.currentJournal.data.shortname;
+                break;
+            case JournalDataType.start_year:
+                concat ?
+                    this.journal.data.start_year += ' ' + this.currentJournal.data.start_year: 
+                    this.journal.data.start_year  = this.currentJournal.data.start_year;
+                break;
+            case JournalDataType.subtitle:
+                concat ?
+                    this.journal.data.subtitle += ' ' + this.currentJournal.data.subtitle: 
+                    this.journal.data.subtitle  = this.currentJournal.data.subtitle;
+                break;
+            case JournalDataType.title:
+                concat ?
+                    this.journal.name += ' ' + this.currentJournal.data.title:
+                    this.journal.name  = this.currentJournal.data.title;
+                break;
+            case JournalDataType.twitter:
+                concat ?
+                    this.journal.data.socialNetworks.twitter += ' ' + this.currentJournal.data.socialNetworks.twitter:
+                    this.journal.data.socialNetworks.twitter  = this.currentJournal.data.socialNetworks.twitter;
+                break;
+            case JournalDataType.url:
+                concat ?
+                    this.journal.data.url += ' ' + this.currentJournal.data.url:
+                    this.journal.data.url  = this.currentJournal.data.url;
+                break;
+        }
+    }
+
+    /**
+     * Concats a `Journal` property by a equal property in `JournalVersion`.
+     * @param type is a `JournalDataType` enum, that means, `type` has all properties of a `Journal` enumerated as identifyer.
+     * @param termId is a `Term` identifyer, only needs if `type` is `JournalDataType.term`.
+     * @NOTE this function call `replace(..., true)` 
+     */
+    public concat( type : JournalDataType, termId ? : number ) {
+        if (type == JournalDataType.term){
+
+            this.currentJournal.terms.forEach( (term : Term) => {
+                if ( term.id == termId ){
+
+                    const termSouce = new TermSource()
+
+                    termSouce.source_id = this.currentJournal.source_id;
+                    termSouce.term_id = term.id;
+                    termSouce.term = term;
+                    termSouce.data = term.data;
+
+                    this.journal.terms.push(termSouce);
+                }
+            });
+
+        }
+        else {
+            this.replace(type, true);
         }
     }
 }

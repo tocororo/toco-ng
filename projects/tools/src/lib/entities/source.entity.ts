@@ -39,7 +39,7 @@ export class TermSource extends EntityBase {
 
 export class SourceVersion extends Entity {
     user_id = '';
-    source_id = '';
+    source_id = -1;
     comment = '';
     created_at = new Date();
     is_current = false;
