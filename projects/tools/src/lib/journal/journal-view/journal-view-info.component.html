@@ -1,18 +1,18 @@
 <!-- Journal Information -->
 <mat-card>
-    <mat-card-header>
+    <mat-card-header style="margin-top: 1em;">
 
         <!-- <img mat-card-avatar *ngIf="journal.data.logo; else logotemplate" [style.background-size]="'cover'" src="journal.data.logo">
         <ng-template #logotemplate>
             <img mat-card-avatar [src]="defaultLogo" alt="">
         </ng-template> -->
 
-        <mat-card-title *ngIf="journal.name">
+        <mat-card-title>
             <ng-container *ngIf="journal.source_type == 'JOURNAL'">
-                Revista:
+                <mat-label style="font-weight: bold;">Revista:</mat-label>
             </ng-container>
-
-            {{journal.name}}
+            <mat-label *ngIf="journal.name"> {{journal.name}} </mat-label>
+            <mat-label *ngIf="!journal.name" class="text-muted text-through">Vacío</mat-label>
         </mat-card-title>
 
         <mat-card-subtitle>
@@ -107,6 +107,25 @@
         <div *ngIf="journal.data.description" class="e2e-inner-html-bound  text-align-justify"
             [innerHTML]="journal.data.description"></div>
 
+        <mat-label style="font-weight: bold;">Redes Sociales:</mat-label>
+        <div style="margin-left: .8em;">
+            <p>
+                <mat-label style="font-weight: bold;"> Facebook: </mat-label>
+                <mat-label *ngIf="journal.data.socialNetworks.facebook"> {{journal.data.socialNetworks.facebook}} </mat-label>
+                <mat-label *ngIf="!journal.data.socialNetworks.facebook" class="text-muted text-through">Vacío</mat-label>
+            </p>
+            <p>
+                <mat-label style="font-weight: bold;"> Twitter: </mat-label>
+                <mat-label *ngIf="journal.data.socialNetworks.twitter"> {{journal.data.socialNetworks.twitter}} </mat-label>
+                <mat-label *ngIf="!journal.data.socialNetworks.twitter" class="text-muted text-through">Vacío</mat-label>
+            </p>
+            <p>
+                <mat-label style="font-weight: bold;"> Linkedin: </mat-label>
+                <mat-label *ngIf="journal.data.socialNetworks.linkedin"> {{journal.data.socialNetworks.linkedin}} </mat-label>
+                <mat-label *ngIf="!journal.data.socialNetworks.linkedin" class="text-muted text-through">Vacío</mat-label>
+            </p>
+        </div>
+        
         <!-- show terms -->
         <mat-divider [inset]="true" style="margin-bottom: 1em; margin-top: 1em;"></mat-divider>
         <p>
@@ -153,7 +172,7 @@
     <mat-divider [inset]="true"></mat-divider>
 
     <mat-card-footer fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="10px" style="padding: 1em;">
-        <button mat-raised-button color="primary">Primary</button>
-        <button mat-raised-button color="accent">Accent</button>
+        <button mat-raised-button color="primary">Aprobar</button>
+        <!-- <button mat-raised-button color="accent">Accent</button> -->
     </mat-card-footer>
 </mat-card>

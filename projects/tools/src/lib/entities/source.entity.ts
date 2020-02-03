@@ -27,13 +27,13 @@ export class SourceData extends EntityBase {
 export class TermSource extends EntityBase {
     term_id = -1;
     source_id = -1;
-    data = '';
+    data = new Object;
     term ? : Term  = null;
 }
 
 export class SourceVersion extends Entity {
     user_id = '';
-    source_id = '';
+    source_id = -1;
     comment = '';
     created_at = new Date();
     is_current = false;
