@@ -1,7 +1,6 @@
 
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { timer, Subscription } from 'rxjs';
-import { MatTableDataSource } from '@angular/material';
 
 import { Common } from '@toco/tools/core';
 import { TableContent, TableComponent } from '@toco/tools/forms';
