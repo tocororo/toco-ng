@@ -13,24 +13,48 @@
     <mat-spinner *ngIf="loading; else elseTemplate"></mat-spinner>
     <ng-template #elseTemplate>
 
-      <mat-form-field>
+
+      <mat-form-field [ngStyle]="{'width': '100%'}">
+        <mat-label>Vocabularios</mat-label>
+        <mat-select
+          [(value)]="currentVocab"
+          (selectionChange)="onSelectionChange()"
+        >
+          <mat-option *ngFor="let option of vocabularies" [value]="option">
+            {{option.human_name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+
+      <!-- <mat-form-field>
         <input matInput placeholder="Vocabularios" aria-label="Vocabularios" [matAutocomplete]="auto"
           [formControl]="vocabCtrl">
         <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let item of filteredVocabularies | async" [value]="item.name" (click)=selectVocab(item) (keydown.enter)=selectVocab(item)>
-            {{item.name}}
+          <mat-option *ngFor="let item of filteredVocabularies | async" [value]="item.human_name" (click)=selectVocab(item) (keydown.enter)=selectVocab(item)>
+            {{item.human_name}}
           </mat-option>
         </mat-autocomplete>
-      </mat-form-field>
-      <ng-container *ngIf="currentVocab">
-        <button mat-icon-button *ngIf="hasPermission('edit', currentVocab.id)" (click)="editVocab(currentVocab)" matTooltip="Editar">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <!-- <button mat-icon-button (click)="deleteVocab(currentVocab)" matTooltip="Eliminar">
-          <mat-icon>delete</mat-icon>
-        </button> -->
-        <p>{{ currentVocab.description }}</p>
-      </ng-container>
+      </mat-form-field> -->
+
+
+      <mat-card *ngIf="currentVocab">
+        <mat-card-header>
+          <mat-card-title></mat-card-title>
+          <mat-card-subtitle>Nombre: {{ currentVocab.human_name }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Identificador: {{ currentVocab.name }}</p> 
+          <p>Descripción: {{ currentVocab.description }}</p>
+          
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-flat-button *ngIf="hasPermission('edit', currentVocab.id)" (click)="editVocab(currentVocab)">Editar 
+            <mat-icon>edit</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+      
     </ng-template>
   </mat-card-content>
 </mat-card>

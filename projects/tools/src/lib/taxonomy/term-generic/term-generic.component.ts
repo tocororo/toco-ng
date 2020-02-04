@@ -3,9 +3,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { PanelContent, FormFieldType, FormContainerAction } from '@toco/tools/forms';
-import { Term } from '@toco/tools/entities';
+import { Term, Vocabulary } from '@toco/tools/entities';
 
-import { TaxonomyService } from '@toco/tools/backend';
+import { TaxonomyService, VocabulariesInmutableNames } from '@toco/tools/backend';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 export class TermAction implements FormContainerAction {
@@ -33,10 +33,26 @@ export class TermGenericComponent implements OnInit {
   public formGroup: FormGroup;
   public action: FormContainerAction;
   public actionLabel = 'Adicionar';
-
+  term: Term;
+  hasService = false;
+  accept;
+  vocab: Vocabulary;
   constructor(
     private _formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) private data: any) { }
+    @Inject(MAT_DIALOG_DATA) private data: any) {
+    if (data.term) {
+      this.term = data.term;
+      this.actionLabel = 'Actualizar';
+    } else {
+      this.term = new Term();
+      this.term.isNew = true;
+    }
+    if (data.accept && data.currentVocab) {
+      this.accept = data.accept;
+      this.hasService = true;
+      this.vocab = data.currentVocab;
+    }
+  }
 
   ngOnInit() {
     this.formGroup = this._formBuilder.group({});
@@ -45,31 +61,97 @@ export class TermGenericComponent implements OnInit {
       description: '',
       iconName: '',
       formGroup: this.formGroup,
-      content: []
+      content: this.getPanels(),
     }];
-    if (this.data.service && this.data.terms && this.data.vocab) {
 
-      // if a term is comming, then we are updating it
-      if (this.data.term) {
-        this.actionLabel = 'Actualizar';
-        this.panels[0].title = 'Editar ' + this.data.term.name;
-        this.action = new TermAction(this.data.service, this.data.term, false);
-      } else {
-        this.data.term = new Term();
-        this.data.term.vocabulary_id = this.data.vocab.id;
-        this.action = new TermAction(this.data.service, this.data.term, true);
-        this.actionLabel = 'Adicionar';
-        this.panels[0].title = 'Nuevo Término de ' + this.data.vocab.human_name;
+    this.action = {
+      doit: (data: any) => {
+        console.log(this.formGroup);
+
+        if (this.formGroup.valid) {
+
+          this.term.load_from_data(this.formGroup.value);
+          this.accept(this.term as Term);
+
+        }
       }
+    };
 
-      this.panels[0].content = [
-        {
+  }
+
+  getPanels() {
+
+    switch (this.vocab.id) {
+      case VocabulariesInmutableNames.INTITUTION:
+        return [
+          {
+            name: 'name', label: 'Nombre',
+            type: FormFieldType.text,
+            required: true,
+            value: (this.data.term.name) ? this.data.term.name : null,
+            width: '45%'
+          },
+          {
+            name: 'description',
+            label: 'Descripción',
+            type: FormFieldType.textarea,
+            required: false,
+            value: (this.data.term.description) ? this.data.term.description : null,
+            width: '45%'
+          },
+          {
+            name: 'grid',
+            label: 'Identificador GRID',
+            type: FormFieldType.text,
+            required: false,
+            value: (this.data.term.data.grid) ? this.data.term.data.grid : null,
+            width: '30%'
+          },
+          {
+            name: 'email',
+            label: 'Email',
+            type: FormFieldType.email,
+            required: true,
+            value: (this.data.term.data.email) ? this.data.term.data.email : null,
+            width: '30%'
+          },
+          {
+            name: 'website',
+            label: 'Sitio Web Oficial',
+            type: FormFieldType.url,
+            required: false,
+            value: (this.data.term.data.website) ? this.data.term.data.website : null,
+            width: '30%'
+          },
+          {
+            name: 'address',
+            label: 'Dirección',
+            type: FormFieldType.textarea,
+            required: false,
+            value: (this.data.term.data.address) ? this.data.term.data.address : null,
+            width: '100%'
+          },
+          {
+            name: 'parent_id',
+            label: 'Jerarquía Institucional (Institución Superior)',
+            type: FormFieldType.term_parent,
+            required: false,
+            extraContent: {
+              currentTerm: (this.data.term) ? this.data.term : null,
+              terms: (this.data.terms) ? this.data.terms : null
+            },
+            width: '30%'
+          },
+        ];
+        break;
+      default:
+        return [{
           name: 'name',
           label: 'Nombre',
           type: FormFieldType.text,
           required: true,
           width: '100%',
-          value: (this.data.term.name) ? this.data.term.name : null,
+          value: (this.term.name) ? this.term.name : null,
         },
         {
           name: 'description',
@@ -77,20 +159,19 @@ export class TermGenericComponent implements OnInit {
           type: FormFieldType.textarea,
           required: false,
           width: '100%',
-          value: (this.data.term.description) ? this.data.term.description : null,
+          value: (this.term.description) ? this.term.description : null,
         },
         {
           name: 'parent_id',
           label: 'Término Padre',
           type: FormFieldType.term_parent,
-          required: false,
+          required: true,
           extraContent: {
             terms: this.data.terms,
-            currentTerm: (this.data.term) ? this.data.term : null,
+            currentTerm: (this.term) ? this.term : null,
           },
           width: '50%'
-        },
-      ];
+        }]
     }
   }
 }

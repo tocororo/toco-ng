@@ -3,9 +3,9 @@
         <mat-card-title>
             <div fxLayout="row" fxLayoutAlign="space-between none">
                 Términos
-                <ng-container *ngIf="vocab"> de {{ vocab.human_name}} </ng-container>
+                <ng-container *ngIf="currentVocab"> de {{ currentVocab.human_name}} </ng-container>
 
-                <button mat-icon-button *ngIf="vocab && hasPermission('add')" (click)="addTerm()"
+                <button mat-icon-button *ngIf="currentVocab && hasPermission('add')" (click)="addTerm()"
                     matTooltip="Adicionar Término">
                     <mat-icon>library_add</mat-icon>
                 </button>
@@ -22,7 +22,7 @@
                     fxLayout="row" fxLayoutAlign="space-between center">
                     {{ node.name }}
                     <div>
-                        <button mat-icon-button *ngIf="vocab && hasPermission('edit', vocab.id)" (click)="editTerm(node)" matTooltip="Editar">
+                        <button mat-icon-button *ngIf="currentVocab && hasPermission('edit', currentVocab.id)" (click)="editTerm(node)" matTooltip="Editar">
                             <mat-icon>edit</mat-icon>
                         </button>
                         <!-- <button mat-icon-button (click)="deleteTerm(node)" matTooltip="Eliminar">
@@ -41,7 +41,7 @@
                     <div class="item-width" fxLayout="row" fxLayoutAlign="space-between center">
                         {{ node.name }}
                         <div>
-                            <button mat-icon-button *ngIf="vocab && hasPermission('edit', vocab.id)" (click)="editTerm(node)" matTooltip="Editar">
+                            <button mat-icon-button *ngIf="currentVocab && hasPermission('edit', currentVocab.id)" (click)="editTerm(node)" matTooltip="Editar">
                                 <mat-icon>edit</mat-icon>
                             </button>
                             <!-- <button mat-icon-button (click)="deleteTerm(node)" matTooltip="Eliminar">

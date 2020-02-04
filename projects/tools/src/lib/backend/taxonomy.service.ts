@@ -95,6 +95,7 @@ export class TaxonomyService {
   }
 
   newVocabulary(vocab: Vocabulary): void {
+    console.log(vocab)
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
 
     // tslint:disable-next-line: max-line-length
@@ -102,6 +103,7 @@ export class TaxonomyService {
   }
 
   editVocabulary(vocab: Vocabulary): void {
+    console.log(vocab)
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
 
     // tslint:disable-next-line: max-line-length

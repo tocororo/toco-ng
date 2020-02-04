@@ -18,6 +18,8 @@ export class TaxonomyComponent implements OnInit, OnDestroy{
 
     current_vocab = {name: '', description: ''};
 
+    currentVocab: Vocabulary;
+
     private currentVocabSuscription: Subscription = null;
     private currentVocabObserver: PartialObserver<Vocabulary> = {
         next: (vocab: Vocabulary) => {
@@ -39,7 +41,11 @@ export class TaxonomyComponent implements OnInit, OnDestroy{
     ngOnInit(): void {
         this.currentVocabSuscription = this.service.currentVocabularyObservable.subscribe(this.currentVocabObserver);
     }
-
+    vocabChange(vocab: Vocabulary){
+        console.log(vocab);
+        this.currentVocab = vocab;
+        // this.service.getTermsTreeByVocab(vocab.id);
+    }
     ngOnDestroy(): void {
         if (this.currentVocabSuscription){
             this.currentVocabSuscription.unsubscribe();

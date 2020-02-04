@@ -1,5 +1,5 @@
 
-import { Component,OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
 import { of as observableOf, PartialObserver, Subscription, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { FlatTreeControl } from '@angular/cdk/tree';
@@ -32,9 +32,8 @@ export interface FlatTreeNode {
     templateUrl: './terms.component.html',
     styleUrls: ['./terms.component.scss']
 })
-export class TermsComponent implements OnInit, OnDestroy{
+export class TermsComponent implements OnInit, OnChanges, OnDestroy {
 
-    vocab: Vocabulary = null;
 
     loading: Boolean = false;
 
@@ -54,7 +53,7 @@ export class TermsComponent implements OnInit, OnDestroy{
         },
 
         error: (err: any) => {
-                console.log('The observable got an error notification: ' + err + '.');
+            console.log('The observable got an error notification: ' + err + '.');
         },
 
         complete: () => {
@@ -66,15 +65,15 @@ export class TermsComponent implements OnInit, OnDestroy{
     private termChangeObserver: PartialObserver<Response<any>> = {
         next: (response: Response<any>) => {
             this.loading = !this.loading;
-            this.service.getTermsTreeByVocab(this.vocab.id).subscribe(this.termsTreeObserver);
+            this.service.getTermsTreeByVocab(this.currentVocab.id).subscribe(this.termsTreeObserver);
             this.dialog.closeAll();
-            const m  = new MessageHandler(this._snackBar);
+            const m = new MessageHandler(this._snackBar);
             m.showMessage(StatusCode.OK, response.message);
             console.log(response);
         },
 
         error: (err: any) => {
-                console.log('The observable got an error notification: ' + err + '.');
+            console.log('The observable got an error notification: ' + err + '.');
         },
 
         complete: () => {
@@ -82,30 +81,32 @@ export class TermsComponent implements OnInit, OnDestroy{
         }
     };
 
-    private currentVocabSuscription: Subscription = null;
-    private currentVocabObserver: PartialObserver<Vocabulary> = {
-        next: (vocab: Vocabulary) => {
-            if ( !this.vocab || this.vocab.name !== vocab.name) {
-                this.loading = !this.loading;
-                this.service.getTermsTreeByVocab(vocab.id).subscribe(this.termsTreeObserver);
-                this.vocab = vocab;
-            }
-        },
+    // private currentVocabSuscription: Subscription = null;
+    // private currentVocabObserver: PartialObserver<Vocabulary> = {
+    //     next: (currentVocab: Vocabulary) => {
+    //         if ( !this.currentVocab || this.currentVocab.name !== currentVocab.name) {
+    //             this.loading = !this.loading;
+    //             this.service.getTermsTreeByVocab(currentVocab.id).subscribe(this.termsTreeObserver);
+    //             this.currentVocab = currentVocab;
+    //         }
+    //     },
 
-        error: (err: any) => {
-                console.log('The observable got an error notification: ' + err + '.');
-        },
+    //     error: (err: any) => {
+    //             console.log('The observable got an error notification: ' + err + '.');
+    //     },
 
-        complete: () => {
-            console.log('The observable got a complete notification.');
-        }
-    };
+    //     complete: () => {
+    //         console.log('The observable got a complete notification.');
+    //     }
+    // };
+
+    @Input()
+    currentVocab: Vocabulary = null;
 
     constructor(private service: TaxonomyService,
         private oautheStorage: OAuthStorage,
         public dialog: MatDialog,
-        private _snackBar: MatSnackBar)
-    {
+        private _snackBar: MatSnackBar) {
         this.treeFlattener = new MatTreeFlattener(
             this.transformer,
             this.getLevel,
@@ -117,26 +118,54 @@ export class TermsComponent implements OnInit, OnDestroy{
     }
 
     ngOnInit(): void {
-        this.currentVocabSuscription = this.service.currentVocabularyObservable.subscribe(this.currentVocabObserver);
-        this.termChangeSuscription = this.service.termChangeObservable.subscribe(this.termChangeObserver);
+        console.log(this.currentVocab);
+
+        // if (this.currentVocab ) {
+        //     this.service.getTermsTreeByVocab(this.currentVocab.id)
+        //     .subscribe((response: Response<any>) => {
+        //         this.dataSource.data = response.data.tree.term_node;
+        //         this.loading = !this.loading;
+        //     });
+        // }
+
+        // this.currentVocabSuscription = this.service.currentVocabularyObservable.subscribe(this.currentVocabObserver);
+        // this.termChangeSuscription = this.service.termChangeObservable.subscribe(this.termChangeObserver);
 
         if (!this.oautheStorage.getItem('user_permission')) {
             this.getAuthenticatedUserPermissions();
         }
     }
-
+    ngOnChanges() {
+        console.log(this.currentVocab);
+        if (this.currentVocab != null) {
+            this.loading = true;
+            this.service.getTermsTreeByVocab(this.currentVocab.id)
+                .subscribe(
+                    (response: Response<any>) => {
+                        console.log(response)
+                        this.dataSource.data = response.data.tree.term_node;
+                    },
+                    (err: any) => {
+                        // error
+                    },
+                    () => {
+                        this.loading = false;
+                    }
+                );
+        }
+    }
     ngOnDestroy(): void {
-        if (this.currentVocabSuscription) {
-            this.currentVocabSuscription.unsubscribe();
-        }
-        if (this.termChangeSuscription) {
-            this.termChangeSuscription.unsubscribe();
-        }
+        // if (this.currentVocabSuscription) {
+        //     this.currentVocabSuscription.unsubscribe();
+        // }
+        // if (this.termChangeSuscription) {
+        //     this.termChangeSuscription.unsubscribe();
+        // }
     }
 
     /** Transform the data to something the tree can read. */
     transformer(node: TermNode, level: number) {
-      return {
+        return {
             name: node.term.name,
             term: node.term,
             level: level,
@@ -166,27 +195,38 @@ export class TermsComponent implements OnInit, OnDestroy{
     addTerm() {
         this.openTermDialog(null);
     }
-    editTerm(node: any ) {
+    editTerm(node: any) {
         const term = new Term();
         term.load_from_data(node.term);
         this.openTermDialog(term);
     }
 
+    saveTerm(term: Term) {
+
+
+    }
+
+
     private openTermDialog(term: Term) {
-        switch (this.vocab.id) {
-            case VocabulariesInmutableNames.INTITUTION:
-                this.dialog.open(TermInstitutionsComponent, {
-                    data: { term: term, service: this.service, terms: this.dataSource.data, vocab: this.vocab }
-                });
-                break;
+        switch (this.currentVocab.id) {
+            
             case VocabulariesInmutableNames.DATABASES:
                 this.dialog.open(TermIndexerComponent, {
-                    data: { term: term, service: this.service, terms: this.dataSource.data, vocab: this.vocab }
+                    data: { term: term, accept: this.saveTerm, terms: this.dataSource.data, currentVocab: this.currentVocab }
                 });
                 break;
             default:
                 const dialogRef = this.dialog.open(TermGenericComponent, {
-                    data: { term: term, terms: this.dataSource.data, vocab: this.vocab, service: this.service }
+                    data: {
+                        term: term,
+                        terms: this.dataSource.data,
+                        currentVocab: this.currentVocab,
+                        accept: (term: Term) => {
+                            console.log(term)
+                            this.dialog.closeAll();
+                            
+                        }
+                    }
                 });
         }
     }
@@ -195,46 +235,46 @@ export class TermsComponent implements OnInit, OnDestroy{
         console.log(node);
     }
 
-    getAuthenticatedUserPermissions(){
+    getAuthenticatedUserPermissions() {
         this.service.getCurrentUserPermissions().pipe(
             catchError(err => {
-                const m  = new MessageHandler(this._snackBar);
+                const m = new MessageHandler(this._snackBar);
                 m.showMessage(StatusCode.serverError, err.message);
                 // TODO: Maybe you must set a better return.
                 return of(null);
             })
         )
-        .subscribe(request => {
-            if (request.status == 'success'){
-                var permJson = JSON.stringify(request.data.permissions.actions);
-                this.oautheStorage.setItem('user_permissions', permJson);
-            }
-        });
+            .subscribe(request => {
+                if (request.status == 'success') {
+                    var permJson = JSON.stringify(request.data.permissions.actions);
+                    this.oautheStorage.setItem('user_permissions', permJson);
+                }
+            });
     }
 
-    hasPermission(permission: string, id? :number): boolean{
+    hasPermission(permission: string, id?: number): boolean {
 
         const userPermission = JSON.parse(this.oautheStorage.getItem('user_permissions'));
         switch (permission) {
             case 'add':
-                if ( userPermission.taxonomy_full_editor_actions === null)
+                if (userPermission.taxonomy_full_editor_actions === null)
                     return true;
 
                 return false;
 
             case 'edit':
-                if ( userPermission.taxonomy_full_editor_actions === null)
+                if (userPermission.taxonomy_full_editor_actions === null)
                     return true;
 
-                    if ( userPermission.vocabulary_editor_actions){
-                    const arr : Array<string> = userPermission.vocabulary_editor_actions;
- 
-                    if (arr.includes( id.toString() )){
+                if (userPermission.vocabulary_editor_actions) {
+                    const arr: Array<string> = userPermission.vocabulary_editor_actions;
+
+                    if (arr.includes(id.toString())) {
                         return true
                     }
 
                 }
-                else if (userPermission.taxonomy_full_editor_actions){
+                else if (userPermission.taxonomy_full_editor_actions) {
                     return true;
                 }
 

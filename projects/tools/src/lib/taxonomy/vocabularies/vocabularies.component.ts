@@ -25,130 +25,95 @@ export class VocabularyDialogComponent implements OnInit {
     public panels: PanelContent[];
     public formGroup: FormGroup;
     public action: FormContainerAction;
-    public actionLabel = 'Adicionar';
-    private isNew = false;
+    public actionLabel = 'Aceptar';
+    private hasService = false;
+    vocab: Vocabulary;
 
     constructor(
         private _formBuilder: FormBuilder,
         public dialogRef: MatDialogRef<FormContainerComponent>,
         public _snackBar: MatSnackBar,
-        @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-    ngOnInit(): void {
-        if (this.data.service) {
-            this.formGroup = this._formBuilder.group({});
-            if (this.data.vocab != null) {
-                this.panels = [{
-                    title: 'Vocabulario',
-                    description: '',
-                    iconName: '',
-                    formGroup: this.formGroup,
-                    content: this.getContent(),
-                    // actionLabel: 'Actualizar',
-                    // action: {
-                    //     doit: (d: any) => {
-                    //         // const name = this.data.name.trim()
-    
-                    //         if (this.formGroup.valid){
-                    //             this.data.vocab.name = d.name;
-                    //             this.data.vocab.human_name = d.human_name;
-                    //             this.data.vocab.description = d.description;
-                    //             console.log(this.data.vocab);
-                                
-                    //             this.data.service.editVocabulary(this.data.vocab);
-                    //         } else {
-                    //             const m = new MessageHandler(this._snackBar);
-                    //             m.showMessage(StatusCode.OK, 'No puede dejar el Identificador con caracteres vacíos.')
-                    //         }
-                    //     }
-                    // }
-                    
-                }];
-            } else {
-                this.data.vocab = new Vocabulary();
-                this.isNew = true;
-                this.panels = [{
-                    title: 'Vocabulario',
-                    description: '',
-                    iconName: '',
-                    formGroup: this.formGroup,
-                    content: this.getContent(),
-                    // actionLabel: 'Adicionar',
-                    // action: {
-                    //     doit: (d: any) => {
-                    //         // const name = this.data.name.trim()
-    
-                    //         if (this.formGroup.valid){
-                    //             this.data.vocab.name = d.name;
-                    //             this.data.vocab.human_name = d.human_name;
-                    //             this.data.vocab.description = d.description;
-                    //             console.log(this.data.vocab);
-                                
-                    //             this.data.service.newVocabulary(this.data.vocab);
-                    //         } else {
-                    //             const m = new MessageHandler(this._snackBar);
-                    //             m.showMessage(StatusCode.OK, 'No puede dejar el Identificador con caracteres vacíos.')
-                    //         }
-                    //     }
-                    // }
-                    
-                }];
-            }
-
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+        if (data.vocab === null) {
+            this.vocab = new Vocabulary();
+            this.vocab.isNew = true;
+        } else {
+            this.vocab = data.vocab;
+        }
+        if (data.service) {
+            this.hasService = true;
         }
     }
-    private getContent(){
-        return [
-            {
-                name: 'name',
-                label: 'Identificador',
-                type: FormFieldType.identifier,
-                required: true,
-                width: '100%',
-                value: this.data.vocab.name,
-                startHint: new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
-            },
-            {
-                name: 'human_name',
-                label: 'Nombre',
-                type: FormFieldType.text,
-                required: false,
-                width: '100%',
-                value: this.data.vocab.human_name,
-                startHint: new HintValue(HintPosition.start, '')
-            },
-            {
-                name: 'description',
-                label: 'Descripción',
-                type: FormFieldType.textarea,
-                required: false,
-                width: '100%',
-                value: this.data.vocab.description,
-                startHint: new HintValue(HintPosition.start, '')
-            },
-        ]
+
+    ngOnInit(): void {
+        if (this.hasService) {
+            console.log(this.hasService)
+            this.formGroup = this._formBuilder.group({});
+            this.panels = [
+                {
+                    title: this.vocab.isNew ? 'Nuevo Vocabulario' : 'Editar Vocabulario',
+                    description: '',
+                    iconName: '',
+                    formGroup: this.formGroup,
+                    content: [
+                        {
+                            name: 'name',
+                            label: 'Identificador',
+                            type: FormFieldType.identifier,
+                            required: true,
+                            width: '100%',
+                            value: this.vocab.name,
+                            startHint: new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
+                        },
+                        {
+                            name: 'human_name',
+                            label: 'Nombre',
+                            type: FormFieldType.text,
+                            required: false,
+                            width: '100%',
+                            value: this.vocab.human_name,
+                            startHint: new HintValue(HintPosition.start, '')
+                        },
+                        {
+                            name: 'description',
+                            label: 'Descripción',
+                            type: FormFieldType.textarea,
+                            required: false,
+                            width: '100%',
+                            value: this.vocab.description,
+                            startHint: new HintValue(HintPosition.start, '')
+                        }
+                    ]
+                }
+            ];
+            console.log(this.panels)
+        }
     }
+
     onNoClick(): void {
         this.dialogRef.close();
     }
 
-    acceptAction(){
-        if(this.formGroup.valid){
+    acceptAction() {
+        if (this.formGroup.valid) {
             console.log('VALID');
-            this.data.vocab.name = this.formGroup.value['name'];
-            this.data.vocab.human_name = this.formGroup['human_name'];
-            this.data.vocab.description = this.formGroup['description'];
-            if (this.isNew) {
-                this.data.service.newVocabulary(this.data.vocab);
-            }else{
-                this.data.service.editVocabulary(this.data.vocab);
+            console.log(this.formGroup.value);
+
+            this.vocab.name = this.formGroup.value['name'];
+            this.vocab.human_name = this.formGroup.value['human_name'];
+            this.vocab.description = this.formGroup.value['description'];
+
+            if (this.vocab.isNew) {
+                this.data.service.newVocabulary(this.vocab);
+            } else {
+                this.data.service.editVocabulary(this.vocab);
             }
-        }else{
+        } else {
             console.log('INVALKID');
             const m = new MessageHandler(this._snackBar);
             m.showMessage(StatusCode.OK, 'No puede dejar el Identificador con caracteres vacíos.')
         }
-        
+
     }
 }
 
@@ -179,7 +144,12 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
 
     public vocabCtrl = new FormControl();
     public filteredVocabularies: Observable<Vocabulary[]>;
+
+    @Output()
+    public selectedVocab: EventEmitter<Vocabulary> = new EventEmitter();
+
     public currentVocab: Vocabulary = null;
+
     public vocabularies: Vocabulary[] = [];
 
     loading = false;
@@ -261,6 +231,10 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
         console.log(vocab);
     }
 
+    onSelectionChange(){
+        console.log(this.currentVocab);
+        this.selectedVocab.emit(this.currentVocab);
+    }
     showTerms(vocab: Vocabulary) {
         // console.log(vocab);
         this.service.vocabularyChanged(vocab);

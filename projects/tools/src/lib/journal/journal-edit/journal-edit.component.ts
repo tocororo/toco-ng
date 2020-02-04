@@ -981,7 +981,6 @@ export class JournalEditAddIndexComponent implements OnInit {
             'end_cover': this.indexFormGroup.controls['end_cover'].value,
           }
         }
-        console.log
         this.addIndexPanel(result);
       }
     };
