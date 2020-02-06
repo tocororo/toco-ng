@@ -3,30 +3,10 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { PanelContent, FormFieldType, FormContainerAction, HintValue, HintPosition } from '@toco/tools/forms';
-import { Term, Vocabulary, TermInstitutionData, Entity, EntityBase, TermIndexData, VocabulariesInmutableNames } from '@toco/tools/entities';
+import { Term, Vocabulary, TermInstitutionData, EntityBase, TermIndexData, VocabulariesInmutableNames } from '@toco/tools/entities';
 
-import { TaxonomyService } from '@toco/tools/backend';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { finalize, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MessageHandler, StatusCode } from '@toco/tools/core';
 import { MatSnackBar } from '@angular/material';
-
-export class TermAction implements FormContainerAction {
-  constructor(private service: TaxonomyService, private term: Term, private is_new_term: boolean) { }
-
-  doit(data: any): void {
-    this.term.name = data.name;
-    this.term.parent_id = data.parent_id;
-    this.term.description = data.description;
-    if (this.is_new_term) {
-      this.service.newTerm(this.term as Term);
-    } else {
-      this.service.editTerm(this.term as Term);
-    }
-  }
-}
 
 @Component({
   selector: 'toco-term-generic',
@@ -45,7 +25,6 @@ export class TermGenericComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     public _snackBar: MatSnackBar,
-    private service: TaxonomyService,
     @Inject(MAT_DIALOG_DATA) private data: any) {
     
     if (data.accept && data.currentVocab) {
@@ -77,16 +56,18 @@ export class TermGenericComponent implements OnInit {
     }];
 
     this.action = {
-      doit: (data: any) => {
-        console.log(this.formGroup);
+      doit: () => {
 
         if (this.formGroup.valid) {
+
+          // get the result from formGroup
           const result = new Term();
           result.load_from_data(this.data.term);
           result.load_from_data(this.formGroup.value);
           result.data = this.getTermDataObject();
           result.data.load_from_data(this.formGroup.value);
-          console.log(result, "aqui")
+
+          // Set the parent term, if any
           const parent = this.formGroup.value['parent_id']
           if ( parent && parent[0]){
             result.parent_id = parent[0].id;
@@ -94,22 +75,25 @@ export class TermGenericComponent implements OnInit {
             result.parent_id = null;
           }
 
+          // if the term is an index, then set miar_class and group_mes
+          // clasifications
           if (this.vocab.id == VocabulariesInmutableNames.DATABASES) { 
+
             result.class_ids = [];
+
             const miar = this.formGroup.value['miar_class'];
             const mes =  this.formGroup.value['group_mes'];
+
             if (miar && miar[0]){
-              
-              console.log(miar[0]);
-              
-            if( miar[0]) {
               result.class_ids.push(miar[0].id)
-            }}
+            }
+
             if (mes && mes[0]) {
               result.class_ids.push(mes[0].id)
             }
+
           }
-          console.log(result, "aqui")
+
           this.accept(result as Term);
         }
       }

@@ -53,15 +53,14 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
         },
 
         error: (err: any) => {
-            console.log('The observable got an error notification: ' + err + '.');
+            console.log('error: ' + err + '.');
         },
 
         complete: () => {
-            console.log('The observable got a complete notification.');
+            console.log('complete');
         }
     };
 
-    private termChangeSuscription: Subscription = null;
     private termChangeObserver: PartialObserver<Response<any>> = {
         next: (response: Response<any>) => {
             this.loading = !this.loading;
@@ -69,36 +68,16 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
             this.dialog.closeAll();
             const m = new MessageHandler(this._snackBar);
             m.showMessage(StatusCode.OK, response.message);
-            console.log(response);
         },
 
         error: (err: any) => {
-            console.log('The observable got an error notification: ' + err + '.');
+            console.log('error: ' + err + '.');
         },
 
         complete: () => {
-            console.log('The observable got a complete notification.');
+            console.log('complete');
         }
     };
-
-    // private currentVocabSuscription: Subscription = null;
-    // private currentVocabObserver: PartialObserver<Vocabulary> = {
-    //     next: (currentVocab: Vocabulary) => {
-    //         if ( !this.currentVocab || this.currentVocab.name !== currentVocab.name) {
-    //             this.loading = !this.loading;
-    //             this.service.getTermsTreeByVocab(currentVocab.id).subscribe(this.termsTreeObserver);
-    //             this.currentVocab = currentVocab;
-    //         }
-    //     },
-
-    //     error: (err: any) => {
-    //             console.log('The observable got an error notification: ' + err + '.');
-    //     },
-
-    //     complete: () => {
-    //         console.log('The observable got a complete notification.');
-    //     }
-    // };
 
     @Input()
     currentVocab: Vocabulary = null;
@@ -118,35 +97,21 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit(): void {
-        console.log(this.currentVocab);
-
-        // if (this.currentVocab ) {
-        //     this.service.getTermsTreeByVocab(this.currentVocab.id)
-        //     .subscribe((response: Response<any>) => {
-        //         this.dataSource.data = response.data.tree.term_node;
-        //         this.loading = !this.loading;
-        //     });
-        // }
-
-        // this.currentVocabSuscription = this.service.currentVocabularyObservable.subscribe(this.currentVocabObserver);
-        // this.termChangeSuscription = this.service.termChangeObservable.subscribe(this.termChangeObserver);
 
         if (!this.oautheStorage.getItem('user_permission')) {
             this.getAuthenticatedUserPermissions();
         }
     }
     ngOnChanges() {
-        console.log(this.currentVocab);
         if (this.currentVocab != null) {
             this.loading = true;
             this.service.getTermsTreeByVocab(this.currentVocab.id)
                 .subscribe(
                     (response: Response<any>) => {
-                        console.log(response)
                         this.dataSource.data = response.data.tree.term_node;
                     },
                     (err: any) => {
-                        // error
+                        console.log('error: ' + err + '.');
                     },
                     () => {
                         this.loading = false;
@@ -155,12 +120,7 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
     ngOnDestroy(): void {
-        // if (this.currentVocabSuscription) {
-        //     this.currentVocabSuscription.unsubscribe();
-        // }
-        // if (this.termChangeSuscription) {
-        //     this.termChangeSuscription.unsubscribe();
-        // }
+
     }
 
     /** Transform the data to something the tree can read. */
@@ -208,7 +168,6 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
                 terms: this.dataSource.data,
                 currentVocab: this.currentVocab,
                 accept: (term: Term) => {
-                    console.log(term)
                     this.dialog.closeAll();
                     if (term.isNew){
                         this.service.newTerm(term).pipe().subscribe(this.termChangeObserver);
@@ -217,6 +176,9 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
                     }
                 }
             }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('dialog closed');
         });
     }
 

@@ -53,7 +53,7 @@ export class VocabularyDialogComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.hasService) {
-            console.log(this.hasService)
+
             this.formGroup = this._formBuilder.group({});
             this.panels = [
                 {
@@ -95,9 +95,6 @@ export class VocabularyDialogComponent implements OnInit {
             this.action = {
                 doit: (data: any) => {
                     if (this.formGroup.valid) {
-                        console.log('VALID');
-                        console.log(this.formGroup.value);
-            
                         this.vocab.name = this.formGroup.value['name'];
                         this.vocab.human_name = this.formGroup.value['human_name'];
                         this.vocab.description = this.formGroup.value['description'];
@@ -105,9 +102,8 @@ export class VocabularyDialogComponent implements OnInit {
                         this.accept(this.vocab);
 
                     } else {
-                        console.log('INVALKID');
                         const m = new MessageHandler(this._snackBar);
-                        m.showMessage(StatusCode.OK, 'No puede dejar el Identificador con caracteres vacíos.')
+                        m.showMessage(StatusCode.OK, 'El identificador no es válido.')
                     }
                 }
               }
@@ -131,7 +127,6 @@ export class VocabularyDialogComponent implements OnInit {
 })
 export class VocabulariesComponent implements OnInit, OnDestroy {
 
-    private vocabulariesChangeSuscription: Subscription = null;
     private vocabulariesChangeObserver: PartialObserver<Response<any>> = {
         next: (result: Response<any>) => {
             this.dialog.closeAll();
@@ -144,11 +139,11 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
         },
 
         error: (err: any) => {
-            console.log('The observable got an error notification: ' + err + '.');
+            console.log('error: ' + err + '.');
         },
 
         complete: () => {
-            console.log('The observable got a complete notification.');
+            console.log('complete.');
         }
     };
 
@@ -174,18 +169,13 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.getAuthenticatedUserPermissions();
         this.loadVocabularies();
-        // this.vocabulariesChangeSuscription = this.service.vocabulariesChangeObservable.subscribe(this.vocabulariesChangeObserver);
     }
 
     ngOnDestroy(): void {
-        // if (this.vocabulariesChangeSuscription) {
-        //     this.vocabulariesChangeSuscription.unsubscribe();
-        // }
     }
 
     selectVocab(item: Vocabulary) {
         this.currentVocab = item;
-        // this.showTerms(item);
     }
 
     loadVocabularies() {
@@ -239,22 +229,16 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
+            console.log('dialog closed');
         });
     }
 
     deleteVocab(vocab: Vocabulary) {
-        console.log(vocab);
     }
 
     onSelectionChange(){
-        console.log(this.currentVocab);
         this.selectedVocab.emit(this.currentVocab);
     }
-    // showTerms(vocab: Vocabulary) {
-    //     // console.log(vocab);
-    //     this.service.vocabularyChanged(vocab);
-    // }
 
     getAuthenticatedUserPermissions() {
         this.service.getCurrentUserPermissions().pipe(
