@@ -7,10 +7,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { MessageHandler, StatusCode } from '@toco/tools/core';
-import { Term, TermIndexData } from '@toco/tools/entities';
+import { Term, TermIndexData, VocabulariesInmutableNames } from '@toco/tools/entities';
 import { FormContainerAction, PanelContent, FormFieldContent, FormFieldType } from '@toco/tools/forms';
 
-import { TaxonomyService, VocabulariesInmutableNames } from '@toco/tools/backend';
+import { TaxonomyService } from '@toco/tools/backend';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 class IndexerAction implements FormContainerAction {

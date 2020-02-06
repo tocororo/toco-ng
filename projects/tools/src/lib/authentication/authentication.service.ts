@@ -1,5 +1,5 @@
 import { Injectable, Optional } from '@angular/core';
-import { HttpClient, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject, throwError } from 'rxjs';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 
@@ -69,12 +69,16 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         let token = this.oauthStorage.getItem('access_token');
-        let header = 'Bearer ' + token;
 
-        let headers = req.headers.set('Authorization', header);
+        console.log(req.url, req.headers, req.method);
+        let headers = req.headers.set('Authorization', 'Bearer ' + token);
+
+        if (req.method != 'GET'){
+            headers = headers.set('Content-Type', 'application/json');
+        }
 
         req = req.clone({ headers });
-        console.log(req.url);
+        console.log(req.url, req.headers);
         
 
         return next.handle(req).pipe(

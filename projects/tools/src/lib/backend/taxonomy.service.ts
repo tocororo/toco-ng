@@ -8,17 +8,7 @@ import { Vocabulary, Term, Response } from '@toco/tools/entities';
 import { EnvService } from '@tocoenv/tools/env.service';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 
-// TODO: Esto esta bastante feo... hay que agregarle a vocabulario un nombre inmutable y referirse a este por aqui, no por los ids
-export enum VocabulariesInmutableNames {
-  INTITUTION = 1,
-  DATABASES = 4,
-  DB_GROUPS = 5,
-  PROVINCES = 3,
-  SUBJECTS = 2,
-  LICENCES = 6, 
-  MIAR = 7,
-  SUBJECTS_UNESCO = 8,
-}
+
 
 // TODO: Poner todos los tipos de datos de retorno de Response. 
 // No puede haber en ningun servicio del backend un Response<any>
@@ -32,7 +22,6 @@ export class TaxonomyService {
     headers: new HttpHeaders(
       {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer '
       })
   };
   private token = '';
@@ -104,13 +93,12 @@ export class TaxonomyService {
 
   editVocabulary(vocab: Vocabulary): void {
     console.log(vocab)
-    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
+    // this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
 
     // tslint:disable-next-line: max-line-length
     this.http.post<Response<any>>(
       this.env.sceibaApi + this.prefix + '/vocabulary/edit/' + vocab.id,
-      vocab.stringify(),
-      this.httpOptions)
+      vocab.stringify())
       .pipe().subscribe(this.vocabulariesChangeObserver);
   }
 
@@ -118,25 +106,25 @@ export class TaxonomyService {
     return this.http.get<Response<any>>(this.env.sceibaApi + this.prefix + '/vocabulary/list');
   }
 
-  newTerm(term: Term): void {
-    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
+  newTerm(term: Term): Observable<Response<any>> {
+    // this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
     let a = term.stringify()
     console.log(a);
     // tslint:disable-next-line: max-line-length
-    this.http.post<Response<any>>(
+    return this.http.post<Response<any>>(
       this.env.sceibaApi + this.prefix + '/term/new',
-      term.stringify(),
-      this.httpOptions)
-      .pipe().subscribe(this.termChangeObserver);
+      term.stringify());
+      // ,
+      // this.httpOptions);
   }
 
-  editTerm(term: Term): void {
-    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
-    this.http.post<Response<any>>(
+  editTerm(term: Term): Observable<Response<any>> {
+    // this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
+    return this.http.post<Response<any>>(
       this.env.sceibaApi + this.prefix + '/term/edit/' + term.uuid,
-      term.stringify(),
-      this.httpOptions)
-      .pipe().subscribe(this.termChangeObserver);
+      term.stringify());
+      // ,
+      // this.httpOptions);
   }
 
   getTermByUUID(termUUID, level=10): Observable<Response<any>> {

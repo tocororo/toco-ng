@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageHandler, StatusCode } from '@toco/tools/core';
 import { Vocabulary, Term, TermNode, Response } from '@toco/tools/entities';
 
-import { TaxonomyService, VocabulariesInmutableNames } from '@toco/tools/backend';
+import { TaxonomyService } from '@toco/tools/backend';
 import { TermGenericComponent } from '../term-generic/term-generic.component';
 import { TermInstitutionsComponent } from '../term-institutions/term-institutions.component';
 import { TermIndexerComponent } from '../term-indexer/term-indexer.component';
@@ -196,39 +196,28 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
         this.openTermDialog(null);
     }
     editTerm(node: any) {
-        const term = new Term();
-        term.load_from_data(node.term);
-        this.openTermDialog(term);
-    }
-
-    saveTerm(term: Term) {
-
-
+        this.openTermDialog(node.term);
     }
 
 
     private openTermDialog(term: Term) {
-        switch (this.currentVocab.id) {
-            
-            case VocabulariesInmutableNames.DATABASES:
-                this.dialog.open(TermIndexerComponent, {
-                    data: { term: term, accept: this.saveTerm, terms: this.dataSource.data, currentVocab: this.currentVocab }
-                });
-                break;
-            default:
-                const dialogRef = this.dialog.open(TermGenericComponent, {
-                    data: {
-                        term: term,
-                        terms: this.dataSource.data,
-                        currentVocab: this.currentVocab,
-                        accept: (term: Term) => {
-                            console.log(term)
-                            this.dialog.closeAll();
-                            
-                        }
+
+        const dialogRef = this.dialog.open(TermGenericComponent, {
+            data: {
+                term: term,
+                terms: this.dataSource.data,
+                currentVocab: this.currentVocab,
+                accept: (term: Term) => {
+                    console.log(term)
+                    this.dialog.closeAll();
+                    if (term.isNew){
+                        this.service.newTerm(term).pipe().subscribe(this.termChangeObserver);
+                    } else {
+                        this.service.editTerm(term).pipe().subscribe(this.termChangeObserver);
                     }
-                });
-        }
+                }
+            }
+        });
     }
 
     deleteTerm(node: TermNode) {
