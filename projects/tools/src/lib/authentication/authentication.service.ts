@@ -1,9 +1,5 @@
 import { Injectable, Optional } from '@angular/core';
-<<<<<<< HEAD
-import { HttpClient, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-=======
 import { HttpClient, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
->>>>>>> 7be6188aa902df747ea1307dd36f99a6fc8f688a
 import { Observable, Subject, throwError } from 'rxjs';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 
