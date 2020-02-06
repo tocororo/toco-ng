@@ -53,9 +53,6 @@ export class TermGenericComponent implements OnInit {
       this.hasService = true;
       this.vocab = data.currentVocab;
       if (data.term) {
-        console.log(data.term)
-
-        // this.term = data.term;
         this.actionLabel = 'Actualizar';
         if (! this.data.term.data){
           this.data.term.data = this.getTermDataObject();

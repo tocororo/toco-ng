@@ -28,21 +28,27 @@ export class VocabularyDialogComponent implements OnInit {
     public actionLabel = 'Aceptar';
     private hasService = false;
     vocab: Vocabulary;
+    accept;
 
     constructor(
+        private service: TaxonomyService,
         private _formBuilder: FormBuilder,
         public dialogRef: MatDialogRef<FormContainerComponent>,
         public _snackBar: MatSnackBar,
         @Inject(MAT_DIALOG_DATA) public data: any) {
-        if (data.vocab === null) {
-            this.vocab = new Vocabulary();
-            this.vocab.isNew = true;
-        } else {
-            this.vocab = data.vocab;
-        }
-        if (data.service) {
+
+        if (data.accept) {
+            this.accept = data.accept;
             this.hasService = true;
+            this.vocab = new Vocabulary();
+            if (data.vocab === null) {
+                this.vocab.isNew = true;
+            } else {
+                this.vocab.load_from_data(data.vocab);
+                this.actionLabel = 'Actualizar';
+            }
         }
+
     }
 
     ngOnInit(): void {
@@ -86,7 +92,25 @@ export class VocabularyDialogComponent implements OnInit {
                     ]
                 }
             ];
-            console.log(this.panels)
+            this.action = {
+                doit: (data: any) => {
+                    if (this.formGroup.valid) {
+                        console.log('VALID');
+                        console.log(this.formGroup.value);
+            
+                        this.vocab.name = this.formGroup.value['name'];
+                        this.vocab.human_name = this.formGroup.value['human_name'];
+                        this.vocab.description = this.formGroup.value['description'];
+
+                        this.accept(this.vocab);
+
+                    } else {
+                        console.log('INVALKID');
+                        const m = new MessageHandler(this._snackBar);
+                        m.showMessage(StatusCode.OK, 'No puede dejar el Identificador con caracteres vacíos.')
+                    }
+                }
+              }
         }
     }
 
@@ -95,24 +119,7 @@ export class VocabularyDialogComponent implements OnInit {
     }
 
     acceptAction() {
-        if (this.formGroup.valid) {
-            console.log('VALID');
-            console.log(this.formGroup.value);
-
-            this.vocab.name = this.formGroup.value['name'];
-            this.vocab.human_name = this.formGroup.value['human_name'];
-            this.vocab.description = this.formGroup.value['description'];
-
-            if (this.vocab.isNew) {
-                this.data.service.newVocabulary(this.vocab);
-            } else {
-                this.data.service.editVocabulary(this.vocab);
-            }
-        } else {
-            console.log('INVALKID');
-            const m = new MessageHandler(this._snackBar);
-            m.showMessage(StatusCode.OK, 'No puede dejar el Identificador con caracteres vacíos.')
-        }
+        
 
     }
 }
@@ -129,6 +136,9 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
         next: (result: Response<any>) => {
             this.dialog.closeAll();
             this.loadVocabularies();
+            const voc = new Vocabulary();
+            voc.load_from_data(result.data.vocabulary);
+            this.selectVocab(voc);
             const m = new MessageHandler(this._snackBar);
             m.showMessage(StatusCode.OK, result.message);
         },
@@ -164,18 +174,18 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.getAuthenticatedUserPermissions();
         this.loadVocabularies();
-        this.vocabulariesChangeSuscription = this.service.vocabulariesChangeObservable.subscribe(this.vocabulariesChangeObserver);
+        // this.vocabulariesChangeSuscription = this.service.vocabulariesChangeObservable.subscribe(this.vocabulariesChangeObserver);
     }
 
     ngOnDestroy(): void {
-        if (this.vocabulariesChangeSuscription) {
-            this.vocabulariesChangeSuscription.unsubscribe();
-        }
+        // if (this.vocabulariesChangeSuscription) {
+        //     this.vocabulariesChangeSuscription.unsubscribe();
+        // }
     }
 
     selectVocab(item: Vocabulary) {
         this.currentVocab = item;
-        this.showTerms(item);
+        // this.showTerms(item);
     }
 
     loadVocabularies() {
@@ -206,23 +216,29 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
     }
 
     newVocab(): void {
-        const dialogRef = this.dialog.open(VocabularyDialogComponent, {
-            data: { vocab: null, service: this.service }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
-        });
+        this.openVocabDialog(null);
     }
 
     editVocab(vocab: any) {
-        const voc = new Vocabulary();
-        voc.load_from_data(vocab);
-        console.log(voc)
+        this.openVocabDialog(vocab);
+    }
+
+    private openVocabDialog(vocab: Vocabulary) {
+
         const dialogRef = this.dialog.open(VocabularyDialogComponent, {
-            data: { vocab: voc, service: this.service }
+            data: {
+                vocab: vocab,
+                accept: (voc: Vocabulary) => {
+                    this.dialog.closeAll();
+                    if (voc.isNew){
+                        this.service.newVocabulary(voc).pipe().subscribe(this.vocabulariesChangeObserver);
+                    } else {
+                        this.service.editVocabulary(voc).pipe().subscribe(this.vocabulariesChangeObserver);
+                    }
+                }
+            }
         });
         dialogRef.afterClosed().subscribe(result => {
-            this.loadVocabularies();
             console.log('The dialog was closed');
         });
     }
@@ -235,10 +251,10 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
         console.log(this.currentVocab);
         this.selectedVocab.emit(this.currentVocab);
     }
-    showTerms(vocab: Vocabulary) {
-        // console.log(vocab);
-        this.service.vocabularyChanged(vocab);
-    }
+    // showTerms(vocab: Vocabulary) {
+    //     // console.log(vocab);
+    //     this.service.vocabularyChanged(vocab);
+    // }
 
     getAuthenticatedUserPermissions() {
         this.service.getCurrentUserPermissions().pipe(
