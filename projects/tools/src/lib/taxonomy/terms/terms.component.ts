@@ -12,8 +12,6 @@ import { Vocabulary, Term, TermNode, Response } from '@toco/tools/entities';
 
 import { TaxonomyService } from '@toco/tools/backend';
 import { TermGenericComponent } from '../term-generic/term-generic.component';
-import { TermInstitutionsComponent } from '../term-institutions/term-institutions.component';
-import { TermIndexerComponent } from '../term-indexer/term-indexer.component';
 
 import { OAuthStorage } from 'angular-oauth2-oidc';
 
