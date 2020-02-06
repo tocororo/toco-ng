@@ -4,6 +4,34 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 
 /**
+ * A collection of CSS styles. 
+ */
+export type CssStyles = {
+    [styleName: string]: string;
+};
+
+/**
+ * An enum that represents how to wrap the content of a table cell. 
+ */
+export enum CellContentWrap
+{
+    /**
+     * The `break` wrap breaks the content when reaching the end of a line. 
+     */
+    break,
+
+    /**
+     * The `ellipsis` wrap clips the remaining content and renders an ellipsis ("...") to represent the clipped content. 
+     */
+    ellipsis,
+
+    /**
+     * The `responsible` wrap is the default style. It only applies the responsible styles that are defined in the table. 
+     */
+    responsible
+}
+
+/**
  * An interface that represents the content of a table control.
  */
 export interface TableContent
@@ -27,6 +55,18 @@ export interface TableContent
      * By default, its value is `[]`. 
      */
     columnsHeaderText?: string[];
+
+    /**
+     * Returns the array of strings that indicates the width of the columns. 
+     * By default, its value is `[]`. 
+     */
+    columnsWidth?: string[];
+
+    /**
+     * Returns the array of `CellContentWrap` that indicates how to wrap the content of the columns. 
+     * By default, its value is `[]`. 
+     */
+    columnContentWrap?: CellContentWrap[];
 
     /**
      * Returns a function that creates the list of CSS classes to apply to the table rows. 
@@ -100,6 +140,8 @@ export function defaultTableContent(): TableContent
 
         'columnsObjectProperty': [],
         'columnsHeaderText': [],
+        'columnsWidth': [],
+        'columnContentWrap': [],
         'createCssClassesForRow': undefined,
 
         'propertyNameToIdentify': '',
@@ -175,6 +217,8 @@ export class TableComponent implements OnInit
         /**************************** `mat-cell` properties. ******************************/
         if (this._content.columnsObjectProperty == undefined) this._content.columnsObjectProperty = [];
         if (this._content.columnsHeaderText == undefined) this._content.columnsHeaderText = [];
+        if (this._content.columnsWidth == undefined) this._content.columnsWidth = [];
+        if (this._content.columnContentWrap == undefined) this._content.columnContentWrap = [];
         if (this._content.createCssClassesForRow == undefined) this._content.createCssClassesForRow = this.defaultCreateCssClassesForRow.bind(this);
 
         /**************************** `mat-row` properties. *******************************/
@@ -208,6 +252,77 @@ export class TableComponent implements OnInit
         return {
             'selected-row': (rowData[this._content.propertyNameToIdentify]) == this._selectedRow
         };
+    }
+
+    /**
+     * Returns the list of CSS styles to apply to the table headers. This method must never be called 
+     * because it is for internal use only; it is called in the correct places internally. 
+     * @param pos The column position. 
+     */
+    public _createCssStylesForHeader(pos: number): CssStyles
+    {
+        let result: CssStyles = {};
+
+        this._addCssStyles_CellWidth(result, pos);
+
+        return result;
+    }
+
+    /**
+     * Returns the list of CSS styles to apply to the table cells. This method must never be called 
+     * because it is for internal use only; it is called in the correct places internally. 
+     * @param pos The column position. 
+     */
+    public _createCssStylesForCell(pos: number): CssStyles
+    {
+        let result: CssStyles = {};
+
+        this._addCssStyles_CellWidth(result, pos);
+        this._addCssStyles_CellContentWrap(result, pos);
+
+        return result;
+    }
+
+    private _addCssStyles_CellWidth(cssStyles: CssStyles, pos: number): void
+    {
+        cssStyles['flex'] = '0 0 ' + this._content.columnsWidth[pos];
+        cssStyles['width'] = this._content.columnsWidth[pos];
+    }
+
+    private _addCssStyles_CellContentWrap(cssStyles: CssStyles, pos: number): void
+    {
+        switch(this._content.columnContentWrap[pos])
+        {
+            case CellContentWrap.break:
+            {
+                cssStyles['word-wrap'] = 'break-word' /*!important*/;
+                cssStyles['white-space'] = 'unset' /*!important*/;
+                cssStyles['overflow-wrap'] = 'break-word';
+                cssStyles['word-break'] = 'break-word';
+                
+                cssStyles['-ms-hyphens'] = 'auto';
+                cssStyles['-moz-hyphens'] = 'auto';
+                cssStyles['-webkit-hyphens'] = 'auto';
+                cssStyles['hyphens'] = 'auto';
+
+                break;
+            }
+            case CellContentWrap.ellipsis:
+            {
+                cssStyles['overflow'] = 'hidden';
+                cssStyles['text-overflow'] = 'ellipsis';
+                cssStyles['white-space'] = 'nowrap';
+
+                break;
+            }
+            default: /* CellContentWrap.responsible */
+            {
+                /* The `responsible` wrap is the default style. It only applies the responsible styles 
+                 * that are defined in the table. */
+
+                break;
+            }
+        }
     }
 
     /**
@@ -293,9 +408,14 @@ export class TableComponent implements OnInit
      */
     public checkColumn(): void
     {
-        if ((this._content.columnsObjectProperty.length == 0) || (this._content.columnsHeaderText.length == 0))
+        const len: number = this._content.columnsObjectProperty.length;
+
+        if ((len == 0)
+            || (len != this._content.columnsHeaderText.length)
+            || (len != this._content.columnsWidth.length)
+            || (len != this._content.columnContentWrap.length))
         {
-            console.warn("The 'columnsObjectProperty' or 'columnsHeaderText' fields are empty.");
+            console.warn("The 'columnsObjectProperty', 'columnsHeaderText', 'columnsWidth' and 'columnContentWrap' arrays must be different of empty, and must have the same amount of elements.");
         }
     }
 

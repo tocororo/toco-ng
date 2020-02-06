@@ -1,6 +1,7 @@
 
 table
 {
+    table-layout: fixed;
     width: 100%;
     padding: 2em 1em 0 1em;
     //min-width: 400px;
@@ -15,6 +16,11 @@ tr.mat-row,
 tr.mat-footer-row
 {
     height: 46px;
+}
+
+.div-mat-icon-actions
+{
+    display: inline-block;
 }
 
 .mat-cell-mat-icon

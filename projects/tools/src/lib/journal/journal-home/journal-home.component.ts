@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { SourceService } from '@toco/tools/backend';
 import { Common } from '@toco/tools/core';
 import { Response } from '@toco/tools/entities';
-import { TableContent, TableComponent } from '@toco/tools/forms';
+import { TableContent, TableComponent, CellContentWrap } from '@toco/tools/forms';
 
 @Component({
     selector: 'toco-journal-home',
@@ -53,6 +53,8 @@ export class JournalHomeComponent implements OnInit, OnDestroy
         this.content = {
             'columnsObjectProperty': ['name', 'source_status', 'version_to_review'],
             'columnsHeaderText': ['Nombre', 'Estatus', 'Cambios a Revisar'],
+            'columnsWidth': ['60%', '25%', '15%'],
+            'columnContentWrap': [CellContentWrap.ellipsis, CellContentWrap.ellipsis, CellContentWrap.responsible],
             'createCssClassesForRow': (rowData: any) => {
                 return {
                     'new-release': rowData['version_to_review'],

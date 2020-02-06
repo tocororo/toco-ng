@@ -3,12 +3,16 @@
 
     <!-- The content that is showed when the `dataSource` is not empty. -->
     <ng-container *ngFor="let column of content.columnsObjectProperty; let pos = index" [matColumnDef]="column">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="_createCssStylesForHeader(pos)">
             {{ content.columnsHeaderText[pos] }}
         </th>
-        <td mat-cell [ngClass]="content.createCssClassesForRow(element)" *matCellDef="let element">
+        <td mat-cell [ngClass]="content.createCssClassesForRow(element)" *matCellDef="let element" [ngStyle]="_createCssStylesForCell(pos)">
+            <mat-icon *ngIf="pos == 0 && element['status']" class="mat-cell-mat-icon">new_releases</mat-icon>
             {{ element[column] }}
-            <mat-icon *ngIf="column == 'status' && element[column]" class="mat-cell-mat-icon">new_releases</mat-icon>
+            <div *ngIf="column == 'status'" class="div-mat-icon-actions">
+                <mat-icon class="mat-cell-mat-icon">description</mat-icon>
+                <mat-icon class="mat-cell-mat-icon">edit</mat-icon>
+            </div>
         </td>
     </ng-container>
 
