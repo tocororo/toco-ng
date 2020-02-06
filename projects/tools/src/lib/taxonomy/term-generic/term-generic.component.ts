@@ -2,26 +2,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { PanelContent, FormFieldType, FormContainerAction } from '@toco/tools/forms';
-import { Term } from '@toco/tools/entities';
+import { PanelContent, FormFieldType, FormContainerAction, HintValue, HintPosition } from '@toco/tools/forms';
+import { Term, Vocabulary, TermInstitutionData, EntityBase, TermIndexData, VocabulariesInmutableNames } from '@toco/tools/entities';
 
-import { TaxonomyService } from '@toco/tools/backend';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
-export class TermAction implements FormContainerAction {
-  constructor(private service: TaxonomyService, private term: Term, private is_new_term: boolean) { }
-
-  doit(data: any): void {
-    this.term.name = data.name;
-    this.term.parent_id = data.parent_id;
-    this.term.description = data.description;
-    if (this.is_new_term) {
-      this.service.newTerm(this.term as Term);
-    } else {
-      this.service.editTerm(this.term as Term);
-    }
-  }
-}
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'toco-term-generic',
@@ -33,10 +18,32 @@ export class TermGenericComponent implements OnInit {
   public formGroup: FormGroup;
   public action: FormContainerAction;
   public actionLabel = 'Adicionar';
-
+  // term: Term;
+  hasService = false;
+  accept;
+  vocab: Vocabulary;
   constructor(
     private _formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) private data: any) { }
+    public _snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) private data: any) {
+    
+    if (data.accept && data.currentVocab) {
+      this.accept = data.accept;
+      this.hasService = true;
+      this.vocab = data.currentVocab;
+      if (data.term) {
+        this.actionLabel = 'Actualizar';
+        if (! this.data.term.data){
+          this.data.term.data = this.getTermDataObject();
+        }
+        
+      } else {
+        this.data.term = new Term();
+        this.data.term.isNew = true;
+        this.data.term.vocabulary_id = data.currentVocab.id;
+      }
+    }
+  }
 
   ngOnInit() {
     this.formGroup = this._formBuilder.group({});
@@ -45,25 +52,196 @@ export class TermGenericComponent implements OnInit {
       description: '',
       iconName: '',
       formGroup: this.formGroup,
-      content: []
+      content: this.getPanels(),
     }];
-    if (this.data.service && this.data.terms && this.data.vocab) {
 
-      // if a term is comming, then we are updating it
-      if (this.data.term) {
-        this.actionLabel = 'Actualizar';
-        this.panels[0].title = 'Editar ' + this.data.term.name;
-        this.action = new TermAction(this.data.service, this.data.term, false);
-      } else {
-        this.data.term = new Term();
-        this.data.term.vocabulary_id = this.data.vocab.id;
-        this.action = new TermAction(this.data.service, this.data.term, true);
-        this.actionLabel = 'Adicionar';
-        this.panels[0].title = 'Nuevo Término de ' + this.data.vocab.human_name;
+    this.action = {
+      doit: () => {
+
+        if (this.formGroup.valid) {
+
+          // get the result from formGroup
+          const result = new Term();
+          result.load_from_data(this.data.term);
+          result.load_from_data(this.formGroup.value);
+          result.data = this.getTermDataObject();
+          result.data.load_from_data(this.formGroup.value);
+
+          // Set the parent term, if any
+          const parent = this.formGroup.value['parent_id']
+          if ( parent && parent[0]){
+            result.parent_id = parent[0].id;
+          } else {
+            result.parent_id = null;
+          }
+
+          // if the term is an index, then set miar_class and group_mes
+          // clasifications
+          if (this.vocab.id == VocabulariesInmutableNames.DATABASES) { 
+
+            result.class_ids = [];
+
+            const miar = this.formGroup.value['miar_class'];
+            const mes =  this.formGroup.value['group_mes'];
+
+            if (miar && miar[0]){
+              result.class_ids.push(miar[0].id)
+            }
+
+            if (mes && mes[0]) {
+              result.class_ids.push(mes[0].id)
+            }
+
+          }
+
+          this.accept(result as Term);
+        }
       }
+    }
+  }
 
-      this.panels[0].content = [
-        {
+  getPanels() {
+
+    switch (this.vocab.id) {
+      case VocabulariesInmutableNames.INTITUTION:
+        return [
+          {
+            name: 'name', label: 'Nombre',
+            type: FormFieldType.text,
+            required: true,
+            value: (this.data.term.name) ? this.data.term.name : null,
+            width: '100%'
+          },
+          {
+            name: 'grid',
+            label: 'Identificador GRID',
+            type: FormFieldType.text,
+            required: false,
+            value: (this.data.term.data.grid) ? this.data.term.data.grid : null,
+            width: '50%'
+          },
+          {
+            name: 'description',
+            label: 'Descripción',
+            type: FormFieldType.textarea,
+            required: false,
+            value: (this.data.term.description) ? this.data.term.description : null,
+            width: '100%'
+          },
+          {
+            name: 'email',
+            label: 'Email',
+            type: FormFieldType.email,
+            required: true,
+            value: (this.data.term.data.email) ? this.data.term.data.email : null,
+            width: '45%'
+          },
+          {
+            name: 'website',
+            label: 'Sitio Web Oficial',
+            type: FormFieldType.url,
+            required: false,
+            value: (this.data.term.data.website) ? this.data.term.data.website : null,
+            width: '45%'
+          },
+          {
+            name: 'address',
+            label: 'Dirección',
+            type: FormFieldType.textarea,
+            required: false,
+            value: (this.data.term.data.address) ? this.data.term.data.address : null,
+            width: '100%'
+          },
+          {
+            name: 'parent_id',
+            label: 'Jerarquía Institucional (Institución Superior)',
+            type: FormFieldType.vocabulary,
+            required: false,
+            extraContent: {
+              multiple: false,
+              selectedTermsIds: (this.data.term.parent_id) ? [this.data.term.parent_id] : null,
+              vocab: this.vocab.id
+            },
+            width: '100%'
+          },
+        ];
+      case VocabulariesInmutableNames.DATABASES:
+          return [
+            {
+              name: 'name', label: 'Nombre',
+              type: FormFieldType.text,
+              required: true,
+              value: (this.data.term.name) ? this.data.term.name : null,
+              width: '100%'
+            },
+            {
+              name: 'url',
+              label: 'URL',
+              type: FormFieldType.url,
+              required: false,
+              value: (this.data.term.data.url) ? this.data.term.data.url : null,
+              width: '100%'
+            },
+            {
+              name: 'abrev',
+              label: 'Identificadores',
+              type: FormFieldType.text,
+              required: false,
+              value: (this.data.term.data.abrev) ? this.data.term.data.abrev : null,
+              width: '30%'
+            },
+            {
+              name: 'initial_cover',
+              label: 'Cobertura inicio',
+              type: FormFieldType.text,
+              required: false,
+              value: (this.data.term.data.initial_cover) ? this.data.term.data.initial_cover : null,
+              width: '30%'
+            },
+            {
+              name: 'end_cover',
+              label: 'Cobertura',
+              type: FormFieldType.text,
+              required: false,
+              value: (this.data.term.data.end_cover) ? this.data.term.data.end_cover : null,
+              width: '30%'
+            },
+            {
+              name: 'description',
+              label: 'Descripción',
+              type: FormFieldType.textarea,
+              required: false,
+              value: (this.data.term.description) ? this.data.term.description : null,
+              width: '100%'
+            },
+            {
+              name: 'miar_class',
+              label: 'Tipología de sistemas de indización',
+              type: FormFieldType.vocabulary,
+              required: false,
+              extraContent: {
+                multiple: false,
+                selectedTermsIds: (this.data.term.class_ids) ? this.data.term.class_ids : null,
+                vocab: VocabulariesInmutableNames.MIAR
+              },
+              width: '48%'
+            },
+            {
+              name: 'group_mes',
+              label: 'Grupos, Categorías según criterios de “calidad” de las publicaciones ',
+              type: FormFieldType.vocabulary,
+              startHint: new HintValue(HintPosition.start, ''),
+              required: false,
+              extraContent: {
+                multiple: false,
+                selectedTermsIds: (this.data.term.class_ids) ? this.data.term.class_ids : null,
+                vocab: VocabulariesInmutableNames.DB_GROUPS
+              },
+              width: '48%'
+            },
+          ];
+      default:
+        return [{
           name: 'name',
           label: 'Nombre',
           type: FormFieldType.text,
@@ -82,15 +260,28 @@ export class TermGenericComponent implements OnInit {
         {
           name: 'parent_id',
           label: 'Término Padre',
-          type: FormFieldType.term_parent,
+          type: FormFieldType.vocabulary,
+          startHint: new HintValue(HintPosition.start, ''),
           required: false,
           extraContent: {
-            terms: this.data.terms,
-            currentTerm: (this.data.term) ? this.data.term : null,
+            multiple: false,
+            selectedTermsIds: (this.data.term.parent_id) ? [this.data.term.parent_id] : null,
+            vocab: this.vocab.id
           },
           width: '50%'
-        },
-      ];
+        }]
     }
   }
+
+  getTermDataObject(){
+    switch (this.vocab.id) {
+      case VocabulariesInmutableNames.INTITUTION:
+        return new TermInstitutionData();
+      case VocabulariesInmutableNames.DATABASES:
+        return new TermIndexData();
+      default:
+        return new EntityBase();
+    }
+  }
+
 }

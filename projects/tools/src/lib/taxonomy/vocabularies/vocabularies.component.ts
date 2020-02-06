@@ -25,130 +25,98 @@ export class VocabularyDialogComponent implements OnInit {
     public panels: PanelContent[];
     public formGroup: FormGroup;
     public action: FormContainerAction;
-    public actionLabel = 'Adicionar';
-    private isNew = false;
+    public actionLabel = 'Aceptar';
+    private hasService = false;
+    vocab: Vocabulary;
+    accept;
 
     constructor(
+        private service: TaxonomyService,
         private _formBuilder: FormBuilder,
         public dialogRef: MatDialogRef<FormContainerComponent>,
         public _snackBar: MatSnackBar,
-        @Inject(MAT_DIALOG_DATA) public data: any) { }
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+
+        if (data.accept) {
+            this.accept = data.accept;
+            this.hasService = true;
+            this.vocab = new Vocabulary();
+            if (data.vocab === null) {
+                this.vocab.isNew = true;
+            } else {
+                this.vocab.load_from_data(data.vocab);
+                this.actionLabel = 'Actualizar';
+            }
+        }
+
+    }
 
     ngOnInit(): void {
-        if (this.data.service) {
-            this.formGroup = this._formBuilder.group({});
-            if (this.data.vocab != null) {
-                this.panels = [{
-                    title: 'Vocabulario',
-                    description: '',
-                    iconName: '',
-                    formGroup: this.formGroup,
-                    content: this.getContent(),
-                    // actionLabel: 'Actualizar',
-                    // action: {
-                    //     doit: (d: any) => {
-                    //         // const name = this.data.name.trim()
-    
-                    //         if (this.formGroup.valid){
-                    //             this.data.vocab.name = d.name;
-                    //             this.data.vocab.human_name = d.human_name;
-                    //             this.data.vocab.description = d.description;
-                    //             console.log(this.data.vocab);
-                                
-                    //             this.data.service.editVocabulary(this.data.vocab);
-                    //         } else {
-                    //             const m = new MessageHandler(this._snackBar);
-                    //             m.showMessage(StatusCode.OK, 'No puede dejar el Identificador con caracteres vacíos.')
-                    //         }
-                    //     }
-                    // }
-                    
-                }];
-            } else {
-                this.data.vocab = new Vocabulary();
-                this.isNew = true;
-                this.panels = [{
-                    title: 'Vocabulario',
-                    description: '',
-                    iconName: '',
-                    formGroup: this.formGroup,
-                    content: this.getContent(),
-                    // actionLabel: 'Adicionar',
-                    // action: {
-                    //     doit: (d: any) => {
-                    //         // const name = this.data.name.trim()
-    
-                    //         if (this.formGroup.valid){
-                    //             this.data.vocab.name = d.name;
-                    //             this.data.vocab.human_name = d.human_name;
-                    //             this.data.vocab.description = d.description;
-                    //             console.log(this.data.vocab);
-                                
-                    //             this.data.service.newVocabulary(this.data.vocab);
-                    //         } else {
-                    //             const m = new MessageHandler(this._snackBar);
-                    //             m.showMessage(StatusCode.OK, 'No puede dejar el Identificador con caracteres vacíos.')
-                    //         }
-                    //     }
-                    // }
-                    
-                }];
-            }
+        if (this.hasService) {
 
+            this.formGroup = this._formBuilder.group({});
+            this.panels = [
+                {
+                    title: this.vocab.isNew ? 'Nuevo Vocabulario' : 'Editar Vocabulario',
+                    description: '',
+                    iconName: '',
+                    formGroup: this.formGroup,
+                    content: [
+                        {
+                            name: 'name',
+                            label: 'Identificador',
+                            type: FormFieldType.identifier,
+                            required: true,
+                            width: '100%',
+                            value: this.vocab.name,
+                            startHint: new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
+                        },
+                        {
+                            name: 'human_name',
+                            label: 'Nombre',
+                            type: FormFieldType.text,
+                            required: false,
+                            width: '100%',
+                            value: this.vocab.human_name,
+                            startHint: new HintValue(HintPosition.start, '')
+                        },
+                        {
+                            name: 'description',
+                            label: 'Descripción',
+                            type: FormFieldType.textarea,
+                            required: false,
+                            width: '100%',
+                            value: this.vocab.description,
+                            startHint: new HintValue(HintPosition.start, '')
+                        }
+                    ]
+                }
+            ];
+            this.action = {
+                doit: (data: any) => {
+                    if (this.formGroup.valid) {
+                        this.vocab.name = this.formGroup.value['name'];
+                        this.vocab.human_name = this.formGroup.value['human_name'];
+                        this.vocab.description = this.formGroup.value['description'];
+
+                        this.accept(this.vocab);
+
+                    } else {
+                        const m = new MessageHandler(this._snackBar);
+                        m.showMessage(StatusCode.OK, 'El identificador no es válido.')
+                    }
+                }
+              }
         }
     }
-    private getContent(){
-        return [
-            {
-                name: 'name',
-                label: 'Identificador',
-                type: FormFieldType.identifier,
-                required: true,
-                width: '100%',
-                value: this.data.vocab.name,
-                startHint: new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
-            },
-            {
-                name: 'human_name',
-                label: 'Nombre',
-                type: FormFieldType.text,
-                required: false,
-                width: '100%',
-                value: this.data.vocab.human_name,
-                startHint: new HintValue(HintPosition.start, '')
-            },
-            {
-                name: 'description',
-                label: 'Descripción',
-                type: FormFieldType.textarea,
-                required: false,
-                width: '100%',
-                value: this.data.vocab.description,
-                startHint: new HintValue(HintPosition.start, '')
-            },
-        ]
-    }
+
     onNoClick(): void {
         this.dialogRef.close();
     }
 
-    acceptAction(){
-        if(this.formGroup.valid){
-            console.log('VALID');
-            this.data.vocab.name = this.formGroup.value['name'];
-            this.data.vocab.human_name = this.formGroup['human_name'];
-            this.data.vocab.description = this.formGroup['description'];
-            if (this.isNew) {
-                this.data.service.newVocabulary(this.data.vocab);
-            }else{
-                this.data.service.editVocabulary(this.data.vocab);
-            }
-        }else{
-            console.log('INVALKID');
-            const m = new MessageHandler(this._snackBar);
-            m.showMessage(StatusCode.OK, 'No puede dejar el Identificador con caracteres vacíos.')
-        }
+    acceptAction() {
         
+
     }
 }
 
@@ -159,27 +127,34 @@ export class VocabularyDialogComponent implements OnInit {
 })
 export class VocabulariesComponent implements OnInit, OnDestroy {
 
-    private vocabulariesChangeSuscription: Subscription = null;
     private vocabulariesChangeObserver: PartialObserver<Response<any>> = {
         next: (result: Response<any>) => {
             this.dialog.closeAll();
             this.loadVocabularies();
+            const voc = new Vocabulary();
+            voc.load_from_data(result.data.vocabulary);
+            this.selectVocab(voc);
             const m = new MessageHandler(this._snackBar);
             m.showMessage(StatusCode.OK, result.message);
         },
 
         error: (err: any) => {
-            console.log('The observable got an error notification: ' + err + '.');
+            console.log('error: ' + err + '.');
         },
 
         complete: () => {
-            console.log('The observable got a complete notification.');
+            console.log('complete.');
         }
     };
 
     public vocabCtrl = new FormControl();
     public filteredVocabularies: Observable<Vocabulary[]>;
+
+    @Output()
+    public selectedVocab: EventEmitter<Vocabulary> = new EventEmitter();
+
     public currentVocab: Vocabulary = null;
+
     public vocabularies: Vocabulary[] = [];
 
     loading = false;
@@ -194,18 +169,13 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.getAuthenticatedUserPermissions();
         this.loadVocabularies();
-        this.vocabulariesChangeSuscription = this.service.vocabulariesChangeObservable.subscribe(this.vocabulariesChangeObserver);
     }
 
     ngOnDestroy(): void {
-        if (this.vocabulariesChangeSuscription) {
-            this.vocabulariesChangeSuscription.unsubscribe();
-        }
     }
 
     selectVocab(item: Vocabulary) {
         this.currentVocab = item;
-        this.showTerms(item);
     }
 
     loadVocabularies() {
@@ -236,34 +206,38 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
     }
 
     newVocab(): void {
-        const dialogRef = this.dialog.open(VocabularyDialogComponent, {
-            data: { vocab: null, service: this.service }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
-        });
+        this.openVocabDialog(null);
     }
 
     editVocab(vocab: any) {
-        const voc = new Vocabulary();
-        voc.load_from_data(vocab);
-        console.log(voc)
+        this.openVocabDialog(vocab);
+    }
+
+    private openVocabDialog(vocab: Vocabulary) {
+
         const dialogRef = this.dialog.open(VocabularyDialogComponent, {
-            data: { vocab: voc, service: this.service }
+            data: {
+                vocab: vocab,
+                accept: (voc: Vocabulary) => {
+                    this.dialog.closeAll();
+                    if (voc.isNew){
+                        this.service.newVocabulary(voc).pipe().subscribe(this.vocabulariesChangeObserver);
+                    } else {
+                        this.service.editVocabulary(voc).pipe().subscribe(this.vocabulariesChangeObserver);
+                    }
+                }
+            }
         });
         dialogRef.afterClosed().subscribe(result => {
-            this.loadVocabularies();
-            console.log('The dialog was closed');
+            console.log('dialog closed');
         });
     }
 
     deleteVocab(vocab: Vocabulary) {
-        console.log(vocab);
     }
 
-    showTerms(vocab: Vocabulary) {
-        // console.log(vocab);
-        this.service.vocabularyChanged(vocab);
+    onSelectionChange(){
+        this.selectedVocab.emit(this.currentVocab);
     }
 
     getAuthenticatedUserPermissions() {

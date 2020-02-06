@@ -1,18 +1,41 @@
 
 import { Entity, EntityBase } from './entity';
 
+// TODO: Esto esta bastante feo... hay que agregarle a vocabulario un nombre inmutable y referirse a este por aqui, no por los ids
+export enum VocabulariesInmutableNames {
+    INTITUTION = 1,
+    DATABASES = 4,
+    DB_GROUPS = 5,
+    PROVINCES = 3,
+    SUBJECTS = 2,
+    LICENCES = 6, 
+    MIAR = 7,
+    SUBJECTS_UNESCO = 8,
+  }
+
 export class Term extends Entity {
     uuid = '';
     name = '';
     description = '';
-    data = new Object();
+    data = new EntityBase();
     vocabulary_id = 0;
     parent_id = 0;
     clasified_ids: number[] = [];
     class_ids: number[] = [];
-    children ? : Array<Term> = new Array<Term>(0);
+    
+    // load_from_data(data: any){
+    //     switch (data['vocabulary_id']) {
+    //         case VocabulariesInmutableNames.INTITUTION:
+    //             this.data = new TermInstitutionData();
+    //             break;
+    //         case VocabulariesInmutableNames.LICENCES:
+    //             this.data = new TermIndexData();
+    //         default:
+    //             this.data = new EntityBase();
+    //     }
+    //     super.load_from_data(data);
+    // }
 }
-
 
 
 export class TermInstitutionData extends EntityBase {
@@ -20,6 +43,7 @@ export class TermInstitutionData extends EntityBase {
     email = '';
     website = '';
     address = '';
+
 }
 
 export class TermIndexData extends EntityBase {

@@ -10,8 +10,6 @@ import { VocabulariesComponent, VocabularyDialogComponent } from './vocabularies
 import { TermsComponent } from './terms/terms.component';
 import { TaxonomyComponent } from './taxonomy/taxonomy.component';
 import { TermGenericComponent } from './term-generic/term-generic.component';
-import { TermInstitutionsComponent } from './term-institutions/term-institutions.component';
-import { TermIndexerComponent } from './term-indexer/term-indexer.component';
 
 @NgModule({
     declarations: [
@@ -19,16 +17,12 @@ import { TermIndexerComponent } from './term-indexer/term-indexer.component';
         VocabularyDialogComponent,
         TermsComponent,
         TaxonomyComponent,
-        TermGenericComponent,
-        TermInstitutionsComponent,
-        TermIndexerComponent
+        TermGenericComponent
     ],
 
     entryComponents: [
         VocabularyDialogComponent,
-        TermGenericComponent,
-        TermInstitutionsComponent,
-        TermIndexerComponent
+        TermGenericComponent
     ],
 
     imports: [

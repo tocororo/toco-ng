@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl, ControlContainer } from '@angular/forms';
+import { FormControl, ControlContainer, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
@@ -19,6 +19,9 @@ import { FormFieldControl_Experimental } from '../form-field.control.experimenta
 })
 export class TermParentComponent extends FormFieldControl_Experimental implements OnInit {
 
+    internalControl = new FormControl();
+
+
     formControl = new FormControl();
     inputId: string;
     filteredOptions: Observable<Term[]>;
@@ -28,13 +31,28 @@ export class TermParentComponent extends FormFieldControl_Experimental implement
 
     constructor(private controlContainer: ControlContainer) {
         super();
-     }
+    }
 
-    ngOnInit()
-    {
+    ngOnInit() {
+
+        this.content.formGroup.addControl(this.content.name, this.internalControl);
+        console.log(this.content.value)
+        console.log(this.content.required);
+
+        console.log(this.content.required && (this.content.value == 0 || this.content.value == null || this.content.value == undefined));
+
+        if (this.content.required) {
+            this.internalControl.setValidators((control: AbstractControl): ValidationErrors | null => {
+                return (control.value == 0 || control.value == null || control.value == undefined)
+                    ? { 'requiredTerms': 'No Terms Selected' }
+                    : null;
+            });
+        }
+        this.setValueToInternalControl();
+
+
         this.inputId = this.content.label.trim().toLowerCase();
-        if (this.content.extraContent && this.content.extraContent.terms )
-        {
+        if (this.content.extraContent && this.content.extraContent.terms) {
 
             if (this.content.extraContent.currentTerm) {
                 this.currentTerm = this.content.extraContent.currentTerm;
@@ -61,8 +79,8 @@ export class TermParentComponent extends FormFieldControl_Experimental implement
         let result: Term[] = [];
         if (!this.currentTerm) {
             result.push(node.term);
-        } else{
-            if ( this.currentTerm.id !== node.term.id) {
+        } else {
+            if (this.currentTerm.id !== node.term.id) {
                 if (this.currentTerm.parent_id && this.currentTerm.parent_id === node.term.id) {
                     this.parentTerm = node.term;
                 } else {
@@ -85,15 +103,32 @@ export class TermParentComponent extends FormFieldControl_Experimental implement
 
         this.formControl.setValue('');
         this._updateFilteredOptions();
-        document.getElementById(this.inputId).blur();
+        // document.getElementById(this.inputId).blur();
 
-        this.content.value = this.parentTerm.id;
-        (this.currentTerm)? this.currentTerm.parent_id = this.parentTerm.id : this.parentTerm.id;
+        (this.currentTerm) ? this.currentTerm.parent_id = this.parentTerm.id : this.parentTerm.id;
+        this.setValueToInternalControl();
     }
 
     removeParent() {
         this.selectOptions.push(this.parentTerm);
         this._updateFilteredOptions();
         this.parentTerm = null;
+        this.setValueToInternalControl();
+    }
+
+    private setValueToInternalControl(){
+        if( this.parentTerm == null){
+            this.content.value = null;
+            this.internalControl.setValue(null);
+        }else{
+            this.content.value = this.parentTerm.id;
+            this.internalControl.setValue(this.content.value);
+        }
+
+        if (this.internalControl.valid){
+            this.formControl.setErrors(null);
+        }else{
+            this.formControl.setErrors({requiered:true});
+        }
     }
 }

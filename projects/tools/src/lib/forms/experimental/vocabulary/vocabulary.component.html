@@ -6,8 +6,14 @@
     <mat-form-field style="width: 100%;">
 
       <mat-label> {{content.label}} <span *ngIf="content.required">*</span></mat-label>
-      <input matInput id="'inputId-'{{content.name}}" type="text" [formControl]="formControl" [matAutocomplete]="auto"
-        aria-label="Number" />
+      <input 
+        matInput 
+        id="'inputId-'{{content.name}}" 
+        type="text" 
+        [formControl]="formControl" 
+        [matAutocomplete]="auto"
+          aria-label="Number" 
+      />
 
       <mat-hint *ngIf="content.startHint" [align]="'start'">{{ content.startHint.label }}</mat-hint>
       <mat-hint *ngIf="!content.startHint" [align]="'start'">{{ searchText }}</mat-hint>
