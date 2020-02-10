@@ -87,7 +87,7 @@ export class AppComponent implements OnInit, OnDestroy
         this.content = {
             'columnsObjectProperty': ['titulo', 'issn', 'status'],
             'columnsHeaderText': ['Título', 'ISSN', 'Status'],
-            'columnsWidth': ['60%', '25%', '15%'],
+            'columnsWidth': ['60%', '22%', '18%'],
             'columnContentWrap': [CellContentWrap.ellipsis, CellContentWrap.ellipsis, CellContentWrap.responsible],
             'createCssClassesForRow': (rowData: any) => {
                 return {
@@ -96,8 +96,8 @@ export class AppComponent implements OnInit, OnDestroy
                 };
             },
             'propertyNameToIdentify': 'issn',
-            'propertyNameToNavigate': 'uuid',
-            'pageSize': 10,
+            'pageSize': 5,
+            'pageSizeOptions': [5, 10, 20, 50],
             //'hidePageSize': true,
             'showFirstLastButtons': true
         };

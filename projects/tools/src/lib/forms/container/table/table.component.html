@@ -7,11 +7,18 @@
             {{ content.columnsHeaderText[pos] }}
         </th>
         <td mat-cell [ngClass]="content.createCssClassesForRow(element)" *matCellDef="let element" [ngStyle]="_createCssStylesForCell(pos)">
-            <mat-icon *ngIf="pos == 0 && element['status']" class="mat-cell-mat-icon">new_releases</mat-icon>
-            {{ element[column] }}
-            <div *ngIf="column == 'status'" class="div-mat-icon-actions">
-                <mat-icon class="mat-cell-mat-icon">description</mat-icon>
-                <mat-icon class="mat-cell-mat-icon">edit</mat-icon>
+            <!-- Adds the notification icon in the first column if there is 'version to review'. -->
+            <mat-icon *ngIf="pos == 0 && element[content.columnsObjectProperty[2]]" class="mat-cell-mat-icon">new_releases</mat-icon>
+            <!-- Adds the cell text if is not the third column. -->
+            <ng-container *ngIf="pos != 2">{{ element[column] }}</ng-container>
+            <!-- Adds the view and edit buttons in the third column. -->
+            <div *ngIf="pos == 2" class="div-mat-button-actions">
+                <button mat-icon-button class="div-mat-button" [attr.aria-label]="'Show the data'" (click)="navigateTo(element[content.propertyNameToIdentify], element)">
+                    <mat-icon>description</mat-icon>
+                </button>
+                <button mat-icon-button class="div-mat-button" [attr.aria-label]="'Edit the data'" (click)="navigateTo('edit', element)">
+                    <mat-icon>edit</mat-icon>
+                </button>
             </div>
         </td>
     </ng-container>
@@ -42,7 +49,7 @@
     </ng-template>
 
     <ng-template #elseTemplate_IsNotEmpty>
-        <tr mat-row class="row-data" *matRowDef="let row; columns: content.columnsObjectProperty;" (click)="navigateTo(row)"></tr>
+        <tr mat-row class="row-data" *matRowDef="let row; columns: content.columnsObjectProperty;" (click)="selectRow(row)"></tr>
     </ng-template>
 
 </table>

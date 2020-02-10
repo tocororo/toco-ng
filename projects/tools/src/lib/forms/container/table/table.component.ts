@@ -84,13 +84,6 @@ export interface TableContent
      */
     propertyNameToIdentify?: string;
 
-    /**
-     * Returns the property name of the data contained in `dataSource` that is used to navigate 
-     * to the view and shows information about that data. 
-     * By default, its value is `''`. 
-     */
-    propertyNameToNavigate?: string;
-
 
 
     /**
@@ -145,7 +138,6 @@ export function defaultTableContent(): TableContent
         'createCssClassesForRow': undefined,
 
         'propertyNameToIdentify': '',
-        'propertyNameToNavigate': '',
 
         'length': 0,
         'pageIndex': 0,
@@ -223,7 +215,6 @@ export class TableComponent implements OnInit
 
         /**************************** `mat-row` properties. *******************************/
         if (this._content.propertyNameToIdentify == undefined) this._content.propertyNameToIdentify = '';
-        if (this._content.propertyNameToNavigate == undefined) this._content.propertyNameToNavigate = '';
 
         /************************* `mat-paginator` properties. ****************************/
         if (this._content.length == undefined) this._content.length = 0;
@@ -421,14 +412,25 @@ export class TableComponent implements OnInit
 
     /**
      * Navigates to the view that shows information about the specified `rowData`. 
+     * @param relativeUrl The relative URL to navigate. 
      * @param rowData The data that is contained in the row. 
      */
-    public navigateTo(rowData: any): void
+    public navigateTo(relativeUrl: string, rowData: any): void
+    {
+        /* Selects the specified row. */
+        this.selectRow(rowData);
+
+        /* Navigates to the specified view. */
+        this._router.navigate([ relativeUrl ], { relativeTo: this._activatedRoute });
+    }
+
+    /**
+     * Selects the specified row. 
+     * @param rowData The data that is contained in the row. 
+     */
+    public selectRow(rowData: any): void
     {
         /* Saves the selected row. */
         this._selectedRow = rowData[this._content.propertyNameToIdentify];
-
-        /* Navigates to the specified view. */
-        this._router.navigate([ rowData[this._content.propertyNameToNavigate] ], { relativeTo: this._activatedRoute });
     }
 }
