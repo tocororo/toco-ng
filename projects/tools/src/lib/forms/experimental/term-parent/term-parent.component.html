@@ -1,12 +1,20 @@
-
 <div class="card-filter" *ngIf="content.extraContent">
 
   <mat-form-field style="width: 100%;">
 
-    <input matInput [id]="inputId" type="text" [formControl]="formControl" [placeholder]="content.label" [matAutocomplete]="auto" aria-label="Number" formControlName="{{content.name}}"/>
-
+      <mat-label> {{content.label}} <span *ngIf="content.required">*</span></mat-label>
+    <input 
+        matInput 
+        id="'inputId-'{{content.name}}" 
+        type="text" 
+        [formControl]="formControl"
+        [placeholder]="content.label"
+        [matAutocomplete]="auto" 
+        aria-label="Number" 
+      />
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name" (click)="addParent(option)" [title]="option.name">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name" (click)="addParent(option)"
+        [title]="option.name">
         {{ option.name }}
       </mat-option>
     </mat-autocomplete>

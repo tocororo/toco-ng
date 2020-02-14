@@ -1,2 +1,10 @@
 
-<toco-form-container [panels]='panels' [action]='action' [actionLabel]='actionLabel'></toco-form-container>
+<toco-form-container 
+    [panels]="panels"
+    [useAccordion]="false"
+    [action]="action"
+    [actionLabel]="actionLabel"
+    [formGroup]="formGroup"
+></toco-form-container>
+
+<h2 *ngIf="!hasService"> No Service</h2>

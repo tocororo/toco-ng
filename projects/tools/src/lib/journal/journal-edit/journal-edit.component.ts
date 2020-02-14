@@ -5,9 +5,9 @@ import { of } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { MatDialog, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 
-import { CatalogService, TaxonomyService, VocabulariesInmutableNames, SourceService } from '@toco/tools/backend';
+import { CatalogService, TaxonomyService, SourceService } from '@toco/tools/backend';
 import { MessageHandler, StatusCode, HandlerComponent } from '@toco/tools/core';
-import { Vocabulary, Journal, SourceTypes, Term, TermSource, TermNode } from '@toco/tools/entities';
+import { Vocabulary, Journal, SourceTypes, Term, TermSource, TermNode, VocabulariesInmutableNames } from '@toco/tools/entities';
 import { FilterHttpMap } from '@toco/tools/filters';
 import { PanelContent, FormFieldType, HintValue, HintPosition, FormContainerAction, IssnValue, SelectOption } from '@toco/tools/forms';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -981,7 +981,6 @@ export class JournalEditAddIndexComponent implements OnInit {
             'end_cover': this.indexFormGroup.controls['end_cover'].value,
           }
         }
-        console.log
         this.addIndexPanel(result);
       }
     };

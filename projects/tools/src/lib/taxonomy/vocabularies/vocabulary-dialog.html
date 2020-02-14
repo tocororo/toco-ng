@@ -1,19 +1,16 @@
+<form *ngIf="hasService">
+    <toco-form-container 
+        [panels]="panels"
+        [formGroup]="formGroup"
+        [useAccordion]="false"
+        [action]="action"
+        [actionLabel]="actionLabel"
+    ></toco-form-container>
 
 
-
-
-<form
-[formGroup]="formGroup"
->
-<toco-form-container 
-    [panels]='panels' 
-    [action]='action' 
-    [actionLabel]='actionLabel'
-    [formGroup]='formGroup'
-    [useAccordion]="false"
-></toco-form-container>
-
-<div>
-    <button mat-raised-button color="primary" (click)="acceptAction()">{{actionLabel}}</button>
-</div>
+    <!-- <div>
+        <button mat-raised-button color="primary" (click)="acceptAction()">{{actionLabel}}</button>
+    </div> -->
 </form>
+
+<h2 *ngIf="!hasService"> No Service</h2>
