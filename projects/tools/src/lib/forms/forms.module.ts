@@ -67,7 +67,7 @@ import { InputIdentifierComponent } from './input/identifier/identifier-input.co
     FormsService
   ]
 })
-export class FormsModule {
+export class TocoFormsModule {
   public constructor(private _iconService: IconService) {
     //console.log('Icon Service: registers icons.');
 

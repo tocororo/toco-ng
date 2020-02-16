@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@toco/tools/shared';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { FormsModule } from '@toco/tools/forms';
+import { TocoFormsModule } from '@toco/tools/forms';
 import { DialogContentComponent } from '@toco/tools/core';
 import { SourceService } from '@toco/tools/backend';
 
@@ -35,7 +35,7 @@ import { JournalInclusionComponent } from './journal-inclusion/journal-inclusion
     imports: [
         SharedModule,
         ReactiveFormsModule,
-        FormsModule,
+        TocoFormsModule,
         JournalRoutingModule
     ],
 

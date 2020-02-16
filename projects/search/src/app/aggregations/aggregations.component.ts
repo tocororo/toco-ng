@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PanelContent, FormFieldType, SelectOption } from '@toco/tools/forms';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { TaxonomyService, SearchService, VocabulariesInmutableNames } from '@toco/tools/backend';
-import { TermNode } from '@toco/tools/entities';
+import { TaxonomyService, SearchService } from '@toco/tools/backend';
+import { TermNode, VocabulariesInmutableNames } from '@toco/tools/entities';
 
 @Component({
   selector: 'app-search-aggregations',
@@ -13,7 +13,7 @@ export class AggregationsComponent implements OnInit {
 
   panels: PanelContent[] = null;
   formGroup: FormGroup;
-  organismoUUID='';
+  organismoUUID = '';
 
   constructor(
     private searchService: SearchService,

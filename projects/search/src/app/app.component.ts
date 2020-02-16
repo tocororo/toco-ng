@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { VocabulariesInmutableNames } from '@toco/tools/backend';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +7,6 @@ import { VocabulariesInmutableNames } from '@toco/tools/backend';
 })
 export class AppComponent {
   title = 'search';
-  institutionsId = VocabulariesInmutableNames.INTITUTION;
   selectTerm = '';
 
 

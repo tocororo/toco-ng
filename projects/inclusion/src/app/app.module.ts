@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SharedModule } from '@toco/tools/shared';
-import { FormsModule } from '@toco/tools/forms';
+import { TocoFormsModule } from '@toco/tools/forms';
 import { CatalogModule } from '@toco/tools/catalog';
 import { JournalModule } from '@toco/tools/journal';
 
@@ -20,7 +20,7 @@ import { AppComponent } from './app.component';
     imports: [
         BrowserAnimationsModule,
         SharedModule,
-        FormsModule,
+        TocoFormsModule,
         CatalogModule,
         JournalModule,
         AppRoutingModule
