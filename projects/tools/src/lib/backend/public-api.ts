@@ -6,5 +6,6 @@
 export * from './backend.module';
 export * from './catalog.service';
 export * from './notification.service';
+export * from './search.service';
 export * from './source.service';
 export * from './taxonomy.service';
