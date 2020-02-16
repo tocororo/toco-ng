@@ -14,7 +14,7 @@
 
             <ng-container *ngFor="let termSource of terms">
 
-                <mat-chip *ngIf="termSource.term.vocabulary_id == vocab_id" [removable]="true">
+                <mat-chip>
                     {{ termSource.term.name }}
                 </mat-chip>
 

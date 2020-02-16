@@ -5,6 +5,7 @@
 
 <div *ngIf="journal != undefined" fxLayout="row wrap" style="margin: 1em;">
 
+    <!-- navigate buttons -->
     <div fxLAyout="row" fxLayoutAlign="end center" fxFlexFill style="background-color: whitesmoke;">
 
         <button mat-icon-button aria-label="Before version" [disabled]="isDisabledNavigateBefore" matTooltip="Versión Anterior" (click)="beforeVersion()">
@@ -23,7 +24,7 @@
     <mat-card *ngIf="currentJournal" fxFlex="1 2 calc(15em + 20px)" style="margin: .5em;">
 
         <mat-icon class="mat-18 notification-position" color="accent" *ngIf="currentJournal.is_current" matTooltip="Versión Actual">star</mat-icon>
-
+        <mat-icon class="mat-18 notification-position" color="accent" *ngIf="!currentJournal.reviewed" matTooltip="Posee Cambios no Vistos">adjust</mat-icon>
         <mat-card-header>
 
             <!-- <img mat-card-avatar *ngIf="currentJournal.data.logo; else logotemplate" [style.background-size]="'cover'" src="currentJournal.data.logo">
@@ -207,18 +208,19 @@
         <mat-card-actions fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayoutGap="10px" style="padding: 1em;">
 
             <mat-checkbox
-                [(ngModel)]="checked"
-                [disabled]="disabled">
+                [(ngModel)]="currentJournalChecked"
+                (change)="markAsViewed()"
+            >
                 Marcar como Visto
             </mat-checkbox>
 
             <div fxLayoutGap="10px">
-                <button mat-raised-button color="primary">Sustituir</button>
+                <button mat-raised-button color="primary" (click)="replace()">Sustituir</button>
                 <button mat-raised-button color="accent">Descartar</button>
             </div>
         </mat-card-actions>
     </mat-card>
-    <!-- </div> -->
+
 
 
 </div>
