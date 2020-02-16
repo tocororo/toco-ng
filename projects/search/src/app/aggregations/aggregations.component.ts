@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { PanelContent, FormFieldType, SelectOption } from '@toco/tools/forms';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, OnInit, OnChanges } from '@angular/core';
+import { PanelContent, FormFieldType, SelectOption, FormContainerAction } from '@toco/tools/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { TaxonomyService, SearchService } from '@toco/tools/backend';
 import { TermNode, VocabulariesInmutableNames } from '@toco/tools/entities';
+import { EnvService } from '@tocoenv/tools/env.service';
 
 @Component({
   selector: 'app-search-aggregations',
@@ -13,23 +14,52 @@ export class AggregationsComponent implements OnInit {
 
   panels: PanelContent[] = null;
   formGroup: FormGroup;
+
   organismoUUID = '';
 
   constructor(
     private searchService: SearchService,
     private taxonomyService: TaxonomyService,
+    private envService: EnvService,
     private _formBuilder: FormBuilder,
-  ) { }
+  ) {
+    if (envService.extraArgs && envService.extraArgs['organismoUUID']) {
+      this.organismoUUID = envService.extraArgs['organismoUUID'];
+    }
+  }
 
   ngOnInit() {
-    this.formGroup = this._formBuilder.group({});
+    this.formGroup = this._formBuilder.group({
+      approved: new FormControl(true),
+    });
+
+    this.formGroup.valueChanges.subscribe(
+      ( values ) => {
+        console.log(values);
+      },
+      (err: any) => {
+          console.log('error: ' + err + '.');
+      },
+      () => {
+        console.log('complete');
+      }
+    );
+
     this.panels = [
       {
-        title: '',
+        title: 'Colección',
         description: '',
         iconName: '',
         formGroup: this.formGroup,
         content: [
+          {
+            type: FormFieldType.checkbox,
+            name: 'approved',
+            label: 'Sólo mostrar datos de fuentes aprobadas',
+            width: '100%',
+            value: true,
+            required: true
+          },
           {
             name: 'organismo',
             label: 'Organismo',
@@ -55,7 +85,7 @@ export class AggregationsComponent implements OnInit {
                 this.organismoUUID = uuid;
               }
             }
-          }
+          },
         ]
       }
     ];
