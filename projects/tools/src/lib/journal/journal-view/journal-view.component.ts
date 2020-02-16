@@ -5,10 +5,9 @@ import { MatSnackBar } from '@angular/material';
 
 import { MetadataService, MessageHandler, StatusCode } from '@toco/tools/core';
 
-import { Journal, TermSource, SourceVersion, JournalVersion, Term} from '@toco/tools/entities';
+import { Journal, TermSource, SourceVersion, JournalVersion, Term, VocabulariesInmutableNames} from '@toco/tools/entities';
 
 import { EnvService } from '@tocoenv/tools/env.service';
-import { VocabulariesInmutableNames } from '@toco/tools/backend';
 
 enum JournalDataType{
     /** is used by default, `Journal` have not that type of data. */

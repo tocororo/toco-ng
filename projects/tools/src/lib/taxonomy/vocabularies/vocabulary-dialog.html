@@ -3,12 +3,14 @@
         [panels]="panels"
         [formGroup]="formGroup"
         [useAccordion]="false"
+        [action]="action"
+        [actionLabel]="actionLabel"
     ></toco-form-container>
 
 
-    <div>
+    <!-- <div>
         <button mat-raised-button color="primary" (click)="acceptAction()">{{actionLabel}}</button>
-    </div>
+    </div> -->
 </form>
 
 <h2 *ngIf="!hasService"> No Service</h2>

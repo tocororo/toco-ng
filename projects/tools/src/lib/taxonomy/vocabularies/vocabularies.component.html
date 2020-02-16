@@ -41,12 +41,15 @@
       <mat-card *ngIf="currentVocab">
         <mat-card-header>
           <mat-card-title></mat-card-title>
-          <mat-card-subtitle>Nombre: {{ currentVocab.human_name }}</mat-card-subtitle>
+          <mat-card-subtitle>
+              <strong>Identificador: </strong> {{ currentVocab.name }}
+              </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <p>Identificador: {{ currentVocab.name }}</p> 
-          <p>Descripción: {{ currentVocab.description }}</p>
-          
+            <strong>Nombre: </strong> {{ currentVocab.human_name }}
+          <p> <strong> Descripción: </strong> </p>
+          <div class="e2e-inner-html-bound  text-align-justify" [innerHTML]="currentVocab.description"></div>
+
         </mat-card-content>
         <mat-card-actions>
           <button mat-flat-button *ngIf="hasPermission('edit', currentVocab.id)" (click)="editVocab(currentVocab)">Editar 

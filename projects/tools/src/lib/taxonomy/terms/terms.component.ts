@@ -10,10 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageHandler, StatusCode } from '@toco/tools/core';
 import { Vocabulary, Term, TermNode, Response } from '@toco/tools/entities';
 
-import { TaxonomyService, VocabulariesInmutableNames } from '@toco/tools/backend';
+import { TaxonomyService } from '@toco/tools/backend';
 import { TermGenericComponent } from '../term-generic/term-generic.component';
-import { TermInstitutionsComponent } from '../term-institutions/term-institutions.component';
-import { TermIndexerComponent } from '../term-indexer/term-indexer.component';
 
 import { OAuthStorage } from 'angular-oauth2-oidc';
 
@@ -53,15 +51,14 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
         },
 
         error: (err: any) => {
-            console.log('The observable got an error notification: ' + err + '.');
+            console.log('error: ' + err + '.');
         },
 
         complete: () => {
-            console.log('The observable got a complete notification.');
+            console.log('complete');
         }
     };
 
-    private termChangeSuscription: Subscription = null;
     private termChangeObserver: PartialObserver<Response<any>> = {
         next: (response: Response<any>) => {
             this.loading = !this.loading;
@@ -69,36 +66,16 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
             this.dialog.closeAll();
             const m = new MessageHandler(this._snackBar);
             m.showMessage(StatusCode.OK, response.message);
-            console.log(response);
         },
 
         error: (err: any) => {
-            console.log('The observable got an error notification: ' + err + '.');
+            console.log('error: ' + err + '.');
         },
 
         complete: () => {
-            console.log('The observable got a complete notification.');
+            console.log('complete');
         }
     };
-
-    // private currentVocabSuscription: Subscription = null;
-    // private currentVocabObserver: PartialObserver<Vocabulary> = {
-    //     next: (currentVocab: Vocabulary) => {
-    //         if ( !this.currentVocab || this.currentVocab.name !== currentVocab.name) {
-    //             this.loading = !this.loading;
-    //             this.service.getTermsTreeByVocab(currentVocab.id).subscribe(this.termsTreeObserver);
-    //             this.currentVocab = currentVocab;
-    //         }
-    //     },
-
-    //     error: (err: any) => {
-    //             console.log('The observable got an error notification: ' + err + '.');
-    //     },
-
-    //     complete: () => {
-    //         console.log('The observable got a complete notification.');
-    //     }
-    // };
 
     @Input()
     currentVocab: Vocabulary = null;
@@ -118,35 +95,21 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit(): void {
-        console.log(this.currentVocab);
-
-        // if (this.currentVocab ) {
-        //     this.service.getTermsTreeByVocab(this.currentVocab.id)
-        //     .subscribe((response: Response<any>) => {
-        //         this.dataSource.data = response.data.tree.term_node;
-        //         this.loading = !this.loading;
-        //     });
-        // }
-
-        // this.currentVocabSuscription = this.service.currentVocabularyObservable.subscribe(this.currentVocabObserver);
-        // this.termChangeSuscription = this.service.termChangeObservable.subscribe(this.termChangeObserver);
 
         if (!this.oautheStorage.getItem('user_permission')) {
             this.getAuthenticatedUserPermissions();
         }
     }
     ngOnChanges() {
-        console.log(this.currentVocab);
         if (this.currentVocab != null) {
             this.loading = true;
             this.service.getTermsTreeByVocab(this.currentVocab.id)
                 .subscribe(
                     (response: Response<any>) => {
-                        console.log(response)
                         this.dataSource.data = response.data.tree.term_node;
                     },
                     (err: any) => {
-                        // error
+                        console.log('error: ' + err + '.');
                     },
                     () => {
                         this.loading = false;
@@ -155,12 +118,7 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
     ngOnDestroy(): void {
-        // if (this.currentVocabSuscription) {
-        //     this.currentVocabSuscription.unsubscribe();
-        // }
-        // if (this.termChangeSuscription) {
-        //     this.termChangeSuscription.unsubscribe();
-        // }
+
     }
 
     /** Transform the data to something the tree can read. */
@@ -196,39 +154,30 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
         this.openTermDialog(null);
     }
     editTerm(node: any) {
-        const term = new Term();
-        term.load_from_data(node.term);
-        this.openTermDialog(term);
-    }
-
-    saveTerm(term: Term) {
-
-
+        this.openTermDialog(node.term);
     }
 
 
     private openTermDialog(term: Term) {
-        switch (this.currentVocab.id) {
-            
-            case VocabulariesInmutableNames.DATABASES:
-                this.dialog.open(TermIndexerComponent, {
-                    data: { term: term, accept: this.saveTerm, terms: this.dataSource.data, currentVocab: this.currentVocab }
-                });
-                break;
-            default:
-                const dialogRef = this.dialog.open(TermGenericComponent, {
-                    data: {
-                        term: term,
-                        terms: this.dataSource.data,
-                        currentVocab: this.currentVocab,
-                        accept: (term: Term) => {
-                            console.log(term)
-                            this.dialog.closeAll();
-                            
-                        }
+
+        const dialogRef = this.dialog.open(TermGenericComponent, {
+            data: {
+                term: term,
+                terms: this.dataSource.data,
+                currentVocab: this.currentVocab,
+                accept: (term: Term) => {
+                    this.dialog.closeAll();
+                    if (term.isNew){
+                        this.service.newTerm(term).pipe().subscribe(this.termChangeObserver);
+                    } else {
+                        this.service.editTerm(term).pipe().subscribe(this.termChangeObserver);
                     }
-                });
-        }
+                }
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('dialog closed');
+        });
     }
 
     deleteTerm(node: TermNode) {
