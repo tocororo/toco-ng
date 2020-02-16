@@ -26,7 +26,7 @@ export class VocabularyDialogComponent implements OnInit {
     public formGroup: FormGroup;
     public action: FormContainerAction;
     public actionLabel = 'Aceptar';
-    private hasService = false;
+    public hasService = false;
     vocab: Vocabulary;
     accept;
 
