@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { timer, Subscription } from 'rxjs';
 
 import { Common } from '@toco/tools/core';
-import { TableContent, TableComponent } from '@toco/tools/forms';
+import { TableContent, TableComponent, CellContentWrap } from '@toco/tools/forms';
 
 export interface PeriodicElement
 {
@@ -15,7 +15,9 @@ export interface PeriodicElement
 const ELEMENT_DATA: PeriodicElement[] = [
     { titulo: 'Hydrogen', issn: 1, status: false },
     { titulo: 'Helium', issn: 2, status: false },
-    { titulo: 'Lithium', issn: 3, status: true },
+    //{ titulo: 'Lithium-1 Lithium-2 Lithium-3 Lithium-4 Lithium-5 Lithium-6 Lithium-1 Lithium-2 Lithium-3 Lithium-4 Lithium-5 Lithium-6 Lithium-1 Lithium-2 Lithium-3 Lithium-4 Lithium-5 Lithium-6 Lithium-1 Lithium-2 Lithium-3 Lithium-4 Lithium-5 Lithium-6', issn: 3, status: true },
+    //{ titulo: 'Lithium-1Lithium-2Lithium-3Lithium-4Lithium-5Lithium-6Lithium-1Lithium-2Lithium-3Lithium-4Lithium-5Lithium-6Lithium-1Lithium-2Lithium-3Lithium-4Lithium-5Lithium-6Lithium-1Lithium-2Lithium-3Lithium-4Lithium-5Lithium-6', issn: 3, status: true },
+    { titulo: 'Lithium1Lithium2Lithium3Lithium4Lithium5Lithium6Lithium1Lithium2Lithium3Lithium4Lithium5Lithium6Lithium1Lithium2Lithium3Lithium4Lithium5Lithium6Lithium1Lithium2Lithium3Lithium4Lithium5Lithium6', issn: 3, status: true },
     { titulo: 'Beryllium', issn: 4, status: true },
     { titulo: 'Boron', issn: 5, status: false },
     { titulo: 'Carbon', issn: 6, status: true },
@@ -85,6 +87,8 @@ export class AppComponent implements OnInit, OnDestroy
         this.content = {
             'columnsObjectProperty': ['titulo', 'issn', 'status'],
             'columnsHeaderText': ['Título', 'ISSN', 'Status'],
+            'columnsWidth': ['60%', '22%', '18%'],
+            'columnContentWrap': [CellContentWrap.ellipsis, CellContentWrap.ellipsis, CellContentWrap.responsible],
             'createCssClassesForRow': (rowData: any) => {
                 return {
                     'new-release': rowData['status'],
@@ -92,8 +96,8 @@ export class AppComponent implements OnInit, OnDestroy
                 };
             },
             'propertyNameToIdentify': 'issn',
-            'propertyNameToNavigate': 'uuid',
-            'pageSize': 10,
+            'pageSize': 5,
+            'pageSizeOptions': [5, 10, 20, 50],
             //'hidePageSize': true,
             'showFirstLastButtons': true
         };

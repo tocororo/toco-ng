@@ -6,7 +6,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { OAuthStorage, OAuthResourceServerErrorHandler, OAuthModuleConfig, OAuthService } from 'angular-oauth2-oidc';
 import { Response } from '../entities/response';
 import { EnvService } from '@tocoenv/tools/env.service';
-import { tap, finalize, catchError } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
