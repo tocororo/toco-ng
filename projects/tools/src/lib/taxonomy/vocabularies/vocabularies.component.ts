@@ -26,7 +26,7 @@ export class VocabularyDialogComponent implements OnInit {
     public formGroup: FormGroup;
     public action: FormContainerAction;
     public actionLabel = 'Aceptar';
-    private hasService = false;
+    public hasService = false;
     vocab: Vocabulary;
     accept;
 
@@ -258,8 +258,11 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
     }
 
     hasPermission(permission: string, id?: number): boolean {
-
+        
         const userPermission = JSON.parse(this.oautheStorage.getItem('user_permissions'));
+        if (!userPermission) {
+            return false;
+        }
         switch (permission) {
             case 'add':
                 if (userPermission.taxonomy_full_editor_actions === null)

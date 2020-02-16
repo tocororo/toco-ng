@@ -30,7 +30,7 @@ import { DialogContentComponent } from './utils/message-handler';
         NavComponent,
         PageHeaderComponent,
         EqualLengthDirective,
-        // DialogContentComponent
+        DialogContentComponent
     ],
 
     imports: [
@@ -49,7 +49,7 @@ import { DialogContentComponent } from './utils/message-handler';
         NavComponent,
         PageHeaderComponent,
         EqualLengthDirective,
-        // DialogContentComponent
+        DialogContentComponent
     ],
 
     providers: [

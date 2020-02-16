@@ -204,6 +204,9 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
     hasPermission(permission: string, id?: number): boolean {
 
         const userPermission = JSON.parse(this.oautheStorage.getItem('user_permissions'));
+        if (!userPermission) {
+            return false;
+        }
         switch (permission) {
             case 'add':
                 if (userPermission.taxonomy_full_editor_actions === null)
