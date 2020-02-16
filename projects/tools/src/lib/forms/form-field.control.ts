@@ -249,6 +249,9 @@ export enum FormFieldType
 
     /** Generic select control. */
     select= 'select',
+
+    /** Generic select with a filter control. */
+    select_filter= 'select_filter',
 }
 
 /**

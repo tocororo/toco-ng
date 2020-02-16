@@ -3,10 +3,10 @@
     <!-- *ngFor="let item of items"
         <toco-form-fields fields]="panel.content"></toco-form-fields> -->
 
-<mat-accordion class="toco-form-container" *ngIf="(useAccordion)">
+<mat-accordion class="toco-form-container" *ngIf="(useAccordion)" multi="true">
 
     <mat-expansion-panel *ngFor="let panel of panels; let newStep = index; let count = count"
-        [expanded]="step == newStep" (opened)="setStep(newStep)">
+        [expanded]="panel.open" (opened)="setStep(newStep)">
 
         <mat-expansion-panel-header>
             <mat-panel-title>

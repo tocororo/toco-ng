@@ -51,6 +51,7 @@ export class AggregationsComponent implements OnInit {
         description: '',
         iconName: '',
         formGroup: this.formGroup,
+        open: false,
         content: [
           {
             type: FormFieldType.checkbox,
@@ -68,23 +69,56 @@ export class AggregationsComponent implements OnInit {
             width: '100%',
             value: this.organismoUUID,
             extraContent: {
-              getOptions: () => {
-                const opts: SelectOption[] = [];
-                this.taxonomyService.getTermsTreeByVocab(VocabulariesInmutableNames.INTITUTION, 0)
-                  .subscribe(response => {
-                    response.data.tree.term_node.forEach((node: TermNode) => {
-                      opts.push({
-                        value: node.term.uuid,
-                        label: node.term.name,
-                      });
-                    });
+              observable: this.taxonomyService.getTermsTreeByVocab(VocabulariesInmutableNames.INTITUTION, 0),
+              getOptions: (response:any) =>  {
+                const opts: SelectOption[] = []
+                response.data.tree.term_node.forEach((node: TermNode) => {
+                  opts.push({
+                    value: node.term.uuid,
+                    label: node.term.name,
                   });
+                });
                 return opts;
               },
               selectionChange: (uuid) => {
-                this.organismoUUID = uuid;
+                
               }
             }
+          },
+        ]
+      },
+      {
+        formGroup: this.formGroup,
+        title: 'Tipos de Indizaciones',
+        iconName: '',
+        description:'',
+        open: true,
+        content: [
+          {
+            name: 'grupo_mes',
+            label: 'Grupo MES',
+            type: FormFieldType.vocabulary,
+            required: true,
+            width: '45%',
+            value: '',
+            extraContent: {
+              multiple: true,
+              selectedTermsIds: null,
+              vocab: VocabulariesInmutableNames.MES_GROUPS
+            },
+          },
+          {
+            name: 'miar_types',
+            label: 'Tipos de MIAR',
+            type: FormFieldType.vocabulary,
+            required: true,
+            width: '45%',
+            value: '',
+            extraContent: {
+              multiple: true,
+              selectedTermsIds: null,
+              vocab: VocabulariesInmutableNames.MIAR_DATABASES
+            },
           },
         ]
       }

@@ -23,6 +23,7 @@ import { TermParentComponent } from './experimental/term-parent/term-parent.comp
 import { SelectComponent } from './experimental/select/select.component';
 import { TextareaComponent } from './experimental/textarea/textarea.component';
 import { InputIdentifierComponent } from './input/identifier/identifier-input.component';
+import { SelectFilterComponent } from './experimental/select-filter/select-filter.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { InputIdentifierComponent } from './input/identifier/identifier-input.co
     VocabularyComponent,
     TermParentComponent,
     SelectComponent,
+    SelectFilterComponent,
     TextareaComponent
   ],
 
@@ -60,7 +62,9 @@ import { InputIdentifierComponent } from './input/identifier/identifier-input.co
     InputUrlComponent,
     VocabularyComponent,
     TermParentComponent,
-    SelectComponent
+    SelectComponent,
+    SelectFilterComponent, 
+    TextareaComponent
   ],
 
   providers: [

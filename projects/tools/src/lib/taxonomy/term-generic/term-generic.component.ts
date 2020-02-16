@@ -222,7 +222,7 @@ export class TermGenericComponent implements OnInit {
               extraContent: {
                 multiple: false,
                 selectedTermsIds: (this.data.term.class_ids) ? this.data.term.class_ids : null,
-                vocab: VocabulariesInmutableNames.MIAR
+                vocab: VocabulariesInmutableNames.MIAR_TYPES
               },
               width: '48%'
             },
@@ -235,7 +235,7 @@ export class TermGenericComponent implements OnInit {
               extraContent: {
                 multiple: false,
                 selectedTermsIds: (this.data.term.class_ids) ? this.data.term.class_ids : null,
-                vocab: VocabulariesInmutableNames.DB_GROUPS
+                vocab: VocabulariesInmutableNames.MES_GROUPS
               },
               width: '48%'
             },

@@ -6,11 +6,11 @@ import { FiltersService } from '../filters.service';
 import { FilterContainerService } from '../filter-container.service';
 
 @Component({
-    selector: 'toco-select-filter',
+    selector: 'toco-select-filter-old',
     templateUrl: './select-filter.component.html',
     styleUrls: ['./select-filter.component.scss']
 })
-export class SelectFilterComponent implements OnInit, FilterComponent {
+export class SelectFilterOldComponent implements OnInit, FilterComponent {
     @Input() data: any;
     type: string = '';
     placeholder:  string = '';
