@@ -2,10 +2,10 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { timer, Subscription } from 'rxjs';
 
-import { Common } from '@toco/tools/core';
+import { Common, BrowserSessionStorageService } from '@toco/tools/core';
 import { TableContent, TableComponent, CellContentWrap } from '@toco/tools/forms';
 
-export interface PeriodicElement
+interface PeriodicElement
 {
     titulo: string;
     issn: number;
@@ -76,8 +76,14 @@ export class AppComponent implements OnInit, OnDestroy
      */
     public content: TableContent;
 
-    public constructor()
-    { }
+    public constructor(private _browserSessionStorageService: BrowserSessionStorageService)
+    {
+        // Delete this ...
+        _browserSessionStorageService.set('green123', 'green0123456789');
+        let test: string = _browserSessionStorageService.get('green123');
+        console.log('The result is: ' + test);
+        console.log('Good!');
+    }
 
     public ngOnInit(): void
     {

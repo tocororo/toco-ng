@@ -17,7 +17,6 @@ import { PageHeaderComponent } from './page-header/page-header.component';
 import { CoreRoutingModule } from './core-routing.module';
 import { MetadataService } from './metadata.service';
 import { EqualLengthDirective } from './utils/validator';
-import { DialogContentComponent } from './utils/message-handler';
 
 @NgModule({
     declarations: [
@@ -29,8 +28,7 @@ import { DialogContentComponent } from './utils/message-handler';
         JournalCardComponent,
         NavComponent,
         PageHeaderComponent,
-        EqualLengthDirective,
-        // DialogContentComponent
+        EqualLengthDirective
     ],
 
     imports: [
@@ -48,8 +46,7 @@ import { DialogContentComponent } from './utils/message-handler';
         JournalCardComponent,
         NavComponent,
         PageHeaderComponent,
-        EqualLengthDirective,
-        // DialogContentComponent
+        EqualLengthDirective
     ],
 
     providers: [
