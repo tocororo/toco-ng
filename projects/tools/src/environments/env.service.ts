@@ -14,6 +14,7 @@ export class EnvService {
     public oauthRedirectUri = '';
     public oauthClientId = '';
     public oauthScope = '';
+    public extraArgs: any = null;
     constructor()
     { }
 }
