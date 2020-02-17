@@ -1,1 +1,7 @@
-<p>record-list works!</p>
+
+<div *ngIf="hits">
+    <div *ngFor="let record of hitList.hits">
+        <toco-record [record]="record"></toco-record>
+    </div>
+
+</div>

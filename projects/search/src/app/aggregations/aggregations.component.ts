@@ -99,7 +99,7 @@ export class AggregationsComponent implements OnInit {
             label: 'Grupo MES',
             type: FormFieldType.vocabulary,
             required: true,
-            width: '45%',
+            width: '100%',
             value: '',
             extraContent: {
               multiple: true,
@@ -112,7 +112,7 @@ export class AggregationsComponent implements OnInit {
             label: 'Tipos de MIAR',
             type: FormFieldType.vocabulary,
             required: true,
-            width: '45%',
+            width: '100%',
             value: '',
             extraContent: {
               multiple: true,

@@ -51,11 +51,13 @@ export class Hit extends EntityBase {
   revision = 0;
 }
 
+export class HitList extends EntityBase {
+  hits = new Array<Hit>();
+  total: 0
+}
 
 export class SearchResponse extends EntityBase {
   aggregations: { [id: string]: Aggr;  } = {};
-  hits: { hits: Array<Hit>, total: number  } = {
-      hits: new Array<Hit>(), total: 0
-    };
+  hits = new HitList();
   links = new Links();
 }

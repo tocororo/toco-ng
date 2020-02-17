@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
+import { Record } from '@toco/tools/entities';
 
 @Component({
   selector: 'toco-record',
@@ -7,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecordComponent implements OnInit {
 
+  @Input()
+  public record: Record;
   constructor() { }
 
   ngOnInit() {

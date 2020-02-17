@@ -13,6 +13,7 @@ import { CoreModule } from '@toco/tools/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TocoFormsModule } from '@toco/tools/forms';
+import { SearchModule } from '@toco/tools/search';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,9 @@ import { TocoFormsModule } from '@toco/tools/forms';
     ReactiveFormsModule,
     AppRoutingModule,
     AuthenticationModule,
-    TocoFormsModule
+    TocoFormsModule,
+    SharedModule, 
+    SearchModule
 
   ],
   providers: [

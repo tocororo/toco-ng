@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { HitList } from '@toco/tools/entities';
 
 @Component({
   selector: 'toco-record-list',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./record-list.component.scss']
 })
 export class RecordListComponent implements OnInit {
+
+  @Input()
+  hitList: HitList;
 
   constructor() { }
 
