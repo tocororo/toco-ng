@@ -28,12 +28,8 @@ import { EqualLengthDirective } from './utils/validator';
         JournalCardComponent,
         NavComponent,
         PageHeaderComponent,
-<<<<<<< HEAD
-        EqualLengthDirective
-=======
         EqualLengthDirective,
         DialogContentComponent
->>>>>>> 34c29f2930c744ca7a08d6c2457085ffb57ec3ed
     ],
 
     imports: [
@@ -51,12 +47,8 @@ import { EqualLengthDirective } from './utils/validator';
         JournalCardComponent,
         NavComponent,
         PageHeaderComponent,
-<<<<<<< HEAD
-        EqualLengthDirective
-=======
         EqualLengthDirective,
         DialogContentComponent
->>>>>>> 34c29f2930c744ca7a08d6c2457085ffb57ec3ed
     ],
 
     providers: [
