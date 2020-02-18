@@ -12,6 +12,14 @@ export class SearchService {
 
   private prefix = 'records';
 
+  // private headers = new HttpHeaders(
+  //     {
+  //       ''Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //       'Access-Control-Allow-Origin': '*'
+  //     }
+  // );
+
   constructor(private env: EnvService, private http: HttpClient) {
   }
 
@@ -24,4 +32,13 @@ export class SearchService {
     return this.http.get<Response<any>>(req, options);
   }
 
+  getRecords(params: HttpParams): Observable<SearchResponse> {
+    const options = {
+      params: params,
+      // headers: this.headers
+    };
+    console.log(params)
+    const req = this.env.sceibaApi + this.prefix;
+    return this.http.get<SearchResponse>(req, options);
+  }
 }

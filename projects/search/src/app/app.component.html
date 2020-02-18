@@ -38,7 +38,9 @@
 
 
     <div class="mat-elevation-z8 width-90 margin1em">
-        <toco-record-list></toco-record-list>
+        <toco-record-list
+            [hitList]="hits"
+        ></toco-record-list>
         <mat-paginator 
             [length]="length"
             [pageSize]="pageSize"

@@ -26,11 +26,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     ],
     providers: [
         AuthenticationService,
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthenticationService,
-            multi: true
-          }
+        // {
+        //     provide: HTTP_INTERCEPTORS,
+        //     useClass: AuthenticationService,
+        //     multi: true
+        //   }
       ]
 })
 export class AuthenticationModule

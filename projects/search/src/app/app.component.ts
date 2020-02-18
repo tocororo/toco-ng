@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material';
+import { SearchService } from '@toco/tools/backend';
+import { HttpParams } from '@angular/common/http';
+import { SearchResponse, HitList } from '@toco/tools/entities';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
   // begin Layout stuff
   layoutPosition = [
@@ -49,9 +52,31 @@ export class AppComponent {
 
   //end paginator stuff
 
+  params = new HttpParams();
+  hits: HitList;
+  constructor(
+    private searchService: SearchService,
+  ){ 
 
-  constructor() { 
+  }
 
+  ngOnInit(){
+    
+    this.params = this.params.set('size', this.pageSize.toString());
+    this.params = this.params.set('page', '1');
+    console.log(this.params);
+    
+    this.searchService.getRecords(this.params).subscribe(
+      (response: SearchResponse) => {
+        this.hits = response.hits;
+      },
+      (error: any) => {
+        
+      },
+      () => {
+        
+      }
+    );
   }
 
 }

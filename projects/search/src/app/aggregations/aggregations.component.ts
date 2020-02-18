@@ -18,7 +18,6 @@ export class AggregationsComponent implements OnInit {
   organismoUUID = '';
 
   constructor(
-    private searchService: SearchService,
     private taxonomyService: TaxonomyService,
     private envService: EnvService,
     private _formBuilder: FormBuilder,
@@ -31,6 +30,7 @@ export class AggregationsComponent implements OnInit {
   ngOnInit() {
     this.formGroup = this._formBuilder.group({
       approved: new FormControl(true),
+      asc: new FormControl(true),
     });
 
     this.formGroup.valueChanges.subscribe(
@@ -47,7 +47,7 @@ export class AggregationsComponent implements OnInit {
 
     this.panels = [
       {
-        title: 'Colección',
+        title: 'Colección:',
         description: '',
         iconName: '',
         formGroup: this.formGroup,
@@ -88,11 +88,50 @@ export class AggregationsComponent implements OnInit {
         ]
       },
       {
+        title: 'Ordenar por:',
+        description: '',
+        iconName: '',
         formGroup: this.formGroup,
-        title: 'Tipos de Indizaciones',
+        open: false,
+        content: [
+          {
+            type: FormFieldType.select,
+            name: 'sort',
+            label: '',
+            width: '100%',
+            value: 'mostrecent',
+            required: true,
+            extraContent: {
+              getOptions: () => {
+                return [
+                  {
+                    value: 'mostrecent',
+                    label: 'Mas reciente',
+                  },
+                  {
+                    value: 'bestmatch',
+                    label: 'Mejor resultado',
+                  },
+                ];
+              }
+            }
+          },
+          {
+            type: FormFieldType.checkbox,
+            name: 'asc',
+            label: 'Orden Ascendente',
+            width: '100%',
+            value: true,
+            required: true
+          },
+        ]
+      },      
+      {
+        formGroup: this.formGroup,
+        title: 'Tipos de Indizaciones:',
         iconName: '',
         description:'',
-        open: true,
+        open: false,
         content: [
           {
             name: 'grupo_mes',
