@@ -51,7 +51,9 @@ import { DialogContentComponent } from './utils/message-handler';
         EqualLengthDirective,
         DialogContentComponent
     ],
-
+    entryComponents: [
+        DialogContentComponent,
+    ],
     providers: [
         MetadataService
     ]

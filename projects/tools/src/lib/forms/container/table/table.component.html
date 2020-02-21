@@ -13,12 +13,25 @@
             <ng-container *ngIf="pos != 2">{{ element[column] }}</ng-container>
             <!-- Adds the view and edit buttons in the third column. -->
             <div *ngIf="pos == 2" class="div-mat-button-actions">
-                <button mat-icon-button class="div-mat-button" [attr.aria-label]="'Show the data'" (click)="navigateTo(element[content.propertyNameToIdentify], element)">
+                <ng-container *ngIf="content.actions">
+                    <button 
+                        *ngFor="let action of content.actions"
+                        mat-icon-button class="div-mat-button" 
+                        [attr.aria-label]="action.tooltip" 
+                        (click)="navigateTo(action.route, element)"
+                        matTooltip="{{action.tooltip}}"
+                    >
+                            <mat-icon>{{action.icon}}</mat-icon>
+                    </button>
+                </ng-container>
+                 
+                <!-- <button mat-icon-button class="div-mat-button" [attr.aria-label]="'Show the data'" (click)="navigateTo(element[content.propertyNameToIdentify], element)">
                     <mat-icon>description</mat-icon>
                 </button>
                 <button mat-icon-button class="div-mat-button" [attr.aria-label]="'Edit the data'" (click)="navigateTo('edit', element)">
                     <mat-icon>edit</mat-icon>
-                </button>
+                </button> -->
+
             </div>
         </td>
     </ng-container>

@@ -65,6 +65,7 @@ export class JournalViewComponent implements OnInit {
     /**
      * Represents a Journal Object, it is a type of Source
      */
+    @Input()
     public journal: Journal;
 
 
@@ -82,14 +83,7 @@ export class JournalViewComponent implements OnInit {
      *  public miarTerms: Array<TermSource>;
      *  public subjectsUnescoTerms: Array<TermSource>;
     */
-    public currentInstitutionTerms: Array<Term>;
-    public currentDataBaseTerms: Array<Term>;
-    public currentGroupTerms: Array<Term>;
-    public currentProvinceTerms: Array<Term>;
-    public currentSubjectTerms: Array<Term>;
-    public currentLicenceTerms: Array<Term>;
 
-    currentJournalChecked: boolean = false;
 
     /**
      * Properties to move between versions
@@ -103,7 +97,6 @@ export class JournalViewComponent implements OnInit {
     journalDataType = JournalDataType;
 
     constructor(
-        private route: ActivatedRoute,
         private metadata: MetadataService,
         private env: EnvService,
         private _sourveService: SourceService,
@@ -117,56 +110,31 @@ export class JournalViewComponent implements OnInit {
 
         this.vocabularies = VocabulariesInmutableNames;
 
-        this.currentInstitutionTerms = new Array<Term>();
-        this.currentDataBaseTerms = new Array<Term>();
-        this.currentGroupTerms = new Array<Term>();
-        this.currentProvinceTerms = new Array<Term>();
-        this.currentSubjectTerms = new Array<Term>();
-        this.currentLicenceTerms = new Array<Term>();
+        // this.route.data
+        //     .subscribe((response) => {
 
-        this.route.data
-            .subscribe((response) => {
+        //         this.loading = false;
 
-                this.loading = false;
+        //         if (response && response.journal && response.journal.status == 'success') {
 
-                if (response && response.journal && response.journal.status == 'success') {
-
-                    // initialize Journal
-                    this.journal = new Journal();
-                    this.journal.load_from_data(response.journal.data.source);
-
-                    // loads data
-                    console.log(response, this.journal);
-
-                    // guardar la cantidad total de versiones
-                    this.lengthVersion = this.journal.versions.length;
-                    // guardar la posicion de la version donde este la actual
-                    this.currentVersion = this.getCurrentJournalPosition();
-
-                    this.SelectCurrentJournal();
-
-                    this.metadata.setTitleDescription('Revista Científica ' + this.journal.data.title, this.journal.data.description);
+        //             // initialize Journal
+        //             this.journal = new Journal();
+        //             this.journal.load_from_data(response.journal.data.source);
 
 
-                } else {
-                    const m = new MessageHandler(this._snackBar);
-                    m.showMessage(StatusCode.serverError, response.message);
-                }
+        // guardar la cantidad total de versiones
+        this.lengthVersion = this.journal.versions.length;
+        // guardar la posicion de la version donde este la actual
+        this.currentVersion = this.getCurrentJournalPosition();
 
-            });
+        this.SelectCurrentJournal();
+
+        this.metadata.setTitleDescription('Revista Científica ' + this.journal.data.title, this.journal.data.description);
+
+
     }
 
-    /**
-     * Changes the field `reviewed` of a `Journal`, that means the user saw these version
-     * and consider it not has more information.
-     */
-    markAsViewed() {
-        if (this.currentJournalChecked) {
-            this.journal.versions[this.currentVersion].reviewed = true;
-            const m = new MessageHandler(this._snackBar);
-            m.showMessage(StatusCode.OK, 'Versión marcada como vista!!!');
-        }
-    }
+
 
     /**
      * Changes the current position to the next one if possible
@@ -230,56 +198,11 @@ export class JournalViewComponent implements OnInit {
             this.currentJournal.load_from_data(this.journal.versions[this.currentVersion]);
 
             // load if was viewed
-            this.currentJournalChecked = this.currentJournal.reviewed;
+            // this.currentJournalChecked = this.currentJournal.reviewed;
 
-            if (this.currentJournal && this.currentJournal.data.term_sources) {
-
-                this.currentInstitutionTerms = new Array<Term>();
-                this.currentDataBaseTerms = new Array<Term>();
-                this.currentGroupTerms = new Array<Term>();
-                this.currentProvinceTerms = new Array<Term>();
-                this.currentSubjectTerms = new Array<Term>();
-                this.currentLicenceTerms = new Array<Term>();
-
-                this.currentJournal.data.term_sources.forEach((termSource: TermSource) => {
-
-                    switch (termSource.term.vocabulary_id) {
-                        case this.vocabularies.INTITUTION:
-                            this.currentInstitutionTerms.push(termSource.term);
-                            break;
-                        case this.vocabularies.DATABASES:
-                            this.currentDataBaseTerms.push(termSource.term);
-                            break;
-                        case this.vocabularies.MES_GROUPS:
-                            this.currentGroupTerms.push(termSource.term);
-                            break;
-                        case this.vocabularies.LICENCES:
-                            this.currentLicenceTerms.push(termSource.term);
-                            break;
-                        case this.vocabularies.PROVINCES:
-                            this.currentProvinceTerms.push(termSource.term);
-                            break;
-                        case this.vocabularies.SUBJECTS:
-                            this.currentSubjectTerms.push(termSource.term);
-                            break;
-                    }
-                });
-            }
         }
     }
 
-    public replace() {
-        this.journal.data = this.currentJournal.data;
-        this.journal.name = this.currentJournal.data.title;
-        this.journal.term_sources = [];
-        this.currentJournal.data.term_sources.forEach((termSource: TermSource) => {
-
-            this.journal.term_sources.push(termSource);
-
-        });
-        console.log('journal remplazado', this.journal);
-
-    }
 
     /**
      * Returns the position of the unseen version of the journal as SourceVersion
@@ -609,4 +532,114 @@ export class JournalViewFieldComponent implements OnInit {
             this.replace(type, true);
         }
     }
+}
+
+
+@Component({
+    selector: 'toco-journal-view-version',
+    templateUrl: './journal-view-version.component.html',
+    styleUrls: ['./journal-view.component.scss']
+})
+export class JournalViewVersionComponent implements OnInit {
+
+    @Input() public currentJournal: JournalVersion;
+
+    @Input() public type: number;
+
+    @Input()
+    public journal: Journal;
+
+    @Input()
+    private currentVersion: number;
+
+
+    public journalDataType = JournalDataType;
+
+    public currentInstitutionTerms: Array<TermSource>;
+    public currentDataBaseTerms: Array<TermSource>;
+    public currentGroupTerms: Array<TermSource>;
+    public currentProvinceTerms: Array<TermSource>;
+    public currentSubjectTerms: Array<TermSource>;
+    public currentLicenceTerms: Array<TermSource>;
+    
+    vocabularies;
+
+    currentJournalChecked: boolean = false;
+
+    constructor(private _snackBar: MatSnackBar) {
+
+    }
+
+    ngOnInit(): void {
+
+        if (this.currentJournal == undefined) this.currentJournal = new JournalVersion();
+        this.loadJournalData();
+
+        if (this.type == undefined) this.type = JournalDataType.default;
+    }
+    loadJournalData(){
+
+        this.currentDataBaseTerms = new Array<TermSource>();
+        this.currentGroupTerms = new Array<TermSource>();
+        this.currentInstitutionTerms = new Array<TermSource>();
+        this.currentLicenceTerms = new Array<TermSource>();
+        this.currentProvinceTerms = new Array<TermSource>();
+        this.currentSubjectTerms = new Array<TermSource>();
+
+        this.vocabularies = VocabulariesInmutableNames;
+
+        if (this.currentJournal.data.term_sources) {
+
+            this.currentJournal.data.term_sources.forEach((termSource: TermSource) => {
+
+                switch (termSource.term.vocabulary_id) {
+                    case VocabulariesInmutableNames.INTITUTION:
+                        this.currentInstitutionTerms.push(termSource);
+                        break;
+                    case VocabulariesInmutableNames.DATABASES:
+                        this.currentDataBaseTerms.push(termSource);
+                        break;
+                    case VocabulariesInmutableNames.MES_GROUPS:
+                        this.currentGroupTerms.push(termSource);
+                        break;
+                    case VocabulariesInmutableNames.LICENCES:
+                        this.currentLicenceTerms.push(termSource);
+                        break;
+                    case VocabulariesInmutableNames.PROVINCES:
+                        this.currentProvinceTerms.push(termSource);
+                        break;
+                    case VocabulariesInmutableNames.SUBJECTS:
+                        this.currentSubjectTerms.push(termSource);
+                        break;
+                }
+            });
+        }
+    }
+
+        /**
+     * Changes the field `reviewed` of a `Journal`, that means the user saw these version
+     * and consider it not has more information.
+     */
+    markAsViewed() {
+        if (this.currentJournalChecked) {
+            this.journal.versions[this.currentVersion].reviewed = true;
+            const m = new MessageHandler(this._snackBar);
+            m.showMessage(StatusCode.OK, 'Versión marcada como vista!!!');
+        }
+    }
+
+
+    public replace() {
+        this.journal.data = this.currentJournal.data;
+        this.journal.name = this.currentJournal.data.title;
+        this.journal.term_sources = [];
+        this.currentJournal.data.term_sources.forEach((termSource: TermSource) => {
+
+            this.journal.term_sources.push(termSource);
+
+        });
+        console.log('journal remplazado', this.journal);
+
+    }
+
 }

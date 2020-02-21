@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JournalComponent } from './journal.component';
+import { SourceViewComponent } from './source-view.component';
 
-describe('JournalComponent', () => {
-  let component: JournalComponent;
-  let fixture: ComponentFixture<JournalComponent>;
+describe('SourceViewComponent', () => {
+  let component: SourceViewComponent;
+  let fixture: ComponentFixture<SourceViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ JournalComponent ]
+      declarations: [ SourceViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(JournalComponent);
+    fixture = TestBed.createComponent(SourceViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

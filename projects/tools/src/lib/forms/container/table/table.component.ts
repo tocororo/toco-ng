@@ -31,6 +31,12 @@ export enum CellContentWrap
     responsible
 }
 
+export interface TableAction {
+    icon: string;
+    route: string;
+    tooltip: string;
+}
+
 /**
  * An interface that represents the content of a table control.
  */
@@ -121,6 +127,8 @@ export interface TableContent
      * By default, its value is `false`. 
      */
     showFirstLastButtons?: boolean;
+
+    actions?: TableAction[];
 }
 
 /**
@@ -421,7 +429,7 @@ export class TableComponent implements OnInit
         this.selectRow(rowData);
 
         /* Navigates to the specified view. */
-        this._router.navigate([ relativeUrl ], { relativeTo: this._activatedRoute });
+        this._router.navigate([ rowData[this._content.propertyNameToIdentify], relativeUrl ], { relativeTo: this._activatedRoute });
     }
 
     /**

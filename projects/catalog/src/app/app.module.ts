@@ -12,10 +12,18 @@ import { AppComponent } from './app.component';
 import { AuthenticationModule } from '@toco/tools/authentication';
 import { NotificationModule } from '@toco/tools/notification';
 import { CoreModule } from '@toco/tools/core';
+import { JournalModule } from '@toco/tools/journal';
+import { SourceViewComponent } from './source-view/source-view.component';
+import { SourcesComponent } from './sources/sources.component';
+import { TocoFormsModule } from '@toco/tools/forms';
+import { SourceEditComponent } from './source-edit/source-edit.component';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        SourceViewComponent,
+        SourceEditComponent,
+        SourcesComponent
     ],
 
     imports: [
@@ -25,7 +33,9 @@ import { CoreModule } from '@toco/tools/core';
         CatalogModule,
         AuthenticationModule,
         NotificationModule,
-        AppRoutingModule
+        AppRoutingModule,
+        JournalModule,
+        TocoFormsModule
     ],
 
     providers: [CatalogService, EnvServiceProvider],
