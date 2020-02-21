@@ -172,7 +172,7 @@
     <mat-divider [inset]="true"></mat-divider>
 
     <mat-card-footer fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="10px" style="padding: 1em;">
-        <button mat-raised-button color="primary">Aprobar</button>
-        <!-- <button mat-raised-button color="accent">Accent</button> -->
+        <button mat-raised-button color="primary" (click)="approve()">Aprobar</button>
+        <button mat-raised-button color="accent" (click)="journalSave()">Guardar Cambios</button>
     </mat-card-footer>
 </mat-card>

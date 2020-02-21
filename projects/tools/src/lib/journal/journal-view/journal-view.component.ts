@@ -1,13 +1,16 @@
 
 import { Component, OnInit, Input, OnChanges, DoCheck } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 
 import { MetadataService, MessageHandler, StatusCode } from '@toco/tools/core';
 
-import { Journal, TermSource, SourceVersion, JournalVersion, Term, VocabulariesInmutableNames} from '@toco/tools/entities';
-
+import { Journal, TermSource, SourceVersion, JournalVersion, Term, VocabulariesInmutableNames, Response} from '@toco/tools/entities';
 import { EnvService } from '@tocoenv/tools/env.service';
+import { SourceService } from '@toco/tools/backend';
+
 
 enum JournalDataType {
     /** is used by default, `Journal` have not that type of data. */
@@ -103,6 +106,7 @@ export class JournalViewComponent implements OnInit {
         private route: ActivatedRoute,
         private metadata: MetadataService,
         private env: EnvService,
+        private _sourveService: SourceService,
         private _snackBar: MatSnackBar
     ) { }
 
@@ -228,7 +232,7 @@ export class JournalViewComponent implements OnInit {
             // load if was viewed
             this.currentJournalChecked = this.currentJournal.reviewed;
 
-            if (this.currentJournal && this.currentJournal.terms) {
+            if (this.currentJournal && this.currentJournal.data.term_sources) {
 
                 this.currentInstitutionTerms = new Array<Term>();
                 this.currentDataBaseTerms = new Array<Term>();
@@ -237,26 +241,26 @@ export class JournalViewComponent implements OnInit {
                 this.currentSubjectTerms = new Array<Term>();
                 this.currentLicenceTerms = new Array<Term>();
 
-                this.currentJournal.terms.forEach((term: Term) => {
+                this.currentJournal.data.term_sources.forEach((termSource: TermSource) => {
 
-                    switch (term.vocabulary_id) {
+                    switch (termSource.term.vocabulary_id) {
                         case this.vocabularies.INTITUTION:
-                            this.currentInstitutionTerms.push(term);
+                            this.currentInstitutionTerms.push(termSource.term);
                             break;
                         case this.vocabularies.DATABASES:
-                            this.currentDataBaseTerms.push(term);
+                            this.currentDataBaseTerms.push(termSource.term);
                             break;
                         case this.vocabularies.DB_GROUPS:
-                            this.currentGroupTerms.push(term);
+                            this.currentGroupTerms.push(termSource.term);
                             break;
                         case this.vocabularies.LICENCES:
-                            this.currentLicenceTerms.push(term);
+                            this.currentLicenceTerms.push(termSource.term);
                             break;
                         case this.vocabularies.PROVINCES:
-                            this.currentProvinceTerms.push(term);
+                            this.currentProvinceTerms.push(termSource.term);
                             break;
                         case this.vocabularies.SUBJECTS:
-                            this.currentSubjectTerms.push(term);
+                            this.currentSubjectTerms.push(termSource.term);
                             break;
                     }
                 });
@@ -264,20 +268,13 @@ export class JournalViewComponent implements OnInit {
         }
     }
 
-    replace() {
+    public replace() {
         this.journal.data = this.currentJournal.data;
         this.journal.name = this.currentJournal.data.title;
         this.journal.term_sources = [];
-        this.currentJournal.terms.forEach((term: Term) => {
+        this.currentJournal.data.term_sources.forEach((termSource: TermSource) => {
 
-            const termSouce = new TermSource()
-
-            termSouce.source_id = this.currentJournal.source_id;
-            termSouce.term_id = term.id;
-            termSouce.term = term;
-            termSouce.data = term.data;
-
-            this.journal.term_sources.push(termSouce);
+            this.journal.term_sources.push(termSource);
 
         });
         console.log('journal remplazado', this.journal);
@@ -360,7 +357,10 @@ export class JournalViewInfoComponent implements OnInit {
 
     public vocabularies: typeof VocabulariesInmutableNames;
 
-    constructor() {
+    constructor(
+        private _sourveService: SourceService,
+        private _snackBar: MatSnackBar
+    ) {
 
     }
 
@@ -406,6 +406,44 @@ export class JournalViewInfoComponent implements OnInit {
                 }
             });
         }
+    }
+
+    /**
+     * approve
+     */
+    public approve() {
+        this._sourveService.makeSourceAsApproved(this.journal.uuid)
+            .pipe(
+                catchError(err => {
+                    console.log(err);
+                    return of(null);
+                })
+            )
+            .subscribe((res: Response<any> ) => {
+                console.log(res);
+                const m = new MessageHandler(this._snackBar);
+                m.showMessage(StatusCode.OK, res.message);
+
+            });
+    }
+
+    public journalSave(){
+        let journalVersion = new JournalVersion();
+        journalVersion.comment = "????";
+
+        this._sourveService.editSource(journalVersion, this.journal.uuid)
+            .pipe(
+                catchError(err => {
+                    console.log(err);
+                    return of(null);
+                })
+            )
+            .subscribe((res: Response<any> ) => {
+                console.log(res);
+                const m = new MessageHandler(this._snackBar);
+                m.showMessage(StatusCode.OK, res.message);
+
+            });
     }
 }
 
@@ -560,17 +598,9 @@ export class JournalViewFieldComponent implements OnInit {
     public concat(type: JournalDataType, termId: number = -1) {
         if (type == JournalDataType.term) {
 
-            this.currentJournal.terms.forEach((term: Term) => {
-                if (term.id == termId) {
-
-                    const termSouce = new TermSource()
-
-                    termSouce.source_id = this.currentJournal.source_id;
-                    termSouce.term_id = term.id;
-                    termSouce.term = term;
-                    termSouce.data = term.data;
-
-                    this.journal.term_sources.push(termSouce);
+            this.currentJournal.data.term_sources.forEach((termSource: TermSource) => {
+                if (termSource.term_id == termId) {
+                    this.journal.term_sources.push(termSource);
                 }
             });
 

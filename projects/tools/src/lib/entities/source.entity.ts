@@ -28,6 +28,7 @@ export const SourceStatus = {
 export class SourceData extends EntityBase {
     title = '';
     description?= '';
+    term_sources ? : Array<TermSource> = new Array<TermSource>();
 }
 
 export class TermSource extends EntityBase {
@@ -44,8 +45,6 @@ export class SourceVersion extends Entity {
     created_at = new Date();
     is_current = false;
     reviewed = false;
-
-    terms ? : Array<Term> = new Array<Term>();
 
     data: SourceData = new SourceData();
 }
