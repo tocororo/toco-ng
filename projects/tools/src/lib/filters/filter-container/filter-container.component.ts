@@ -6,7 +6,7 @@ import { FilterItem } from '../filter-item';
 import { FilterDirective } from '../filter.directive';
 import { TitleFilterComponent } from '../title-filter/title-filter.component';
 import { BooleanFilterComponent } from '../boolean-filter/boolean-filter.component';
-import { SelectFilterComponent } from '../select-filter/select-filter.component';
+import { SelectFilterOldComponent } from '../select-filter/select-filter.component';
 import { SelectAutocompleteFilterComponent } from '../select-autocomplete-filter/select-autocomplete-filter.component';
 import { FilterContainerService } from '../filter-container.service';
 
@@ -57,7 +57,7 @@ export class FilterContainerComponent implements OnInit {
         data_filter.viewContainerRef = this.adHost.viewContainerRef;
         let f = null;
         switch(data_filter.type){
-            case 'select' : {f = new FilterItem(SelectFilterComponent, data_filter); break;}
+            case 'select' : {f = new FilterItem(SelectFilterOldComponent, data_filter); break;}
             case 'boolean' : {f = new FilterItem(BooleanFilterComponent, data_filter); break;}
             case 'select-autocomplete' : {f = new FilterItem(SelectAutocompleteFilterComponent, data_filter); break;}
             default : f = new FilterItem(TitleFilterComponent, data_filter);

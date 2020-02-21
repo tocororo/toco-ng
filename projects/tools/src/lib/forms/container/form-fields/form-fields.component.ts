@@ -9,8 +9,8 @@ import { FormGroup, ControlContainer } from '@angular/forms';
 
 /**
  * @description
- * This componente defines a form fields collection. 
- * `fields` is an input atribute, that represents an array of `FormFieldContent` interface. 
+ * This componente defines a form fields collection.
+ * `fields` is an input atribute, that represents an array of `FormFieldContent` interface.
  */
 @Component({
     selector: 'toco-form-fields',
@@ -26,7 +26,7 @@ export class FormFieldsComponent implements OnInit
 
     @Input()
     public containerFormGroup: FormGroup;
-    
+
     public readonly formFieldType: typeof FormFieldType = FormFieldType;
 
     public constructor(private controlContainer: ControlContainer)
@@ -35,5 +35,7 @@ export class FormFieldsComponent implements OnInit
     public ngOnInit(): void
     {
         if (this.fields == undefined) this.fields = [];
+        console.log(this.fields);
+
     }
 }

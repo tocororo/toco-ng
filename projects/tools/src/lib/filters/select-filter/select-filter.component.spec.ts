@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SelectFilterComponent } from './select-filter.component';
+import { SelectFilterOldComponent } from './select-filter.component';
 
 describe('SelectFilterComponent', () => {
-  let component: SelectFilterComponent;
-  let fixture: ComponentFixture<SelectFilterComponent>;
+  let component: SelectFilterOldComponent;
+  let fixture: ComponentFixture<SelectFilterOldComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectFilterComponent ]
+      declarations: [ SelectFilterOldComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SelectFilterComponent);
+    fixture = TestBed.createComponent(SelectFilterOldComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

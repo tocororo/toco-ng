@@ -250,7 +250,7 @@ export class JournalViewComponent implements OnInit {
                         case this.vocabularies.DATABASES:
                             this.currentDataBaseTerms.push(termSource.term);
                             break;
-                        case this.vocabularies.DB_GROUPS:
+                        case this.vocabularies.MES_GROUPS:
                             this.currentGroupTerms.push(termSource.term);
                             break;
                         case this.vocabularies.LICENCES:
@@ -391,7 +391,7 @@ export class JournalViewInfoComponent implements OnInit {
                     case VocabulariesInmutableNames.DATABASES:
                         this.dataBaseTerms.push(term);
                         break;
-                    case VocabulariesInmutableNames.DB_GROUPS:
+                    case VocabulariesInmutableNames.MES_GROUPS:
                         this.groupTerms.push(term);
                         break;
                     case VocabulariesInmutableNames.LICENCES:

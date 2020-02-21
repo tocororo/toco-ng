@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@toco/tools/shared';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { FormsModule } from '@toco/tools/forms';
+import { TocoFormsModule } from '@toco/tools/forms';
 
 import { VocabulariesComponent, VocabularyDialogComponent } from './vocabularies/vocabularies.component';
 import { TermsComponent } from './terms/terms.component';
@@ -28,7 +28,7 @@ import { TermGenericComponent } from './term-generic/term-generic.component';
     imports: [
         SharedModule,
         ReactiveFormsModule,
-        FormsModule
+        TocoFormsModule
     ],
 
     exports: [

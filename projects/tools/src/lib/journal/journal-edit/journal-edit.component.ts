@@ -420,17 +420,15 @@ export class JournalEditComponent implements OnInit {
           width: '100%',
           value: this.organization ? this.organization.uuid : '',
           extraContent: {
-            getOptions: () => {
+            observable: this.taxonomyService.getTermsTreeByVocab(VocabulariesInmutableNames.INTITUTION, 0),
+            getOptions:  (response:any) => {
               const opts: SelectOption[] = [];
-              this.taxonomyService.getTermsTreeByVocab(VocabulariesInmutableNames.INTITUTION, 0)
-                .subscribe(response => {
-                  response.data.tree.term_node.forEach((node: TermNode) => {
-                    opts.push({
-                      value: node.term.uuid,
-                      label: node.term.name,
-                    });
-                  });
+              response.data.tree.term_node.forEach((node: TermNode) => {
+                opts.push({
+                  value: node.term.uuid,
+                  label: node.term.name,
                 });
+              });
               return opts;
             },
             selectionChange: (uuid) => {
@@ -505,7 +503,6 @@ export class JournalEditComponent implements OnInit {
                       });
                     });
                 }
-                console.log(opts);
                 return opts;
               },
               selectionChange: (uuid) => {

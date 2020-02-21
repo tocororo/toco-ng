@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormFieldControl_Experimental } from '../form-field.control.experimental';
 import { FormControl } from '@angular/forms';
 import { MatOption } from '@angular/material';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 export interface SelectOption{
   value: any;
@@ -26,29 +28,54 @@ export class SelectComponent extends FormFieldControl_Experimental implements On
   internalControl = new FormControl();
 
   public selectOptions: SelectOption[] = null;
+
+
   selectedValue: any;
-  algo: MatOption;
   constructor() {
     super();
   }
 
+
+  multiple = false;
+
+
   ngOnInit() {
-    this.selectOptions = this.content.extraContent.getOptions();
-    this.selectedValue = this.content.value;
-    // this.selectOptions.forEach(opt => {
-    //   if (opt.value === this.selectedValue) {
-    //     opt.selected = true;
-    //   } else {
-    //     opt.selected = false;
-    //   }
-    // });
+
+    this.multiple = this.content.extraContent['multiple']?this.content.extraContent['multiple'] : false;
+
     this.content.formGroup.addControl(this.content.name, this.internalControl);
+
+    if (this.content.extraContent.observable) {
+
+      this.content.extraContent.observable.subscribe(
+
+        // next
+        (response: any) => {
+          this.selectOptions = this.content.extraContent.getOptions(response);
+        },
+  
+        // error
+        (error: any) => { console.log(error); }
+        ,
+  
+        // complete
+        () => { }
+  
+      );
+    } else {
+      this.selectOptions = this.content.extraContent.getOptions();
+    }
+
+
     this.internalControl.setValue(this.content.value);
     this.onSelectionChange();
+
   }
+
   onSelectionChange() {
     if (this.content.extraContent.selectionChange) {
         this.content.extraContent.selectionChange(this.content.value);
       }
   }
+
 }

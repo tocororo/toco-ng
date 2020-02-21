@@ -45,6 +45,10 @@ export interface PanelContent
     actionLabel?: string;
 
     /**
+     * wheather the panel is open or not.
+     */
+    open?: boolean;
+    /**
      * In case you need an extra value associated with the panel, to identify it or whathever
      */
     value?: any;

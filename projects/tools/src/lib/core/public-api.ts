@@ -11,6 +11,7 @@ export * from './info-card/info-card.component';
 export * from './journal-card/journal-card.component';
 export * from './nav/nav.component';
 export * from './page-header/page-header.component';
+export * from './services/browser-storage.service';
 export * from './services/icon.service';
 export * from './utils/common';
 export * from './utils/message-handler';
