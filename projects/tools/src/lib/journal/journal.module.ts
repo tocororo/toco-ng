@@ -23,13 +23,13 @@ import { JournalInclusionComponent } from './journal-inclusion/journal-inclusion
         JournalViewFieldComponent,
         JournalEditComponent,
         JournalHomeComponent,
-        DialogContentComponent,
+        // DialogContentComponent,
         JournalInclusionComponent,
         JournalEditAddIndexComponent
 
     ],
     entryComponents: [
-        DialogContentComponent,
+        // DialogContentComponent,
         JournalEditAddIndexComponent
     ],
     imports: [
