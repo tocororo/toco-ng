@@ -1,27 +1,35 @@
-
 <div *ngIf="journal != undefined" fxLayout="row wrap" style="margin: 1em;">
 
     <!-- navigate buttons -->
-    <div fxLAyout="row" fxLayoutAlign="end center" fxFlexFill style="background-color: whitesmoke;">
+    <div fxLAyout="row" fxLayoutAlign="space-between center" fxFlexFill style="background-color: whitesmoke;">
+        <button mat-raised-button color="primary" (click)="approve()">Aprobar</button>
+        <div>
+            <button mat-icon-button aria-label="Before version" [disabled]="isDisabledNavigateBefore"
+                matTooltip="Versión Anterior" (click)="beforeVersion()">
+                <mat-icon>navigate_before</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="Next version" [disabled]="isDisabledNavigateNext"
+                matTooltip="Versión Siguiente" (click)="nextVersion()">
+                <mat-icon>navigate_next</mat-icon>
+            </button>
+        </div>
 
-        <button mat-icon-button aria-label="Before version" [disabled]="isDisabledNavigateBefore" matTooltip="Versión Anterior" (click)="beforeVersion()">
-            <mat-icon>navigate_before</mat-icon>
-        </button>
-        <button mat-icon-button aria-label="Next version" [disabled]="isDisabledNavigateNext" matTooltip="Versión Siguiente" (click)="nextVersion()">
-            <mat-icon>navigate_next</mat-icon>
-        </button>
 
     </div>
 
     <!-- Show journal information -->
-    <toco-journal-view-info [journal]="journal" fxFlex="1 2 calc(15em + 20px)" style="margin: .5em;"></toco-journal-view-info>
-    
-    <toco-journal-view-version 
-        [journal]="journal" 
-        [currentJournal]="currentJournal"  
-        [currentVersion]="currentVersion" 
-        fxFlex="1 2 calc(15em + 20px)" style="margin: .5em;"
-    ></toco-journal-view-version>
+    <toco-journal-view-info 
+        #journalViewInfo
+        [journalVersion]="editingJournal" 
+        [journalUUID]="journal.uuid" 
+        fxFlex="1 2 calc(15em + 20px)" style="margin: .5em;">
+    </toco-journal-view-info>
+
+    <toco-journal-view-version
+        [editingJournal]="editingJournal" 
+        [currentJournal]="selectedJournal"
+        (editingJournalChange)= "journalViewInfo.editingJournalChange()"
+        fxFlex="1 2 calc(15em + 20px)" style="margin: .5em;"></toco-journal-view-version>
 
 
 

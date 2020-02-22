@@ -112,6 +112,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
                 this.authenticationService.getUserInfo().subscribe(response => {
                     // save email in storage
                     this.oauthStorage.setItem('email', response.data.userprofile.email);
+                    // this.oauthStorage.setItem('userID', response.data.userprofile.id);
 
                     // notifies user is logged
                     this.authenticationService.logguedChange(true);

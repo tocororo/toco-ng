@@ -99,6 +99,21 @@
         <h3>Ha completado el formulario</h3>
         <h4>Antes de aceptar puede revisar nuevamente los valores que ha introducido.</h4>
         <!-- <toco-journal-view-info [journal]="journal"></toco-journal-view-info> -->
+
+        <form
+            [formGroup]="finalFormGroup"
+        >
+            <toco-form-container
+                #indexPanelContainer
+                [panels]="finalPanel"
+                [useAccordion]="false"
+                fxLayout="row"
+                [formGroup]="finalFormGroup"
+                [deleteValuesAfterAction]="false"
+                [ngStyle]="{'width': '100%'}"
+            ></toco-form-container>
+        </form>
+
         <div>
         <button mat-raised-button color="accent" matStepperPrevious>Atrás</button>
         <button mat-raised-button color="primary" (click)="finishStepper()">Aceptar</button>

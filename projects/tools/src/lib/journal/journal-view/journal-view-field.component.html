@@ -70,13 +70,13 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.start_year">
-            <mat-label style="font-weight: bold;">Fecha de Inicio:</mat-label>
+            <mat-label style="font-weight: bold;">Año de Inicio:</mat-label>
             <mat-label *ngIf="currentJournal.data.start_year"> {{currentJournal.data.start_year | date }} </mat-label>
             <mat-label *ngIf="!currentJournal.data.start_year" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.end_year">
-            <mat-label style="font-weight: bold;">Fecha de Fin:</mat-label>
+            <mat-label style="font-weight: bold;">Año de Fin:</mat-label>
             <mat-label *ngIf="currentJournal.data.end_year"> {{currentJournal.data.end_year | date }} </mat-label>
             <mat-label *ngIf="!currentJournal.data.end_year" class="text-muted text-through">Vacío</mat-label>
         </ng-container>

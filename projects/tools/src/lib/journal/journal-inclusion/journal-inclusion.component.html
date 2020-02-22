@@ -33,7 +33,7 @@
     Complete y compruebe todos los datos solicitados para incluir la revista.
   </h2>
   <toco-journal-edit
-    [journal]="journal"
+    [journalVersion]="journal"
     (journalEditDone)="journalEditDone()"
   ></toco-journal-edit>
 </div>
@@ -54,7 +54,7 @@
 
       <toco-journal-view-info
         *ngIf="isViewing"
-        [journal]="journal"
+        [journalVersion]="journal.versions[0]"
       ></toco-journal-view-info>
 
       <div>

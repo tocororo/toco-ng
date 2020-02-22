@@ -3,7 +3,8 @@
 <ng-container *ngIf="source" [ngSwitch]="source.source_type">
     <toco-journal-edit 
         *ngSwitchCase="sourceType.JOURNAL.value"
-        [journal]="source"
+        [journalVersion]="version"
+        (journalEditDone)="sourceEditDone()"
     >
     </toco-journal-edit>
 
