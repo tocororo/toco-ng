@@ -21,12 +21,9 @@ import { JournalViewVersionComponent } from './journal-view/journal-view-version
         JournalViewInfoComponent,
         JournalViewFieldComponent,
         JournalEditComponent,
-        JournalHomeComponent,
         JournalInclusionComponent,
         JournalEditAddIndexComponent,
         JournalViewVersionComponent
-
-
     ],
     entryComponents: [
         JournalEditAddIndexComponent
