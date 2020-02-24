@@ -72,10 +72,6 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
 
         let token = this.oauthStorage.getItem('access_token');
 
-<<<<<<< HEAD
-        //console.log(req.url, req.headers, req.method);
-=======
->>>>>>> 6910977af1c87e814aaedc1b24d89a077cc3645c
         let headers = req.headers.set('Authorization', 'Bearer ' + token);
 
         if (req.method != 'GET') {
