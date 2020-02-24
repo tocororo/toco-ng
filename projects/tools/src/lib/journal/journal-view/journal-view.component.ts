@@ -46,13 +46,14 @@ export class JournalViewComponent implements OnInit {
 
     public panelOpenState = false;
 
-    defaultLogo = this.env.sceibaHost + 'static/favicon.ico'
+    
+    public defaultLogo = this.env.sceibaHost + 'static/favicon.ico'
 
     /**
      * Button roperty, is to enable or disable if there are not more versions
      */
-    isDisabledNavigateBefore: boolean;
-    isDisabledNavigateNext: boolean;
+    public isDisabledNavigateBefore: boolean;
+    public isDisabledNavigateNext: boolean;
 
     public vocabularies: typeof VocabulariesInmutableNames;
 
@@ -60,16 +61,15 @@ export class JournalViewComponent implements OnInit {
     /**************** journal variables *******************/
 
     /**
-     * Represents a Journal Object, it is a type of Source
+     * Represents a Journal Object, it is a type of Source. 
      */
     public journal: Journal;
-
 
 
     /**************** current journal variables *******************/
 
     /**
-     * the version of a Journal, (a type of Source)
+     * the current version of a Journal, (a type of Source)
      * it is to compare and show changes between Journal and last version of journal
      */
     public currentJournal: JournalVersion;
@@ -86,7 +86,7 @@ export class JournalViewComponent implements OnInit {
     public currentSubjectTerms: Array<Term>;
     public currentLicenceTerms: Array<Term>;
 
-    currentJournalChecked: boolean = false;
+    public currentJournalChecked: boolean = false;
 
     /**
      * Properties to move between versions
@@ -97,7 +97,7 @@ export class JournalViewComponent implements OnInit {
     /**
      * Inmutables data types of Journal
      */
-    journalDataType = JournalDataType;
+    public journalDataType = JournalDataType;
 
     constructor(
         private route: ActivatedRoute,
@@ -264,7 +264,10 @@ export class JournalViewComponent implements OnInit {
         }
     }
 
-    replace() {
+    /**
+     * Replaces . 
+     */
+    public replace(): void {
         this.journal.data = this.currentJournal.data;
         this.journal.name = this.currentJournal.data.title;
         this.journal.term_sources = [];
@@ -285,7 +288,7 @@ export class JournalViewComponent implements OnInit {
     }
 
     /**
-     * Returns the position of the unseen version of the journal as SourceVersion
+     * Returns the first position of the unseen version of the `SourceVersion` (journal). 
      */
     private getCurrentJournalPosition(): number {
         let count = 0;
@@ -344,7 +347,8 @@ export class JournalViewTermComponent implements OnInit {
 })
 export class JournalViewInfoComponent implements OnInit {
 
-    @Input() public journal: Journal;
+    @Input()
+    public journal: Journal;
 
     /** TODO: In the future databaseTerms and subjectTerms will be changes by 
      *  miarTerms and subjectsUnescoTerms
@@ -360,15 +364,14 @@ export class JournalViewInfoComponent implements OnInit {
 
     public vocabularies: typeof VocabulariesInmutableNames;
 
-    constructor() {
-
+    public constructor() {
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.loadJournalData();
     }
 
-    loadJournalData(){
+    public loadJournalData(): void {
         if (this.journal == undefined) this.journal = new Journal();
 
         this.dataBaseTerms = new Array<TermSource>();
@@ -407,6 +410,13 @@ export class JournalViewInfoComponent implements OnInit {
             });
         }
     }
+
+    /**
+     * Approves the 
+     */
+    public approve(): void{
+
+    }
 }
 
 /**
@@ -420,16 +430,18 @@ export class JournalViewInfoComponent implements OnInit {
 })
 export class JournalViewFieldComponent implements OnInit {
 
-    @Input() public journal: Journal;
+    @Input()
+    public journal: Journal;
 
-    @Input() public currentJournal: JournalVersion;
+    @Input()
+    public currentJournal: JournalVersion;
 
-    @Input() public type: number;
+    @Input()
+    public type: number;
 
     public journalDataType = JournalDataType;
 
-    constructor() {
-
+    public constructor() {
     }
 
     ngOnInit(): void {

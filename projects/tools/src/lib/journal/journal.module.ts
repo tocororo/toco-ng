@@ -4,7 +4,6 @@ import { SharedModule } from '@toco/tools/shared';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { TocoFormsModule } from '@toco/tools/forms';
-import { DialogContentComponent } from '@toco/tools/core';
 import { SourceService } from '@toco/tools/backend';
 
 import { JournalRoutingModule } from './journal-routing.module';
@@ -23,13 +22,11 @@ import { JournalInclusionComponent } from './journal-inclusion/journal-inclusion
         JournalViewFieldComponent,
         JournalEditComponent,
         JournalHomeComponent,
-        DialogContentComponent,
         JournalInclusionComponent,
         JournalEditAddIndexComponent
 
     ],
     entryComponents: [
-        DialogContentComponent,
         JournalEditAddIndexComponent
     ],
     imports: [
