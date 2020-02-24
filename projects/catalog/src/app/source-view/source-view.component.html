@@ -1,0 +1,15 @@
+<mat-progress-bar mode="indeterminate" color="accent" *ngIf="loading" style="margin-bottom: 1em;"></mat-progress-bar>
+
+<ng-container *ngIf="source" [ngSwitch]="source.source_type">
+    <toco-journal-view 
+        *ngSwitchCase="sourceType.JOURNAL.value"
+        [journal]="source"
+    >
+
+    </toco-journal-view>
+
+    <p *ngSwitchDefault>
+        {{sourceType.JOURNAL.value}}
+        {{source.source_type}}
+    </p>
+</ng-container>

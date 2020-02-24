@@ -72,7 +72,10 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
 
         let token = this.oauthStorage.getItem('access_token');
 
+<<<<<<< HEAD
         //console.log(req.url, req.headers, req.method);
+=======
+>>>>>>> 6910977af1c87e814aaedc1b24d89a077cc3645c
         let headers = req.headers.set('Authorization', 'Bearer ' + token);
 
         if (req.method != 'GET') {
@@ -80,9 +83,16 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
             //headers = headers.set('Access-Control-Allow-Origin', '*');
         }
 
+<<<<<<< HEAD
         req = req.clone({ headers });
         console.log(req.url, req.headers);
         
+=======
+        // req = req.clone({ headers });
+        // console.log(req.url, req.headers);
+
+
+>>>>>>> 6910977af1c87e814aaedc1b24d89a077cc3645c
         return next.handle(req).pipe(
             catchError((err: HttpErrorResponse) => {
 
@@ -96,7 +106,7 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
             })
         );
         // return next.handle(req).pipe(
-        //     tap( 
+        //     tap(
         //         // Succeeds when there is a response; ignore other events
         //         event => {
         //             console.log('eventttttt', event);

@@ -8,11 +8,11 @@ import { Response } from '@toco/tools/entities';
 import { TableContent, TableComponent, CellContentWrap } from '@toco/tools/forms';
 
 @Component({
-    selector: 'toco-journal-home',
-    templateUrl: './journal-home.component.html',
-    styleUrls: ['./journal-home.component.scss']
+    selector: 'toco-sources',
+    templateUrl: './sources.component.html',
+    styleUrls: ['./sources.component.scss']
 })
-export class JournalHomeComponent implements OnInit, OnDestroy
+export class SourcesComponent implements OnInit, OnDestroy
 {
 	private _journalsObserver = {
 		next: (value: Response<any>) => {
@@ -22,12 +22,12 @@ export class JournalHomeComponent implements OnInit, OnDestroy
             //this._tableControl.data = [];
             this._tableControl.data = value.data.sources;
 		},
-        error: (err: any) => { Common.logError('initializing journals', JournalHomeComponent.name, err); },
+        error: (err: any) => { Common.logError('initializing journals', SourcesComponent.name, err); },
         complete: () => {
             /* It finished the loading of the data. In this way, it hides the loading progress control. */
             this._tableControl.loading = false;
 
-            Common.logComplete('initializing journals', JournalHomeComponent.name);
+            Common.logComplete('initializing journals', SourcesComponent.name);
         }
     };
 
@@ -37,8 +37,8 @@ export class JournalHomeComponent implements OnInit, OnDestroy
     private _tableControl: TableComponent;
 
     /**
-     * The journals list. 
-     * Use this field to initialize only; to change value use the `_tableControl` field. 
+     * The journals list.
+     * Use this field to initialize only; to change value use the `_tableControl` field.
      */
     public content: TableContent;
 
@@ -65,7 +65,11 @@ export class JournalHomeComponent implements OnInit, OnDestroy
             'pageSize': 5,
             'pageSizeOptions': [5, 10, 20, 50],
             //'hidePageSize': true,
-            'showFirstLastButtons': true
+            'showFirstLastButtons': true,
+            actions: [
+                {icon: 'visibility', route: 'view', tooltip: 'Ver'},
+                {icon: 'edit', route: 'edit', tooltip: 'Editar'},
+            ]
         };
 
         /* Gets the journals list. */

@@ -6,24 +6,29 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TocoFormsModule } from '@toco/tools/forms';
 import { SourceService } from '@toco/tools/backend';
 
-import { JournalRoutingModule } from './journal-routing.module';
-import { JournalComponent } from './journal/journal.component';
-import { JournalViewComponent, JournalViewTermComponent, JournalViewInfoComponent, JournalViewFieldComponent } from './journal-view/journal-view.component';
+import { JournalViewComponent } from './journal-view/journal-view.component';
 import { JournalEditComponent, JournalEditAddIndexComponent } from './journal-edit/journal-edit.component';
-import { JournalHomeComponent } from './journal-home/journal-home.component';
 import { JournalInclusionComponent } from './journal-inclusion/journal-inclusion.component';
+import { JournalViewTermComponent } from './journal-view/journal-view-version-term.component';
+import { JournalViewInfoComponent } from './journal-view/journal-view-info.component';
+import { JournalViewFieldComponent } from './journal-view/journal-view-version-field.component';
+import { JournalViewVersionComponent } from './journal-view/journal-view-version.component';
 
 @NgModule({
     declarations: [
-        JournalComponent,
         JournalViewComponent,
         JournalViewTermComponent,
         JournalViewInfoComponent,
         JournalViewFieldComponent,
         JournalEditComponent,
+<<<<<<< HEAD
         JournalHomeComponent,
+=======
+>>>>>>> 6910977af1c87e814aaedc1b24d89a077cc3645c
         JournalInclusionComponent,
-        JournalEditAddIndexComponent
+        JournalEditAddIndexComponent,
+        JournalViewVersionComponent
+
 
     ],
     entryComponents: [
@@ -33,14 +38,11 @@ import { JournalInclusionComponent } from './journal-inclusion/journal-inclusion
         SharedModule,
         ReactiveFormsModule,
         TocoFormsModule,
-        JournalRoutingModule
     ],
 
     exports: [
-        JournalComponent,
         JournalViewComponent,
-        JournalEditComponent,
-        JournalHomeComponent
+        JournalEditComponent
     ],
 
     providers: [

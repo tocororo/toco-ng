@@ -1,56 +1,43 @@
-<div fxLayoutAlign="end center" fxLayout="row">
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon>view_quilt</mat-icon>
+
+    <button mat-icon-button  (click)="drawer.toggle()">
+      <mat-icon>filter_list</mat-icon>
     </button>
-    <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="changeLayoutPosition(0)">
-            <mat-icon>arrow_forward</mat-icon>
-            <span>{{layoutPosition[0].name}}</span>
-        </button>
-        <button mat-menu-item (click)="changeLayoutPosition(1)">
-            <mat-icon>arrow_back</mat-icon>
-            <span>{{layoutPosition[1].name}}</span>
-        </button>
-        <button mat-menu-item (click)="changeLayoutPosition(2)">
-            <mat-icon>arrow_upward</mat-icon>
-            <span>{{layoutPosition[2].name}}</span>
-        </button>
-        <button mat-menu-item (click)="changeLayoutPosition(3)">
-            <mat-icon>arrow_downward</mat-icon>
-            <span>{{layoutPosition[3].name}}</span>
-        </button>
-    </mat-menu>
-</div>
 
-<div fxLayout="{{currentlayout.layout}}" fxLayout.xs="column nowrap"
-    fxLayoutAlign="{{currentlayout.aling}}">
-    
+<mat-drawer-container>
+  <mat-drawer #drawer mode="push">
     <app-search-aggregations
-        fxLayout="row wrap" 
-        fxLayout.xs="column wrap" 
-        fxFlex="{{currentlayout.width}}"
-        fxLayoutAlign="start center" 
-        fxLayoutAlign.xs="center center" 
-        fxLayoutGap="1em"
-        class=" back-grey mat-elevation-z8"
-    ></app-search-aggregations>
+    fxLayout="row wrap"
+    fxLayout.xs="column wrap"
+    fxFlex="{{ currentlayout.width }}"
+    fxLayoutAlign="start center"
+    fxLayoutAlign.xs="center center"
+    fxLayoutGap="1em"
+    class=" back-grey mat-elevation-z8"
+  ></app-search-aggregations>
+  </mat-drawer>
 
+  <div *ngIf="sr" >
 
-
-    <div class="mat-elevation-z8 width-90 margin1em">
-        <toco-record-list
-            [hitList]="hits"
-        ></toco-record-list>
-        <mat-paginator 
-            [length]="length"
-            [pageSize]="pageSize"
-            [pageSizeOptions]="pageSizeOptions"
-            (page)="pageEvent = $event">
-        </mat-paginator>
-
-    </div>
-
-</div>
+    <mat-paginator
+      [length]="sr.hits.total"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="pageSizeOptions"
+      [showFirstLastButtons]="true"
+      (page)="pageEvent = pageChange($event)"
+    >
+    </mat-paginator>
+    <toco-record-list [hitList]="sr.hits"></toco-record-list>
+    <mat-paginator
+      [length]="sr.hits.total"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="pageEvent = pageChange($event)"
+    >
+    </mat-paginator>
+  </div>
+</mat-drawer-container>
 
 
 <router-outlet></router-outlet>

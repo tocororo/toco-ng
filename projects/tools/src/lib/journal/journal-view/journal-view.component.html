@@ -1,225 +1,35 @@
-
-<mat-progress-bar mode="indeterminate" color="accent" *ngIf="loading" style="margin-bottom: 1em;"></mat-progress-bar>
-
-<!-- <h1>Casa 123</h1> -->
-
 <div *ngIf="journal != undefined" fxLayout="row wrap" style="margin: 1em;">
 
     <!-- navigate buttons -->
-    <div fxLAyout="row" fxLayoutAlign="end center" fxFlexFill style="background-color: whitesmoke;">
+    <div fxLAyout="row" fxLayoutAlign="space-between center" fxFlexFill style="background-color: whitesmoke;">
+        <button mat-raised-button color="primary" (click)="approve()">Aprobar</button>
+        <div>
+            <button mat-icon-button aria-label="Before version" [disabled]="isDisabledNavigateBefore"
+                matTooltip="Versión Anterior" (click)="beforeVersion()">
+                <mat-icon>navigate_before</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="Next version" [disabled]="isDisabledNavigateNext"
+                matTooltip="Versión Siguiente" (click)="nextVersion()">
+                <mat-icon>navigate_next</mat-icon>
+            </button>
+        </div>
 
-        <button mat-icon-button aria-label="Before version" [disabled]="isDisabledNavigateBefore" matTooltip="Versión Anterior" (click)="beforeVersion()">
-            <mat-icon>navigate_before</mat-icon>
-        </button>
-        <button mat-icon-button aria-label="Next version" [disabled]="isDisabledNavigateNext" matTooltip="Versión Siguiente" (click)="nextVersion()">
-            <mat-icon>navigate_next</mat-icon>
-        </button>
 
     </div>
 
     <!-- Show journal information -->
-    <toco-journal-view-info [journal]="journal" fxFlex="1 2 calc(15em + 20px)" style="margin: .5em;"></toco-journal-view-info>
+    <toco-journal-view-info 
+        #journalViewInfo
+        [journalVersion]="editingJournal" 
+        [journalUUID]="journal.uuid" 
+        fxFlex="1 2 calc(15em + 20px)" style="margin: .5em;">
+    </toco-journal-view-info>
 
-
-    <mat-card *ngIf="currentJournal" fxFlex="1 2 calc(15em + 20px)" style="margin: .5em;">
-
-        <mat-icon class="mat-18 notification-position" color="accent" *ngIf="currentJournal.is_current" matTooltip="Versión Actual">star</mat-icon>
-        <mat-icon class="mat-18 notification-position" color="accent" *ngIf="!currentJournal.reviewed" matTooltip="Posee Cambios no Vistos">adjust</mat-icon>
-        <mat-card-header>
-
-            <!-- <img mat-card-avatar *ngIf="currentJournal.data.logo; else logotemplate" [style.background-size]="'cover'" src="currentJournal.data.logo">
-            <ng-template #logotemplate>
-                <img mat-card-avatar [src]="defaultLogo" alt="">
-            </ng-template> -->
-
-            <mat-card-title>
-
-                <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.title"></toco-journal-view-field>
-
-            </mat-card-title>
-
-            <mat-card-subtitle>
-                <mat-label>
-                    {{currentJournal.created_at | date }}.
-                </mat-label>
-                <mat-label>
-                    {{currentJournal.comment}}
-                </mat-label>
-            </mat-card-subtitle>
-            
-        </mat-card-header>
-
-        <mat-divider [inset]="true" style="margin-bottom: 1em;"></mat-divider>
-
-        <mat-card-content>
-            <!-- subtitle -->
-            <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.subtitle"></toco-journal-view-field>
-
-            <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.shortname"></toco-journal-view-field>
-
-            <mat-label style="font-weight: bold;">ISSN: </mat-label>
-            <div style="margin-left: .8em;">
-
-                <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.issnP"></toco-journal-view-field>
-
-                <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.issnE"></toco-journal-view-field>
-
-                <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.issnE"></toco-journal-view-field>
-
-            </div>
-
-            <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.rnps"></toco-journal-view-field>
-
-            <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.url"></toco-journal-view-field>
-
-            <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.email"></toco-journal-view-field>
-
-            <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.seriadas_cubanas"></toco-journal-view-field>
-
-            <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.purpose"></toco-journal-view-field>
-
-            <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.start_year"></toco-journal-view-field>
-
-            <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.end_year"></toco-journal-view-field>
-
-            <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.frequency"></toco-journal-view-field>
-
-            <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.description"></toco-journal-view-field>
-
-            <div *ngIf="currentJournal.data.description" class="e2e-inner-html-bound  text-align-justify"
-                [innerHTML]="currentJournal.data.description"></div>
-
-            <mat-label style="font-weight: bold;">Redes Sociales:</mat-label>
-            <div style="margin-left: .8em;">
-                <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.facebook"></toco-journal-view-field>
-
-                <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.twitter"></toco-journal-view-field>
-    
-                <toco-journal-view-field [journal]="journal" [currentJournal]="currentJournal" [type]="journalDataType.linkedin"></toco-journal-view-field>
-            </div>
-
-
-            <!-- show terms -->
-            <mat-divider [inset]="true" style="margin-bottom: 1em; margin-top: 1em;"></mat-divider>
-            <p>
-                <mat-label style="font-weight: bold;"> Institución: </mat-label>
-                <mat-label *ngIf="currentInstitutionTerms.length == 0" class="text-muted text-through">Vacío</mat-label>
-                <ng-container *ngFor="let term of currentInstitutionTerms">
-                    <mat-label *ngIf="term.vocabulary_id == vocabularies.INTITUTION" style="padding-left: 1em;">
-                        {{ term.name }}
-                    </mat-label>
-                </ng-container>
-            </p>
-            <mat-card style="margin: 1em; background-color: whitesmoke;">
-                <mat-card-header>
-                    <mat-card-title> Grupo: </mat-card-title>
-                    <mat-label *ngIf="currentGroupTerms.length == 0" class="text-muted text-through">Vacío</mat-label>
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-chip-list>
-                        <ng-container *ngFor="let termof currentGroupTerms">
-                            <mat-chip *ngIf="term.vocabulary_id == vocab_id">
-                                <button mat-icon-button color="accent" matTooltip="Agregar">
-                                    <mat-icon class="mat-18">merge_type</mat-icon>
-                                </button>
-                                {{ term.name }}
-                            </mat-chip>
-                        </ng-container>
-                    </mat-chip-list>
-                </mat-card-content>
-            </mat-card>
-
-            <mat-card style="margin: 1em; background-color: whitesmoke;">
-                <mat-card-header>
-                    <mat-card-title> Provincia: </mat-card-title>
-                    <mat-label *ngIf="currentProvinceTerms.length == 0" class="text-muted text-through">Vacío</mat-label>
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-chip-list>
-                        <ng-container *ngFor="let termof currentProvinceTerms">
-                            <mat-chip *ngIf="term.vocabulary_id == vocab_id">
-                                {{ term.name }}
-                            </mat-chip>
-                        </ng-container>
-                    </mat-chip-list>
-                </mat-card-content>
-            </mat-card>
-
-            <mat-card style="margin: 1em; background-color: whitesmoke;">
-                <mat-card-header>
-                    <mat-card-title> Licencia: </mat-card-title>
-                    <mat-label *ngIf="currentLicenceTerms.length == 0" class="text-muted text-through">Vacío</mat-label>
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-chip-list>
-                        <ng-container *ngFor="let termof currentLicenceTerms">
-                            <mat-chip *ngIf="term.vocabulary_id == vocab_id">
-                                {{ term.name }}
-                            </mat-chip>
-                        </ng-container>
-                    </mat-chip-list>
-                </mat-card-content>
-            </mat-card>
-
-            <mat-card style="margin: 1em; background-color: whitesmoke;">
-                <mat-card-header>
-                    <mat-card-title> Materias: </mat-card-title>
-                    <mat-label *ngIf="currentSubjectTerms.length == 0" class="text-muted text-through">Vacío</mat-label>
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-chip-list>
-                        <ng-container *ngFor="let termof currentSubjectTerms">
-                            <mat-chip *ngIf="term.vocabulary_id == vocab_id">
-                                {{ term.name }}
-                            </mat-chip>
-                        </ng-container>
-                    </mat-chip-list>
-                </mat-card-content>
-            </mat-card>
-
-            <mat-card style="margin: 1em; background-color: whitesmoke;">
-                <mat-card-header>
-                    <mat-card-title> Bases de Datos:</mat-card-title>
-                    <mat-label *ngIf="currentDataBaseTerms.length == 0" class="text-muted text-through">Vacío</mat-label>
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-accordion>
-                        <ng-container *ngFor="let term of currentDataBaseTerms">
-                            <mat-expansion-panel *ngIf="term.vocabulary_id == vocabularies.DATABASES" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title>
-                                        {{ term.name }}
-                                    </mat-panel-title>
-                                    <mat-panel-description>
-    
-                                    </mat-panel-description>
-                                </mat-expansion-panel-header>
-                                <p *ngIf="data">{{ data.url }}</p>
-                            </mat-expansion-panel>
-                        </ng-container>
-                    </mat-accordion>
-                </mat-card-content>
-            </mat-card>
-
-        </mat-card-content>
-        
-        <mat-divider [inset]="true"></mat-divider>
-        
-        <mat-card-actions fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayoutGap="10px" style="padding: 1em;">
-
-            <mat-checkbox
-                [(ngModel)]="currentJournalChecked"
-                (change)="markAsViewed()"
-            >
-                Marcar como Visto
-            </mat-checkbox>
-
-            <div fxLayoutGap="10px">
-                <button mat-raised-button color="primary" (click)="replace()">Sustituir</button>
-                <button mat-raised-button color="accent">Descartar</button>
-            </div>
-        </mat-card-actions>
-    </mat-card>
+    <toco-journal-view-version
+        [editingJournal]="editingJournal" 
+        [currentJournal]="selectedJournal"
+        (editingJournalChange)= "journalViewInfo.editingJournalChange()"
+        fxFlex="1 2 calc(15em + 20px)" style="margin: .5em;"></toco-journal-view-version>
 
 
 
@@ -231,9 +41,9 @@
         <h1>No se encontró la información solicitada</h1>
     </mat-card-content>
 
-    <mat-card-actions>
-        <a mat-stroked-button color="primary" [routerLink]="['/journal']">Volver a la lista</a>
+    <!-- <mat-card-actions>
+        <a mat-stroked-button color="primary" [routerLink]="['/sources']">Volver a la lista</a>
 
-    </mat-card-actions>
+    </mat-card-actions> -->
 
 </mat-card>

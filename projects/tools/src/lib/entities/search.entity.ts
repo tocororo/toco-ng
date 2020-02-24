@@ -53,7 +53,7 @@ export class Hit extends EntityBase {
 
 export class HitList extends EntityBase {
   hits = new Array<Hit>();
-  total: 0
+  total: 0;
 }
 
 export class SearchResponse extends EntityBase {

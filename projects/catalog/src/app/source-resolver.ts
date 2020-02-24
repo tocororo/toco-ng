@@ -5,10 +5,10 @@ import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 import { SourceService } from '@toco/tools/backend';
-import { Journal } from '@toco/tools/entities';
+import { Source } from '@toco/tools/entities';
 
 @Injectable()
-export class JournalResolver implements Resolve<Journal>
+export class SourceResolver implements Resolve<Source>
 {
     constructor(private service: SourceService, private router: Router)
     { }
@@ -21,7 +21,7 @@ export class JournalResolver implements Resolve<Journal>
                 if (node) {
                     return node;
                 } else {
-                    this.router.navigate(['/journal']);
+                    this.router.navigate(['/sources']);
                 }
             })
         );

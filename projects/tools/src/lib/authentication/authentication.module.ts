@@ -25,7 +25,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
         AuthenticationComponent
     ],
     providers: [
+<<<<<<< HEAD
         //AuthenticationService,
+=======
+        AuthenticationService,
+>>>>>>> 6910977af1c87e814aaedc1b24d89a077cc3645c
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthenticationService,
