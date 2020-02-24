@@ -1,31 +1,35 @@
 
 <mat-card>
 
-    <mat-spinner *ngIf="!selectOptions" mode="indeterminate"></mat-spinner>
-  
+  <mat-progress-bar
+  mode="indeterminate"
+  *ngIf="!selectOptions">
+</mat-progress-bar>
+
+
     <mat-card-subtitle *ngIf="selectOptions">
       <mat-form-field style="width: 100%;">
-  
+
         <mat-label> {{content.label}} <span *ngIf="content.required">*</span></mat-label>
-        <input 
-          matInput 
-          id="'inputId-'{{content.name}}" 
-          type="text" 
-          [formControl]="formControl" 
+        <input
+          matInput
+          id="'inputId-'{{content.name}}"
+          type="text"
+          [formControl]="formControl"
           [matAutocomplete]="auto"
-            aria-label="Number" 
+            aria-label="Number"
         />
-  
+
         <mat-hint *ngIf="content.startHint" [align]="'start'">{{ content.startHint.label }}</mat-hint>
         <mat-hint *ngIf="!content.startHint" [align]="'start'">{{ searchText }}</mat-hint>
-  
+
         <mat-autocomplete #auto="matAutocomplete">
           <mat-option *ngFor="let option of filteredOptions | async" [value]="option.label" (click)="addChips(option)"
             [title]="option.label">
             {{ option.label }}
           </mat-option>
         </mat-autocomplete>
-  
+
         <!-- <button mat-icon-button color="accent" class="delete-filter" (click)="remove_component()">
         <mat-icon>close</mat-icon>
       </button> -->
@@ -40,5 +44,5 @@
         </mat-chip>
       </mat-chip-list>
     </mat-card-content>
-  
+
   </mat-card>

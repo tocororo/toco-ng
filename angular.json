@@ -468,6 +468,33 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "toirokodev": {
+              "baseHref": "https://localhost:5000/irokosearch",
+              "deployUrl": "https://localhost:5000/static/search/",
+              "watch": true,
+              "outputPath": "/Users/malayo/Documents/dev/tocororo/iroko/iroko/.venv/var/instance/static/search",
+              "optimization": false,
+              "outputHashing": "none",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": false,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
             }
           }
         },
@@ -479,6 +506,9 @@
           "configurations": {
             "production": {
               "browserTarget": "search:build:production"
+            },
+            "toirokodev": {
+              "browserTarget": "search:build:toiroko"
             }
           }
         },

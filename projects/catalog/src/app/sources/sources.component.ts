@@ -37,8 +37,8 @@ export class SourcesComponent implements OnInit, OnDestroy
     private _tableControl: TableComponent;
 
     /**
-     * The journals list. 
-     * Use this field to initialize only; to change value use the `_tableControl` field. 
+     * The journals list.
+     * Use this field to initialize only; to change value use the `_tableControl` field.
      */
     public content: TableContent;
 
@@ -67,7 +67,7 @@ export class SourcesComponent implements OnInit, OnDestroy
             //'hidePageSize': true,
             'showFirstLastButtons': true,
             actions: [
-                {icon: 'description', route: 'view', tooltip: 'Ver'},
+                {icon: 'visibility', route: 'view', tooltip: 'Ver'},
                 {icon: 'edit', route: 'edit', tooltip: 'Editar'},
             ]
         };

@@ -14,6 +14,7 @@ export class RecordListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.hitList);
   }
 
 }

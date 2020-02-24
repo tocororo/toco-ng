@@ -9,33 +9,33 @@ import { SearchResponse, HitList } from '@toco/tools/entities';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
   // begin Layout stuff
   layoutPosition = [
     {
-        name: 'Derecha',
-        layout: 'row-reverse',
-        aling: 'center baseline',
-        width:  '22'
+      name: 'Derecha',
+      layout: 'row-reverse',
+      aling: 'center baseline',
+      width: '22'
     },
     {
-        name: 'Izquierda',
-        layout: 'row',
-        aling: 'center baseline',
-        width:  '22'
+      name: 'Izquierda',
+      layout: 'row',
+      aling: 'center baseline',
+      width: '22'
     },
     {
-        name: 'Arriba',
-        layout: 'column',
-        aling: 'center center',
-        width:  '90'
+      name: 'Arriba',
+      layout: 'column',
+      aling: 'center center',
+      width: '90'
     },
     {
-        name: 'Abajo',
-        layout: 'column-reverse',
-        aling: 'center center',
-        width:  '90'
+      name: 'Abajo',
+      layout: 'column-reverse',
+      aling: 'center center',
+      width: '90'
     }
   ];
   currentlayout = this.layoutPosition[0];
@@ -44,37 +44,51 @@ export class AppComponent implements OnInit{
   }
   // end Layout stuff
 
-  //begin paginator stuff
+  // begin paginator stuff
   length = 100;
-  pageSize = 10;
+  pageSize = 5;
+  pageIndex = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  pageEvent: PageEvent;
 
-  //end paginator stuff
 
-  params = new HttpParams();
-  hits: HitList;
+  // end paginator stuff
+
+  params: HttpParams;
+  sr: SearchResponse;
   constructor(
     private searchService: SearchService,
-  ){ 
+  ) {
 
   }
 
-  ngOnInit(){
-    
+  ngOnInit() {
+    this.params = new HttpParams();
+    this.getRecords();
+  }
+
+  pageChange(event?: PageEvent){
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.getRecords();
+  }
+  getRecords() {
     this.params = this.params.set('size', this.pageSize.toString());
-    this.params = this.params.set('page', '1');
-    console.log(this.params);
-    
+    this.params = this.params.set('page', ( this.pageIndex + 1 ).toString());
+
+
     this.searchService.getRecords(this.params).subscribe(
       (response: SearchResponse) => {
-        this.hits = response.hits;
+        console.log(response);
+        // this.pageEvent.length = response.hits.total;
+        this.sr = response;
+
+
       },
       (error: any) => {
-        
+
       },
       () => {
-        
+
       }
     );
   }

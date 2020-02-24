@@ -39,7 +39,7 @@ export class SourceService {
 
     editSource(source: SourceVersion, uuid: any): Observable<Response<any>> {
         console.log(source.stringify());
-        
+
         const req = this.env.sceibaApi + this.prefix + '/' + uuid + '/edit';
         return this.http.post<Response<any>>(req, source.stringify(), this.httpOptions);
     }
@@ -53,6 +53,11 @@ export class SourceService {
         const req = this.env.sceibaApi + this.prefix + '/' + uuid;
         return this.http.get<Response<any>>(req);
     }
+
+    getSourcesByTermUUID(uuid): Observable<Response<any>> {
+      const req = this.env.sceibaApi + this.prefix + '/relations/' + uuid;
+      return this.http.get<Response<any>>(req);
+  }
 
     getSourceByUUIDWithVersions(uuid): Observable<Response<any>> {
         this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);

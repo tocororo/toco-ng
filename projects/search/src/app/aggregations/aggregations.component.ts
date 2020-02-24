@@ -1,8 +1,8 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { PanelContent, FormFieldType, SelectOption, FormContainerAction } from '@toco/tools/forms';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { TaxonomyService, SearchService } from '@toco/tools/backend';
-import { TermNode, VocabulariesInmutableNames } from '@toco/tools/entities';
+import { TaxonomyService, SearchService, SourceService } from '@toco/tools/backend';
+import { TermNode, VocabulariesInmutableNames, Source } from '@toco/tools/entities';
 import { EnvService } from '@tocoenv/tools/env.service';
 
 @Component({
@@ -19,6 +19,7 @@ export class AggregationsComponent implements OnInit {
 
   constructor(
     private taxonomyService: TaxonomyService,
+    private sourceService: SourceService,
     private envService: EnvService,
     private _formBuilder: FormBuilder,
   ) {
@@ -81,10 +82,12 @@ export class AggregationsComponent implements OnInit {
                 return opts;
               },
               selectionChange: (uuid) => {
-                
+                this.organismoUUID = uuid;
+                this.initSourcesPanel();
+
               }
             }
-          },
+          }
         ]
       },
       {
@@ -125,7 +128,7 @@ export class AggregationsComponent implements OnInit {
             required: true
           },
         ]
-      },      
+      },
       {
         formGroup: this.formGroup,
         title: 'Tipos de Indizaciones:',
@@ -164,4 +167,33 @@ export class AggregationsComponent implements OnInit {
     ];
   }
 
+  initSourcesPanel() {
+    this.formGroup.removeControl('source');
+    this.panels[0].content[2] = {
+      name: 'source',
+      label: 'Fuentes',
+      type: FormFieldType.select_filter,
+      formGroup: this.formGroup,
+      width: '100%',
+      extraContent: {
+        multiple: true,
+        observable: this.sourceService.getSourcesByTermUUID(this.organismoUUID),
+        getOptions: (response: any) => {
+          const opts: SelectOption[] = [];
+          if (response.data.sources){
+            response.data.sources.forEach((source: Source) => {
+              opts.push({
+                value: source.uuid,
+                label: source.name,
+              });
+            });
+          }
+          return opts;
+        },
+        selectionChange: (value) => {
+          console.log(value);
+        }
+      }
+    };
+  }
 }

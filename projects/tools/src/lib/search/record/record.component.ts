@@ -13,6 +13,7 @@ export class RecordComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

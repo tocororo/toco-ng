@@ -1,7 +1,7 @@
 
-<div *ngIf="hits">
-    <div *ngFor="let record of hitList.hits">
-        <toco-record [record]="record"></toco-record>
+<div *ngIf="hitList">
+    <div *ngFor="let hit of hitList.hits">
+        <toco-record [record]="hit.metadata"></toco-record>
     </div>
 
 </div>

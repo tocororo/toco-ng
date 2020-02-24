@@ -77,9 +77,9 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
         // headers = headers.set('Access-Control-Allow-Origin', '*');
         // }
 
-        req = req.clone({ headers });
-        console.log(req.url, req.headers);
-        
+        // req = req.clone({ headers });
+        // console.log(req.url, req.headers);
+
 
         return next.handle(req).pipe(
             catchError((err: HttpErrorResponse) => {
@@ -94,7 +94,7 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
             })
         );
         // return next.handle(req).pipe(
-        //     tap( 
+        //     tap(
         //         // Succeeds when there is a response; ignore other events
         //         event => {
         //             console.log('eventttttt', event);

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SearchService, TaxonomyService } from '@toco/tools/backend';
+import { SearchService, TaxonomyService, SourceService } from '@toco/tools/backend';
 import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
 import { AuthenticationModule } from '@toco/tools/authentication';
 import { AggregationsComponent } from './aggregations/aggregations.component';
@@ -27,13 +27,14 @@ import { SearchModule } from '@toco/tools/search';
     AppRoutingModule,
     AuthenticationModule,
     TocoFormsModule,
-    SharedModule, 
+    SharedModule,
     SearchModule
 
   ],
   providers: [
     SearchService,
     TaxonomyService,
+    SourceService,
     EnvServiceProvider
   ],
   bootstrap: [AppComponent]
