@@ -8,13 +8,13 @@ import { Response } from '../entities/response';
 import { EnvService } from '@tocoenv/tools/env.service';
 import { catchError } from 'rxjs/operators';
 
-@Injectable({
-    providedIn: 'root'
-})
 /**
  * This service handles the behavior when a user authentications and
  * gives information about it.
  */
+@Injectable({
+    providedIn: 'root'
+})
 export class AuthenticationService implements CanActivate, HttpInterceptor {
 
     constructor(
@@ -39,7 +39,6 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
      */
     logguedChange(islogged: boolean) {
         this.authenticationSubject.next(islogged);
-
     }
     /**
      * gives information about an user authenticated
@@ -54,8 +53,11 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
         if (user) {
             return true;
         }
-        this._router.navigate(['/']);
-        return false;
+        else{
+            this._router.navigate(['/']);
+            return false;
+        }
+
         // if (user.Role === next.data.role) {
         //   return true;
         // }
@@ -80,17 +82,17 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
         req = req.clone({ headers });
         console.log(req.url, req.headers);
 
-
+        
         return next.handle(req).pipe(
             catchError((err: HttpErrorResponse) => {
 
+                /* 401 means the user is not authorized. */
                 if (err.status === 401) {
                     this.oauthService.initImplicitFlow();
                     // this._router.navigateByUrl('/');
                 }
 
                 return throwError(err);
-
             })
         );
         // return next.handle(req).pipe(

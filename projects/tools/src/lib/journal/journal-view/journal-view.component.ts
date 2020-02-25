@@ -48,7 +48,8 @@ export class JournalViewComponent implements OnInit {
 
     public panelOpenState = false;
 
-    defaultLogo = this.env.sceibaHost + 'static/favicon.ico'
+    
+    public defaultLogo = this.env.sceibaHost + 'static/favicon.ico'
 
     /**
      * Button roperty, is to enable or disable if there are not more versions
@@ -62,7 +63,7 @@ export class JournalViewComponent implements OnInit {
     /**************** journal variables *******************/
 
     /**
-     * Represents a Journal Object, it is a type of Source
+     * Represents a Journal Object, it is a type of Source. 
      */
     @Input()
     public journal: Journal;
@@ -72,7 +73,7 @@ export class JournalViewComponent implements OnInit {
     /**************** select journal version variables *******************/
 
     /**
-     * the version of a Journal, (a type of Source)
+     * the current version of a Journal, (a type of Source)
      * it is to compare and show changes between Journal and last version of journal
      * iteration over journal.versions
      */
@@ -95,7 +96,7 @@ export class JournalViewComponent implements OnInit {
     /**
      * Inmutables data types of Journal
      */
-    journalDataType = JournalDataType;
+    public journalDataType = JournalDataType;
 
 
 

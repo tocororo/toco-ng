@@ -13,6 +13,8 @@ export * from './nav/nav.component';
 export * from './page-header/page-header.component';
 export * from './services/browser-storage.service';
 export * from './services/icon.service';
+export * from './services/message.service';
+export * from './services/request-cache.service';
 export * from './utils/common';
 export * from './utils/message-handler';
 export * from './utils/validator';

@@ -25,7 +25,6 @@ import { CoreModule } from '../core';
         JournalInclusionComponent,
         JournalEditAddIndexComponent,
         JournalViewVersionComponent
-
     ],
     entryComponents: [
         JournalEditAddIndexComponent
