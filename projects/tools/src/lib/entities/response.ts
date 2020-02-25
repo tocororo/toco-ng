@@ -8,3 +8,10 @@ export interface Response <T>
     status?: string;
     data?: T;
 }
+
+
+export const ResponseStatus = {
+    SUCCESS:  'success',
+    ERROR: 'error'
+};
+

@@ -72,13 +72,13 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
 
         let headers = req.headers.set('Authorization', 'Bearer ' + token);
 
-        // if (req.method != 'GET'){
-        // headers = headers.set('Content-Type', 'application/json');
-        // headers = headers.set('Access-Control-Allow-Origin', '*');
-        // }
+        if (req.method != 'GET'){
+        headers = headers.set('Content-Type', 'application/json');
+        headers = headers.set('Access-Control-Allow-Origin', '*');
+        }
 
-        // req = req.clone({ headers });
-        // console.log(req.url, req.headers);
+        req = req.clone({ headers });
+        console.log(req.url, req.headers);
 
 
         return next.handle(req).pipe(

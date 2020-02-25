@@ -92,23 +92,4 @@ export class JournalViewInfoComponent implements OnInit, OnChanges{
     editingJournalChange(): void {
         this.loadJournalData();
     }
-
-    public journalSave(){
-        let journalVersion = new JournalVersion();
-        journalVersion.comment = "????";
-
-        this._sourveService.editSource(journalVersion, this.journalUUID)
-            .pipe(
-                catchError(err => {
-                    console.log(err);
-                    return of(null);
-                })
-            )
-            .subscribe((res: Response<any> ) => {
-                console.log(res);
-                const m = new MessageHandler(this._snackBar);
-                m.showMessage(StatusCode.OK, res.message);
-
-            });
-    }
 }

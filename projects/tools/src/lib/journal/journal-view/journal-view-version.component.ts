@@ -107,15 +107,17 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
 
 
     public replace() {
+        
+ 
         this.editingJournal.data = this.currentJournal.data;
-        this.editingJournal.data.title = this.currentJournal.data.title;
-        this.editingJournal.data.term_sources = [];
-        this.editingJournal.data.term_sources = this.currentJournal.data.term_sources;
-        // this.currentJournal.data.term_sources.forEach((termSource: TermSource) => {
+        // this.editingJournal.data.term_sources = [];
+        // this.editingJournal.data.term_sources = this.currentJournal.data.term_sources;
+        this.editingJournalChange.emit(this.editingJournal);
+        // // this.currentJournal.data.term_sources.forEach((termSource: TermSource) => {
 
-        //     this.editingJournal.data.term_sources.push(termSource);
+        // //     this.editingJournal.data.term_sources.push(termSource);
 
-        // });
+        // // });
         console.log('editingJournal remplazado', this.editingJournal);
 
     }
@@ -126,18 +128,21 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
      * @param termId is a `Term` identifyer, only needs if `type` is `JournalDataType.term`.
      * @NOTE this function call `replace(..., true)` 
      */
-    public concat(type: JournalDataType, termId: number = -1) {
-        console.log("concat~~");
+    public concat(type: JournalDataType, termSource: TermSource) {
         
         if (type == JournalDataType.term) {
-            // this.editingJournal.data.term_sources = this.currentJournal.data.term_sources;
-            this.currentJournal.data.term_sources.forEach((termSource: TermSource) => {
-                if (termSource.term_id == termId) {
-                    this.editingJournal.data.term_sources.push(termSource);
-                    this.editingJournalChange.emit(this.editingJournal);
+            let notFound= true;
+            for (let index = 0; index < this.editingJournal.data.term_sources.length; index++) {
+                const element = this.editingJournal.data.term_sources[index];
+                if(element.term_id == termSource.term_id) {
+                    this.editingJournal.data.term_sources[index].data = termSource.data;
+                    notFound = false;
                 }
-            });
-
+            }
+            if (notFound) {
+                this.editingJournal.data.term_sources.push(termSource);
+            }
+            this.editingJournalChange.emit(this.editingJournal);
         }
     }
 

@@ -6,7 +6,7 @@ import { catchError, finalize } from 'rxjs/operators';
 import { MatDialog, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 
 import { CatalogService, TaxonomyService, SourceService } from '@toco/tools/backend';
-import { MessageHandler, StatusCode, HandlerComponent } from '@toco/tools/core';
+import { MessageHandler, StatusCode, HandlerComponent, MetadataService } from '@toco/tools/core';
 import { Vocabulary, Journal, SourceTypes, Term, TermSource, TermNode, VocabulariesInmutableNames, JournalVersion } from '@toco/tools/entities';
 import { FilterHttpMap } from '@toco/tools/filters';
 import { PanelContent, FormFieldType, HintValue, HintPosition, FormContainerAction, IssnValue, SelectOption } from '@toco/tools/forms';
@@ -24,7 +24,7 @@ export class JournalEditComponent implements OnInit {
   // TODO: Idea del componente:
   // trabajan internamente con un journal, si recibe null entonces es uno nuevo, si recibe un journal entonces es editar.
   // en ambos casos devuelve el journal editado, o sea el contenido, listo para hacer post en el backend.
-
+  public pageTitle = '';
   @Input()
   public journalVersion: JournalVersion = null;
 
@@ -62,10 +62,15 @@ export class JournalEditComponent implements OnInit {
   stepAction3: FormContainerAction;
   stepAction4: FormContainerAction;
 
+  // TODO: Esto se puede hacer mejor, con un emiter alcanza
   @Output()
   journalEditDone = new EventEmitter<JournalVersion>();
 
+  @Output()
+  editCanceled = new EventEmitter<boolean> ();
+
   public constructor(
+    private metadata: MetadataService,
     private sourceService: SourceService,
     private catalogService: CatalogService,
     private taxonomyService: TaxonomyService,
@@ -74,6 +79,8 @@ export class JournalEditComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.pageTitle = (this.journalVersion.isNew)? "Nueva Revista" : "Editando : " + this.journalVersion.data.title;
+    this.metadata.setTitleDescription(this.pageTitle, "");
 
     console.log('journal edit INIT');
     this.resetStepper();
@@ -336,7 +343,22 @@ export class JournalEditComponent implements OnInit {
           return termSource;
         }
       });
-      if (termSource && !termSource.term.isNew) {
+      
+      // si la revista no tiene ninguna institucion
+      if (!termSource){
+        // termSource = new TermSource();
+        // termSource.term = new Term();
+        // termSource.term.isNew = true;
+        // termSource.term.vocabulary_id = VocabulariesInmutableNames.INTITUTION;
+        // this.journalVersion.organization = termSource.term;
+        // this.journalVersion.institution = termSource.term;
+        // this.journalVersion.entity = termSource.term;
+        this.organization = null;
+        this.institution = null;
+        this.entity = null;
+        this.initOrganizationPanel();
+      }
+      else if (termSource && !termSource.term.isNew) {
         this.taxonomyService.getTermByUUID(termSource.term.uuid, -3)
           .subscribe(response => {
             if (!response.data) {
@@ -406,28 +428,38 @@ export class JournalEditComponent implements OnInit {
               return opts;
             },
             selectionChange: (uuid) => {
+              console.log("organizatioon")
+              if (!uuid) { return; }
               this.taxonomyService.getTermByUUID(uuid, 1)
-                .subscribe(response => {
-                  if (!response.data &&
-                    !response.data.term_node &&
-                    !response.data.term_node.term) {
-                    return;
+                .subscribe(
+                  (response) => {
+                    if (!response.data &&
+                      !response.data.term_node &&
+                      !response.data.term_node.term) {
+                      return;
+                    }
+
+                    this.organization = new Term();
+                    this.organization.load_from_data(response.data.term_node.term);
+                    this.journalVersion.organization = this.organization;
+
+                    if (this.institution &&
+                      this.organization.id != this.institution.parent_id) {
+
+                      this.institution = null;
+                      this.institutionPanel = null;
+                      this.entity = null;
+                      this.entityPanel = null;
+                    }
+                    this.initInstitutionPanel(response.data.term_node.children, this.organizationFormGroup);
+                  },
+                  (err: any) => {
+                      console.log('error: ' + err + '.');
+                  },
+                  () => {
+                    console.log('complete');
                   }
-
-                  this.organization = new Term();
-                  this.organization.load_from_data(response.data.term_node.term);
-                  this.journalVersion.organization = this.organization;
-
-                  if (this.institution &&
-                    this.organization.id != this.institution.parent_id) {
-
-                    this.institution = null;
-                    this.institutionPanel = null;
-                    this.entity = null;
-                    this.entityPanel = null;
-                  }
-                  this.initInstitutionPanel(response.data.term_node.children, this.organizationFormGroup);
-                });
+                );
             }
           }
         }]
@@ -462,6 +494,7 @@ export class JournalEditComponent implements OnInit {
                     });
                   });
                 } else if (this.organization) {
+                  console.log("instituytion")
                   this.taxonomyService.getTermByUUID(this.organization.uuid, 1)
                     .subscribe(response => {
                       if (!response.data &&
@@ -481,6 +514,9 @@ export class JournalEditComponent implements OnInit {
               },
               selectionChange: (uuid) => {
                 if (!uuid) { return; }
+                console.log("inst selec change");
+                
+
                 this.taxonomyService.getTermByUUID(uuid, 1)
                   .subscribe(response => {
                     if (!response.data &&
@@ -510,6 +546,8 @@ export class JournalEditComponent implements OnInit {
 
     if (this.isManageByEntity) {
       const instUUID = this.organizationFormGroup.value['institution'];
+      console.log("entitiy");
+      
       this.taxonomyService.getTermByUUID(instUUID, 1)
         .subscribe(response => {
           if (!response.data &&
@@ -563,6 +601,8 @@ export class JournalEditComponent implements OnInit {
                     });
                   });
                 } else if (this.institution) {
+                  console.log("entiti change");
+                  
                   this.taxonomyService.getTermByUUID(this.institution.uuid, 1)
                     .subscribe(response => {
                       if (!response.data &&
@@ -853,8 +893,8 @@ export class JournalEditComponent implements OnInit {
       ts.term_id = ts.term.id;
       ts.source_id = this.journalVersion.source_id;
       ts.data['url'] = this.indexesFormGroup.value['url_'+ts.term.id];
-      ts.data['initial_cover_'] = this.indexesFormGroup.value['initial_cover_'+ts.term.id];
-      ts.data['end_cover_'] = this.indexesFormGroup.value['end_cover_'+ts.term.id];
+      ts.data['initial_cover'] = this.indexesFormGroup.value['initial_cover_'+ts.term.id];
+      ts.data['end_cover'] = this.indexesFormGroup.value['end_cover_'+ts.term.id];
       this.journalVersion.data.term_sources.push(ts);
     });
 
@@ -865,8 +905,6 @@ export class JournalEditComponent implements OnInit {
     console.log(this.organizationFormGroup);
     console.log(this.indexesFormGroup);
   }
-
-
 
   step1Action() {
     this.stepperStep += 1;
@@ -884,6 +922,9 @@ export class JournalEditComponent implements OnInit {
     // console.log(this.journalVersion)
     this.journalEditDone.emit(this.journalVersion);
   }
+  public cancelStepper() {
+    this.editCanceled.emit(true);
+  }
 }
 
 @Component({
@@ -899,7 +940,7 @@ export class JournalEditComponent implements OnInit {
                 [action]="addIndexAction"
                 [actionLabel]="'Adicionar'"
                 [deleteValuesAfterAction]="false"
-            ></toco-form-container>'
+            ></toco-form-container>
   `
 })
 export class JournalEditAddIndexComponent implements OnInit {

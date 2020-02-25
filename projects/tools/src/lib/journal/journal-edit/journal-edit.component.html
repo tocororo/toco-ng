@@ -1,3 +1,7 @@
+<header [ngStyle]="{'margin-left': '1em'}">
+    <h1 > {{pageTitle}} </h1>
+</header>
+
 
 <mat-vertical-stepper [linear]=true #stepper>
 
@@ -36,7 +40,7 @@
                 fxLayout="row"
                 [deleteValuesAfterAction]="false"
             ></toco-form-container>
-
+            
             <toco-form-container
                 *ngIf="institutionPanel"
                 #institutionPanelContainer
@@ -45,22 +49,27 @@
                 fxLayout="row"
                 [deleteValuesAfterAction]="false"
             ></toco-form-container>
-            <mat-checkbox
-              #isManagedBy
-              [checked]="true"
-              (click)="manageByEntityClick()"
-            >
-                <p>La revista es gestionada por una unidad perteneciente a: "{{institution.name}}"</p>
-            </mat-checkbox>
 
-            <toco-form-container
-                *ngIf="isManagedBy.checked && entityPanel"
-                #entityPanelContainer
-                [panels]="entityPanel"
-                [useAccordion]="false"
-                fxLayout="row"
-                [deleteValuesAfterAction]="false"
-            ></toco-form-container>
+            <ng-container *ngIf="institution">
+                <mat-checkbox
+                  #isManagedBy
+                  [checked]="true"
+                  (click)="manageByEntityClick()"
+                >
+                    <div>La revista es gestionada por una unidad perteneciente a: </div>
+                    <div> <strong> {{institution.name}}</strong></div>
+                </mat-checkbox>
+    
+                <toco-form-container
+                    *ngIf="isManagedBy.checked && entityPanel"
+                    #entityPanelContainer
+                    [panels]="entityPanel"
+                    [useAccordion]="false"
+                    fxLayout="row"
+                    [deleteValuesAfterAction]="false"
+                ></toco-form-container>
+    
+            </ng-container>
 
 
             <div>
@@ -116,6 +125,7 @@
 
         <div>
         <button mat-raised-button color="accent" matStepperPrevious>Atrás</button>
+        <button mat-raised-button color="warn" (click)="cancelStepper()">Cancelar</button>
         <button mat-raised-button color="primary" (click)="finishStepper()">Aceptar</button>
         </div>
     </mat-step>

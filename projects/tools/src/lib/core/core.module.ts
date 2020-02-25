@@ -18,6 +18,7 @@ import { CoreRoutingModule } from './core-routing.module';
 import { MetadataService } from './metadata.service';
 import { EqualLengthDirective } from './utils/validator';
 import { DialogContentComponent } from './utils/message-handler';
+import { ProgressComponent } from './utils/progress';
 
 @NgModule({
     declarations: [
@@ -30,7 +31,8 @@ import { DialogContentComponent } from './utils/message-handler';
         NavComponent,
         PageHeaderComponent,
         EqualLengthDirective,
-        DialogContentComponent
+        DialogContentComponent,
+        ProgressComponent
     ],
 
     imports: [
@@ -49,7 +51,8 @@ import { DialogContentComponent } from './utils/message-handler';
         NavComponent,
         PageHeaderComponent,
         EqualLengthDirective,
-        DialogContentComponent
+        DialogContentComponent,
+        ProgressComponent
     ],
     entryComponents: [
         DialogContentComponent,

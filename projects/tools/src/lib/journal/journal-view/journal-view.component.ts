@@ -1,13 +1,13 @@
 
-import { Component, OnInit, Input, OnChanges, DoCheck } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, DoCheck, Inject, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 
 import { MetadataService, MessageHandler, StatusCode } from '@toco/tools/core';
 
-import { Journal, TermSource, SourceVersion, JournalVersion, Term, VocabulariesInmutableNames, Response} from '@toco/tools/entities';
+import { Journal, TermSource, SourceVersion, JournalVersion, Term, VocabulariesInmutableNames, Response, ResponseStatus} from '@toco/tools/entities';
 import { EnvService } from '@tocoenv/tools/env.service';
 import { SourceService } from '@toco/tools/backend';
 
@@ -45,7 +45,6 @@ export enum JournalDataType {
 export class JournalViewComponent implements OnInit {
 
     /**************** auxiliary variables *******************/
-    public loading = true;
 
     public panelOpenState = false;
 
@@ -54,7 +53,7 @@ export class JournalViewComponent implements OnInit {
     /**
      * Button roperty, is to enable or disable if there are not more versions
      */
-    isDisabledNavigateBefore: boolean;
+    isDisabledNavigatePrevious: boolean;
     isDisabledNavigateNext: boolean;
 
     public vocabularies: typeof VocabulariesInmutableNames;
@@ -105,19 +104,23 @@ export class JournalViewComponent implements OnInit {
      */
     public currentJournal: JournalVersion;
 
+    @Input()
     public editingJournal: JournalVersion;
 
+    public showVersions = false;
+
+    
 
     constructor(
         private metadata: MetadataService,
         private env: EnvService,
-        private _sourveService: SourceService,
-        private _snackBar: MatSnackBar
+        private _snackBar: MatSnackBar,
+        public dialog: MatDialog
     ) { }
 
     ngOnInit() {
 
-        this.isDisabledNavigateBefore = true;
+        this.isDisabledNavigatePrevious = true;
         this.isDisabledNavigateNext = false;
 
         this.vocabularies = VocabulariesInmutableNames;
@@ -131,14 +134,17 @@ export class JournalViewComponent implements OnInit {
 
         this.metadata.setTitleDescription('Revista Científica ' + this.journal.data.title, this.journal.data.description);
 
-        this.journal.versions.forEach((journalVersion: JournalVersion, index: number) => {
-            // check if has versions to view and return that position
-            if (journalVersion.is_current) {
-                this.currentJournal = journalVersion;
-                this.editingJournal = new JournalVersion();
-                this.editingJournal.load_from_data(journalVersion);
-            }
-        });
+        if (! this.editingJournal){
+            this.journal.versions.forEach((journalVersion: JournalVersion, index: number) => {
+                // check if has versions to view and return that position
+                if (journalVersion.is_current) {
+                    this.currentJournal = journalVersion;
+                    this.editingJournal = new JournalVersion();
+                    this.editingJournal.load_from_data(journalVersion);
+                }
+            });
+        }
+
 
     }
 
@@ -152,7 +158,7 @@ export class JournalViewComponent implements OnInit {
         if (this.selectedVersion < this.lengthVersion - 1) {
 
             this.isDisabledNavigateNext = false;
-            this.isDisabledNavigateBefore = false;
+            this.isDisabledNavigatePrevious = false;
             this.selectedVersion++;
             this.SelectJournalVersion();
 
@@ -172,10 +178,10 @@ export class JournalViewComponent implements OnInit {
     /**
      * Changes the selected position to the before one if possible
      */
-    public beforeVersion(): void {
+    public previousVersion(): void {
 
         if (this.selectedVersion > 0) {
-            this.isDisabledNavigateBefore = false;
+            this.isDisabledNavigatePrevious = false;
             this.isDisabledNavigateNext = false;
             this.selectedVersion--;
             this.SelectJournalVersion();
@@ -183,13 +189,13 @@ export class JournalViewComponent implements OnInit {
         }
         else {
 
-            this.isDisabledNavigateBefore = true;
+            this.isDisabledNavigatePrevious = true;
             const m = new MessageHandler(this._snackBar);
             m.showMessage(StatusCode.OK, 'No hay más versiones para mostrar')
 
         }
         if (this.selectedVersion == 0) {
-            this.isDisabledNavigateBefore = true;
+            this.isDisabledNavigatePrevious = true;
         }
     }
 
@@ -230,23 +236,6 @@ export class JournalViewComponent implements OnInit {
     }
 
 
-    /**
-     * approve
-     */
-    public approve() {
-        this._sourveService.makeSourceAsApproved(this.journal.uuid)
-            .pipe(
-                catchError(err => {
-                    console.log(err);
-                    return of(null);
-                })
-            )
-            .subscribe((res: Response<any> ) => {
-                console.log(res);
-                const m = new MessageHandler(this._snackBar);
-                m.showMessage(StatusCode.OK, res.message);
-
-            });
-    }
 
 }
+

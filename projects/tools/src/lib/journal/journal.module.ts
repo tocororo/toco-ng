@@ -13,6 +13,7 @@ import { JournalViewTermComponent } from './journal-view/journal-view-version-te
 import { JournalViewInfoComponent } from './journal-view/journal-view-info.component';
 import { JournalViewFieldComponent } from './journal-view/journal-view-version-field.component';
 import { JournalViewVersionComponent } from './journal-view/journal-view-version.component';
+import { CoreModule } from '../core';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,6 @@ import { JournalViewVersionComponent } from './journal-view/journal-view-version
         JournalEditAddIndexComponent,
         JournalViewVersionComponent
 
-
     ],
     entryComponents: [
         JournalEditAddIndexComponent
@@ -33,7 +33,7 @@ import { JournalViewVersionComponent } from './journal-view/journal-view-version
     imports: [
         SharedModule,
         ReactiveFormsModule,
-        TocoFormsModule,
+        TocoFormsModule
     ],
 
     exports: [

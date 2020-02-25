@@ -1,14 +1,29 @@
-<mat-progress-bar mode="indeterminate" color="accent" *ngIf="loading" style="margin-bottom: 1em;"></mat-progress-bar>
+<toco-progress [loading]="saving">
+</toco-progress>
 
+<!-- <div *ngIf="source" fxLayout="row" fxLayoutGap="1em">
+</div> -->
+<mat-toolbar>  
+        <mat-toolbar-row fxLayoutGap="1em">
+                <button mat-raised-button color="primary" (click)="approve()">Aprobar</button>
+                <button mat-raised-button color="warn" (click)="editVersion()">Editar</button>
+                <button mat-raised-button color="warn" (click)="saveEditingVersion()">Guardar cambios de la version actual</button>
+        </mat-toolbar-row>
+</mat-toolbar>
 <ng-container *ngIf="source" [ngSwitch]="source.source_type">
+
+
+
     <toco-journal-view 
+        #view
         *ngSwitchCase="sourceType.JOURNAL.value"
         [journal]="source"
+        [editingJournal]="editingSource"
     >
 
     </toco-journal-view>
 
-    <p *ngSwitchDefault>
+    <p #view *ngSwitchDefault>
         {{sourceType.JOURNAL.value}}
         {{source.source_type}}
     </p>

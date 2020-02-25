@@ -160,7 +160,18 @@
 
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
-                            <p *ngIf="termSource.data">{{ termSource.data.url }}</p>
+                            <p *ngIf="termSource.data"> 
+                                <strong>URL: </strong> {{ termSource.data.url }}
+                            </p>
+                            <p *ngIf="termSource.data && termSource.data['initial_cover']">
+                                <strong>Cobertura inicio: </strong> 
+                                {{ termSource.data['initial_cover'] }}
+                            </p>
+                            <p *ngIf="termSource.data && termSource.data['end_cover']">
+                                <strong>Cobertura hasta: </strong> {{ termSource.data['end_cover'] }}
+                            </p>
+
+
                         </mat-expansion-panel>
                     </ng-container>
                 </mat-accordion>
@@ -170,8 +181,4 @@
 
     <mat-divider [inset]="true"></mat-divider>
 
-    <mat-card-footer fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="10px" style="padding: 1em;">
-        
-        <button mat-raised-button color="accent" (click)="journalSave()">Guardar Cambios</button>
-    </mat-card-footer>
 </mat-card>

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SourceTypes, Journal, Source, SourceVersion, JournalVersion } from '@toco/tools/entities';
-import { ActivatedRoute } from '@angular/router';
+import { SourceTypes, Journal, Source, SourceVersion, JournalVersion, TermSource, VocabulariesInmutableNames, Term } from '@toco/tools/entities';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageHandler, StatusCode } from '@toco/tools/core';
 import { MatSnackBar } from '@angular/material';
-import { SourceService } from '@toco/tools/backend';
+import { SourceService, TaxonomyService } from '@toco/tools/backend';
 
 @Component({
   selector: 'toco-source-edit',
@@ -15,10 +15,13 @@ export class SourceEditComponent implements OnInit {
   public sourceType = SourceTypes;
   public source: Source;
   public version: SourceVersion;
+  public saving = false;
   constructor(
     private route: ActivatedRoute,
+    private _router: Router,
     private _snackBar: MatSnackBar, 
-    private sourceService: SourceService
+    private sourceService: SourceService, 
+    private taxonomyService: TaxonomyService
   ) { }
 
   ngOnInit() {
@@ -27,7 +30,6 @@ export class SourceEditComponent implements OnInit {
 
         // this.loading = false;
         console.log(response);
-        
 
         if (response && response.resolver.status == 'success' && response.resolver.data.source ) {
           let src = response.resolver.data.source;
@@ -38,7 +40,7 @@ export class SourceEditComponent implements OnInit {
               this.source.versions.length
               this.version = new JournalVersion();
               this.version.source_id = this.source.id;
-              this.version.data = this.source.data;
+              this.version.data.load_from_data(this.source.data);
 
               break;
           
@@ -59,10 +61,36 @@ export class SourceEditComponent implements OnInit {
 
   sourceEditDone(){
     console.log(this.version);
-    this.sourceService.editSource(this.version, this.source.uuid)
+    this.saving = true;
+    let toReplace = -1;
+    for (let index = 0; index < this.version.data.term_sources.length; index++) {
+      const element = this.version.data.term_sources[index];
+      if (element.term.vocabulary_id == VocabulariesInmutableNames.INTITUTION 
+        && element.term.isNew){
+          toReplace = index;
+        }
+    }
+    this.taxonomyService.newTerm(this.version.data.term_sources[toReplace].term)
       .subscribe(
-        ( values ) => {
-          console.log(values);
+        ( response ) => {
+          console.log(response);
+          let newTerm = new Term();
+          newTerm.load_from_data(response.data.term);
+          this.version.data.term_sources[toReplace].term_id = newTerm.id;
+          this.sourceService.editSource(this.version, this.source.uuid)
+            .subscribe(
+              ( values ) => {
+                console.log(values);
+                this._router.navigate(['sources', this.source.uuid, 'view' ]);
+                this.saving = false;
+              },
+              (err: any) => {
+                  console.log('error: ' + err + '.');
+              },
+              () => {
+                console.log('complete');
+              }
+            );
         },
         (err: any) => {
             console.log('error: ' + err + '.');
@@ -70,7 +98,11 @@ export class SourceEditComponent implements OnInit {
         () => {
           console.log('complete');
         }
-      )
+      );
+  }
+
+  editCanceled(){
+    this._router.navigate(['sources', this.source.uuid, 'view' ]);
   }
 }
 

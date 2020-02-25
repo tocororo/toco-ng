@@ -13,7 +13,7 @@ import { AuthenticationModule } from '@toco/tools/authentication';
 import { NotificationModule } from '@toco/tools/notification';
 import { CoreModule } from '@toco/tools/core';
 import { JournalModule } from '@toco/tools/journal';
-import { SourceViewComponent } from './source-view/source-view.component';
+import { SourceViewComponent, SourceViewSaveDialog } from './source-view/source-view.component';
 import { SourcesComponent } from './sources/sources.component';
 import { TocoFormsModule } from '@toco/tools/forms';
 import { SourceEditComponent } from './source-edit/source-edit.component';
@@ -23,7 +23,8 @@ import { SourceEditComponent } from './source-edit/source-edit.component';
         AppComponent,
         SourceViewComponent,
         SourceEditComponent,
-        SourcesComponent
+        SourcesComponent,
+        SourceViewSaveDialog
     ],
 
     imports: [
@@ -37,7 +38,9 @@ import { SourceEditComponent } from './source-edit/source-edit.component';
         JournalModule,
         TocoFormsModule
     ],
-
+    entryComponents:[
+        SourceViewSaveDialog
+    ],
     providers: [CatalogService, EnvServiceProvider],
 
     bootstrap: [AppComponent]

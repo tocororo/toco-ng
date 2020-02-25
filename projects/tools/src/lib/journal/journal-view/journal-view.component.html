@@ -1,37 +1,41 @@
 <div *ngIf="journal != undefined" fxLayout="row wrap" style="margin: 1em;">
 
     <!-- navigate buttons -->
-    <div fxLAyout="row" fxLayoutAlign="space-between center" fxFlexFill style="background-color: whitesmoke;">
-        <button mat-raised-button color="primary" (click)="approve()">Aprobar</button>
-        <div>
-            <button mat-icon-button aria-label="Before version" [disabled]="isDisabledNavigateBefore"
-                matTooltip="Versión Anterior" (click)="beforeVersion()">
-                <mat-icon>navigate_before</mat-icon>
-            </button>
-            <button mat-icon-button aria-label="Next version" [disabled]="isDisabledNavigateNext"
-                matTooltip="Versión Siguiente" (click)="nextVersion()">
-                <mat-icon>navigate_next</mat-icon>
-            </button>
-        </div>
-
+    <mat-toolbar>  
+            <mat-toolbar-row fxLayoutGap="1em" fxLayoutAlign="end center">
+                <mat-slide-toggle (change)="showVersions = !showVersions" [color]="primary">
+                        <!-- <span *ngIf="showVersions">Ocultar</span>
+                        <span *ngIf="!showVersions">Mostrar</span> -->
+                        Versiones
+                </mat-slide-toggle>
+                <div *ngIf="showVersions">
+                        <button mat-icon-button aria-label="Previous version" [disabled]="isDisabledNavigatePrevious"
+                            matTooltip="Versión Anterior" (click)="previousVersion()">
+                            <mat-icon>navigate_before</mat-icon>
+                        </button>
+                        <button mat-icon-button aria-label="Next version" [disabled]="isDisabledNavigateNext"
+                            matTooltip="Versión Siguiente" (click)="nextVersion()">
+                            <mat-icon>navigate_next</mat-icon>
+                        </button>
+                </div>
+            </mat-toolbar-row>
+    </mat-toolbar>
+    <div fxLAyout="row" fxLayoutAlign="space-between start" fxFlexFill style="background-color: whitesmoke;">
 
     </div>
+    
 
-    <!-- Show journal information -->
-    <toco-journal-view-info 
-        #journalViewInfo
-        [journalVersion]="editingJournal" 
-        [journalUUID]="journal.uuid" 
+    <toco-journal-view-info #journalViewInfo [journalVersion]="editingJournal" [journalUUID]="journal.uuid"
         fxFlex="1 2 calc(15em + 20px)" style="margin: .5em;">
     </toco-journal-view-info>
 
-    <toco-journal-view-version
-        [editingJournal]="editingJournal" 
-        [currentJournal]="selectedJournal"
-        (editingJournalChange)= "journalViewInfo.editingJournalChange()"
-        fxFlex="1 2 calc(15em + 20px)" style="margin: .5em;"></toco-journal-view-version>
 
-
+    <ng-container #versionsPanel *ngIf="showVersions">
+        
+        <toco-journal-view-version [editingJournal]="editingJournal" [currentJournal]="selectedJournal"
+            (editingJournalChange)="journalViewInfo.editingJournalChange()" fxFlex="1 2 calc(15em + 20px)"
+            style="margin: .5em;"></toco-journal-view-version>
+    </ng-container>
 
 </div>
 

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { OAuthStorage, OAuthService } from 'angular-oauth2-oidc';
 import { AuthenticationService } from '@toco/tools/authentication/authentication.service';
 import { Subscription, PartialObserver } from 'rxjs';
+import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 
 @Component({
     selector: 'toco-root',
@@ -14,7 +15,7 @@ export class AppComponent {
     isOnline: boolean;
     islogged: boolean;
     user: any;
-
+    loading = false;
     private authenticateSuscription: Subscription = null;
     private authenticateObserver: PartialObserver<boolean> = {
         next: (islogged: boolean) => {
@@ -33,8 +34,31 @@ export class AppComponent {
         }
     };
 
-    constructor(private oauthStorage: OAuthStorage, private oauthService: OAuthService, private authenticateService: AuthenticationService) {
+    constructor(
+        private oauthStorage: OAuthStorage, 
+        private oauthService: OAuthService,
+        private authenticateService: AuthenticationService,
+        private router: Router) {
         this.isOnline = true; //navigator.onLine;
+        this.router.events.subscribe(
+            (event: RouterEvent) => {
+                if (event instanceof NavigationStart) {
+                    this.loading = true;
+                  }
+              
+                  if (event instanceof NavigationEnd ||
+                    event instanceof NavigationCancel ||
+                    event instanceof NavigationError) {
+                    this.loading = false;
+                  }
+              },
+              (error: any) => {
+        
+              },
+              () => {
+        
+              }
+        );
     }
     ngOnInit(): void {
         this.authenticateSuscription = this.authenticateService.authenticationSubjectObservable

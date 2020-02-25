@@ -62,7 +62,7 @@ export class SourcesComponent implements OnInit, OnDestroy
                 };
             },
             'propertyNameToIdentify': 'uuid',
-            'pageSize': 5,
+            'pageSize': 10,
             'pageSizeOptions': [5, 10, 20, 50],
             //'hidePageSize': true,
             'showFirstLastButtons': true,
