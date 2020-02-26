@@ -33,15 +33,15 @@ export class JournalEditComponent implements OnInit {
   informationFormGroup: FormGroup;
 
   // organization, institution and entity, variables for step 2
-  private organization: Term = null;
+  public organization: Term = null;
   organizationPanel: PanelContent[] = null;
   organizationFormGroup: FormGroup;
   // institution
-  private institution: Term = null;
+  public institution: Term = null;
   institutionPanel: PanelContent[] = null;
   institutionFormGroup: FormGroup;
   // entity
-  private entity: Term = null;
+  public entity: Term = null;
   entityPanel: PanelContent[] = null;
 
   public isManageByEntity = true;

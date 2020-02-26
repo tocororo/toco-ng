@@ -91,7 +91,7 @@ export class SourceViewComponent implements OnInit {
         console.log(dialogRef.getState());
         console.log(result);
 
-        if (result.accept) {
+        if (result && result.accept) {
           this.dialogCommentText = result.comment;
           this.editingSource.comment = this.dialogCommentText;
           this.saving = true;

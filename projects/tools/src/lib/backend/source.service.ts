@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 
@@ -26,11 +26,19 @@ export class SourceService {
         this.token = this.oauthStorage.getItem('access_token');
     }
 
-    getMySources(): Observable<Response<any>> {
-        this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
+    getMySources(size: number = 10, page: number = 1): Observable<Response<any>> {
+        let params = new HttpParams();
+        params = params.set('size', size.toString());
+        params = params.set('page', page.toString());
+
+        const options = {
+            params: params,
+            // headers: this.headers
+          };
+        // this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
 
         const req = this.env.sceibaApi + this.prefix + '/me/sources/all';
-        return this.http.get<Response<any>>(req, this.httpOptions);
+        return this.http.get<Response<any>>(req, options);
     }
 
     newSource(source: any): void {

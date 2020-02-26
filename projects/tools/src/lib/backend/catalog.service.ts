@@ -24,7 +24,7 @@ export class CatalogService extends HttpService {
                 }
             }
             const options = {
-                params: params.set('count', count.toString()).set('page', (page).toString())
+                params: params.set('size', count.toString()).set('page', (page).toString())
             };
             return this.http.get<Response<any>>(this.env.sceibaApi + 'source/journals', options);
         }
