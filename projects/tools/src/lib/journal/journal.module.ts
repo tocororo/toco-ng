@@ -37,7 +37,8 @@ import { CoreModule } from '../core';
 
     exports: [
         JournalViewComponent,
-        JournalEditComponent
+        JournalEditComponent,
+        JournalViewInfoComponent
     ],
 
     providers: [
