@@ -33,6 +33,7 @@ export class JournalViewInfoComponent implements OnInit, OnChanges{
     public licenceTerms: Array<TermSource>;
 
     public vocabularies: typeof VocabulariesInmutableNames;
+    public panelOpenState = false;
 
     constructor(
         private _sourveService: SourceService,

@@ -29,6 +29,7 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
     public currentLicenceTerms: Array<TermSource>;
     
     vocabularies;
+    public panelOpenState = false;
 
     currentJournalChecked: boolean = false;
 

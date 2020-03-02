@@ -5,9 +5,9 @@
 </div> -->
 <mat-toolbar>  
         <mat-toolbar-row fxLayoutGap="1em">
-                <button mat-raised-button color="primary" (click)="approve()">Aprobar</button>
-                <button mat-raised-button color="warn" (click)="editVersion()">Editar</button>
-                <button mat-raised-button color="warn" (click)="saveEditingVersion()">Guardar cambios de la version actual</button>
+                <button mat-stroked-button color="primary" (click)="approve()">Aprobar</button>
+                <button mat-stroked-button color="warn" (click)="editVersion()">Editar</button>
+                <button mat-stroked-button color="warn" (click)="saveEditingVersion()">Guardar cambios de la version actual</button>
         </mat-toolbar-row>
 </mat-toolbar>
 <ng-container *ngIf="source" [ngSwitch]="source.source_type">

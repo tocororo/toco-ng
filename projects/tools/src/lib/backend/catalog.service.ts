@@ -24,7 +24,7 @@ export class CatalogService extends HttpService {
                 }
             }
             const options = {
-                params: params.set('count', count.toString()).set('page', (page).toString())
+                params: params.set('size', count.toString()).set('page', (page).toString())
             };
             return this.http.get<Response<any>>(this.env.sceibaApi + 'source/journals', options);
         }
@@ -67,4 +67,9 @@ export class CatalogService extends HttpService {
     //     addPeople(body):Observable<Response>{
     //       return this.http.post<Response>(this.dominio,body);
     //   }
+
+    getSourceByUUID(uuid): Observable<Response<any>> {
+        const req = this.env.sceibaApi + 'source/' + uuid;
+        return this.http.get<Response<any>>(req);
+    }
 }

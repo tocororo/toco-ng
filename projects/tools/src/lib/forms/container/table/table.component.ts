@@ -1,7 +1,7 @@
 
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator, PageEvent } from '@angular/material';
 
 /**
  * A collection of CSS styles. 
@@ -167,6 +167,7 @@ export function defaultTableContent(): TableContent
 })
 export class TableComponent implements OnInit
 {
+
     /**
      * Returns true if it is loading the data source; otherwise, false. 
      * By default, its value is `false`. 
@@ -382,8 +383,16 @@ export class TableComponent implements OnInit
         else this._content.dataSource.data = newData;
 
         if (this._content.dataSource.sort == undefined) this._content.dataSource.sort = this._sort;
-        if (this._content.dataSource.paginator == undefined) this._content.dataSource.paginator = this._paginator;
 
+        console.log(this._content.dataSource);
+        
+        // if (this._content.dataSource.paginator == undefined) {
+            console.log("UNDEFINED", this._paginator);
+            
+            this._content.dataSource.paginator = this._paginator;
+        // }
+
+        
         this.checkColumn();
 
         /* Sets the `isEmpty` field depending on the `_content.dataSource` value. */
@@ -441,4 +450,7 @@ export class TableComponent implements OnInit
         /* Saves the selected row. */
         this._selectedRow = rowData[this._content.propertyNameToIdentify];
     }
+
+    
+
 }

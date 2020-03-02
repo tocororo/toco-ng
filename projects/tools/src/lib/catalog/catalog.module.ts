@@ -7,15 +7,17 @@ import { FiltersModule } from '@toco/tools/filters';
 import { AuthenticationModule } from '@toco/tools/authentication';
 import { BackendModule } from '@toco/tools/backend';
 
-import { CatalogComponent } from './catalog/catalog.component';
+import { CatalogComponent, DialogCatalogJournalInfoDialog } from './catalog/catalog.component';
 import { CatalogFiltersComponent } from './catalog-filters/catalog-filters.component';
 import { SourcesListComponent } from './sources-list/sources-list.component';
+import { JournalModule } from '../journal';
 
 @NgModule({
     declarations: [
         CatalogComponent,
         CatalogFiltersComponent,
-        SourcesListComponent
+        SourcesListComponent,
+        DialogCatalogJournalInfoDialog
     ],
 
     imports: [
@@ -23,12 +25,17 @@ import { SourcesListComponent } from './sources-list/sources-list.component';
         ReactiveFormsModule,
         FiltersModule,
         AuthenticationModule,
-        BackendModule
+        BackendModule,
+        JournalModule
     ],
 
     exports: [
         CatalogComponent,
         SourcesListComponent
+    ],
+
+    entryComponents: [
+        DialogCatalogJournalInfoDialog
     ],
 
     providers: [
