@@ -52,9 +52,9 @@ export class AppComponent implements OnInit, OnDestroy
 
 	private _journalsObserver = {
 		next: (value: number) => {
-            /* Initializes the `data`. */
-            //this._tableControl.data = [];
-            this._tableControl.data = ELEMENT_DATA;
+            /* Initializes the `page`. */
+            //this._tableControl.page = [];
+            this._tableControl.page = ELEMENT_DATA;
 		},
         error: (err: any) => { Common.logError('initializing journals', AppComponent.name, err); },
         complete: () => {

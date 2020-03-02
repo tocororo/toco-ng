@@ -42,7 +42,6 @@ export class SourceService {
     }
 
     newSource(source: any): void {
-
     }
 
     editSource(source: SourceVersion, uuid: any): Observable<Response<any>> {

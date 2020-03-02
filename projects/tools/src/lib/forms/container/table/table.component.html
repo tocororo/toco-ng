@@ -19,9 +19,9 @@
                         mat-icon-button class="div-mat-button" 
                         [attr.aria-label]="action.tooltip" 
                         (click)="navigateTo(action.route, element)"
-                        matTooltip="{{action.tooltip}}"
+                        matTooltip="{{ action.tooltip }}"
                     >
-                            <mat-icon>{{action.icon}}</mat-icon>
+                        <mat-icon>{{ action.icon }}</mat-icon>
                     </button>
                 </ng-container>
                  
@@ -67,13 +67,24 @@
 
 </table>
 
-<mat-paginator
+<!-- <mat-paginator
     [length]="content.length"
     [pageIndex]="content.pageIndex"
     [pageSize]="content.pageSize"
     [pageSizeOptions]="content.pageSizeOptions"
     [hidePageSize]="content.hidePageSize"
-    [showFirstLastButtons]="content.showFirstLastButtons"
->
+    [showFirstLastButtons]="content.showFirstLastButtons">
+</mat-paginator> -->
 
+<!-- <mat-paginator *ngIf="(page$ | async as newPage1) || ({'pageIndex': content.pageIndex, 'pageSize': content.pageSize, 'length': content.length} as newPage2)" -->
+<!-- <mat-paginator *ngIf="page$ | async as newPage" -->
+<!-- <mat-paginator
+    [length]="newPage.length"
+    [pageIndex]="newPage.pageIndex"
+    [pageSize]="newPage.pageSize"
+    [pageSizeOptions]="content.pageSizeOptions"
+    [hidePageSize]="content.hidePageSize"
+    [showFirstLastButtons]="content.showFirstLastButtons"> -->
+<mat-paginator
+    [length]="10">
 </mat-paginator>

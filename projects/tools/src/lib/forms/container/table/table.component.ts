@@ -1,7 +1,12 @@
 
-import { Component, OnInit, ViewChild, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, EventEmitter, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatTableDataSource, MatSort, MatPaginator, PageEvent } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator, PageEvent, Sort } from '@angular/material';
+import { merge, combineLatest, Observable, of, Subscription } from 'rxjs';
+import { startWith, switchMap, map } from 'rxjs/operators';
+
+import { PageRequest, UserQuery, User, Page as Page_G } from 'projects/catalog/src/app/sources/user.service';
+import { Common } from '@toco/tools/core';
 
 /**
  * A collection of CSS styles. 
@@ -38,15 +43,29 @@ export interface TableAction {
 }
 
 /**
+ * An interface that represents the requested data. 
+ * The generic parameter T always refers to the type of data that it is dealing with. 
+ */
+export interface Page/*<T>*/
+{
+    data: any[];
+    totalData: number;
+    //size: number;
+    //number: number;
+}
+
+/**
  * An interface that represents the content of a table control.
  */
 export interface TableContent
 {
     /**
-     * Returns the data source. 
-     * By default, its value is `MatTableDataSource([])`. 
+     * Returns the data. 
+     * By default, its value is `{ 'data': [], 'totalData': 0 }`. 
      */
-    dataSource?: MatTableDataSource<any>;
+//    dataSource?: MatTableDataSource<any>;
+    page?: Page;
+    endpoint?: (request: PageRequest<User>, query: UserQuery) => Observable<Page_G<User>>;
 
 
 
@@ -85,7 +104,7 @@ export interface TableContent
 
 
     /**
-     * Returns the property name of the data contained in `dataSource` that is used to identify that data. 
+     * Returns the property name of the data contained in `page` that is used to identify that data. 
      * By default, its value is `''`. 
      */
     propertyNameToIdentify?: string;
@@ -137,7 +156,8 @@ export interface TableContent
 export function defaultTableContent(): TableContent
 {
     return {
-        'dataSource': new MatTableDataSource([]),  /* The default data source does not contain element. */
+        //'dataSource': new MatTableDataSource([]),  /* The default data source does not contain element. */
+        'page': { 'data': [], 'totalData': 0 },  /* The default data source does not contain element. */
 
         'columnsObjectProperty': [],
         'columnsHeaderText': [],
@@ -165,9 +185,8 @@ export function defaultTableContent(): TableContent
     templateUrl: './table.component.html',
     styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit
+export class TableComponent implements OnInit, OnDestroy
 {
-
     /**
      * Returns true if it is loading the data source; otherwise, false. 
      * By default, its value is `false`. 
@@ -175,6 +194,7 @@ export class TableComponent implements OnInit
     public loading: boolean;
 
     private _content: TableContent;
+    private _dataSource: MatTableDataSource<any>;
     private static readonly _defaultDataSource: MatTableDataSource<any> = new MatTableDataSource([ { } ]);  /* Returns a data source with only one empty element. */
     private _selectedRow: number;  /* Represents the selected row. */
 
@@ -189,13 +209,67 @@ export class TableComponent implements OnInit
     @ViewChild(MatPaginator, { static: true })
     private _paginator: MatPaginator;
 
-    public constructor(private _router: Router, private _activatedRoute: ActivatedRoute)
-    { }
+    countTemp: number = 0;  //TODO: Delete This!!!
+	private _paginatorObserver = {
+		next: (pageEvent: PageEvent) => {
+            console.log('Call _paginatorObserver: ', this.countTemp++);
 
-    public ngOnInit()
+            //this._souceService.getMySources(pageEvent.pageSize, (pageEvent.pageIndex + 1));
+            this._content.endpoint(
+                {
+                    page: pageEvent.pageIndex,
+                    size: pageEvent.pageSize,
+                    sort: { property: 'id', order: 'desc' }
+                },
+                {
+                    search: '',
+                    registration: undefined
+                }
+            ).pipe(
+                map((response: Page_G<User>/*Response<any>*/) => {
+                    console.log('_sourcesResponse: ', response);
+        
+                    /* Initializes the `page`. */
+                    //this.page = { 'data': [], 'totalData': 0 };
+                    //this.page = { 'data': response.data.sources.sources, 'totalData': response.data.sources.count };
+                    this.page = { 'data': response.content, 'totalData': response.totalElements };
+                })
+            ).subscribe();
+		},
+        error: (err: any) => { Common.logError('setting paginator', TableComponent.name, err); },
+        complete: () => {
+            /* It finished the loading of the data. In this way, it hides the loading progress control. */
+            //this.loading = false;
+
+            Common.logComplete('setting paginator', TableComponent.name);
+        }
+	};
+	
+    private _paginatorSubscription: Subscription = null;
+
+    public constructor(private _router: Router, private _activatedRoute: ActivatedRoute)
     {
+        console.log('this._paginator: ', this._paginator);
+    }
+
+    public ngOnInit(): void
+    {
+        console.log('ngOnInit: TableComponent');
+
         /* Sets the default values only if the `_content` has not been set yet. */
         if (this._content == undefined) this.init();
+
+        this._paginatorSubscription = this._paginator.page
+            .subscribe(this._paginatorObserver);
+    }
+
+    public ngOnDestroy(): void
+    {
+		/* Disposes the resources held by the subscription. */
+		if (this._paginatorSubscription)
+		{
+			this._paginatorSubscription.unsubscribe();
+		}
     }
 
     /**
@@ -203,7 +277,7 @@ export class TableComponent implements OnInit
      */
     private get _isEmpty(): boolean
     {
-        return (this._content.dataSource.data.length == 0);
+        return (this._dataSource.data.length == 0);
     }
 
     /**
@@ -227,18 +301,25 @@ export class TableComponent implements OnInit
 
         /************************* `mat-paginator` properties. ****************************/
         if (this._content.length == undefined) this._content.length = 0;
+        this._paginator.length = this._content.length;
         if (this._content.pageIndex == undefined) this._content.pageIndex = 0;
+        this._paginator.pageIndex = this._content.pageIndex;
         if (this._content.pageSize == undefined) this._content.pageSize = 50;
+        this._paginator.pageSize = this._content.pageSize;
         if (this._content.pageSizeOptions == undefined) this._content.pageSizeOptions = [10, 20, 50];
+        this._paginator.pageSizeOptions = this._content.pageSizeOptions;
         if (this._content.hidePageSize == undefined) this._content.hidePageSize = false;
+        this._paginator.hidePageSize = this._content.hidePageSize;
         if (this._content.showFirstLastButtons == undefined) this._content.showFirstLastButtons = false;
+        this._paginator.showFirstLastButtons = this._content.showFirstLastButtons;
 
         /************************** Internal control properties. **************************/
 
         /******************************* Other properties. ********************************/
 
         /*********** (Must be the last initialization) `mat-table` properties. ************/
-        this.data = (this._content.dataSource && this._content.dataSource.data);  /* By default, its value is set to `[]` because the default data does not contain element. */
+//        this.data = (this._content.dataSource && this._content.dataSource.data);  /* By default, its value is set to `[]` because the default data does not contain element. */
+        this.page = (this._content.page);  /* By default, its value is set to `{ 'data': [], 'totalData': 0 }` because the default data does not contain element. */
     }
 
     /**
@@ -353,7 +434,7 @@ export class TableComponent implements OnInit
 	/**
 	 * Sets the input field that contains the content of this class (the table control content to show). 
      * @param newContent The new content to set. 
-     * If the value is null, sets the `defaultTableContent`. 
+     * If the value is null, sets to `defaultTableContent`. 
 	 */
     public set content(newContent: TableContent | null)
     {
@@ -362,40 +443,44 @@ export class TableComponent implements OnInit
     }
 
     /**
-     * Returns the array of data that should be rendered by the table, where each object represents one row. 
-     * By default, its value is `[]`. 
+     * Returns the data that should be rendered by the table, where each object represents one row. 
+     * By default, its value is `{ 'data': [], 'totalData': 0 }`. 
      */
-    public get data(): any[]
+    public get page(): Page
     {
-        return this._content.dataSource.data;
+        return this._content.page;
     }
 
 	/**
-	 * Sets the array of data that should be rendered by the table, where each object represents one row. 
-     * If the value is null, sets the `[]`. 
+	 * Sets the data that should be rendered by the table, where each object represents one row. 
+     * If the value is null, sets to `{ 'data': [], 'totalData': 0 }`. 
      * @param newData The new data to set. 
 	 */
-    public set data(newData: any[] | null)
+    public set page(newData: Page | null)
     {
-        newData = newData || [];  /* The default data does not contain element. */
+        newData = newData || { 'data': [], 'totalData': 0 };  /* The default data does not contain element. */
 
-        if (this._content.dataSource == undefined) this._content.dataSource = new MatTableDataSource(newData);
-        else this._content.dataSource.data = newData;
+        this._content.length = newData.totalData;
+        this._paginator.length = newData.totalData;  /* It must be set before setting the data.  */
 
-        if (this._content.dataSource.sort == undefined) this._content.dataSource.sort = this._sort;
+        if (this._dataSource == undefined) this._dataSource = new MatTableDataSource(newData.data);
+        else this._dataSource.data = newData.data;
 
-        console.log(this._content.dataSource);
-        
-        // if (this._content.dataSource.paginator == undefined) {
-            console.log("UNDEFINED", this._paginator);
-            
-            this._content.dataSource.paginator = this._paginator;
-        // }
+        if (this._dataSource.sort == undefined) this._dataSource.sort = this._sort;
+        if (this._dataSource.paginator == undefined) this._dataSource.paginator = this._paginator;
 
-        
+        //this._paginator.length = newData.totalData;
+        //this._dataSource.paginator.length = newData.totalData;
+        //this._content.length = newData.totalData;
+
+        /* Only occurs the first time to initialize. */
+            //this._dataSource.paginator.pageIndex = this._content.pageIndex;
+            //this._dataSource.paginator.pageSize = this._content.pageSize;
+        console.log('set page');
+
         this.checkColumn();
 
-        /* Sets the `isEmpty` field depending on the `_content.dataSource` value. */
+        /* Sets the `isEmpty` field depending on the `_dataSource` value. */
         this.isEmpty = this._isEmpty;
     }
 
@@ -408,7 +493,7 @@ export class TableComponent implements OnInit
     {
         if (this.isEmpty) return TableComponent._defaultDataSource;
 
-        return this._content.dataSource;
+        return this._dataSource;
     }
 
     /**
@@ -451,6 +536,19 @@ export class TableComponent implements OnInit
         this._selectedRow = rowData[this._content.propertyNameToIdentify];
     }
 
-    
+    /**
+     * Event emitted when the user changes either the active sort or sort direction. 
+     */
+    public get sortChange(): EventEmitter<Sort>
+    {
+        return this._sort.sortChange;
+    }
 
+    /**
+     * Event emitted when the paginator changes the page size or page index. 
+     */
+    public get pageChange(): EventEmitter<PageEvent>
+    {
+        return this._paginator.page;
+    }
 }
