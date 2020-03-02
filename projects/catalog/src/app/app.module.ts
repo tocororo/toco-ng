@@ -38,12 +38,13 @@ import { SourceEditComponent } from './source-edit/source-edit.component';
         JournalModule,
         TocoFormsModule
     ],
-    entryComponents:[
+    entryComponents: [
         SourceViewSaveDialog
     ],
     providers: [CatalogService, EnvServiceProvider],
 
     bootstrap: [AppComponent]
 })
-export class AppModule
-{ }
+export class AppCatalogModule {
+
+}

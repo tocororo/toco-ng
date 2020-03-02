@@ -1,0 +1,39 @@
+<mat-toolbar class="mat-elevation-z6" color="primary" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between center">
+  <a class="color-white" [routerLink]="['/']">
+      {{ title }}
+  </a>
+  <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="15px">
+
+      <a *ngIf="islogged" mat-raised-button color="primary" [routerLink]="['/sources/new/journal']">Adicionar Revista</a>
+
+      <a *ngIf="islogged" mat-raised-button color="primary" [routerLink]="['/sources']" > Mis Registros </a>
+
+
+
+      <toco-notification-button *ngIf="islogged"></toco-notification-button>
+
+      <button mat-stroked-button *ngIf="islogged" [matMenuTriggerFor]="menu">
+          {{ user }}
+          <mat-icon>person_pin</mat-icon>
+      </button>
+
+      <toco-authentication *ngIf="!islogged" [isButtonLogin]="'true'"></toco-authentication>
+
+
+  </div>
+
+</mat-toolbar>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="logoff()">
+      <mat-icon>lock</mat-icon>
+      Salir
+  </button>
+</mat-menu>
+
+<toco-progress [loading]="loading">
+</toco-progress>
+
+<router-outlet></router-outlet>
+
+<toco-footer></toco-footer>
