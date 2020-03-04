@@ -11,7 +11,7 @@ import { FilterContainerService } from '@toco/tools/filters';
 import { FilterContainerComponent } from '@toco/tools/filters';
 import { MessageHandler, StatusCode } from '@toco/tools/core';
 
-import { CatalogService } from '@toco/tools/backend';
+import { CatalogService, TaxonomyService } from '@toco/tools/backend';
 import { EnvService } from '@tocoenv/tools/env.service';
 import { VocabulariesInmutableNames } from '@toco/tools/entities';
 
@@ -25,6 +25,7 @@ export class CatalogFiltersComponent extends FilterContainerComponent {
   constructor(protected componentFactoryResolver: ComponentFactoryResolver,
     protected childrenService: FilterContainerService,
     protected service: CatalogService,
+    private taxonomyService: TaxonomyService,
     private _snackBar: MatSnackBar,
     private env: EnvService) {
     super(componentFactoryResolver, childrenService)
@@ -51,8 +52,21 @@ export class CatalogFiltersComponent extends FilterContainerComponent {
         if (response) {
           response.data.vocabularies.forEach(vocab => {
             if (VocabulariesInmutableNames.INTITUTION === vocab.id
-                && this.env.organizationUUID !== '') {
-                  console.log(this.env.organizationUUID);
+              && this.env.organizationUUID !== '') {
+              console.log(this.env.organizationUUID);
+              this.taxonomyService.getTermByUUID(this.env.organizationUUID).subscribe(termsResponse => {
+                this.filters_data.push(
+                  {
+                    index: this.filters_data.length,
+                    field: 'terms',
+                    type: 'tree',
+                    placeholder: vocab.human_name,
+                    name: vocab.human_name,
+                    idVocab: vocab.id,
+                    selectOptions: termsResponse.data.term_node.children,
+                    is_enabled: true
+                  });
+              });
             } else {
               this.service.getTerminosByVocab(vocab.id).subscribe(termsResponse => {
                 this.filters_data.push(
