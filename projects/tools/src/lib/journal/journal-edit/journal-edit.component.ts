@@ -25,9 +25,15 @@ export class JournalEditComponent implements OnInit {
   // trabajan internamente con un journal, si recibe null entonces es uno nuevo, si recibe un journal entonces es editar.
   // en ambos casos devuelve el journal editado, o sea el contenido, listo para hacer post en el backend.
   public pageTitle = '';
+
   @Input()
   public journalVersion: JournalVersion = null;
 
+  @Input()
+  public showCancelButton: boolean = true;
+
+  @Input()
+  public description = "";
   // journal information variables for step 1
   informationPanel: PanelContent[] = null;
   informationFormGroup: FormGroup;
