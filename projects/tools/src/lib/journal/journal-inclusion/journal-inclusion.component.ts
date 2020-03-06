@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormContainerAction, PanelContent, FormFieldType, HintValue, HintPosition, SelectOption } from '@toco/tools/forms';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { CatalogService, SourceService } from '@toco/tools/backend';
-import { Journal, SourcePersonRole } from '@toco/tools/entities';
+import { Journal, SourcePersonRole, JournalVersion } from '@toco/tools/entities';
 import { FilterHttpMap } from '@toco/tools/filters';
 import { StatusCode, HandlerComponent, MessageHandler } from '@toco/tools/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatStep, MatStepper } from '@angular/material';
 
 @Component({
   selector: 'toco-journal-inclusion',
@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material';
 export class JournalInclusionComponent implements OnInit {
 
   public journal: Journal = null;
+  public versionToEdit: JournalVersion = null;
 
   public loading = false;
   public isStartProcess = true;
@@ -32,6 +33,7 @@ export class JournalInclusionComponent implements OnInit {
   agreementPanel: PanelContent[] = [];
   agreementFormGroup: FormGroup;
 
+
   constructor(
     private catalogService: CatalogService,
     private sourceService: SourceService,
@@ -39,6 +41,7 @@ export class JournalInclusionComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit() {
+
 
     this.findFormGroup = this._formBuilder.group({});
     this.findPanel = [
@@ -131,46 +134,75 @@ export class JournalInclusionComponent implements OnInit {
       doit: (data: any) => {
         this.loading = true;
         const httpParams = [
-          new FilterHttpMap('issn', data.idenfifier)
+          // new FilterHttpMap('issn', data.idenfifier),
           // new FilterHttpMap('rnps', data.idenfifier),
           // new FilterHttpMap('url', data.idenfifier),
-          // new FilterHttpMap('title', data.idenfifier)
+          new FilterHttpMap('title', data.idenfifier)
         ];
 
         this.catalogService.getJournalsPage(10, 0, httpParams)
-          .subscribe(response => {
+          .subscribe(
+            (response) => {
 
-            let title = 'No hemos encontrado información';
-            let content = 'Debe completar todos los datos solicitados para incluir la revista.';
-            this.journal = new Journal();
-            if (response.data && response.data.sources.count === 1) {
-              console.log(response.data);
-              this.journal.load_from_data(response.data.sources.data[0]);
-              title = 'Tenemos información sobre la revista';
-              content = 'Compruebe y complete todos los datos solicitados para incluir la revista.';
-            } else {
-              this.sourceService.getIssnInfo(data.idenfifier)
-                .subscribe(response => {
-                  if (response.data && response.data.issn_org) {
-                    this.journal.data.issn.issn_org.load_from_data(response.data.issn_org);
-                  }
-                });
-              this.journal.isNew = true;
-            }
-            this.isStartProcess = false;
-            this.isEditig = true;
-            this.loading = false;
-            const m = new MessageHandler(null, this.dialog);
-            m.showMessage(StatusCode.OK, content, HandlerComponent.dialog, title);
-          });
+              let title = 'No hemos encontrado información';
+              let content = 'Debe completar todos los datos solicitados para incluir la revista.';
+              this.journal = new Journal();
+              this.versionToEdit = new JournalVersion();
+              if (response.data && response.data.sources.count === 1) {
+                console.log(response.data);
+                this.sourceService.getSourceByUUIDWithVersions(response.data.sources.data[0].uuid)
+                  .subscribe(
+                    (response) => {
+                      console.log(response);
+                      this.journal.load_from_data(response.data.source);
+                      this.journal.versions.forEach(version => {
+                        if (version.is_current) {
+                          title = 'Tenemos información sobre la revista';
+                          content = 'Compruebe y complete todos los datos solicitados para incluir la revista.';
+                          this.versionToEdit.data.load_from_data(version.data);
+                          this.isStartProcess = false;
+                          this.isEditig = true;
+                          this.loading = false;
+                          const m = new MessageHandler(null, this.dialog);
+                          m.showMessage(StatusCode.OK, content, HandlerComponent.dialog, title);
+                        }
+                      });
+                    },
+                    (error: any) => {
+                    },
+                    () => { }
+                  );
+
+              } else {
+                this.sourceService.getIssnInfo(data.idenfifier)
+                  .subscribe(
+                    (response) => {
+                      if (response.data && response.data.issn_org) {
+                        this.journal.data.issn.issn_org.load_from_data(response.data.issn_org);
+                        this.versionToEdit.data.issn.issn_org.load_from_data(response.data.issn_org);
+                        this.journal.isNew = true;
+                      }
+                    },
+                    (error: any) => { },
+                    () => { }
+                  );
+              }
+            },
+            (error: any) => { },
+            () => { }
+          );
       }
     };
+
   }
 
   journalEditDone() {
-    this.isEditig = false;
-    this.isViewing = true;
-    console.log(this.journal)
+    // this.isEditig = false;
+    // this.isViewing = true;
+    // console.log(this.versionToEdit)
+    // this.journalStep.completed = true;
+    // this.journalStep.hasError = false;
+    // this.stepper.next();
   }
   resetEdit() {
     this.journal = null;

@@ -14,6 +14,7 @@ import { JournalViewInfoComponent } from './journal-view/journal-view-info.compo
 import { JournalViewFieldComponent } from './journal-view/journal-view-version-field.component';
 import { JournalViewVersionComponent } from './journal-view/journal-view-version.component';
 import { CoreModule } from '../core';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import { CoreModule } from '../core';
     ],
     imports: [
         SharedModule,
+        CoreModule,
         ReactiveFormsModule,
         TocoFormsModule
     ],
@@ -42,7 +44,11 @@ import { CoreModule } from '../core';
     ],
 
     providers: [
-        SourceService
+        SourceService,
+        {
+            provide: STEPPER_GLOBAL_OPTIONS,
+            useValue: { displayDefaultIndicatorType: false }
+          }
     ]
 })
 export class JournalModule

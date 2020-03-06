@@ -1,69 +1,53 @@
-<mat-progress-bar mode="indeterminate" *ngIf="loading" color="accent">
-</mat-progress-bar>
+<toco-progress *ngIf="loading">
+</toco-progress>
 
-<div style="margin: 1em">
+<mat-toolbar>
+  <mat-toolbar-row fxLayout="row wrap" fxLayoutAlign="space-between center">
+    <h1>Inclusión de Revista</h1>
 
-<div fxLayout="row wrap" fxLayoutAlign="space-between center">
-  <h1>Inclusión de Revista</h1>
-  
-  <button
-    mat-raised-button
-    color="accent"
-    *ngIf="!isStartProcess"
-    (click)="resetEdit()"
-  >
-    Comenzar de nuevo
-  </button>
-
-</div>
+    <button mat-icon-button aria-label="Reset" *ngIf="!isStartProcess" matTooltip="Comenzar de nuevo"
+      (click)="resetEdit()">
+      <mat-icon>cached</mat-icon>
+    </button>
 
 
-<toco-form-container
-  *ngIf="isStartProcess"
-  [panels]="findPanel"
-  [useAccordion]="false"
-  [formGroup]="findFormGroup"
-  [action]="searchJournalAction"
-  [actionLabel]="'Buscar'"
-  [deleteValuesAfterAction]="true"
-></toco-form-container>
 
-<div *ngIf="isEditig">
-  <h2>
-    Complete y compruebe todos los datos solicitados para incluir la revista.
-  </h2>
-  <toco-journal-edit
-    [journalVersion]="journal"
-    (journalEditDone)="journalEditDone()"
-  ></toco-journal-edit>
-</div>
+  </mat-toolbar-row>
 
-<div *ngIf="!isEditig && !isStartProcess">
-  <h2>Para finalizar el proceso de Inclusión.</h2>
-  <h3>Debe completar su información personal y aceptar el acuerdo legal.</h3>
+</mat-toolbar>
 
-  <mat-horizontal-stepper [linear]="true" #stepper>
-    <mat-step>
-      <ng-template matStepLabel>Revista</ng-template>
 
-      <mat-action-row>
-        <button mat-raised-button color="accent" (click)="editAgain()">
-          Editar denuevo
-        </button>
-      </mat-action-row>
 
-      <toco-journal-view-info
-        *ngIf="isViewing"
-        [journalVersion]="journal.versions[0]"
-      ></toco-journal-view-info>
 
-      <div>
-        <button mat-button matStepperPrevious>Atrás</button>
-        <button mat-button matStepperNext>Siguiente</button>
-      </div>
+<toco-form-container *ngIf="isStartProcess" [panels]="findPanel" [useAccordion]="false" [formGroup]="findFormGroup"
+  [action]="searchJournalAction" [actionLabel]="'Buscar'" [deleteValuesAfterAction]="true"></toco-form-container>
+
+
+<div *ngIf="!isStartProcess">
+
+  <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
+
+    <ng-template matStepperIcon="journal">
+      <mat-icon>notes</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="person">
+      <mat-icon>person</mat-icon>
+    </ng-template>
+    <ng-template matStepperIcon="end">
+      <mat-icon>done</mat-icon>
+    </ng-template>
+    <mat-step label="Revista" state="journal" completed=false #journalStep>
+      <toco-journal-edit 
+        *ngIf="isEditig" 
+        [journalVersion]="versionToEdit" 
+        (journalEditDone)="journalStep.completed=true; stepper.next();"
+        [showCancelButton]=false 
+        [description]="'Complete y compruebe todos los datos solicitados.'">
+      </toco-journal-edit>
+
     </mat-step>
-    <mat-step [stepControl]="personFormGroup">
-      <ng-template matStepLabel>Persona</ng-template>
+    <mat-step label="Persona" state="person" [stepControl]="personFormGroup">
+
       <h2>
         aqui se solicita información sobre la relacion que tiene la persona con
         la revista
@@ -77,21 +61,18 @@
       <h3>Si la revista ya ha sido incluida por otra persona</h3>
       <p>se muestra aqui la información sobre esa persona</p>
       <form [formGroup]="personFormGroup">
-        <toco-form-container
-          [panels]="personPanel"
-          [useAccordion]="false"
-          [formGroup]="personFormGroup"
-        ></toco-form-container>
+        <toco-form-container [panels]="personPanel" [useAccordion]="false" [formGroup]="personFormGroup">
+        </toco-form-container>
 
         <div>
-          <button mat-button matStepperPrevious>Atrás</button>
-          <button mat-button matStepperNext>Siguiente</button>
+          <button mat-stroked-button color="accent" matStepperPrevious>Atrás</button>
+          <button mat-stroked-button color="primary" matStepperNext>Siguiente</button>
         </div>
       </form>
     </mat-step>
 
-    <mat-step>
-      <ng-template matStepLabel>Finalizar</ng-template>
+    <mat-step label="Finalizar" state="end">
+
       <h2>
         Acuerdo legal
       </h2>
@@ -102,11 +83,8 @@
       <h3>Subtitulo</h3>
       <p>algo mas...</p>
       <form [formGroup]="personFormGroup">
-        <toco-form-container
-          [panels]="agreementPanel"
-          [useAccordion]="false"
-          [formGroup]="agreementFormGroup"
-        ></toco-form-container>
+        <toco-form-container [panels]="agreementPanel" [useAccordion]="false" [formGroup]="agreementFormGroup">
+        </toco-form-container>
 
         <div>
           <button mat-raised-button color="primary" (click)="finishInclusion()">
@@ -116,5 +94,4 @@
       </form>
     </mat-step>
   </mat-horizontal-stepper>
-</div>
 </div>
