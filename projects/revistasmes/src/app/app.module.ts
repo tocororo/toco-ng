@@ -14,6 +14,7 @@ import { TocoFormsModule } from '@toco/tools/forms';
 import { SourceViewSaveDialog } from 'projects/catalog/src/app/source-view/source-view.component';
 import { AppCatalogModule } from 'projects/catalog/src/app/app.module';
 import { HomeComponent } from './home/home.component';
+import { InstitutionsModule } from '@toco/tools/institutions/institutions.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { HomeComponent } from './home/home.component';
     JournalModule,
     TocoFormsModule,
     AppRoutingModule,
-    AppCatalogModule
+    AppCatalogModule,
+    InstitutionsModule
   ],
   entryComponents: [
     SourceViewSaveDialog

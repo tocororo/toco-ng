@@ -18,8 +18,6 @@ export class AppComponent {
     private authenticateSuscription: Subscription = null;
     private authenticateObserver: PartialObserver<boolean> = {
         next: (islogged: boolean) => {
-            console.log(this.oauthStorage);
-
             this.islogged = islogged;
             if (this.oauthStorage.getItem('access_token')) {
                 this.user = this.oauthStorage.getItem('email');
@@ -52,8 +50,6 @@ export class AppComponent {
                     event instanceof NavigationCancel ||
                     event instanceof NavigationError) {
                     this.loading = false;
-                    console.log(this.loading);
-                    
                 }
             },
             (error: any) => {

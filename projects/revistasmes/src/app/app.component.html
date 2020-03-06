@@ -12,41 +12,34 @@
             fxLayout.xs="column"
             fxLayoutAlign="center center"
         >
-            <a mat-button href=""> FAQ </a>
-            <a mat-button href=""> Ayuda </a>
-            <a mat-button href="">
+            <a mat-button [routerLink]="['/faq']"> FAQ </a>
+            <a mat-button [routerLink]="['/help']"> Ayuda </a>
+            <a mat-button [routerLink]="['/contact']">
                 <mat-button-toggle class="color-white" value="Contacto">
                     Contacto
                 </mat-button-toggle>
             </a>
-            <a mat-button href="">
+            <a mat-button [routerLink]="['/']">
                 <mat-button-toggle class="color-white" value="Redes Sociales">
                     Redes Sociales
                 </mat-button-toggle>
             </a>
-            <button mat-button class="color-white" value="Usuario" [matMenuTriggerFor]="menu">
-                Edel Abreu
+
+            <toco-notification-button *ngIf="islogged"></toco-notification-button>
+
+            <toco-authentication *ngIf="!islogged" [isButtonLogin]="'true'"></toco-authentication>
+
+            <button mat-button *ngIf="islogged" [matMenuTriggerFor]="menu">
+                {{ user }}
                 <mat-icon>person_pin</mat-icon>
             </button>
 
         </mat-button-toggle-group>
 
-        <a *ngIf="islogged" mat-raised-button color="primary" [routerLink]="['/sources/new/journal']">Adicionar
+        <!-- <a *ngIf="islogged" mat-raised-button color="primary" [routerLink]="['/sources/new/journal']">Adicionar
             Revista</a>
 
-        <a *ngIf="islogged" mat-raised-button color="primary" [routerLink]="['/sources']"> Mis Registros </a>
-
-
-
-        <toco-notification-button *ngIf="islogged"></toco-notification-button>
-
-        <button mat-stroked-button *ngIf="islogged" [matMenuTriggerFor]="menu">
-            {{ user }}
-            <mat-icon>person_pin</mat-icon>
-        </button>
-
-        <!-- <toco-authentication *ngIf="!islogged" [isButtonLogin]="'true'"></toco-authentication> -->
-
+        <a *ngIf="islogged" mat-raised-button color="primary" [routerLink]="['/sources']"> Mis Registros </a> -->
 
     </div>
 

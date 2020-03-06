@@ -4,11 +4,11 @@
     fxLayout="row wrap" fxLayout.xs="column"
     fxLayoutAlign="center center"
 >
-    <mat-button-toggle value="Inicio">Inicio</mat-button-toggle>
-    <mat-button-toggle value="Acerca de">Acerca de</mat-button-toggle>
-    <mat-button-toggle value="Incluye tu revista">Incluye tu revista</mat-button-toggle>
-    <mat-button-toggle value="Catálogo">Catálogo</mat-button-toggle>
-    <mat-button-toggle value="Reportes y estadísticas">Reportes y estadísticas</mat-button-toggle>
+    <a mat-button [routerLink]="['/']" value="Inicio">Inicio</a>
+    <a mat-button [routerLink]="['/about']" value="Acerca de">Acerca de</a>
+    <a mat-button [routerLink]="['/sources/new/journal']" value="Incluye tu revista">Incluye tu revista</a>
+    <a mat-button [routerLink]="['/directory']" value="Catálogo">Directorio</a>
+    <a mat-button [routerLink]="['/']" value="Reportes y estadísticas">Reportes y estadísticas</a>
 
 </mat-button-toggle-group>
 
@@ -73,47 +73,5 @@
     </mat-card>
 </section>
 
-<section fxLayout="row wrap" fxLayoutAlign="center center">
-    <mat-card class="w-card m-1">
-        <mat-card-title-group fxLayout="row wrap" fxLayoutAlign="center center">
-            <mat-card-title>Revistas Por Institución</mat-card-title>
-        </mat-card-title-group>
-        <mat-card-content
-            fxLayout="row wrap"
-            fxLayout.xs="column"
-            fxLayoutAlign="center center"
-        >
-    
-            <mat-nav-list dense style="width: 15em;">
-                <a mat-list-item href="">Universidad de Pinar del Río (5)</a>
-                <a mat-list-item href="">Universidad de la Habana (20)</a>
-                <a mat-list-item href="">Universidad de Artemisa</a>
-                <a mat-list-item href="">Universidad de Matanzas</a>
-            </mat-nav-list>
-
-            <mat-nav-list dense style="width: 15em;">
-                <a mat-list-item href="">Universidad de Pinar del Río (5)</a>
-                <a mat-list-item href="">Universidad de la Habana (20)</a>
-                <a mat-list-item href="">Universidad de Artemisa</a>
-                <a mat-list-item href="">Universidad de Matanzas</a>
-            </mat-nav-list>
-            <mat-nav-list dense style="width: 15em;">
-                <a mat-list-item href="">Universidad de Pinar del Río (5)</a>
-                <a mat-list-item href="">Universidad de la Habana (20)</a>
-                <a mat-list-item href="">Universidad de Artemisa</a>
-                <a mat-list-item href="">Universidad de Matanzas</a>
-            </mat-nav-list>
-    
-        </mat-card-content>
-            <mat-card-footer>
-                <mat-paginator
-                itemsPerPageLabel="lalaal"
-                [length]="200"
-                [pageSize]="12"
-                [pageIndex]="0"
-                >
-                </mat-paginator>
-            </mat-card-footer>
-    </mat-card>
-</section>
+<toco-list-count-sources-by-term [uuid]="organizationUUID"></toco-list-count-sources-by-term>
 

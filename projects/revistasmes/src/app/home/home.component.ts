@@ -1,27 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { MatPaginatorIntl } from '@angular/material';
+import { Term } from '@toco/tools/entities';
+import { EnvService } from '@tocoenv/tools/env.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
-  providers: [
-    { provide: MatPaginatorIntl, useValue: CustomPaginator()}
-  ]
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
 
-  constructor() {
-   }
+    public organizationUUID: string
+    constructor(private env: EnvService) {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+        this.organizationUUID = this.env.organizationUUID;
+    }
 
-}
-export function CustomPaginator() {
-  const customPaginatorIntl = new MatPaginatorIntl();
-
-  customPaginatorIntl.itemsPerPageLabel = 'Elementos por página:';
-
-  return customPaginatorIntl;
 }

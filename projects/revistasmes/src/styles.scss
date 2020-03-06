@@ -146,7 +146,7 @@ $md-greylight: (
 $toco-primary: mat-palette($md-azul);
 $toco-accent: mat-palette($md-grey);
 //$toco-warn: mat-palette($mat-grey, 200, 100, 900);
-$toco-warn: mat-palette($md-azullight);
+$toco-warn: mat-palette($md-greylight, A700);
 
 $toco-theme: mat-light-theme($toco-primary, $toco-accent, $toco-warn);
 

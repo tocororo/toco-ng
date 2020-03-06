@@ -19,6 +19,10 @@ const routes: Routes = [
         component: HomeComponent
     },
     {
+        path: 'directory',
+        component: CatalogComponent
+    },
+    {
         path: 'sources',
         // loadChildren: () => import('@toco/tools/journal').then(mod => mod.JournalModule),
         children: [
