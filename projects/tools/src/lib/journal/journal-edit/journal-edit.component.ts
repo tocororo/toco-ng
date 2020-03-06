@@ -73,19 +73,19 @@ export class JournalEditComponent implements OnInit {
   journalEditDone = new EventEmitter<JournalVersion>();
 
   @Output()
-  editCanceled = new EventEmitter<boolean> ();
+  editCanceled = new EventEmitter<boolean>();
 
   public constructor(
     private metadata: MetadataService,
     private sourceService: SourceService,
     private catalogService: CatalogService,
     private taxonomyService: TaxonomyService,
-    public _snackBar: MatSnackBar,
-    private _formBuilder: FormBuilder,
+    public snackBar: MatSnackBar,
+    private formBuilder: FormBuilder,
     public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.pageTitle = (this.journalVersion.isNew)? "Nueva Revista" : "Editando : " + this.journalVersion.data.title;
+    this.pageTitle = (this.journalVersion.isNew) ? "Nueva Revista" : "Editando : " + this.journalVersion.data.title;
     this.metadata.setTitleDescription(this.pageTitle, "");
 
     console.log('journal edit INIT');
@@ -95,7 +95,7 @@ export class JournalEditComponent implements OnInit {
     this.initStep1();
     this.initStep2();
     this.initStep3();
-    this.initStepFinal() ;
+    this.initStepFinal();
 
 
   }
@@ -124,7 +124,7 @@ export class JournalEditComponent implements OnInit {
 
   initStep1(): void {
 
-    this.informationFormGroup = this._formBuilder.group({
+    this.informationFormGroup = this.formBuilder.group({
       // 'description': descriptionControl,
       start_year: new FormControl(''),
       end_year: new FormControl(''),
@@ -349,9 +349,9 @@ export class JournalEditComponent implements OnInit {
           return termSource;
         }
       });
-      
+
       // si la revista no tiene ninguna institucion
-      if (!termSource){
+      if (!termSource) {
         // termSource = new TermSource();
         // termSource.term = new Term();
         // termSource.term.isNew = true;
@@ -363,8 +363,7 @@ export class JournalEditComponent implements OnInit {
         this.institution = null;
         this.entity = null;
         this.initOrganizationPanel();
-      }
-      else if (termSource && !termSource.term.isNew) {
+      } else if (termSource && !termSource.term.isNew) {
         this.taxonomyService.getTermByUUID(termSource.term.uuid, -3)
           .subscribe(response => {
             if (!response.data) {
@@ -405,8 +404,9 @@ export class JournalEditComponent implements OnInit {
       }
     }
   }
+
   initOrganizationPanel() {
-    this.organizationFormGroup = this._formBuilder.group({});
+    this.organizationFormGroup = this.formBuilder.group({});
 
     this.organizationPanel = [{
       title: 'Organismo',
@@ -423,7 +423,7 @@ export class JournalEditComponent implements OnInit {
           value: this.organization ? this.organization.uuid : '',
           extraContent: {
             observable: this.taxonomyService.getTermsTreeByVocab(VocabulariesInmutableNames.INTITUTION, 0),
-            getOptions:  (response:any) => {
+            getOptions: (response: any) => {
               const opts: SelectOption[] = [];
               response.data.tree.term_node.forEach((node: TermNode) => {
                 opts.push({
@@ -460,7 +460,7 @@ export class JournalEditComponent implements OnInit {
                     this.initInstitutionPanel(response.data.term_node.children, this.organizationFormGroup);
                   },
                   (err: any) => {
-                      console.log('error: ' + err + '.');
+                    console.log('error: ' + err + '.');
                   },
                   () => {
                     console.log('complete');
@@ -521,7 +521,7 @@ export class JournalEditComponent implements OnInit {
               selectionChange: (uuid) => {
                 if (!uuid) { return; }
                 console.log("inst selec change");
-                
+
 
                 this.taxonomyService.getTermByUUID(uuid, 1)
                   .subscribe(response => {
@@ -532,7 +532,7 @@ export class JournalEditComponent implements OnInit {
                     }
                     this.institution = new Term();
                     this.institution.load_from_data(response.data.term_node.term);
-                    this.journalVersion.institution= this.institution;
+                    this.journalVersion.institution = this.institution;
                     if (this.entity &&
                       this.institution.id != this.entity.parent_id) {
                       this.entity = null;
@@ -553,7 +553,7 @@ export class JournalEditComponent implements OnInit {
     if (this.isManageByEntity) {
       const instUUID = this.organizationFormGroup.value['institution'];
       console.log("entitiy");
-      
+
       this.taxonomyService.getTermByUUID(instUUID, 1)
         .subscribe(response => {
           if (!response.data &&
@@ -608,7 +608,7 @@ export class JournalEditComponent implements OnInit {
                   });
                 } else if (this.institution) {
                   console.log("entiti change");
-                  
+
                   this.taxonomyService.getTermByUUID(this.institution.uuid, 1)
                     .subscribe(response => {
                       if (!response.data &&
@@ -628,7 +628,7 @@ export class JournalEditComponent implements OnInit {
               },
               selectionChange: (uuid) => {
                 if (uuid == 'new') {
-                  if ( !this.entity ) {
+                  if (!this.entity) {
                     this.entity = new Term();
                   }
                   this.entity.isNew = true;
@@ -703,7 +703,7 @@ export class JournalEditComponent implements OnInit {
     this.entity.vocabulary_id = VocabulariesInmutableNames.INTITUTION;
     this.journalVersion.entity = this.entity;
   }
-  private deleteEntityPanelFields () {
+  private deleteEntityPanelFields() {
     this.organizationFormGroup.removeControl('entity');
     this.organizationFormGroup.removeControl('name');
     this.organizationFormGroup.removeControl('description');
@@ -726,7 +726,7 @@ export class JournalEditComponent implements OnInit {
 
   initStep3() {
 
-    this.indexesFormGroup = this._formBuilder.group({});
+    this.indexesFormGroup = this.formBuilder.group({});
     const panel = [];
     this.indexesPanel = [];
     // for (let index = 0; index < this.journalVersion.data.term_sources.length; index++) {
@@ -781,19 +781,19 @@ export class JournalEditComponent implements OnInit {
       actionLabel: 'Eliminar',
       action: {
         doit: (index) => {
-            const panels = [];
-            for (let i = 0; i < this.indexesPanel.length; i++) {
-              if (i === index) {
-                this.indexesPanel[i].content.forEach(element => {
-                  this.indexesFormGroup.removeControl(element.name);
-                });
-              } else {
-                panels.push(this.indexesPanel[i]);
-              }
+          const panels = [];
+          for (let i = 0; i < this.indexesPanel.length; i++) {
+            if (i === index) {
+              this.indexesPanel[i].content.forEach(element => {
+                this.indexesFormGroup.removeControl(element.name);
+              });
+            } else {
+              panels.push(this.indexesPanel[i]);
             }
-            this.indexesPanel = panels;
           }
-        },
+          this.indexesPanel = panels;
+        }
+      },
       value: termSource.term,
       content: [
         {
@@ -828,7 +828,7 @@ export class JournalEditComponent implements OnInit {
 
   initStepFinal() {
 
-    this.finalFormGroup = this._formBuilder.group({});
+    this.finalFormGroup = this.formBuilder.group({});
     this.finalPanel = [
       {
         title: '',
@@ -850,7 +850,7 @@ export class JournalEditComponent implements OnInit {
         ]
       }
     ];
-    
+
   }
 
   private fillJournalFields() {
@@ -898,14 +898,14 @@ export class JournalEditComponent implements OnInit {
       ts.term = panel.value;
       ts.term_id = ts.term.id;
       ts.source_id = this.journalVersion.source_id;
-      ts.data['url'] = this.indexesFormGroup.value['url_'+ts.term.id];
-      ts.data['initial_cover'] = this.indexesFormGroup.value['initial_cover_'+ts.term.id];
-      ts.data['end_cover'] = this.indexesFormGroup.value['end_cover_'+ts.term.id];
+      ts.data['url'] = this.indexesFormGroup.value['url_' + ts.term.id];
+      ts.data['initial_cover'] = this.indexesFormGroup.value['initial_cover_' + ts.term.id];
+      ts.data['end_cover'] = this.indexesFormGroup.value['end_cover_' + ts.term.id];
       this.journalVersion.data.term_sources.push(ts);
     });
 
     this.journalVersion.comment = this.finalFormGroup.value['comment'];
-    
+
 
     console.log(this.informationFormGroup);
     console.log(this.organizationFormGroup);
@@ -1014,13 +1014,12 @@ export class JournalEditAddIndexComponent implements OnInit {
             value: ''
           }
         ]
-    }];
+      }];
 
     this.addIndexAction = {
       doit: (data: any) => {
         const result = new TermSource();
-        if( this.indexFormGroup.controls['indexes'].value )
-        {
+        if (this.indexFormGroup.controls['indexes'].value) {
           result.term = this.indexFormGroup.controls['indexes'].value[0];
           result.term_id = result.term.id;
           result.data = {
