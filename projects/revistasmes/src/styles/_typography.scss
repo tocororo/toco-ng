@@ -39,10 +39,17 @@
 //     font-style: normal;
 // }
 
-$toco-typography: mat-typography-config(
-    /*$font-family: '"MyriadPro Regular", "Helvetica Neue", sans-serif',
+@font-face {
+    font-family: 'DINPro Medium';
+    font-style: normal;
+    font-weight: normal;
+    src: local('DINPro Medium'), url('assets/fonts/DINPro-Medium tr.woff') format('woff');
+}
 
-    $display-4: mat-typography-level(32px, 48px, 500),
+$toco-typography: mat-typography-config(
+    $font-family: '"DINPro Medium"',
+
+    /*$display-4: mat-typography-level(32px, 48px, 500),
     $display-3: mat-typography-level(28px, 44px, 500),
     $display-2: mat-typography-level(24px, 40px, 500),
     $display-1: mat-typography-level(20px, 36px, 500),
