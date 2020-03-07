@@ -10,11 +10,16 @@ import { SourceViewComponent } from 'projects/catalog/src/app/source-view/source
 import { SourceResolver } from 'projects/catalog/src/app/source-resolver';
 import { SourceEditComponent } from 'projects/catalog/src/app/source-edit/source-edit.component';
 import { SourcesComponent } from 'projects/catalog/src/app/sources/sources.component';
+import { HomeComponent } from './home/home.component';
 
 
 const routes: Routes = [
     {
         path: '',
+        component: HomeComponent
+    },
+    {
+        path: 'directory',
         component: CatalogComponent
     },
     {
@@ -56,10 +61,10 @@ const routes: Routes = [
         component: NotificationListComponent,
         canActivate: [AuthenticationService]
     },
-    // {
-    //     path: '**',
-    //     redirectTo: ''
-    // }
+    {
+        path: '**',
+        redirectTo: ''
+    }
 ];
 
 @NgModule({
