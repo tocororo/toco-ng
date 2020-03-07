@@ -36,11 +36,18 @@
         </div>
       </mat-step>
 
-      <mat-step *ngIf="organizationPanel" [stepControl]="organizationFormGroup">
+      <mat-step *ngIf="organizationFormGroup" [stepControl]="organizationFormGroup">
         <ng-template matStepLabel>Institución</ng-template>
         <h3>Entidad que gestiona la revista</h3>
         <form [formGroup]="organizationFormGroup">
-          <toco-form-container
+          <toco-institution-selector
+            [level1FormGroup]="organizationFormGroup"
+            [level1]="organization"
+            [level2]="institution"
+            [level3]="entity"
+          >
+          </toco-institution-selector>
+          <!-- <toco-form-container
             *ngIf="organizationPanel"
             #organizationPanelContainer
             [panels]="organizationPanel"
@@ -81,7 +88,7 @@
               [deleteValuesAfterAction]="false"
             >
             </toco-form-container>
-          </ng-container>
+          </ng-container> -->
         </form>
         <div>
           <button mat-stroked-button color="accent" matStepperPrevious>

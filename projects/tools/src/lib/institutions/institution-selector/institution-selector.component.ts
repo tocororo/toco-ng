@@ -1,35 +1,35 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { Term, TermNode, VocabulariesInmutableNames } from '@toco/tools/entities';
 import { PanelContent, FormFieldType, SelectOption } from '@toco/tools/forms';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { TaxonomyService } from '@toco/tools/backend';
 
 @Component({
-  selector: 'lib-institution-selector',
+  selector: 'toco-institution-selector',
   templateUrl: './institution-selector.component.html',
   styleUrls: ['./institution-selector.component.scss']
 })
 export class InstitutionSelectorComponent implements OnInit {
 
-  @Input()
-  selectedInstitution: Term;
+  @Output()
+  institution: Term;
 
   // organization, institution and entity, variables for step 2
   @Input()
-  public organization: Term = null;
-  organizationPanel: PanelContent[] = null;
-  organizationFormGroup: FormGroup;
+  public level1: Term = null;
+  @Input()
+  level1FormGroup: FormGroup;
+  level1Panel: PanelContent[] = null;
 
   // institution
   @Input()
-  public institution: Term = null;
-  institutionPanel: PanelContent[] = null;
-  institutionFormGroup: FormGroup;
+  public level2: Term = null;
+  level2Panel: PanelContent[] = null;
 
   // entity
   @Input()
-  public entity: Term = null;
-  entityPanel: PanelContent[] = null;
+  public level3: Term = null;
+  level3Panel: PanelContent[] = null;
 
   public isManageByEntity = true;
 
@@ -39,17 +39,19 @@ export class InstitutionSelectorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initOrganizationPanel();
+    if(this.level1FormGroup){
+      this.initLevel1Panel();
+    }
+    
   }
 
-  initOrganizationPanel() {
-    this.organizationFormGroup = this.formBuilder.group({});
+  initLevel1Panel() {
 
-    this.organizationPanel = [{
+    this.level1Panel = [{
       title: 'Organismo',
       description: '',
       iconName: '',
-      formGroup: this.organizationFormGroup,
+      formGroup: this.level1FormGroup,
       content: [
         {
           name: 'organization',
@@ -57,7 +59,7 @@ export class InstitutionSelectorComponent implements OnInit {
           type: FormFieldType.select,
           required: true,
           width: '100%',
-          value: this.organization ? this.organization.uuid : '',
+          value: this.level1 ? this.level1.uuid : '',
           extraContent: {
             observable: this.taxonomyService.getTermsTreeByVocab(VocabulariesInmutableNames.INTITUTION, 0),
             getOptions: (response: any) => {
@@ -82,18 +84,18 @@ export class InstitutionSelectorComponent implements OnInit {
                       return;
                     }
 
-                    this.organization = new Term();
-                    this.organization.load_from_data(response.data.term_node.term);
+                    this.level1 = new Term();
+                    this.level1.load_from_data(response.data.term_node.term);
 
-                    if (this.institution &&
-                      this.organization.id != this.institution.parent_id) {
+                    if (this.level2 &&
+                      this.level1.id != this.level2.parent_id) {
 
-                      this.institution = null;
-                      this.institutionPanel = null;
-                      this.entity = null;
-                      this.entityPanel = null;
+                      this.level2 = null;
+                      this.level2Panel = null;
+                      this.level3 = null;
+                      this.level3Panel = null;
                     }
-                    this.initInstitutionPanel(response.data.term_node.children, this.organizationFormGroup);
+                    this.initLevel2Panel(response.data.term_node.children, this.level1FormGroup);
                   },
                   (err: any) => {
                     console.log('error: ' + err + '.');
@@ -108,15 +110,15 @@ export class InstitutionSelectorComponent implements OnInit {
     }];
   }
 
-  initInstitutionPanel(children: TermNode[] = null, formGroup: FormGroup) {
-    console.log(this.organizationFormGroup);
+  initLevel2Panel(children: TermNode[] = null, formGroup: FormGroup) {
+    console.log(this.level1FormGroup);
     // this.institutionFormGroup = this._formBuilder.group({});
-    this.institutionPanel = [
+    this.level2Panel = [
       {
         title: 'Institución',
         description: 'Institución a la que pertenece la revista',
         iconName: '',
-        formGroup: this.organizationFormGroup,
+        formGroup: this.level1FormGroup,
         content: [
           {
             name: 'institution',
@@ -124,7 +126,7 @@ export class InstitutionSelectorComponent implements OnInit {
             type: FormFieldType.select,
             required: true,
             width: '100%',
-            value: this.institution ? this.institution.uuid : null,
+            value: this.level2 ? this.level2.uuid : null,
             extraContent: {
               getOptions: () => {
                 const opts: SelectOption[] = [];
@@ -135,9 +137,9 @@ export class InstitutionSelectorComponent implements OnInit {
                       label: node.term.name,
                     });
                   });
-                } else if (this.organization) {
+                } else if (this.level1) {
                   console.log("instituytion")
-                  this.taxonomyService.getTermByUUID(this.organization.uuid, 1)
+                  this.taxonomyService.getTermByUUID(this.level1.uuid, 1)
                     .subscribe(response => {
                       if (!response.data &&
                         !response.data.term_node &&
@@ -166,14 +168,14 @@ export class InstitutionSelectorComponent implements OnInit {
                       !response.data.term_node.term) {
                       return;
                     }
-                    this.institution = new Term();
-                    this.institution.load_from_data(response.data.term_node.term);
-                    if (this.entity &&
-                      this.institution.id != this.entity.parent_id) {
-                      this.entity = null;
-                      this.entityPanel = null;
+                    this.level2 = new Term();
+                    this.level2.load_from_data(response.data.term_node.term);
+                    if (this.level3 &&
+                      this.level2.id != this.level3.parent_id) {
+                      this.level3 = null;
+                      this.level3Panel = null;
                     }
-                    this.initEntityPanel(response.data.term_node.children);
+                    this.initLevel3Panel(response.data.term_node.children);
                   });
               }
             }
@@ -181,12 +183,12 @@ export class InstitutionSelectorComponent implements OnInit {
       }];
   }
 
-  manageByEntityClick() {
+  manageByLevel3Click() {
     this.isManageByEntity = !this.isManageByEntity;
     console.log(this.isManageByEntity)
 
     if (this.isManageByEntity) {
-      const instUUID = this.organizationFormGroup.value['institution'];
+      const instUUID = this.level1FormGroup.value['institution'];
       console.log("entitiy");
 
       this.taxonomyService.getTermByUUID(instUUID, 1)
@@ -196,28 +198,28 @@ export class InstitutionSelectorComponent implements OnInit {
             !response.data.term_node.term) {
             return;
           }
-          this.institution = new Term();
-          this.institution.load_from_data(response.data.term_node.term);
-          if (this.entity &&
-            this.institution.id != this.entity.parent_id) {
-            this.entity = null;
-            this.entityPanel = null;
+          this.level2 = new Term();
+          this.level2.load_from_data(response.data.term_node.term);
+          if (this.level3 &&
+            this.level2.id != this.level3.parent_id) {
+            this.level3 = null;
+            this.level3Panel = null;
           }
-          this.initEntityPanel(response.data.term_node.children);
+          this.initLevel3Panel(response.data.term_node.children);
         });
     } else {
-      this.deleteEntityPanelFields();
+      this.deleteLevel3PanelFields();
     }
   }
 
-  initEntityPanel(children: TermNode[] = null) {
-    this.deleteEntityPanelFields();
-    this.entityPanel = [
+  initLevel3Panel(children: TermNode[] = null) {
+    this.deleteLevel3PanelFields();
+    this.level3Panel = [
       {
         title: 'Entidad',
         description: 'Complete la información sobre la entidad que gestiona la revista.',
         iconName: '',
-        formGroup: this.organizationFormGroup,
+        formGroup: this.level1FormGroup,
         content: [
           {
             name: 'entity',
@@ -225,7 +227,7 @@ export class InstitutionSelectorComponent implements OnInit {
             type: FormFieldType.select,
             required: true,
             width: '100%',
-            value: this.entity ? this.entity.uuid : 'new',
+            value: this.level3 ? this.level3.uuid : 'new',
             extraContent: {
               getOptions: () => {
                 const opts: SelectOption[] = [
@@ -241,10 +243,10 @@ export class InstitutionSelectorComponent implements OnInit {
                       label: node.term.name,
                     });
                   });
-                } else if (this.institution) {
+                } else if (this.level2) {
                   console.log("entiti change");
 
-                  this.taxonomyService.getTermByUUID(this.institution.uuid, 1)
+                  this.taxonomyService.getTermByUUID(this.level2.uuid, 1)
                     .subscribe(response => {
                       if (!response.data &&
                         !response.data.term_node &&
@@ -263,12 +265,12 @@ export class InstitutionSelectorComponent implements OnInit {
               },
               selectionChange: (uuid) => {
                 if (uuid == 'new') {
-                  if (!this.entity) {
-                    this.entity = new Term();
+                  if (!this.level3) {
+                    this.level3 = new Term();
                   }
-                  this.entity.isNew = true;
-                  this.entity.parent_id = this.institution.id;
-                  this.resetEntityPanelFields();
+                  this.level3.isNew = true;
+                  this.level3.parent_id = this.level2.id;
+                  this.resetLevel3PanelFields();
                 } else {
                   this.taxonomyService.getTermByUUID(uuid, 0)
                     .subscribe(response => {
@@ -277,9 +279,9 @@ export class InstitutionSelectorComponent implements OnInit {
                         !response.data.term_node.term) {
                         return;
                       }
-                      this.entity = new Term();
-                      this.entity.load_from_data(response.data.term_node.term);
-                      this.resetEntityPanelFields();
+                      this.level3 = new Term();
+                      this.level3.load_from_data(response.data.term_node.term);
+                      this.resetLevel3PanelFields();
                     });
                 }
               }
@@ -290,7 +292,7 @@ export class InstitutionSelectorComponent implements OnInit {
             label: 'Nombre',
             type: FormFieldType.text,
             required: true,
-            value: (this.entity) ? this.entity.name : null,
+            value: (this.level3) ? this.level3.name : null,
             width: '100%'
           },
           {
@@ -298,7 +300,7 @@ export class InstitutionSelectorComponent implements OnInit {
             label: 'Descripción',
             type: FormFieldType.textarea,
             required: false,
-            value: (this.entity) ? this.entity.description : null,
+            value: (this.level3) ? this.level3.description : null,
             width: '100%'
           },
           {
@@ -306,7 +308,7 @@ export class InstitutionSelectorComponent implements OnInit {
             label: 'Email',
             type: FormFieldType.email,
             required: false,
-            value: (this.entity) ? this.entity.data['email'] : null,
+            value: (this.level3) ? this.level3.data['email'] : null,
             width: '45%'
           },
           {
@@ -314,7 +316,7 @@ export class InstitutionSelectorComponent implements OnInit {
             label: 'Sitio Web Oficial',
             type: FormFieldType.url,
             required: false,
-            value: (this.entity) ? this.entity.data['website'] : null,
+            value: (this.level3) ? this.level3.data['website'] : null,
             width: '45%'
           },
           {
@@ -322,36 +324,40 @@ export class InstitutionSelectorComponent implements OnInit {
             label: 'Dirección',
             type: FormFieldType.textarea,
             required: false,
-            value: (this.entity) ? this.entity.data['address'] : null,
+            value: (this.level3) ? this.level3.data['address'] : null,
             width: '100%'
           }]
       }];
   }
 
-  private fillEntityData() {
-    this.entity.uuid = this.organizationFormGroup.value['entity'];
-    this.entity.name = this.organizationFormGroup.value['name'];
-    this.entity.data['description'] = this.organizationFormGroup.value['description'];
-    this.entity.data['email'] = this.organizationFormGroup.value['email'];
-    this.entity.data['website'] = this.organizationFormGroup.value['website'];
-    this.entity.data['address'] = this.organizationFormGroup.value['address'];
-    this.entity.vocabulary_id = VocabulariesInmutableNames.INTITUTION;
+  private fillInstitutionData() {
+    this.institution.uuid = this.level1FormGroup.value['entity'];
+    this.institution.name = this.level1FormGroup.value['name'];
+    this.institution.data['description'] = this.level1FormGroup.value['description'];
+    this.institution.data['email'] = this.level1FormGroup.value['email'];
+    this.institution.data['website'] = this.level1FormGroup.value['website'];
+    this.institution.data['address'] = this.level1FormGroup.value['address'];
+    this.institution.vocabulary_id = VocabulariesInmutableNames.INTITUTION;
+
   }
-  private deleteEntityPanelFields() {
-    this.organizationFormGroup.removeControl('entity');
-    this.organizationFormGroup.removeControl('name');
-    this.organizationFormGroup.removeControl('description');
-    this.organizationFormGroup.removeControl('email');
-    this.organizationFormGroup.removeControl('website');
-    this.organizationFormGroup.removeControl('address');
+
+  private deleteLevel3PanelFields() {
+    this.level1FormGroup.removeControl('entity');
+    this.level1FormGroup.removeControl('name');
+    this.level1FormGroup.removeControl('description');
+    this.level1FormGroup.removeControl('email');
+    this.level1FormGroup.removeControl('website');
+    this.level1FormGroup.removeControl('address');
   }
-  private resetEntityPanelFields() {
-    this.resetControl(this.organizationFormGroup.controls, 'name', this.entity.name);
-    this.resetControl(this.organizationFormGroup.controls, 'description', this.entity.description);
-    this.resetControl(this.organizationFormGroup.controls, 'email', this.entity.data['email']);
-    this.resetControl(this.organizationFormGroup.controls, 'website', this.entity.data['website']);
-    this.resetControl(this.organizationFormGroup.controls, 'address', this.entity.data['address']);
+
+  private resetLevel3PanelFields() {
+    this.resetControl(this.level1FormGroup.controls, 'name', this.level3.name);
+    this.resetControl(this.level1FormGroup.controls, 'description', this.level3.description);
+    this.resetControl(this.level1FormGroup.controls, 'email', this.level3.data['email']);
+    this.resetControl(this.level1FormGroup.controls, 'website', this.level3.data['website']);
+    this.resetControl(this.level1FormGroup.controls, 'address', this.level3.data['address']);
   }
+
   private resetControl(controls, name, value) {
     if (controls[name]) {
       controls[name].setValue(value);

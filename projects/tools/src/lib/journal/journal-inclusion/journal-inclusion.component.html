@@ -1,32 +1,33 @@
-<toco-progress *ngIf="loading">
-</toco-progress>
+<toco-progress *ngIf="loading"> </toco-progress>
 
 <mat-toolbar>
   <mat-toolbar-row fxLayout="row wrap" fxLayoutAlign="space-between center">
     <h1>Inclusión de Revista</h1>
 
-    <button mat-icon-button aria-label="Reset" *ngIf="!isStartProcess" matTooltip="Comenzar de nuevo"
-      (click)="resetEdit()">
+    <button
+      mat-icon-button
+      aria-label="Reset"
+      *ngIf="!isStartProcess"
+      matTooltip="Comenzar de nuevo"
+      (click)="resetEdit()"
+    >
       <mat-icon>cached</mat-icon>
     </button>
-
-
-
   </mat-toolbar-row>
-
 </mat-toolbar>
 
-
-
-
-<toco-form-container *ngIf="isStartProcess" [panels]="findPanel" [useAccordion]="false" [formGroup]="findFormGroup"
-  [action]="searchJournalAction" [actionLabel]="'Buscar'" [deleteValuesAfterAction]="true"></toco-form-container>
-
+<toco-form-container
+  *ngIf="isStartProcess"
+  [panels]="findPanel"
+  [useAccordion]="false"
+  [formGroup]="findFormGroup"
+  [action]="searchJournalAction"
+  [actionLabel]="'Buscar'"
+  [deleteValuesAfterAction]="true"
+></toco-form-container>
 
 <div *ngIf="!isStartProcess">
-
   <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
-
     <ng-template matStepperIcon="journal">
       <mat-icon>notes</mat-icon>
     </ng-template>
@@ -36,18 +37,17 @@
     <ng-template matStepperIcon="end">
       <mat-icon>done</mat-icon>
     </ng-template>
-    <mat-step label="Revista" state="journal" completed=false #journalStep>
-      <toco-journal-edit 
-        *ngIf="isEditig" 
-        [journalVersion]="versionToEdit" 
-        (journalEditDone)="journalStep.completed=true; stepper.next();"
-        [showCancelButton]=false 
-        [description]="'Complete y compruebe todos los datos solicitados.'">
+    <mat-step label="Revista" state="journal" completed="false" #journalStep>
+      <toco-journal-edit
+        *ngIf="isEditig"
+        [journalVersion]="versionToEdit"
+        (journalEditDone)="journalStep.completed = true; stepper.next()"
+        [showCancelButton]="false"
+        [description]="'Complete y compruebe todos los datos solicitados.'"
+      >
       </toco-journal-edit>
-
     </mat-step>
     <mat-step label="Persona" state="person" [stepControl]="personFormGroup">
-
       <h2>
         aqui se solicita información sobre la relacion que tiene la persona con
         la revista
@@ -61,18 +61,25 @@
       <h3>Si la revista ya ha sido incluida por otra persona</h3>
       <p>se muestra aqui la información sobre esa persona</p>
       <form [formGroup]="personFormGroup">
-        <toco-form-container [panels]="personPanel" [useAccordion]="false" [formGroup]="personFormGroup">
+        <toco-form-container
+          [panels]="personPanel"
+          [useAccordion]="false"
+          [formGroup]="personFormGroup"
+        >
         </toco-form-container>
 
         <div>
-          <button mat-stroked-button color="accent" matStepperPrevious>Atrás</button>
-          <button mat-stroked-button color="primary" matStepperNext>Siguiente</button>
+          <button mat-stroked-button color="accent" matStepperPrevious>
+            Atrás
+          </button>
+          <button mat-stroked-button color="primary" matStepperNext>
+            Siguiente
+          </button>
         </div>
       </form>
     </mat-step>
 
     <mat-step label="Finalizar" state="end">
-
       <h2>
         Acuerdo legal
       </h2>
@@ -83,7 +90,11 @@
       <h3>Subtitulo</h3>
       <p>algo mas...</p>
       <form [formGroup]="personFormGroup">
-        <toco-form-container [panels]="agreementPanel" [useAccordion]="false" [formGroup]="agreementFormGroup">
+        <toco-form-container
+          [panels]="agreementPanel"
+          [useAccordion]="false"
+          [formGroup]="agreementFormGroup"
+        >
         </toco-form-container>
 
         <div>
