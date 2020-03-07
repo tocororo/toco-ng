@@ -1,5 +1,12 @@
 
-<table mat-table matSort class="mat-elevation-z8" [dataSource]="_getDataSource" multiTemplateDataRows>
+<mat-form-field id="filter-mat-form-field" [style.width]="'65%'" [appearance]="'outline'">
+    <mat-label>Write a text to filter</mat-label>
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput id="text-input-element" (keyup)="applyFilter($event.target.value)" [style.textAlign]="'left'" [attr.aria-label]="'Filter'" />
+    <mat-hint [align]="start">Filters when typing stops.</mat-hint>
+</mat-form-field>
+
+<table mat-table matSort class="mat-elevation-z8" [dataSource]="_getDataSourceToRender" multiTemplateDataRows>
 
     <!-- The content that is showed when the `dataSource` is not empty. -->
     <ng-container *ngFor="let column of content.columnsObjectProperty; let pos = index" [matColumnDef]="column">
@@ -67,24 +74,11 @@
 
 </table>
 
-<!-- <mat-paginator
+<mat-paginator
     [length]="content.length"
     [pageIndex]="content.pageIndex"
     [pageSize]="content.pageSize"
     [pageSizeOptions]="content.pageSizeOptions"
     [hidePageSize]="content.hidePageSize"
     [showFirstLastButtons]="content.showFirstLastButtons">
-</mat-paginator> -->
-
-<!-- <mat-paginator *ngIf="(page$ | async as newPage1) || ({'pageIndex': content.pageIndex, 'pageSize': content.pageSize, 'length': content.length} as newPage2)" -->
-<!-- <mat-paginator *ngIf="page$ | async as newPage" -->
-<!-- <mat-paginator
-    [length]="newPage.length"
-    [pageIndex]="newPage.pageIndex"
-    [pageSize]="newPage.pageSize"
-    [pageSizeOptions]="content.pageSizeOptions"
-    [hidePageSize]="content.hidePageSize"
-    [showFirstLastButtons]="content.showFirstLastButtons"> -->
-<mat-paginator
-    [length]="10">
 </mat-paginator>

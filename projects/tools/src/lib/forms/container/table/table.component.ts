@@ -1,12 +1,14 @@
 
-import { Component, OnInit, ViewChild, Input, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatTableDataSource, MatSort, MatPaginator, PageEvent, Sort } from '@angular/material';
-import { merge, combineLatest, Observable, of, Subscription } from 'rxjs';
-import { startWith, switchMap, map } from 'rxjs/operators';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { Observable, Subscription, Subject, BehaviorSubject, merge, of, combineLatest } from 'rxjs';
+import { startWith, switchMap, map, finalize } from 'rxjs/operators';
 
-import { PageRequest, UserQuery, User, Page as Page_G } from 'projects/catalog/src/app/sources/user.service';
+import { PageRequest, UserQuery, User, Page, Page1, SortDirection } from 'projects/catalog/src/app/sources/user.service';
 import { Common } from '@toco/tools/core';
+import { InputContent, TextInputAppearance } from '../../input/input.control';
+import { TextAlign, IconValue, IconSource, ContentPosition, HintValue, HintPosition } from '../../form-field.control';
 
 /**
  * A collection of CSS styles. 
@@ -43,29 +45,15 @@ export interface TableAction {
 }
 
 /**
- * An interface that represents the requested data. 
- * The generic parameter T always refers to the type of data that it is dealing with. 
- */
-export interface Page/*<T>*/
-{
-    data: any[];
-    totalData: number;
-    //size: number;
-    //number: number;
-}
-
-/**
- * An interface that represents the content of a table control.
+ * An interface that represents the content of a table control. 
  */
 export interface TableContent
 {
     /**
-     * Returns the data. 
-     * By default, its value is `{ 'data': [], 'totalData': 0 }`. 
+     * Returns the ---. 
+     * By default, its value is `---`. 
      */
-//    dataSource?: MatTableDataSource<any>;
-    page?: Page;
-    endpoint?: (request: PageRequest<User>, query: UserQuery) => Observable<Page_G<User>>;
+    endpoint?: (request: PageRequest/*<User>*/, query: UserQuery) => Observable<Page1<User>>;
 
 
 
@@ -156,8 +144,7 @@ export interface TableContent
 export function defaultTableContent(): TableContent
 {
     return {
-        //'dataSource': new MatTableDataSource([]),  /* The default data source does not contain element. */
-        'page': { 'data': [], 'totalData': 0 },  /* The default data source does not contain element. */
+        
 
         'columnsObjectProperty': [],
         'columnsHeaderText': [],
@@ -189,93 +176,164 @@ export class TableComponent implements OnInit, OnDestroy
 {
     /**
      * Returns true if it is loading the data source; otherwise, false. 
+     * In this way, it shows/hides the loading progress control. 
      * By default, its value is `false`. 
      */
-    public loading: boolean;
+    private _loading: boolean;
 
     private _content: TableContent;
+    private readonly _page: Subject<Page>;  /* Stream that emits when a new data array is set on the data source. */
+    private _pageAsObservable: Observable<Page>;
     private _dataSource: MatTableDataSource<any>;
     private static readonly _defaultDataSource: MatTableDataSource<any> = new MatTableDataSource([ { } ]);  /* Returns a data source with only one empty element. */
     private _selectedRow: number;  /* Represents the selected row. */
 
-    /**
-     * Returns true if the data source is empty; otherwise, false. 
-     */
-    public isEmpty: boolean;
+	public filter_content: InputContent = {
+        'width': '65%',
+
+        'label': 'Write a text to filter',
+
+        'textAlign': TextAlign.left,
+        'ariaLabel': 'Filter',
+
+        'appearance': TextInputAppearance.standard,
+
+        'prefixIcon': new IconValue(IconSource.external, ContentPosition.prefix, 'search'),
+
+        'startHint': new HintValue(HintPosition.start, 'Filters when typing stops.')
+	};
 
     @ViewChild(MatSort, { static: true })
     private _sort: MatSort;
 
     @ViewChild(MatPaginator, { static: true })
     private _paginator: MatPaginator;
-
-    countTemp: number = 0;  //TODO: Delete This!!!
-	private _paginatorObserver = {
-		next: (pageEvent: PageEvent) => {
-            console.log('Call _paginatorObserver: ', this.countTemp++);
-
-            //this._souceService.getMySources(pageEvent.pageSize, (pageEvent.pageIndex + 1));
-            this._content.endpoint(
-                {
-                    page: pageEvent.pageIndex,
-                    size: pageEvent.pageSize,
-                    sort: { property: 'id', order: 'desc' }
-                },
-                {
-                    search: '',
-                    registration: undefined
-                }
-            ).pipe(
-                map((response: Page_G<User>/*Response<any>*/) => {
-                    console.log('_sourcesResponse: ', response);
-        
-                    /* Initializes the `page`. */
-                    //this.page = { 'data': [], 'totalData': 0 };
-                    //this.page = { 'data': response.data.sources.sources, 'totalData': response.data.sources.count };
-                    this.page = { 'data': response.content, 'totalData': response.totalElements };
-                })
-            ).subscribe();
-		},
-        error: (err: any) => { Common.logError('setting paginator', TableComponent.name, err); },
-        complete: () => {
-            /* It finished the loading of the data. In this way, it hides the loading progress control. */
-            //this.loading = false;
-
-            Common.logComplete('setting paginator', TableComponent.name);
-        }
-	};
-	
-    private _paginatorSubscription: Subscription = null;
+    
+    private _generalSubscription: Subscription;
+    private _paginatorSubscription: Subscription;
 
     public constructor(private _router: Router, private _activatedRoute: ActivatedRoute)
     {
-        console.log('this._paginator: ', this._paginator);
+        this._loading = false;  /* By default, its value is `false`. */
+
+        this._page = new Subject<Page>();
+        this._pageAsObservable = this._page.asObservable();
+
+        this._dataSource = new MatTableDataSource();
+
+        this._selectedRow = undefined;
+
+        this._generalSubscription = Subscription.EMPTY;
+        this._paginatorSubscription = Subscription.EMPTY;
     }
 
+    countTemp: number = 0;  //TODO: Delete This!!!
     public ngOnInit(): void
     {
-        console.log('ngOnInit: TableComponent');
-
         /* Sets the default values only if the `_content` has not been set yet. */
         if (this._content == undefined) this.init();
 
-        this._paginatorSubscription = this._paginator.page
-            .subscribe(this._paginatorObserver);
+        /* Sorting and/or pagination should be watched if `MatSort` and/or `MatPaginator` are provided. 
+         * The events should emit whenever the component emits a change, or if no 
+         * component is provided, a stream with just a null event should be provided. 
+         * The `sortChange` and `pageChange` acts as a signal to the `combineLatests` below so that the 
+         * pipeline can progress to the next step. Note that the value from these streams are not used, 
+         * they purely act as a signal to progress in the pipeline. */
+
+        //TODO: Poner verificacion de que exits: filter, `MatSort` and `MatPaginator`. 
+
+        /* Subscribes to get the values when there is a change in sorting, pagination, filtering or data. */
+        this._generalSubscription = combineLatest([
+            this._sort.sortChange.pipe(
+                /* Emits the first value. Sorts using the initial values. */
+                startWith({
+                    'active': this._content.propertyNameToIdentify,
+                    'direction': SortDirection.asc
+                })
+            ),
+            this._paginator.page.pipe(
+                /* Emits the first value. Paginates using the initial values. */
+                startWith({
+                    'pageIndex': this._content.pageIndex,
+                    'pageSize': this._content.pageSize,
+                    'length': 0  /* In the first value, it is not important. */
+                })
+            )
+        ]).pipe(
+            map(([sortEvent, pageEvent]): void => {
+                console.log('Call _paginatorObserver: ', this.countTemp++);
+
+                /* It begins the loading of the data. In this way, it shows the loading progress control. */
+                this._loading = true;
+    
+                /* Subscribes to get the data from de backend. */
+                this._paginatorSubscription.unsubscribe();
+                // this._setPage({
+                //     'data': [],
+                //     'totalData': 0,
+                //     'pageIndex': pageEvent.pageIndex,
+                //     'pageSize': pageEvent.pageSize
+                // });
+                this._setPage(null);
+                //this._souceService.getMySources(pageEvent.pageSize, (pageEvent.pageIndex + 1));
+                this._paginatorSubscription = this._content.endpoint(
+                    {
+                        'page': pageEvent.pageIndex,
+                        'size': pageEvent.pageSize,
+                        'sort': sortEvent
+                    },
+                    {
+                        'search': '',
+                        'registration': undefined
+                    }
+                ).pipe(
+                    finalize(() => {
+                        /* It ends the loading of the data. In this way, it hides the loading progress control. */
+                        this._loading = false;
+                    }),
+                    map((response: Page1<User>/*Response<any>*/): void => {
+                        console.log('_sourcesResponse: ', response);
+            
+                        /* Initializes the `page`. */
+                        // this._setPage({
+                        //     'data': [],
+                        //     'totalData': 0,
+                        //     'pageIndex': pageEvent.pageIndex,
+                        //     'pageSize': pageEvent.pageSize
+                        // });
+                        // this._setPage({
+                        //     'data': response.data.sources.sources,
+                        //     'totalData': response.data.sources.count,
+                        //     'pageIndex': pageEvent.pageIndex,
+                        //     'pageSize': pageEvent.pageSize
+                        // });
+                        this._setPage({
+                            'data': response.content,
+                            'totalData': response.totalElements,
+                            'pageIndex': response.number,
+                            'pageSize': response.size
+                        });
+                    })
+                )
+                .subscribe();
+
+                //this._page.next();
+            })
+        )
+        .subscribe();
     }
 
     public ngOnDestroy(): void
     {
-		/* Disposes the resources held by the subscription. */
-		if (this._paginatorSubscription)
-		{
-			this._paginatorSubscription.unsubscribe();
-		}
+        /* Disposes the resources held by the subscription. */
+        this._generalSubscription.unsubscribe();
+        this._paginatorSubscription.unsubscribe();
     }
 
     /**
      * Returns true if the data source is empty; otherwise, false. 
      */
-    private get _isEmpty(): boolean
+    private get isEmpty(): boolean
     {
         return (this._dataSource.data.length == 0);
     }
@@ -299,27 +357,21 @@ export class TableComponent implements OnInit, OnDestroy
         /**************************** `mat-row` properties. *******************************/
         if (this._content.propertyNameToIdentify == undefined) this._content.propertyNameToIdentify = '';
 
+        /**************************** `filter` properties. ********************************/
+
         /************************* `mat-paginator` properties. ****************************/
         if (this._content.length == undefined) this._content.length = 0;
-        this._paginator.length = this._content.length;
         if (this._content.pageIndex == undefined) this._content.pageIndex = 0;
-        this._paginator.pageIndex = this._content.pageIndex;
         if (this._content.pageSize == undefined) this._content.pageSize = 50;
-        this._paginator.pageSize = this._content.pageSize;
         if (this._content.pageSizeOptions == undefined) this._content.pageSizeOptions = [10, 20, 50];
-        this._paginator.pageSizeOptions = this._content.pageSizeOptions;
         if (this._content.hidePageSize == undefined) this._content.hidePageSize = false;
-        this._paginator.hidePageSize = this._content.hidePageSize;
         if (this._content.showFirstLastButtons == undefined) this._content.showFirstLastButtons = false;
-        this._paginator.showFirstLastButtons = this._content.showFirstLastButtons;
 
         /************************** Internal control properties. **************************/
 
         /******************************* Other properties. ********************************/
 
-        /*********** (Must be the last initialization) `mat-table` properties. ************/
-//        this.data = (this._content.dataSource && this._content.dataSource.data);  /* By default, its value is set to `[]` because the default data does not contain element. */
-        this.page = (this._content.page);  /* By default, its value is set to `{ 'data': [], 'totalData': 0 }` because the default data does not contain element. */
+        /************************ Must be the last initialization. ************************/
     }
 
     /**
@@ -411,7 +463,7 @@ export class TableComponent implements OnInit, OnDestroy
      */
     public get isLoading(): boolean
     {
-        return this.loading;
+        return this._loading;
     }
 
     /**
@@ -443,57 +495,59 @@ export class TableComponent implements OnInit, OnDestroy
     }
 
     /**
-     * Returns the data that should be rendered by the table, where each object represents one row. 
-     * By default, its value is `{ 'data': [], 'totalData': 0 }`. 
+     * Returns the stream that emits the page that should be rendered by the table, where each object 
+     * in the `data` field represents one row. 
      */
-    public get page(): Page
+    public get page(): Observable<Page>
     {
-        return this._content.page;
+        return this._pageAsObservable;
     }
 
 	/**
-	 * Sets the data that should be rendered by the table, where each object represents one row. 
-     * If the value is null, sets to `{ 'data': [], 'totalData': 0 }`. 
-     * @param newData The new data to set. 
+	 * Sets the page that should be rendered by the table, where each object in the `newPage.data` 
+     * represents one row. For internal use only. 
+     * If the value is null, sets to `{ 'data': [], 'totalData': 0, 'pageIndex': this._content.pageIndex, 'pageSize': this._content.pageSize }`. 
+     * @param newPage The new page to set. 
 	 */
-    public set page(newData: Page | null)
+    private _setPage(newPage: Page | null): void
     {
-        newData = newData || { 'data': [], 'totalData': 0 };  /* The default data does not contain element. */
+        newPage = newPage || { 'data': [], 'totalData': 0, 'pageIndex': this._content.pageIndex, 'pageSize': this._content.pageSize };  /* The default data does not contain element. */
 
-        this._content.length = newData.totalData;
-        this._paginator.length = newData.totalData;  /* It must be set before setting the data.  */
+        this._dataSource.data = newPage.data;
 
-        if (this._dataSource == undefined) this._dataSource = new MatTableDataSource(newData.data);
-        else this._dataSource.data = newData.data;
-
-        if (this._dataSource.sort == undefined) this._dataSource.sort = this._sort;
-        if (this._dataSource.paginator == undefined) this._dataSource.paginator = this._paginator;
-
-        //this._paginator.length = newData.totalData;
-        //this._dataSource.paginator.length = newData.totalData;
-        //this._content.length = newData.totalData;
-
-        /* Only occurs the first time to initialize. */
-            //this._dataSource.paginator.pageIndex = this._content.pageIndex;
-            //this._dataSource.paginator.pageSize = this._content.pageSize;
-        console.log('set page');
+//        if (this._dataSource.sort == undefined) this._dataSource.sort = this._sort;
+        if (false)
+        {
+            if (this._dataSource.paginator == undefined) this._dataSource.paginator = this._paginator;
+        }
+        else
+        {
+            this._content.length = newPage.totalData;
+            this._content.pageIndex = newPage.pageIndex;
+            this._content.pageSize = newPage.pageSize;
+        }
 
         this.checkColumn();
-
-        /* Sets the `isEmpty` field depending on the `_dataSource` value. */
-        this.isEmpty = this._isEmpty;
     }
 
     /**
-     * Returns the data source. If the data source is empty, then returns the default data source 
+     * Returns the data source. It is used to do especialized behavior. 
+     */
+    public get dataSource(): MatTableDataSource<any>
+    {
+        return this._dataSource;
+    }
+
+    /**
+     * Returns the data source to render. If the data source is empty, then returns the default data source 
      * that contains only one empty element (it is used to show one row that contains the empty 
      * table information). For internal use only. 
      */
-    public get _getDataSource(): MatTableDataSource<any>
+    public get _getDataSourceToRender(): MatTableDataSource<any>
     {
         if (this.isEmpty) return TableComponent._defaultDataSource;
 
-        return this._dataSource;
+        return this.dataSource;
     }
 
     /**
@@ -537,18 +591,13 @@ export class TableComponent implements OnInit, OnDestroy
     }
 
     /**
-     * Event emitted when the user changes either the active sort or sort direction. 
+     * Applies the filter term that should be used to filter out objects from the data source. To override 
+     * how data objects match to this filter string, provide a custom function for `TableContent.filterPredicate`. 
+     * @param filter New filter term that should be used to filter out objects from the data source. 
      */
-    public get sortChange(): EventEmitter<Sort>
+    public applyFilter(filter: string): void
     {
-        return this._sort.sortChange;
-    }
-
-    /**
-     * Event emitted when the paginator changes the page size or page index. 
-     */
-    public get pageChange(): EventEmitter<PageEvent>
-    {
-        return this._paginator.page;
+        /* It is not necessary to call `filter.trim().toLowerCase()` because it is called internally. */
+        this._dataSource.filter = filter;
     }
 }
