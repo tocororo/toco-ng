@@ -905,7 +905,7 @@ export class JournalEditComponent implements OnInit {
 
     const ts = new TermSource();
     if (this.isManageByEntity) {
-      this.fillEntityData();
+      // this.fillEntityData();
       ts.term = this.entity;
       this.journalVersion.entity = this.entity;
     } else {
