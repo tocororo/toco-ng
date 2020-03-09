@@ -6,13 +6,14 @@
     <mat-hint [align]="start">Filters when typing stops.</mat-hint>
 </mat-form-field>
 
-<table mat-table matSort class="mat-elevation-z8" [dataSource]="_getDataSourceToRender" multiTemplateDataRows>
+<table mat-table matSort class="mat-elevation-z8" [dataSource]="_getDataSource" multiTemplateDataRows>
 
     <!-- The content that is showed when the `dataSource` is not empty. -->
     <ng-container *ngFor="let column of content.columnsObjectProperty; let pos = index" [matColumnDef]="column">
         <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="_createCssStylesForHeader(pos)">
             {{ content.columnsHeaderText[pos] }}
         </th>
+
         <td mat-cell [ngClass]="content.createCssClassesForRow(element)" *matCellDef="let element" [ngStyle]="_createCssStylesForCell(pos)">
             <!-- Adds the notification icon in the first column if there is 'version to review'. -->
             <mat-icon *ngIf="pos == 0 && element[content.columnsObjectProperty[2]]" class="mat-cell-mat-icon">new_releases</mat-icon>

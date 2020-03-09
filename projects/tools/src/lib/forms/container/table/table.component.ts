@@ -1,12 +1,12 @@
 
-import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { Observable, Subscription, Subject, BehaviorSubject, merge, of, combineLatest } from 'rxjs';
-import { startWith, switchMap, map, finalize } from 'rxjs/operators';
+import { Observable, Subscription, Subject, combineLatest } from 'rxjs';
+import { startWith, switchMap, map, finalize, debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 
-import { PageRequest, UserQuery, User, Page, Page1, SortDirection } from 'projects/catalog/src/app/sources/user.service';
-import { Common } from '@toco/tools/core';
+import { PageRequest, UserQuery, User, Page, Page1, SortDirection } from '@toco/tools/core';
+
 import { InputContent, TextInputAppearance } from '../../input/input.control';
 import { TextAlign, IconValue, IconSource, ContentPosition, HintValue, HintPosition } from '../../form-field.control';
 
@@ -180,6 +180,8 @@ export class TableComponent implements OnInit, OnDestroy
      * By default, its value is `false`. 
      */
     private _loading: boolean;
+    private _loadingFirstTime: boolean;  /* Returns true if it is loading the data source the first time; otherwise, false. */
+    private _countBackendSubscriptions: number;
 
     private _content: TableContent;
     private readonly _page: Subject<Page>;  /* Stream that emits when a new data array is set on the data source. */
@@ -201,20 +203,30 @@ export class TableComponent implements OnInit, OnDestroy
         'prefixIcon': new IconValue(IconSource.external, ContentPosition.prefix, 'search'),
 
         'startHint': new HintValue(HintPosition.start, 'Filters when typing stops.')
-	};
+    };
+    
+    /**
+     * Stream that emits when a new filter string is set on the data source. 
+     */
+    private readonly _filterChange: Subject<string>;
 
     @ViewChild(MatSort, { static: true })
     private _sort: MatSort;
 
     @ViewChild(MatPaginator, { static: true })
     private _paginator: MatPaginator;
-    
-    private _generalSubscription: Subscription;
-    private _paginatorSubscription: Subscription;
+
+    /**
+     * Subscription to the changes that should trigger an update to the table's rendered rows, such 
+     * as filtering, sorting, or pagination. 
+     */
+    private _renderChangesSubscription: Subscription;
 
     public constructor(private _router: Router, private _activatedRoute: ActivatedRoute)
     {
         this._loading = false;  /* By default, its value is `false`. */
+        this._loadingFirstTime = true;
+        this._countBackendSubscriptions = 0;
 
         this._page = new Subject<Page>();
         this._pageAsObservable = this._page.asObservable();
@@ -223,32 +235,39 @@ export class TableComponent implements OnInit, OnDestroy
 
         this._selectedRow = undefined;
 
-        this._generalSubscription = Subscription.EMPTY;
-        this._paginatorSubscription = Subscription.EMPTY;
+        this._filterChange = new Subject<string>();
+
+        this._renderChangesSubscription = Subscription.EMPTY;
     }
 
-    countTemp: number = 0;  //TODO: Delete This!!!
     public ngOnInit(): void
     {
         /* Sets the default values only if the `_content` has not been set yet. */
         if (this._content == undefined) this.init();
 
-        /* Sorting and/or pagination should be watched if `MatSort` and/or `MatPaginator` are provided. 
-         * The events should emit whenever the component emits a change, or if no 
-         * component is provided, a stream with just a null event should be provided. 
-         * The `sortChange` and `pageChange` acts as a signal to the `combineLatests` below so that the 
-         * pipeline can progress to the next step. Note that the value from these streams are not used, 
-         * they purely act as a signal to progress in the pipeline. */
-
-        //TODO: Poner verificacion de que exits: filter, `MatSort` and `MatPaginator`. 
-
-        /* Subscribes to get the values when there is a change in sorting, pagination, filtering or data. */
-        this._generalSubscription = combineLatest([
+        /* The `_filterChange` is always present; although the user decides if it is used or not. 
+         * Also, `MatSort` and `MatPaginator` are always present because they are managed by the component completed. 
+         * Subscribes to get the values when there is a change in the filtering, sorting, or pagination of the data. */
+        this._renderChangesSubscription = combineLatest([
+            this._filterChange.pipe(
+                /* Waits 500ms after each keystroke before considering the term. */
+                debounceTime(500),
+                /* Ignores new term if same as previous term. */
+                distinctUntilChanged(),
+                /* Emits the first value. Filters using the initial values. The operators must be called in this order. */
+                startWith(''
+                )
+            ),
             this._sort.sortChange.pipe(
                 /* Emits the first value. Sorts using the initial values. */
                 startWith({
                     'active': this._content.propertyNameToIdentify,
                     'direction': SortDirection.asc
+                }),
+                /* When the table is empty and it is not loading, then clicking the table header 
+                 * does not generate any request to the backend, except the first time. */
+                filter(_ => {
+                    return (this._loadingFirstTime || this.isLoading || !this.isEmpty);
                 })
             ),
             this._paginator.page.pipe(
@@ -260,80 +279,76 @@ export class TableComponent implements OnInit, OnDestroy
                 })
             )
         ]).pipe(
-            map(([sortEvent, pageEvent]): void => {
-                console.log('Call _paginatorObserver: ', this.countTemp++);
+            /* Switches to new search observable each time the term changes. */
+            switchMap(([filterEvent, sortEvent, pageEvent]): Observable<Page1<User>> => {
 
                 /* It begins the loading of the data. In this way, it shows the loading progress control. */
                 this._loading = true;
+                this._loadingFirstTime = false;  /* It will be false forever. */
+                this._countBackendSubscriptions++;
+                console.log('Call _countBackendSubscriptions: ', this._countBackendSubscriptions);
     
-                /* Subscribes to get the data from de backend. */
-                this._paginatorSubscription.unsubscribe();
+                /* Erases the page from the table. */
                 // this._setPage({
                 //     'data': [],
-                //     'totalData': 0,
+                //     'totalData': pageEvent.length,
                 //     'pageIndex': pageEvent.pageIndex,
                 //     'pageSize': pageEvent.pageSize
                 // });
                 this._setPage(null);
-                //this._souceService.getMySources(pageEvent.pageSize, (pageEvent.pageIndex + 1));
-                this._paginatorSubscription = this._content.endpoint(
+
+                //return this._souceService.getMySources(pageEvent.pageSize, (pageEvent.pageIndex + 1))
+                return this._content.endpoint(
                     {
                         'page': pageEvent.pageIndex,
                         'size': pageEvent.pageSize,
                         'sort': sortEvent
                     },
                     {
-                        'search': '',
+                        'search': filterEvent,
                         'registration': undefined
                     }
                 ).pipe(
                     finalize(() => {
+                        this._countBackendSubscriptions--;
                         /* It ends the loading of the data. In this way, it hides the loading progress control. */
-                        this._loading = false;
-                    }),
-                    map((response: Page1<User>/*Response<any>*/): void => {
-                        console.log('_sourcesResponse: ', response);
-            
-                        /* Initializes the `page`. */
-                        // this._setPage({
-                        //     'data': [],
-                        //     'totalData': 0,
-                        //     'pageIndex': pageEvent.pageIndex,
-                        //     'pageSize': pageEvent.pageSize
-                        // });
-                        // this._setPage({
-                        //     'data': response.data.sources.sources,
-                        //     'totalData': response.data.sources.count,
-                        //     'pageIndex': pageEvent.pageIndex,
-                        //     'pageSize': pageEvent.pageSize
-                        // });
-                        this._setPage({
-                            'data': response.content,
-                            'totalData': response.totalElements,
-                            'pageIndex': response.number,
-                            'pageSize': response.size
-                        });
+                        if (this._countBackendSubscriptions == 0) this._loading = false;
                     })
-                )
-                .subscribe();
+                );
+            }),
+            map((response: Page1<User>/*Response<any>*/): void => {
+                console.log('_sourcesResponse: ', response);
+    
+                const newPage: Page = {
+                    // 'data': response.data.sources.sources,
+                    // 'totalData': response.data.sources.count,
+                    // 'pageIndex': pageEvent.pageIndex,
+                    // 'pageSize': pageEvent.pageSize,
 
-                //this._page.next();
+                    'data': response.content,
+                    'totalData': response.totalElements,
+                    'pageIndex': response.number,
+                    'pageSize': response.size
+                };
+
+                /* Sets the new page on the table. */
+                this._setPage(newPage);
+
+                this._page.next(newPage);
             })
-        )
-        .subscribe();
+        ).subscribe();
     }
 
     public ngOnDestroy(): void
     {
         /* Disposes the resources held by the subscription. */
-        this._generalSubscription.unsubscribe();
-        this._paginatorSubscription.unsubscribe();
+        this._renderChangesSubscription.unsubscribe();
     }
 
     /**
      * Returns true if the data source is empty; otherwise, false. 
      */
-    private get isEmpty(): boolean
+    public get isEmpty(): boolean
     {
         return (this._dataSource.data.length == 0);
     }
@@ -506,12 +521,12 @@ export class TableComponent implements OnInit, OnDestroy
 	/**
 	 * Sets the page that should be rendered by the table, where each object in the `newPage.data` 
      * represents one row. For internal use only. 
-     * If the value is null, sets to `{ 'data': [], 'totalData': 0, 'pageIndex': this._content.pageIndex, 'pageSize': this._content.pageSize }`. 
+     * If the value is null, sets to `{ 'data': [], 'totalData': this._content.length, 'pageIndex': this._content.pageIndex, 'pageSize': this._content.pageSize }`. 
      * @param newPage The new page to set. 
 	 */
     private _setPage(newPage: Page | null): void
     {
-        newPage = newPage || { 'data': [], 'totalData': 0, 'pageIndex': this._content.pageIndex, 'pageSize': this._content.pageSize };  /* The default data does not contain element. */
+        newPage = newPage || { 'data': [], 'totalData': this._content.length, 'pageIndex': this._content.pageIndex, 'pageSize': this._content.pageSize };  /* The default data does not contain element. */
 
         this._dataSource.data = newPage.data;
 
@@ -524,18 +539,9 @@ export class TableComponent implements OnInit, OnDestroy
         {
             this._content.length = newPage.totalData;
             this._content.pageIndex = newPage.pageIndex;
-            this._content.pageSize = newPage.pageSize;
         }
 
         this.checkColumn();
-    }
-
-    /**
-     * Returns the data source. It is used to do especialized behavior. 
-     */
-    public get dataSource(): MatTableDataSource<any>
-    {
-        return this._dataSource;
     }
 
     /**
@@ -543,11 +549,11 @@ export class TableComponent implements OnInit, OnDestroy
      * that contains only one empty element (it is used to show one row that contains the empty 
      * table information). For internal use only. 
      */
-    public get _getDataSourceToRender(): MatTableDataSource<any>
+    public get _getDataSource(): MatTableDataSource<any>
     {
         if (this.isEmpty) return TableComponent._defaultDataSource;
 
-        return this.dataSource;
+        return this._dataSource;
     }
 
     /**
@@ -591,13 +597,15 @@ export class TableComponent implements OnInit, OnDestroy
     }
 
     /**
-     * Applies the filter term that should be used to filter out objects from the data source. To override 
-     * how data objects match to this filter string, provide a custom function for `TableContent.filterPredicate`. 
+     * Applies the filter term that should be used to filter out objects from the data source. 
+     * Assumes that the backend will call `filter.trim().toLowerCase()`. 
      * @param filter New filter term that should be used to filter out objects from the data source. 
      */
     public applyFilter(filter: string): void
     {
-        /* It is not necessary to call `filter.trim().toLowerCase()` because it is called internally. */
-        this._dataSource.filter = filter;
+        /* It is not necessary to call `filter.trim().toLowerCase()` because it is called 
+        in the backend internally. */
+
+        this._filterChange.next(filter);
     }
 }

@@ -1,9 +1,8 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 
+import { UserService, Page } from '@toco/tools/core';
 import { TableContent, TableComponent, CellContentWrap } from '@toco/tools/forms';
-
-import { UserService } from './user.service';
 
 @Component({
     selector: 'toco-sources',
@@ -32,15 +31,18 @@ export class SourcesComponent implements OnInit
     public ngOnInit(): void
     {
         this.content = this._initTableContent();
+
+        //For Test:
+        this._tableControl.page.subscribe((page: Page) => console.log(page));
     }
 
     private _initTableContent(): TableContent {
         return {
             'endpoint' : this._userService.page.bind(this._userService),
             //'columnsObjectProperty': ['name', 'source_status', 'version_to_review'],
-            'columnsObjectProperty': ['id', 'name', 'registration'],
+            'columnsObjectProperty': ['id', 'name', 'registrationDate'],
             //'columnsHeaderText': ['Nombre', 'Estatus', 'Acciones'],
-            'columnsHeaderText': ['id', 'name', 'registration'],
+            'columnsHeaderText': ['id', 'name', 'registrationDate'],
             'columnsWidth': ['60%', '22%', '18%'],
             'columnContentWrap': [CellContentWrap.ellipsis, CellContentWrap.ellipsis, CellContentWrap.responsible],
             'createCssClassesForRow': (rowData: any) => {
