@@ -1,7 +1,7 @@
 
 import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator, Sort } from '@angular/material';
 import { Observable, Subscription, Subject, combineLatest } from 'rxjs';
 import { startWith, switchMap, finalize, debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 
@@ -92,6 +92,18 @@ export interface TableContent<T, F extends Params<any>>
 
 
     /**
+     * The current filter state. 
+     * By default, its value is `{}`. 
+     */
+    filter?: F;
+
+    /**
+     * The current sort state. 
+     * By default, its value is `{ 'active': propertyNameToIdentify, 'direction': SortDirection.asc }`. 
+     */
+    sort?: Sort;
+
+    /**
      * Returns the length of the total number of items that are being paginated. 
      * By default, its value is `0`. 
      */
@@ -154,6 +166,11 @@ export function defaultTableContent(): TableContent<any, SimpleFilter>
 
         'propertyNameToIdentify': '',
 
+        'filter': {},
+        'sort': {
+            'active': this._content.propertyNameToIdentify,
+            'direction': SortDirection.asc
+        },
         'length': 0,
         'pageIndex': 0,
         'pageSize': 50,
@@ -297,6 +314,13 @@ export class TableComponent implements OnInit, OnDestroy
         if (this._content.propertyNameToIdentify == undefined) this._content.propertyNameToIdentify = '';
 
         /**************************** `filter` properties. ********************************/
+        if (this._content.filter == undefined) this._content.filter = {};
+
+        /***************************** `sort` properties. *********************************/
+        if (this._content.sort == undefined) this._content.sort = {
+            'active': this._content.propertyNameToIdentify,
+            'direction': SortDirection.asc
+        };
 
         /************************* `mat-paginator` properties. ****************************/
         if (this._content.length == undefined) this._content.length = 0;
@@ -336,10 +360,7 @@ export class TableComponent implements OnInit, OnDestroy
                 /* Ignores new term if same as previous term. */
                 distinctUntilChanged(),
                 /* Emits the first value. Filters using the initial values. The operators must be called in this order. */
-                startWith(this._filterValue = {
-                    'search': '',
-                    'registration': undefined
-                })
+                startWith((this._filterValue = this._content.filter))
             ),
             this._sort.sortChange.pipe(
                 /* When the table is empty and it is not loading, then clicking the table header 
@@ -348,10 +369,7 @@ export class TableComponent implements OnInit, OnDestroy
                     return (this.isLoading || !this.isEmpty);
                 }),
                 /* Emits the first value. Sorts using the initial values. The operators must be called in this order. */
-                startWith({
-                    'active': this._content.propertyNameToIdentify,
-                    'direction': SortDirection.asc
-                })
+                startWith(this._content.sort)
             ),
             this._paginator.page.pipe(
                 /* Emits the first value. Paginates using the initial values. */

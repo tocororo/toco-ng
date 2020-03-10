@@ -95,8 +95,8 @@ export interface BackendDataSourceFunction<T, F extends Params<any>>
  * A simple filter model with a single search property. 
  */
 export type SimpleFilter = {
-    search: string;
-    registration: Date;
+    search?: string;
+    //registration?: Date;
 };
 
 /**
