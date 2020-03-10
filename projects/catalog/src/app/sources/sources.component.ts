@@ -1,8 +1,12 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { UserService, Page } from '@toco/tools/core';
+import { PageRequest, Page, SimpleFilter, UserService } from '@toco/tools/core';
+import { SourceService } from '@toco/tools/backend';
 import { TableContent, TableComponent, CellContentWrap } from '@toco/tools/forms';
+import { Response } from '@toco/tools/entities';
 
 @Component({
     selector: 'toco-sources',
@@ -18,27 +22,23 @@ export class SourcesComponent implements OnInit
      * The sources list.
      * Use this field to initialize only; to change value use the `_tableControl` field.
      */
-    public content: TableContent;
+    public content: TableContent<any, SimpleFilter>;
 
-    //public constructor(private _souceService: SourceService) { }
+    //public constructor(private _souceService: SourceService)
     public constructor(private _userService: UserService)
     { }
-
-    //{ size: number = 10, page: number = 1 }
-    //getMySources({ 'size': 10, 'page': 1 }): Observable<Response<any>>;
-    //getMySources<T>(args: { [arg: string]: any }): Observable<T>;
 
     public ngOnInit(): void
     {
         this.content = this._initTableContent();
 
-        //For Test:
-        this._tableControl.page.subscribe((page: Page) => console.log(page));
+        this._tableControl.page.subscribe((value) => console.log('page', value));
     }
 
-    private _initTableContent(): TableContent {
+    private _initTableContent(): TableContent<any, SimpleFilter> {
         return {
-            'endpoint' : this._userService.page.bind(this._userService),
+            //'endpoint': this._getMySources.bind(this),
+            'endpoint': this._userService.page.bind(this._userService),
             //'columnsObjectProperty': ['name', 'source_status', 'version_to_review'],
             'columnsObjectProperty': ['id', 'name', 'registrationDate'],
             //'columnsHeaderText': ['Nombre', 'Estatus', 'Acciones'],
@@ -66,4 +66,20 @@ export class SourcesComponent implements OnInit
             ]
         };
     }
+
+    // private _getMySources(pageRequest: PageRequest<SimpleFilter>): Observable<Page<any>>
+    // {
+    //     return this._souceService.getMySources(pageRequest.paginator.pageSize, (pageRequest.paginator.pageIndex + 1)).pipe(
+    //         map((response: Response<any>): Page<any> => {
+    //             console.log('Sources Response: ', response);
+
+    //             return {
+    //                 'data': response.data.sources.sources,
+    //                 'totalData': response.data.sources.count,
+    //                 'pageIndex': pageRequest.paginator.pageIndex,
+    //                 'pageSize': pageRequest.paginator.pageSize
+    //             };
+    //         })
+    //     );
+    // }
 }

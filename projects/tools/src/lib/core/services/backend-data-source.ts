@@ -1,43 +1,9 @@
 
 import { _isNumberValue } from '@angular/cdk/coercion';
-import { Sort } from '@angular/material';
+import { Sort, PageEvent } from '@angular/material';
+import { Observable } from 'rxjs';
 
-/**
- * Corresponds to `Number.MAX_SAFE_INTEGER`. Moved out into a variable here due to 
- * flaky browser support and the value not being defined in Closure's typings. 
- */
-const MAX_SAFE_INTEGER: number = 9007199254740991;
-
-/**
- * An interface that represents the requested page. 
- * The generic parameter T always refers to the type of data that it is dealing with. 
- */
-export interface Page/*<T>*/
-{
-    /**
-     * Returns the list of items. 
-     * By default, its value is `[]`. 
-     */
-    data: any[];
-
-    /**
-     * Returns the total number of items being paged. 
-     * By default, its value is `0`. 
-     */
-    totalData: number;
-
-    /**
-     * Returns the zero-based page index of the displayed list of items. 
-     * By default, its value is `0`. 
-     */
-    pageIndex?: number;
-
-    /**
-     * Returns the number of items to display on a page. 
-     * By default, its value is `50`. 
-     */
-    pageSize?: number;
-}
+import { MAX_SAFE_INTEGER, Params } from '../utils/common';
 
 /**
  * The data sort direction. 
@@ -58,6 +24,79 @@ export enum SortDirection
      * Sorts the data in the original order or does not sort them. 
      */
     orig = ''
+};
+
+/**
+ * An interface that represents the input data that are used to make a page request. 
+ * It is the input of `BackendDataSourceFunction` function. 
+ * The generic parameter F always refers to the type of object that contains the filter model. 
+ */
+export interface PageRequest<F extends Params<any>>
+{
+    /**
+     * The current filter state. 
+     */
+    filter?: F;
+
+    /**
+     * The current sort state. 
+     */
+    sort: Sort;
+
+    /**
+     * The current paginator state. 
+     */
+    paginator: PageEvent;
+}
+
+/**
+ * An interface that represents the requested page. 
+ * It is the output of `BackendDataSourceFunction` function. 
+ * The generic parameter T always refers to the type of data that it is dealing with. 
+ */
+export interface Page<T>
+{
+    /**
+     * Returns the list of items. 
+     * By default, its value is `[]`. 
+     */
+    data: T[];
+
+    /**
+     * Returns the total number of items being paged. 
+     * By default, its value is `0`. 
+     */
+    totalData: number;
+
+    /**
+     * Returns the zero-based page index of the displayed list of items. 
+     * By default, its value is `0`. 
+     */
+    pageIndex: number;
+
+    /**
+     * Returns the number of items to display on a page. 
+     * By default, its value is `50`. 
+     */
+    pageSize: number;
+}
+
+/**
+ * An interface that represents the function that is used to get the data source from backend. 
+ * The generic parameter T always refers to the type of data that it is dealing with. 
+ * The generic parameter F always refers to the type of object that contains the filter model. 
+ */
+export interface BackendDataSourceFunction<T, F extends Params<any>>
+{
+    (pageRequest: PageRequest<F>): Observable<Page<T>>;
+}
+
+/**
+ * A simple filter model with a single search property. 
+ */
+export type SimpleFilter = {
+    search: string;
+    registration: Date;
 };
 
 /**

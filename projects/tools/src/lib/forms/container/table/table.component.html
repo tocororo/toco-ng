@@ -2,7 +2,7 @@
 <mat-form-field id="filter-mat-form-field" [style.width]="'65%'" [appearance]="'outline'">
     <mat-label>Write a text to filter</mat-label>
     <mat-icon matPrefix>search</mat-icon>
-    <input matInput id="text-input-element" (keyup)="applyFilter($event.target.value)" [style.textAlign]="'left'" [attr.aria-label]="'Filter'" />
+    <input matInput id="text-input-element" (keyup)="applyFilter({ 'search': $event.target.value })" [style.textAlign]="'left'" [attr.aria-label]="'Filter'" />
     <mat-hint [align]="start">Filters when typing stops.</mat-hint>
 </mat-form-field>
 
