@@ -5,21 +5,21 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TreeFilterComponent } from './tree-filter.component';
+import { FiltersComponent } from './filters.component';
 
-describe('TreeFilterComponent', () => {
-  let component: TreeFilterComponent;
-  let fixture: ComponentFixture<TreeFilterComponent>;
+describe('AggregationsComponent', () => {
+  let component: FiltersComponent;
+  let fixture: ComponentFixture<FiltersComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TreeFilterComponent ]
+      declarations: [ FiltersComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TreeFilterComponent);
+    fixture = TestBed.createComponent(FiltersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
