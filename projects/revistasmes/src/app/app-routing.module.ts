@@ -25,7 +25,8 @@ const routes: Routes = [
     },
     {
         path: 'directory',
-        component: CatalogComponent
+        component: CatalogComponent,
+        
     },
     {
         path: 'sources',
