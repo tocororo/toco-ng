@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@toco/tools/shared';
@@ -24,6 +29,7 @@ import { SelectComponent } from './experimental/select/select.component';
 import { TextareaComponent } from './experimental/textarea/textarea.component';
 import { InputIdentifierComponent } from './input/identifier/identifier-input.component';
 import { SelectFilterComponent } from './experimental/select-filter/select-filter.component';
+import { SelectTreeComponent } from './experimental/select-tree/select-tree.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +47,8 @@ import { SelectFilterComponent } from './experimental/select-filter/select-filte
     TermParentComponent,
     SelectComponent,
     SelectFilterComponent,
-    TextareaComponent
+    TextareaComponent,
+    SelectTreeComponent
   ],
 
   imports: [

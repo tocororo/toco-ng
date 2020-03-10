@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 
 import { Component, OnInit, ComponentFactoryResolver, ViewChild, Output, EventEmitter } from '@angular/core';
 

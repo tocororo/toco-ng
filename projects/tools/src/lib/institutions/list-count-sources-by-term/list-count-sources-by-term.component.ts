@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatPaginatorIntl, MatPaginator } from '@angular/material';
 import { SourceService } from '@toco/tools/backend';
@@ -54,50 +59,6 @@ export class ListCountSourcesByTermComponent implements OnInit {
         if (this.uuid != undefined){
             this.sourceList = new Array<CountSourcesByTerm>();
             this.loadData();
-            this.sourceList.push({ name: 'Universidad de Pinar del Rio', count: 2});
-            this.sourceList.push({ name: 'Universidad de 1', count: 5});
-            this.sourceList.push({ name: 'Universidad de 2', count: 7});
-            this.sourceList.push({ name: 'Universidad de 3', count: 8});
-            this.sourceList.push({ name: 'Universidad de 4', count: 25});
-            this.sourceList.push({ name: 'Universidad de 5', count: 2});
-            this.sourceList.push({ name: 'Universidad de Matanzas', count: 3});
-            this.sourceList.push({ name: 'Universidad de 6', count: 2});
-            this.sourceList.push({ name: 'Universidad de 7', count: 2});
-            this.sourceList.push({ name: 'Universidad de 8', count: 2});
-            this.sourceList.push({ name: 'Universidad de 9', count: 2});
-            this.sourceList.push({ name: 'Universidad de la Habaan', count: 20});
-            this.sourceList.push({ name: 'Universidad de 10', count: 2});
-            this.sourceList.push({ name: 'Universidad de 11', count: 2});
-            this.sourceList.push({ name: 'Universidad de 12', count: 2});
-            this.sourceList.push({ name: 'Universidad de 13', count: 2});
-            this.sourceList.push({ name: 'Universidad de 14', count: 2});
-            this.sourceList.push({ name: 'Universidad de 5', count: 2});
-            this.sourceList.push({ name: 'Universidad de Matanzas', count: 3});
-            this.sourceList.push({ name: 'Universidad de 6', count: 2});
-            this.sourceList.push({ name: 'Universidad de 7', count: 2});
-            this.sourceList.push({ name: 'Universidad de 8', count: 2});
-            this.sourceList.push({ name: 'Universidad de 9', count: 2});
-            this.sourceList.push({ name: 'Universidad de la Habaan', count: 20});
-            this.sourceList.push({ name: 'Universidad de 10', count: 2});
-            this.sourceList.push({ name: 'Universidad de 11', count: 2});
-            this.sourceList.push({ name: 'Universidad de 12', count: 2});
-            this.sourceList.push({ name: 'Universidad de 13', count: 2});
-            this.sourceList.push({ name: 'Universidad de 14', count: 2});
-            this.sourceList.push({ name: 'Universidad de 5', count: 2});
-            this.sourceList.push({ name: 'Universidad de Matanzas', count: 3});
-            this.sourceList.push({ name: 'Universidad de 6', count: 2});
-            this.sourceList.push({ name: 'Universidad de 7', count: 2});
-            this.sourceList.push({ name: 'Universidad de 8', count: 2});
-            this.sourceList.push({ name: 'Universidad de 9', count: 2});
-            this.sourceList.push({ name: 'Universidad de la Habaan', count: 20});
-            this.sourceList.push({ name: 'Universidad de 10', count: 2});
-            this.sourceList.push({ name: 'Universidad de 11', count: 2});
-            this.sourceList.push({ name: 'Universidad de 12', count: 2});
-            this.sourceList.push({ name: 'Universidad de 13', count: 2});
-            this.sourceList.push({ name: 'Universidad de 14', count: 2});
-            this.sourceList.push({ name: 'Universidad de 14', count: 2});
-            this.sourceList.push({ name: 'Universidad de 14', count: 2});
-
             this.paginatorLength = this.sourceList.length;
             this.paginator.length = this.paginatorLength;
 
@@ -107,7 +68,7 @@ export class ListCountSourcesByTermComponent implements OnInit {
             this.paginatorPageIndex = 0;
             this.paginator.firstPage();
 
-            this.service.getSourcesByTermUUID(this.uuid)
+            this.service.countSourcesByTerm(this.uuid, 1)
             .pipe(
                 catchError((err) => {
                     console.log(err);
@@ -119,6 +80,9 @@ export class ListCountSourcesByTermComponent implements OnInit {
                 {
                     next: (response) => {
                         console.log(response);
+                        this.sourceList = response.data.relations.children;
+                        this.paginatorLength = this.sourceList.length;
+                        this.paginator.length = this.paginatorLength;
                         this.loadData();
                     },
                     error: (err) => {

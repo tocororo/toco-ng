@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 import { Component, OnInit, Input } from '@angular/core';
 import { FormFieldControl_Experimental } from '../form-field.control.experimental';
 import { FormControl } from '@angular/forms';

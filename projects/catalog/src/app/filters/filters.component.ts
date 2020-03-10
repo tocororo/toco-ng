@@ -9,13 +9,14 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { TaxonomyService, SearchService, SourceService } from '@toco/tools/backend';
 import { TermNode, VocabulariesInmutableNames, Source } from '@toco/tools/entities';
 import { EnvService } from '@tocoenv/tools/env.service';
+import { SelectOptionNode } from '@toco/tools/forms/experimental/select-tree/select-tree.component';
 
 @Component({
-  selector: 'app-search-aggregations',
-  templateUrl: './aggregations.component.html',
-  styleUrls: ['./aggregations.component.scss']
+  selector: 'app-catalog-filters',
+  templateUrl: './filters.component.html',
+  styleUrls: ['./filters.component.scss']
 })
-export class AggregationsComponent implements OnInit {
+export class FiltersComponent implements OnInit {
 
   panels: PanelContent[] = null;
   formGroup: FormGroup;
@@ -66,6 +67,34 @@ export class AggregationsComponent implements OnInit {
             width: '100%',
             value: true,
             required: true
+          },
+          {
+            name: 'institutions',
+            label: 'Instituciones',
+            type: FormFieldType.select_tree,
+            required: true,
+            width: '100%',
+            value: '',
+            extraContent: {
+              observable: this.sourceService.countSourcesByTerm(this.envService.extraArgs['organismoUUID'], 1),
+              getOptions: (response:any) =>  {
+                const opts: SelectOptionNode[] = []
+                response.data.relations.children.forEach((node: any) => {
+                  opts.push({
+                    element: {
+                      value: node.uuid,
+                      label: node.name + " (" + node.count + ")"
+                    },
+                    children: node.children
+                  });
+                });
+                return opts;
+              },
+              selectionChange: (uuid) => {
+                console.log("AAAQAQAQA")
+
+              }
+            }
           },
           {
             name: 'organismo',

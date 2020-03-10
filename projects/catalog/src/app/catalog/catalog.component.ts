@@ -18,10 +18,10 @@ import { FilterHttpMap, FiltersService } from '@toco/tools/filters';
 import { EnvService } from '@tocoenv/tools/env.service';
 
 import { CatalogService } from '@toco/tools/backend';
-import { CatalogFiltersComponent } from '../catalog-filters/catalog-filters.component';
 import { MatSnackBar, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { JournalViewInfoComponent } from '@toco/tools/journal/journal-view/journal-view-info.component';
 import { ScrollStrategyOptions } from '@angular/cdk/overlay';
+import { FiltersComponent } from '../filters/filters.component';
 
 @Component({
   selector: 'toco-catalog',
@@ -49,7 +49,6 @@ export class CatalogComponent implements OnInit {
   pageEvent: PageEvent;
   params: Array<FilterHttpMap>;
 
-  sceibaHost = '';
 
   layoutPosition = [
     {
@@ -85,12 +84,11 @@ export class CatalogComponent implements OnInit {
     private env: EnvService,
     private _snackBar: MatSnackBar,
     public dialog: MatDialog) {
-    this.sceibaHost = env.sceibaHost + '/catalog';
     env.organizationUUID
   }
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(CatalogFiltersComponent, { static: true }) filter_component: CatalogFiltersComponent;
+  
 
   ngOnInit() {
 

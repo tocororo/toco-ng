@@ -3,28 +3,29 @@
  *   All rights reserved.
  */
 
-
-import { Component, OnInit, Input } from '@angular/core';
-
-import { FilterComponent } from '../filter.component';
-import { FiltersService } from '../filters.service';
-import { FilterContainerService } from '../filter-container.service';
-import { TermNode, Term } from '@toco/tools/entities';
+import { Component, OnInit } from '@angular/core';
+import { FormFieldControl_Experimental } from '../form-field.control.experimental';
+import { FormControl } from '@angular/forms';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
-import { of, Observable } from 'rxjs';
-import { SelectionModel, CollectionViewer } from '@angular/cdk/collections';
-import { FormControl } from '@angular/forms';
-import { startWith, map } from 'rxjs/operators';
+import { SelectionModel } from '@angular/cdk/collections';
+import { of } from 'rxjs';
+import { SelectOption } from '../select/select.component';
+
+export interface SelectOptionNode {
+  element: SelectOption;
+  parent?: SelectOptionNode;
+  children?: SelectOptionNode[];
+}
 
 export interface FlatTreeNode {
   name: string;
   level: number;
   expandable: boolean;
-  term: Term;
+  element: SelectOption;
 }
 interface TreeFilterData {
-  selectOptions: TermNode[];
+  selectOptions: SelectOptionNode[];
   type: string;
   placeholder: string;
   text: string;
@@ -34,63 +35,75 @@ interface TreeFilterData {
   idVocab: number;
 }
 
+
 @Component({
-  selector: 'toco-tree-filter',
-  templateUrl: './tree-filter.component.html',
-  styleUrls: ['./tree-filter.component.scss']
+  selector: 'toco-select-tree',
+  templateUrl: './select-tree.component.html',
+  styleUrls: ['./select-tree.component.scss']
 })
-export class TreeFilterComponent implements OnInit, FilterComponent {
-  @Input() data: TreeFilterData;
+export class SelectTreeComponent  extends FormFieldControl_Experimental implements OnInit {
+  
+
+  data: SelectOptionNode[];
+
+  internalControl = new FormControl();
 
 
   treeControl: FlatTreeControl<FlatTreeNode>;
-  treeFlattener: MatTreeFlattener<TermNode, FlatTreeNode>;
-  dataSource: MatTreeFlatDataSource<TermNode, FlatTreeNode>;
+  treeFlattener: MatTreeFlattener<SelectOptionNode, FlatTreeNode>;
+  dataSource: MatTreeFlatDataSource<SelectOptionNode, FlatTreeNode>;
   checklistSelection = new SelectionModel<FlatTreeNode>(true /* multiple */);
 
-  myControl = new FormControl();
 
-  inputId: string;
 
-  constructor(
-    private filterService: FiltersService,
-    private filterContainerService: FilterContainerService) {
-    this.treeFlattener = new MatTreeFlattener(
-      this.transformer,
-      this.getLevel,
-      this.isExpandable,
-      this.getChildren);
-
-    this.treeControl = new FlatTreeControl(this.getLevel, this.isExpandable);
-    this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  
+  constructor() { 
+    super();
   }
 
   ngOnInit() {
-    this.data.value = '';
-    this.dataSource.data = this.data.selectOptions;
-    this.myControl.valueChanges.subscribe(
-      (value: any) => {
-        this._filter(value);
-      },
-      (error: any) => { },
-      () => {
-      }
-    );
-    this.inputId = this.data.placeholder.trim().toLowerCase();
+    this.content.formGroup.addControl(this.content.name, this.internalControl);
+
+    if (this.content.extraContent.observable) {
+
+      this.content.extraContent.observable.subscribe(
+
+        // next
+        (response: any) => {
+          this.data = this.content.extraContent.getOptions(response);
+        },
+  
+        // error
+        (error: any) => { console.log(error); }
+        ,
+  
+        // complete
+        () => { }
+  
+      );
+    } else {
+      this.data = this.content.extraContent.getOptions();
+    }
+
+    this.content.value = '';
+    this.dataSource.data = this.data;
+
   }
 
-  private _filter(value: string): void {
-    const filterValue = value.toLowerCase();
-    console.log(filterValue);
+  // private _filter(value: string): void {
+  //   const filterValue = value.toLowerCase();
+  //   console.log(filterValue);
 
-    const newData = this.data.selectOptions.filter(node => this._include_node(filterValue, node));
+  //   const newData = this.data.selectOptions.filter(node => this._include_node(filterValue, node));
 
-    this.dataSource.data = newData;
-    this._fix_selection();
-  }
+  //   this.dataSource.data = newData;
+  //   this._fix_selection();
+  // }
+
+
   /** return true if any children is include, false otherwise */
-  private _include_node(filter: string, node: TermNode): boolean {
-    if (node.term.name.toLowerCase().includes(filter)) {
+  private _include_node(filter: string, node: SelectOptionNode): boolean {
+    if (node.element.label.toLowerCase().includes(filter)) {
       return true;
     } else if (node.children) {
       for (const child of node.children) {
@@ -119,32 +132,35 @@ export class TreeFilterComponent implements OnInit, FilterComponent {
     //   }
     // }
   }
-  remove_component() {
-    this.filterService.deleteParameter(this.data.field);
-    this.filterContainerService.filterDeleted(this.data.index);
 
+
+  remove_component() {
   }
+
   onChange() {
-    this.filterService.changeFilter(this.data.field, this.data.value);
   }
 
   emitSelection() {
     console.log(this.checklistSelection.selected);
     var valueEmiter = 'OR';
     this.checklistSelection.selected.forEach(node => {
-      valueEmiter = valueEmiter + ',' + node.term.id;
+      valueEmiter = valueEmiter + ',' + node.element.value;
     });
-    this.filterService.changeAutocompleteFilter(this.data.idVocab.toString(), valueEmiter);
+
+    if (this.content.extraContent.selectionChange) {
+      this.content.extraContent.selectionChange(this.content.value);
+    }
+
   }
 
 
   /** Transform the data to something the tree can read. */
-  transformer(node: TermNode, level: number) {
+  transformer(node: SelectOptionNode, level: number) {
     const result = {
-      name: node.term.name,
+      name: node.element.label,
       level: level,
       expandable: (node.children.length > 0),
-      term: node.term,
+      element: node.element,
     };
     return result;
   }
@@ -165,7 +181,7 @@ export class TreeFilterComponent implements OnInit, FilterComponent {
   }
 
   /** Get the children for the node. */
-  getChildren(node: TermNode) {
+  getChildren(node: SelectOptionNode) {
     return of(node.children);
   }
 

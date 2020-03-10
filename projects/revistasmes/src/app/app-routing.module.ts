@@ -6,7 +6,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CatalogComponent } from '@toco/tools/catalog';
 import { AuthenticationService } from '@toco/tools/authentication/authentication.service';
 import { NotificationListComponent } from '@toco/tools/notification';
 
@@ -17,6 +16,7 @@ import { SourceEditComponent } from 'projects/catalog/src/app/source-edit/source
 import { SourcesComponent } from 'projects/catalog/src/app/sources/sources.component';
 import { HomeComponent } from './home/home.component';
 import { StaticPagesComponent } from './static-pages/static-pages.component';
+import { CatalogComponent } from 'projects/catalog/src/app/catalog/catalog.component';
 
 
 const routes: Routes = [
@@ -26,7 +26,7 @@ const routes: Routes = [
     },
     {
         path: 'directory',
-        component: CatalogComponent
+        component: CatalogComponent,
     },
     {
         path: 'faq',
