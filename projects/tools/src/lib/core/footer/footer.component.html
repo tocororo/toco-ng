@@ -1,29 +1,42 @@
 <div class="alternate-theme-footer">
-    <mat-toolbar fxLayout='row wrap' fxLayout.mx="column" fxLayoutAlign="center center" color="primary">
-        <a href="/">
-            <img src="https://sceiba-lab.upr.edu.cu/static/images/sceiba-logo-white.png" alt="Sceiba" width="150"
-                style="padding-top: .9em; padding-bottom: .9em;">
-        </a>
+    <mat-toolbar class="footer-height" fxLayout='row wrap' fxLayout.mx="column" fxLayoutAlign="center center" color="primary">
+        <ng-container *ngIf="image">
+            <a href="/">
+                <img src="{{ image }}" alt="Sceiba" width="150"
+                    style="padding-top: .9em; padding-bottom: .9em;">
+            </a>
+        </ng-container>
 
-        <mat-toolbar-row fxLayout='row wrap' fxLayout.mx="column" fxLayoutAlign="center start">
+        <mat-toolbar-row 
+            fxLayout='row wrap'
+            fxLayout.mx="column"
+            fxLayoutAlign="center start"
+            fxLayoutGap="20px"
+        >
             <div fxFlex="30%" fxFlex.xs="100%">
-                <span>About</span>
+                <span class="text-large">Sobre el Proyecto</span>
+                <p class="text-small">Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis iure voluptas quod earum dignissimos deleniti amet? Quia qui vel sit nisi quae ex minus, sed sapiente cupiditate, exercitationem ut doloribus?</p>
+                <a mat-raised-button href="/sources/new/journal" color="warn">Inclúyete</a>
             </div>
             <div fxLayout='column wrap' fxFlex="30%" fxFlex.xs="100%">
-                <span>Institution</span>
-                <a href="http://www.upr.edu.cu" style="font-size: small; color: white">
-                    <p>Universidad de Pinar del Río Hermanos Saíz Montes de Oca</p>
-                </a>
-                <p style="font-size: small;">Martí Street #300 between González Alcorta and 27 de noviembre. Pinar del
-                    Río.
-                    Postal Code: 20100. Pinar del Río, Cuba </p>
+                <span class="text-large">Sitios de Interés</span>
+                <ng-container *ngFor="let item of sites">
+                    <a mat-button class="aling-left" color="warn" href="{{ item.url }}">
+                        {{ item.name }}
+                    </a>
+                </ng-container>
             </div>
-            <div fxFlex="30%" fxFlex.xs="100%">
-                <span>Contact</span>
+            <div fxLayout='column wrap' fxFlex="30%" fxFlex.xs="100%">
+                <span class="text-large">Información General</span>
+                <ng-container *ngFor="let item of information">
+                    <a mat-button class="aling-left" color="warn" href="{{ item.url }}">
+                        {{ item.name }}
+                    </a>
+                </ng-container>
             </div>
         </mat-toolbar-row>
 
-        <mat-toolbar-row fxLayout='row wrap' fxLayout.mx="column" fxLayoutAlign="center center" fxLayoutGap="15px" style="padding-bottom: 15px;">
+        <!-- <mat-toolbar-row fxLayout='row wrap' fxLayout.mx="column" fxLayoutAlign="center center" fxLayoutGap="15px" style="padding-bottom: 15px;">
             <a mat-mini-fab matTooltip="Facebook" href="https://facebook.com" color="accent"
                 style="font-size: x-large; margin-bottom: 15px !important;">
                 f
@@ -32,18 +45,8 @@
                 style="font-size: x-large; margin-bottom: 15px !important;">
                 t
             </a>
-        </mat-toolbar-row>
+        </mat-toolbar-row> -->
 
     </mat-toolbar>
 
-
-
-
-    <!-- Copyright -->
-    <mat-toolbar class="footer-height" fxLayout='row wrap' fxLayout.mx="column" fxLayoutAlign="center center"
-        style="font-size: small;">
-        © 2020 Copyright:
-        <a href="http://www.upr.edu.cu" target="_blank"> Universidad de Pinar del Río</a>
-    </mat-toolbar>
-    <!-- Copyright -->
 </div>
