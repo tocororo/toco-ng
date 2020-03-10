@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { PageRequest, Page, SimpleFilter, UserService } from '@toco/tools/core';
+import { PageRequest, Page, SimpleFilter, UserService, SortDirection } from '@toco/tools/core';
 import { SourceService } from '@toco/tools/backend';
 import { TableContent, TableComponent, CellContentWrap } from '@toco/tools/forms';
 import { Response } from '@toco/tools/entities';
@@ -37,8 +37,6 @@ export class SourcesComponent implements OnInit
 
     private _initTableContent(): TableContent<any, SimpleFilter> {
         return {
-            //'endpoint': this._getMySources.bind(this),
-            'endpoint': this._userService.page.bind(this._userService),
             //'columnsObjectProperty': ['name', 'source_status', 'version_to_review'],
             'columnsObjectProperty': ['id', 'name', 'registrationDate'],
             //'columnsHeaderText': ['Nombre', 'Estatus', 'Acciones'],
@@ -54,11 +52,22 @@ export class SourcesComponent implements OnInit
             //'propertyNameToIdentify': 'uuid',
             'propertyNameToIdentify': 'id',
 
+            'filter': {
+                'search': '',
+                //'registration': undefined
+            },
+            'sort': {
+                'active': 'id',
+                'direction': SortDirection.desc
+            },
             'pageIndex': 0,
             'pageSize': 5,
             'pageSizeOptions': [5, 10, 20, 50],
             //'hidePageSize': true,
             'showFirstLastButtons': true,
+
+            //'endpoint': this._getMySources.bind(this),
+            'endpoint': this._userService.page.bind(this._userService),
 
             actions: [
                 { icon: 'visibility', route: 'view', tooltip: 'Ver' },

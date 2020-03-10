@@ -339,6 +339,39 @@ export class TableComponent implements OnInit, OnDestroy
     }
 
     /**
+     * Updates the filter component visually when there is an external change. 
+     */
+    private _updateFilter(): void
+    {
+        //TODO: ...
+    }
+
+    /**
+     * Updates the `MatSort` visually when there is an external change. 
+     */
+    private _updateMatSort(): void
+    {
+        /* In this case, `_content` already contains the sorting values correctly, 
+         * so updates the `MatSort`. */
+        this._sort.active = this._content.sort.active;
+        this._sort.direction = this._content.sort.direction;
+    }
+
+    /**
+     * Updates the `MatPaginator` visually when there is an external change. 
+     * @param newPage The new page to set. 
+     */
+    private _updateMatPaginator(newPage: Page<any>): void
+    {
+        /* In this case, `_content` is updated with the new values, then the `MatPaginator` 
+         * takes the values via property binding from `_content` (through the template). 
+         * Needs to update the `MatSort` only. */
+        this._content.length = newPage.totalData;
+        this._content.pageIndex = newPage.pageIndex;
+        this._content.pageSize = newPage.pageSize;
+    }
+
+    /**
      * Subscribes to changes that should trigger an update to the table's rendered rows. When the 
      * changes occur, process the current state of the filter, sort, and pagination along with 
      * the provided base data and send it to the table for rendering. 
@@ -349,6 +382,10 @@ export class TableComponent implements OnInit, OnDestroy
 
         /* Disposes the resources held by the subscription. */
         this._renderChangesSubscription.unsubscribe();
+
+        /* Needs to update the filter component and `MatSort` only, the `MatPaginator` is updated later. */
+        this._updateFilter();
+        this._updateMatSort();
 
         /* The `_filterChange` is always present; although the user decides if it is used or not. 
          * Also, `MatSort` and `MatPaginator` are always present because they are managed by the component completely. 
@@ -559,11 +596,11 @@ export class TableComponent implements OnInit, OnDestroy
     {
         newPage = newPage || { 'data': [], 'totalData': this._content.length, 'pageIndex': this._content.pageIndex, 'pageSize': this._content.pageSize };  /* The default data does not contain element. */
 
-        /* Updates the data only. */
+        /* In `_dataSource`, needs to update the data only. */
         this._dataSource.data = newPage.data;
 
-        this._content.length = newPage.totalData;
-        this._content.pageIndex = newPage.pageIndex;
+        /* Needs to update the paginator only. */
+        this._updateMatPaginator(newPage);
 
         this.checkColumn();
     }
