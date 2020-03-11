@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.organizationUUID = this.env.organizationUUID;
+        this.organizationUUID = this.env.extraArgs['organizationUUID'];
     }
 
 }

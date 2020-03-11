@@ -9,7 +9,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { TaxonomyService, SearchService, SourceService } from '@toco/tools/backend';
 import { TermNode, VocabulariesInmutableNames, Source } from '@toco/tools/entities';
 import { EnvService } from '@tocoenv/tools/env.service';
-import { SelectOptionNode } from '@toco/tools/forms/experimental/select-tree/select-tree.component';
+import { SelectOptionNode, FlatTreeNode } from '@toco/tools/forms/experimental/select-tree/select-tree.component';
 
 @Component({
   selector: 'app-catalog-filters',
@@ -18,10 +18,11 @@ import { SelectOptionNode } from '@toco/tools/forms/experimental/select-tree/sel
 })
 export class FiltersComponent implements OnInit {
 
+  filters : Array<{name: string, value: string}> ;
   panels: PanelContent[] = null;
   formGroup: FormGroup;
-
-  organismoUUID = '';
+  institutionTree: SelectOptionNode[] = [];
+  organizationUUID = '';
 
   constructor(
     private taxonomyService: TaxonomyService,
@@ -29,12 +30,15 @@ export class FiltersComponent implements OnInit {
     private envService: EnvService,
     private _formBuilder: FormBuilder,
   ) {
-    if (envService.extraArgs && envService.extraArgs['organismoUUID']) {
-      this.organismoUUID = envService.extraArgs['organismoUUID'];
+    if (envService.extraArgs && envService.extraArgs['organizationUUID']) {
+      this.organizationUUID = envService.extraArgs['organizationUUID'];
     }
   }
 
   ngOnInit() {
+    
+    this.filters = new Array();
+
     this.formGroup = this._formBuilder.group({
       approved: new FormControl(true),
       asc: new FormControl(true),
@@ -42,7 +46,10 @@ export class FiltersComponent implements OnInit {
 
     this.formGroup.valueChanges.subscribe(
       ( values ) => {
-        console.log(values);
+        const inst = values['institutions'];
+        inst.forEach( val=> {
+
+        });
       },
       (err: any) => {
           console.log('error: ' + err + '.');
@@ -54,7 +61,7 @@ export class FiltersComponent implements OnInit {
 
     this.panels = [
       {
-        title: 'Colección:',
+        title: 'Aprobados:',
         description: '',
         iconName: '',
         formGroup: this.formGroup,
@@ -67,7 +74,17 @@ export class FiltersComponent implements OnInit {
             width: '100%',
             value: true,
             required: true
-          },
+          }
+
+        ]
+      },
+      {
+        title: 'Revistas por Tipo:',
+        description: '',
+        iconName: '',
+        formGroup: this.formGroup,
+        open: false,
+        content: [
           {
             name: 'institutions',
             label: 'Instituciones',
@@ -76,93 +93,65 @@ export class FiltersComponent implements OnInit {
             width: '100%',
             value: '',
             extraContent: {
-              observable: this.sourceService.countSourcesByTerm(this.envService.extraArgs['organismoUUID'], 1),
+              observable: this.sourceService.countSourcesByTerm(this.organizationUUID, 2),
               getOptions: (response:any) =>  {
-                const opts: SelectOptionNode[] = []
-                response.data.relations.children.forEach((node: any) => {
-                  opts.push({
-                    element: {
-                      value: node.uuid,
-                      label: node.name + " (" + node.count + ")"
-                    },
-                    children: node.children
-                  });
+                this.institutionTree = []
+                this.institutionTree.push({
+                  element: {
+                    value: response.data.relations.uuid,
+                    label: response.data.relations.name + " (" + response.data.relations.count + ")"
+                  },
+                  children: this.initInstitutionTree(response.data.relations)
                 });
-                return opts;
+                return this.institutionTree;
               },
-              selectionChange: (uuid) => {
-                console.log("AAAQAQAQA")
+              selectionChange: (selection) => {
+                console.log(selection)
 
               }
             }
           },
-          {
-            name: 'organismo',
-            label: 'Organismo',
-            type: FormFieldType.select,
-            required: true,
-            width: '100%',
-            value: this.organismoUUID,
-            extraContent: {
-              observable: this.taxonomyService.getTermsTreeByVocab(VocabulariesInmutableNames.INTITUTION, 0),
-              getOptions: (response:any) =>  {
-                const opts: SelectOption[] = []
-                response.data.tree.term_node.forEach((node: TermNode) => {
-                  opts.push({
-                    value: node.term.uuid,
-                    label: node.term.name,
-                  });
-                });
-                return opts;
-              },
-              selectionChange: (uuid) => {
-                this.organismoUUID = uuid;
-                this.initSourcesPanel();
 
-              }
-            }
-          }
         ]
       },
       {
-        title: 'Ordenar por:',
+        title: 'Revistas por Institución:',
         description: '',
         iconName: '',
         formGroup: this.formGroup,
         open: false,
         content: [
           {
-            type: FormFieldType.select,
-            name: 'sort',
-            label: '',
-            width: '100%',
-            value: 'mostrecent',
+            name: 'institutions',
+            label: 'Instituciones',
+            type: FormFieldType.select_tree,
             required: true,
+            width: '100%',
+            value: '',
             extraContent: {
-              getOptions: () => {
-                return [
-                  {
-                    value: 'mostrecent',
-                    label: 'Mas reciente',
+              observable: this.sourceService.countSourcesByTerm(this.organizationUUID, 2),
+              getOptions: (response:any) =>  {
+                this.institutionTree = []
+                this.institutionTree.push({
+                  element: {
+                    value: response.data.relations.uuid,
+                    label: response.data.relations.name + " (" + response.data.relations.count + ")"
                   },
-                  {
-                    value: 'bestmatch',
-                    label: 'Mejor resultado',
-                  },
-                ];
+                  children: this.initInstitutionTree(response.data.relations)
+                });
+                return this.institutionTree;
+              },
+              selectionChange: (selection) => {
+                console.log(selection)
+
               }
             }
           },
-          {
-            type: FormFieldType.checkbox,
-            name: 'asc',
-            label: 'Orden Ascendente',
-            width: '100%',
-            value: true,
-            required: true
-          },
+
         ]
       },
+
+      
       {
         formGroup: this.formGroup,
         title: 'Tipos de Indizaciones:',
@@ -201,33 +190,26 @@ export class FiltersComponent implements OnInit {
     ];
   }
 
-  initSourcesPanel() {
-    this.formGroup.removeControl('source');
-    this.panels[0].content[2] = {
-      name: 'source',
-      label: 'Fuentes',
-      type: FormFieldType.select_filter,
-      formGroup: this.formGroup,
-      width: '100%',
-      extraContent: {
-        multiple: true,
-        observable: this.sourceService.getSourcesByTermUUID(this.organismoUUID),
-        getOptions: (response: any) => {
-          const opts: SelectOption[] = [];
-          if (response.data.sources){
-            response.data.sources.forEach((source: Source) => {
-              opts.push({
-                value: source.uuid,
-                label: source.name,
-              });
-            });
-          }
-          return opts;
-        },
-        selectionChange: (value) => {
-          console.log(value);
-        }
-      }
-    };
+  private initInstitutionTree(node: any){
+    
+    if (node && node.children){
+      const opts: SelectOptionNode[] = []
+      node.children.forEach((node: any) => {
+        opts.push({
+          element: {
+            value: node.uuid,
+            label: node.name + " (" + node.count + ")"
+          },
+          children: this.initInstitutionTree(node)
+        });
+      });
+      return opts;
+    }
+    return null;
+    
+  }
+
+  private selectInstitution(node:FlatTreeNode){
+    
   }
 }

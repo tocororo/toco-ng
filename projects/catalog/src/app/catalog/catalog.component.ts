@@ -76,7 +76,7 @@ export class CatalogComponent implements OnInit {
       width: '90'
     }
   ];
-  currentlayout = this.layoutPosition[1];
+  currentlayout = this.layoutPosition[2];
 
   constructor(private service: CatalogService,
     private metadata: MetadataService,
