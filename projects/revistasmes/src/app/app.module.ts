@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, SecurityContext } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,11 +15,15 @@ import { SourceViewSaveDialog } from 'projects/catalog/src/app/source-view/sourc
 import { AppCatalogModule } from 'projects/catalog/src/app/app.module';
 import { HomeComponent } from './home/home.component';
 import { InstitutionsModule } from '@toco/tools/institutions/institutions.module';
+import { StaticPagesComponent } from './static-pages/static-pages.component';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    StaticPagesComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -32,7 +36,11 @@ import { InstitutionsModule } from '@toco/tools/institutions/institutions.module
     TocoFormsModule,
     AppRoutingModule,
     AppCatalogModule,
-    InstitutionsModule
+    InstitutionsModule,
+    HttpClientModule,
+    MarkdownModule.forRoot({
+      loader: HttpClient
+    })
   ],
   entryComponents: [
     SourceViewSaveDialog
