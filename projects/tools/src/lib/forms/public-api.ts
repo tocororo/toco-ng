@@ -18,6 +18,7 @@ export * from './experimental/select/select.component';
 export * from './experimental/select-filter/select-filter.component';
 export * from './experimental/select-tree/select-tree.component';
 export * from './experimental/term-parent/term-parent.component';
+export * from './experimental/textarea/textarea.component';
 export * from './experimental/vocabulary/vocabulary.component';
 
 

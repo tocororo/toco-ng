@@ -1,5 +1,18 @@
 
 /**
+ * Corresponds to `Number.MAX_SAFE_INTEGER`. Moved out into a variable here due to 
+ * flaky browser support and the value not being defined in Closure's typings. 
+ */
+export const MAX_SAFE_INTEGER: number = 9007199254740991;
+
+/**
+ * A collection of key/value elements, where the keys are strings. 
+ */
+export type Params<T> = {
+    [key: string]: T;
+};
+
+/**
  * A class with static methods that are commonly used. 
  */
 export class Common

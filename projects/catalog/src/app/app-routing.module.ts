@@ -19,7 +19,8 @@ import { SourceEditComponent } from './source-edit/source-edit.component';
 const routes: Routes = [
     {
         path: '',
-        component: CatalogComponent
+        //component: CatalogComponent
+        component: SourcesComponent
     },
     {
         path: 'sources',
@@ -48,10 +49,10 @@ const routes: Routes = [
                     resolver: SourceResolver
                 }
             },
-            {
-                path: '',
-                component: SourcesComponent,
-            }
+            // {
+            //     path: '',
+            //     component: SourcesComponent,
+            // }
         ],
         canActivate: [AuthenticationService]
     },
