@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 
 import { Entity, EntityBase } from './entity';
 import { TermNode, Term } from './taxonomy.entity';
@@ -5,11 +10,11 @@ import { TermNode, Term } from './taxonomy.entity';
 
 
 export const SourceTypes = {
-    JOURNAL: { 'label': "Revista Cientifica", 'value': 'JOURNAL' },
-    STUDENT: { 'label': "Revista Cientifico Estudiantil", 'value': 'STUDENT' },
-    POPULARIZATION: { 'label': "Revista de Divulgacion", 'value': 'POPULARIZATION' },
-    REPOSITORY: { 'label': "Repositorio Institucional", 'value': 'REPOSITORY' },
-    WEBSITE: { 'label': "Sitio Web", 'value': 'WEBSITE' },
+    JOURNAL: { 'label': 'Revista Científica', 'value': 'JOURNAL' },
+    STUDENT: { 'label': 'Revista Científico Estudiantil', 'value': 'STUDENT' },
+    POPULARIZATION: { 'label': 'Revista de Divulgación', 'value': 'POPULARIZATION' },
+    REPOSITORY: { 'label': 'Repositorio Institucional', 'value': 'REPOSITORY' },
+    WEBSITE: { 'label': 'Sitio Web', 'value': 'WEBSITE' },
 };
 
 export const SourcePersonRole = {

@@ -215,7 +215,7 @@ export abstract class InputControl extends FormFieldControl
         //         : null;
         // });
         
-        this.content.formGroup.addControl(this.content.name, this.internalControl);
+        if (this.content.formGroup != undefined) this.content.formGroup.addControl(this.content.name, this.internalControl);
 
 
         

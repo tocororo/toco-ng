@@ -6,6 +6,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header [ngStyle]="_createCssStylesForHeader(pos)">
             {{ content.columnsHeaderText[pos] }}
         </th>
+
         <td mat-cell [ngClass]="content.createCssClassesForRow(element)" *matCellDef="let element" [ngStyle]="_createCssStylesForCell(pos)">
             <!-- Adds the notification icon in the first column if there is 'version to review'. -->
             <mat-icon *ngIf="pos == 0 && element[content.columnsObjectProperty[2]]" class="mat-cell-mat-icon">new_releases</mat-icon>
@@ -19,9 +20,9 @@
                         mat-icon-button class="div-mat-button" 
                         [attr.aria-label]="action.tooltip" 
                         (click)="navigateTo(action.route, element)"
-                        matTooltip="{{action.tooltip}}"
+                        matTooltip="{{ action.tooltip }}"
                     >
-                            <mat-icon>{{action.icon}}</mat-icon>
+                        <mat-icon>{{ action.icon }}</mat-icon>
                     </button>
                 </ng-container>
                  
@@ -73,7 +74,5 @@
     [pageSize]="content.pageSize"
     [pageSizeOptions]="content.pageSizeOptions"
     [hidePageSize]="content.hidePageSize"
-    [showFirstLastButtons]="content.showFirstLastButtons"
->
-
+    [showFirstLastButtons]="content.showFirstLastButtons">
 </mat-paginator>

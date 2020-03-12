@@ -49,6 +49,7 @@ th
     background-color: rgba(245, 247, 247, 1) !important;
     border-top: 1px solid rgba(189, 195, 199, 1)/*green*/;
     border-bottom: 1px solid transparent /*rgba(189, 195, 199, 1)*//*green*/;
+    
 }
 
 th:first-of-type
@@ -167,7 +168,7 @@ tr.row-data:active
     background-color: rgba(238, 238, 238, 1);
 }
 
-/* Cetres the headers. */
+/* Cetres the table headers. */
 :host ::ng-deep .mat-sort-header-container
 { 
     //display: flex;
