@@ -69,30 +69,52 @@ export class SelectTreeComponent extends FormFieldControl_Experimental
 
   ngOnInit() {
     this.content.formGroup.addControl(this.content.name, this.internalControl);
-
-    if (this.content.extraContent.observable) {
-      this.content.extraContent.observable.subscribe(
-        // next
-        (response: any) => {
-          console.log(response);
-
-          this.data = this.content.extraContent.getOptions(response);
-          console.log(this.data);
-          this.dataSource.data = this.data;
-          console.log(this.dataSource);
-        },
-
-        // error
-        (error: any) => {
-          console.log(error);
-        },
-        // complete
-        () => {}
-      );
-    } else {
-      this.data = this.content.extraContent.getOptions();
-      this.dataSource.data = this.data;
+    if (this.content.extraContent){
+      if (this.content.extraContent.observable) {
+        this.content.extraContent.observable.subscribe(
+          // next
+          (response: any) => {
+            console.log(response);
+  
+            this.data = this.content.extraContent.getOptions(response);
+            console.log(this.data);
+            this.dataSource.data = this.data;
+            console.log(this.dataSource);
+            this.content.extraContent.selectedTermsUUIDs.forEach((uuid:string) => {
+              console.log(uuid);
+              
+              this.treeControl.dataNodes.forEach(node => {
+                
+                
+                if (node.element.value == uuid){
+                  console.log(node);
+                  
+                  if(node.expandable){
+                    this.itemSelectionToggle(node);
+                  } else {
+                    this.leafItemSelectionToggle(node);
+                  }
+                }
+              })
+            });
+          },
+  
+          // error
+          (error: any) => {
+            console.log(error);
+          },
+          // complete
+          () => {}
+        );
+      } else {
+        this.data = this.content.extraContent.getOptions();
+        this.dataSource.data = this.data;
+      }
+      if (!this.content.extraContent.selectedTermsUUIDs) {
+        this.content.extraContent.selectedTermsUUIDs = [];
+      }
     }
+    
 
     this.content.value = "";
   }

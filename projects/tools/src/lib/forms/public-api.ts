@@ -16,8 +16,10 @@ export * from './forms.service';
 
 export * from './experimental/select/select.component';
 export * from './experimental/select-filter/select-filter.component';
+export * from './experimental/select-tree/select-tree.component';
 export * from './experimental/term-parent/term-parent.component';
 export * from './experimental/vocabulary/vocabulary.component';
+
 
 export * from './action/action.control';
 export * from './input/email/email-value';

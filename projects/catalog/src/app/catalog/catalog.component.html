@@ -39,7 +39,8 @@
     fxLayoutAlign="start center"
     fxLayoutAlign.xs="center center"
     fxLayoutGap="1em"
-    
+    [params]="routeParams"
+    (paramsChange)=filtersChange($event)
   >
   </app-catalog-filters>
 
