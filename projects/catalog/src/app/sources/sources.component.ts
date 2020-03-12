@@ -3,9 +3,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { PageRequest, Page, SimpleFilter, UserService, SortDirection } from '@toco/tools/core';
+import { SortDirection, FilterValues, PageRequest, Page, UserService } from '@toco/tools/core';
 import { SourceService } from '@toco/tools/backend';
-import { TableContent, TableComponent, CellContentWrap } from '@toco/tools/forms';
+import { TableContent, TableComponent, CellContentWrap, InputTextComponent, InputContent, TextAlign, TextInputAppearance, IconValue, IconSource, ContentPosition, HintValue, HintPosition } from '@toco/tools/forms';
 import { Response } from '@toco/tools/entities';
 
 @Component({
@@ -15,14 +15,22 @@ import { Response } from '@toco/tools/entities';
 })
 export class SourcesComponent implements OnInit
 {
-    @ViewChild(TableComponent, { static: true })
-    private _tableControl: TableComponent;
+    /**
+     * The search filter. 
+     */
+	public searchContent: InputContent;
+
+    @ViewChild('input_search', { static: true })
+    private _inputSearch: InputTextComponent;
 
     /**
      * The sources list.
      * Use this field to initialize only; to change value use the `_tableControl` field.
      */
-    public content: TableContent<any, SimpleFilter>;
+    public tableContent: TableContent<any>;
+
+    @ViewChild(TableComponent, { static: true })
+    private _tableControl: TableComponent;
 
     //public constructor(private _souceService: SourceService)
     public constructor(private _userService: UserService)
@@ -30,12 +38,39 @@ export class SourcesComponent implements OnInit
 
     public ngOnInit(): void
     {
-        this.content = this._initTableContent();
+        /* Sets an initial search value. */
+        //this._inputSearch.internalControl.setValue('cl');
+
+        /***************************/
+
+        this.searchContent = this._initSearchContent();
+        this.tableContent = this._initTableContent();
+
+        /***************************/
 
         this._tableControl.page.subscribe((value) => console.log('page', value));
     }
 
-    private _initTableContent(): TableContent<any, SimpleFilter> {
+    private _initSearchContent(): InputContent
+    {
+        return {
+            'width': '65%',
+
+            'label': 'Write a text to search',
+    
+            'textAlign': TextAlign.left,
+            'ariaLabel': 'Search',
+    
+            'appearance': TextInputAppearance.outline,
+    
+            'prefixIcon': new IconValue(IconSource.external, ContentPosition.prefix, 'search'),
+    
+            'startHint': new HintValue(HintPosition.start, 'Searches when typing stops.')
+        };
+    }
+
+    private _initTableContent(): TableContent<any>
+    {
         return {
             //'columnsObjectProperty': ['name', 'source_status', 'version_to_review'],
             'columnsObjectProperty': ['id', 'name', 'registrationDate'],
@@ -46,14 +81,14 @@ export class SourcesComponent implements OnInit
             'createCssClassesForRow': (rowData: any) => {
                 return {
                     'new-release': rowData['version_to_review'],
-                    'selected-row': (rowData[this.content.propertyNameToIdentify]) == this._tableControl.selectedRow
+                    'selected-row': (rowData[this.tableContent.propertyNameToIdentify]) == this._tableControl.selectedRow
                 };
             },
             //'propertyNameToIdentify': 'uuid',
             'propertyNameToIdentify': 'id',
 
             'filter': {
-                'search': '',
+                'search': this._inputSearch,
                 //'registration': undefined
             },
             'sort': {
@@ -76,7 +111,7 @@ export class SourcesComponent implements OnInit
         };
     }
 
-    // private _getMySources(pageRequest: PageRequest<SimpleFilter>): Observable<Page<any>>
+    // private _getMySources(pageRequest: PageRequest): Observable<Page<any>>
     // {
     //     return this._souceService.getMySources(pageRequest.paginator.pageSize, (pageRequest.paginator.pageIndex + 1)).pipe(
     //         map((response: Response<any>): Page<any> => {

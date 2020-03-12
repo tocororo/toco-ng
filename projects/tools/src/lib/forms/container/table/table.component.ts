@@ -5,10 +5,7 @@ import { MatTableDataSource, MatSort, MatPaginator, Sort } from '@angular/materi
 import { Observable, Subscription, Subject, combineLatest } from 'rxjs';
 import { startWith, switchMap, finalize, debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 
-import { Page, SortDirection, Params, BackendDataSourceFunction, SimpleFilter } from '@toco/tools/core';
-
-import { InputContent, TextInputAppearance } from '../../input/input.control';
-import { TextAlign, IconValue, IconSource, ContentPosition, HintValue, HintPosition } from '../../form-field.control';
+import { SortDirection, FilterControls, FilterValues, Page, Params, BackendDataSourceFunction } from '@toco/tools/core';
 
 /**
  * A collection of CSS styles. 
@@ -45,9 +42,8 @@ export interface TableAction {
 /**
  * An interface that represents the content of a table control. 
  * The generic parameter T always refers to the type of data that it is dealing with. 
- * The generic parameter F always refers to the type of object that contains the filter model. 
  */
-export interface TableContent<T, F extends Params<any>>
+export interface TableContent<T>
 {
     /**
      * Returns the array of strings that indicates the object property name of the columns. 
@@ -95,7 +91,7 @@ export interface TableContent<T, F extends Params<any>>
      * The current filter state. 
      * By default, its value is `{}`. 
      */
-    filter?: F;
+    filter?: FilterControls;
 
     /**
      * The current sort state. 
@@ -144,10 +140,9 @@ export interface TableContent<T, F extends Params<any>>
     /**
      * Returns the function that is used to get the data source from backend. 
      * The generic parameter T always refers to the type of data that it is dealing with. 
-     * The generic parameter F always refers to the type of object that contains the filter model. 
      * By default, its value is `undefined`. 
      */
-    endpoint?: BackendDataSourceFunction<T, F>;
+    endpoint?: BackendDataSourceFunction<T>;
 
     actions?: TableAction[];
 }
@@ -155,7 +150,7 @@ export interface TableContent<T, F extends Params<any>>
 /**
  * Returns a new object that represents the default `TableContent`. 
  */
-export function defaultTableContent(): TableContent<any, SimpleFilter>
+export function defaultTableContent(): TableContent<any>
 {
     return {
         'columnsObjectProperty': [],
@@ -201,35 +196,21 @@ export class TableComponent implements OnInit, OnDestroy
     private _loading: boolean;
     private _countBackendSubscriptions: number;
 
-    private _content: TableContent<any, SimpleFilter>;
+    private _content: TableContent<any>;
     private readonly _page: Subject<Page<any>>;  /* Stream that emits when a new data array is set on the data source. */
     private _pageAsObservable: Observable<Page<any>>;
     private _dataSource: MatTableDataSource<any>;
     private static readonly _defaultDataSource: MatTableDataSource<any> = new MatTableDataSource([ { } ]);  /* Returns a data source with only one empty element. */
     private _selectedRow: number;  /* Represents the selected row. */
 
-	public filter_content: InputContent = {
-        'width': '65%',
-
-        'label': 'Write a text to filter',
-
-        'textAlign': TextAlign.left,
-        'ariaLabel': 'Filter',
-
-        'appearance': TextInputAppearance.standard,
-
-        'prefixIcon': new IconValue(IconSource.external, ContentPosition.prefix, 'search'),
-
-        'startHint': new HintValue(HintPosition.start, 'Filters when typing stops.')
-    };
-    
     /**
      * Stream that emits when a new filter is set on the data source. 
      * Because of the behavior and appearance of the component, it is necessary to use 
-     * `Subject` instead of `BehaviorSubject` to represent the `_filterChange`. 
+     * `Subject` instead of `BehaviorSubject` to represent the `_filterValuesChange`. 
      */
-    private readonly _filterChange: Subject<SimpleFilter>;
-    private _filterValue: SimpleFilter;
+    private readonly _filterValuesChange: Subject<FilterValues>;
+    private _filterValues: FilterValues;  /* The current filter values. */
+    private _filterValuesSubscription: Params<Subscription>;  /* The current subscriptions for observing the changes in the filter controls value. It has the same properties than `_filterValues` */
 
     @ViewChild(MatSort, { static: true })
     private _sort: MatSort;
@@ -255,8 +236,9 @@ export class TableComponent implements OnInit, OnDestroy
 
         this._selectedRow = undefined;
 
-        this._filterChange = new Subject<SimpleFilter>();
-        this._filterValue = undefined;
+        this._filterValuesChange = new Subject<FilterValues>();
+        this._filterValues = {};
+        this._filterValuesSubscription = {};
 
         this._renderChangesSubscription = Subscription.EMPTY;
     }
@@ -272,6 +254,11 @@ export class TableComponent implements OnInit, OnDestroy
 
     public ngOnDestroy(): void
     {
+        /* Disposes the resources held by the subscription. */
+        Object.keys(this._filterValuesSubscription).forEach((name: string) => {
+            this._filterValuesSubscription[name].unsubscribe();
+        });
+
         /* Disposes the resources held by the subscription. */
         this._renderChangesSubscription.unsubscribe();
     }
@@ -343,7 +330,25 @@ export class TableComponent implements OnInit, OnDestroy
      */
     private _updateFilter(): void
     {
-        //TODO: ...
+        /* For each filter property. */
+        Object.keys(this._content.filter).forEach((filterName: string) => {
+            /* Saves the initial values. */
+            this._filterValues[filterName] = this._content.filter[filterName].internalControl.value;
+
+            /* Disposes the resources held by the subscription. */
+            if (this._filterValuesSubscription[filterName] != undefined) this._filterValuesSubscription[filterName].unsubscribe();
+
+            /* Subscribes to observe the changes in the control value. */
+            this._filterValuesSubscription[filterName] = this._content.filter[filterName].internalControl.valueChanges.pipe(
+                /* Waits 500ms after each keystroke before considering the term. */
+                debounceTime(500),
+                /* Ignores new term if same as previous term. */
+                distinctUntilChanged()
+            )
+            .subscribe((value: any) => {
+                this.applyFilter(filterName, value);
+            });
+        });
     }
 
     /**
@@ -387,17 +392,13 @@ export class TableComponent implements OnInit, OnDestroy
         this._updateFilter();
         this._updateMatSort();
 
-        /* The `_filterChange` is always present; although the user decides if it is used or not. 
+        /* The `_filterValuesChange` is always present; although the user decides if it is used or not. 
          * Also, `MatSort` and `MatPaginator` are always present because they are managed by the component completely. 
          * Subscribes to get the values when there is a change in the filtering, sorting, or pagination of the data. */
         this._renderChangesSubscription = combineLatest([
-            this._filterChange.pipe(
-                /* Waits 500ms after each keystroke before considering the term. */
-                debounceTime(500),
-                /* Ignores new term if same as previous term. */
-                distinctUntilChanged(),
+            this._filterValuesChange.pipe(
                 /* Emits the first value. Filters using the initial values. The operators must be called in this order. */
-                startWith((this._filterValue = this._content.filter))
+                startWith(this._filterValues)
             ),
             this._sort.sortChange.pipe(
                 /* When the table is empty and it is not loading, then clicking the table header 
@@ -560,17 +561,18 @@ export class TableComponent implements OnInit, OnDestroy
      * Returns the input field that contains the content of this class (the table control content to show). 
      */
     @Input()
-    public get content(): TableContent<any, SimpleFilter>
+    public get content(): TableContent<any>
     {
         return this._content;
     }
 
 	/**
 	 * Sets the input field that contains the content of this class (the table control content to show). 
+     * In this way, the component is updated correctly. 
      * @param newContent The new content to set. 
      * If the value is null, sets to `defaultTableContent`. 
 	 */
-    public set content(newContent: TableContent<any, SimpleFilter> | null)
+    public set content(newContent: TableContent<any> | null)
     {
         this._content = newContent;
         this.init();
@@ -665,17 +667,40 @@ export class TableComponent implements OnInit, OnDestroy
      * won't be overridden when only one property is updated. 
      * @param filter The partial representation of the filter model to combine. 
      */
-    public applyFilter(filter: Partial<SimpleFilter>): void
+    public applyFilters(filter: Partial<FilterValues>): void
     {
         /* This method is accepting a partial representation of the filter model. 
-         * It combines the specified filter with the last one by accessing the `BehaviorSubject<SimpleFilter>` 
+         * It combines the specified filter with the last one by accessing the `Subject<FilterValues>` 
          * and merging both filters via the spread operator. This way old filter properties 
          * won't be overridden when only one property is updated. 
          * It is not necessary to call the `trim()` method over its properties because it is called 
          * in the backend internally. */
 
-        this._filterValue = { ...this._filterValue, ...filter };
+        this._filterValues = { ...this._filterValues, ...filter };
 
-        this._filterChange.next(this._filterValue);
+        this._filterValuesChange.next(this._filterValues);
+    }
+
+    /**
+     * Applies the filter model that should be used to filter out objects from the data source. 
+     * Assumes that the backend will call the `trim()` method over its properties. 
+     * This method is accepting a partial representation of the filter model. 
+     * It combines the specified filter with the last one. This way old filter properties 
+     * won't be overridden when only one property is updated. 
+     * @param filter The partial representation of the filter model to combine. 
+     */
+    public applyFilter(name: string, value: any): void
+    {
+        /* This method is accepting a partial representation of the filter model. 
+         * It combines the specified filter with the last one by accessing the `Subject<FilterValues>` 
+         * and merging both filters via the spread operator. This way old filter properties 
+         * won't be overridden when only one property is updated. 
+         * It is not necessary to call the `trim()` method over its properties because it is called 
+         * in the backend internally. */
+
+        this._filterValues = { ...this._filterValues };
+        this._filterValues[name] = value;
+
+        this._filterValuesChange.next(this._filterValues);
     }
 }

@@ -1,11 +1,4 @@
 
-<mat-form-field id="filter-mat-form-field" [style.width]="'65%'" [appearance]="'outline'">
-    <mat-label>Write a text to filter</mat-label>
-    <mat-icon matPrefix>search</mat-icon>
-    <input matInput id="text-input-element" (keyup)="applyFilter({ 'search': $event.target.value })" [style.textAlign]="'left'" [attr.aria-label]="'Filter'" />
-    <mat-hint [align]="start">Filters when typing stops.</mat-hint>
-</mat-form-field>
-
 <table mat-table matSort class="mat-elevation-z8" [dataSource]="_getDataSource" multiTemplateDataRows>
 
     <!-- The content that is showed when the `dataSource` is not empty. -->

@@ -3,6 +3,8 @@ import { _isNumberValue } from '@angular/cdk/coercion';
 import { Sort, PageEvent } from '@angular/material';
 import { Observable } from 'rxjs';
 
+import { InputControl } from '@toco/tools/forms';
+
 import { MAX_SAFE_INTEGER, Params } from '../utils/common';
 
 /**
@@ -27,16 +29,28 @@ export enum SortDirection
 };
 
 /**
+ * A collection of key/value elements, where the key is the filter name and the value is the control 
+ * that contains the filter value. 
+ * Both the `FilterControls` keys and `FilterValues` keys are the same.
+ */
+export type FilterControls = Params<InputControl>;
+
+/**
+ * A collection of key/value elements, where the key is the filter name and the value is the filter value. 
+ * Both the `FilterControls` keys and `FilterValues` keys are the same.
+ */
+export type FilterValues = Params<any>;
+
+/**
  * An interface that represents the input data that are used to make a page request. 
  * It is the input of `BackendDataSourceFunction` function. 
- * The generic parameter F always refers to the type of object that contains the filter model. 
  */
-export interface PageRequest<F extends Params<any>>
+export interface PageRequest
 {
     /**
      * The current filter state. 
      */
-    filter?: F;
+    filter?: FilterValues;
 
     /**
      * The current sort state. 
@@ -84,20 +98,11 @@ export interface Page<T>
 /**
  * An interface that represents the function that is used to get the data source from backend. 
  * The generic parameter T always refers to the type of data that it is dealing with. 
- * The generic parameter F always refers to the type of object that contains the filter model. 
  */
-export interface BackendDataSourceFunction<T, F extends Params<any>>
+export interface BackendDataSourceFunction<T>
 {
-    (pageRequest: PageRequest<F>): Observable<Page<T>>;
+    (pageRequest: PageRequest): Observable<Page<T>>;
 }
-
-/**
- * A simple filter model with a single search property. 
- */
-export type SimpleFilter = {
-    search?: string;
-    //registration?: Date;
-};
 
 /**
  * Checks if a data object matches the data source's filter string. By default, each data object 

@@ -45,7 +45,7 @@ export interface UserQuery
 })
 export class UserService
 {
-    public page(pageRequest: PageRequest<UserQuery>): Observable<Page<User>>
+    public page(pageRequest: PageRequest): Observable<Page<User>>
     {
         /* Fake backend, do your server request here instead. */
 
