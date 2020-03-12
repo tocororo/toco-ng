@@ -47,15 +47,10 @@ export class SourceService {
     return this.http.get<Response<any>>(req, options);
   }
 
-<<<<<<< HEAD
-    newSource(source: any): void {
-    }
-=======
   newSource(source: any): void {}
 
   editSource(source: SourceVersion, uuid: any): Observable<Response<any>> {
     console.log(source.stringify());
->>>>>>> f719982ce6b3dac6da4c86d126f30510edfde094
 
     const req = this.env.sceibaApi + this.prefix + "/" + uuid + "/edit";
     return this.http.post<Response<any>>(
