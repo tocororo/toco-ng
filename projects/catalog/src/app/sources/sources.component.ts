@@ -18,10 +18,10 @@ export class SourcesComponent implements OnInit
     /**
      * The search filter. 
      */
-	public searchContent: InputContent;
+	// public searchContent: InputContent;
 
-    @ViewChild('input_search', { static: true })
-    private _inputSearch: InputTextComponent;
+    // @ViewChild('input_search', { static: true })
+    // private _inputSearch: InputTextComponent;
 
     /**
      * The sources list.
@@ -32,8 +32,8 @@ export class SourcesComponent implements OnInit
     @ViewChild(TableComponent, { static: true })
     private _tableControl: TableComponent;
 
-    //public constructor(private _souceService: SourceService)
-    public constructor(private _userService: UserService)
+    public constructor(private _souceService: SourceService)
+    //public constructor(private _userService: UserService)
     { }
 
     public ngOnInit(): void
@@ -43,12 +43,12 @@ export class SourcesComponent implements OnInit
 
         /***************************/
 
-        this.searchContent = this._initSearchContent();
+        // this.searchContent = this._initSearchContent();
         this.tableContent = this._initTableContent();
 
         /***************************/
 
-        this._tableControl.page.subscribe((value) => console.log('page', value));
+        // this._tableControl.page.subscribe((value) => console.log('page', value));
     }
 
     private _initSearchContent(): InputContent
@@ -72,10 +72,10 @@ export class SourcesComponent implements OnInit
     private _initTableContent(): TableContent<any>
     {
         return {
-            //'columnsObjectProperty': ['name', 'source_status', 'version_to_review'],
-            'columnsObjectProperty': ['id', 'name', 'registrationDate'],
-            //'columnsHeaderText': ['Nombre', 'Estatus', 'Acciones'],
-            'columnsHeaderText': ['id', 'name', 'registrationDate'],
+            'columnsObjectProperty': ['name', 'source_status', 'version_to_review'],
+            //'columnsObjectProperty': ['id', 'name', 'registrationDate'],
+            'columnsHeaderText': ['Nombre', 'Estatus', 'Acciones'],
+            //'columnsHeaderText': ['id', 'name', 'registrationDate'],
             'columnsWidth': ['60%', '22%', '18%'],
             'columnContentWrap': [CellContentWrap.ellipsis, CellContentWrap.ellipsis, CellContentWrap.responsible],
             'createCssClassesForRow': (rowData: any) => {
@@ -84,13 +84,13 @@ export class SourcesComponent implements OnInit
                     'selected-row': (rowData[this.tableContent.propertyNameToIdentify]) == this._tableControl.selectedRow
                 };
             },
-            //'propertyNameToIdentify': 'uuid',
-            'propertyNameToIdentify': 'id',
+            'propertyNameToIdentify': 'uuid',
+            //'propertyNameToIdentify': 'id',
 
-            'filter': {
-                'search': this._inputSearch,
-                //'registration': undefined
-            },
+            // 'filter': {
+            //     'search': this._inputSearch,
+            //     //'registration': undefined
+            // },
             'sort': {
                 'active': 'id',
                 'direction': SortDirection.desc
@@ -101,8 +101,8 @@ export class SourcesComponent implements OnInit
             //'hidePageSize': true,
             'showFirstLastButtons': true,
 
-            //'endpoint': this._getMySources.bind(this),
-            'endpoint': this._userService.page.bind(this._userService),
+            'endpoint': this._getMySources.bind(this),
+            //'endpoint': this._userService.page.bind(this._userService),
 
             actions: [
                 { icon: 'visibility', route: 'view', tooltip: 'Ver' },
@@ -111,19 +111,19 @@ export class SourcesComponent implements OnInit
         };
     }
 
-    // private _getMySources(pageRequest: PageRequest): Observable<Page<any>>
-    // {
-    //     return this._souceService.getMySources(pageRequest.paginator.pageSize, (pageRequest.paginator.pageIndex + 1)).pipe(
-    //         map((response: Response<any>): Page<any> => {
-    //             console.log('Sources Response: ', response);
+    private _getMySources(pageRequest: PageRequest): Observable<Page<any>>
+    {
+        return this._souceService.getMySources(pageRequest.paginator.pageSize, (pageRequest.paginator.pageIndex + 1)).pipe(
+            map((response: Response<any>): Page<any> => {
+                console.log('Sources Response: ', response);
 
-    //             return {
-    //                 'data': response.data.sources.sources,
-    //                 'totalData': response.data.sources.count,
-    //                 'pageIndex': pageRequest.paginator.pageIndex,
-    //                 'pageSize': pageRequest.paginator.pageSize
-    //             };
-    //         })
-    //     );
-    // }
+                return {
+                    'data': response.data.sources.sources,
+                    'totalData': response.data.sources.count,
+                    'pageIndex': pageRequest.paginator.pageIndex,
+                    'pageSize': pageRequest.paginator.pageSize
+                };
+            })
+        );
+    }
 }
