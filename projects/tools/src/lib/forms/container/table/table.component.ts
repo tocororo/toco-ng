@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource, MatSort, MatPaginator, Sort, PageEvent } from '@angular/material';
 import { Observable, Subscription, Subject, combineLatest } from 'rxjs';
-import { startWith, switchMap, finalize, debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
+import { startWith, switchMap, finalize, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { SortDirection, FilterControls, FilterValues, Page, Params, BackendDataSourceFunction } from '@toco/tools/core';
 
@@ -191,11 +191,11 @@ export function defaultTableContent(): TableContent<any>
 export class TableComponent implements OnInit, OnDestroy
 {
     /**
-     * Returns true if it is loading the data source; otherwise, false. 
+     * Returns the amount of backend subscriptions. 
+     * When its value is different of 0, means the component is loading the data source. 
      * In this way, it shows/hides the loading progress control. 
-     * By default, its value is `false`. 
+     * By default, its value is `0`. 
      */
-    private _loading: boolean;
     private _countBackendSubscriptions: number;
 
     private _content: TableContent<any>;
@@ -237,7 +237,7 @@ export class TableComponent implements OnInit, OnDestroy
 
     public constructor(private _router: Router, private _activatedRoute: ActivatedRoute)
     {
-        this._loading = false;  /* By default, its value is `false`. */
+        /* By default, its value is `0`, means the component is NOT loading the data source. */
         this._countBackendSubscriptions = 0;
 
         this._page = new Subject<Page<any>>();
@@ -449,8 +449,8 @@ export class TableComponent implements OnInit, OnDestroy
             /* Switches to new search observable each time the term changes. */
             switchMap(([filterEvent, sortEvent, pageEvent]): Observable<Page<any>> => {
 
-                /* It begins the loading of the data. In this way, it shows the loading progress control. */
-                this._loading = true;
+                /* Adds the new backend subscription. It begins/continues the loading of the data. 
+                 * In this way, it shows the loading progress control. */
                 this._countBackendSubscriptions++;
                 console.log('Call _countBackendSubscriptions: ', this._countBackendSubscriptions);
 
@@ -463,9 +463,9 @@ export class TableComponent implements OnInit, OnDestroy
                     'paginator': pageEvent
                 }).pipe(
                     finalize(() => {
+                        /* Removes the last backend subscription. In this way, when its value is `0`, 
+                         * means the component is NOT loading the data source; it then hides the loading progress control. */
                         this._countBackendSubscriptions--;
-                        /* It ends the loading of the data. In this way, it hides the loading progress control. */
-                        if (this._countBackendSubscriptions == 0) this._loading = false;
                     })
                 );
             })
@@ -569,7 +569,9 @@ export class TableComponent implements OnInit, OnDestroy
      */
     public get isLoading(): boolean
     {
-        return this._loading;
+        /* When the `_countBackendSubscriptions` value is different of 0, 
+         * means the component is loading the data source. */
+        return (this._countBackendSubscriptions != 0);
     }
 
     /**
@@ -723,15 +725,13 @@ export class TableComponent implements OnInit, OnDestroy
     /**
      * Applies the filter model that should be used to filter out objects from the data source. 
      * Assumes that the backend will call the `trim()` method over its properties. 
-     * This method is accepting a partial representation of the filter model. 
-     * It combines the specified filter with the last one. This way old filter properties 
+     * It combines the specified filter property with the last one. This way old filter properties 
      * won't be overridden when only one property is updated. 
      * @param filter The partial representation of the filter model to combine. 
      */
     public applyFilter(name: string, value: any): void
     {
-        /* This method is accepting a partial representation of the filter model. 
-         * It combines the specified filter with the last one by accessing the `Subject<FilterValues>` 
+        /* It combines the specified filter property with the last one by accessing the `Subject<FilterValues>` 
          * and merging both filters via the spread operator. This way old filter properties 
          * won't be overridden when only one property is updated. 
          * It is not necessary to call the `trim()` method over its properties because it is called 
