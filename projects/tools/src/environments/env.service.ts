@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 
 import { Injectable } from '@angular/core';
 
@@ -14,6 +19,7 @@ export class EnvService {
     public oauthRedirectUri = '';
     public oauthClientId = '';
     public oauthScope = '';
+    public organizationUUID = '';
     public extraArgs: any = null;
     constructor()
     { }

@@ -29,7 +29,7 @@ export class TitleFilterComponent implements OnInit, FilterComponent {
     remove_component(){
         this.filterService.deleteParameter(this.data.field);
         this.filterContainerService.filterDeleted(this.data.index)
-        
+
     }
     onChange(){
         this.filterService.changeFilter(this.data.field, this.data.value);

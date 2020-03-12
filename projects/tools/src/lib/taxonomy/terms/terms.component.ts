@@ -150,6 +150,7 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
     getChildren(node: TermNode) {
         return observableOf(node.children);
     }
+
     addTerm() {
         this.openTermDialog(null);
     }

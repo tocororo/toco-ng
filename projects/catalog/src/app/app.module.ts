@@ -1,9 +1,13 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '@toco/tools/shared';
 
-import { CatalogModule } from '@toco/tools/catalog';
 import { CatalogService } from '@toco/tools/backend';
 import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
 
@@ -17,6 +21,9 @@ import { SourceViewComponent, SourceViewSaveDialog } from './source-view/source-
 import { SourcesComponent } from './sources/sources.component';
 import { TocoFormsModule } from '@toco/tools/forms';
 import { SourceEditComponent } from './source-edit/source-edit.component';
+import { FiltersComponent } from './filters/filters.component';
+import { CatalogComponent, DialogCatalogJournalInfoDialog } from './catalog/catalog.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -24,26 +31,31 @@ import { SourceEditComponent } from './source-edit/source-edit.component';
         SourceViewComponent,
         SourceEditComponent,
         SourcesComponent,
-        SourceViewSaveDialog
+        SourceViewSaveDialog,
+        FiltersComponent,
+        CatalogComponent,
+        DialogCatalogJournalInfoDialog
     ],
 
     imports: [
         BrowserAnimationsModule,
         SharedModule,
         CoreModule,
-        CatalogModule,
+        ReactiveFormsModule,
         AuthenticationModule,
         NotificationModule,
         AppRoutingModule,
         JournalModule,
         TocoFormsModule
     ],
-    entryComponents:[
-        SourceViewSaveDialog
+    entryComponents: [
+        SourceViewSaveDialog,
+        DialogCatalogJournalInfoDialog
     ],
     providers: [CatalogService, EnvServiceProvider],
 
     bootstrap: [AppComponent]
 })
-export class AppModule
-{ }
+export class AppCatalogModule {
+
+}

@@ -1,0 +1,38 @@
+<toco-form-container
+  *ngIf="level1Panel"
+  #level1PanelContainer
+  [panels]="level1Panel"
+  [useAccordion]="false"
+  fxLayout="row"
+  [deleteValuesAfterAction]="false"
+></toco-form-container>
+
+<toco-form-container
+  *ngIf="level2Panel"
+  #level2PanelContainer
+  [panels]="level2Panel"
+  [useAccordion]="false"
+  fxLayout="row"
+  [deleteValuesAfterAction]="false"
+></toco-form-container>
+
+<ng-container *ngIf="level2">
+  <mat-checkbox #isManagedBy [checked]="true" (click)="manageByLevel3Click()">
+    <div>
+      La revista es gestionada por una unidad perteneciente a:
+    </div>
+    <div>
+      <strong> {{ level2.name }}</strong>
+    </div>
+  </mat-checkbox>
+
+  <toco-form-container
+    *ngIf="isManagedBy.checked && level3Panel"
+    #level3PanelContainer
+    [panels]="level3Panel"
+    [useAccordion]="false"
+    fxLayout="row"
+    [deleteValuesAfterAction]="false"
+  >
+  </toco-form-container>
+</ng-container>

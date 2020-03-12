@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@toco/tools/shared';
@@ -14,6 +19,8 @@ import { JournalViewInfoComponent } from './journal-view/journal-view-info.compo
 import { JournalViewFieldComponent } from './journal-view/journal-view-version-field.component';
 import { JournalViewVersionComponent } from './journal-view/journal-view-version.component';
 import { CoreModule } from '../core';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { InstitutionsModule } from '../institutions/institutions.module';
 
 @NgModule({
     declarations: [
@@ -31,17 +38,24 @@ import { CoreModule } from '../core';
     ],
     imports: [
         SharedModule,
+        CoreModule,
         ReactiveFormsModule,
-        TocoFormsModule
+        TocoFormsModule, 
+        InstitutionsModule
     ],
 
     exports: [
         JournalViewComponent,
-        JournalEditComponent
+        JournalEditComponent,
+        JournalViewInfoComponent
     ],
 
     providers: [
-        SourceService
+        SourceService,
+        {
+            provide: STEPPER_GLOBAL_OPTIONS,
+            useValue: { displayDefaultIndicatorType: false }
+          }
     ]
 })
 export class JournalModule

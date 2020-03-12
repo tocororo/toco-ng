@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 
 import { Input } from '@angular/core';
 
@@ -252,6 +257,9 @@ export enum FormFieldType
 
     /** Generic select with a filter control. */
     select_filter= 'select_filter',
+
+    /** Generic select with a filter control. */
+    select_tree= 'select_tree',
 }
 
 /**

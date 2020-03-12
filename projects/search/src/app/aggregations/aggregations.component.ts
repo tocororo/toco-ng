@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { PanelContent, FormFieldType, SelectOption, FormContainerAction } from '@toco/tools/forms';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';

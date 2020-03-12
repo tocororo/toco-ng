@@ -11,6 +11,7 @@ import { TitleFilterComponent } from './title-filter/title-filter.component';
 import { FilterContainerService } from './filter-container.service';
 import { FiltersService } from './filters.service';
 import { FilterDirective } from './filter.directive';
+import { TreeFilterComponent } from './tree-filter/tree-filter.component';
 
 @NgModule({
     declarations: [
@@ -19,15 +20,16 @@ import { FilterDirective } from './filter.directive';
         SelectAutocompleteFilterComponent,
         SelectFilterOldComponent,
         TitleFilterComponent,
-        FilterDirective
-        
+        FilterDirective,
+        TreeFilterComponent
     ],
 
     entryComponents:[
         BooleanFilterComponent,
         SelectAutocompleteFilterComponent,
         SelectFilterOldComponent,
-        TitleFilterComponent
+        TitleFilterComponent,
+        TreeFilterComponent
     ],
 
     imports: [
@@ -42,7 +44,8 @@ import { FilterDirective } from './filter.directive';
         SelectAutocompleteFilterComponent,
         SelectFilterOldComponent,
         TitleFilterComponent,
-        FilterDirective
+        FilterDirective,
+        TreeFilterComponent
     ],
 
     providers: [

@@ -35,7 +35,7 @@
 
 <div *ngIf="(!useAccordion)" class="toco-form-container">
     <div *ngFor="let panel of panels; let i=index; let count = count">
-    <mat-card >
+    <mat-card [ngStyle]="{'margin-bottom': '1em'}">
         <mat-card-header>
             <mat-card-title>
                 {{ panel.title }}
@@ -58,7 +58,6 @@
 
         </mat-card-actions>
     </mat-card>
-    <mat-divider></mat-divider>
     </div>
 </div>
 

@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
     selector: 'toco-progress',
     template: `
     <mat-progress-bar *ngIf="loading"
-        mode="indeterminate" color="warn">
+        mode="indeterminate" color="warn" style="z-index: 1001">
     </mat-progress-bar>
     <div *ngIf="loading" class="overlay"> 
 

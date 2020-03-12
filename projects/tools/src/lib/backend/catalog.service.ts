@@ -67,4 +67,9 @@ export class CatalogService extends HttpService {
     //     addPeople(body):Observable<Response>{
     //       return this.http.post<Response>(this.dominio,body);
     //   }
+
+    getSourceByUUID(uuid): Observable<Response<any>> {
+        const req = this.env.sceibaApi + 'source/' + uuid;
+        return this.http.get<Response<any>>(req);
+    }
 }
