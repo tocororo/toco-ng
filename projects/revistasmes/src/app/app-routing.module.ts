@@ -17,6 +17,7 @@ import { SourcesComponent } from 'projects/catalog/src/app/sources/sources.compo
 import { HomeComponent } from './home/home.component';
 import { StaticPagesComponent } from './static-pages/static-pages.component';
 import { CatalogComponent } from 'projects/catalog/src/app/catalog/catalog.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 const routes: Routes = [
@@ -47,6 +48,10 @@ const routes: Routes = [
         path: 'contact',
         component: StaticPagesComponent,
         data: {src: 'assets/markdown/contact.md', title: 'Contacto'}
+    },
+    {
+        path: 'userprofile',
+        component: UserProfileComponent
     },
     {
         path: 'sources',

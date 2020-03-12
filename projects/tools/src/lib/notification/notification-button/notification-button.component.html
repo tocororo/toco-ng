@@ -1,6 +1,19 @@
-<button mat-mini-fab color="primary" [matBadge]="notificationsCount()" matBadgeColor="accent" [matMenuTriggerFor]="notificationsMenu">
-    <mat-icon>notifications</mat-icon>
-</button>
+<ng-container [ngSwitch]="buttonType">
+    
+    <button *ngSwitchCase="'mat-icon-button'" mat-icon-button [matBadge]="notificationsCount()" matBadgeColor="accent" [matMenuTriggerFor]="notificationsMenu" matTooltip="Notificaciones">
+        <mat-icon>notifications</mat-icon>
+    </button>
+
+    <button *ngSwitchCase="'mat-button'" mat-button color="{{color}}" [matBadge]="notificationsCount()" matBadgeColor="accent" [matMenuTriggerFor]="notificationsMenu" matTooltip="Notificaciones">
+        <mat-icon>notifications</mat-icon>
+    </button>
+
+    <button *ngSwitchDefault mat-mini-fab color="{{color}}" [matBadge]="notificationsCount()" matBadgeColor="accent" [matMenuTriggerFor]="notificationsMenu" matTooltip="Notificaciones">
+        <mat-icon>notifications</mat-icon>
+    </button>
+</ng-container>
+
+
 
 <mat-menu #notificationsMenu="matMenu">
     <button mat-menu-item *ngFor="let notification of notifications">

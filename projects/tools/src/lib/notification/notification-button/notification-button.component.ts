@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { of as observableOf, timer, Subscription, PartialObserver } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
@@ -13,6 +13,10 @@ import { OAuthStorage } from 'angular-oauth2-oidc';
     styleUrls: ['./notification-button.component.scss']
 })
 export class NotificationButtonComponent implements OnInit {
+
+    @Input() public color: string;
+
+    @Input() public buttonType: string;
 
     private count: number;
     public notifications : Array<NotificationInfo>;
@@ -62,6 +66,9 @@ export class NotificationButtonComponent implements OnInit {
         // Emits, one every second (90000ms), starting after 0 seconds
         this.timerSuscription = timer(0, 90000).subscribe(this.timerObserver);
 
+        if (this.color == undefined) this.color = "primary";
+
+        if (this.buttonType == undefined) this.buttonType = "mat-mini-fab";
     }
 
     notificationsCount(){

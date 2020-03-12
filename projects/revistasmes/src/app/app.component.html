@@ -1,66 +1,106 @@
-<mat-toolbar class="mat-elevation-z6" color="primary" fxLayout="row wrap" fxLayout.xs="column"
-    fxLayoutAlign="space-between center">
-    <a class="color-white" [routerLink]="['/']">
-        <img src="assets/images/logo_mes.png" alt="MES" width="140">
-    </a>
+<mat-toolbar class="mat-elevation-z6" color="primary" style="position: relative;">
 
-    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="15px">
-        <mat-button-toggle-group
+    <mat-toolbar-row
+        fxLayout="row wrap"
+        fxLayout.xs="column"
+        fxLayoutAlign="space-between center"
+        style="height: auto !important; min-height: 56px;"
+    >
+        <a class="color-white" [routerLink]="['/']">
+            <img src="assets/images/logo_mes.png" alt="MES" width="140">
+        </a>
+        <div
             appearance="legacy"
             aria-label="Menu de Inicio"
             fxLayout="row wrap"
-            fxLayout.xs="column"
-            fxLayoutAlign="center center"
+            fxLayoutGap="15px"
         >
-            <a mat-button [routerLink]="['/faq']"> FAQ </a>
-            <a mat-button [routerLink]="['/help']"> Ayuda </a>
-            <a mat-button [routerLink]="['/contact']"> Contacto </a>
-            <a mat-button [routerLink]="['/']"> Redes Sociales </a>
 
-            <toco-notification-button *ngIf="islogged"></toco-notification-button>
+            <button mat-icon-button [matMenuTriggerFor]="menuNetwork" matTooltip="Redes Sociales">
+                <mat-icon>share</mat-icon>
+            </button>
+
+            <button mat-icon-button [matMenuTriggerFor]="menuHelp" matTooltip="Ayuda">
+                <mat-icon>help</mat-icon>
+            </button>
+
+            <toco-notification-button *ngIf="islogged" [color]="'primary'" [buttonType]="'mat-icon-button'"></toco-notification-button>
 
             <toco-authentication *ngIf="!islogged" [isButtonLogin]="'true'"></toco-authentication>
 
-            <button mat-button *ngIf="islogged" [matMenuTriggerFor]="menu">
-                {{ user }}
+            <button mat-icon-button *ngIf="islogged" [matMenuTriggerFor]="menu" matTooltip="{{ user }}">
                 <mat-icon>person_pin</mat-icon>
             </button>
 
-        </mat-button-toggle-group>
+        </div>
 
-        <!-- <a *ngIf="islogged" mat-raised-button color="primary" [routerLink]="['/sources/new/journal']">Adicionar
-            Revista</a>
+    </mat-toolbar-row
+    >
+    
+    <mat-toolbar-row
+        fxLayout="row wrap"
+        fxLayoutAlign="center"
+        fxLayout.xs="column"
+        fxLayoutAlign="center center"
+        style="height: auto !important; min-height: 56px;"
+    >
 
-        <a *ngIf="islogged" mat-raised-button color="primary" [routerLink]="['/sources']"> Mis Registros </a> -->
+        <a mat-button [routerLink]="['/']" value="Inicio">Inicio</a>
+        <a mat-button [routerLink]="['/about']" value="Acerca de">Acerca de</a>
+        <a mat-button [routerLink]="['/sources/new/journal']" value="Incluye tu revista">Incluye tu revista</a>
+        <a *ngIf="islogged" mat-button [routerLink]="['/sources']"> Mis Registros </a>
+        <a mat-button [routerLink]="['/directory']" value="Catálogo">Directorio</a>
+        <a mat-button [routerLink]="['/']" value="Reportes y estadísticas">Reportes y estadísticas</a>
 
-    </div>
+    </mat-toolbar-row
+    >
 
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item >
+    <a mat-menu-item [routerLink]="['/userprofile']">
         <mat-icon>account_circle</mat-icon>
         Mi Cuenta
-    </button>
+    </a>
     <button mat-menu-item (click)="logoff()">
         <mat-icon>lock</mat-icon>
         Salir
     </button>
 </mat-menu>
 
-<mat-button-toggle-group
-    appearance="legacy"
-    aria-label="Menu de Inicio"
-    fxLayout="row wrap" fxLayout.xs="column"
-    fxLayoutAlign="center center"
->
-    <a mat-button [routerLink]="['/']" value="Inicio">Inicio</a>
-    <a mat-button [routerLink]="['/about']" value="Acerca de">Acerca de</a>
-    <a mat-button [routerLink]="['/sources/new/journal']" value="Incluye tu revista">Incluye tu revista</a>
-    <a mat-button [routerLink]="['/directory']" value="Catálogo">Directorio</a>
-    <a mat-button [routerLink]="['/']" value="Reportes y estadísticas">Reportes y estadísticas</a>
+<mat-menu #menuNetwork="matMenu">
+    <a mat-menu-item href="https://facebook.com">
+        <!-- <mat-icon>info</mat-icon> -->
+        Facebook
+    </a>
+    <a mat-menu-item href="https://twitter.com">
+        <!-- <mat-icon>question_answer</mat-icon> -->
+        Twitter
+    </a>
+    <a mat-menu-item href="https://linkedin.com">
+        <!-- <mat-icon>contacts</mat-icon> -->
+        Linkedin
+    </a>
+</mat-menu>
 
-</mat-button-toggle-group>
+<mat-menu #menuHelp="matMenu">
+    <a mat-menu-item [routerLink]="['/help']">
+        <mat-icon>help_outline</mat-icon>
+        Ayuda
+    </a>
+    <a mat-menu-item [routerLink]="['/faq']">
+        <mat-icon>question_answer</mat-icon>
+        FAQs
+    </a>
+    <a mat-menu-item [routerLink]="['/about']">
+        <mat-icon>info</mat-icon>
+        Acerca de
+    </a>
+    <a mat-menu-item [routerLink]="['/contact']">
+        <mat-icon>contacts</mat-icon>
+        Contactos
+    </a>
+</mat-menu>
 
 <toco-progress [loading]="loading">
 </toco-progress>

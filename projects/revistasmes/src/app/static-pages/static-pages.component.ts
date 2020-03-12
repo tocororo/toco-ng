@@ -22,8 +22,6 @@ export class StaticPagesComponent implements OnInit {
 
         this.activatedRoute.data.subscribe({
             next: (data) => {
-                console.log(data);
-                
                 if (data) {
                     this.src = data['src'];
                     this.title = data['title'];

@@ -18,12 +18,14 @@ import { InstitutionsModule } from '@toco/tools/institutions/institutions.module
 import { StaticPagesComponent } from './static-pages/static-pages.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MarkdownModule } from 'ngx-markdown';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    StaticPagesComponent
+    StaticPagesComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserAnimationsModule,
