@@ -1,10 +1,10 @@
 
-<mat-form-field id="text-mat-form-field" [appearance]="content.appearance" [formGroup]="content.formGroup">
-<!-- <mat-form-field id="text-mat-form-field" [appearance]="content.appearance"> -->
+<!-- <mat-form-field id="text-mat-form-field" [appearance]="content.appearance" [formGroup]="content.formGroup"> -->
+<mat-form-field id="text-mat-form-field" [appearance]="content.appearance">
     <mat-label>{{ content.label }}</mat-label>
 
-    <input matInput id="inputId-{{content.name}}" [formControl]="internalControl" [required]="content.required" [style.textAlign]="content.textAlign" [attr.aria-label]="content.ariaLabel" (input)="handleInput()" [formControlName]="content.name"/>
-    <!-- <input matInput id="inputId-{{content.name}}" [formControl]="internalControl" [required]="content.required" [style.textAlign]="content.textAlign" [attr.aria-label]="content.ariaLabel" (input)="handleInput()" /> -->
+    <!-- <input matInput id="inputId-{{content.name}}" [formControl]="internalControl" [required]="content.required" [style.textAlign]="content.textAlign" [attr.aria-label]="content.ariaLabel" (input)="handleInput()" [formControlName]="content.name"/> -->
+    <input matInput id="inputId-{{content.name}}" [formControl]="internalControl" [required]="content.required" [style.textAlign]="content.textAlign" [attr.aria-label]="content.ariaLabel" (input)="handleInput()" />
 
     <!-- At the moment of writing this code (2019-08-03), I think that there is an error in `ng-container` or 
         `mat-icon` or something related because I can not put the `mat-icon` tag within an `ng-container` tag 

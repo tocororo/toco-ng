@@ -1,7 +1,7 @@
 
 import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatTableDataSource, MatSort, MatPaginator, Sort } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator, Sort, PageEvent } from '@angular/material';
 import { Observable, Subscription, Subject, combineLatest } from 'rxjs';
 import { startWith, switchMap, finalize, debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 
@@ -23,12 +23,14 @@ export enum CellContentWrap
     break,
 
     /**
-     * The `ellipsis` wrap clips the remaining content and renders an ellipsis ("...") to represent the clipped content. 
+     * The `ellipsis` wrap clips the remaining content and renders an ellipsis ("...") 
+     * to represent the clipped content. 
      */
     ellipsis,
 
     /**
-     * The `responsible` wrap is the default style. It only applies the responsible styles that are defined in the table. 
+     * The `responsible` wrap is the default style. It only applies the responsible styles 
+     * that are defined in the table. 
      */
     responsible
 }
@@ -197,10 +199,17 @@ export class TableComponent implements OnInit, OnDestroy
     private _countBackendSubscriptions: number;
 
     private _content: TableContent<any>;
-    private readonly _page: Subject<Page<any>>;  /* Stream that emits when a new data array is set on the data source. */
+
+    /**
+     * Returns the stream that emits the page that should be rendered by the table, 
+     * when there is a change in the filtering, sorting, or pagination of the data. Each object 
+     * in the `data` field represents one row. This is made for someone that wants to know it. 
+     */
+    private readonly _page: Subject<Page<any>>;  
     private _pageAsObservable: Observable<Page<any>>;
     private _dataSource: MatTableDataSource<any>;
-    private static readonly _defaultDataSource: MatTableDataSource<any> = new MatTableDataSource([ { } ]);  /* Returns a data source with only one empty element. */
+    /* Returns a data source with only one empty element. */
+    private static readonly _defaultDataSource: MatTableDataSource<any> = new MatTableDataSource([ { } ]);
     private _selectedRow: number;  /* Represents the selected row. */
 
     /**
@@ -209,8 +218,10 @@ export class TableComponent implements OnInit, OnDestroy
      * `Subject` instead of `BehaviorSubject` to represent the `_filterValuesChange`. 
      */
     private readonly _filterValuesChange: Subject<FilterValues>;
-    private _filterValues: FilterValues;  /* The current filter values. */
-    private _filterValuesSubscription: Params<Subscription>;  /* The current subscriptions for observing the changes in the filter controls value. It has the same properties than `_filterValues` */
+    /* The current filter values. */
+    private _filterValues: FilterValues;
+    /* The current subscriptions for observing the changes in the filter controls value. It has the same properties than `_filterValues` */
+    private _filterValuesSubscription: Params<Subscription>;
 
     @ViewChild(MatSort, { static: true })
     private _sort: MatSort;
@@ -323,10 +334,11 @@ export class TableComponent implements OnInit, OnDestroy
         if (this._content.endpoint == undefined) this._content.endpoint = undefined;
 
         /************************ Must be the last initialization. ************************/
+        this.checkColumn();
     }
 
     /**
-     * Updates the filter component visually when there is an external change. 
+     * Updates the fields related to the filter component. 
      */
     private _updateFilter(): void
     {
@@ -338,7 +350,7 @@ export class TableComponent implements OnInit, OnDestroy
             /* Disposes the resources held by the subscription. */
             if (this._filterValuesSubscription[filterName] != undefined) this._filterValuesSubscription[filterName].unsubscribe();
 
-            /* Subscribes to observe the changes in the control value. */
+            /* Subscribes to observe the changes in the control value when there is an external change. */
             this._filterValuesSubscription[filterName] = this._content.filter[filterName].internalControl.valueChanges.pipe(
                 /* Waits 500ms after each keystroke before considering the term. */
                 debounceTime(500),
@@ -352,28 +364,48 @@ export class TableComponent implements OnInit, OnDestroy
     }
 
     /**
-     * Updates the `MatSort` visually when there is an external change. 
+     * Updates the fields related to sorting. 
+     * @param sortEvent The new sorting to set. 
      */
-    private _updateMatSort(): void
+    private _updateSort(sortEvent: Sort): void
     {
-        /* In this case, `_content` already contains the sorting values correctly, 
-         * so updates the `MatSort`. */
+        /* In this case, `_content` is updated with the new values; the `MatSort` already has them. */
+        this._content.sort.active = sortEvent.active;
+        this._content.sort.direction = sortEvent.direction;
+    }
+
+    /**
+     * Sets the `MatSort` initial values. 
+     * The filter component and `MatPaginator` are initialized in a different way. 
+     */
+    private _setMatSortInitialValue(): void
+    {
+        /* Saves the initial values. */
         this._sort.active = this._content.sort.active;
         this._sort.direction = this._content.sort.direction;
     }
 
     /**
-     * Updates the `MatPaginator` visually when there is an external change. 
-     * @param newPage The new page to set. 
+     * Updates the fields related to pagination. 
+     * @param newPage The new page to set. Its type is `Page<any>` or `PageEvent`. 
      */
-    private _updateMatPaginator(newPage: Page<any>): void
+    private _updatePaginator(newPage: any): void
     {
         /* In this case, `_content` is updated with the new values, then the `MatPaginator` 
-         * takes the values via property binding from `_content` (through the template). 
-         * Needs to update the `MatSort` only. */
-        this._content.length = newPage.totalData;
+         * takes the values via property binding from `_content` (through the template). */
+        this._content.length = (newPage.totalData || newPage.length);
         this._content.pageIndex = newPage.pageIndex;
         this._content.pageSize = newPage.pageSize;
+    }
+
+    /**
+     * Sets the `MatSort` and `MatPaginator` disabled or not. 
+     * @param disabled Whether the `MatSort` and `MatPaginator` are disabled. 
+     */
+    private _disabledSortPaginator(disabled: boolean): void
+    {
+        this._sort.disabled = disabled;
+        this._paginator.disabled = disabled;
     }
 
     /**
@@ -388,9 +420,10 @@ export class TableComponent implements OnInit, OnDestroy
         /* Disposes the resources held by the subscription. */
         this._renderChangesSubscription.unsubscribe();
 
-        /* Needs to update the filter component and `MatSort` only, the `MatPaginator` is updated later. */
+        /* Updates the fields related to the filter component; the `MatSort` and `MatPaginator` are updated later. */
         this._updateFilter();
-        this._updateMatSort();
+        /* Sets the `MatSort` initial values; the filter component and `MatPaginator` are initialized in a different way. */
+        this._setMatSortInitialValue();
 
         /* The `_filterValuesChange` is always present; although the user decides if it is used or not. 
          * Also, `MatSort` and `MatPaginator` are always present because they are managed by the component completely. 
@@ -401,11 +434,6 @@ export class TableComponent implements OnInit, OnDestroy
                 startWith(this._filterValues)
             ),
             this._sort.sortChange.pipe(
-                /* When the table is empty and it is not loading, then clicking the table header 
-                 * does not generate any request to the backend, except the first time. */
-                filter(_ => {
-                    return (this.isLoading || !this.isEmpty);
-                }),
                 /* Emits the first value. Sorts using the initial values. The operators must be called in this order. */
                 startWith(this._content.sort)
             ),
@@ -425,15 +453,9 @@ export class TableComponent implements OnInit, OnDestroy
                 this._loading = true;
                 this._countBackendSubscriptions++;
                 console.log('Call _countBackendSubscriptions: ', this._countBackendSubscriptions);
-    
-                /* Erases the page from the table. */
-                // this._setPage({
-                //     'data': [],
-                //     'totalData': pageEvent.length,
-                //     'pageIndex': pageEvent.pageIndex,
-                //     'pageSize': pageEvent.pageSize
-                // });
-                this._setPage(null);
+
+                /* Erases the data from the table. */
+                this._setDataBeforeCallEndpoint(sortEvent, pageEvent);
 
                 return this._content.endpoint({
                     'filter': filterEvent,
@@ -450,9 +472,10 @@ export class TableComponent implements OnInit, OnDestroy
         ).subscribe((response: Page<any>): void => {
             //console.log('Endpoint Response: ', response);
 
-            /* Sets the new page on the table. */
-            this._setPage(response);
+            /* Sets the new data on the table. */
+            this._setDataAfterCallEndpoint(response);
 
+            /* Emits the new page for someone that wants to know it. */
             this._page.next(response);
         });
     }
@@ -581,7 +604,7 @@ export class TableComponent implements OnInit, OnDestroy
     /**
      * Returns the stream that emits the page that should be rendered by the table, 
      * when there is a change in the filtering, sorting, or pagination of the data. Each object 
-     * in the `data` field represents one row. 
+     * in the `data` field represents one row. This is made for someone that wants to know it. 
      */
     public get page(): Observable<Page<any>>
     {
@@ -589,22 +612,38 @@ export class TableComponent implements OnInit, OnDestroy
     }
 
 	/**
+	 * Sets the page that should be rendered by the table, it erases the data. For internal use only. 
+     * @param sortEvent The current sort state. 
+     * @param pageEvent The current paginator state. 
+	 */
+    private _setDataBeforeCallEndpoint(sortEvent: Sort, pageEvent: PageEvent): void
+    {
+        /* Erases the data from the table. */
+        this._dataSource.data = [];
+
+        /* Updates the fields related to sorting and pagination; the filter component is updated in a different way. */
+        this._updateSort(sortEvent);
+        this._updatePaginator(pageEvent);
+
+        /* The `MatSort` and `MatPaginator` are always enabled. */
+        this._disabledSortPaginator(false);
+    }
+
+	/**
 	 * Sets the page that should be rendered by the table, where each object in the `newPage.data` 
      * represents one row. For internal use only. 
-     * If the value is null, sets to `{ 'data': [], 'totalData': this._content.length, 'pageIndex': this._content.pageIndex, 'pageSize': this._content.pageSize }`. 
      * @param newPage The new page to set. 
 	 */
-    private _setPage(newPage: Page<any> | null): void
+    private _setDataAfterCallEndpoint(newPage: Page<any>): void
     {
-        newPage = newPage || { 'data': [], 'totalData': this._content.length, 'pageIndex': this._content.pageIndex, 'pageSize': this._content.pageSize };  /* The default data does not contain element. */
-
         /* In `_dataSource`, needs to update the data only. */
         this._dataSource.data = newPage.data;
 
-        /* Needs to update the paginator only. */
-        this._updateMatPaginator(newPage);
+        /* Updates the fields related to pagination; the filter component and sorting do not need to update. */
+        this._updatePaginator(newPage);
 
-        this.checkColumn();
+        /* The `MatSort` and `MatPaginator` are disabled if the table is empty. */
+        this._disabledSortPaginator(this.isEmpty);
     }
 
     /**
