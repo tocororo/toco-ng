@@ -37,6 +37,15 @@ import {
 import { ParamMap, ActivatedRoute } from "@angular/router";
 import { filter } from "rxjs/operators";
 
+export const CatalogFilterKeys = {
+  type: "type",
+  institutions: "institutions",
+  subjects: "subjects",
+  grupo_mes: "grupo_mes",
+  miar_types: "miar_types",
+  approved: "approved"
+};
+
 @Component({
   selector: "app-catalog-filters",
   templateUrl: "./filters.component.html",
@@ -57,14 +66,7 @@ export class FiltersComponent implements OnInit {
 
   organizationUUID = "";
 
-  filters = {
-    type: "type",
-    institutions: "institutions",
-    subjects: "subjects",
-    grupo_mes: "grupo_mes",
-    miar_types: "miar_types",
-    approved: "approved"
-  };
+
   constructor(
     private taxonomyService: TaxonomyService,
     private sourceService: SourceService,
@@ -85,14 +87,35 @@ export class FiltersComponent implements OnInit {
     this.formGroup.valueChanges.subscribe(
       values => {
         const filters = values;
-        this.institutionSelection = values[this.filters.institutions];
+        this.institutionSelection = values[CatalogFilterKeys.institutions];
         if (this.institutionTree && this.institutionSelection) {
           const selection = this.findFlatInInstTree(this.institutionTree);
           let insts = '';
           selection.forEach(element => {
-            insts = insts.concat(element.element.value, ',')
+            insts = insts.concat(element.element.value, ',');
           });
-          filters[this.filters.institutions] = insts;
+          filters[CatalogFilterKeys.institutions] = insts;
+        }
+        if (values[CatalogFilterKeys.subjects]) {
+          let val = '';
+          values[CatalogFilterKeys.subjects].forEach( element => {
+            val = val.concat(element.uuid, ',');
+          });
+          filters[CatalogFilterKeys.subjects] = val;
+        }
+        if (values[CatalogFilterKeys.grupo_mes]) {
+          let val = '';
+          values[CatalogFilterKeys.grupo_mes].forEach( element => {
+            val = val.concat(element.uuid, ',');
+          });
+          filters[CatalogFilterKeys.grupo_mes] = val;
+        }
+        if (values[CatalogFilterKeys.miar_types]) {
+          let val = '';
+          values[CatalogFilterKeys.miar_types].forEach( element => {
+            val = val.concat(element.uuid, ',');
+          });
+          filters[CatalogFilterKeys.miar_types] = val;
         }
         console.log(values);
 
@@ -115,13 +138,13 @@ export class FiltersComponent implements OnInit {
         open: false,
         content: [
           {
-            name: this.filters.type,
+            name: CatalogFilterKeys.type,
             label: "Tipo de Revista",
             type: FormFieldType.select,
             required: true,
             width: "100%",
-            value: this.params.has(this.filters.type)
-              ? this.params.get(this.filters.type)
+            value: this.params.has(CatalogFilterKeys.type)
+              ? this.params.get(CatalogFilterKeys.type)
               : "",
             extraContent: {
               multiple: false,
@@ -156,15 +179,15 @@ export class FiltersComponent implements OnInit {
         open: false,
         content: [
           {
-            name: this.filters.institutions,
+            name: CatalogFilterKeys.institutions,
             label: "Instituciones",
             type: FormFieldType.select_tree,
             required: true,
             width: "100%",
             value: "",
             extraContent: {
-              selectedTermsUUIDs: this.params.has(this.filters.institutions)
-                ? this.params.get(this.filters.institutions).split(",")
+              selectedTermsUUIDs: this.params.has(CatalogFilterKeys.institutions)
+                ? this.params.get(CatalogFilterKeys.institutions).split(",")
                 : "",
               observable: this.sourceService.countSourcesByTerm(
                 this.organizationUUID,
@@ -200,18 +223,18 @@ export class FiltersComponent implements OnInit {
         open: false,
         content: [
           {
-            name: this.filters.subjects,
+            name: CatalogFilterKeys.subjects,
             label: "Materias",
             type: FormFieldType.vocabulary,
             required: false,
             width: "100%",
-            value: this.params.has(this.filters.subjects)
-              ? this.params.get(this.filters.subjects).split(",")
+            value: this.params.has(CatalogFilterKeys.subjects)
+              ? this.params.get(CatalogFilterKeys.subjects).split(",")
               : "",
             extraContent: {
               multiple: true,
-              selectedTermsUUIDs: this.params.has(this.filters.subjects)
-                ? this.params.get(this.filters.subjects).split(",")
+              selectedTermsUUIDs: this.params.has(CatalogFilterKeys.subjects)
+                ? this.params.get(CatalogFilterKeys.subjects).split(",")
                 : "",
               vocab: VocabulariesInmutableNames.SUBJECTS
             }
@@ -226,35 +249,35 @@ export class FiltersComponent implements OnInit {
         open: false,
         content: [
           {
-            name: this.filters.grupo_mes,
+            name: CatalogFilterKeys.grupo_mes,
             label: "Grupo MES",
             type: FormFieldType.vocabulary,
             required: true,
             width: "100%",
-            value: this.params.has(this.filters.grupo_mes)
-              ? this.params.get(this.filters.grupo_mes).split(",")
+            value: this.params.has(CatalogFilterKeys.grupo_mes)
+              ? this.params.get(CatalogFilterKeys.grupo_mes).split(",")
               : "",
             extraContent: {
               multiple: true,
-              selectedTermsUUIDs: this.params.has(this.filters.grupo_mes)
-                ? this.params.get(this.filters.grupo_mes).split(",")
+              selectedTermsUUIDs: this.params.has(CatalogFilterKeys.grupo_mes)
+                ? this.params.get(CatalogFilterKeys.grupo_mes).split(",")
                 : "",
               vocab: VocabulariesInmutableNames.MES_GROUPS
             }
           },
           {
-            name: this.filters.miar_types,
+            name: CatalogFilterKeys.miar_types,
             label: "Tipos de MIAR",
             type: FormFieldType.vocabulary,
             required: true,
             width: "100%",
-            value: this.params.has(this.filters.miar_types)
-              ? this.params.get(this.filters.miar_types).split(",")
+            value: this.params.has(CatalogFilterKeys.miar_types)
+              ? this.params.get(CatalogFilterKeys.miar_types).split(",")
               : "",
             extraContent: {
               multiple: true,
-              selectedTermsUUIDs: this.params.has(this.filters.miar_types)
-                ? this.params.get(this.filters.miar_types).split(",")
+              selectedTermsUUIDs: this.params.has(CatalogFilterKeys.miar_types)
+                ? this.params.get(CatalogFilterKeys.miar_types).split(",")
                 : "",
               vocab: VocabulariesInmutableNames.MIAR_DATABASES
             }
@@ -270,7 +293,7 @@ export class FiltersComponent implements OnInit {
         content: [
           {
             type: FormFieldType.checkbox,
-            name: this.filters.approved,
+            name: CatalogFilterKeys.approved,
             label: "Sólo mostrar datos de fuentes aprobadas",
             width: "100%",
             value: true,

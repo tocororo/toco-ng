@@ -122,8 +122,9 @@
     <mat-paginator
       [length]="length"
       [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
       [pageSizeOptions]="pageSizeOptions"
-      (page)="fetchJournalData()"
+      (page)="pageEvent = pageChange($event)"
     >
     </mat-paginator>
   </div>

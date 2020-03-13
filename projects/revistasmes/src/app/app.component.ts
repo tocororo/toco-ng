@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 import { Component } from '@angular/core';
 import { Subscription, PartialObserver } from 'rxjs';
 import { OAuthStorage, OAuthService } from 'angular-oauth2-oidc';

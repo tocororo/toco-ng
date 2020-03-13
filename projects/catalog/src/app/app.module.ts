@@ -8,7 +8,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '@toco/tools/shared';
 
-import { CatalogService } from '@toco/tools/backend';
+import { CatalogService, SearchService } from '@toco/tools/backend';
 import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -52,7 +52,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         SourceViewSaveDialog,
         DialogCatalogJournalInfoDialog
     ],
-    providers: [CatalogService, EnvServiceProvider],
+    providers: [CatalogService, EnvServiceProvider, SearchService],
 
     bootstrap: [AppComponent]
 })

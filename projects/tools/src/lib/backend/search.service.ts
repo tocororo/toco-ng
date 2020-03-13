@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -41,4 +46,15 @@ export class SearchService {
     const req = this.env.sceibaApi + this.prefix;
     return this.http.get<SearchResponse>(req, options);
   }
+
+  getSources(params: HttpParams): Observable<SearchResponse> {
+    const options = {
+      params: params,
+      // headers: this.headers
+    };
+    console.log(params);
+    const req = this.env.sceibaApi + 'sources';
+    return this.http.get<SearchResponse>(req, options);
+  }
+
 }

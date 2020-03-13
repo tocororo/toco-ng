@@ -27,7 +27,7 @@ import { FilterHttpMap, FiltersService } from "@toco/tools/filters";
 
 import { EnvService } from "@tocoenv/tools/env.service";
 
-import { CatalogService } from "@toco/tools/backend";
+import { CatalogService, SearchService } from "@toco/tools/backend";
 import {
   MatSnackBar,
   MatDialog,
@@ -36,8 +36,10 @@ import {
 } from "@angular/material";
 import { JournalViewInfoComponent } from "@toco/tools/journal/journal-view/journal-view-info.component";
 import { ScrollStrategyOptions } from "@angular/cdk/overlay";
-import { FiltersComponent } from "../filters/filters.component";
+import { FiltersComponent, CatalogFilterKeys } from "../filters/filters.component";
 import { ActivatedRoute, ParamMap, Route, Router, NavigationExtras } from "@angular/router";
+import { ThrowStmt } from '@angular/compiler';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: "toco-catalog",
@@ -66,6 +68,7 @@ export class CatalogComponent implements OnInit {
   expandedElement: Journal;
   length = 0;
   pageSize = 5;
+  pageIndex = 0;
   pageSizeOptions: number[] = [5, 10, 15, 20];
   pageEvent: PageEvent;
   params: Array<FilterHttpMap>;
@@ -99,7 +102,10 @@ export class CatalogComponent implements OnInit {
   ];
   currentlayout = this.layoutPosition[2];
 
+  searchParams: HttpParams;
+
   constructor(
+    private searchService: SearchService,
     private service: CatalogService,
     private metadata: MetadataService,
     private filterService: FiltersService,
@@ -120,14 +126,65 @@ export class CatalogComponent implements OnInit {
     this.metadata.setTitleDescription("Catálogo de Revistas Científicas", "");
     this.paginator.firstPage();
     this.paginator.pageSize = 5;
-    
+    this.searchParams = new HttpParams();
     this.activatedRoute.queryParamMap.subscribe({
       next: params => {
         this.routeParams = params;
+        if (params.has('count')) {
+          this.pageSize = Number.parseInt(params.get('count'), 10);
+          this.searchParams = this.searchParams.set('count', params.get('count'));
+        }
+        if (params.has('page')) {
+          this.pageIndex = Number.parseInt(params.get('page'), 10) - 1;
+          this.searchParams = this.searchParams.set('page', params.get('page'));
+        }
+        if (params.has(CatalogFilterKeys.approved)) {
+          this.searchParams = this.searchParams.set(CatalogFilterKeys.approved, params.get(CatalogFilterKeys.approved));
+        }
+        if (params.has(CatalogFilterKeys.type)) {
+          this.searchParams = this.searchParams.set(CatalogFilterKeys.type, params.get(CatalogFilterKeys.type));
+        }
+        // TODO: this is not nice, but..
+        let query = '';
+        if (params.has(CatalogFilterKeys.institutions)) {
+          query = query.concat('(relations.uuid:');
+          params.get(CatalogFilterKeys.institutions).split(',').forEach(uuid => {
+            query = query.concat(uuid, 'OR');
+          });
+          query = query.concat(')');
+        }
+        if (params.has(CatalogFilterKeys.subjects)) {
+          query = query.concat('AND (relations.uuid:');
+          params.get(CatalogFilterKeys.subjects).split(',').forEach(uuid => {
+            query = query.concat(uuid, 'OR');
+          });
+          query = query.concat(')');
+        }
+        if (params.has(CatalogFilterKeys.grupo_mes)) {
+          query = query.concat('AND (relations.uuid:');
+          params.get(CatalogFilterKeys.grupo_mes).split(',').forEach(uuid => {
+            query = query.concat(uuid, 'OR');
+          });
+          query = query.concat(')');
+        }
+        if (params.has(CatalogFilterKeys.miar_types)) {
+          query = query.concat('AND (relations.uuid:');
+          params.get(CatalogFilterKeys.miar_types).split(',').forEach(uuid => {
+            query = query.concat(uuid, 'OR');
+          });
+          query = query.concat(')');
+        }
+
+        this.searchParams = this.searchParams.set('q', query);
+        console.log(this.searchParams);
+
+
+        this.fetchJournalData();
+
         console.log(params);
       },
-      error: e => {},
-      complete: () => {}
+      error: e => { },
+      complete: () => { }
     });
 
     // this.filters.formGroup.valueChanges.subscribe(
@@ -142,28 +199,28 @@ export class CatalogComponent implements OnInit {
     //   }
     // );
 
-    try {
-      this.fetchJournalData();
+    // try {
+    //   this.fetchJournalData();
 
-      this.filterService.paramsChanged
-        .pipe(
-          catchError(error => {
-            const m = new MessageHandler(this._snackBar);
-            m.showMessage(StatusCode.serverError, error.message);
-            return observableOf([]);
-          })
-        )
-        .subscribe(params => {
-          this.params = params;
-          this.fetchJournalData();
-        });
-    } catch (err) {
-      const m = new MessageHandler(this._snackBar);
-      m.showMessage(StatusCode.serverError, err.message);
-    }
+    //   this.filterService.paramsChanged
+    //     .pipe(
+    //       catchError(error => {
+    //         const m = new MessageHandler(this._snackBar);
+    //         m.showMessage(StatusCode.serverError, error.message);
+    //         return observableOf([]);
+    //       })
+    //     )
+    //     .subscribe(params => {
+    //       this.params = params;
+    //       this.fetchJournalData();
+    //     });
+    // } catch (err) {
+    //   const m = new MessageHandler(this._snackBar);
+    //   m.showMessage(StatusCode.serverError, err.message);
+    // }
   }
 
-  filtersChange(values){
+  filtersChange(values) {
     console.log(values);
 
     let navigationExtras: NavigationExtras = {
@@ -171,11 +228,21 @@ export class CatalogComponent implements OnInit {
       queryParams: values,
       queryParamsHandling: 'merge'
     };
-    
     this.router.navigate(['.'], navigationExtras);
-    
   }
-  // onPaginatorChanged(){
+
+  pageChange(event?: PageEvent) {
+    const navigationExtras: NavigationExtras = {
+      relativeTo: this.activatedRoute,
+      queryParams: { page: event.pageIndex + 1, count: event.pageSize },
+      queryParamsHandling: 'merge'
+    };
+
+    this.router.navigate(['.'], navigationExtras);
+  }
+
+  // onPageChanged() {
+
   //   this.filterService.changeFilter('count',this.paginator.pageSize, false);
   //   this.filterService.changeFilter('page',this.paginator.pageIndex);
   // }
@@ -187,38 +254,42 @@ export class CatalogComponent implements OnInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-          //this.loading = true;
-          return this.service!.getJournalsPage(
-            this.paginator.pageSize,
-            this.paginator.pageIndex,
-            this.params
-          );
+          // //this.loading = true;
+          // return this.service!.getJournalsPage(
+          //   this.paginator.pageSize,
+          //   this.paginator.pageIndex,
+          //   this.params
+          // );
+          return this.searchService.getSources(this.searchParams);
         }),
         map(response => {
           // Flip flag to show that loading has finished.
           this.loading = false;
 
-          this.length = response.data.sources.count;
+          // this.length = response.data.sources.count;
+          this.length = response.hits.total;
 
-          response.data.sources.data.forEach(item => {
+          response.hits.hits.forEach(item => {
+            console.log(item);
+
             const j = new Journal();
-            j.id = item.id;
-            j.uuid = item.uuid;
-            const info = new JournalData();
-            info.url = item.data != null ? item.data.url : "";
-            info.title = item.name;
-            info.subtitle = item.subtitle;
-            info.shortname = item.shortname;
-            const issn = new ISSN();
-            issn.e = item.data != null ? item.data.issn.e : "";
-            issn.l = item.data != null ? item.data.issn.l : "";
-            issn.p = item.data != null ? item.data.issn.p : "";
-            info.issn = issn;
-            info.rnps = item.data != null ? item.data.rnps : "";
-            info.logo = item.data != null ? item.data.logo : "";
-            info.purpose = item.purpose;
-            info.description = item.data != null ? item.data.description : "";
-            j.data = info;
+            // j.id = item.id;
+            // j.uuid = item.id;
+            // const info = new JournalData();
+            // info.url = item.data != null ? item.data.url : "";
+            // info.title = item.name;
+            // info.subtitle = item.subtitle;
+            // info.shortname = item.shortname;
+            // const issn = new ISSN();
+            // issn.e = item.data != null ? item.data.issn.e : "";
+            // issn.l = item.data != null ? item.data.issn.l : "";
+            // issn.p = item.data != null ? item.data.issn.p : "";
+            // info.issn = issn;
+            // info.rnps = item.data != null ? item.data.rnps : "";
+            // info.logo = item.data != null ? item.data.logo : "";
+            // info.purpose = item.purpose;
+            // info.description = item.data != null ? item.data.description : "";
+            // j.data = info;
             arr.push(j);
           });
           return arr;
@@ -291,7 +362,7 @@ export class CatalogComponent implements OnInit {
       error => {
         console.log("error");
       },
-      () => {}
+      () => { }
     );
   }
 }
@@ -312,7 +383,7 @@ export class DialogCatalogJournalInfoDialog implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DialogCatalogJournalInfoDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     console.log(this.data);
