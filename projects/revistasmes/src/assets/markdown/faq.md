@@ -17,3 +17,11 @@ Una revista de **divulgación científica**, comúnmente, se caracteriza por:
 * Publicar trabajos secundarios como artículos de opinión, reseñas, resúmenes
 * emplear lenguaje especializado
 * público general interesado en temas
+
+### ¿Cómo se nominan las revistas al Registro Nacional de Revistas del Ministerio de educación de Cuba?
+En general, el proceso de nominación requiere dos pasos:
+1. Completamiento de un formulario que proporciona información básica sobre la revista para determinar si elegible para su inclusión en el registro.
+2. Verificación de los datos e información incorporados al formulario de nominación para el Registro.
+
+### ¿Quién puede nominar revistas al registro?
+Cualquier persona u organización puede nominar revistas, pero es recomendable que lo hagan personas involucradas en el proceso de gestión editorial de las publicaciones. Siempre se envía un correo electrónico al Director y/o Editor principal de la revista donde es informado de la nominación.  

@@ -39,15 +39,15 @@
 //     font-style: normal;
 // }
 
-@font-face {
-    font-family: 'DINPro Medium';
-    font-style: normal;
-    font-weight: normal;
-    src: local('DINPro Medium'), url('assets/fonts/DINPro-Medium tr.woff') format('woff');
-}
+// @font-face {
+//     font-family: 'DINPro Medium';
+//     font-style: normal;
+//     font-weight: normal;
+//     src: local('DINPro Medium'), url('assets/fonts/DINPro-Medium tr.woff') format('woff');
+// }
 
 $toco-typography: mat-typography-config(
-    $font-family: '"DINPro Medium"',
+    /* $font-family: '"DINPro Medium"',*/
 
     /*$display-4: mat-typography-level(32px, 48px, 500),
     $display-3: mat-typography-level(28px, 44px, 500),

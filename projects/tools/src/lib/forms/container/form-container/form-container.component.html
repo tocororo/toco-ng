@@ -20,7 +20,7 @@
 
         <toco-form-fields [fields]="panel.content"></toco-form-fields>
 
-        <mat-action-row>
+        <mat-action-row *ngIf="panel.actionLabel">
             <!-- <button mat-button *ngIf="newStep > 0" color="warn" (click)="prevStep()">Anterior</button>
             <button mat-button *ngIf="newStep != count-1" color="primary" (click)="nextStep()">Siguente</button> -->
 

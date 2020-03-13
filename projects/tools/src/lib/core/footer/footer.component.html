@@ -1,4 +1,7 @@
 <div class="alternate-theme-footer">
+    
+
+
     <mat-toolbar class="footer-height" fxLayout='row wrap' fxLayout.mx="column" fxLayoutAlign="center center" color="primary">
         <ng-container *ngIf="image">
             <a href="/">
@@ -15,8 +18,13 @@
         >
             <div fxFlex="30%" fxFlex.xs="100%">
                 <span class="text-large">Sobre el Proyecto</span>
-                <p class="text-small">Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis iure voluptas quod earum dignissimos deleniti amet? Quia qui vel sit nisi quae ex minus, sed sapiente cupiditate, exercitationem ut doloribus?</p>
-                <a mat-raised-button href="/sources/new/journal" color="warn">Inclúyete</a>
+                <div fxLayout='column wrap' fxLayoutAlign="center center">
+
+                    <img src="/assets/images/tocororo.png" alt="Tocororo" width="60" height="60">
+                    <label class="text-small" style="max-width: 30em; text-align: center;">Proyecto Nacional Tocororo un esfuerzo por la comunicación científica en Cuba. </label>
+
+                    <a mat-raised-button href="/sources/new/journal" color="warn">Inclúyete</a>
+                </div>
             </div>
             <div fxLayout='column wrap' fxFlex="30%" fxFlex.xs="100%">
                 <span class="text-large">Sitios de Interés</span>
@@ -49,4 +57,13 @@
 
     </mat-toolbar>
 
+    <mat-toolbar fxLayout='column wrap' fxLayoutAlign="center center" style="padding: 1em;">
+        <a href="https://sceiba-lab.upr.edu.cu" target="_blank" style="color: rgb(0, 0, 0, 0.87); text-decoration: none;">
+            <img src="/assets/images/sceiba-logo.png" alt="Sceiba" width="120" height="50">
+        </a>
+        <a href="https://sceiba-lab.upr.edu.cu" target="_blank" style="color: rgb(0, 0, 0, 0.87); text-decoration: none;">
+            Portal de publicaciones cientificas cubanas
+        </a>
+
+    </mat-toolbar>
 </div>

@@ -35,7 +35,7 @@
   <app-catalog-filters
     fxLayout="row wrap"
     fxLayout.xs="column wrap"
-    fxFlex="{{ currentlayout.width }}"
+    
     fxLayoutAlign="start center"
     fxLayoutAlign.xs="center center"
     fxLayoutGap="1em"
@@ -43,6 +43,7 @@
     (paramsChange)=filtersChange($event)
   >
   </app-catalog-filters>
+  <!-- fxFlex="{{ currentlayout.width }}" -->
 
   <div class="mat-elevation-z8 width-90 margin1em">
     <table

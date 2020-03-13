@@ -1,25 +1,26 @@
-# About
 
-There are two ways to create links.
+El Registro Nacional es la lista nacional oficial de revistas gestionadas por instituciones adscritas al Ministerio de educación de Cuba. Es mantenido por las Direcciones de Ciencia e Informatización del MES y fue desarrollado en el marco del proyecto [VLIR JOINT  2019-01-27 (SCEIBA)](https://www.vliruos.be/en/projects/project/22?pid=4202) y el proyecto nacional ramal [TOCORORO](https://tocororo.upr.edu.cu).
 
-[I'm an inline-style link](https://www.google.com)
+Esta plataforma es de acceso gratuito y se distribuyen sus contenidos bajo la Licencia Creative Commons CC by 4.0. Su objetivo está orientado a aumentar la visibilidad de las revistas científicas del sistema de educación superior cubano, así como la implementación de servicios que permitan el monitoreo y evaluación de su calidad.
 
-[I'm an inline-style link with title](https://www.google.com "Google's Homepage")
+A través del registro, se tiene conocimiento de las revistas científicas, - sean académicas o estudiantiles-, y revistas de divulgación científica de las instituciones adscritas Ministerio de Educación Superior, y de esta manera iniciar la colecta de sus metadatos. Los metadatos serán incorporados al directorio federado de revistas científicas cubanas. Los metadatos asociados a la información personal, así como la información personal provista por el usuario sólo será  usada para los fines descritos en la [política de privacidad de esta plataforma](https://sceiba-lab.upr.edu.cu/page/politicas).
 
-[I'm a reference-style link][Arbitrary case-insensitive reference text]
+El contenido del registro es dinámico y está en constante crecimiento pues está abierto a la integración y participación de nuevas publicaciones seriadas científicas de editadas por instituciones del Ministerio de Educación Superior.
 
-[I'm a relative reference to a repository file](../blob/master/LICENSE)
+El sistema se desarrolla en código abierto accesible desde [Github](https://github.com/tocororo) y es desarrollado por un equipo de trabajo proveniente de las siguientes universidades asociadas a los proyectos Tocororo y SCEIBA:
 
-[You can use numbers for reference-style link definitions][1]
+* Universidad de Pinar del Río (Cuba)
+* Universidad de La Habana (Cuba)
+* Universidad Nacional de La Molina (Perú)
+* Universidad San Ignacio Loyola (Perú)
+* Universidad de Hasselt (Bélgica)
+* Universidad de Amberes (Bélgica)
 
-Or leave it empty and use the [link text itself].
-
-URLs and URLs in angle brackets will automatically get turned into links.
-http://www.example.com or <http://www.example.com> and sometimes
-example.com (but not on Github, for example).
-
-Some text to show that the reference links can follow later.
-
-[arbitrary case-insensitive reference text]: https://www.mozilla.org
-[1]: http://slashdot.org
-[link text itself]: http://www.reddit.com
+<div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center">
+    <img src="/assets/images/upr.png" width="93" height="108" style="margin:1em">
+    <img src="/assets/images/uh.png" width="93" height="108" style="margin:1em">
+    <img src="/assets/images/lamolina.jpg" width="93" height="108" style="margin:1em">
+    <img src="/assets/images/usil.png" width="93" height="108" style="margin:1em">
+    <img src="/assets/images/hasselt.png" width="140" height="108" style="margin:1em">
+    <img src="/assets/images/antwerpent.png" width="93" height="108" style="margin:1em">
+ </div>
