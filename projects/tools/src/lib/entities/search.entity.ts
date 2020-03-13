@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 import { Entity, EntityBase } from './entity';
 
 export class Links extends EntityBase {
@@ -42,22 +47,22 @@ export class Record extends EntityBase {
   status = '';
 }
 
-export class Hit extends EntityBase {
+export class Hit<T> extends EntityBase {
   id = '';
   created = '';
   updated = '';
   links = new Links();
-  metadata = new Record();
+  metadata:T;
   revision = 0;
 }
 
-export class HitList extends EntityBase {
-  hits = new Array<Hit>();
+export class HitList<T> extends EntityBase {
+  hits = new Array<Hit<T>>();
   total: 0;
 }
 
-export class SearchResponse extends EntityBase {
+export class SearchResponse<T> extends EntityBase {
   aggregations: { [id: string]: Aggr;  } = {};
-  hits = new HitList();
+  hits = new HitList<T>();
   links = new Links();
 }

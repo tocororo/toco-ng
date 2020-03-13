@@ -23,12 +23,16 @@ export class ISSN extends EntityBase {
     l  = '';
     issn_org = new IssnOrg();
 }
+export class RNPS extends EntityBase {
+  p  = '';
+  e  = '';
+}
 export class JournalData extends SourceData {
 
     subtitle  = '';
     shortname  = '';
     issn: ISSN = new ISSN();
-    rnps = '';
+    rnps: RNPS = new RNPS();
     url = '';
     email = '';
     logo ? = '';

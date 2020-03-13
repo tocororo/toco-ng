@@ -10,11 +10,11 @@ import { TermNode, Term } from './taxonomy.entity';
 
 
 export const SourceTypes = {
-    JOURNAL: { 'label': 'Revista Científica', 'value': 'JOURNAL' },
-    STUDENT: { 'label': 'Revista Científico Estudiantil', 'value': 'STUDENT' },
-    POPULARIZATION: { 'label': 'Revista de Divulgación', 'value': 'POPULARIZATION' },
-    REPOSITORY: { 'label': 'Repositorio Institucional', 'value': 'REPOSITORY' },
-    WEBSITE: { 'label': 'Sitio Web', 'value': 'WEBSITE' },
+    JOURNAL: { 'label': 'Revista Científica', 'value': 'journal' },
+    STUDENT: { 'label': 'Revista Científico Estudiantil', 'value': 'student' },
+    POPULARIZATION: { 'label': 'Revista de Divulgación', 'value': 'popularization' },
+    REPOSITORY: { 'label': 'Repositorio Institucional', 'value': 'repository' },
+    WEBSITE: { 'label': 'Sitio Web', 'value': 'website' },
 };
 
 export const SourcePersonRole = {

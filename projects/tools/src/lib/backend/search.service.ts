@@ -5,11 +5,11 @@
 
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpBackend } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 
-import { SearchResponse, Response } from '@toco/tools/entities';
+import { SearchResponse, Response, Record, Source } from '@toco/tools/entities';
 import { EnvService } from '@tocoenv/tools/env.service';
 
 @Injectable()
@@ -24,8 +24,17 @@ export class SearchService {
   //       'Access-Control-Allow-Origin': '*'
   //     }
   // );
+  http: HttpClient; 
+  constructor(private env: EnvService, private  handler: HttpBackend) {
 
-  constructor(private env: EnvService, private http: HttpClient) {
+    // TODO: hay una mejor manera de hacer esto, creando diferentes y propios HttpClients que
+    // tengan un comportamiento especifico (eg: sin/con autenticacion) 
+    // ver: https://github.com/angular/angular/issues/20203#issuecomment-369754776
+    // otra solucion seria pasar parametros especiales como {ignore_auth = true} y que el 
+    // interceptor actue en consecuencia... .
+    // https://github.com/angular/angular/issues/18155#issuecomment-382438006
+
+    this.http = new HttpClient(handler);
   }
 
   getAggregation(field, size=10): Observable<Response<any>> {
@@ -37,24 +46,24 @@ export class SearchService {
     return this.http.get<Response<any>>(req, options);
   }
 
-  getRecords(params: HttpParams): Observable<SearchResponse> {
+  getRecords(params: HttpParams): Observable<SearchResponse<Record>> {
     const options = {
       params: params,
       // headers: this.headers
     };
     console.log(params)
-    const req = this.env.sceibaApi + this.prefix;
-    return this.http.get<SearchResponse>(req, options);
+    const req = this.env.sceibaApi + 'records';
+    return this.http.get<SearchResponse<Record>>(req, options);
   }
 
-  getSources(params: HttpParams): Observable<SearchResponse> {
+  getSources(params: HttpParams): Observable<SearchResponse<Source>> {
     const options = {
       params: params,
       // headers: this.headers
     };
     console.log(params);
     const req = this.env.sceibaApi + 'sources';
-    return this.http.get<SearchResponse>(req, options);
+    return this.http.get<SearchResponse<Source>>(req, options);
   }
 
 }

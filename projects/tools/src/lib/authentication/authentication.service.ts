@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 import { Injectable, Optional } from '@angular/core';
 import { HttpClient, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject, throwError } from 'rxjs';
@@ -75,8 +80,8 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
         let headers = req.headers.set('Authorization', 'Bearer ' + token);
 
         if (req.method != 'GET'){
-        headers = headers.set('Content-Type', 'application/json');
-        headers = headers.set('Access-Control-Allow-Origin', '*');
+            headers = headers.set('Content-Type', 'application/json');
+            headers = headers.set('Access-Control-Allow-Origin', '*');
         }
 
         req = req.clone({ headers });

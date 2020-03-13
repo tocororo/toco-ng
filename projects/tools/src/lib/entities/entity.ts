@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 
 
 /*** La idea de esta clase es tener un deserializador */
@@ -23,7 +28,7 @@ export class EntityBase extends Object {
  * Created by Edel on 02/04/2018.
  */
 export class Entity extends EntityBase {
-    id = 0;
+    id: number | string = 0;
 
     /** By default is FALSE. If TRUE, means that the entity does not have valid identifiers or has not been saved to the backend.  */
     isNew = false;

@@ -27,7 +27,8 @@ import {
   TermNode,
   VocabulariesInmutableNames,
   Source,
-  SourceTypes
+  SourceTypes,
+  SourceStatus
 } from "@toco/tools/entities";
 import { EnvService } from "@tocoenv/tools/env.service";
 import {
@@ -38,12 +39,12 @@ import { ParamMap, ActivatedRoute } from "@angular/router";
 import { filter } from "rxjs/operators";
 
 export const CatalogFilterKeys = {
-  type: "type",
+  source_type: "source_type",
   institutions: "institutions",
   subjects: "subjects",
   grupo_mes: "grupo_mes",
   miar_types: "miar_types",
-  approved: "approved"
+  source_status: "source_status"
 };
 
 @Component({
@@ -80,9 +81,7 @@ export class FiltersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.formGroup = this._formBuilder.group({
-      approved: new FormControl(true)
-    });
+    this.formGroup = this._formBuilder.group({});
 
     this.formGroup.valueChanges.subscribe(
       values => {
@@ -94,6 +93,7 @@ export class FiltersComponent implements OnInit {
           selection.forEach(element => {
             insts = insts.concat(element.element.value, ',');
           });
+          insts = insts.slice(0, insts.length - 2);
           filters[CatalogFilterKeys.institutions] = insts;
         }
         if (values[CatalogFilterKeys.subjects]) {
@@ -101,6 +101,7 @@ export class FiltersComponent implements OnInit {
           values[CatalogFilterKeys.subjects].forEach( element => {
             val = val.concat(element.uuid, ',');
           });
+          val = val.slice(0, val.length - 2);
           filters[CatalogFilterKeys.subjects] = val;
         }
         if (values[CatalogFilterKeys.grupo_mes]) {
@@ -108,6 +109,7 @@ export class FiltersComponent implements OnInit {
           values[CatalogFilterKeys.grupo_mes].forEach( element => {
             val = val.concat(element.uuid, ',');
           });
+          val = val.slice(0, val.length - 2);
           filters[CatalogFilterKeys.grupo_mes] = val;
         }
         if (values[CatalogFilterKeys.miar_types]) {
@@ -115,6 +117,7 @@ export class FiltersComponent implements OnInit {
           values[CatalogFilterKeys.miar_types].forEach( element => {
             val = val.concat(element.uuid, ',');
           });
+          val = val.slice(0, val.length - 2);
           filters[CatalogFilterKeys.miar_types] = val;
         }
         console.log(values);
@@ -138,13 +141,13 @@ export class FiltersComponent implements OnInit {
         open: false,
         content: [
           {
-            name: CatalogFilterKeys.type,
+            name: CatalogFilterKeys.source_type,
             label: "Tipo de Revista",
             type: FormFieldType.select,
             required: true,
             width: "100%",
-            value: this.params.has(CatalogFilterKeys.type)
-              ? this.params.get(CatalogFilterKeys.type)
+            value: this.params.has(CatalogFilterKeys.source_type)
+              ? this.params.get(CatalogFilterKeys.source_type)
               : "",
             extraContent: {
               multiple: false,
@@ -292,12 +295,32 @@ export class FiltersComponent implements OnInit {
         open: false,
         content: [
           {
-            type: FormFieldType.checkbox,
-            name: CatalogFilterKeys.approved,
-            label: "Sólo mostrar datos de fuentes aprobadas",
+            name: CatalogFilterKeys.source_status,
+            label: "Estado",
+            type: FormFieldType.select,
+            required: true,
             width: "100%",
-            value: true,
-            required: true
+            value: this.params.has(CatalogFilterKeys.source_status)
+              ? this.params.get(CatalogFilterKeys.source_status)
+              : SourceStatus.UNOFFICIAL.value,
+            extraContent: {
+              multiple: false,
+              getOptions: () => {
+                return [
+                  {
+                    label: SourceStatus.APPROVED.label,
+                    value: SourceStatus.APPROVED.value
+                  },
+                  {
+                    label: SourceStatus.UNOFFICIAL.label,
+                    value: SourceStatus.UNOFFICIAL.value
+                  }
+                ];
+              },
+              selectionChange: selection => {
+                console.log(selection);
+              }
+            }
           }
         ]
       }

@@ -16,12 +16,19 @@ import { startWith, switchMap, map, catchError } from "rxjs/operators";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 
-import { MetadataService, MessageHandler, StatusCode, ExtraValidators } from "@toco/tools/core";
+import {
+  MetadataService,
+  MessageHandler,
+  StatusCode,
+  ExtraValidators
+} from "@toco/tools/core";
 import {
   Journal,
   JournalData,
   ISSN,
-  JournalVersion
+  JournalVersion,
+  Hit,
+  Source
 } from "@toco/tools/entities";
 import { FilterHttpMap, FiltersService } from "@toco/tools/filters";
 
@@ -36,10 +43,19 @@ import {
 } from "@angular/material";
 import { JournalViewInfoComponent } from "@toco/tools/journal/journal-view/journal-view-info.component";
 import { ScrollStrategyOptions } from "@angular/cdk/overlay";
-import { FiltersComponent, CatalogFilterKeys } from "../filters/filters.component";
-import { ActivatedRoute, ParamMap, Route, Router, NavigationExtras } from "@angular/router";
-import { ThrowStmt } from '@angular/compiler';
-import { HttpParams } from '@angular/common/http';
+import {
+  FiltersComponent,
+  CatalogFilterKeys
+} from "../filters/filters.component";
+import {
+  ActivatedRoute,
+  ParamMap,
+  Route,
+  Router,
+  NavigationExtras
+} from "@angular/router";
+import { ThrowStmt } from "@angular/compiler";
+import { HttpParams } from "@angular/common/http";
 
 @Component({
   selector: "toco-catalog",
@@ -113,7 +129,7 @@ export class CatalogComponent implements OnInit {
     private _snackBar: MatSnackBar,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
+    private router: Router
   ) {
     env.organizationUUID;
   }
@@ -130,94 +146,94 @@ export class CatalogComponent implements OnInit {
     this.activatedRoute.queryParamMap.subscribe({
       next: params => {
         this.routeParams = params;
-        if (params.has('count')) {
-          this.pageSize = Number.parseInt(params.get('count'), 10);
-          this.searchParams = this.searchParams.set('count', params.get('count'));
+        // this.searchParams = this.searchParams.set('size', this.pageSize.toString());
+        // this.searchParams = this.searchParams.set('page', this.pageIndex.toString());
+
+        if (params.has("size")) {
+          this.pageSize = Number.parseInt(params.get("size"), 10);
+          this.searchParams = this.searchParams.set("size", params.get("size"));
+        } else {
+          this.searchParams = this.searchParams.set(
+            "size",
+            this.pageSize.toString()
+          );
         }
-        if (params.has('page')) {
-          this.pageIndex = Number.parseInt(params.get('page'), 10) - 1;
-          this.searchParams = this.searchParams.set('page', params.get('page'));
+        if (params.has("page")) {
+          this.pageIndex = Number.parseInt(params.get("page"), 10);
+          this.searchParams = this.searchParams.set("page", params.get("page"));
+        } else {
+          this.searchParams = this.searchParams.set(
+            "page",
+            (this.pageIndex + 1).toString()
+          );
         }
-        if (params.has(CatalogFilterKeys.approved)) {
-          this.searchParams = this.searchParams.set(CatalogFilterKeys.approved, params.get(CatalogFilterKeys.approved));
+
+        if (params.has(CatalogFilterKeys.source_status)) {
+          this.searchParams = this.searchParams.set(
+            CatalogFilterKeys.source_status,
+            params.get(CatalogFilterKeys.source_status)
+          );
         }
-        if (params.has(CatalogFilterKeys.type)) {
-          this.searchParams = this.searchParams.set(CatalogFilterKeys.type, params.get(CatalogFilterKeys.type));
+        if (params.has(CatalogFilterKeys.source_type)) {
+          this.searchParams = this.searchParams.set(
+            CatalogFilterKeys.source_type,
+            params.get(CatalogFilterKeys.source_type)
+          );
         }
         // TODO: this is not nice, but..
-        let query = '';
+        let query = "";
         if (params.has(CatalogFilterKeys.institutions)) {
-          query = query.concat('(relations.uuid:');
-          params.get(CatalogFilterKeys.institutions).split(',').forEach(uuid => {
-            query = query.concat(uuid, 'OR');
-          });
-          query = query.concat(')');
+          query = query.concat("(relations.uuid:");
+          params
+            .get(CatalogFilterKeys.institutions)
+            .split(",")
+            .forEach(uuid => {
+              query = query.concat(uuid, "OR");
+            });
+          query = query.concat(")");
         }
         if (params.has(CatalogFilterKeys.subjects)) {
-          query = query.concat('AND (relations.uuid:');
-          params.get(CatalogFilterKeys.subjects).split(',').forEach(uuid => {
-            query = query.concat(uuid, 'OR');
-          });
-          query = query.concat(')');
+          query = query.concat("AND (relations.uuid:");
+          params
+            .get(CatalogFilterKeys.subjects)
+            .split(",")
+            .forEach(uuid => {
+              query = query.concat(uuid, "OR");
+            });
+          query = query.concat(")");
         }
         if (params.has(CatalogFilterKeys.grupo_mes)) {
-          query = query.concat('AND (relations.uuid:');
-          params.get(CatalogFilterKeys.grupo_mes).split(',').forEach(uuid => {
-            query = query.concat(uuid, 'OR');
-          });
-          query = query.concat(')');
+          query = query.concat("AND (relations.uuid:");
+          params
+            .get(CatalogFilterKeys.grupo_mes)
+            .split(",")
+            .forEach(uuid => {
+              query = query.concat(uuid, "OR");
+            });
+          query = query.concat(")");
         }
         if (params.has(CatalogFilterKeys.miar_types)) {
-          query = query.concat('AND (relations.uuid:');
-          params.get(CatalogFilterKeys.miar_types).split(',').forEach(uuid => {
-            query = query.concat(uuid, 'OR');
-          });
-          query = query.concat(')');
+          query = query.concat("AND (relations.uuid:");
+          params
+            .get(CatalogFilterKeys.miar_types)
+            .split(",")
+            .forEach(uuid => {
+              query = query.concat(uuid, "OR");
+            });
+          query = query.concat(")");
         }
 
-        this.searchParams = this.searchParams.set('q', query);
+        this.searchParams = this.searchParams.set("q", query);
         console.log(this.searchParams);
-
 
         this.fetchJournalData();
 
         console.log(params);
       },
-      error: e => { },
-      complete: () => { }
+      error: e => {},
+      complete: () => {}
     });
 
-    // this.filters.formGroup.valueChanges.subscribe(
-    //   values => {
-    //     console.log(values);
-    //   },
-    //   (err: any) => {
-    //     console.log("error: " + err + ".");
-    //   },
-    //   () => {
-    //     console.log("complete");
-    //   }
-    // );
-
-    // try {
-    //   this.fetchJournalData();
-
-    //   this.filterService.paramsChanged
-    //     .pipe(
-    //       catchError(error => {
-    //         const m = new MessageHandler(this._snackBar);
-    //         m.showMessage(StatusCode.serverError, error.message);
-    //         return observableOf([]);
-    //       })
-    //     )
-    //     .subscribe(params => {
-    //       this.params = params;
-    //       this.fetchJournalData();
-    //     });
-    // } catch (err) {
-    //   const m = new MessageHandler(this._snackBar);
-    //   m.showMessage(StatusCode.serverError, err.message);
-    // }
   }
 
   filtersChange(values) {
@@ -226,85 +242,52 @@ export class CatalogComponent implements OnInit {
     let navigationExtras: NavigationExtras = {
       relativeTo: this.activatedRoute,
       queryParams: values,
-      queryParamsHandling: 'merge'
+      queryParamsHandling: "merge"
     };
-    this.router.navigate(['.'], navigationExtras);
+    this.router.navigate(["."], navigationExtras);
   }
 
   pageChange(event?: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
     const navigationExtras: NavigationExtras = {
       relativeTo: this.activatedRoute,
-      queryParams: { page: event.pageIndex + 1, count: event.pageSize },
-      queryParamsHandling: 'merge'
+      queryParams: { page: event.pageIndex + 1, size: event.pageSize },
+      queryParamsHandling: "merge"
     };
 
-    this.router.navigate(['.'], navigationExtras);
+    this.router.navigate(["."], navigationExtras);
   }
 
-  // onPageChanged() {
 
-  //   this.filterService.changeFilter('count',this.paginator.pageSize, false);
-  //   this.filterService.changeFilter('page',this.paginator.pageIndex);
-  // }
 
   public fetchJournalData() {
-    const arr = new Array<Journal>();
+    this.searchService.getSources(this.searchParams).subscribe(
+      values => {
+        this.length = values.hits.total;
+        const arr = new Array<Journal>();
+        values.hits.hits.forEach(item => {
+          console.log(item)
+          const j = new Journal();
+          j.load_from_data(item.metadata)
+          j.uuid = item.metadata['source_uuid'];
+          j.data.load_from_data(item.metadata);
+          console.log(j);
+          
+          arr.push(j);
+        });
+        this.dataSource.data = arr;
+        console.log(values);
+      },
+      (err: any) => {
+        console.log("error: " + err + ".");
+      },
+      () => {
+        console.log("complete");
+        this.loading = false;
+      }
+    );
 
-    merge()
-      .pipe(
-        startWith({}),
-        switchMap(() => {
-          // //this.loading = true;
-          // return this.service!.getJournalsPage(
-          //   this.paginator.pageSize,
-          //   this.paginator.pageIndex,
-          //   this.params
-          // );
-          return this.searchService.getSources(this.searchParams);
-        }),
-        map(response => {
-          // Flip flag to show that loading has finished.
-          this.loading = false;
-
-          // this.length = response.data.sources.count;
-          this.length = response.hits.total;
-
-          response.hits.hits.forEach(item => {
-            console.log(item);
-
-            const j = new Journal();
-            // j.id = item.id;
-            // j.uuid = item.id;
-            // const info = new JournalData();
-            // info.url = item.data != null ? item.data.url : "";
-            // info.title = item.name;
-            // info.subtitle = item.subtitle;
-            // info.shortname = item.shortname;
-            // const issn = new ISSN();
-            // issn.e = item.data != null ? item.data.issn.e : "";
-            // issn.l = item.data != null ? item.data.issn.l : "";
-            // issn.p = item.data != null ? item.data.issn.p : "";
-            // info.issn = issn;
-            // info.rnps = item.data != null ? item.data.rnps : "";
-            // info.logo = item.data != null ? item.data.logo : "";
-            // info.purpose = item.purpose;
-            // info.description = item.data != null ? item.data.description : "";
-            // j.data = info;
-            arr.push(j);
-          });
-          return arr;
-        }),
-        catchError(error => {
-          this.loading = false;
-          this.hasErrors = true;
-          const m = new MessageHandler(this._snackBar);
-          m.showMessage(StatusCode.serverError, error.message);
-          // Catch if the GitHub API has reached its rate limit. Return empty data.
-          // this.isRateLimitReached = true;
-          return observableOf([]);
-        })
-      )
-      .subscribe(data => (this.dataSource.data = data));
   }
 
   public onScrollUp() {
@@ -362,7 +345,7 @@ export class CatalogComponent implements OnInit {
       error => {
         console.log("error");
       },
-      () => { }
+      () => {}
     );
   }
 }
@@ -383,7 +366,7 @@ export class DialogCatalogJournalInfoDialog implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DialogCatalogJournalInfoDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     console.log(this.data);
