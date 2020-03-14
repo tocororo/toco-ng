@@ -1,7 +1,4 @@
-/*
- *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
- *   All rights reserved.
- */
+
 
 import { Component, OnInit, ViewChild, Inject, OnChanges } from "@angular/core";
 import {
@@ -139,14 +136,14 @@ export class CatalogComponent implements OnInit, OnChanges{
     }
   }
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  // @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   // @ViewChild(FiltersComponent, { static: true }) filters: FiltersComponent;
 
   ngOnInit() {
     this.metadata.setTitleDescription("Catálogo de Revistas Científicas", "");
-    this.paginator.firstPage();
-    this.paginator.pageSize = 5;
+    // this.paginator.firstPage();
+    // this.paginator.pageSize = 5;
     this.searchParams = new HttpParams();
     this.activatedRoute.queryParamMap.subscribe({
       next: params => {
@@ -155,7 +152,7 @@ export class CatalogComponent implements OnInit, OnChanges{
         // this.searchParams = this.searchParams.set('page', this.pageIndex.toString());
 
         if (params.has("size")) {
-          this.pageSize = Number.parseInt(params.get("size"), 10);
+          // this.pageSize = Number.parseInt(params.get("size"), 10);
           this.searchParams = this.searchParams.set("size", params.get("size"));
         } else {
           this.searchParams = this.searchParams.set(
@@ -164,7 +161,7 @@ export class CatalogComponent implements OnInit, OnChanges{
           );
         }
         if (params.has("page")) {
-          this.pageIndex = Number.parseInt(params.get("page"), 10);
+          // this.pageIndex = Number.parseInt(params.get("page"), 10);
           this.searchParams = this.searchParams.set("page", params.get("page"));
         } else {
           this.searchParams = this.searchParams.set(
@@ -279,7 +276,9 @@ export class CatalogComponent implements OnInit, OnChanges{
     // console.log(this.filtersParams);
     console.log(values);
     console.log(this.router.url);
-    
+    values['page'] = this.pageIndex + 1;
+    values['size'] = this.pageSize;
+
     let navigationExtras: NavigationExtras = {
       relativeTo: this.activatedRoute,
       queryParams: values,
@@ -287,6 +286,7 @@ export class CatalogComponent implements OnInit, OnChanges{
       replaceUrl: true
     };
     this.router.navigate(['.'], navigationExtras);
+    // this.paginator.firstPage();
   }
 
   pageChange(event?: PageEvent) {
@@ -298,7 +298,7 @@ export class CatalogComponent implements OnInit, OnChanges{
       queryParamsHandling: "merge"
     };
 
-    this.router.navigate(["."], navigationExtras);
+    this.router.navigate(['.'], navigationExtras);
   }
 
 
@@ -308,7 +308,7 @@ export class CatalogComponent implements OnInit, OnChanges{
     this.searchService.getSources(this.searchParams).subscribe(
       values => {
         this.length = values.hits.total;
-        this.paginator.firstPage();
+        
         const arr = new Array<Journal>();
         values.hits.hits.forEach(item => {
           console.log(item)

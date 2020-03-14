@@ -1,7 +1,4 @@
-/*
- *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
- *   All rights reserved.
- */
+
 
 
 import { Entity, EntityBase } from './entity';
@@ -10,23 +7,31 @@ import { TermNode, Term } from './taxonomy.entity';
 
 
 export const SourceTypes = {
-    JOURNAL: { 'label': 'Revista Científica', 'value': 'journal' },
-    STUDENT: { 'label': 'Revista Científico Estudiantil', 'value': 'student' },
-    POPULARIZATION: { 'label': 'Revista de Divulgación', 'value': 'popularization' },
-    REPOSITORY: { 'label': 'Repositorio Institucional', 'value': 'repository' },
-    WEBSITE: { 'label': 'Sitio Web', 'value': 'website' },
+    JOURNAL: { 'label': 'Revista Científica', 'value': 'JOURNAL' },
+    STUDENT: { 'label': 'Revista Científico Estudiantil', 'value': 'STUDENT' },
+    POPULARIZATION: { 'label': 'Revista de Divulgación', 'value': 'POPULARIZATION' },
+    REPOSITORY: { 'label': 'Repositorio Institucional', 'value': 'REPOSITORY' },
+    WEBSITE: { 'label': 'Sitio Web', 'value': 'WEBSITE' },
+    OTHER: { 'label': 'Otro', 'value': 'OTHER' },
 };
 
 export const SourcePersonRole = {
-  EDITOR: { 'label': "Editor", 'value': 'EDITOR' },
-  MANAGER: { 'label': "Gestor", 'value': 'MANAGER'},
-  DIRECTOR: { 'label': "Director", 'value': 'DIRECTOR'}
+  ADMINISTRATOR: {'label': "Administrador", 'value': "ADMINISTRATOR"},
+  JOURNALMANAGER: {'label': "Gestor de Revista", 'value': "JOURNALMANAGER"},
+  AUTHOR: {'label': "Autor", 'value': "AUTHOR"},
+  EDITOR: {'label': "Editor", 'value': "EDITOR"},
+  SECTIONEDITOR: {'label': "Editor de Sección", 'value': "SECTIONEDITOR"},
+  REVIEWER: {'label': "Revisor", 'value': "REVIEWER"},
+  COPYEDITOR: {'label': "Editor de Copias", 'value': "COPYEDITOR"},
+  LAYOUTEDITOR: {'label': "Editor de Formato", 'value': "LAYOUTEDITOR"},
+  PROOFREADER: {'label': "Corrector de Pruebas", 'value': "PROOFREADER"},
+  READER: {'label': "Lector", 'value': "READER"}
 };
 
 export const SourceStatus = {
     APPROVED: { 'label': "Aprobado", 'value': 'APPROVED' },
     TO_REVIEW: { 'label': "En revision", 'value': 'TO_REVIEW'},
-    UNOFFICIAL: { 'label': "Incluida Extraoficialmente", 'value': 'UNOFFICIAL'}
+    UNOFFICIAL: { 'label': "Incluido Extraoficialmente", 'value': 'UNOFFICIAL'}
 };
 
 
