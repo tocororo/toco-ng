@@ -6,7 +6,7 @@
 <div
     fxLayout="row wrap"
     fxLayoutAlign="space-around start"
-    style="margin: -3em 2em 2em;"
+    style="margin: -4em 2em 2em;"
 >
 
     <mat-card style="min-width: 15em; width: 50%; margin: .5em;">
@@ -19,7 +19,7 @@
             <img matCardAvatar *ngIf="user.avatar == ''"
                 [ngStyle]="{ 'width.px': 130, 'height.px': 130 }"
                 [ngStyle.xs]="{ 'width.px': 180, 'height.px': 180 }"
-                src="/assets/images/identificador_MES.png"
+                src="/assets/images/userprofile.png"
             >
             
             <mat-card-title *ngIf="user && user.full_name">

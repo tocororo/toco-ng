@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { NotificationButtonComponent } from './notification-button/notification-button.component';
 import { NotificationListComponent } from './notification-list/notification-list.component';
 import { NotificationService } from '@toco/tools/backend';
-import { MatButtonModule, MatMenuModule, MatIconModule, MatBadgeModule, MatTableModule, MatPaginatorModule, MatDividerModule } from '@angular/material';
+import { MatButtonModule, MatMenuModule, MatIconModule, MatBadgeModule, MatTableModule, MatPaginatorModule, MatDividerModule, MatTooltipModule } from '@angular/material';
 
 
 
@@ -23,7 +23,8 @@ import { MatButtonModule, MatMenuModule, MatIconModule, MatBadgeModule, MatTable
         MatBadgeModule,
         MatTableModule,
         MatPaginatorModule,
-        MatDividerModule
+        MatDividerModule,
+        MatTooltipModule
     ],
     exports: [
         NotificationButtonComponent,
