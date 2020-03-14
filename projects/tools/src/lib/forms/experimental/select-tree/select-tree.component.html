@@ -6,6 +6,7 @@
     matTreeNodePadding
     fxLayout="row"
     fxLayoutAlign="space-between center"
+    [ngStyle]="{ 'white-space': 'normal !important' }"
   >
     <div fxLayout="row" fxLayoutAlign="start center">
       <button mat-icon-button disabled></button>
@@ -14,8 +15,10 @@
         [checked]="checklistSelection.isSelected(node)"
         (change)="leafItemSelectionToggle(node)"
         matTooltip="{{ node.name }}"
-        >{{ node.name }}</mat-checkbox
+        [ngStyle]="{ 'white-space': 'normal !important' }"
       >
+          {{ node.name }}
+      </mat-checkbox>
     </div>
   </mat-tree-node>
 
@@ -23,6 +26,7 @@
     class="hover"
     *matTreeNodeDef="let node; when: hasChild"
     matTreeNodePadding
+    [ngStyle]="{ 'white-space': 'normal !important' }"
   >
     <button
       mat-icon-button
@@ -39,6 +43,7 @@
         [indeterminate]="descendantsPartiallySelected(node)"
         (change)="itemSelectionToggle(node)"
         matTooltip="{{ node.name }}"
+        [ngStyle]="{ 'white-space': 'normal !important' }"
         >{{ node.name }}</mat-checkbox
       >
     </div>

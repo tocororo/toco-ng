@@ -6,8 +6,9 @@
         fxLayoutAlign="space-between center"
         style="height: auto !important; min-height: 56px;"
     >
-        <a class="color-white" [routerLink]="['/']">
-            <img src="assets/images/logo_mes.png" alt="MES" width="140">
+        <a class="color-white" [routerLink]="['/']" style="white-space: normal;">
+            <!-- <img src="assets/images/logo_mes.png" alt="MES" width="140"> -->
+            Registro de Revistas Científicas del MES
         </a>
         <div
             appearance="legacy"
@@ -46,7 +47,7 @@
     >
 
         <a mat-button [routerLink]="['/']" value="Inicio">Inicio</a>
-        <a mat-button [routerLink]="['/about']" value="Acerca de">Acerca de</a>
+        <!-- <a mat-button [routerLink]="['/about']" value="Acerca de">Acerca de</a> -->
         <a mat-button [routerLink]="['/sources/new/journal']" value="Incluye tu revista">Incluye tu revista</a>
         <a *ngIf="islogged" mat-button [routerLink]="['/sources']"> Mis Registros </a>
         <a mat-button [routerLink]="['/directory']" value="Catálogo">Directorio</a>
