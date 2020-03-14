@@ -35,7 +35,7 @@ import {
   SelectOptionNode,
   FlatTreeNode
 } from "@toco/tools/forms/experimental/select-tree/select-tree.component";
-import { ParamMap, ActivatedRoute, convertToParamMap } from "@angular/router";
+import { ParamMap, ActivatedRoute, convertToParamMap, Params } from "@angular/router";
 import { filter } from "rxjs/operators";
 
 export const CatalogFilterKeys = {
@@ -57,7 +57,7 @@ export class FiltersComponent implements OnInit {
   params: ParamMap;
 
   @Output()
-  paramsChange: EventEmitter<any> = new EventEmitter();
+  paramsChange: EventEmitter<Params> = new EventEmitter();
 
   panels: PanelContent[] = null;
   formGroup: FormGroup;
@@ -67,7 +67,7 @@ export class FiltersComponent implements OnInit {
 
   organizationUUID = "";
 
-  filters = [];
+  filters: Map<string, string> = new Map<string, string>();
 
   constructor(
     private taxonomyService: TaxonomyService,
@@ -78,43 +78,59 @@ export class FiltersComponent implements OnInit {
   ) {
     if (envService.extraArgs && envService.extraArgs["organizationUUID"]) {
       this.organizationUUID = envService.extraArgs["organizationUUID"];
-      
     }
   }
 
   ngOnInit() {
-    this.formGroup = this._formBuilder.group({});
 
+    this.formGroup = this._formBuilder.group({});
+    this.initFilters();
     this.formGroup.valueChanges.subscribe(
       values => {
-        
         this.institutionSelection = values[CatalogFilterKeys.institutions];
         this.changeTreeFilter();
         this.changeTermMultipleFilter(values, CatalogFilterKeys.subjects);
         this.changeTermMultipleFilter(values, CatalogFilterKeys.grupo_mes);
         this.changeTermMultipleFilter(values, CatalogFilterKeys.miar_types);
-        
-        if (values[CatalogFilterKeys.source_type] && values[CatalogFilterKeys.source_type] != ''){
-          this.filters[CatalogFilterKeys.source_type] = values[CatalogFilterKeys.source_type];
+
+        if (
+          values[CatalogFilterKeys.source_type] &&
+          values[CatalogFilterKeys.source_type] != ""
+        ) {
+          this.filters.set(CatalogFilterKeys.source_type,
+            values[CatalogFilterKeys.source_type]);
         }
-        if (values[CatalogFilterKeys.source_status] && values[CatalogFilterKeys.source_status] != ''){
-          this.filters[CatalogFilterKeys.source_status] = values[CatalogFilterKeys.source_status];
+        if (
+          values[CatalogFilterKeys.source_status] &&
+          values[CatalogFilterKeys.source_status] != ""
+        ) {
+          this.filters.set(CatalogFilterKeys.source_status,
+            values[CatalogFilterKeys.source_status]);
         }
-        
+
         // this.params = convertToParamMap(this.filters);
-        // console.log(this.params);
-        // let res = [];
-        // console.log(this.filters);
-        // for (const key in this.filters.keys) {
-        //   if (this.filters[key] != '') {
-        //     const element = this.filters.keys[key];
-        //     res[key] = element;
-            
+        console.log(values);
+        
+        console.log(this.filters);
+        let res: Params = {};
+        this.filters.forEach((value:string, key:string) => {
+          console.log(value, key);
+          if (value != "") {
+            res[key]= value;
+          }
+        });
+        // console.log(this.filters.keys());
+        
+        // for (const key in this.filters.keys()) {
+        //   console.log(key)
+        //   console.log(this.filters[key]);
+        //   if (this.filters.get(key) != "") {
+        //     res.set(key, this.filters.get(key));
         //   }
         // }
-        // this.filters = res;
-        this.filters.forEach(f => {console.log(f)})
-        this.paramsChange.emit(this.filters);
+        console.log(res);
+        
+        this.paramsChange.emit(res);
       },
       (err: any) => {
         console.log("error: " + err + ".");
@@ -138,9 +154,7 @@ export class FiltersComponent implements OnInit {
             type: FormFieldType.select,
             required: true,
             width: "100%",
-            value: this.params.has(CatalogFilterKeys.source_type)
-              ? this.params.get(CatalogFilterKeys.source_type)
-              : "",
+            value: this.filters.get(CatalogFilterKeys.source_type),
             extraContent: {
               multiple: false,
               getOptions: () => {
@@ -160,7 +174,7 @@ export class FiltersComponent implements OnInit {
                 ];
               },
               selectionChange: selection => {
-                console.log(selection);
+                // console.log(selection);
               }
             }
           }
@@ -181,20 +195,27 @@ export class FiltersComponent implements OnInit {
             width: "100%",
             value: "",
             extraContent: {
-              selectedTermsUUIDs: this.params.has(CatalogFilterKeys.institutions)
-                ? this.params.get(CatalogFilterKeys.institutions).split(",")
-                : "",
-              observable: (this.organizationUUID != '')? this.sourceService.countSourcesByTerm(
-                this.organizationUUID,
-                2
-              ): this.taxonomyService.getTermsTreeByVocab(VocabulariesInmutableNames.INTITUTION),
+              selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.institutions).split(","),
+              observable:
+                this.organizationUUID != ""
+                  ? this.sourceService.countSourcesByTerm(
+                      this.organizationUUID,
+                      2
+                    )
+                  : this.taxonomyService.getTermsTreeByVocab(
+                      VocabulariesInmutableNames.INTITUTION
+                    ),
               getOptions: (response: any) => {
-                if (this.organizationUUID != '') {
+                if (this.organizationUUID != "") {
                   console.log(response);
-                  this.institutionTree = this.initInstitutionTree(response.data.relations);
+                  this.institutionTree = this.initInstitutionTree(
+                    response.data.relations
+                  );
                   return this.institutionTree;
                 } else {
-                  this.institutionTree = this.initInstitutionTreeVocab(response.data.tree.term_node);
+                  this.institutionTree = this.initInstitutionTreeVocab(
+                    response.data.tree.term_node
+                  );
                   return this.institutionTree;
                 }
               },
@@ -218,14 +239,10 @@ export class FiltersComponent implements OnInit {
             type: FormFieldType.vocabulary,
             required: false,
             width: "100%",
-            value: this.params.has(CatalogFilterKeys.subjects)
-              ? this.params.get(CatalogFilterKeys.subjects).split(",")
-              : "",
+            value: this.filters.get(CatalogFilterKeys.subjects).split(","),
             extraContent: {
               multiple: true,
-              selectedTermsUUIDs: this.params.has(CatalogFilterKeys.subjects)
-                ? this.params.get(CatalogFilterKeys.subjects).split(",")
-                : "",
+              selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.subjects).split(","),
               vocab: VocabulariesInmutableNames.SUBJECTS
             }
           }
@@ -244,14 +261,10 @@ export class FiltersComponent implements OnInit {
             type: FormFieldType.vocabulary,
             required: true,
             width: "100%",
-            value: this.params.has(CatalogFilterKeys.grupo_mes)
-              ? this.params.get(CatalogFilterKeys.grupo_mes).split(",")
-              : "",
+            value: this.filters.get(CatalogFilterKeys.grupo_mes).split(","),
             extraContent: {
               multiple: true,
-              selectedTermsUUIDs: this.params.has(CatalogFilterKeys.grupo_mes)
-                ? this.params.get(CatalogFilterKeys.grupo_mes).split(",")
-                : "",
+              selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.grupo_mes).split(","),
               vocab: VocabulariesInmutableNames.MES_GROUPS
             }
           },
@@ -261,14 +274,10 @@ export class FiltersComponent implements OnInit {
             type: FormFieldType.vocabulary,
             required: true,
             width: "100%",
-            value: this.params.has(CatalogFilterKeys.miar_types)
-              ? this.params.get(CatalogFilterKeys.miar_types).split(",")
-              : "",
+            value: this.filters.get(CatalogFilterKeys.miar_types).split(","),
             extraContent: {
               multiple: true,
-              selectedTermsUUIDs: this.params.has(CatalogFilterKeys.miar_types)
-                ? this.params.get(CatalogFilterKeys.miar_types).split(",")
-                : "",
+              selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.miar_types).split(","),
               vocab: VocabulariesInmutableNames.MIAR_DATABASES
             }
           }
@@ -287,9 +296,7 @@ export class FiltersComponent implements OnInit {
             type: FormFieldType.select,
             required: true,
             width: "100%",
-            value: this.params.has(CatalogFilterKeys.source_status)
-              ? this.params.get(CatalogFilterKeys.source_status)
-              : SourceStatus.UNOFFICIAL.value,
+            value: this.filters.get(CatalogFilterKeys.source_status),
             extraContent: {
               multiple: false,
               getOptions: () => {
@@ -314,7 +321,40 @@ export class FiltersComponent implements OnInit {
     ];
   }
 
-  private initInstitutionTreeVocab(nodes: TermNode[]){
+  private initFilters() {
+    this.filters.set(CatalogFilterKeys.grupo_mes, this.params.has(
+      CatalogFilterKeys.grupo_mes
+    )
+      ? this.params.get(CatalogFilterKeys.grupo_mes)
+      : "");
+    this.filters.set(CatalogFilterKeys.institutions, this.params.has(
+      CatalogFilterKeys.institutions
+    )
+      ? this.params.get(CatalogFilterKeys.institutions)
+      : "");
+    this.filters.set(CatalogFilterKeys.miar_types, this.params.has(
+      CatalogFilterKeys.miar_types
+    )
+      ? this.params.get(CatalogFilterKeys.miar_types)
+      : "");
+    this.filters.set(CatalogFilterKeys.source_status, this.params.has(
+      CatalogFilterKeys.source_status
+    )
+      ? this.params.get(CatalogFilterKeys.source_status)
+      : SourceStatus.UNOFFICIAL.value);
+    this.filters.set(CatalogFilterKeys.source_type, this.params.has(
+      CatalogFilterKeys.source_type
+    )
+      ? this.params.get(CatalogFilterKeys.source_type)
+      : "");
+    this.filters.set(CatalogFilterKeys.subjects, this.params.has(
+        CatalogFilterKeys.subjects
+    )
+      ? this.params.get(CatalogFilterKeys.subjects)
+      : "");
+  }
+
+  private initInstitutionTreeVocab(nodes: TermNode[]) {
     const opts: SelectOptionNode[] = [];
     nodes.forEach(node => {
       opts.push({
@@ -344,18 +384,19 @@ export class FiltersComponent implements OnInit {
     return null;
   }
 
-  private changeTreeFilter(){
+  private changeTreeFilter() {
     if (this.institutionTree && this.institutionSelection) {
       const selection = this.findFlatInInstTree(this.institutionTree);
-      let val = '';
+      let val = "";
       selection.forEach(element => {
-        val = val.concat(element.element.value, ',');
+        val = val.concat(element.element.value, ",");
       });
       // val = val.concat(this.organizationUUID)
       val = val.slice(0, val.length - 1);
       // if (val != ''){
-      this.filters[CatalogFilterKeys.institutions] = val;
-      // } 
+      // this.filters[CatalogFilterKeys.institutions] = val;
+      this.filters.set(CatalogFilterKeys.institutions, val);
+      // }
       // else if (this.organizationUUID != ''){
       //   this.filters[CatalogFilterKeys.institutions] = this.organizationUUID;
       // }
@@ -376,17 +417,17 @@ export class FiltersComponent implements OnInit {
     return result;
   }
 
-  private changeTermMultipleFilter(values, key){
+  private changeTermMultipleFilter(values, key) {
     if (values[key]) {
-      let val = '';
-      values[key].forEach( element => {
-        val = val.concat(element.uuid, ',');
+      let val = "";
+      values[key].forEach(element => {
+        val = val.concat(element.uuid, ",");
       });
       val = val.slice(0, val.length - 1);
       // if (val != '') {
-      this.filters[key] = val;
+      this.filters.set(key, val);
+      // this.filters[key] = val;
       // }
-      
     }
   }
 }

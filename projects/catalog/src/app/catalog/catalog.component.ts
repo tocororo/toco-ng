@@ -53,7 +53,8 @@ import {
   Route,
   Router,
   NavigationExtras,
-  convertToParamMap
+  convertToParamMap,
+  Params
 } from "@angular/router";
 import { ThrowStmt } from "@angular/compiler";
 import { HttpParams } from "@angular/common/http";
@@ -271,27 +272,21 @@ export class CatalogComponent implements OnInit, OnChanges{
     
   }
 
-  filtersChange(values) {
-    let res = [];
-    console.log(values);
-    for (const key in values.keys) {
-      console.log(key);
-      
-      if (values[key] != '') {
-        const element = values[key];
-        res[key] = element;
-        
-      }
-    }
-    console.log(res);
-    this.filtersParams = convertToParamMap(res);
+  filtersChange(values: Params) {
+    
+    this.filtersParams = convertToParamMap(values);
 
+    // console.log(this.filtersParams);
+    console.log(values);
+    console.log(this.router.url);
+    
     let navigationExtras: NavigationExtras = {
       relativeTo: this.activatedRoute,
-      queryParams: res,
-      queryParamsHandling: "merge"
+      queryParams: values,
+      queryParamsHandling: "",
+      replaceUrl: true
     };
-    this.router.navigate(["."], navigationExtras);
+    this.router.navigate(['.'], navigationExtras);
   }
 
   pageChange(event?: PageEvent) {
