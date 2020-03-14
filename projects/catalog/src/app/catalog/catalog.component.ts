@@ -3,7 +3,7 @@
  *   All rights reserved.
  */
 
-import { Component, OnInit, ViewChild, Inject } from "@angular/core";
+import { Component, OnInit, ViewChild, Inject, OnChanges } from "@angular/core";
 import {
   animate,
   state,
@@ -52,7 +52,8 @@ import {
   ParamMap,
   Route,
   Router,
-  NavigationExtras
+  NavigationExtras,
+  convertToParamMap
 } from "@angular/router";
 import { ThrowStmt } from "@angular/compiler";
 import { HttpParams } from "@angular/common/http";
@@ -75,7 +76,7 @@ import { HttpParams } from "@angular/common/http";
     ])
   ]
 })
-export class CatalogComponent implements OnInit {
+export class CatalogComponent implements OnInit, OnChanges{
   // journalList: Journal[] = [];
   loading = true;
   private hasErrors = false;
@@ -88,7 +89,7 @@ export class CatalogComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 15, 20];
   pageEvent: PageEvent;
   params: Array<FilterHttpMap>;
-  routeParams: ParamMap;
+  filtersParams: ParamMap;
 
   layoutPosition = [
     {
@@ -119,6 +120,7 @@ export class CatalogComponent implements OnInit {
   currentlayout = this.layoutPosition[2];
 
   searchParams: HttpParams;
+  organizationUUID = '';
 
   constructor(
     private searchService: SearchService,
@@ -131,7 +133,9 @@ export class CatalogComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
-    env.organizationUUID;
+    if (env.extraArgs && env.extraArgs["organizationUUID"]) {
+      this.organizationUUID = env.extraArgs["organizationUUID"];
+    }
   }
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -145,7 +149,7 @@ export class CatalogComponent implements OnInit {
     this.searchParams = new HttpParams();
     this.activatedRoute.queryParamMap.subscribe({
       next: params => {
-        this.routeParams = params;
+        this.filtersParams = params;
         // this.searchParams = this.searchParams.set('size', this.pageSize.toString());
         // this.searchParams = this.searchParams.set('page', this.pageIndex.toString());
 
@@ -181,44 +185,64 @@ export class CatalogComponent implements OnInit {
           );
         }
         // TODO: this is not nice, but..
-        let query = "";
+        let query = '';
+        if(this.organizationUUID != ''){
+          query = '(relations.uuid:' + this.organizationUUID + ')';
+        }
+        
         if (params.has(CatalogFilterKeys.institutions)) {
+          query = this.queryAddAndOp(query);
           query = query.concat("(relations.uuid:");
           params
             .get(CatalogFilterKeys.institutions)
             .split(",")
-            .forEach(uuid => {
-              query = query.concat(uuid, "OR");
+            .forEach((uuid, index, array) => {
+              query = query.concat(uuid);
+              if (index < array.length - 1){
+                query = query.concat(' OR ');
+              }
             });
           query = query.concat(")");
         }
         if (params.has(CatalogFilterKeys.subjects)) {
-          query = query.concat("AND (relations.uuid:");
+          query = this.queryAddAndOp(query);
+          query = query.concat("(relations.uuid:");
           params
             .get(CatalogFilterKeys.subjects)
             .split(",")
-            .forEach(uuid => {
-              query = query.concat(uuid, "OR");
+            .forEach((uuid, index, array) => {
+              query = query.concat(uuid);
+              if (index < array.length - 1){
+                query = query.concat(' OR ');
+              }
             });
           query = query.concat(")");
         }
         if (params.has(CatalogFilterKeys.grupo_mes)) {
-          query = query.concat("AND (relations.uuid:");
+          query = this.queryAddAndOp(query);
+          query = query.concat("(relations.uuid:");
           params
             .get(CatalogFilterKeys.grupo_mes)
             .split(",")
-            .forEach(uuid => {
-              query = query.concat(uuid, "OR");
+            .forEach((uuid, index, array) => {
+              query = query.concat(uuid);
+              if (index < array.length - 1){
+                query = query.concat(' OR ');
+              }
             });
           query = query.concat(")");
         }
         if (params.has(CatalogFilterKeys.miar_types)) {
-          query = query.concat("AND (relations.uuid:");
+          query = this.queryAddAndOp(query);
+          query = query.concat("(relations.uuid:");
           params
             .get(CatalogFilterKeys.miar_types)
             .split(",")
-            .forEach(uuid => {
-              query = query.concat(uuid, "OR");
+            .forEach((uuid, index, array) => {
+              query = query.concat(uuid);
+              if (index < array.length - 1){
+                query = query.concat(' OR ');
+              }
             });
           query = query.concat(")");
         }
@@ -236,12 +260,35 @@ export class CatalogComponent implements OnInit {
 
   }
 
+  private queryAddAndOp(query){
+    if (query != ''){
+      return query + ' AND ';
+    }
+    return query;
+  }
+  ngOnChanges(){
+    console.log('change');
+    
+  }
+
   filtersChange(values) {
+    let res = [];
     console.log(values);
+    for (const key in values.keys) {
+      console.log(key);
+      
+      if (values[key] != '') {
+        const element = values[key];
+        res[key] = element;
+        
+      }
+    }
+    console.log(res);
+    this.filtersParams = convertToParamMap(res);
 
     let navigationExtras: NavigationExtras = {
       relativeTo: this.activatedRoute,
-      queryParams: values,
+      queryParams: res,
       queryParamsHandling: "merge"
     };
     this.router.navigate(["."], navigationExtras);
@@ -265,6 +312,7 @@ export class CatalogComponent implements OnInit {
     this.searchService.getSources(this.searchParams).subscribe(
       values => {
         this.length = values.hits.total;
+        this.paginator.firstPage();
         const arr = new Array<Journal>();
         values.hits.hits.forEach(item => {
           console.log(item)

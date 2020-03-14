@@ -1,8 +1,13 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 
 import { Entity } from "./entity";
 
 export class Repository extends Entity {
-    source_id: number;
+    source_id: string;
     last_run: Date;
     identifier: string;
     metadata_formats: Array<string>;
@@ -18,9 +23,9 @@ export class RepositorySet extends Entity {
 }
 
 export class HarvestedItem extends Entity {
-    repository_id: number
-    identifier: string
-    record_uuid: string
-    status: string
-    error_log: string
+    repository_id: string;
+    identifier: string;
+    record_uuid: string;
+    status: string;
+    error_log: string;
 }

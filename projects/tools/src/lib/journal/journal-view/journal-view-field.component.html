@@ -45,10 +45,16 @@
             <mat-label *ngIf="!currentJournal.data.issn.l" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
-        <ng-container *ngSwitchCase="journalDataType.rnps">
-            <mat-label style="font-weight: bold;">RNPS:</mat-label>
-            <mat-label *ngIf="currentJournal.data.rnps"> {{currentJournal.data.rnps}} </mat-label>
-            <mat-label *ngIf="!currentJournal.data.rnps" class="text-muted text-through">Vacío</mat-label>
+        <ng-container *ngSwitchCase="journalDataType.rnpsP">
+            <mat-label style="font-weight: bold;">Impreso:</mat-label>
+            <mat-label *ngIf="currentJournal.data.rnps.p"> {{currentJournal.data.rnps.p}} </mat-label>
+            <mat-label *ngIf="!currentJournal.data.rnps.p" class="text-muted text-through">Vacío</mat-label>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.rnpsE">
+            <mat-label style="font-weight: bold;">Electrónico:</mat-label>
+            <mat-label *ngIf="currentJournal.data.rnps.e"> {{currentJournal.data.rnps.e}} </mat-label>
+            <mat-label *ngIf="!currentJournal.data.rnps.e" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.url">

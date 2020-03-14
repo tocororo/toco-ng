@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 
 import { Component, OnInit, Input, OnChanges, DoCheck, Inject, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -21,7 +26,8 @@ export enum JournalDataType {
     issnP = 4,
     issnE = 5,
     issnL = 6,
-    rnps = 7,
+    rnpsP = 7,
+    rnpsE = 21,
     url = 8,
     email = 9,
     logo = 10,

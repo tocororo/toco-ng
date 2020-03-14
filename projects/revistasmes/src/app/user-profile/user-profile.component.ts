@@ -1,6 +1,11 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 import { Component, OnInit } from '@angular/core';
 import { UserProfileService } from './user-profile.service';
-import { Entity } from '@toco/tools/entities';
+import { UserProfile } from '@toco/tools/entities';
 import { EnvService } from '@tocoenv/tools/env.service';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -41,16 +46,4 @@ export class UserProfileComponent implements OnInit {
     }
 
 
-}
-
-export class UserProfile extends Entity {
-    biography: string = '';
-    email: string = '';
-    full_name: string = '';
-    id: number = -1;
-    institution: string = '';
-    institution_id: number = -1;
-    institution_rol: string = '';
-    username: string = '';
-    avatar: string = '';
 }

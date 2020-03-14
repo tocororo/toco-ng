@@ -27,7 +27,7 @@ export class Term extends Entity {
     description = '';
     data = new EntityBase();
     vocabulary_id = 0;
-    parent_id = 0;
+    parent_id = '';
     clasified_ids: number[] = [];
     class_ids: number[] = [];
     

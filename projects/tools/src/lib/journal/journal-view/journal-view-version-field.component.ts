@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 import { Component, OnInit, Input } from '@angular/core';
 import { Journal, JournalVersion } from '@toco/tools/entities';
 import { JournalDataType } from './journal-view.component';
@@ -102,10 +107,15 @@ export class JournalViewFieldComponent implements OnInit {
                     this.editingJournal.data.purpose += ' ' + this.currentJournal.data.purpose :
                     this.editingJournal.data.purpose = this.currentJournal.data.purpose;
                 break;
-            case JournalDataType.rnps:
+            case JournalDataType.rnpsP:
                 concat ?
-                    this.editingJournal.data.rnps += ' ' + this.currentJournal.data.rnps :
-                    this.editingJournal.data.rnps = this.currentJournal.data.rnps;
+                    this.editingJournal.data.rnps.p += ' ' + this.currentJournal.data.rnps.p :
+                    this.editingJournal.data.rnps.p = this.currentJournal.data.rnps.p;
+                break;
+            case JournalDataType.rnpsE:
+                concat ?
+                    this.editingJournal.data.rnps.e += ' ' + this.currentJournal.data.rnps.e :
+                    this.editingJournal.data.rnps.e = this.currentJournal.data.rnps.e;
                 break;
             case JournalDataType.seriadas_cubanas:
                 concat ?

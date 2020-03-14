@@ -8,7 +8,7 @@ import { Entity } from "./entity";
 
 export class Person extends Entity
 {
-    institution_id: number;
+    institution_id: string;
     name: String;
     secondName: String;
     lastName: String;
@@ -25,3 +25,17 @@ export class Person extends Entity
     province: String;
     country: String;
 }
+
+
+export class UserProfile extends Entity {
+    biography: string = '';
+    email: string = '';
+    full_name: string = '';
+    id: string = '';
+    institution: string = '';
+    institution_id: number = -1;
+    institution_rol: string = '';
+    username: string = '';
+    avatar: string = '';
+}
+

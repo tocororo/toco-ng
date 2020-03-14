@@ -28,7 +28,7 @@ export class EntityBase extends Object {
  * Created by Edel on 02/04/2018.
  */
 export class Entity extends EntityBase {
-    id: number | string = 0;
+    id: string = '';
 
     /** By default is FALSE. If TRUE, means that the entity does not have valid identifiers or has not been saved to the backend.  */
     isNew = false;
