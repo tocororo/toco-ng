@@ -81,6 +81,9 @@ export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
     public useAccordion = true;
 
     @Input()
+    public useContainer = true;
+
+    @Input()
     public actionButtonIsStepperNext = false;
 
 

@@ -6,6 +6,7 @@
     <toco-journal-edit 
         *ngSwitchCase="sourceType.JOURNAL.value"
         [journalVersion]="version"
+        [source]="source"
         (journalEditDone)="sourceEditDone()"
         (editCanceled)="editCanceled()"
     >

@@ -34,6 +34,7 @@ export class JournalData extends SourceData {
     issn: ISSN = new ISSN();
     rnps: RNPS = new RNPS();
     url = '';
+    oaiurl ? = '';
     email = '';
     logo ? = '';
     purpose ? = '';

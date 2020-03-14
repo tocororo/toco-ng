@@ -8,17 +8,17 @@ import { Entity, EntityBase } from './entity';
 
 // TODO: Esto esta bastante feo... hay que agregarle a vocabulario un nombre inmutable y referirse a este por aqui, no por los ids
 export enum VocabulariesInmutableNames {
-    INTITUTION = 1,
-    SUBJECTS = 2,
-    PROVINCES = 3,
-    DATABASES = 4,
-    MES_GROUPS = 5,
-    LICENCES = 6, 
-    MIAR_TYPES = 7,
-    MIAR_DATABASES = 8,
-    UNESCO_VOCAB = 9,
-    RECOD_SETS = 10,
-    RECORD_TYPES = 11
+    INTITUTION = '1',
+    SUBJECTS = '2',
+    PROVINCES = '3',
+    DATABASES = '4',
+    MES_GROUPS = '5',
+    LICENCES = '6', 
+    MIAR_TYPES = '7',
+    MIAR_DATABASES = '8',
+    UNESCO_VOCAB = '9',
+    RECOD_SETS = '10',
+    RECORD_TYPES = '11'
   }
 
 export class Term extends Entity {
@@ -26,7 +26,7 @@ export class Term extends Entity {
     name = '';
     description = '';
     data = new EntityBase();
-    vocabulary_id = 0;
+    vocabulary_id = '';
     parent_id = '';
     clasified_ids: number[] = [];
     class_ids: number[] = [];

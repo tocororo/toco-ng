@@ -14,6 +14,9 @@ export class InstitutionSelectorComponent implements OnInit {
   @Output()
   institution: Term;
 
+  @Input()
+  public defaultOrganizationUUID: string = null;
+
   // organization, institution and entity, variables for step 2
   @Input()
   public level1: Term = null;
@@ -46,7 +49,9 @@ export class InstitutionSelectorComponent implements OnInit {
   }
 
   initLevel1Panel() {
-
+    if (this.defaultOrganizationUUID != null && this.level1 && this.defaultOrganizationUUID != this.level1.uuid){
+      
+    }
     this.level1Panel = [{
       title: 'Organismo',
       description: '',

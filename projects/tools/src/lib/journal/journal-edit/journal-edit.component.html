@@ -15,9 +15,29 @@
 
   <mat-card-content>
     <mat-horizontal-stepper labelPosition="end" [linear]="true" #stepper>
+      
+      <mat-step *ngIf="identifiersPanel" [stepControl]="identifiersFormGroup">
+        <ng-template matStepLabel>Identificadores</ng-template>
+        <form [formGroup]="identifiersFormGroup">
+          <toco-form-container
+            #informationPanelContainer
+            [panels]="identifiersPanel"
+            [useAccordion]="false"
+            fxLayout="row"
+            [formGroup]="identifiersFormGroup"
+            [deleteValuesAfterAction]="false"
+          >
+          </toco-form-container>
+        </form>
+        <div>
+          <button mat-stroked-button color="primary" matStepperNext>
+            Siguiente
+          </button>
+        </div>
+      </mat-step>
+
       <mat-step *ngIf="informationPanel" [stepControl]="informationFormGroup">
-        <ng-template matStepLabel>Información</ng-template>
-        <h3>Información de la revista</h3>
+        <ng-template matStepLabel>Datos de la Revista</ng-template>
         <form [formGroup]="informationFormGroup">
           <toco-form-container
             #informationPanelContainer
