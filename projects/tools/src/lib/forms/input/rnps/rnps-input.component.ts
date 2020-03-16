@@ -29,7 +29,7 @@ export class InputRnpsComponent extends InputControl implements OnInit
 	 */
     private _codeOldValue: string;
 
-    public constructor(private controlContainer: ControlContainer)
+    public constructor(/*private controlContainer: ControlContainer*/)
     {
         super(
             /* Constructs a new `FormControl` instance. */

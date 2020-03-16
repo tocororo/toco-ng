@@ -1,24 +1,29 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
-import { Term, TermNode, VocabulariesInmutableNames, TermSource } from '@toco/tools/entities';
-import { PanelContent, FormFieldType, SelectOption } from '@toco/tools/forms';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { TaxonomyService } from '@toco/tools/backend';
+import { Component, OnInit, Input, Output } from "@angular/core";
+import {
+  Term,
+  TermNode,
+  VocabulariesInmutableNames,
+  TermSource
+} from "@toco/tools/entities";
+import { PanelContent, FormFieldType, SelectOption } from "@toco/tools/forms";
+import { FormGroup, FormBuilder } from "@angular/forms";
+import { TaxonomyService } from "@toco/tools/backend";
 
+// TODO: rename this component to InstitutionHierarchySelectorComponent
 @Component({
-  selector: 'toco-institution-selector',
-  templateUrl: './institution-selector.component.html',
-  styleUrls: ['./institution-selector.component.scss']
+  selector: "toco-institution-selector",
+  templateUrl: "./institution-selector.component.html",
+  styleUrls: ["./institution-selector.component.scss"]
 })
 export class InstitutionSelectorComponent implements OnInit {
+  // @Output()
+  // institution: Term;
 
-  @Output()
-  institution: Term;
+  // @Input()
+  // public defaultOrganizationUUID: string = null;
 
   @Input()
-  public defaultOrganizationUUID: string = null;
-
-  @Input()
-  public termSource: TermSource = null;
+  public institution: Term = null;
 
   @Input()
   externalFormGroup: FormGroup;
@@ -43,51 +48,60 @@ export class InstitutionSelectorComponent implements OnInit {
 
   constructor(
     private taxonomyService: TaxonomyService,
-    private formBuilder: FormBuilder,
-  ) { }
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit() {
     if (this.externalFormGroup) {
-      if (!this.termSource) {
+      if (!this.institution) {
         this.level1 = null;
         this.level2 = null;
         this.level3 = null;
         this.initializated = this.initLevel1Panel();
       } else {
-        if (this.termSource.term.isNew) {
-          this.taxonomyService.getTermByID(this.termSource.term.parent_id, -3)
-            .subscribe(
-              response => {
-                if (!response.data) {
-                  return;
-                }
-                const node: TermNode = response.data.term_node;
-                if (node.parent && !node.parent.parent) {
-                  this.level1 = new Term();
-                  this.level1.load_from_data(node.parent.term);
-                  this.level2 = new Term();
-                  this.level2.load_from_data(node.term);
-                  this.level3 = this.termSource.term;
-                } else {
-                  this.level1 = null;
-                  this.level2 = null;
-                  this.level3 = null;
-                }
-                this.initializated = this.initLevel1Panel();
-              },
-              (error: any) => { },
-              () => { }
-            );
+        if (this.institution.isNew) {
+          if (this.institution.parent_id && this.institution.parent_id != "") {
+            this.taxonomyService
+              .getTermByID(this.institution.parent_id, -3)
+              .subscribe(
+                response => {
+                  if (!response.data) {
+                    return;
+                  }
+                  const node: TermNode = response.data.term_node;
+                  if (node.parent && !node.parent.parent) {
+                    this.level1 = new Term();
+                    this.level1.load_from_data(node.parent.term);
+                    this.level2 = new Term();
+                    this.level2.load_from_data(node.term);
+                    this.level3 = this.institution;
+                  } else {
+                    this.level1 = null;
+                    this.level2 = null;
+                    this.level3 = null;
+                  }
+                  this.initializated = this.initLevel1Panel();
+                },
+                (error: any) => {},
+                () => {}
+              );
+          } else {
+            this.level1 = null;
+            this.level2 = null;
+            this.level3 = null;
+            this.initializated = this.initLevel1Panel();
+          }
         } else {
-          this.taxonomyService.getTermByUUID(this.termSource.term.uuid, -3)
+          this.taxonomyService
+            .getTermByUUID(this.institution.uuid, -3)
             .subscribe(
               response => {
                 if (!response.data) {
                   return;
                 }
-                console.log(this.termSource);
+                console.log(this.institution);
                 console.log(response);
-                
+
                 const node: TermNode = response.data.term_node;
                 if (node.parent) {
                   if (node.parent.parent) {
@@ -114,8 +128,8 @@ export class InstitutionSelectorComponent implements OnInit {
                 }
                 this.initializated = this.initLevel1Panel();
               },
-              (error: any) => { },
-              () => { }
+              (error: any) => {},
+              () => {}
             );
         }
       }
@@ -123,70 +137,83 @@ export class InstitutionSelectorComponent implements OnInit {
   }
 
   initLevel1Panel() {
-    if (this.defaultOrganizationUUID != null && this.level1 && this.defaultOrganizationUUID != this.level1.uuid) {
-      return false;
-    }
-    this.level1Panel = [{
-      title: 'Organismo',
-      description: '',
-      iconName: '',
-      formGroup: this.externalFormGroup,
-      content: [
-        {
-          name: 'organization',
-          label: 'Organismo',
-          type: FormFieldType.select,
-          required: true,
-          width: '100%',
-          value: this.level1 ? this.level1.uuid : '',
-          extraContent: {
-            observable: this.taxonomyService.getTermsTreeByVocab(VocabulariesInmutableNames.INTITUTION, 0),
-            getOptions: (response: any) => {
-              const opts: SelectOption[] = [];
-              response.data.tree.term_node.forEach((node: TermNode) => {
-                opts.push({
-                  value: node.term.uuid,
-                  label: node.term.name,
+    // if (this.defaultOrganizationUUID != null && this.level1 && this.defaultOrganizationUUID != this.level1.uuid) {
+    //   return false;
+    // }
+    this.level1Panel = [
+      {
+        title: "Organismo",
+        description: "",
+        iconName: "",
+        formGroup: this.externalFormGroup,
+        content: [
+          {
+            name: "organization",
+            label: "Organismo",
+            type: FormFieldType.select,
+            required: true,
+            width: "100%",
+            value: this.level1 ? this.level1.uuid : "",
+            extraContent: {
+              observable: this.taxonomyService.getTermsTreeByVocab(
+                VocabulariesInmutableNames.INTITUTION,
+                0
+              ),
+              getOptions: (response: any) => {
+                const opts: SelectOption[] = [];
+                response.data.tree.term_node.forEach((node: TermNode) => {
+                  opts.push({
+                    value: node.term.uuid,
+                    label: node.term.name
+                  });
                 });
-              });
-              return opts;
-            },
-            selectionChange: (uuid) => {
-              console.log("organizatioon")
-              if (!uuid) { return; }
-              this.taxonomyService.getTermByUUID(uuid, 1)
-                .subscribe(
-                  (response) => {
-                    if (!response.data &&
+                return opts;
+              },
+              selectionChange: uuid => {
+                console.log("organizatioon");
+                if (!uuid) {
+                  return;
+                }
+                this.taxonomyService.getTermByUUID(uuid, 1).subscribe(
+                  response => {
+                    if (
+                      !response.data &&
                       !response.data.term_node &&
-                      !response.data.term_node.term) {
+                      !response.data.term_node.term
+                    ) {
                       return;
                     }
 
                     this.level1 = new Term();
                     this.level1.load_from_data(response.data.term_node.term);
 
-                    if (this.level2 &&
-                      this.level1.id != this.level2.parent_id) {
-
+                    if (
+                      this.level2 &&
+                      this.level1.id != this.level2.parent_id
+                    ) {
                       this.level2 = null;
                       this.level2Panel = null;
                       this.level3 = null;
                       this.level3Panel = null;
                     }
-                    this.initLevel2Panel(response.data.term_node.children, this.externalFormGroup);
+                    this.initLevel2Panel(
+                      response.data.term_node.children,
+                      this.externalFormGroup
+                    );
                   },
                   (err: any) => {
-                    console.log('error: ' + err + '.');
+                    console.log("error: " + err + ".");
                   },
                   () => {
-                    console.log('complete');
+                    console.log("complete");
                   }
                 );
+              }
             }
           }
-        }]
-    }];
+        ]
+      }
+    ];
     return true;
   }
 
@@ -195,17 +222,17 @@ export class InstitutionSelectorComponent implements OnInit {
     // this.institutionFormGroup = this._formBuilder.group({});
     this.level2Panel = [
       {
-        title: 'Institución',
-        description: 'Institución a la que pertenece la revista',
-        iconName: '',
+        title: "Institución",
+        description: "Institución a la que pertenece la revista",
+        iconName: "",
         formGroup: this.externalFormGroup,
         content: [
           {
-            name: 'institution',
-            label: 'Institución',
+            name: "institution",
+            label: "Institución",
             type: FormFieldType.select,
             required: true,
-            width: '100%',
+            width: "100%",
             value: this.level2 ? this.level2.uuid : null,
             extraContent: {
               getOptions: () => {
@@ -214,44 +241,55 @@ export class InstitutionSelectorComponent implements OnInit {
                   children.forEach((node: TermNode) => {
                     opts.push({
                       value: node.term.uuid,
-                      label: node.term.name,
+                      label: node.term.name
                     });
                   });
                 } else if (this.level1) {
-                  console.log("instituytion")
-                  this.taxonomyService.getTermByUUID(this.level1.uuid, 1)
+                  console.log("instituytion");
+                  this.taxonomyService
+                    .getTermByUUID(this.level1.uuid, 1)
                     .subscribe(response => {
-                      if (!response.data &&
+                      if (
+                        !response.data &&
                         !response.data.term_node &&
-                        !response.data.term_node.children) {
+                        !response.data.term_node.children
+                      ) {
                         return;
                       }
-                      response.data.term_node.children.forEach((node: TermNode) => {
-                        opts.push({
-                          value: node.term.uuid,
-                          label: node.term.name,
-                        });
-                      });
+                      response.data.term_node.children.forEach(
+                        (node: TermNode) => {
+                          opts.push({
+                            value: node.term.uuid,
+                            label: node.term.name
+                          });
+                        }
+                      );
                     });
                 }
                 return opts;
               },
-              selectionChange: (uuid) => {
-                if (!uuid) { return; }
+              selectionChange: uuid => {
+                if (!uuid) {
+                  return;
+                }
                 console.log("inst selec change");
 
-
-                this.taxonomyService.getTermByUUID(uuid, 1)
+                this.taxonomyService
+                  .getTermByUUID(uuid, 1)
                   .subscribe(response => {
-                    if (!response.data &&
+                    if (
+                      !response.data &&
                       !response.data.term_node &&
-                      !response.data.term_node.term) {
+                      !response.data.term_node.term
+                    ) {
                       return;
                     }
                     this.level2 = new Term();
                     this.level2.load_from_data(response.data.term_node.term);
-                    if (this.level3 &&
-                      this.level2.id != this.level3.parent_id) {
+                    if (
+                      this.level3 &&
+                      this.level2.id != this.level3.parent_id
+                    ) {
                       this.level3 = null;
                       this.level3Panel = null;
                     }
@@ -259,35 +297,38 @@ export class InstitutionSelectorComponent implements OnInit {
                   });
               }
             }
-          }]
-      }];
+          }
+        ]
+      }
+    ];
   }
 
   manageByLevel3Click() {
     this.isManageByEntity = !this.isManageByEntity;
-    console.log(this.isManageByEntity)
+    console.log(this.isManageByEntity);
 
     if (this.isManageByEntity) {
-      const instUUID = this.externalFormGroup.value['institution'];
+      const instUUID = this.externalFormGroup.value["institution"];
       console.log("entitiy");
 
-      this.taxonomyService.getTermByUUID(instUUID, 1)
-        .subscribe(response => {
-          if (!response.data &&
-            !response.data.term_node &&
-            !response.data.term_node.term) {
-            return;
-          }
-          this.level2 = new Term();
-          this.level2.load_from_data(response.data.term_node.term);
-          if (this.level3 &&
-            this.level2.id != this.level3.parent_id) {
-            this.level3 = null;
-            this.level3Panel = null;
-          }
-          this.initLevel3Panel(response.data.term_node.children);
-        });
+      this.taxonomyService.getTermByUUID(instUUID, 1).subscribe(response => {
+        if (
+          !response.data &&
+          !response.data.term_node &&
+          !response.data.term_node.term
+        ) {
+          return;
+        }
+        this.level2 = new Term();
+        this.level2.load_from_data(response.data.term_node.term);
+        if (this.level3 && this.level2.id != this.level3.parent_id) {
+          this.level3 = null;
+          this.level3Panel = null;
+        }
+        this.initLevel3Panel(response.data.term_node.children);
+      });
     } else {
+      this.level3 = null;
       this.deleteLevel3PanelFields();
     }
   }
@@ -296,55 +337,60 @@ export class InstitutionSelectorComponent implements OnInit {
     this.deleteLevel3PanelFields();
     this.level3Panel = [
       {
-        title: 'Unidad',
-        description: 'Complete la información sobre la Unidad.',
-        iconName: '',
+        title: "Unidad",
+        description: "Complete la información sobre la Unidad.",
+        iconName: "",
         formGroup: this.externalFormGroup,
         content: [
           {
-            name: 'entity',
-            label: 'Unidad',
+            name: "entity",
+            label: "Unidad",
             type: FormFieldType.select,
             required: true,
-            width: '100%',
-            value: this.level3 ? this.level3.uuid : 'new',
+            width: "100%",
+            value: this.level3 ? this.level3.uuid : "new",
             extraContent: {
               getOptions: () => {
                 const opts: SelectOption[] = [
                   {
-                    label: ' < Nueva Unidad > ',
-                    value: 'new'
+                    label: " < Nueva Unidad > ",
+                    value: "new"
                   }
                 ];
                 if (children) {
                   children.forEach((node: TermNode) => {
                     opts.push({
                       value: node.term.uuid,
-                      label: node.term.name,
+                      label: node.term.name
                     });
                   });
                 } else if (this.level2) {
                   console.log("entiti change");
 
-                  this.taxonomyService.getTermByUUID(this.level2.uuid, 1)
+                  this.taxonomyService
+                    .getTermByUUID(this.level2.uuid, 1)
                     .subscribe(response => {
-                      if (!response.data &&
+                      if (
+                        !response.data &&
                         !response.data.term_node &&
-                        !response.data.term_node.children) {
+                        !response.data.term_node.children
+                      ) {
                         return;
                       }
-                      response.data.term_node.children.forEach((node: TermNode) => {
-                        opts.push({
-                          value: node.term.uuid,
-                          label: node.term.name,
-                        });
-                      });
+                      response.data.term_node.children.forEach(
+                        (node: TermNode) => {
+                          opts.push({
+                            value: node.term.uuid,
+                            label: node.term.name
+                          });
+                        }
+                      );
                     });
                 }
                 return opts;
               },
-              selectionChange: (uuid) => {
-                if (uuid == 'new') {
+              selectionChange: uuid => {
+                if (uuid == "new") {
                   if (!this.level3) {
                     this.level3 = new Term();
                   }
@@ -352,11 +398,14 @@ export class InstitutionSelectorComponent implements OnInit {
                   this.level3.parent_id = this.level2.id;
                   this.resetLevel3PanelFields();
                 } else {
-                  this.taxonomyService.getTermByUUID(uuid, 0)
+                  this.taxonomyService
+                    .getTermByUUID(uuid, 0)
                     .subscribe(response => {
-                      if (!response.data &&
+                      if (
+                        !response.data &&
                         !response.data.term_node &&
-                        !response.data.term_node.term) {
+                        !response.data.term_node.term
+                      ) {
                         return;
                       }
                       this.level3 = new Term();
@@ -368,74 +417,97 @@ export class InstitutionSelectorComponent implements OnInit {
             }
           },
           {
-            name: 'name',
-            label: 'Nombre',
+            name: "name",
+            label: "Nombre",
             type: FormFieldType.text,
             required: true,
-            value: (this.level3) ? this.level3.name : null,
-            width: '100%'
+            value: this.level3 ? this.level3.name : null,
+            width: "100%"
           },
           {
-            name: 'description',
-            label: 'Descripción',
+            name: "description",
+            label: "Descripción",
             type: FormFieldType.textarea,
             required: false,
-            value: (this.level3) ? this.level3.description : null,
-            width: '100%'
+            value: this.level3 ? this.level3.description : null,
+            width: "100%"
           },
           {
-            name: 'email',
-            label: 'Email',
+            name: "email",
+            label: "Email",
             type: FormFieldType.email,
             required: false,
-            value: (this.level3) ? this.level3.data['email'] : null,
-            width: '45%'
+            value: this.level3 ? this.level3.data["email"] : null,
+            width: "45%"
           },
           {
-            name: 'website',
-            label: 'Sitio Web Oficial',
+            name: "website",
+            label: "Sitio Web Oficial",
             type: FormFieldType.url,
             required: false,
-            value: (this.level3) ? this.level3.data['website'] : null,
-            width: '45%'
+            value: this.level3 ? this.level3.data["website"] : null,
+            width: "45%"
           },
           {
-            name: 'address',
-            label: 'Dirección',
+            name: "address",
+            label: "Dirección",
             type: FormFieldType.textarea,
             required: false,
-            value: (this.level3) ? this.level3.data['address'] : null,
-            width: '100%'
-          }]
-      }];
+            value: this.level3 ? this.level3.data["address"] : null,
+            width: "100%"
+          }
+        ]
+      }
+    ];
   }
 
   private fillInstitutionData() {
-    this.level3.uuid = this.externalFormGroup.value['entity'];
-    this.level3.name = this.externalFormGroup.value['name'];
-    this.level3.data['description'] = this.externalFormGroup.value['description'];
-    this.level3.data['email'] = this.externalFormGroup.value['email'];
-    this.level3.data['website'] = this.externalFormGroup.value['website'];
-    this.level3.data['address'] = this.externalFormGroup.value['address'];
+    this.level3.uuid = this.externalFormGroup.value["entity"];
+    this.level3.name = this.externalFormGroup.value["name"];
+    this.level3.data["description"] = this.externalFormGroup.value[
+      "description"
+    ];
+    this.level3.data["email"] = this.externalFormGroup.value["email"];
+    this.level3.data["website"] = this.externalFormGroup.value["website"];
+    this.level3.data["address"] = this.externalFormGroup.value["address"];
     this.level3.vocabulary_id = VocabulariesInmutableNames.INTITUTION;
-
   }
 
   private deleteLevel3PanelFields() {
-    this.externalFormGroup.removeControl('entity');
-    this.externalFormGroup.removeControl('name');
-    this.externalFormGroup.removeControl('description');
-    this.externalFormGroup.removeControl('email');
-    this.externalFormGroup.removeControl('website');
-    this.externalFormGroup.removeControl('address');
+    this.externalFormGroup.removeControl("entity");
+    this.externalFormGroup.removeControl("name");
+    this.externalFormGroup.removeControl("description");
+    this.externalFormGroup.removeControl("email");
+    this.externalFormGroup.removeControl("website");
+    this.externalFormGroup.removeControl("address");
   }
 
   private resetLevel3PanelFields() {
-    this.resetControl(this.externalFormGroup.controls, 'name', this.level3.name);
-    this.resetControl(this.externalFormGroup.controls, 'description', this.level3.description);
-    this.resetControl(this.externalFormGroup.controls, 'email', this.level3.data['email']);
-    this.resetControl(this.externalFormGroup.controls, 'website', this.level3.data['website']);
-    this.resetControl(this.externalFormGroup.controls, 'address', this.level3.data['address']);
+    this.resetControl(
+      this.externalFormGroup.controls,
+      "name",
+      this.level3.name
+    );
+    this.resetControl(
+      this.externalFormGroup.controls,
+      "description",
+      this.level3.description
+    );
+    this.resetControl(
+      this.externalFormGroup.controls,
+      "email",
+      this.level3.data["email"]
+    );
+    this.resetControl(
+      this.externalFormGroup.controls,
+      "website",
+      this.level3.data["website"]
+    );
+    this.resetControl(
+      this.externalFormGroup.controls,
+      "address",
+      this.level3.data["address"]
+    );
   }
 
   private resetControl(controls, name, value) {
@@ -444,4 +516,34 @@ export class InstitutionSelectorComponent implements OnInit {
     }
   }
 
+  public getSelectedHierarchy(): TermNode{
+    
+    if (this.level3) {
+      return {
+        term: this.level3,
+        parent: {
+          term: this.level2,
+          parent: {
+            parent: null,
+            term: this.level1
+          }
+        }
+      }
+    } else if (this.level2) {
+      return {
+        term: this.level2,
+        parent: {
+          term: this.level1,
+          parent: null
+        }
+      }
+    } else if (this.level1) {
+      return {
+        term: this.level1,
+        parent: null
+      }
+    } else {
+      return null;
+    }
+  }
 }

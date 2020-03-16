@@ -12,9 +12,11 @@ import { PanelContent } from '@toco/tools/forms';
 export class ExtraInstitutionSelectorComponent implements OnInit {
 
   @Input()
-  institution: Term;
+  public institution: Term;
 
-  institutionFormGroup: FormGroup;
+  @Input()
+  public externalFormGroup: FormGroup;
+
   institutionPanel: PanelContent[] = null;
 
   constructor(
@@ -22,17 +24,17 @@ export class ExtraInstitutionSelectorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.institutionFormGroup = this.formBuilder.group({});
-    const content = TermHelper.getPanelContentToEdit(this.institution);
-    this.institutionPanel = [
-      {
-        title: "Término",
-        description: "",
-        iconName: "",
-        formGroup: this.institutionFormGroup,
-        content: content
-      }
-    ];
+    if (this.institution) {
+      const content = TermHelper.getPanelContentToEdit(this.institution);
+      this.institutionPanel = [
+        {
+          title: "Institución",
+          description: "",
+          iconName: "",
+          formGroup: this.externalFormGroup,
+          content: content
+        }
+      ];
+    }
   }
-
 }

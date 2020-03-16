@@ -34,7 +34,7 @@ export class TermParentComponent extends FormFieldControl_Experimental implement
     currentTerm: Term = null;
     parentTerm: Term = null;
 
-    constructor(private controlContainer: ControlContainer) {
+    constructor(/*private controlContainer: ControlContainer*/) {
         super();
     }
 

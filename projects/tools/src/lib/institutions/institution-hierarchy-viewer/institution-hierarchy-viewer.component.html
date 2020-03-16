@@ -1,0 +1,11 @@
+<mat-list>
+    <ng-container *ngIf="node.parent; else elseTemplate">
+        <mat-list-item *ngIf="node.parent.parent">{{node.parent.parent.term.name}}</mat-list-item>
+        <mat-list-item *ngIf="node.parent">{{node.parent.term.name}}</mat-list-item>
+        <mat-list-item >{{ term.name }}</mat-list-item>
+    </ng-container>
+    <ng-template #elseTemplate>
+        <mat-list-item >{{ term.name }}</mat-list-item>
+    </ng-template>
+  </mat-list>
+  

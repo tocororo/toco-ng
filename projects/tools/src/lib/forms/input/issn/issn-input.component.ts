@@ -24,7 +24,7 @@ export class InputIssnComponent extends InputControl implements OnInit
 {
 	/* Note: this control works well with a 'width' = '310px' or '285px'. */
 
-	public constructor(private controlContainer: ControlContainer)
+	public constructor(/*private controlContainer: ControlContainer*/)
 	{
 		super(null);
 	}
