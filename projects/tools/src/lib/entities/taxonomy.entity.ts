@@ -13,12 +13,15 @@ export enum VocabulariesInmutableNames {
     PROVINCES = '3',
     DATABASES = '4',
     MES_GROUPS = '5',
-    LICENCES = '6', 
+    LICENCES = '6',
     MIAR_TYPES = '7',
     MIAR_DATABASES = '8',
     UNESCO_VOCAB = '9',
     RECOD_SETS = '10',
-    RECORD_TYPES = '11'
+    RECORD_TYPES = '11',
+    EXTRA_INSTITUTIONS = '12',
+    SUBJECT_COVER = '13',
+    COUNTRIES = '14'
   }
 
 export class Term extends Entity {
@@ -30,7 +33,7 @@ export class Term extends Entity {
     parent_id = '';
     clasified_ids: number[] = [];
     class_ids: number[] = [];
-    
+
     // load_from_data(data: any){
     //     switch (data['vocabulary_id']) {
     //         case VocabulariesInmutableNames.INTITUTION:

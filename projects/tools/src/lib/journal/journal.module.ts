@@ -21,6 +21,7 @@ import { JournalViewVersionComponent } from './journal-view/journal-view-version
 import { CoreModule } from '../core';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { InstitutionsModule } from '../institutions/institutions.module';
+import { JournalInstitutionsComponent } from './journal-institutions/journal-institutions.component';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,8 @@ import { InstitutionsModule } from '../institutions/institutions.module';
         JournalEditComponent,
         JournalInclusionComponent,
         JournalEditAddIndexComponent,
-        JournalViewVersionComponent
+        JournalViewVersionComponent,
+        JournalInstitutionsComponent
     ],
     entryComponents: [
         JournalEditAddIndexComponent

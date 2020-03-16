@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessageHandler, StatusCode } from '@toco/tools/core';
 import { MatSnackBar } from '@angular/material';
 import { SourceService, TaxonomyService } from '@toco/tools/backend';
+import { EnvService } from '@tocoenv/tools/env.service';
 
 @Component({
   selector: 'toco-source-edit',
@@ -21,13 +22,19 @@ export class SourceEditComponent implements OnInit {
   public source: Source;
   public version: SourceVersion;
   public saving = false;
+  public organizationUUID = null;
   constructor(
     private route: ActivatedRoute,
     private _router: Router,
-    private _snackBar: MatSnackBar, 
-    private sourceService: SourceService, 
-    private taxonomyService: TaxonomyService
-  ) { }
+    private _snackBar: MatSnackBar,
+    private sourceService: SourceService,
+    private taxonomyService: TaxonomyService,
+    private env: EnvService,
+  ) {
+    if (env.extraArgs && env.extraArgs["organizationUUID"]) {
+      this.organizationUUID = env.extraArgs["organizationUUID"];
+    }
+  }
 
   ngOnInit() {
     this.route.data
@@ -48,7 +55,7 @@ export class SourceEditComponent implements OnInit {
               this.version.data.load_from_data(this.source.data);
 
               break;
-          
+
             default:
               this.source = new Source();
               this.source.load_from_data(src);
@@ -70,7 +77,7 @@ export class SourceEditComponent implements OnInit {
     let toReplace = -1;
     for (let index = 0; index < this.version.data.term_sources.length; index++) {
       const element = this.version.data.term_sources[index];
-      if (element.term.vocabulary_id == VocabulariesInmutableNames.INTITUTION 
+      if (element.term.vocabulary_id == VocabulariesInmutableNames.INTITUTION
         && element.term.isNew){
           toReplace = index;
         }

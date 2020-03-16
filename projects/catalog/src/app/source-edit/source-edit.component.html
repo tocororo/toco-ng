@@ -3,10 +3,11 @@
 </toco-progress>
 
 <ng-container *ngIf="source" [ngSwitch]="source.source_type">
-    <toco-journal-edit 
+    <toco-journal-edit
         *ngSwitchCase="sourceType.JOURNAL.value"
         [journalVersion]="version"
         [source]="source"
+        [defaultOrganizationUUID]="organizationUUID"
         (journalEditDone)="sourceEditDone()"
         (editCanceled)="editCanceled()"
     >

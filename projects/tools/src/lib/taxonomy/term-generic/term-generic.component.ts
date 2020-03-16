@@ -115,6 +115,7 @@ export class TermGenericComponent implements OnInit {
   }
 
   getPanels() {
+    // TODO: use TermHelper
     switch (this.vocab.id) {
       case VocabulariesInmutableNames.INTITUTION:
         return [

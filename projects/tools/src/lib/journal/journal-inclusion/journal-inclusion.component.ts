@@ -1,3 +1,5 @@
+
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormContainerAction, PanelContent, FormFieldType, HintValue, HintPosition, SelectOption } from '@toco/tools/forms';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -80,20 +82,13 @@ export class JournalInclusionComponent implements OnInit {
             value: this.journal ? this.journal.source_type : '',
             extraContent: {
               getOptions: () => {
-                const opts: SelectOption[] = [
-                  {
-                    value: SourcePersonRole.EDITOR.value,
-                    label: SourcePersonRole.EDITOR.label,
-                  },
-                  {
-                    value: SourcePersonRole.MANAGER.value,
-                    label: SourcePersonRole.MANAGER.label,
-                  },
-                  {
-                    value: SourcePersonRole.DIRECTOR.value,
-                    label: SourcePersonRole.DIRECTOR.label,
-                  },
-                ];
+                const opts: SelectOption[] = [];
+                Object.keys(SourcePersonRole).forEach(key => {
+                  opts.push({
+                    value: SourcePersonRole[key].value,
+                    label: SourcePersonRole[key].label,
+                  });
+                });
                 return opts;
               }
             }

@@ -11,13 +11,15 @@ import { InstitutionSelectorComponent } from './institution-selector/institution
 import { ListCountSourcesByTermComponent } from './list-count-sources-by-term/list-count-sources-by-term.component';
 import { SharedModule } from '../shared';
 import { TocoFormsModule } from '../forms';
+import { ExtraInstitutionSelectorComponent } from './extra-institution-selector/extra-institution-selector.component';
 
 
 
 @NgModule({
   declarations: [
     InstitutionSelectorComponent,
-    ListCountSourcesByTermComponent
+    ListCountSourcesByTermComponent,
+    ExtraInstitutionSelectorComponent
   ],
   imports: [
     CommonModule,

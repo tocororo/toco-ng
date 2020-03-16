@@ -34,7 +34,6 @@ export class JournalData extends SourceData {
     issn: ISSN = new ISSN();
     rnps: RNPS = new RNPS();
     url = '';
-    oaiurl ? = '';
     email = '';
     logo ? = '';
     purpose ? = '';
@@ -69,11 +68,11 @@ export class JournalVersion extends SourceVersion {
 
   stringify(): string  {
     return JSON.stringify(this, (k, v) => {
-      if (k !== 'id' && 
-          k !== 'uuid' && 
-          k !== 'isNew' && 
-          k !== 'organization' && 
-          k !== 'institution' && 
+      if (k !== 'id' &&
+          k !== 'uuid' &&
+          k !== 'isNew' &&
+          k !== 'organization' &&
+          k !== 'institution' &&
           k !== 'entity' ) {
         return v;
       }

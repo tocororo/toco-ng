@@ -15,7 +15,7 @@
 
   <mat-card-content>
     <mat-horizontal-stepper labelPosition="end" [linear]="true" #stepper>
-      
+
       <mat-step *ngIf="identifiersPanel" [stepControl]="identifiersFormGroup">
         <ng-template matStepLabel>Identificadores</ng-template>
         <form [formGroup]="identifiersFormGroup">
@@ -50,6 +50,9 @@
           </toco-form-container>
         </form>
         <div>
+          <button mat-stroked-button color="accent" matStepperPrevious>
+            Atrás
+          </button>
           <button mat-stroked-button color="primary" matStepperNext>
             Siguiente
           </button>
@@ -58,15 +61,16 @@
 
       <mat-step *ngIf="organizationFormGroup" [stepControl]="organizationFormGroup">
         <ng-template matStepLabel>Institución</ng-template>
-        <h3>Entidad que gestiona la revista</h3>
+        <h3>Institución</h3>
         <form [formGroup]="organizationFormGroup">
-          <toco-institution-selector
-            [level1FormGroup]="organizationFormGroup"
-            [level1]="organization"
-            [level2]="institution"
-            [level3]="entity"
+          <toco-journal-institutions
+            [source]="source"
+            [journalVersion]="journalVersion"
+            [organizationFormGroup]="organizationFormGroup"
+            [defaultOrganizationUUID]="defaultOrganizationUUID"
+            [institutions]="institutions"
           >
-          </toco-institution-selector>
+          </toco-journal-institutions>
           <!-- <toco-form-container
             *ngIf="organizationPanel"
             #organizationPanelContainer
@@ -118,7 +122,6 @@
             mat-stroked-button
             color="primary"
             matStepperNext
-            (click)="step2Action()"
           >
             Siguiente
           </button>
@@ -150,7 +153,6 @@
             mat-stroked-button
             color="primary"
             matStepperNext
-            (click)="step3Action()"
           >
             Siguiente
           </button>

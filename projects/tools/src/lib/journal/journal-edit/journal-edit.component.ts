@@ -31,7 +31,8 @@ import {
   TermNode,
   VocabulariesInmutableNames,
   JournalVersion,
-  Source
+  Source,
+  SourceSystems
 } from "@toco/tools/entities";
 import { FilterHttpMap } from "@toco/tools/filters";
 import {
@@ -74,6 +75,9 @@ export class JournalEditComponent implements OnInit {
   @Input()
   public description = "";
 
+  @Input()
+  public defaultOrganizationUUID: string = null;
+
   // journal identifiers variables for step 0
   identifiersPanel: PanelContent[] = null;
   identifiersFormGroup: FormGroup;
@@ -82,19 +86,8 @@ export class JournalEditComponent implements OnInit {
   informationPanel: PanelContent[] = null;
   informationFormGroup: FormGroup;
 
-  // organization, institution and entity, variables for step 2
-  public organization: Term = null;
-  organizationPanel: PanelContent[] = null;
   organizationFormGroup: FormGroup;
-  // institution
-  public institution: Term = null;
-  institutionPanel: PanelContent[] = null;
-  institutionFormGroup: FormGroup;
-  // entity
-  public entity: Term = null;
-  entityPanel: PanelContent[] = null;
-
-  public isManageByEntity = true;
+  institutions: TermSource[] = [];
   // entityFormGroup: FormGroup;
 
   // indexes (databases), variables for step 3
@@ -106,7 +99,6 @@ export class JournalEditComponent implements OnInit {
   finalFormGroup: FormGroup;
 
   // actions, if needed
-  stepperStep = 0;
   stepAction1: FormContainerAction;
   stepAction2: FormContainerAction;
   stepAction3: FormContainerAction;
@@ -138,8 +130,6 @@ export class JournalEditComponent implements OnInit {
     console.log("journal edit INIT");
     this.resetStepper();
 
-    this.stepperStep = 0;
-
     this.initStep0Identifiers();
     this.initStep1();
     this.initStep2();
@@ -148,7 +138,6 @@ export class JournalEditComponent implements OnInit {
   }
 
   resetStepper() {
-    this.stepperStep = 0;
 
     this.identifiersPanel = null;
     this.identifiersFormGroup = null;
@@ -156,21 +145,19 @@ export class JournalEditComponent implements OnInit {
     this.informationPanel = null;
     this.informationFormGroup = null;
 
-    this.organization = null;
-    this.organizationPanel = null;
-    this.institution = null;
-    this.institutionPanel = null;
-    this.entity = null;
-    this.entityPanel = null;
+    // this.organization = null;
+    // this.organizationPanel = null;
+    // this.institution = null;
+    // this.institutionPanel = null;
+    // this.entity = null;
+    // this.entityPanel = null;
     this.organizationFormGroup = null;
 
     this.indexesPanel = null;
     this.indexesFormGroup = null;
   }
 
-  previusStep() {
-    this.stepperStep -= 1;
-  }
+
 
   initStep0Identifiers() {
     this.identifiersFormGroup = this.formBuilder.group({});
@@ -333,15 +320,42 @@ export class JournalEditComponent implements OnInit {
             value: this.journalVersion ? this.journalVersion.data.url : ""
           },
           {
+            name: "source_system",
+            label: "Tipo de Sistema que soporta la revista",
+            type: FormFieldType.select,
+            required: false,
+            width: "35%",
+            value: this.journalVersion ? this.journalVersion.data.source_system : "",
+            extraContent: {
+              multiple: false,
+              getOptions: () => {
+                return [
+                  {
+                    label: SourceSystems.OJS.label,
+                    value: SourceSystems.OJS.value
+                  },
+                  {
+                    label: SourceSystems.CMS.label,
+                    value: SourceSystems.CMS.value
+                  },
+                  {
+                    label: SourceSystems.OTHER.label,
+                    value: SourceSystems.OTHER.value
+                  }
+                ];
+              }
+            }
+          },
+          {
             name: "oaiurl",
             label: "OAI-PMH",
             type: FormFieldType.url,
-            required: true,
+            required: false,
             startHint: new HintValue(
               HintPosition.start,
               "Escriba una URL válida."
             ),
-            width: "100%",
+            width: "60%",
             value: this.journalVersion ? this.journalVersion.data.oaiurl : ""
           },
           // {
@@ -486,78 +500,79 @@ export class JournalEditComponent implements OnInit {
   }
 
   initStep2() {
-    // get data for and create institutional panel (second step)
-    let termSource: TermSource = null;
-    if (this.journalVersion) {
-      termSource = this.journalVersion.data.term_sources.find(
-        (termSource: TermSource) => {
-          if (
-            termSource.term.vocabulary_id ==
-            VocabulariesInmutableNames.INTITUTION
-          ) {
-            return termSource;
-          }
-        }
-      );
+    this.organizationFormGroup = this.formBuilder.group({});
+    // // get data for and create institutional panel (second step)
+    // let termSource: TermSource = null;
+    // if (this.journalVersion) {
+    //   termSource = this.journalVersion.data.term_sources.find(
+    //     (termSource: TermSource) => {
+    //       if (
+    //         termSource.term.vocabulary_id ==
+    //         VocabulariesInmutableNames.INTITUTION
+    //       ) {
+    //         return termSource;
+    //       }
+    //     }
+    //   );
 
-      // si la revista no tiene ninguna institucion
-      if (!termSource) {
-        // termSource = new TermSource();
-        // termSource.term = new Term();
-        // termSource.term.isNew = true;
-        // termSource.term.vocabulary_id = VocabulariesInmutableNames.INTITUTION;
-        // this.journalVersion.organization = termSource.term;
-        // this.journalVersion.institution = termSource.term;
-        // this.journalVersion.entity = termSource.term;
-        this.organization = null;
-        this.institution = null;
-        this.entity = null;
-        this.initOrganizationPanel();
-      } else if (termSource && !termSource.term.isNew) {
-        this.taxonomyService
-          .getTermByUUID(termSource.term.uuid, -3)
-          .subscribe(response => {
-            if (!response.data) {
-              return;
-            }
-            const hierarchy: TermNode = response.data.term_node;
-            if (hierarchy.parent) {
-              if (hierarchy.parent.parent) {
-                this.organization = new Term();
-                this.organization.load_from_data(hierarchy.parent.parent.term);
-                this.institution = new Term();
-                this.institution.load_from_data(hierarchy.parent.term);
-                this.entity = new Term();
-                this.entity.load_from_data(hierarchy.term);
-                // Se asume que la revista solo se puede relacionar con elementos de hasta el tercer nivel de la jerarquia institucional
-                if (hierarchy.parent.parent.parent) {
-                  this.organization = null;
-                  this.institution = null;
-                  this.entity = null;
-                }
-              } else {
-                this.organization = new Term();
-                this.organization.load_from_data(hierarchy.parent.term);
-                this.institution = new Term();
-                this.institution.load_from_data(hierarchy.term);
-              }
-            } else {
-              this.organization = new Term();
-              this.organization.load_from_data(hierarchy.term);
-            }
-            this.initOrganizationPanel();
-          });
-      } else if (this.journalVersion.organization) {
-        this.organization = this.journalVersion.organization;
-        this.institution = this.journalVersion.institution;
-        this.entity = this.journalVersion.entity;
-        this.initOrganizationPanel();
-      }
-    }
+    //   // si la revista no tiene ninguna institucion
+    //   if (!termSource) {
+    //     // termSource = new TermSource();
+    //     // termSource.term = new Term();
+    //     // termSource.term.isNew = true;
+    //     // termSource.term.vocabulary_id = VocabulariesInmutableNames.INTITUTION;
+    //     // this.journalVersion.organization = termSource.term;
+    //     // this.journalVersion.institution = termSource.term;
+    //     // this.journalVersion.entity = termSource.term;
+    //     this.organization = null;
+    //     this.institution = null;
+    //     this.entity = null;
+    //     this.initOrganizationPanel();
+    //   } else if (termSource && !termSource.term.isNew) {
+    //     this.taxonomyService
+    //       .getTermByUUID(termSource.term.uuid, -3)
+    //       .subscribe(response => {
+    //         if (!response.data) {
+    //           return;
+    //         }
+    //         const hierarchy: TermNode = response.data.term_node;
+    //         if (hierarchy.parent) {
+    //           if (hierarchy.parent.parent) {
+    //             this.organization = new Term();
+    //             this.organization.load_from_data(hierarchy.parent.parent.term);
+    //             this.institution = new Term();
+    //             this.institution.load_from_data(hierarchy.parent.term);
+    //             this.entity = new Term();
+    //             this.entity.load_from_data(hierarchy.term);
+    //             // Se asume que la revista solo se puede relacionar con elementos de hasta el tercer nivel de la jerarquia institucional
+    //             if (hierarchy.parent.parent.parent) {
+    //               this.organization = null;
+    //               this.institution = null;
+    //               this.entity = null;
+    //             }
+    //           } else {
+    //             this.organization = new Term();
+    //             this.organization.load_from_data(hierarchy.parent.term);
+    //             this.institution = new Term();
+    //             this.institution.load_from_data(hierarchy.term);
+    //           }
+    //         } else {
+    //           this.organization = new Term();
+    //           this.organization.load_from_data(hierarchy.term);
+    //         }
+    //         this.initOrganizationPanel();
+    //       });
+    //   } else if (this.journalVersion.organization) {
+    //     this.organization = this.journalVersion.organization;
+    //     this.institution = this.journalVersion.institution;
+    //     this.entity = this.journalVersion.entity;
+    //     this.initOrganizationPanel();
+    //   }
+    // }
   }
 
   initOrganizationPanel() {
-    this.organizationFormGroup = this.formBuilder.group({});
+    // this.organizationFormGroup = this.formBuilder.group({});
 
     // this.organizationPanel = [{
     //   title: 'Organismo',
@@ -1041,18 +1056,9 @@ export class JournalEditComponent implements OnInit {
       this.journalVersion.data.term_sources.push(ts);
     });
 
-    const ts = new TermSource();
-    if (this.isManageByEntity) {
-      // this.fillEntityData();
-      ts.term = this.entity;
-      this.journalVersion.entity = this.entity;
-    } else {
-      ts.term = this.institution;
-      this.journalVersion.entity = null;
-    }
-    ts.term_id = ts.term.id;
-    ts.source_id = this.journalVersion.source_id;
-    this.journalVersion.data.term_sources.push(ts);
+    this.institutions.forEach(inst => {
+      this.journalVersion.data.term_sources.push(inst);
+    });
 
     this.indexesPanel.forEach(panel => {
       const ts = new TermSource();
@@ -1075,18 +1081,9 @@ export class JournalEditComponent implements OnInit {
     console.log(this.informationFormGroup);
     console.log(this.organizationFormGroup);
     console.log(this.indexesFormGroup);
+    console.log(this.journalVersion);
   }
 
-  step1Action() {
-    this.stepperStep += 1;
-  }
-
-  step2Action() {
-    this.stepperStep += 1;
-  }
-  step3Action() {
-    this.stepperStep += 1;
-  }
   public finishStepper() {
     // console.log(this.journalVersion)
     this.fillJournalFields();

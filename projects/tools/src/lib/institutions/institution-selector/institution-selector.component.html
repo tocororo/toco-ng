@@ -1,4 +1,6 @@
-<toco-form-container
+
+<ng-container *ngIf="initializated; else elseTemplate">
+  <toco-form-container
   *ngIf="level1Panel"
   #level1PanelContainer
   [panels]="level1Panel"
@@ -19,7 +21,7 @@
 <ng-container *ngIf="level2">
   <mat-checkbox #isManagedBy [checked]="true" (click)="manageByLevel3Click()">
     <div>
-      La revista es gestionada por una unidad perteneciente a:
+      Unidad perteneciente a:
     </div>
     <div>
       <strong> {{ level2.name }}</strong>
@@ -36,3 +38,12 @@
   >
   </toco-form-container>
 </ng-container>
+</ng-container>
+<ng-template #elseTemplate>
+  <p *ngIf="level1">{{level1.name}}</p>
+  <p *ngIf="level2"> --> {{level2.name}}</p>
+  <p *ngIf="level3"> --> -->{{level3.name}}</p>
+</ng-template>
+
+
+
