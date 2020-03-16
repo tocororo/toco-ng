@@ -1,16 +1,23 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Source, JournalVersion, Term, TermSource, VocabulariesInmutableNames, TermNode } from '@toco/tools/entities';
-import { PanelContent } from '@toco/tools/forms';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { TaxonomyService } from '@toco/tools/backend';
+import { Component, OnInit, Input } from "@angular/core";
+import {
+  Source,
+  JournalVersion,
+  Term,
+  TermSource,
+  VocabulariesInmutableNames,
+  TermNode,
+  SourceInstitutionRole
+} from "@toco/tools/entities";
+import { PanelContent } from "@toco/tools/forms";
+import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
+import { TaxonomyService } from "@toco/tools/backend";
 
 @Component({
-  selector: 'toco-journal-institutions',
-  templateUrl: './journal-institutions.component.html',
-  styleUrls: ['./journal-institutions.component.scss']
+  selector: "toco-journal-institutions",
+  templateUrl: "./journal-institutions.component.html",
+  styleUrls: ["./journal-institutions.component.scss"]
 })
 export class JournalInstitutionsComponent implements OnInit {
-
   @Input()
   public source: Source;
 
@@ -24,23 +31,21 @@ export class JournalInstitutionsComponent implements OnInit {
   organizationFormGroup: FormGroup;
 
   @Input()
-  institutions: TermSource[];
+  institutions: TermSource[] = [];
 
-  // organization, institution and entity, variables for step 2
-  public organization: Term = null;
-  organizationPanel: PanelContent[] = null;
+  // // organization, institution and entity, variables for step 2
+  // public organization: Term = null;
+  // organizationPanel: PanelContent[] = null;
 
+  // // institution
+  // public institution: Term = null;
+  // institutionPanel: PanelContent[] = null;
+  // institutionFormGroup: FormGroup;
+  // // entity
+  // public entity: Term = null;
+  // entityPanel: PanelContent[] = null;
 
-  // institution
-  public institution: Term = null;
-  institutionPanel: PanelContent[] = null;
-  institutionFormGroup: FormGroup;
-  // entity
-  public entity: Term = null;
-  entityPanel: PanelContent[] = null;
-
-  public isManageByEntity = true;
-
+  // public isManageByEntity = true;
 
   public initOrganizationPanel = false;
 
@@ -48,60 +53,52 @@ export class JournalInstitutionsComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private taxonomyService: TaxonomyService,
-  ) { }
+    private taxonomyService: TaxonomyService
+  ) {}
 
   ngOnInit() {
     // get data for and create institutional panel (second step)
-    let termSource: TermSource = null;
+    let termSource: TermSource[] = [];
     if (this.journalVersion) {
-      termSource = this.journalVersion.data.term_sources.find(
-        (termSource: TermSource) => {
-          if (
-            termSource.term.vocabulary_id ==
-            VocabulariesInmutableNames.INTITUTION
-          ) {
-            return termSource;
-          }
-        }
+      this.institutions = this.journalVersion.data.term_sources.filter(
+        ts => ts.term.vocabulary_id == VocabulariesInmutableNames.INTITUTION
       );
-      if (this.journalVersion.organization) {
-        this.organization = this.journalVersion.organization;
-        this.institution = this.journalVersion.institution;
-        this.entity = this.journalVersion.entity;
-        this.initTabs();
+      console.log(this.institutions);
+      
+      if (this.institutions.length == 1) {
+        if (!this.institutions[0].data){
+          this.institutions[0].data = {'role' : SourceInstitutionRole.MAIN.value}
+        }else {
+          this.institutions[0].data['role'] = SourceInstitutionRole.MAIN.value;
+        }
       }
+      this.initOrganizationPanel = true;
     }
   }
 
-  //   selected = new FormControl(0);
+  selected = new FormControl(0);
 
-  initTabs() {
-    this.initOrganizationPanel = true;
-    this.tabs.push(
-      {
-        oficial: true,
-        organization: this.organization,
-        institution: this.institution,
-        entity: this.entity
-      }
-    );
-  }
 
-  addTab(selectAfterAdding: boolean) {
-    this.tabs.push('New');
+
+  addInst(selectAfterAdding: boolean) {
+    let newInst = new TermSource();
+    newInst.source_id = this.source.id;
+    newInst.data['role'] = SourceInstitutionRole.COLABORATOR;
+    newInst.term = new Term();
+    newInst.term.isNew = true;
+    newInst.term.vocabulary_id = VocabulariesInmutableNames.INTITUTION;
+
+    this.institutions.push(newInst);
 
     if (selectAfterAdding) {
-      this.selected.setValue(this.tabs.length - 1);
+      this.selected.setValue(this.institutions.length - 1);
     }
   }
 
-  removeTab(index: number) {
+  removeInst(index: number) {
     this.tabs.splice(index, 1);
   }
-
 }
-
 
 // const ts = new TermSource();
 // // if (this.isManageByEntity) {
@@ -114,10 +111,6 @@ export class JournalInstitutionsComponent implements OnInit {
 // // }
 // ts.term_id = ts.term.id;
 // ts.source_id = this.journalVersion.source_id;
-
-
-
-
 
 // import {Component} from '@angular/core';
 // import {FormControl} from '@angular/forms';
@@ -132,11 +125,7 @@ export class JournalInstitutionsComponent implements OnInit {
 // })
 // export class TabGroupDynamicExample {
 
-
 // }
-
-
-
 
 // Ayer no te mande el correo, pero no me dio tiempo de llamarte, así q te escribo.
 
@@ -151,7 +140,6 @@ export class JournalInstitutionsComponent implements OnInit {
 // Co-Auspiciador
 
 // No se si crees falte aun otro rol q pueda jugar la institución o llamarlos diferente.
-
 
 // En Indizacion;
 // Debe haber un campo, no recuerdo si está, para el tipo de Indizacion o Clasificación, que son las mismas de Miar, pero veo q tiene además dos más q ahora mismo sólo recuerdo Índices.

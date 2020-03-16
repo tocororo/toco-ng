@@ -138,7 +138,7 @@ export class TaxonomyService {
     const options = {
       params: params.set('level', level.toString())
     };
-    const req = this.env.sceibaApi + this.prefix + '/term/' + termID;
+    const req = this.env.sceibaApi + this.prefix + '/term/id/' + termID;
     return this.http.get<Response<any>>(req, options);
   }
 

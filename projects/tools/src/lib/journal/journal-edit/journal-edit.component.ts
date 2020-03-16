@@ -129,10 +129,10 @@ export class JournalEditComponent implements OnInit {
 
     console.log("journal edit INIT");
     this.resetStepper();
-
+    this.initStep2();
     this.initStep0Identifiers();
     this.initStep1();
-    this.initStep2();
+    
     this.initStep3();
     this.initStepFinal();
   }

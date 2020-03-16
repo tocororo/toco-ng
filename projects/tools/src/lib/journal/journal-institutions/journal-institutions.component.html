@@ -9,7 +9,7 @@
   <div>
     <button mat-raised-button
             class="example-add-tab-button"
-            (click)="addTab(selectAfterAdding.checked)">
+            (click)="addInst(selectAfterAdding.checked)">
       Add new tab
     </button>
     <mat-checkbox #selectAfterAdding> Select tab after adding </mat-checkbox>
@@ -17,20 +17,18 @@
 
   <mat-tab-group [selectedIndex]="selected.value"
                  (selectedIndexChange)="selected.setValue($event)">
-    <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
+    <mat-tab *ngFor="let inst of institutions; let index = index" [label]="inst.data['role']">
 
       <toco-institution-selector
-      [level1FormGroup]="organizationFormGroup"
-      [level1]="tab.organization"
-      [level2]="tab.institution"
-      [level3]="tab.entity"
+      [externalFormGroup]="organizationFormGroup"
+      [termSource]="inst"
       [defaultOrganizationUUID]="defaultOrganizationUUID"
     >
     </toco-institution-selector>
 
       <button mat-raised-button
               class="example-delete-tab-button"
-              [disabled]="tabs.length === 1"
+              [disabled]="institutions.length === 1"
               (click)="removeTab(index)">
         Delete Tab
       </button>

@@ -85,6 +85,9 @@ export class InstitutionSelectorComponent implements OnInit {
                 if (!response.data) {
                   return;
                 }
+                console.log(this.termSource);
+                console.log(response);
+                
                 const node: TermNode = response.data.term_node;
                 if (node.parent) {
                   if (node.parent.parent) {
