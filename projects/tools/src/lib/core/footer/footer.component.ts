@@ -8,16 +8,16 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-    @Input() public sites: Array< { name: string, url: string } >;
+    @Input() public sites: Array< { name: string, url: string, useRouterLink: boolean } >;
 
-    @Input() public information: Array< { name: string, url: string } >;
+    @Input() public information: Array< { name: string, url: string, useRouterLink: boolean } >;
 
     @Input() public image: string
 
     constructor(){}
 
     ngOnInit() {
-        if ( this.sites == undefined ) this.sites = new Array< { name: string, url: string } >();
-        if ( this.information == undefined ) this.information = new Array< { name: string, url: string } >();
+        if ( this.sites == undefined ) this.sites = new Array();
+        if ( this.information == undefined ) this.information = new Array();
     }
 }

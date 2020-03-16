@@ -6,19 +6,19 @@
         <mat-card-content fxLayout="row wrap" fxLayout.xs="column">
             <mat-nav-list dense style="width: 15em;">
                 <ng-container  *ngFor="let item of data">
-                    <a mat-list-item href="">{{ item.name }} ({{ item.count }})</a>
+                    <a mat-list-item [routerLink]="[path]" [queryParams]="{institutions: item.uuid}">{{ item.name }} ({{ item.count }})</a>
                 </ng-container>
             </mat-nav-list>
 
             <mat-nav-list dense style="width: 15em;">
                 <ng-container  *ngFor="let item of data1">
-                    <a mat-list-item href="">{{ item.name }} ({{ item.count }})</a>
+                    <a mat-list-item [routerLink]="[path]" [queryParams]="{institutions: item.uuid}">{{ item.name }} ({{ item.count }})</a>
                 </ng-container>
             </mat-nav-list>
 
             <mat-nav-list dense style="width: 15em;">
                 <ng-container  *ngFor="let item of data2">
-                    <a mat-list-item href="">{{ item.name }} ({{ item.count }})</a>
+                    <a mat-list-item [routerLink]="[path]" [queryParams]="{institutions: item.uuid}">{{ item.name }} ({{ item.count }})</a>
                 </ng-container>
             </mat-nav-list>
 

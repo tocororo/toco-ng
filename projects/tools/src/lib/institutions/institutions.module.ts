@@ -12,6 +12,7 @@ import { ListCountSourcesByTermComponent } from './list-count-sources-by-term/li
 import { SharedModule } from '../shared';
 import { TocoFormsModule } from '../forms';
 import { ExtraInstitutionSelectorComponent } from './extra-institution-selector/extra-institution-selector.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -24,7 +25,8 @@ import { ExtraInstitutionSelectorComponent } from './extra-institution-selector/
   imports: [
     CommonModule,
     SharedModule, 
-    TocoFormsModule
+    TocoFormsModule,
+    RouterModule
   ],
   exports: [
     ListCountSourcesByTermComponent,

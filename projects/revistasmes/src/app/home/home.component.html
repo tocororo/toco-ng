@@ -8,7 +8,7 @@
         <mat-card-content fxLayout="column" style="padding: 2em;">
 
             <h2> 82 Revistas </h2>
-            <!-- <h2> 4000 Artículos </h2> -->
+            <h2> 4000 Artículos </h2>
             <h2> 36 Instituciones </h2>
         
         </mat-card-content>
@@ -38,9 +38,9 @@
         <!-- <img matCardImage src="Card wide image source"> -->
         <mat-card-content>
             <mat-nav-list dense>
-                <a mat-list-item href="">Revistas Científicas Estudiantiles</a>
-                <a mat-list-item href="">Revistas Dibulgación Científicas</a>
-                <a mat-list-item href="">Revistas Científicas</a>
+                <a mat-list-item [routerLink]="['/directory']" [queryParams]="{source_type: 'STUDENT'}">Revistas Científicas Estudiantiles</a>
+                <a mat-list-item [routerLink]="['/directory']" [queryParams]="{source_type: 'POPULARIZATION'}">Revistas Dibulgación Científicas</a>
+                <a mat-list-item [routerLink]="['/directory']" [queryParams]="{source_type: 'JOURNAL'}">Revistas Científicas</a>
             </mat-nav-list>
         </mat-card-content>
 

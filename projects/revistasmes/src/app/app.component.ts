@@ -26,9 +26,9 @@ export class AppComponent {
 
     public loading = true;
 
-    public footerSites: Array< { name: string, url: string } >;
+    public footerSites: Array< { name: string, url: string, useRouterLink: boolean } >;
 
-    public footerInformation: Array< { name: string, url: string } >;
+    public footerInformation: Array< { name: string, url: string, useRouterLink: boolean } >;
 
     // public footerImage: string
 
@@ -82,18 +82,18 @@ export class AppComponent {
             .subscribe(this.authenticateObserver);
 
         // this.footerImage = 'https://10.2.83.160:5000/static/images/sceiba-logo-white.png';
-        this.footerInformation =  Array< { name: string, url: string } >();
-        this.footerSites =  Array< { name: string, url: string } >();
+        this.footerInformation =  Array();
+        this.footerSites =  Array();
 
-        this.footerSites.push({ name: "MES", url: "https://www.mes.gob.cu"});
-        this.footerSites.push({ name: "Sceiba", url: "https://sceiba-lab.upr.edu.cu"});
-        this.footerSites.push({ name: "Dirección Nacional de Publicaciones Seriadas", url: "http://www.seriadascubanas.cult.cu/http://www.seriadascubanas.cult.cu/"});
-        this.footerSites.push({ name: "Red Ciencia", url: "http://www.redciencia.cu/"});
+        this.footerSites.push({ name: "MES", url: "https://www.mes.gob.cu", useRouterLink: false});
+        this.footerSites.push({ name: "Sceiba", url: "https://sceiba-lab.upr.edu.cu", useRouterLink: false});
+        this.footerSites.push({ name: "Dirección Nacional de Publicaciones Seriadas", url: "http://www.seriadascubanas.cult.cu/http://www.seriadascubanas.cult.cu/", useRouterLink:false});
+        this.footerSites.push({ name: "Red Ciencia", url: "http://www.redciencia.cu/", useRouterLink: false});
 
-        this.footerInformation.push({ name: "Términos de uso", url: "https://www.mes.gob.cu"});
-        this.footerInformation.push({ name: "Privacidad", url: "https://sceiba-lab.upr.edu.cu"});
-        this.footerInformation.push({ name: "Contacto", url: "/contact"});
-        this.footerInformation.push({ name: "FAQs", url: "/faq"});
+        this.footerInformation.push({ name: "Términos de uso", url: "https://www.mes.gob.cu", useRouterLink: false});
+        this.footerInformation.push({ name: "Privacidad", url: "https://sceiba-lab.upr.edu.cu", useRouterLink: false});
+        this.footerInformation.push({ name: "Contacto", url: "/contact", useRouterLink: true});
+        this.footerInformation.push({ name: "FAQs", url: "/faq", useRouterLink: true});
     }
 
     ngOnDestroy(): void {
