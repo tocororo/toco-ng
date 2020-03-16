@@ -12,6 +12,7 @@ import { ListCountSourcesByTermComponent } from './list-count-sources-by-term/li
 import { SharedModule } from '../shared';
 import { TocoFormsModule } from '../forms';
 import { ExtraInstitutionSelectorComponent } from './extra-institution-selector/extra-institution-selector.component';
+import { InstitutionHierarchyViewerComponent } from './institution-hierarchy-viewer/institution-hierarchy-viewer.component';
 
 
 
@@ -19,7 +20,8 @@ import { ExtraInstitutionSelectorComponent } from './extra-institution-selector/
   declarations: [
     InstitutionSelectorComponent,
     ListCountSourcesByTermComponent,
-    ExtraInstitutionSelectorComponent
+    ExtraInstitutionSelectorComponent,
+    InstitutionHierarchyViewerComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,9 @@ import { ExtraInstitutionSelectorComponent } from './extra-institution-selector/
   ],
   exports: [
     ListCountSourcesByTermComponent,
-    InstitutionSelectorComponent
+    InstitutionSelectorComponent,
+    ExtraInstitutionSelectorComponent,
+    InstitutionHierarchyViewerComponent
   ]
 })
 export class InstitutionsModule { }

@@ -1,41 +1,61 @@
 <ng-container *ngIf="organizationFormGroup && initOrganizationPanel">
-
-
-  <mat-form-field>
-    <mat-label>Selected tab index</mat-label>
-    <input matInput type="number" [formControl]="selected">
-  </mat-form-field>
-
   <div>
-    <button mat-raised-button
-            class="example-add-tab-button"
-            (click)="addInst(selectAfterAdding.checked)">
-      Add new tab
+    Adicionar
+    <button
+      mat-raised-button
+      class="example-add-tab-button"
+      (click)="addInst(false)"
+    >
+      Institucion Cubana Oficial
     </button>
-    <mat-checkbox #selectAfterAdding> Select tab after adding </mat-checkbox>
+    <button
+      mat-raised-button
+      class="example-add-tab-button"
+      (click)="addInst(true)"
+    >
+      Otra Institucion
+    </button>
   </div>
 
-  <mat-tab-group [selectedIndex]="selected.value"
-                 (selectedIndexChange)="selected.setValue($event)">
-    <mat-tab *ngFor="let inst of institutions; let index = index" [label]="inst.data['role']">
-
-      <toco-institution-selector
-      [externalFormGroup]="organizationFormGroup"
-      [termSource]="inst"
-      [defaultOrganizationUUID]="defaultOrganizationUUID"
-    >
-    </toco-institution-selector>
-
-      <button mat-raised-button
-              class="example-delete-tab-button"
-              [disabled]="institutions.length === 1"
-              (click)="removeTab(index)">
-        Delete Tab
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let inst of institutions; let index = index">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ roles[inst.data["role"]].label }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ inst.term.name }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <ng-container *ngIf="inst.term.vocabulary_id == vocab.INTITUTION">
+        <toco-institution-hierarchy-viewer
+          [term]="inst.term"
+          [node]="inst['h']"
+        ></toco-institution-hierarchy-viewer>
+      </ng-container>
+      <ng-container *ngIf="inst.term.vocabulary_id == vocab.EXTRA_INSTITUTIONS">
+        show all data of the inst...
+        {{ inst.term.name }}
+      </ng-container>
+      <mat-action-row
+        >
+        <button
+          mat-stroked-button
+          class="example-delete-tab-button"
+          [disabled]="institutions.length === 1"
+          (click)="editInst(index)"
+        >
+          Editar
+        </button>
+        <button
+        mat-stroked-button
+        class="example-delete-tab-button"
+        [disabled]="institutions.length === 1"
+        (click)="removeInst(index)"
+      >
+        Eliminar
       </button>
-    </mat-tab>
-  </mat-tab-group>
-
-
-
-
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
 </ng-container>

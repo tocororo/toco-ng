@@ -21,7 +21,8 @@ import { JournalViewVersionComponent } from './journal-view/journal-view-version
 import { CoreModule } from '../core';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { InstitutionsModule } from '../institutions/institutions.module';
-import { JournalInstitutionsComponent } from './journal-institutions/journal-institutions.component';
+import { JournalInstitutionsComponent, JournalAddInstitutionComponent, JournalAddExtraInstitutionComponent } from './journal-institutions/journal-institutions.component';
+import { ExtraInstitutionSelectorComponent } from '../institutions/extra-institution-selector/extra-institution-selector.component';
 
 @NgModule({
     declarations: [
@@ -33,10 +34,14 @@ import { JournalInstitutionsComponent } from './journal-institutions/journal-ins
         JournalInclusionComponent,
         JournalEditAddIndexComponent,
         JournalViewVersionComponent,
-        JournalInstitutionsComponent
+        JournalInstitutionsComponent,
+        JournalAddInstitutionComponent,
+        JournalAddExtraInstitutionComponent
     ],
     entryComponents: [
-        JournalEditAddIndexComponent
+        JournalEditAddIndexComponent,
+        JournalAddInstitutionComponent,
+        JournalAddExtraInstitutionComponent
     ],
     imports: [
         SharedModule,

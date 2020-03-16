@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Inject, ViewChild } from "@angular/core";
 import {
   Source,
   JournalVersion,
@@ -8,9 +8,12 @@ import {
   TermNode,
   SourceInstitutionRole
 } from "@toco/tools/entities";
-import { PanelContent } from "@toco/tools/forms";
+import { PanelContent, FormContainerAction } from "@toco/tools/forms";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { TaxonomyService } from "@toco/tools/backend";
+import { MAT_DIALOG_DATA, MatDialog } from "@angular/material";
+import { TermHelper } from "@toco/tools/taxonomy";
+import { InstitutionSelectorComponent } from "@toco/tools/institutions/institution-selector/institution-selector.component";
 
 @Component({
   selector: "toco-journal-institutions",
@@ -48,12 +51,14 @@ export class JournalInstitutionsComponent implements OnInit {
   // public isManageByEntity = true;
 
   public initOrganizationPanel = false;
-
+  public roles = SourceInstitutionRole;
+  public vocab = VocabulariesInmutableNames;
   tabs = [];
 
   constructor(
     private formBuilder: FormBuilder,
-    private taxonomyService: TaxonomyService
+    private taxonomyService: TaxonomyService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -64,12 +69,14 @@ export class JournalInstitutionsComponent implements OnInit {
         ts => ts.term.vocabulary_id == VocabulariesInmutableNames.INTITUTION
       );
       console.log(this.institutions);
-      
+
       if (this.institutions.length == 1) {
-        if (!this.institutions[0].data){
-          this.institutions[0].data = {'role' : SourceInstitutionRole.MAIN.value}
-        }else {
-          this.institutions[0].data['role'] = SourceInstitutionRole.MAIN.value;
+        if (!this.institutions[0].data) {
+          this.institutions[0].data = {
+            role: SourceInstitutionRole.MAIN.value
+          };
+        } else {
+          this.institutions[0].data["role"] = SourceInstitutionRole.MAIN.value;
         }
       }
       this.initOrganizationPanel = true;
@@ -78,73 +85,180 @@ export class JournalInstitutionsComponent implements OnInit {
 
   selected = new FormControl(0);
 
-
-
-  addInst(selectAfterAdding: boolean) {
+  addInst(extra = false) {
     let newInst = new TermSource();
     newInst.source_id = this.source.id;
-    newInst.data['role'] = SourceInstitutionRole.COLABORATOR;
+    newInst.data = { role: SourceInstitutionRole.COLABORATOR.value };
     newInst.term = new Term();
     newInst.term.isNew = true;
-    newInst.term.vocabulary_id = VocabulariesInmutableNames.INTITUTION;
 
-    this.institutions.push(newInst);
+    this.editTermSource(newInst, extra);
 
-    if (selectAfterAdding) {
-      this.selected.setValue(this.institutions.length - 1);
+    this.selected.setValue(this.institutions.length - 1);
+  }
+
+  editTermSource(termSource: TermSource, extra = false, index=-1) {
+    let dialogRef;
+    if (extra) {
+      dialogRef = termSource.term.vocabulary_id =
+        VocabulariesInmutableNames.EXTRA_INSTITUTIONS;
+      this.dialog.open(JournalAddExtraInstitutionComponent, {
+        data: {
+          term: termSource.term,
+          addTerm: (term: Term) => {
+            termSource.term = term;
+            this.dialog.closeAll();
+            if (index > 0 && index < this.institutions.length){
+              this.institutions[index] = termSource;
+            }
+            else {
+              this.institutions.push(termSource);
+            }
+          }
+        }
+      });
+    } else {
+      dialogRef = termSource.term.vocabulary_id =
+        VocabulariesInmutableNames.INTITUTION;
+      this.dialog.open(JournalAddInstitutionComponent, {
+        data: {
+          term: termSource.term,
+          addTerm: (hierarchy: TermNode) => {
+            this.dialog.closeAll();
+            console.log(hierarchy);
+
+            termSource.term = hierarchy.term;
+            termSource['h'] = hierarchy;
+            // if (hierarchy.parent) {
+            //   if (hierarchy.parent.parent) {
+            //     termSource["l1"] = hierarchy.parent.parent.term;
+            //   } else {
+            //     termSource["l2"] = null;
+            //   }
+            //   termSource["l2"] = hierarchy.parent.term;
+            // } else {
+            //   termSource["l1"] = null;
+            //   termSource["l2"] = null;
+            // }
+            if (index > 0 && index < this.institutions.length){
+              this.institutions[index] = termSource;
+            } else {
+              this.institutions.push(termSource);
+            }
+            
+          }
+        }
+      });
     }
   }
 
+  editInst(index: number) {
+    const extra =
+      this.institutions[index].term.vocabulary_id ==
+      VocabulariesInmutableNames.EXTRA_INSTITUTIONS;
+    this.editTermSource(this.institutions[index], extra, index);
+  }
   removeInst(index: number) {
-    this.tabs.splice(index, 1);
+    this.institutions.splice(index, 1);
   }
 }
 
-// const ts = new TermSource();
-// // if (this.isManageByEntity) {
-// //   // this.fillEntityData();
-// //   ts.term = this.entity;
-// //   this.journalVersion.entity = this.entity;
-// // } else {
-// //   ts.term = this.institution;
-// //   this.journalVersion.entity = null;
-// // }
-// ts.term_id = ts.term.id;
-// ts.source_id = this.journalVersion.source_id;
+@Component({
+  selector: "toco-journal-addinst",
+  template: `
+    <toco-institution-selector
+      [institution]="term"
+      [externalFormGroup]="formGroup"
+    >
+    </toco-institution-selector>
+    <div mat-dialog-actions>
+      <button mat-stroked-button (click)="ok()">Adicionar</button>
+    </div>
+  `
+})
+export class JournalAddInstitutionComponent implements OnInit {
+  @ViewChild(InstitutionSelectorComponent, { static: true })
+  selector: InstitutionSelectorComponent;
+  term: Term;
 
-// import {Component} from '@angular/core';
-// import {FormControl} from '@angular/forms';
+  formGroup: FormGroup;
+  addTerm;
+  constructor(
+    private _formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.term = data.term;
+    this.addTerm = data.addTerm;
+  }
 
-// /**
-//  * @title Tab group with dynamically changing tabs
-//  */
-// @Component({
-//   selector: 'tab-group-dynamic-example',
-//   templateUrl: 'tab-group-dynamic-example.html',
-//   styleUrls: ['tab-group-dynamic-example.css'],
-// })
-// export class TabGroupDynamicExample {
+  ngOnInit() {
+    this.formGroup = this._formBuilder.group({});
+  }
+  ok() {
+    const h = this.selector.getSelectedHierarchy();
+    if (h) {
+      this.addTerm(h);
+    }
+  }
+}
 
-// }
+// TODO: hacer este control de la misma manera que JournalAddInstitutionComponent, osea
+// usando view  child, y agregandole al control ExtraInstitutionSelectorComponent del modulo institutions.
+// un metodo que devuelva el termino creado...
 
-// Ayer no te mande el correo, pero no me dio tiempo de llamarte, así q te escribo.
+@Component({
+  selector: "toco-journal-addinstextra",
+  template: `
+    <toco-form-container
+      *ngIf="formGroup && institutionPanel"
+      #level1PanelContainer
+      [panels]="institutionPanel"
+      [useAccordion]="false"
+      fxLayout="row"
+      [deleteValuesAfterAction]="false"
+      [action]="addAction"
+      [actionLabel]="'Adicionar'"
+    ></toco-form-container>
+  `
+})
+export class JournalAddExtraInstitutionComponent implements OnInit {
+  term: Term;
 
-// Los campos se pueden revisar sobre la maqueta de contenidos, q es el pdf q hemos visto y te mande hace días.
-// Hemos hablado ya de ellos y sabes del otro rnps, de más instituciones...
+  institutionPanel: PanelContent[] = null;
 
-// La Información como título del steper, ponle Datos de la Revista.
+  formGroup: FormGroup;
+  addTerm;
+  addAction: FormContainerAction;
+  constructor(
+    private _formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.term = data.term;
+    this.addTerm = data.addTerm;
+  }
 
-// En esencia la idea de las instituciones involucradas, revisa los campos pero creo q sólo faltaba lo del rol de la institución en la revista,
-// Que sería algo así:
-// Principal o Auspiciador,
-// Co-Auspiciador
+  ngOnInit() {
+    this.formGroup = this._formBuilder.group({});
+    const content = TermHelper.getPanelContentToEdit(this.term);
 
-// No se si crees falte aun otro rol q pueda jugar la institución o llamarlos diferente.
+    this.institutionPanel = [
+      {
+        title: "Institución",
+        description: "",
+        iconName: "",
+        formGroup: this.formGroup,
+        content: content
+      }
+    ];
 
-// En Indizacion;
-// Debe haber un campo, no recuerdo si está, para el tipo de Indizacion o Clasificación, que son las mismas de Miar, pero veo q tiene además dos más q ahora mismo sólo recuerdo Índices.
-// (Desp se puede agregar la q falte)
-
-// Cualquier cosa me timbras, en el receso te llamo.
-// Saludos,
-// Eduardo
+    this.addAction = {
+      doit: (data: any) => {
+        console.log(this.formGroup);
+        this.term.name = this.formGroup.value["name"];
+        this.term.data = this.formGroup.value;
+        console.log(this.term);
+        this.addTerm(this.term);
+      }
+    };
+  }
+}
