@@ -1,11 +1,31 @@
-<mat-list>
-    <ng-container *ngIf="node.parent; else elseTemplate">
-        <mat-list-item *ngIf="node.parent.parent">{{node.parent.parent.term.name}}</mat-list-item>
-        <mat-list-item *ngIf="node.parent">{{node.parent.term.name}}</mat-list-item>
-        <mat-list-item >{{ term.name }}</mat-list-item>
-    </ng-container>
-    <ng-template #elseTemplate>
-        <mat-list-item >{{ term.name }}</mat-list-item>
-    </ng-template>
-  </mat-list>
-  
+<ng-container *ngIf="node">
+
+      <mat-list>
+        <mat-list-item *ngIf="node.parent && node.parent.parent">
+            {{node.parent.parent.term.name}}
+        </mat-list-item>
+        <mat-list-item *ngIf="node.parent">
+            {{node.parent.term.name}}
+        </mat-list-item>
+        <mat-list-item>{{ term.name }}</mat-list-item>
+
+      </mat-list>
+
+    <p>
+      <strong>Descripción: </strong>
+      {{ term.data["description"] }}
+    </p>
+    <p>
+      <strong>Email: </strong>
+      {{ term.data["email"] }}
+    </p>
+    <p>
+      <strong>Sitio Web Oficial: </strong>
+      {{ term.data["website"] }}
+    </p>
+    <p>
+      <strong>Dirección: </strong>
+      {{ term.data["address"] }}
+    </p>
+
+</ng-container>

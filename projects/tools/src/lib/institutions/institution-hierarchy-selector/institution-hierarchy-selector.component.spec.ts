@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InstitutionSelectorComponent } from './institution-selector.component';
+import { InstitutionHierarchySelectorComponent } from './institution-hierarchy-selector.component';
 
 describe('InstitutionSelectorComponent', () => {
-  let component: InstitutionSelectorComponent;
-  let fixture: ComponentFixture<InstitutionSelectorComponent>;
+  let component: InstitutionHierarchySelectorComponent;
+  let fixture: ComponentFixture<InstitutionHierarchySelectorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InstitutionSelectorComponent ]
+      declarations: [ InstitutionHierarchySelectorComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InstitutionSelectorComponent);
+    fixture = TestBed.createComponent(InstitutionHierarchySelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

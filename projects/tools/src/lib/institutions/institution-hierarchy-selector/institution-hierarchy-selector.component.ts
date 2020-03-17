@@ -9,13 +9,12 @@ import { PanelContent, FormFieldType, SelectOption } from "@toco/tools/forms";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { TaxonomyService } from "@toco/tools/backend";
 
-// TODO: rename this component to InstitutionHierarchySelectorComponent
 @Component({
-  selector: "toco-institution-selector",
-  templateUrl: "./institution-selector.component.html",
-  styleUrls: ["./institution-selector.component.scss"]
+  selector: "toco-institution-hierarchy-selector",
+  templateUrl: "./institution-hierarchy-selector.component.html",
+  styleUrls: ["./institution-hierarchy-selector.component.scss"]
 })
-export class InstitutionSelectorComponent implements OnInit {
+export class InstitutionHierarchySelectorComponent implements OnInit {
   // @Output()
   // institution: Term;
 
@@ -517,8 +516,11 @@ export class InstitutionSelectorComponent implements OnInit {
   }
 
   public getSelectedHierarchy(): TermNode{
-    
+    if (this.externalFormGroup.invalid){
+      return null;
+    }
     if (this.level3) {
+      this.fillInstitutionData();
       return {
         term: this.level3,
         parent: {

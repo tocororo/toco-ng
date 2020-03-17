@@ -15,74 +15,6 @@
 
   <mat-card-content>
     <mat-horizontal-stepper labelPosition="end" [linear]="true" #stepper>
-      <mat-step *ngIf="organizationFormGroup" [stepControl]="organizationFormGroup">
-        <ng-template matStepLabel>Institución</ng-template>
-        <h3>Institución</h3>
-        <form [formGroup]="organizationFormGroup">
-          <toco-journal-institutions
-            [source]="source"
-            [journalVersion]="journalVersion"
-            [organizationFormGroup]="organizationFormGroup"
-            [defaultOrganizationUUID]="defaultOrganizationUUID"
-            [institutions]="institutions"
-          >
-          </toco-journal-institutions>
-          <!-- <toco-form-container
-            *ngIf="organizationPanel"
-            #organizationPanelContainer
-            [panels]="organizationPanel"
-            [useAccordion]="false"
-            fxLayout="row"
-            [deleteValuesAfterAction]="false"
-          ></toco-form-container>
-
-          <toco-form-container
-            *ngIf="institutionPanel"
-            #institutionPanelContainer
-            [panels]="institutionPanel"
-            [useAccordion]="false"
-            fxLayout="row"
-            [deleteValuesAfterAction]="false"
-          ></toco-form-container>
-
-          <ng-container *ngIf="institution">
-            <mat-checkbox
-              #isManagedBy
-              [checked]="true"
-              (click)="manageByEntityClick()"
-            >
-              <div>
-                La revista es gestionada por una unidad perteneciente a:
-              </div>
-              <div>
-                <strong> {{ institution.name }}</strong>
-              </div>
-            </mat-checkbox>
-
-            <toco-form-container
-              *ngIf="isManagedBy.checked && entityPanel"
-              #entityPanelContainer
-              [panels]="entityPanel"
-              [useAccordion]="false"
-              fxLayout="row"
-              [deleteValuesAfterAction]="false"
-            >
-            </toco-form-container>
-          </ng-container> -->
-        </form>
-        <div>
-          <button mat-stroked-button color="accent" matStepperPrevious>
-            Atrás
-          </button>
-          <button
-            mat-stroked-button
-            color="primary"
-            matStepperNext
-          >
-            Siguiente
-          </button>
-        </div>
-      </mat-step>
 
       <mat-step *ngIf="identifiersPanel" [stepControl]="identifiersFormGroup">
         <ng-template matStepLabel>Identificadores</ng-template>
@@ -127,6 +59,33 @@
         </div>
       </mat-step>
 
+      <mat-step *ngIf="organizationFormGroup" [stepControl]="organizationFormGroup">
+        <ng-template matStepLabel>Institución</ng-template>
+        <h3>Institución</h3>
+        <form [formGroup]="organizationFormGroup">
+          <toco-journal-institutions
+            [source]="source"
+            [journalVersion]="journalVersion"
+            [organizationFormGroup]="organizationFormGroup"
+            [defaultOrganizationUUID]="defaultOrganizationUUID"
+            [enableEdit]="true"
+            [ngStyle]="{'margin': '1em'}"
+          >
+          </toco-journal-institutions>
+        </form>
+        <div>
+          <button mat-stroked-button color="accent" matStepperPrevious>
+            Atrás
+          </button>
+          <button
+            mat-stroked-button
+            color="primary"
+            matStepperNext
+          >
+            Siguiente
+          </button>
+        </div>
+      </mat-step>
 
       <mat-step *ngIf="indexesPanel" [stepControl]="indexesFormGroup">
         <ng-template matStepLabel>Indizaciones</ng-template>
@@ -191,6 +150,7 @@
           </button>
         </div>
       </mat-step>
+
     </mat-horizontal-stepper>
   </mat-card-content>
 </mat-card>

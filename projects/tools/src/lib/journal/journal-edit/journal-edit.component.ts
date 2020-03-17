@@ -4,7 +4,8 @@ import {
   OnInit,
   Inject,
   Output,
-  EventEmitter
+  EventEmitter,
+  ViewChild
 } from "@angular/core";
 import { HttpErrorResponse } from "@angular/common/http";
 import { of } from "rxjs";
@@ -51,6 +52,10 @@ import {
   FormControl
 } from "@angular/forms";
 import { ConstantPool } from "@angular/compiler";
+import {
+  JournalInstitutionsComponent,
+  JournalInstitutionsPanel
+} from "../journal-institutions/journal-institutions.component";
 
 @Component({
   selector: "toco-journal-edit",
@@ -87,7 +92,11 @@ export class JournalEditComponent implements OnInit {
   informationFormGroup: FormGroup;
 
   organizationFormGroup: FormGroup;
-  institutions: TermSource[] = [];
+
+  @ViewChild(JournalInstitutionsComponent, { static: true })
+  institutionsComponent: JournalInstitutionsComponent;
+
+  // institutions: TermSource[] = [];
   // entityFormGroup: FormGroup;
 
   // indexes (databases), variables for step 3
@@ -132,13 +141,12 @@ export class JournalEditComponent implements OnInit {
     this.initStep2();
     this.initStep0Identifiers();
     this.initStep1();
-    
+
     this.initStep3();
     this.initStepFinal();
   }
 
   resetStepper() {
-
     this.identifiersPanel = null;
     this.identifiersFormGroup = null;
 
@@ -156,8 +164,6 @@ export class JournalEditComponent implements OnInit {
     this.indexesPanel = null;
     this.indexesFormGroup = null;
   }
-
-
 
   initStep0Identifiers() {
     this.identifiersFormGroup = this.formBuilder.group({});
@@ -325,7 +331,9 @@ export class JournalEditComponent implements OnInit {
             type: FormFieldType.select,
             required: false,
             width: "35%",
-            value: this.journalVersion ? this.journalVersion.data.source_system : "",
+            value: this.journalVersion
+              ? this.journalVersion.data.source_system
+              : "",
             extraContent: {
               multiple: false,
               getOptions: () => {
@@ -500,407 +508,15 @@ export class JournalEditComponent implements OnInit {
   }
 
   initStep2() {
-    this.organizationFormGroup = this.formBuilder.group({});
-    // // get data for and create institutional panel (second step)
-    // let termSource: TermSource = null;
-    // if (this.journalVersion) {
-    //   termSource = this.journalVersion.data.term_sources.find(
-    //     (termSource: TermSource) => {
-    //       if (
-    //         termSource.term.vocabulary_id ==
-    //         VocabulariesInmutableNames.INTITUTION
-    //       ) {
-    //         return termSource;
-    //       }
-    //     }
-    //   );
-
-    //   // si la revista no tiene ninguna institucion
-    //   if (!termSource) {
-    //     // termSource = new TermSource();
-    //     // termSource.term = new Term();
-    //     // termSource.term.isNew = true;
-    //     // termSource.term.vocabulary_id = VocabulariesInmutableNames.INTITUTION;
-    //     // this.journalVersion.organization = termSource.term;
-    //     // this.journalVersion.institution = termSource.term;
-    //     // this.journalVersion.entity = termSource.term;
-    //     this.organization = null;
-    //     this.institution = null;
-    //     this.entity = null;
-    //     this.initOrganizationPanel();
-    //   } else if (termSource && !termSource.term.isNew) {
-    //     this.taxonomyService
-    //       .getTermByUUID(termSource.term.uuid, -3)
-    //       .subscribe(response => {
-    //         if (!response.data) {
-    //           return;
-    //         }
-    //         const hierarchy: TermNode = response.data.term_node;
-    //         if (hierarchy.parent) {
-    //           if (hierarchy.parent.parent) {
-    //             this.organization = new Term();
-    //             this.organization.load_from_data(hierarchy.parent.parent.term);
-    //             this.institution = new Term();
-    //             this.institution.load_from_data(hierarchy.parent.term);
-    //             this.entity = new Term();
-    //             this.entity.load_from_data(hierarchy.term);
-    //             // Se asume que la revista solo se puede relacionar con elementos de hasta el tercer nivel de la jerarquia institucional
-    //             if (hierarchy.parent.parent.parent) {
-    //               this.organization = null;
-    //               this.institution = null;
-    //               this.entity = null;
-    //             }
-    //           } else {
-    //             this.organization = new Term();
-    //             this.organization.load_from_data(hierarchy.parent.term);
-    //             this.institution = new Term();
-    //             this.institution.load_from_data(hierarchy.term);
-    //           }
-    //         } else {
-    //           this.organization = new Term();
-    //           this.organization.load_from_data(hierarchy.term);
-    //         }
-    //         this.initOrganizationPanel();
-    //       });
-    //   } else if (this.journalVersion.organization) {
-    //     this.organization = this.journalVersion.organization;
-    //     this.institution = this.journalVersion.institution;
-    //     this.entity = this.journalVersion.entity;
-    //     this.initOrganizationPanel();
-    //   }
-    // }
+    this.organizationFormGroup = this.formBuilder.group({
+      institutions: new FormControl("")
+    });
   }
-
-  initOrganizationPanel() {
-    // this.organizationFormGroup = this.formBuilder.group({});
-
-    // this.organizationPanel = [{
-    //   title: 'Organismo',
-    //   description: 'Organismo al que pertenece la revista (OAC)',
-    //   iconName: '',
-    //   formGroup: this.organizationFormGroup,
-    //   content: [
-    //     {
-    //       name: 'organization',
-    //       label: 'Organismo',
-    //       type: FormFieldType.select,
-    //       required: true,
-    //       width: '100%',
-    //       value: this.organization ? this.organization.uuid : '',
-    //       extraContent: {
-    //         observable: this.taxonomyService.getTermsTreeByVocab(VocabulariesInmutableNames.INTITUTION, 0),
-    //         getOptions: (response: any) => {
-    //           const opts: SelectOption[] = [];
-    //           response.data.tree.term_node.forEach((node: TermNode) => {
-    //             opts.push({
-    //               value: node.term.uuid,
-    //               label: node.term.name,
-    //             });
-    //           });
-    //           return opts;
-    //         },
-    //         selectionChange: (uuid) => {
-    //           console.log("organizatioon")
-    //           if (!uuid) { return; }
-    //           this.taxonomyService.getTermByUUID(uuid, 1)
-    //             .subscribe(
-    //               (response) => {
-    //                 if (!response.data &&
-    //                   !response.data.term_node &&
-    //                   !response.data.term_node.term) {
-    //                   return;
-    //                 }
-
-    //                 this.organization = new Term();
-    //                 this.organization.load_from_data(response.data.term_node.term);
-    //                 this.journalVersion.organization = this.organization;
-
-    //                 if (this.institution &&
-    //                   this.organization.id != this.institution.parent_id) {
-
-    //                   this.institution = null;
-    //                   this.institutionPanel = null;
-    //                   this.entity = null;
-    //                   this.entityPanel = null;
-    //                 }
-    //                 this.initInstitutionPanel(response.data.term_node.children, this.organizationFormGroup);
-    //               },
-    //               (err: any) => {
-    //                 console.log('error: ' + err + '.');
-    //               },
-    //               () => {
-    //                 console.log('complete');
-    //               }
-    //             );
-    //         }
-    //       }
-    //     }]
-    // }];
-  }
-
-  // initInstitutionPanel(children: TermNode[] = null, formGroup: FormGroup) {
-  //   console.log(this.organizationFormGroup);
-  //   // this.institutionFormGroup = this._formBuilder.group({});
-  //   this.institutionPanel = [
-  //     {
-  //       title: 'Institución',
-  //       description: 'Institución a la que pertenece la revista',
-  //       iconName: '',
-  //       formGroup: this.organizationFormGroup,
-  //       content: [
-  //         {
-  //           name: 'institution',
-  //           label: 'Institución',
-  //           type: FormFieldType.select,
-  //           required: true,
-  //           width: '100%',
-  //           value: this.institution ? this.institution.uuid : null,
-  //           extraContent: {
-  //             getOptions: () => {
-  //               const opts: SelectOption[] = [];
-  //               if (children) {
-  //                 children.forEach((node: TermNode) => {
-  //                   opts.push({
-  //                     value: node.term.uuid,
-  //                     label: node.term.name,
-  //                   });
-  //                 });
-  //               } else if (this.organization) {
-  //                 console.log("instituytion")
-  //                 this.taxonomyService.getTermByUUID(this.organization.uuid, 1)
-  //                   .subscribe(response => {
-  //                     if (!response.data &&
-  //                       !response.data.term_node &&
-  //                       !response.data.term_node.children) {
-  //                       return;
-  //                     }
-  //                     response.data.term_node.children.forEach((node: TermNode) => {
-  //                       opts.push({
-  //                         value: node.term.uuid,
-  //                         label: node.term.name,
-  //                       });
-  //                     });
-  //                   });
-  //               }
-  //               return opts;
-  //             },
-  //             selectionChange: (uuid) => {
-  //               if (!uuid) { return; }
-  //               console.log("inst selec change");
-
-  //               this.taxonomyService.getTermByUUID(uuid, 1)
-  //                 .subscribe(response => {
-  //                   if (!response.data &&
-  //                     !response.data.term_node &&
-  //                     !response.data.term_node.term) {
-  //                     return;
-  //                   }
-  //                   this.institution = new Term();
-  //                   this.institution.load_from_data(response.data.term_node.term);
-  //                   this.journalVersion.institution = this.institution;
-  //                   if (this.entity &&
-  //                     this.institution.id != this.entity.parent_id) {
-  //                     this.entity = null;
-  //                     this.entityPanel = null;
-  //                   }
-  //                   this.initEntityPanel(response.data.term_node.children);
-  //                 });
-  //             }
-  //           }
-  //         }]
-  //     }];
-  // }
-
-  // manageByEntityClick() {
-  //   this.isManageByEntity = !this.isManageByEntity;
-  //   console.log(this.isManageByEntity)
-
-  //   if (this.isManageByEntity) {
-  //     const instUUID = this.organizationFormGroup.value['institution'];
-  //     console.log("entitiy");
-
-  //     this.taxonomyService.getTermByUUID(instUUID, 1)
-  //       .subscribe(response => {
-  //         if (!response.data &&
-  //           !response.data.term_node &&
-  //           !response.data.term_node.term) {
-  //           return;
-  //         }
-  //         this.institution = new Term();
-  //         this.institution.load_from_data(response.data.term_node.term);
-  //         if (this.entity &&
-  //           this.institution.id != this.entity.parent_id) {
-  //           this.entity = null;
-  //           this.entityPanel = null;
-  //         }
-  //         this.initEntityPanel(response.data.term_node.children);
-  //       });
-  //   } else {
-  //     this.deleteEntityPanelFields();
-  //   }
-  // }
-
-  // initEntityPanel(children: TermNode[] = null) {
-  //   this.deleteEntityPanelFields();
-  //   this.entityPanel = [
-  //     {
-  //       title: 'Entidad',
-  //       description: 'Complete la información sobre la entidad que gestiona la revista.',
-  //       iconName: '',
-  //       formGroup: this.organizationFormGroup,
-  //       content: [
-  //         {
-  //           name: 'entity',
-  //           label: 'Entidad',
-  //           type: FormFieldType.select,
-  //           required: true,
-  //           width: '100%',
-  //           value: this.entity ? this.entity.uuid : 'new',
-  //           extraContent: {
-  //             getOptions: () => {
-  //               const opts: SelectOption[] = [
-  //                 {
-  //                   label: ' < Nueva Entidad > ',
-  //                   value: 'new'
-  //                 }
-  //               ];
-  //               if (children) {
-  //                 children.forEach((node: TermNode) => {
-  //                   opts.push({
-  //                     value: node.term.uuid,
-  //                     label: node.term.name,
-  //                   });
-  //                 });
-  //               } else if (this.institution) {
-  //                 console.log("entiti change");
-
-  //                 this.taxonomyService.getTermByUUID(this.institution.uuid, 1)
-  //                   .subscribe(response => {
-  //                     if (!response.data &&
-  //                       !response.data.term_node &&
-  //                       !response.data.term_node.children) {
-  //                       return;
-  //                     }
-  //                     response.data.term_node.children.forEach((node: TermNode) => {
-  //                       opts.push({
-  //                         value: node.term.uuid,
-  //                         label: node.term.name,
-  //                       });
-  //                     });
-  //                   });
-  //               }
-  //               return opts;
-  //             },
-  //             selectionChange: (uuid) => {
-  //               if (uuid == 'new') {
-  //                 if (!this.entity) {
-  //                   this.entity = new Term();
-  //                 }
-  //                 this.entity.isNew = true;
-  //                 this.entity.parent_id = this.institution.id;
-  //                 this.resetEntityPanelFields();
-  //               } else {
-  //                 this.taxonomyService.getTermByUUID(uuid, 0)
-  //                   .subscribe(response => {
-  //                     if (!response.data &&
-  //                       !response.data.term_node &&
-  //                       !response.data.term_node.term) {
-  //                       return;
-  //                     }
-  //                     this.entity = new Term();
-  //                     this.entity.load_from_data(response.data.term_node.term);
-  //                     this.resetEntityPanelFields();
-  //                   });
-  //               }
-  //             }
-  //           }
-  //         },
-  //         {
-  //           name: 'name',
-  //           label: 'Nombre',
-  //           type: FormFieldType.text,
-  //           required: true,
-  //           value: (this.entity) ? this.entity.name : null,
-  //           width: '100%'
-  //         },
-  //         {
-  //           name: 'description',
-  //           label: 'Descripción',
-  //           type: FormFieldType.textarea,
-  //           required: false,
-  //           value: (this.entity) ? this.entity.description : null,
-  //           width: '100%'
-  //         },
-  //         {
-  //           name: 'email',
-  //           label: 'Email',
-  //           type: FormFieldType.email,
-  //           required: false,
-  //           value: (this.entity) ? this.entity.data['email'] : null,
-  //           width: '45%'
-  //         },
-  //         {
-  //           name: 'website',
-  //           label: 'Sitio Web Oficial',
-  //           type: FormFieldType.url,
-  //           required: false,
-  //           value: (this.entity) ? this.entity.data['website'] : null,
-  //           width: '45%'
-  //         },
-  //         {
-  //           name: 'address',
-  //           label: 'Dirección',
-  //           type: FormFieldType.textarea,
-  //           required: false,
-  //           value: (this.entity) ? this.entity.data['address'] : null,
-  //           width: '100%'
-  //         }]
-  //     }];
-  // }
-
-  // private fillEntityData() {
-  //   this.entity.uuid = this.organizationFormGroup.value['entity'];
-  //   this.entity.name = this.organizationFormGroup.value['name'];
-  //   this.entity.data['description'] = this.organizationFormGroup.value['description'];
-  //   this.entity.data['email'] = this.organizationFormGroup.value['email'];
-  //   this.entity.data['website'] = this.organizationFormGroup.value['website'];
-  //   this.entity.data['address'] = this.organizationFormGroup.value['address'];
-  //   this.entity.vocabulary_id = VocabulariesInmutableNames.INTITUTION;
-  //   this.journalVersion.entity = this.entity;
-  // }
-  // private deleteEntityPanelFields() {
-  //   this.organizationFormGroup.removeControl('entity');
-  //   this.organizationFormGroup.removeControl('name');
-  //   this.organizationFormGroup.removeControl('description');
-  //   this.organizationFormGroup.removeControl('email');
-  //   this.organizationFormGroup.removeControl('website');
-  //   this.organizationFormGroup.removeControl('address');
-  // }
-  // private resetEntityPanelFields() {
-  //   this.resetControl(this.organizationFormGroup.controls, 'name', this.entity.name);
-  //   this.resetControl(this.organizationFormGroup.controls, 'description', this.entity.description);
-  //   this.resetControl(this.organizationFormGroup.controls, 'email', this.entity.data['email']);
-  //   this.resetControl(this.organizationFormGroup.controls, 'website', this.entity.data['website']);
-  //   this.resetControl(this.organizationFormGroup.controls, 'address', this.entity.data['address']);
-  // }
-  // private resetControl(controls, name, value) {
-  //   if (controls[name]) {
-  //     controls[name].setValue(value);
-  //   }
-  // }
 
   initStep3() {
     this.indexesFormGroup = this.formBuilder.group({});
     const panel = [];
     this.indexesPanel = [];
-    // for (let index = 0; index < this.journalVersion.data.term_sources.length; index++) {
-    //   const element = this.journalVersion.data.term_sources[index];
-    //   if (element.term.vocabulary_id === VocabulariesInmutableNames.DATABASES) {
-    //     // this.indexesPanel.push(this.getIndexPanel(element));
-
-    //   }
-    // }
-    // this.indexesPanel = temPanel;
 
     this.journalVersion.data.term_sources.forEach(element => {
       if (element.term.vocabulary_id === VocabulariesInmutableNames.DATABASES) {
@@ -1056,9 +672,19 @@ export class JournalEditComponent implements OnInit {
       this.journalVersion.data.term_sources.push(ts);
     });
 
-    this.institutions.forEach(inst => {
-      this.journalVersion.data.term_sources.push(inst);
-    });
+    this.organizationFormGroup.value[
+      "institutions"
+    ].forEach((panel: JournalInstitutionsPanel) => {
+      const ts = new TermSource();
+      ts.load_from_data(panel.inst);
+      this.journalVersion.data.term_sources.push(ts)
+
+    }
+    );
+
+    // this.institutions.forEach(inst => {
+    //   this.journalVersion.data.term_sources.push(inst);
+    // });
 
     this.indexesPanel.forEach(panel => {
       const ts = new TermSource();

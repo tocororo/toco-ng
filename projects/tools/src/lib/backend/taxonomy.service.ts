@@ -133,6 +133,18 @@ export class TaxonomyService {
       // this.httpOptions);
   }
 
+  getTermListByIDs(ids: number[]): Observable<Response<any>> {
+    let p = '';
+    ids.forEach(n => p = p + n.toString() + ',');
+    p = p.substring(0, p.length - 1);
+    let params = new HttpParams();
+    const options = {
+      params: params.set('ids', p)
+    };
+    const req = this.env.sceibaApi + this.prefix + '/term/inlist';
+    return this.http.get<Response<any>>(req, options);
+  }
+
   getTermByID(termID, level=10): Observable<Response<any>> {
     let params = new HttpParams();
     const options = {

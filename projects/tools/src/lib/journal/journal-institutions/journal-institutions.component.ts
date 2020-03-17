@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, ViewChild } from "@angular/core";
+import { Component, OnInit, Input, Inject, ViewChild, OnDestroy } from "@angular/core";
 import {
   Source,
   JournalVersion,
@@ -8,19 +8,27 @@ import {
   TermNode,
   SourceInstitutionRole
 } from "@toco/tools/entities";
-import { PanelContent, FormContainerAction } from "@toco/tools/forms";
+import {
+  PanelContent,
+  FormContainerAction,
+  FormFieldType
+} from "@toco/tools/forms";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { TaxonomyService } from "@toco/tools/backend";
 import { MAT_DIALOG_DATA, MatDialog } from "@angular/material";
 import { TermHelper } from "@toco/tools/taxonomy";
-import { InstitutionSelectorComponent } from "@toco/tools/institutions/institution-selector/institution-selector.component";
+import { InstitutionHierarchySelectorComponent } from "@toco/tools/institutions/institution-hierarchy-selector/institution-hierarchy-selector.component";
 
+export interface JournalInstitutionsPanel{
+  open: boolean; 
+  inst: TermSource;
+}
 @Component({
   selector: "toco-journal-institutions",
   templateUrl: "./journal-institutions.component.html",
   styleUrls: ["./journal-institutions.component.scss"]
 })
-export class JournalInstitutionsComponent implements OnInit {
+export class JournalInstitutionsComponent implements OnInit, OnDestroy {
   @Input()
   public source: Source;
 
@@ -34,26 +42,12 @@ export class JournalInstitutionsComponent implements OnInit {
   organizationFormGroup: FormGroup;
 
   @Input()
-  institutions: TermSource[] = [];
-
-  // // organization, institution and entity, variables for step 2
-  // public organization: Term = null;
-  // organizationPanel: PanelContent[] = null;
-
-  // // institution
-  // public institution: Term = null;
-  // institutionPanel: PanelContent[] = null;
-  // institutionFormGroup: FormGroup;
-  // // entity
-  // public entity: Term = null;
-  // entityPanel: PanelContent[] = null;
-
-  // public isManageByEntity = true;
+  enableEdit = false;
 
   public initOrganizationPanel = false;
   public roles = SourceInstitutionRole;
   public vocab = VocabulariesInmutableNames;
-  tabs = [];
+  panels: JournalInstitutionsPanel[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -61,29 +55,37 @@ export class JournalInstitutionsComponent implements OnInit {
     public dialog: MatDialog
   ) {}
 
+  ngOnDestroy(){
+    console.log("DESTROY JournalInstitutionsComponent");
+  }
   ngOnInit() {
-    // get data for and create institutional panel (second step)
+    console.log("INIT JournalInstitutionsComponent");
     let termSource: TermSource[] = [];
     if (this.journalVersion) {
-      this.institutions = this.journalVersion.data.term_sources.filter(
+      const institutions: TermSource[] = this.journalVersion.data.term_sources.filter(
         ts => ts.term.vocabulary_id == VocabulariesInmutableNames.INTITUTION
       );
-      console.log(this.institutions);
+      console.log(institutions);
 
-      if (this.institutions.length == 1) {
-        if (!this.institutions[0].data) {
-          this.institutions[0].data = {
+      if (institutions.length == 1) {
+        if (!institutions[0].data) {
+          institutions[0].data = {
             role: SourceInstitutionRole.MAIN.value
           };
         } else {
-          this.institutions[0].data["role"] = SourceInstitutionRole.MAIN.value;
+          institutions[0].data["role"] = SourceInstitutionRole.MAIN.value;
         }
       }
+      institutions.forEach(i => {
+        this.panels.push({open: false, inst: i})
+      });
+
+      this.organizationFormGroup.setValue({institutions: this.panels});
+      console.log(this.organizationFormGroup);
+
       this.initOrganizationPanel = true;
     }
   }
-
-  selected = new FormControl(0);
 
   addInst(extra = false) {
     let newInst = new TermSource();
@@ -94,10 +96,9 @@ export class JournalInstitutionsComponent implements OnInit {
 
     this.editTermSource(newInst, extra);
 
-    this.selected.setValue(this.institutions.length - 1);
   }
 
-  editTermSource(termSource: TermSource, extra = false, index=-1) {
+  editTermSource(termSource: TermSource, extra = false, index = -1) {
     let dialogRef;
     if (extra) {
       dialogRef = termSource.term.vocabulary_id =
@@ -108,12 +109,14 @@ export class JournalInstitutionsComponent implements OnInit {
           addTerm: (term: Term) => {
             termSource.term = term;
             this.dialog.closeAll();
-            if (index > 0 && index < this.institutions.length){
-              this.institutions[index] = termSource;
+            if (index > 0 && index < this.panels.length) {
+              this.panels[index] = {open:true, inst:termSource};
+            } else {
+              this.panels.push({open:true, inst:termSource});
             }
-            else {
-              this.institutions.push(termSource);
-            }
+            this.organizationFormGroup.setValue({institutions: this.panels});
+            console.log(this.organizationFormGroup);
+            
           }
         }
       });
@@ -128,24 +131,15 @@ export class JournalInstitutionsComponent implements OnInit {
             console.log(hierarchy);
 
             termSource.term = hierarchy.term;
-            termSource['h'] = hierarchy;
-            // if (hierarchy.parent) {
-            //   if (hierarchy.parent.parent) {
-            //     termSource["l1"] = hierarchy.parent.parent.term;
-            //   } else {
-            //     termSource["l2"] = null;
-            //   }
-            //   termSource["l2"] = hierarchy.parent.term;
-            // } else {
-            //   termSource["l1"] = null;
-            //   termSource["l2"] = null;
-            // }
-            if (index > 0 && index < this.institutions.length){
-              this.institutions[index] = termSource;
+            termSource["h"] = hierarchy;
+            if (index >= 0 && index < this.panels.length) {
+              this.panels[index] = {open:true, inst:termSource};
             } else {
-              this.institutions.push(termSource);
+              this.panels.push({open:true, inst:termSource});
             }
             
+            this.organizationFormGroup.setValue({institutions: this.panels});
+            console.log(this.organizationFormGroup);
           }
         }
       });
@@ -154,31 +148,59 @@ export class JournalInstitutionsComponent implements OnInit {
 
   editInst(index: number) {
     const extra =
-      this.institutions[index].term.vocabulary_id ==
+      this.panels[index].inst.term.vocabulary_id ==
       VocabulariesInmutableNames.EXTRA_INSTITUTIONS;
-    this.editTermSource(this.institutions[index], extra, index);
+      console.log(index);
+      
+    this.editTermSource(this.panels[index].inst, extra, index);
   }
   removeInst(index: number) {
-    this.institutions.splice(index, 1);
+    this.panels.splice(index, 1);
+    this.organizationFormGroup.setValue({institutions: this.panels});
+    console.log(this.organizationFormGroup);
+  }
+
+  setAsMain(index){
+    this.panels.forEach((p, i) => {
+      if (i == index){
+        p.inst.data = {
+          role: SourceInstitutionRole.MAIN.value
+        };
+      } else {
+        p.inst.data = {
+          role: SourceInstitutionRole.COLABORATOR.value
+        };
+      }
+    })
+    this.organizationFormGroup.setValue({institutions: this.panels});
+    console.log(this.organizationFormGroup);
+  }
+
+  getInstitutionalRelations() : TermSource[]{
+    let result: TermSource[] = [];
+    this.panels.forEach(p => {
+      result.push(p.inst);
+    })
+    return result;
   }
 }
 
 @Component({
   selector: "toco-journal-addinst",
   template: `
-    <toco-institution-selector
+    <toco-institution-hierarchy-selector
       [institution]="term"
       [externalFormGroup]="formGroup"
     >
-    </toco-institution-selector>
+    </toco-institution-hierarchy-selector>
     <div mat-dialog-actions>
       <button mat-stroked-button (click)="ok()">Adicionar</button>
     </div>
   `
 })
 export class JournalAddInstitutionComponent implements OnInit {
-  @ViewChild(InstitutionSelectorComponent, { static: true })
-  selector: InstitutionSelectorComponent;
+  @ViewChild(InstitutionHierarchySelectorComponent, { static: true })
+  selector: InstitutionHierarchySelectorComponent;
   term: Term;
 
   formGroup: FormGroup;
@@ -239,7 +261,6 @@ export class JournalAddExtraInstitutionComponent implements OnInit {
 
   ngOnInit() {
     this.formGroup = this._formBuilder.group({});
-    const content = TermHelper.getPanelContentToEdit(this.term);
 
     this.institutionPanel = [
       {
@@ -247,7 +268,70 @@ export class JournalAddExtraInstitutionComponent implements OnInit {
         description: "",
         iconName: "",
         formGroup: this.formGroup,
-        content: content
+        content: [
+          {
+            name: "name",
+            label: "Nombre",
+            type: FormFieldType.text,
+            required: true,
+            value: this.term.name ? this.term.name : null,
+            width: "100%"
+          },
+          {
+            name: "grid",
+            label: "Identificador",
+            type: FormFieldType.text,
+            required: false,
+            value: this.term.data["grid"] ? this.term.data["grid"] : null,
+            width: "45%"
+          },
+          {
+            name: "country",
+            label: "Pais",
+            type: FormFieldType.vocabulary,
+            required: false,
+            extraContent: {
+              multiple: false,
+              selectedTermsIds: this.term.class_ids
+                ? this.term.class_ids
+                : null,
+              vocab: VocabulariesInmutableNames.PROVINCES
+            },
+            width: "45%"
+          },
+          {
+            name: "description",
+            label: "Descripción",
+            type: FormFieldType.textarea,
+            required: false,
+            value: this.term.description ? this.term.description : null,
+            width: "100%"
+          },
+          {
+            name: "email",
+            label: "Email",
+            type: FormFieldType.email,
+            required: true,
+            value: this.term.data["email"] ? this.term.data["email"] : null,
+            width: "45%"
+          },
+          {
+            name: "website",
+            label: "Sitio Web Oficial",
+            type: FormFieldType.url,
+            required: false,
+            value: this.term.data["website"] ? this.term.data["website"] : null,
+            width: "45%"
+          },
+          {
+            name: "address",
+            label: "Dirección",
+            type: FormFieldType.textarea,
+            required: false,
+            value: this.term.data["address"] ? this.term.data["address"] : null,
+            width: "100%"
+          }
+        ]
       }
     ];
 
@@ -255,7 +339,13 @@ export class JournalAddExtraInstitutionComponent implements OnInit {
       doit: (data: any) => {
         console.log(this.formGroup);
         this.term.name = this.formGroup.value["name"];
+        this.term.description = this.formGroup.value["description"];
         this.term.data = this.formGroup.value;
+
+        this.formGroup.value["country"].forEach((term:Term) => {
+          this.term.class_ids.push(Number.parseInt(term.id));
+        });
+        // this.term.class_ids = this.formGroup.value["country"];
         console.log(this.term);
         this.addTerm(this.term);
       }

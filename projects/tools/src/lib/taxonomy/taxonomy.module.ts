@@ -10,6 +10,7 @@ import { VocabulariesComponent, VocabularyDialogComponent } from './vocabularies
 import { TermsComponent } from './terms/terms.component';
 import { TaxonomyComponent } from './taxonomy/taxonomy.component';
 import { TermGenericComponent } from './term-generic/term-generic.component';
+import { TermsViewerComponent } from './terms-viewer/terms-viewer.component';
 
 @NgModule({
     declarations: [
@@ -17,7 +18,8 @@ import { TermGenericComponent } from './term-generic/term-generic.component';
         VocabularyDialogComponent,
         TermsComponent,
         TaxonomyComponent,
-        TermGenericComponent
+        TermGenericComponent,
+        TermsViewerComponent
     ],
 
     entryComponents: [
@@ -33,7 +35,8 @@ import { TermGenericComponent } from './term-generic/term-generic.component';
 
     exports: [
         TaxonomyComponent,
-        VocabulariesComponent
+        VocabulariesComponent,
+        TermsViewerComponent
     ],
 
     providers: [
