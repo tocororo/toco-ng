@@ -8,11 +8,11 @@
 /*** La idea de esta clase es tener un deserializador */
 export class EntityBase extends Object {
 
-  load_from_data(data: any) {
+  load_from_data(data: any, exclude: string[] = []) {
     const keys = Object.keys(this);
-    
+
     for (const key of keys) {
-      if (data[key]) {
+      if (data[key] && !exclude.includes(key)) {
         if (this[key] instanceof EntityBase) {
           this[key].load_from_data(data[key]);
         } else {

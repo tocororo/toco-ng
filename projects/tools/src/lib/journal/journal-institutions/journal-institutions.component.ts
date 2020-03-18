@@ -19,8 +19,8 @@ import { MAT_DIALOG_DATA, MatDialog } from "@angular/material";
 import { TermHelper } from "@toco/tools/taxonomy";
 import { InstitutionHierarchySelectorComponent } from "@toco/tools/institutions/institution-hierarchy-selector/institution-hierarchy-selector.component";
 
-export interface JournalInstitutionsPanel{
-  open: boolean; 
+export interface JournalInstitutionsPanel {
+  open: boolean;
   inst: TermSource;
 }
 @Component({
@@ -53,9 +53,9 @@ export class JournalInstitutionsComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private taxonomyService: TaxonomyService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     console.log("DESTROY JournalInstitutionsComponent");
   }
   ngOnInit() {
@@ -63,7 +63,9 @@ export class JournalInstitutionsComponent implements OnInit, OnDestroy {
     let termSource: TermSource[] = [];
     if (this.journalVersion) {
       const institutions: TermSource[] = this.journalVersion.data.term_sources.filter(
-        ts => ts.term.vocabulary_id == VocabulariesInmutableNames.INTITUTION
+        ts =>
+        ts.term.vocabulary_id == VocabulariesInmutableNames.INTITUTION
+        || ts.term.vocabulary_id == VocabulariesInmutableNames.EXTRA_INSTITUTIONS
       );
       console.log(institutions);
 
@@ -77,10 +79,10 @@ export class JournalInstitutionsComponent implements OnInit, OnDestroy {
         }
       }
       institutions.forEach(i => {
-        this.panels.push({open: false, inst: i})
+        this.panels.push({ open: false, inst: i });
       });
 
-      this.organizationFormGroup.setValue({institutions: this.panels});
+      this.organizationFormGroup.setValue({ institutions: this.panels });
       console.log(this.organizationFormGroup);
 
       this.initOrganizationPanel = true;
@@ -110,13 +112,13 @@ export class JournalInstitutionsComponent implements OnInit, OnDestroy {
             termSource.term = term;
             this.dialog.closeAll();
             if (index > 0 && index < this.panels.length) {
-              this.panels[index] = {open:true, inst:termSource};
+              this.panels[index] = { open: true, inst: termSource };
             } else {
-              this.panels.push({open:true, inst:termSource});
+              this.panels.push({ open: true, inst: termSource });
             }
-            this.organizationFormGroup.setValue({institutions: this.panels});
+            this.organizationFormGroup.setValue({ institutions: this.panels });
             console.log(this.organizationFormGroup);
-            
+
           }
         }
       });
@@ -133,12 +135,12 @@ export class JournalInstitutionsComponent implements OnInit, OnDestroy {
             termSource.term = hierarchy.term;
             termSource["h"] = hierarchy;
             if (index >= 0 && index < this.panels.length) {
-              this.panels[index] = {open:true, inst:termSource};
+              this.panels[index] = { open: true, inst: termSource };
             } else {
-              this.panels.push({open:true, inst:termSource});
+              this.panels.push({ open: true, inst: termSource });
             }
-            
-            this.organizationFormGroup.setValue({institutions: this.panels});
+
+            this.organizationFormGroup.setValue({ institutions: this.panels });
             console.log(this.organizationFormGroup);
           }
         }
@@ -150,19 +152,19 @@ export class JournalInstitutionsComponent implements OnInit, OnDestroy {
     const extra =
       this.panels[index].inst.term.vocabulary_id ==
       VocabulariesInmutableNames.EXTRA_INSTITUTIONS;
-      console.log(index);
-      
+    console.log(index);
+
     this.editTermSource(this.panels[index].inst, extra, index);
   }
   removeInst(index: number) {
     this.panels.splice(index, 1);
-    this.organizationFormGroup.setValue({institutions: this.panels});
+    this.organizationFormGroup.setValue({ institutions: this.panels });
     console.log(this.organizationFormGroup);
   }
 
-  setAsMain(index){
+  setAsMain(index) {
     this.panels.forEach((p, i) => {
-      if (i == index){
+      if (i == index) {
         p.inst.data = {
           role: SourceInstitutionRole.MAIN.value
         };
@@ -172,11 +174,11 @@ export class JournalInstitutionsComponent implements OnInit, OnDestroy {
         };
       }
     })
-    this.organizationFormGroup.setValue({institutions: this.panels});
+    this.organizationFormGroup.setValue({ institutions: this.panels });
     console.log(this.organizationFormGroup);
   }
 
-  getInstitutionalRelations() : TermSource[]{
+  getInstitutionalRelations(): TermSource[] {
     let result: TermSource[] = [];
     this.panels.forEach(p => {
       result.push(p.inst);
@@ -342,7 +344,7 @@ export class JournalAddExtraInstitutionComponent implements OnInit {
         this.term.description = this.formGroup.value["description"];
         this.term.data = this.formGroup.value;
 
-        this.formGroup.value["country"].forEach((term:Term) => {
+        this.formGroup.value["country"].forEach((term: Term) => {
           this.term.class_ids.push(Number.parseInt(term.id));
         });
         // this.term.class_ids = this.formGroup.value["country"];

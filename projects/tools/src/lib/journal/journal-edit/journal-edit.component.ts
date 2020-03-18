@@ -176,7 +176,7 @@ export class JournalEditComponent implements OnInit {
         formGroup: this.identifiersFormGroup,
         content: [
           {
-            name: "p",
+            name: "issn_p",
             label: "ISSN Impreso",
             type: FormFieldType.text,
             required: false,
@@ -186,7 +186,7 @@ export class JournalEditComponent implements OnInit {
             // value: this.journalVersion ? IssnValue.createIssnValueFromString(this.journalVersion.data.issn.p) : null
           },
           {
-            name: "e",
+            name: "issn_e",
             label: "ISSN Electrónico",
             type: FormFieldType.text,
             required: false,
@@ -196,7 +196,7 @@ export class JournalEditComponent implements OnInit {
             // value: this.journalVersion ? IssnValue.createIssnValueFromString(this.journalVersion.data.issn.e) : null
           },
           {
-            name: "l",
+            name: "issn_l",
             label: "ISSN de Enlace",
             type: FormFieldType.text,
             required: false,
@@ -206,7 +206,7 @@ export class JournalEditComponent implements OnInit {
             // value: this.journalVersion ? IssnValue.createIssnValueFromString(this.journalVersion.data.issn.l) : null
           },
           {
-            name: "rnps",
+            name: "rnps_p",
             label: "RNPS Impreso",
             type: FormFieldType.rnps,
             required: true,
@@ -215,7 +215,7 @@ export class JournalEditComponent implements OnInit {
             value: this.journalVersion ? this.journalVersion.data.rnps.p : ""
           },
           {
-            name: "rnps",
+            name: "rnps_e",
             label: "RNPS Electrónico",
             type: FormFieldType.rnps,
             required: true,
@@ -632,12 +632,18 @@ export class JournalEditComponent implements OnInit {
   private fillJournalFields() {
     // this.journalVersion.source_type = this.informationFormGroup.value['source_type'];
 
-    this.journalVersion.data.issn.load_from_data(
-      this.identifiersFormGroup.value
-    );
-    this.journalVersion.data.rnps.load_from_data(
-      this.identifiersFormGroup.value
-    );
+    this.journalVersion.data.issn.p = this.identifiersFormGroup.value['issn_p'];
+    this.journalVersion.data.issn.e = this.identifiersFormGroup.value['issn_e'];
+    this.journalVersion.data.issn.l = this.identifiersFormGroup.value['issn_l'];
+    this.journalVersion.data.rnps.p = this.identifiersFormGroup.value['rnps_p'];
+    this.journalVersion.data.rnps.e = this.identifiersFormGroup.value['rnps_e'];
+
+    // this.journalVersion.data.issn.load_from_data(
+    //   this.identifiersFormGroup.value
+    // );
+    // this.journalVersion.data.rnps.load_from_data(
+    //   this.identifiersFormGroup.value
+    // );
 
     this.journalVersion.data.load_from_data(this.informationFormGroup.value);
     this.journalVersion.data.socialNetworks.load_from_data(
@@ -677,7 +683,9 @@ export class JournalEditComponent implements OnInit {
     ].forEach((panel: JournalInstitutionsPanel) => {
       const ts = new TermSource();
       ts.load_from_data(panel.inst);
-      this.journalVersion.data.term_sources.push(ts)
+      ts.term_id = panel.inst.term.id;
+      ts.source_id = this.journalVersion.source_id;
+      this.journalVersion.data.term_sources.push(ts);
 
     }
     );
