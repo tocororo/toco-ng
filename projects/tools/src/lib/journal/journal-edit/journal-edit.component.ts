@@ -523,7 +523,7 @@ export class JournalEditComponent implements OnInit {
 
     console.log(this.journalVersion.data.term_sources)
     this.journalVersion.data.term_sources.forEach(element => {
-      if (element.term.vocabulary_id == VocabulariesInmutableNames.DATABASES) {
+      if (element.term.vocabulary_id == VocabulariesInmutableNames.MIAR_DATABASES) {
         panel.push(this.getPanelIndex(element));
       }
     });
@@ -803,7 +803,7 @@ export class JournalEditAddIndexComponent implements OnInit {
               multiple: false,
               selectedTermsIds: null,
               excludeTermsIds: this.termsIdsToExclude,
-              vocab: VocabulariesInmutableNames.DATABASES
+              vocab: VocabulariesInmutableNames.MIAR_DATABASES
             }
           },
           {
