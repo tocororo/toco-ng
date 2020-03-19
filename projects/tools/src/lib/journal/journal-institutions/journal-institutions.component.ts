@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, ViewChild, OnDestroy } from "@angular/core";
+import { Component, OnInit, Input, Inject, ViewChild, OnDestroy, OnChanges } from "@angular/core";
 import {
   Source,
   JournalVersion,
@@ -15,7 +15,7 @@ import {
 } from "@toco/tools/forms";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { TaxonomyService } from "@toco/tools/backend";
-import { MAT_DIALOG_DATA, MatDialog } from "@angular/material";
+import { MAT_DIALOG_DATA, MatDialog, MAT_DIALOG_DEFAULT_OPTIONS } from "@angular/material";
 import { TermHelper } from "@toco/tools/taxonomy";
 import { InstitutionHierarchySelectorComponent } from "@toco/tools/institutions/institution-hierarchy-selector/institution-hierarchy-selector.component";
 
@@ -28,7 +28,7 @@ export interface JournalInstitutionsPanel {
   templateUrl: "./journal-institutions.component.html",
   styleUrls: ["./journal-institutions.component.scss"]
 })
-export class JournalInstitutionsComponent implements OnInit, OnDestroy {
+export class JournalInstitutionsComponent implements OnInit,  OnChanges {
   @Input()
   public source: Source;
 
@@ -55,11 +55,17 @@ export class JournalInstitutionsComponent implements OnInit, OnDestroy {
     public dialog: MatDialog
   ) { }
 
-  ngOnDestroy() {
-    console.log("DESTROY JournalInstitutionsComponent");
+  ngOnChanges(){
+    this.ngOnInit();
   }
   ngOnInit() {
     console.log("INIT JournalInstitutionsComponent");
+    if (this.organizationFormGroup == undefined ){
+      this.organizationFormGroup = this.formBuilder.group({
+        institutions: new FormControl("")
+      });
+    }
+    this.panels = [];
     let termSource: TermSource[] = [];
     if (this.journalVersion) {
       const institutions: TermSource[] = this.journalVersion.data.term_sources.filter(
@@ -81,13 +87,15 @@ export class JournalInstitutionsComponent implements OnInit, OnDestroy {
       institutions.forEach(i => {
         this.panels.push({ open: false, inst: i });
       });
-
+      
+      console.log(this.panels)
       this.organizationFormGroup.setValue({ institutions: this.panels });
       console.log(this.organizationFormGroup);
 
       this.initOrganizationPanel = true;
     }
   }
+  
 
   addInst(extra = false) {
     let newInst = new TermSource();
@@ -101,10 +109,10 @@ export class JournalInstitutionsComponent implements OnInit, OnDestroy {
   }
 
   editTermSource(termSource: TermSource, extra = false, index = -1) {
-    let dialogRef;
+    // let dialogRef;
     if (extra) {
-      dialogRef = termSource.term.vocabulary_id =
-        VocabulariesInmutableNames.EXTRA_INSTITUTIONS;
+      // dialogRef = termSource.term.vocabulary_id =
+      //   VocabulariesInmutableNames.EXTRA_INSTITUTIONS;
       this.dialog.open(JournalAddExtraInstitutionComponent, {
         data: {
           term: termSource.term,
@@ -123,9 +131,11 @@ export class JournalInstitutionsComponent implements OnInit, OnDestroy {
         }
       });
     } else {
-      dialogRef = termSource.term.vocabulary_id =
-        VocabulariesInmutableNames.INTITUTION;
-      this.dialog.open(JournalAddInstitutionComponent, {
+      // dialogRef = termSource.term.vocabulary_id =
+      //   VocabulariesInmutableNames.INTITUTION;
+      this.dialog.open(JournalAddInstitutionComponent, { 
+        width: '90%',
+        minWidth: '15em',
         data: {
           term: termSource.term,
           addTerm: (hierarchy: TermNode) => {
@@ -195,8 +205,9 @@ export class JournalInstitutionsComponent implements OnInit, OnDestroy {
       [externalFormGroup]="formGroup"
     >
     </toco-institution-hierarchy-selector>
-    <div mat-dialog-actions>
-      <button mat-stroked-button (click)="ok()">Adicionar</button>
+    <div mat-dialog-actions fxLayout="row wrap"
+    fxLayoutAlign="end center">
+      <button mat-stroked-button (click)="ok()">Aceptar</button>
     </div>
   `
 })
@@ -237,11 +248,11 @@ export class JournalAddInstitutionComponent implements OnInit {
       *ngIf="formGroup && institutionPanel"
       #level1PanelContainer
       [panels]="institutionPanel"
-      [useAccordion]="false"
+      [useContainer]="false"
       fxLayout="row"
       [deleteValuesAfterAction]="false"
       [action]="addAction"
-      [actionLabel]="'Adicionar'"
+      [actionLabel]="'Aceptar'"
     ></toco-form-container>
   `
 })

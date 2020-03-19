@@ -51,9 +51,7 @@
             </mat-card-content>
     
             <mat-card-actions  *ngIf="i == count-1 && actionLabel" fxLayout="row" fxLayoutAlign="end center">
-    
-                <!-- <button *ngIf="actionButtonIsStepperNext" mat-button matStepperNext color="primary" (click)="doAction()">{{actionLabel}}</button> -->
-    
+
                 <button mat-button color="primary" (click)="doAction()">{{actionLabel}}</button>
     
             </mat-card-actions>
@@ -62,11 +60,14 @@
     </div>
 </ng-container>
 
-<ng-container *ngIf="!useContainer">
-    <div *ngFor="let panel of panels; let i=index; let count = count">
+<div fxLayout="column" *ngIf="!useContainer">
+    <div *ngFor="let panel of panels; let i=index; let count = count" class="toco-form-container">
         <toco-form-fields [fields]="panel.content" ></toco-form-fields>
     </div>
-</ng-container>
+    <div  *ngIf="actionLabel" fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button color="primary" (click)="doAction()">{{actionLabel}}</button>
+    </div>
+</div >
 
 
 

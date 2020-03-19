@@ -243,6 +243,5 @@ export class JournalViewComponent implements OnInit {
     }
 
 
-
 }
 

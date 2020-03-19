@@ -1,4 +1,4 @@
-<toco-progress *ngIf="loading"> </toco-progress>
+<toco-progress [loading]= "loading"> </toco-progress>
 
 <mat-toolbar>
   <mat-toolbar-row fxLayout="row wrap" fxLayoutAlign="space-between center">
@@ -26,7 +26,18 @@
   [deleteValuesAfterAction]="true"
 ></toco-form-container>
 
-<div *ngIf="!isStartProcess">
+<toco-journal-edit
+  *ngIf="!isStartProcess"
+        [journalVersion]="versionToEdit"
+        (journalEditDone)="finishInclusion()"
+        [showEditHeader]="false"
+        [source]="journal"
+        [description]="'Complete y compruebe todos los datos solicitados.'"
+    >
+    </toco-journal-edit>
+
+
+<!-- <div *ngIf="!isStartProcess">
   <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
     <ng-template matStepperIcon="journal">
       <mat-icon>notes</mat-icon>
@@ -39,10 +50,10 @@
     </ng-template>
     <mat-step label="Revista" state="journal" completed="false" #journalStep>
       <toco-journal-edit
-        *ngIf="isEditig"
         [journalVersion]="versionToEdit"
         (journalEditDone)="journalStep.completed = true; stepper.next()"
-        [showCancelButton]="false"
+        [showEditHeader]="false"
+        [source]="journal"
         [description]="'Complete y compruebe todos los datos solicitados.'"
       >
       </toco-journal-edit>
@@ -105,4 +116,4 @@
       </form>
     </mat-step>
   </mat-horizontal-stepper>
-</div>
+</div> -->

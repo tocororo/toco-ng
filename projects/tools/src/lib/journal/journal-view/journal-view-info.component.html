@@ -7,7 +7,7 @@
         </ng-template> -->
 
     <mat-card-title>
-      <mat-label style="font-weight: bold;">Revista:</mat-label>
+      <mat-label style="font-weight: bold;">Título:</mat-label>
 
       <mat-label *ngIf="journalVersion.data.title">
         {{ journalVersion.data.title }}
@@ -92,7 +92,7 @@
       <p>
         <mat-label style="font-weight: bold;"> Impreso: </mat-label>
         <mat-label *ngIf="journalVersion.data.rnps">
-          {{ journalVersion.data.rnps }}
+          {{ journalVersion.data.rnps.p }}
         </mat-label>
         <mat-label
           *ngIf="!journalVersion.data.rnps"
@@ -103,7 +103,7 @@
       <p>
         <mat-label style="font-weight: bold;"> Electrónico: </mat-label>
         <mat-label *ngIf="journalVersion.data.rnps">
-          {{ journalVersion.data.rnps }}
+          {{ journalVersion.data.rnps.e }}
         </mat-label>
         <mat-label
           *ngIf="!journalVersion.data.rnps"
@@ -250,21 +250,24 @@
     </div>
 
     <!-- show terms -->
+
     <mat-divider
       [inset]="true"
       style="margin-bottom: 1em; margin-top: 1em;"
     ></mat-divider>
-    <p>
-      <mat-label style="font-weight: bold;"> Institución: </mat-label>
-      <ng-container *ngFor="let termSource of institutionTerms">
-        <mat-label
-          *ngIf="termSource.term.vocabulary_id == vocabularies.INTITUTION"
-          style="padding-left: 1em;"
+    <mat-card style="margin: 1em; background-color: whitesmoke;">
+      <mat-card-header>
+        <mat-card-title>Instituciones:</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <toco-journal-institutions
+          [journalVersion]="journalVersion"
+          [enableEdit]="false"
+          [ngStyle]="{ margin: '1em' }"
         >
-          {{ termSource.term.name }}
-        </mat-label>
-      </ng-container>
-    </p>
+        </toco-journal-institutions>
+      </mat-card-content>
+    </mat-card>
 
     <toco-journal-view-term
       title="Grupo:"
@@ -292,7 +295,7 @@
 
     <mat-card style="margin: 1em; background-color: whitesmoke;">
       <mat-card-header>
-        <mat-card-title> Bases de Datos:</mat-card-title>
+        <mat-card-title> Indizaciones:</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <mat-accordion>

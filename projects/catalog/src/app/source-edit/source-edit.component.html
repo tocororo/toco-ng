@@ -1,20 +1,39 @@
-
-<toco-progress [loading]="saving">
-</toco-progress>
+<toco-progress [loading]="saving"> </toco-progress>
 
 <ng-container *ngIf="source" [ngSwitch]="source.source_type">
-    <toco-journal-edit
-        *ngSwitchCase="sourceType.JOURNAL.value"
-        [journalVersion]="version"
-        [source]="source"
-        [defaultOrganizationUUID]="organizationUUID"
-        (journalEditDone)="sourceEditDone()"
-        (editCanceled)="editCanceled()"
-    >
-    </toco-journal-edit>
+  <mat-toolbar
+    fxLayout="row wrap"
+    fxLayoutAlign="space-between center"
+    [ngStyle]="{
+      width: '100%',
+      height: 'auto',
+      padding: '16px',
+      'min-height': '56px'
+    }"
+  >
+    <span [ngStyle]="{'white-space': 'normal'}">
+      <ng-container *ngIf="version.isNew; else elseTemplate">
+        Nueva Fuente
+      </ng-container>
+      <ng-template #elseTemplate> Editando: {{ source.name }} </ng-template>
+    </span>
+    <button mat-stroked-button color="warn" (click)="editCanceled()">
+      Cancelar
+    </button>
+  </mat-toolbar>
 
-    <p *ngSwitchDefault>
-        {{sourceType.JOURNAL.value}}
-        {{source.source_type}}
-    </p>
+  <toco-journal-edit
+    *ngSwitchCase="sourceType.JOURNAL.value"
+    [journalVersion]="version"
+    [source]="source"
+    [defaultOrganizationUUID]="organizationUUID"
+    (journalEditDone)="sourceEditDone()"
+    [showEditHeader]="false"
+  >
+  </toco-journal-edit>
+
+  <p *ngSwitchDefault>
+    {{ sourceType.JOURNAL.value }}
+    {{ source.source_type }}
+  </p>
 </ng-container>

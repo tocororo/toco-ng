@@ -10,7 +10,7 @@
 
     <ng-container [ngSwitch]="type">
         <ng-container *ngSwitchCase="journalDataType.title">
-            <mat-label style="font-weight: bold;">Revista:</mat-label>
+            <mat-label style="font-weight: bold;">Título:</mat-label>
             <mat-label *ngIf="currentJournal.data.title"> {{currentJournal.data.title}} </mat-label>
             <mat-label *ngIf="!currentJournal.data.title" class="text-muted text-through">Vacío</mat-label>
         </ng-container>

@@ -75,13 +75,16 @@ export class JournalEditComponent implements OnInit {
   public journalVersion: JournalVersion = null;
 
   @Input()
-  public showCancelButton: boolean = true;
+  public showEditHeader: boolean = false;
 
   @Input()
   public description = "";
 
   @Input()
   public defaultOrganizationUUID: string = null;
+
+  @Input()
+  public showFinalStep = true;
 
   // journal identifiers variables for step 0
   identifiersPanel: PanelContent[] = null;
@@ -518,35 +521,56 @@ export class JournalEditComponent implements OnInit {
     const panel = [];
     this.indexesPanel = [];
 
+    console.log(this.journalVersion.data.term_sources)
     this.journalVersion.data.term_sources.forEach(element => {
-      if (element.term.vocabulary_id === VocabulariesInmutableNames.DATABASES) {
+      if (element.term.vocabulary_id == VocabulariesInmutableNames.DATABASES) {
         panel.push(this.getPanelIndex(element));
       }
     });
     this.indexesPanel = panel;
+    // this.indexAction = {
+    //   doit: (data: any) => {
+    //     const termsIdsToExclude = [];
+    //     this.indexesPanel.forEach(panel => {
+    //       termsIdsToExclude.push(panel.value.id);
+    //     });
 
-    this.indexAction = {
-      doit: (data: any) => {
-        const termsIdsToExclude = [];
-        this.indexesPanel.forEach(panel => {
-          termsIdsToExclude.push(panel.value.id);
-        });
+    //     this.dialog.open(JournalEditAddIndexComponent, {
+    //       data: {
+    //         termsIdsToExclude: termsIdsToExclude,
+    //         addIndexPanel: (termSource: TermSource) => {
+    //           this.dialog.closeAll();
+    //           termSource.source_id = this.journalVersion.source_id;
+    //           const panels = this.indexesPanel.slice(0);
+    //           panels.push(this.getPanelIndex(termSource));
+    //           this.indexesPanel = panels;
+    //           console.log(this.indexesFormGroup);
+    //         }
+    //       }
+    //     });
+    //   }
+    // };
+  }
 
-        this.dialog.open(JournalEditAddIndexComponent, {
-          data: {
-            termsIdsToExclude: termsIdsToExclude,
-            addIndexPanel: (termSource: TermSource) => {
-              this.dialog.closeAll();
-              termSource.source_id = this.journalVersion.source_id;
-              const panels = this.indexesPanel.slice(0);
-              panels.push(this.getPanelIndex(termSource));
-              this.indexesPanel = panels;
-              console.log(this.indexesFormGroup);
-            }
-          }
-        });
+  public addIndexAction(){
+    const termsIdsToExclude = [];
+    this.indexesPanel.forEach(panel => {
+      termsIdsToExclude.push(panel.value.id);
+    });
+
+    this.dialog.open(JournalEditAddIndexComponent, {
+      data: {
+        termsIdsToExclude: termsIdsToExclude,
+        addIndexPanel: (termSource: TermSource) => {
+          this.dialog.closeAll();
+          termSource.source_id = this.journalVersion.source_id;
+          const panels = this.indexesPanel.slice(0);
+          panels.push(this.getPanelIndex(termSource));
+          this.indexesPanel = panels;
+          console.log(this.indexesFormGroup);
+        }
       }
-    };
+    });
   }
 
   private getPanelIndex(termSource: TermSource) {
@@ -609,14 +633,14 @@ export class JournalEditComponent implements OnInit {
     this.finalPanel = [
       {
         title: "",
-        description: "Puede agregar aquí un comentario.",
+        description: "",
         iconName: "",
         formGroup: this.finalFormGroup,
 
         content: [
           {
             name: "comment",
-            label: "",
+            label: "Puede agregar aquí un comentario.",
             type: FormFieldType.textarea,
             required: false,
             startHint: new HintValue(HintPosition.start, ""),
@@ -693,7 +717,7 @@ export class JournalEditComponent implements OnInit {
     // this.institutions.forEach(inst => {
     //   this.journalVersion.data.term_sources.push(inst);
     // });
-
+    console.log(this.indexesPanel)
     this.indexesPanel.forEach(panel => {
       const ts = new TermSource();
       ts.term = panel.value;
