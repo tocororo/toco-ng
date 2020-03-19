@@ -308,7 +308,7 @@ export class JournalAddExtraInstitutionComponent implements OnInit {
               selectedTermsIds: this.term.class_ids
                 ? this.term.class_ids
                 : null,
-              vocab: VocabulariesInmutableNames.PROVINCES
+              vocab: VocabulariesInmutableNames.COUNTRIES
             },
             width: "45%"
           },

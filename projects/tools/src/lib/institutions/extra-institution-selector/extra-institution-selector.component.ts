@@ -56,7 +56,7 @@ export class ExtraInstitutionSelectorComponent implements OnInit {
               extraContent: {
                 multiple: false,
                 selectedTermsIds: this.institution.class_ids ? this.institution.class_ids : null,
-                vocab: VocabulariesInmutableNames.PROVINCES
+                vocab: VocabulariesInmutableNames.COUNTRIES
               },
               width: "45%"
             },
