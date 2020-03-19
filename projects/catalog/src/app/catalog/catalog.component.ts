@@ -115,7 +115,7 @@ export class CatalogComponent implements OnInit, OnChanges{
       width: "90"
     }
   ];
-  currentlayout = this.layoutPosition[2];
+  currentlayout = this.layoutPosition[1];
 
   searchParams: HttpParams;
   organizationUUID = '';

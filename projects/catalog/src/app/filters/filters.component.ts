@@ -146,7 +146,7 @@ export class FiltersComponent implements OnInit {
         description: "",
         iconName: "",
         formGroup: this.formGroup,
-        open: false,
+        open: this.filters.get(CatalogFilterKeys.source_type) != '',
         content: [
           {
             name: CatalogFilterKeys.source_type,
@@ -185,7 +185,7 @@ export class FiltersComponent implements OnInit {
         description: "",
         iconName: "",
         formGroup: this.formGroup,
-        open: false,
+        open: this.filters.get(CatalogFilterKeys.institutions) != '',
         content: [
           {
             name: CatalogFilterKeys.institutions,
@@ -231,7 +231,7 @@ export class FiltersComponent implements OnInit {
         title: "Cobertura Temática:",
         iconName: "",
         description: "",
-        open: false,
+        open: this.filters.get(CatalogFilterKeys.subjects) != '',
         content: [
           {
             name: CatalogFilterKeys.subjects,
@@ -253,7 +253,7 @@ export class FiltersComponent implements OnInit {
         title: "Indizaciones:",
         iconName: "",
         description: "",
-        open: false,
+        open: this.filters.get(CatalogFilterKeys.grupo_mes) != '' || this.filters.get(CatalogFilterKeys.miar_types) != '',
         content: [
           {
             name: CatalogFilterKeys.grupo_mes,
@@ -288,7 +288,7 @@ export class FiltersComponent implements OnInit {
         description: "",
         iconName: "",
         formGroup: this.formGroup,
-        open: false,
+        open: this.filters.get(CatalogFilterKeys.source_status) != '' && this.filters.get(CatalogFilterKeys.source_status) != 'ALL',
         content: [
           {
             name: CatalogFilterKeys.source_status,
@@ -301,6 +301,10 @@ export class FiltersComponent implements OnInit {
               multiple: false,
               getOptions: () => {
                 return [
+                  {
+                    label: 'Todos',
+                    value: 'ALL'
+                  },
                   {
                     label: SourceStatus.APPROVED.label,
                     value: SourceStatus.APPROVED.value

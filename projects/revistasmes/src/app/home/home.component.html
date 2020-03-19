@@ -7,9 +7,9 @@
         
         <mat-card-content fxLayout="column" style="padding: 2em;">
 
-            <h2> 82 Revistas </h2>
-            <h2> 4000 Artículos </h2>
-            <h2> 36 Instituciones </h2>
+            <h2> {{ sourcesCount }} Revistas </h2>
+            <h2> {{ records }} Artículos </h2>
+            <h2> {{ institutionsCount }} Instituciones </h2>
         
         </mat-card-content>
     </mat-card>
@@ -46,15 +46,15 @@
 
     </mat-card>
 
-    <mat-card class="w-card">
+    <mat-card class="w-card" [ngStyle]="{'min-height': '160px'}">
         <mat-card-title-group>
             <mat-card-title>Últimos Ingresos</mat-card-title>
         </mat-card-title-group>
         <mat-card-content>
             <mat-nav-list dense>
-                <a mat-list-item href="">Revista Mendive</a>
-                <a mat-list-item href="">Revista Cubana de Ciencia de la Información</a>
-                <a mat-list-item href="">Revista 16 de Abril</a>
+                <a mat-list-item *ngFor="let source of lastSources" (click)="viewJournal(source.uuid)"> {{ source.name }} </a>
+                <!-- <a mat-list-item href="">Revista Cubana de Ciencia de la Información</a>
+                <a mat-list-item href="">Revista 16 de Abril</a> -->
             </mat-nav-list>
         </mat-card-content>
 
