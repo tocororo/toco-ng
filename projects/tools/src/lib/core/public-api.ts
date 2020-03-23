@@ -17,7 +17,7 @@ export * from './services/http-interceptor.order';
 export * from './services/http.interceptor';
 export * from './services/icon.service';
 export * from './services/message.service';
-//export * from './services/request-cache-different-time.service';
+export * from './services/request-cache-different-time.service';
 export * from './services/request-cache.service';
 export * from './services/test-backend-data-source.service';
 export * from './utils/common';

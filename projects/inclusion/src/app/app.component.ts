@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { BrowserSessionStorageService, UserService, SortDirection } from '@toco/tools/core';
-import { TableContent, TableComponent, CellContentWrap, InputContent, TextAlign, TextInputAppearance, IconValue, IconSource, HintPosition, HintValue, ContentPosition } from '@toco/tools/forms';
+import { TableContent, TableComponent, CellContentWrap, InputContent, TextAlign, TextInputAppearance, IconValue, IconSource, HintPosition, HintValue, ContentPosition, InputTextComponent } from '@toco/tools/forms';
 
 @Component({
     selector: 'app-root',
@@ -20,10 +20,10 @@ export class AppComponent implements OnInit
     /**
      * The search filter. 
      */
-	// public searchContent: InputContent;
+	public searchContent: InputContent;
 
-    // @ViewChild('input_search', { static: true })
-    // private _inputSearch: InputTextComponent;
+    @ViewChild('input_search', { static: true })
+    private _inputSearch: InputTextComponent;
 
     /**
      * The sources list.
@@ -51,7 +51,7 @@ export class AppComponent implements OnInit
 
         /***************************/
 
-        // this.searchContent = this._initSearchContent();
+        this.searchContent = this._initSearchContent();
         this.tableContent = this._initTableContent();
 
         /***************************/
@@ -92,10 +92,10 @@ export class AppComponent implements OnInit
             },
             'propertyNameToIdentify': 'id',
 
-            // 'filter': {
-            //     'search': this._inputSearch,
-            //     //'registration': undefined
-            // },
+            'filter': {
+                'search': this._inputSearch,
+                //'registration': undefined
+            },
             'sort': {
                 'active': 'id',
                 'direction': SortDirection.desc

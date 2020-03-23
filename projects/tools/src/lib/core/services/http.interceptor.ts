@@ -40,8 +40,10 @@ export class CachingInterceptor implements HttpInterceptor
      */
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
     {
+        let maxAgeInCache: number;
+
         /* Continues if not cachable. */
-        if (!this._cachable.isCachable(req))
+        if (!(maxAgeInCache = this._cachable.isCachable(req)))
         {
             return next.handle(req);
         }
@@ -50,32 +52,33 @@ export class CachingInterceptor implements HttpInterceptor
         if (req.headers.get(REFRESH_X_CACHE))
         {
             /* fetch. */
-            return this._sendRequest(req, next, true);
+            return this._sendRequest(req, maxAgeInCache, true, next);
         }
 
         /* cache-or-fetch. */
         const cachedResponse: HttpResponse<any> = this._cache.get(req);
         return (cachedResponse
             ? of(cachedResponse)
-            : this._sendRequest(req, next, false));
+            : this._sendRequest(req, maxAgeInCache, false, next));
     }
 
     /**
      * Gets server response observable by sending request to `next` argument. 
      * It will add the response to the cache on the way out. 
      * @param req The outgoing request object to handle. 
-     * @param next The next interceptor in the chain, or the backend if no interceptors remain in the chain. 
+     * @param maxAgeInCache The maximum cache age in milliseconds. 
      * @param hasRefreshXCache It is true if the custom `REFRESH_X_CACHE` header is present; otherwise, false. 
+     * @param next The next interceptor in the chain, or the backend if no interceptors remain in the chain. 
      * @returns An observable of the event stream. 
      */
-    private _sendRequest(req: HttpRequest<any>, next: HttpHandler, hasRefreshXCache: boolean): Observable<HttpEvent<any>>
+    private _sendRequest(req: HttpRequest<any>, maxAgeInCache: number, hasRefreshXCache: boolean, next: HttpHandler): Observable<HttpEvent<any>>
     {
         /* Removes the `REFRESH_X_CACHE` custom option from header. */
         let reqWithoutCustomHeader: HttpRequest<any> = (hasRefreshXCache)
             ? req.clone({ headers: (req.headers.delete(REFRESH_X_CACHE)) })
             : req;
 
-        console.log('mio2', reqWithoutCustomHeader.headers);
+        console.log('Req-2: ', reqWithoutCustomHeader.headers);
 
         return next.handle(reqWithoutCustomHeader).pipe(
             tap((event: HttpEvent<any>) => {
@@ -83,7 +86,7 @@ export class CachingInterceptor implements HttpInterceptor
                 if (event instanceof HttpResponse)
                 {
                     /* Updates the cache. */
-                    this._cache.set(req, event);  /* Cached the original request `req`. */
+                    this._cache.set(req, maxAgeInCache, event);  /* Cached the original request `req`. */
                 }
             })
         );
