@@ -11,6 +11,7 @@ import { OAuthStorage } from 'angular-oauth2-oidc';
 
 import { SearchResponse, Response, Record, Source } from '@toco/tools/entities';
 import { EnvService } from '@tocoenv/tools/env.service';
+import { Organization } from '../entities/organization.entity';
 
 @Injectable()
 export class SearchService {
@@ -24,13 +25,13 @@ export class SearchService {
   //       'Access-Control-Allow-Origin': '*'
   //     }
   // );
-  http: HttpClient; 
+  http: HttpClient;
   constructor(private env: EnvService, private  handler: HttpBackend) {
 
     // TODO: hay una mejor manera de hacer esto, creando diferentes y propios HttpClients que
-    // tengan un comportamiento especifico (eg: sin/con autenticacion) 
+    // tengan un comportamiento especifico (eg: sin/con autenticacion)
     // ver: https://github.com/angular/angular/issues/20203#issuecomment-369754776
-    // otra solucion seria pasar parametros especiales como {ignore_auth = true} y que el 
+    // otra solucion seria pasar parametros especiales como {ignore_auth = true} y que el
     // interceptor actue en consecuencia... .
     // https://github.com/angular/angular/issues/18155#issuecomment-382438006
 
@@ -64,6 +65,16 @@ export class SearchService {
     console.log(params);
     const req = this.env.sceibaApi + 'sources';
     return this.http.get<SearchResponse<Source>>(req, options);
+  }
+
+  getOrganizations(params: HttpParams): Observable<SearchResponse<Organization>> {
+    const options = {
+      params: params,
+      // headers: this.headers
+    };
+    console.log(params);
+    const req = this.env.sceibaApi + 'organizations';
+    return this.http.get<SearchResponse<Organization>>(req, options);
   }
 
 }

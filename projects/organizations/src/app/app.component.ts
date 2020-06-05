@@ -1,20 +1,16 @@
-/*
- *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
- *   All rights reserved.
- */
-
-import { Component, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material';
-import { SearchService } from '@toco/tools/backend';
+import { Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { SearchResponse, HitList, Record } from '@toco/tools/entities';
+import { SearchResponse } from '@toco/tools/entities';
+import { Organization } from '@toco/tools/entities/organization.entity';
+import { SearchService } from '@toco/tools/backend';
+import { PageEvent } from '@angular/material';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
   // begin Layout stuff
   layoutPosition = [
@@ -54,12 +50,10 @@ export class AppComponent implements OnInit {
   pageSize = 5;
   pageIndex = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-
-
   // end paginator stuff
 
   params: HttpParams;
-  sr: SearchResponse<Record>;
+  sr: SearchResponse<Organization>;
   constructor(
     private searchService: SearchService,
   ) {
@@ -81,13 +75,11 @@ export class AppComponent implements OnInit {
     this.params = this.params.set('page', ( this.pageIndex + 1 ).toString());
 
 
-    this.searchService.getRecords(this.params).subscribe(
-      (response: SearchResponse<Record>) => {
+    this.searchService.getOrganizations(this.params).subscribe(
+      (response: SearchResponse<Organization>) => {
         console.log(response);
         // this.pageEvent.length = response.hits.total;
         this.sr = response;
-
-
       },
       (error: any) => {
 
@@ -97,5 +89,4 @@ export class AppComponent implements OnInit {
       }
     );
   }
-
 }
