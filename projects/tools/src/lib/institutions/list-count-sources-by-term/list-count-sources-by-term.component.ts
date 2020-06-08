@@ -82,10 +82,12 @@ export class ListCountSourcesByTermComponent implements OnInit {
                 {
                     next: (response) => {
                         console.log(response);
-                        this.sourceList = response.data.relations.children;
-                        this.paginatorLength = this.sourceList.length;
-                        this.paginator.length = this.paginatorLength;
-                        this.loadData();
+                        if (response && response.data && response.data.relations){
+                            this.sourceList = response.data.relations.children;
+                            this.paginatorLength = this.sourceList.length;
+                            this.paginator.length = this.paginatorLength;
+                            this.loadData();
+                        }
                     },
                     error: (err) => {
                         console.log("error",err);
