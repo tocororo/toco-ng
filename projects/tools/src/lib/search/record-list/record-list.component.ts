@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HitList } from '@toco/tools/entities';
+import { HitList, Record } from '@toco/tools/entities';
 
 @Component({
   selector: 'toco-record-list',
@@ -9,7 +9,7 @@ import { HitList } from '@toco/tools/entities';
 export class RecordListComponent implements OnInit {
 
   @Input()
-  hitList: HitList;
+  hitList: HitList<Record>;
 
   constructor() { }
 

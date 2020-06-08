@@ -1,0 +1,7 @@
+
+<div *ngIf="hitList">
+  <div *ngFor="let hit of hitList.hits">
+      <lib-org-view [org]="hit.metadata"></lib-org-view>
+  </div>
+
+</div>
