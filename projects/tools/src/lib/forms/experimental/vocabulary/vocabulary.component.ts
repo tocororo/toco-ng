@@ -79,7 +79,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
 
   constructor(
     private service: TaxonomyService,
-    private controlContainer: ControlContainer
+    /*private controlContainer: ControlContainer*/
   ) {
     super();
   }

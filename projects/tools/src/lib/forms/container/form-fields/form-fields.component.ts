@@ -34,7 +34,7 @@ export class FormFieldsComponent implements OnInit
 
     public readonly formFieldType: typeof FormFieldType = FormFieldType;
 
-    public constructor(private controlContainer: ControlContainer)
+    public constructor(/*private controlContainer: ControlContainer*/)
     { }
 
     public ngOnInit(): void

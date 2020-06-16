@@ -91,7 +91,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
 
       // silentRefreshRedirectUri: this.env.sceibaHost + 'oauth/token',
 
-      timeoutFactor: 0.75,
+      // timeoutFactor: 0.75,
 
       sessionChecksEnabled: true,
       // set the scope for the permissions the client should request
@@ -101,7 +101,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     this.oauthService.configure(authConfig);
 
     // Store user session in storage
-    this.oauthService.setStorage(this.oauthStorage);
+    // this.oauthService.setStorage(this.oauthStorage);
 
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 

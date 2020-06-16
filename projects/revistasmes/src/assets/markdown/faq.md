@@ -1,3 +1,5 @@
+## Preguntas Frecuentes
+
 ### ¿Qué es el Registro Nacional de Revistas Científicas del Ministerio de educación de Cuba?
 El Registro Nacional es la lista nacional oficial de Revistas Científicas gestionadas por instituciones adscritas al Ministerio de educación de Cuba. Es mantenido por las Direcciones de Ciencia e Informatización del MES y fue desarrollado en el marco del proyecto [VLIR JOINT 2019-01-27](https://www.vliruos.be/en/projects/project/22?pid=4202) y el proyecto nacional ramal TOCORORO [SCEIBA](https://sceiba-lab.upr.edu.cu/). 
 

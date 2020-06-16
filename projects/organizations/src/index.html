@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Organizations</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <script>
+      (function (window) {
+        window.__env = window.__env || {};
+        // API url
+        window.__env.sceibaApi = "https://localhost:5000/api/";
+
+        window.__env.sceibaHost = "https://localhost:5000/";
+
+        window.__env.oauthRedirectUri = "https://localhost:4200/";
+        window.__env.oauthClientId = "dB6nmUnt8HDsB4Lg29KL3Vg0xrN8ZlFwlRLeyXCr";
+        window.__env.oauthScope = "user:email";
+        window.__env.enableDebug = true;
+      })(this);
+    </script>
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>

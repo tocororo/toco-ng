@@ -1,0 +1,33 @@
+<ng-container *ngIf="valid">
+  <p>
+    <strong>Nombre: </strong>
+    {{term.name}}
+  </p>
+  <p>
+    <strong>Identificador: </strong>
+    {{term.data['grid']}}
+  </p>
+  <p>
+    <strong>Pais: </strong>
+    <toco-terms-viewer
+    [vocabulary_id]="vocab_country"
+    [ids]="term.class_ids"
+    ></toco-terms-viewer>
+  </p>
+  <p>
+    <strong>Descripción: </strong>
+    {{term.data['description']}}
+  </p>
+  <p>
+    <strong>Email: </strong>
+    {{term.data['email']}}
+  </p>
+  <p>
+    <strong>Sitio Web Oficial: </strong>
+    {{term.data['website']}}
+  </p>
+  <p>
+    <strong>Dirección: </strong>
+    {{term.data['address']}}
+  </p>
+</ng-container>

@@ -170,7 +170,32 @@
       [inset]="true"
       style="margin-bottom: 1em; margin-top: 1em;"
     ></mat-divider>
-    <p>
+    <mat-card style="margin: 1em; background-color: whitesmoke;">
+      <mat-card-header>
+        <mat-card-title>
+          <button
+                mat-icon-button
+                color="accent"
+                matTooltip="Reemplazar"
+                (click)="replaceInstitutions()"
+              >
+                <mat-icon class="mat-18">merge_type</mat-icon>
+              </button>
+              Instituciones:
+
+        </mat-card-title>
+
+      </mat-card-header>
+      <mat-card-content>
+        <toco-journal-institutions
+          [journalVersion]="currentJournal"
+          [enableEdit]="false"
+          [ngStyle]="{ margin: '1em' }"
+        >
+        </toco-journal-institutions>
+      </mat-card-content>
+    </mat-card>
+    <!-- <p>
       <mat-label style="font-weight: bold;"> Institución: </mat-label>
       <mat-label
         *ngIf="currentInstitutionTerms.length == 0"
@@ -182,7 +207,7 @@
           {{ termSource.term.name }}
         </mat-label>
       </ng-container>
-    </p>
+    </p> -->
     <mat-card style="margin: 1em; background-color: whitesmoke;">
       <mat-card-header>
         <mat-card-title> Grupo: </mat-card-title>
@@ -297,7 +322,7 @@
 
     <mat-card style="margin: 1em; background-color: whitesmoke;">
       <mat-card-header>
-        <mat-card-title> Bases de Datos:</mat-card-title>
+        <mat-card-title> Indizaciones:</mat-card-title>
         <mat-label
           *ngIf="currentDataBaseTerms.length == 0"
           class="text-muted text-through"

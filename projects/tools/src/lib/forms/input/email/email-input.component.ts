@@ -20,7 +20,7 @@ import { Common } from '@toco/tools/core';
 })
 export class InputEmailComponent extends InputControl implements OnInit
 {
-    public constructor(private controlContainer: ControlContainer)
+    public constructor(/*private controlContainer: ControlContainer*/)
     {
         super(
             /* Constructs a new `FormControl` instance. */

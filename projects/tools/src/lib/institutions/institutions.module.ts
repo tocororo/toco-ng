@@ -7,28 +7,40 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InstitutionSelectorComponent } from './institution-selector/institution-selector.component';
+import { InstitutionHierarchySelectorComponent } from './institution-hierarchy-selector/institution-hierarchy-selector.component';
 import { ListCountSourcesByTermComponent } from './list-count-sources-by-term/list-count-sources-by-term.component';
 import { SharedModule } from '../shared';
 import { TocoFormsModule } from '../forms';
 import { ExtraInstitutionSelectorComponent } from './extra-institution-selector/extra-institution-selector.component';
+import { RouterModule } from '@angular/router';
+import { InstitutionHierarchyViewerComponent } from './institution-hierarchy-viewer/institution-hierarchy-viewer.component';
+import { ExtraInstitutionViewerComponent } from './extra-institution-viewer/extra-institution-viewer.component';
+import { TaxonomyModule } from '../taxonomy';
 
 
 
 @NgModule({
   declarations: [
-    InstitutionSelectorComponent,
+    InstitutionHierarchySelectorComponent,
     ListCountSourcesByTermComponent,
-    ExtraInstitutionSelectorComponent
+    ExtraInstitutionSelectorComponent,
+    InstitutionHierarchyViewerComponent,
+    ExtraInstitutionViewerComponent
   ],
   imports: [
     CommonModule,
     SharedModule, 
-    TocoFormsModule
+    TocoFormsModule,
+    TaxonomyModule,
+    RouterModule
   ],
   exports: [
     ListCountSourcesByTermComponent,
-    InstitutionSelectorComponent
+    InstitutionHierarchySelectorComponent,
+    ExtraInstitutionSelectorComponent,
+    ExtraInstitutionViewerComponent,
+    InstitutionHierarchyViewerComponent,
+
   ]
 })
 export class InstitutionsModule { }

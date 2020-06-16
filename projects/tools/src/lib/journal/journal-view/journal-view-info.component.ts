@@ -1,10 +1,11 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ViewChild } from '@angular/core';
 import { Journal, TermSource, VocabulariesInmutableNames, JournalVersion, Response } from '@toco/tools/entities';
 import { SourceService } from '@toco/tools/backend';
 import { MatSnackBar } from '@angular/material';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MessageHandler, StatusCode } from '@toco/tools/core';
+import { JournalInstitutionsComponent } from '../journal-institutions/journal-institutions.component';
 
 /**
  * This component share the same scss that `JournalViewComponent`.
@@ -34,6 +35,8 @@ export class JournalViewInfoComponent implements OnInit, OnChanges{
 
     public vocabularies: typeof VocabulariesInmutableNames;
     public panelOpenState = false;
+
+    @ViewChild(JournalInstitutionsComponent, { static: false }) inst: JournalInstitutionsComponent;
 
     constructor(
         private _sourveService: SourceService,
@@ -66,8 +69,9 @@ export class JournalViewInfoComponent implements OnInit, OnChanges{
 
             this.journalVersion.data.term_sources.forEach((term: TermSource) => {
 
-                switch (term.term.vocabulary_id) {
+                switch (term.term.vocabulary_id.toString()) {
                     case VocabulariesInmutableNames.INTITUTION:
+                    case VocabulariesInmutableNames.EXTRA_INSTITUTIONS:
                         this.institutionTerms.push(term);
                         break;
                     case VocabulariesInmutableNames.DATABASES:
@@ -87,10 +91,14 @@ export class JournalViewInfoComponent implements OnInit, OnChanges{
                         break;
                 }
             });
+
         }
     }
 
-    editingJournalChange(): void {
+    editingJournalChange(newVersion: JournalVersion): void {
+        console.log("*****llego....", newVersion, this.journalVersion);
+        
         this.loadJournalData();
+        this.inst.ngOnChanges();
     }
 }

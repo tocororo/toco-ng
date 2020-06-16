@@ -408,7 +408,10 @@ export abstract class FormFieldControl
 
         if (label == undefined)
         {
-            if (this.content.label == undefined) throw new Error("The control's label is not specified.");
+            if (this.content.label == undefined) {
+                console.log(this.content);
+                throw new Error("The control's label is not specified.");
+            }
 
             label = this.content.label;
         }

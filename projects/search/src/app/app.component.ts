@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material';
 import { SearchService } from '@toco/tools/backend';
 import { HttpParams } from '@angular/common/http';
-import { SearchResponse, HitList } from '@toco/tools/entities';
+import { SearchResponse, HitList, Record } from '@toco/tools/entities';
 
 @Component({
   selector: 'app-root',
@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
   // end paginator stuff
 
   params: HttpParams;
-  sr: SearchResponse;
+  sr: SearchResponse<Record>;
   constructor(
     private searchService: SearchService,
   ) {
@@ -82,7 +82,7 @@ export class AppComponent implements OnInit {
 
 
     this.searchService.getRecords(this.params).subscribe(
-      (response: SearchResponse) => {
+      (response: SearchResponse<Record>) => {
         console.log(response);
         // this.pageEvent.length = response.hits.total;
         this.sr = response;

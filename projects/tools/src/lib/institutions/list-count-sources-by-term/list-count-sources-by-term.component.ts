@@ -24,7 +24,9 @@ export interface CountSourcesByTerm{
 })
 export class ListCountSourcesByTermComponent implements OnInit {
 
-    @Input() public uuid: string
+    @Input() public uuid: string;
+
+    @Input() public path = '/directory';
 
     private sourceList: Array<CountSourcesByTerm>;
 

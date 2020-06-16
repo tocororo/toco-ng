@@ -1,9 +1,10 @@
-import { Term, VocabulariesInmutableNames } from '../entities';
-import { PanelContent, FormFieldType, HintValue, HintPosition } from '../forms';
-
+import { Term, VocabulariesInmutableNames } from "../entities";
+import { PanelContent, FormFieldType, HintValue, HintPosition } from "../forms";
 
 export class TermHelper {
   public static getPanelContentToEdit(term: Term) {
+    // console.log(term);
+
     let result = null;
     if (term) {
       switch (term.vocabulary_id) {
@@ -22,7 +23,7 @@ export class TermHelper {
               label: "Identificador GRID",
               type: FormFieldType.text,
               required: false,
-              value: term.data['grid'] ? term.data['grid'] : null,
+              value: term.data["grid"] ? term.data["grid"] : null,
               width: "50%"
             },
             {
@@ -30,9 +31,7 @@ export class TermHelper {
               label: "Descripción",
               type: FormFieldType.textarea,
               required: false,
-              value: term.description
-                ? term.description
-                : null,
+              value: term.description ? term.description : null,
               width: "100%"
             },
             {
@@ -40,7 +39,7 @@ export class TermHelper {
               label: "Email",
               type: FormFieldType.email,
               required: true,
-              value: term.data['email'] ? term.data['email'] : null,
+              value: term.data["email"] ? term.data["email"] : null,
               width: "45%"
             },
             {
@@ -48,9 +47,7 @@ export class TermHelper {
               label: "Sitio Web Oficial",
               type: FormFieldType.url,
               required: false,
-              value: term.data['website']
-                ? term.data['website']
-                : null,
+              value: term.data["website"] ? term.data["website"] : null,
               width: "45%"
             },
             {
@@ -58,9 +55,7 @@ export class TermHelper {
               label: "Dirección",
               type: FormFieldType.textarea,
               required: false,
-              value: term.data['address']
-                ? term.data['address']
-                : null,
+              value: term.data["address"] ? term.data["address"] : null,
               width: "100%"
             },
             {
@@ -70,87 +65,15 @@ export class TermHelper {
               required: false,
               extraContent: {
                 multiple: false,
-                selectedTermsIds: term.parent_id
-                  ? [term.parent_id]
-                  : null,
+                selectedTermsIds: term.parent_id ? [term.parent_id] : null,
                 vocab: term.vocabulary_id
               },
               width: "100%"
             }
           ];
-          case VocabulariesInmutableNames.EXTRA_INSTITUTIONS:
-            result = [
-              {
-                name: "name",
-                label: "Nombre",
-                type: FormFieldType.text,
-                required: true,
-                value: term.name ? term.name : null,
-                width: "100%"
-              },
-              {
-                name: "grid",
-                label: "Identificador GRID",
-                type: FormFieldType.text,
-                required: false,
-                value: term.data['grid'] ? term.data['grid'] : null,
-                width: "45%"
-              },
-              {
-                name: "country",
-                label: "Pais",
-                type: FormFieldType.vocabulary,
-                required: false,
-                extraContent: {
-                  multiple: false,
-                  selectedTermsIds: term.class_ids
-                    ? term.class_ids
-                    : null,
-                  vocab: VocabulariesInmutableNames.COUNTRIES
-                },
-                width: "45%"
-              },
-              {
-                name: "description",
-                label: "Descripción",
-                type: FormFieldType.textarea,
-                required: false,
-                value: term.description
-                  ? term.description
-                  : null,
-                width: "100%"
-              },
-              {
-                name: "email",
-                label: "Email",
-                type: FormFieldType.email,
-                required: true,
-                value: term.data['email'] ? term.data['email'] : null,
-                width: "45%"
-              },
-              {
-                name: "website",
-                label: "Sitio Web Oficial",
-                type: FormFieldType.url,
-                required: false,
-                value: term.data['website']
-                  ? term.data['website']
-                  : null,
-                width: "45%"
-              },
-              {
-                name: "address",
-                label: "Dirección",
-                type: FormFieldType.textarea,
-                required: false,
-                value: term.data['address']
-                  ? term.data['address']
-                  : null,
-                width: "100%"
-              }
-            ];
+          break;
         case VocabulariesInmutableNames.DATABASES:
-          result =  [
+          result = [
             {
               name: "name",
               label: "Nombre",
@@ -164,7 +87,7 @@ export class TermHelper {
               label: "URL",
               type: FormFieldType.url,
               required: false,
-              value: term.data['url'] ? term.data['url'] : null,
+              value: term.data["url"] ? term.data["url"] : null,
               width: "100%"
             },
             {
@@ -172,7 +95,7 @@ export class TermHelper {
               label: "Identificadores",
               type: FormFieldType.text,
               required: false,
-              value: term.data['abrev'] ? term.data['abrev'] : null,
+              value: term.data["abrev"] ? term.data["abrev"] : null,
               width: "30%"
             },
             {
@@ -180,8 +103,8 @@ export class TermHelper {
               label: "Cobertura inicio",
               type: FormFieldType.text,
               required: false,
-              value: term.data['initial_cover']
-                ? term.data['initial_cover']
+              value: term.data["initial_cover"]
+                ? term.data["initial_cover"]
                 : null,
               width: "30%"
             },
@@ -190,9 +113,7 @@ export class TermHelper {
               label: "Cobertura",
               type: FormFieldType.text,
               required: false,
-              value: term.data['end_cover']
-                ? term.data['end_cover']
-                : null,
+              value: term.data["end_cover"] ? term.data["end_cover"] : null,
               width: "30%"
             },
             {
@@ -200,9 +121,7 @@ export class TermHelper {
               label: "Descripción",
               type: FormFieldType.textarea,
               required: false,
-              value: term.description
-                ? term.description
-                : null,
+              value: term.description ? term.description : null,
               width: "100%"
             },
             {
@@ -212,9 +131,7 @@ export class TermHelper {
               required: false,
               extraContent: {
                 multiple: false,
-                selectedTermsIds: term.class_ids
-                  ? term.class_ids
-                  : null,
+                selectedTermsIds: term.class_ids ? term.class_ids : null,
                 vocab: VocabulariesInmutableNames.MIAR_TYPES
               },
               width: "48%"
@@ -228,16 +145,15 @@ export class TermHelper {
               required: false,
               extraContent: {
                 multiple: false,
-                selectedTermsIds: term.class_ids
-                  ? term.class_ids
-                  : null,
+                selectedTermsIds: term.class_ids ? term.class_ids : null,
                 vocab: VocabulariesInmutableNames.MES_GROUPS
               },
               width: "48%"
             }
           ];
+          break;
         default:
-          result =  [
+          result = [
             {
               name: "name",
               label: "Nombre",
@@ -252,9 +168,7 @@ export class TermHelper {
               type: FormFieldType.textarea,
               required: false,
               width: "100%",
-              value: term.description
-                ? term.description
-                : null
+              value: term.description ? term.description : null
             },
             {
               name: "parent_id",
@@ -264,9 +178,7 @@ export class TermHelper {
               required: false,
               extraContent: {
                 multiple: false,
-                selectedTermsIds: term.parent_id
-                  ? [term.parent_id]
-                  : null,
+                selectedTermsIds: term.parent_id ? [term.parent_id] : null,
                 vocab: term.vocabulary_id
               },
               width: "50%"

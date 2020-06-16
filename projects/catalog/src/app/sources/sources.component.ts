@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { SortDirection, FilterValues, PageRequest, Page, UserService } from '@toco/tools/core';
 import { SourceService } from '@toco/tools/backend';
 import { TableContent, TableComponent, CellContentWrap, InputTextComponent, InputContent, TextAlign, TextInputAppearance, IconValue, IconSource, ContentPosition, HintValue, HintPosition } from '@toco/tools/forms';
-import { Response } from '@toco/tools/entities';
+import { Response, ResponseStatus } from '@toco/tools/entities';
 
 @Component({
     selector: 'toco-sources',
@@ -116,13 +116,15 @@ export class SourcesComponent implements OnInit
         return this._souceService.getMySources(pageRequest.paginator.pageSize, (pageRequest.paginator.pageIndex + 1)).pipe(
             map((response: Response<any>): Page<any> => {
                 console.log('Sources Response: ', response);
-
-                return {
-                    'data': response.data.sources.sources,
-                    'totalData': response.data.sources.count,
-                    'pageIndex': pageRequest.paginator.pageIndex,
-                    'pageSize': pageRequest.paginator.pageSize
-                };
+                if (response && response.status != ResponseStatus.ERROR){
+                    return {
+                        'data': response.data.sources.sources,
+                        'totalData': response.data.sources.count,
+                        'pageIndex': pageRequest.paginator.pageIndex,
+                        'pageSize': pageRequest.paginator.pageSize
+                    };
+                }
+                
             })
         );
     }

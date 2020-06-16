@@ -1,30 +1,54 @@
-<toco-progress [loading]="saving">
-</toco-progress>
+<toco-progress [loading]="saving"> </toco-progress>
 
 <!-- <div *ngIf="source" fxLayout="row" fxLayoutGap="1em">
 </div> -->
-<mat-toolbar>  
-        <mat-toolbar-row fxLayoutGap="1em">
-                <button mat-stroked-button color="primary" (click)="approve()">Aprobar</button>
-                <button mat-stroked-button color="warn" (click)="editVersion()">Editar</button>
-                <button mat-stroked-button color="warn" (click)="saveEditingVersion()">Guardar cambios de la version actual</button>
-        </mat-toolbar-row>
-</mat-toolbar>
-<ng-container *ngIf="source" [ngSwitch]="source.source_type">
 
-
-
-    <toco-journal-view 
-        #view
-        *ngSwitchCase="sourceType.JOURNAL.value"
-        [journal]="source"
-        [editingJournal]="editingSource"
+<!-- <div fxLayout="row wrap" fxLayoutAlign="space-between center" [ngStyle]="{'width': '100%'}">
+    <h2>
+      {{ pageTitle }}
+    </h2>
+    <button
+      *ngIf="showEditHeader"
+      mat-stroked-button
+      color="warn"
+      (click)="cancelStepper()"
     >
+      Cancelar
+    </button>
+</div> -->
 
-    </toco-journal-view>
+<ng-container *ngIf="source" [ngSwitch]="source.source_type">
+  <mat-toolbar
+    fxLayout="row wrap"
+    fxLayoutAlign="space-between center"
+    [ngStyle]="{ width: '100%', 'height': 'auto', 'padding': '16px', 'min-height': '56px'}"
+  >
+    <span [ngStyle]="{'white-space': 'normal'}">
+      {{ source.name }}
+    </span>
+    <div fxLayout="row wrap" fxLayoutGap="20px">
+      <button mat-stroked-button color="primary" (click)="approve()">
+        Aprobar
+      </button>
+      <button mat-stroked-button color="warn" (click)="editVersion()">
+        Editar
+      </button>
+      <button mat-stroked-button color="warn" (click)="saveEditingVersion()">
+        Guardar cambios de la version actual
+      </button>
+    </div>
+  </mat-toolbar>
 
-    <p #view *ngSwitchDefault>
-        {{sourceType.JOURNAL.value}}
-        {{source.source_type}}
-    </p>
+  <toco-journal-view
+    #view
+    *ngSwitchCase="sourceType.JOURNAL.value"
+    [journal]="source"
+    [editingJournal]="editingSource"
+  >
+  </toco-journal-view>
+
+  <p #view *ngSwitchDefault>
+    {{ sourceType.JOURNAL.value }}
+    {{ source.source_type }}
+  </p>
 </ng-container>

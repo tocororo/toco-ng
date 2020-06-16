@@ -7,7 +7,7 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@toco/tools/shared';
 
-import { OAuthModule } from 'angular-oauth2-oidc';
+import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 
 import { AuthenticationComponent } from './authentication.component'
 import { AuthenticateRoutingModule } from './authentication-routing.module'
@@ -28,6 +28,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
     //TODO: esto se elimina de aquí y se pone en el fichero `core/services/http-interceptor.order.ts`.
     providers: [
+        { provide: OAuthStorage, useValue: localStorage },
         AuthenticationService,
         {
             provide: HTTP_INTERCEPTORS,

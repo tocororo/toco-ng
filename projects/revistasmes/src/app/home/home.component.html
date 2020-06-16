@@ -3,13 +3,13 @@
     <mat-card class="w-60" fxLayout="row wrap" fxLayoutAlign="center">
 
         <img fxFlex="2 1 calc(80% - 100px)" height="250" matCardImage style="margin-bottom: -16px;  object-fit: cover;"
-                src="assets/images/identificador_MES.png">
+                src="assets/images/photo-of-people-having-meeting.jpg">
         
         <mat-card-content fxLayout="column" style="padding: 2em;">
 
-            <h2> 82 Revistas </h2>
-            <!-- <h2> 4000 Artículos </h2> -->
-            <h2> 36 Instituciones </h2>
+            <h2> {{ sourcesCount }} Revistas </h2>
+            <h2> {{ records }} Artículos </h2>
+            <h2> {{ institutionsCount }} Instituciones </h2>
         
         </mat-card-content>
     </mat-card>
@@ -38,23 +38,23 @@
         <!-- <img matCardImage src="Card wide image source"> -->
         <mat-card-content>
             <mat-nav-list dense>
-                <a mat-list-item href="">Revistas Científicas Estudiantiles</a>
-                <a mat-list-item href="">Revistas Dibulgación Científicas</a>
-                <a mat-list-item href="">Revistas Científicas</a>
+                <a mat-list-item [routerLink]="['/directory']" [queryParams]="{source_type: 'STUDENT'}">Revistas Científicas Estudiantiles</a>
+                <a mat-list-item [routerLink]="['/directory']" [queryParams]="{source_type: 'POPULARIZATION'}">Revistas Dibulgación Científicas</a>
+                <a mat-list-item [routerLink]="['/directory']" [queryParams]="{source_type: 'JOURNAL'}">Revistas Científicas</a>
             </mat-nav-list>
         </mat-card-content>
 
     </mat-card>
 
-    <mat-card class="w-card">
+    <mat-card class="w-card" [ngStyle]="{'min-height': '160px'}">
         <mat-card-title-group>
             <mat-card-title>Últimos Ingresos</mat-card-title>
         </mat-card-title-group>
         <mat-card-content>
             <mat-nav-list dense>
-                <a mat-list-item href="">Revista Mendive</a>
-                <a mat-list-item href="">Revista Cubana de Ciencia de la Información</a>
-                <a mat-list-item href="">Revista 16 de Abril</a>
+                <a mat-list-item *ngFor="let source of lastSources" (click)="viewJournal(source.uuid)"> {{ source.name }} </a>
+                <!-- <a mat-list-item href="">Revista Cubana de Ciencia de la Información</a>
+                <a mat-list-item href="">Revista 16 de Abril</a> -->
             </mat-nav-list>
         </mat-card-content>
 
