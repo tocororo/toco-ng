@@ -1,7 +1,10 @@
 import { EntityBase } from './entity';
 
-
+/**
+ * Entity for Organizations based on schema organization-v1.0.0.json.
+ */
 export class Organization extends EntityBase {
+
   id = '';
   identifiers = new Object();
   name = '';
