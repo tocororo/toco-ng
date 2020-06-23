@@ -7,8 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { MessageHandler, StatusCode } from '@toco/tools/core';
-import { Vocabulary, Term, TermNode, Response } from '@toco/tools/entities';
+import { MessageHandler, StatusCode, Response } from '@toco/tools/core';
+import { Vocabulary, Term, TermNode } from '@toco/tools/entities';
 
 import { TaxonomyService } from '@toco/tools/backend';
 import { TermGenericComponent } from '../term-generic/term-generic.component';

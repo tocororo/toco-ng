@@ -4,18 +4,13 @@
  */
 
 
-import { Component, OnInit, Input, OnChanges, DoCheck, Inject, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { Component, OnInit, Input } from '@angular/core';
+import { MatSnackBar, MatDialog } from '@angular/material';
+
+import { EnvService } from '@tocoenv/tools/env.service';
 
 import { MetadataService, MessageHandler, StatusCode } from '@toco/tools/core';
-
-import { Journal, TermSource, SourceVersion, JournalVersion, Term, VocabulariesInmutableNames, Response, ResponseStatus} from '@toco/tools/entities';
-import { EnvService } from '@tocoenv/tools/env.service';
-import { SourceService } from '@toco/tools/backend';
-
+import { Journal, TermSource, JournalVersion, VocabulariesInmutableNames } from '@toco/tools/entities';
 
 export enum JournalDataType {
     /** is used by default, `Journal` have not that type of data. */
