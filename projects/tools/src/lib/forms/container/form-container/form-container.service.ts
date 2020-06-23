@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Response } from '@toco/tools/entities';
-
 import { EnvService } from '@tocoenv/tools/env.service';
+
+import { Response } from '@toco/tools/core';
 
 @Injectable({
 	providedIn: 'root'

@@ -740,6 +740,7 @@
               "projects/organizations/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/organizations/src/styles.scss"
             ],
             "scripts": []

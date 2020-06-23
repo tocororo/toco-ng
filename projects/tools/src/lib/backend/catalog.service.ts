@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { HttpService, Response } from '@toco/tools/entities';
+import { HttpService, Response } from '@toco/tools/core';
 import { FilterHttpMap } from '@toco/tools/filters';
 
 import { EnvService } from '@tocoenv/tools/env.service';

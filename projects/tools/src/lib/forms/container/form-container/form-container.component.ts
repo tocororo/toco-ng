@@ -1,15 +1,15 @@
 
-import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
 import { PartialObserver, Subscription } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 
-import { Entity, Response } from '@toco/tools/entities';
+import { Entity } from '@toco/tools/entities';
+import { Response } from '@toco/tools/core';
 
 import { InputContent } from '../../input/input.control';
 import { ActionContent } from '../../action/action.control';
 import { FormFieldContent_Experimental } from '../../experimental/form-field.control.experimental';
-import { FormGroup } from '@angular/forms';
 import { FormFieldContent } from '../../form-field.control';
-import { element } from 'protractor';
 
 /**
  * An interface that represents the content of an expansion control.

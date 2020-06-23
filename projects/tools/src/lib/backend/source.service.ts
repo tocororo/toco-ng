@@ -8,8 +8,10 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { OAuthStorage } from "angular-oauth2-oidc";
 
-import { Response, SourceVersion } from "@toco/tools/entities";
 import { EnvService } from "@tocoenv/tools/env.service";
+
+import { Response } from "@toco/tools/core";
+import { SourceVersion } from "@toco/tools/entities";
 
 @Injectable()
 export class SourceService {

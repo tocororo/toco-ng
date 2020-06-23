@@ -7,13 +7,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, PartialObserver, Subject } from 'rxjs';
-
-import { Vocabulary, Term, Response } from '@toco/tools/entities';
-
-import { EnvService } from '@tocoenv/tools/env.service';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 
+import { EnvService } from '@tocoenv/tools/env.service';
 
+import { Response } from '@toco/tools/core';
+import { Vocabulary, Term } from '@toco/tools/entities';
 
 // TODO: Poner todos los tipos de datos de retorno de Response.
 // No puede haber en ningun servicio del backend un Response<any>

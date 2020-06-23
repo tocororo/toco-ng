@@ -3,7 +3,6 @@
  *   All rights reserved.
  */
 
-
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@toco/tools/shared';
 import { RouterModule } from '@angular/router';
