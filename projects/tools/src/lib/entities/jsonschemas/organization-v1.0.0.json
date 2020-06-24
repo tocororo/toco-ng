@@ -147,7 +147,7 @@
                     "type": "string",
                     "enum": [
                       "grid",
-                      "wikidata",
+                      "wkdata",
                       "ror",
                       "isni",
                       "orgref",

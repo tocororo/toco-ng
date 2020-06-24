@@ -9,13 +9,13 @@ import { SearchService } from '@toco/tools/backend';
 
 import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { OrgRoutingModule } from './org-routing.module';
+import { OrgComponent } from './org.component';
 import { AggregationsComponent } from './aggregations/aggregations.component';
 
 @NgModule({
 	declarations: [
-		AppComponent,
+		OrgComponent,
 		AggregationsComponent
 	],
 
@@ -26,7 +26,7 @@ import { AggregationsComponent } from './aggregations/aggregations.component';
 		OrganizationsModule,
 		// AuthenticationModule,
 		TocoFormsModule,
-		AppRoutingModule
+		OrgRoutingModule
 	],
 
 	providers: [
@@ -34,6 +34,6 @@ import { AggregationsComponent } from './aggregations/aggregations.component';
 		EnvServiceProvider
 	],
 
-	bootstrap: [AppComponent]
+	bootstrap: [OrgComponent]
 })
-export class AppModule { }
+export class OrgModule { }

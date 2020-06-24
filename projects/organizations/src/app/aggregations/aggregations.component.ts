@@ -1,14 +1,10 @@
 
-import { Component, OnInit, OnChanges } from '@angular/core';
-import { PanelContent, FormFieldType, SelectOption, FormContainerAction } from '@toco/tools/forms';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { TaxonomyService, SearchService, SourceService } from '@toco/tools/backend';
-import { TermNode, VocabulariesInmutableNames, Source } from '@toco/tools/entities';
-import { EnvService } from '@tocoenv/tools/env.service';
-
+import { Component, OnInit } from '@angular/core';
+import { PanelContent, FormFieldType } from '@toco/tools/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'app-aggregations',
+  selector: 'toco-aggregations',
   templateUrl: './aggregations.component.html',
   styleUrls: ['./aggregations.component.scss']
 })

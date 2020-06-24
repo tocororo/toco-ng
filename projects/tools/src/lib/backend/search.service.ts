@@ -7,12 +7,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpBackend } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { OAuthStorage } from 'angular-oauth2-oidc';
 
 import { Response } from '@toco/tools/core';
-import { SearchResponse, Record, Source } from '@toco/tools/entities';
+import { SearchResponse, Record, Source, Organization } from '@toco/tools/entities';
 import { EnvService } from '@tocoenv/tools/env.service';
-import { Organization } from '../entities/organization.entity';
 
 @Injectable()
 export class SearchService {

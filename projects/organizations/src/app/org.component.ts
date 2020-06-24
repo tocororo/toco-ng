@@ -8,11 +8,11 @@ import { Organization, SearchResponse } from '@toco/tools/entities';
 import { SearchService } from '@toco/tools/backend';
 
 @Component({
-	selector: 'app-root',
-	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss']
+	selector: 'toco-org-root',
+	templateUrl: './toco-org-root.component.html',
+	styleUrls: ['./toco-org-root.component.scss']
 })
-export class AppComponent {
+export class OrgComponent {
 
 	// begin Layout stuff
 	layoutPosition = [

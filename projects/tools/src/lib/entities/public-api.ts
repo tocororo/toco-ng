@@ -17,5 +17,3 @@ export * from './repository.entity';
 export * from './search.entity';
 export * from './source.entity';
 export * from './taxonomy.entity';
-
-
