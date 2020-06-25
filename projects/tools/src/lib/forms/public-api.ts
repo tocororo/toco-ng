@@ -23,6 +23,7 @@ export * from './experimental/vocabulary/vocabulary.component';
 
 
 export * from './action/action.control';
+export * from './input/chips/chips-input.component';
 export * from './input/email/email-value';
 export * from './input/email/email-input.component';
 export * from './input/identifier/identifier-value';

@@ -10,12 +10,12 @@ import { SearchService } from '@toco/tools/backend';
 import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
 
 import { OrgRoutingModule } from './org-routing.module';
-import { OrgComponent } from './org.component';
+import { OrgRootComponent } from './org.component';
 import { AggregationsComponent } from './aggregations/aggregations.component';
 
 @NgModule({
 	declarations: [
-		OrgComponent,
+		OrgRootComponent,
 		AggregationsComponent
 	],
 
@@ -34,6 +34,6 @@ import { AggregationsComponent } from './aggregations/aggregations.component';
 		EnvServiceProvider
 	],
 
-	bootstrap: [OrgComponent]
+	bootstrap: [OrgRootComponent]
 })
 export class OrgModule { }

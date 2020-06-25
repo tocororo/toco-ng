@@ -21,6 +21,7 @@ import { InputIssnInternalComponent } from './input/issn/issn-internal/issn-inpu
 import { InputIssnComponent } from './input/issn/issn-input.component';
 import { InputRnpsComponent } from './input/rnps/rnps-input.component';
 import { InputUrlComponent } from './input/url/url-input.component';
+import { InputChipsComponent } from './input/chips/chips-input.component';
 
 import { VocabularyComponent } from './experimental/vocabulary/vocabulary.component';
 import { TermParentComponent } from './experimental/term-parent/term-parent.component';
@@ -42,6 +43,7 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
     InputIssnComponent,
     InputRnpsComponent,
     InputUrlComponent,
+    InputChipsComponent,
     VocabularyComponent,
     TermParentComponent,
     SelectComponent,
@@ -66,6 +68,7 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
     InputIssnComponent,
     InputRnpsComponent,
     InputUrlComponent,
+    InputChipsComponent,
     VocabularyComponent,
     TermParentComponent,
     SelectComponent,

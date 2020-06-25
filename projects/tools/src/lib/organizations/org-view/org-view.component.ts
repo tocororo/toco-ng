@@ -2,6 +2,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { Organization } from '@toco/tools/entities';
+import { InputContent } from '@toco/tools/forms';
 
 const orgExample: any = {
 	"id": "eb237d50-b64e-11ea-b3de-0242ac130004",  // Generado por Backend. Sólo se muestra.
@@ -21,8 +22,8 @@ const orgExample: any = {
 	],
 	"name": "Library in University",
 	"status": "active",
-	"aliases": ["est", "eu", "aliquip", "proident", "consequat"],
-	"acronyms": ["dolore", "anim laboris", "ad esse ipsum magna fugiat"],
+	"aliases": ["alias1", "alias2", "alias3", "alias4", "alias5"],
+	"acronyms": ["acronyms 1", "acronyms 2", "acronyms 3"],
 	"types": ["Government", "Nonprofit", "Facility", "Healthcare"],
 	"wikipedia_url": "www.wiki.elitaute.com",
 	"email_address": "first@gmail.com",
@@ -123,8 +124,14 @@ const orgExample: any = {
 })
 export class OrgViewComponent implements OnInit
 {
+	/**
+	 * Represents an organization. 
+	 */
 	@Input()
 	public org: Organization;
+
+	@Input()
+	public content: InputContent[];
 
 	@Input()
 	public fullView = false;
