@@ -7,11 +7,14 @@ import { TocoFormsModule } from '@toco/tools/forms';
 
 import { OrgListComponent } from './org-list/org-list.component';
 import { OrgViewComponent } from './org-view/org-view.component';
+import { OrgEditComponent } from './org-edit/org-edit.component';
 
 @NgModule({
 	declarations: [
 		OrgListComponent,
-		OrgViewComponent],
+		OrgViewComponent,
+		OrgEditComponent
+	],
 
 	imports: [
 		SharedModule,
@@ -21,7 +24,8 @@ import { OrgViewComponent } from './org-view/org-view.component';
 
 	exports: [
 		OrgListComponent,
-		OrgViewComponent
+		OrgViewComponent,
+		OrgEditComponent
 	]
 })
 export class OrganizationsModule

@@ -1,8 +1,8 @@
 
 <mat-form-field id="chips-mat-form-field" [appearance]="'outline'">
 	<mat-label>{{ desc }}</mat-label>
-	<mat-chip-list [attr.aria-label]="'Items selection'">
-		<mat-chip *ngFor="let item of items">{{ item }}</mat-chip>
+	<mat-chip-list [selectable]="selectable" [attr.aria-label]="'Items selection'">
+    <mat-chip *ngFor="let item of items">{{ item }}</mat-chip>
 	</mat-chip-list>
 </mat-form-field>
 

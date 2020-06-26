@@ -5,7 +5,119 @@ import { PageEvent } from '@angular/material';
 
 import { Organization, SearchResponse } from '@toco/tools/entities';
 import { SearchService } from '@toco/tools/backend';
-import { InputContent, FormFieldType, TextInputAppearance } from '@toco/tools/forms';
+
+const orgExample: any = {
+	"id": "eb237d50-b64e-11ea-b3de-0242ac130004",  // Generado por Backend. Sólo se muestra.
+	"identifiers": [
+		{
+			"idtype": "isni",
+			"value": "An id isni"
+		},
+		{
+			"idtype": "grid",
+			"value": "An id grid"
+		},
+		{
+			"idtype": "wkdata",
+			"value": "An id wkdata"
+		}
+	],
+	"name": "Library in University",
+	"status": "active",
+	"aliases": ["alias1", "alias2", "alias3", "alias4", "alias5"],
+	"acronyms": ["acronyms 1", "acronyms 2", "acronyms 3"],
+	"types": ["Government", "Nonprofit", "Facility", "Healthcare"],       // Un "Select" multiple
+	"wikipedia_url": "www.wiki.elitaute.com",
+	"email_address": "first@gmail.com",
+	"ip_addresses": ["192.168.111.1", "192.168.26.4", "192.168.222.16"],
+	"established": -1,
+	"links": ["www.uclv.cu", "www.ulh.cu", "www.ucm.cu"],
+	"labels": [
+		{
+			"label": "Excepteur 1",
+			"iso639": "ipsum irure 1"
+		},
+		{
+			"label": "Excepteur 2",
+			"iso639": "ipsum irure 2"
+		},
+		{
+			"label": "Excepteur 3",
+			"iso639": "ipsum irure 3"
+		}
+	],
+	"relationships": [
+		{
+			"identifiers": [
+				{
+					"idtype": "isni",
+					"value": "An id isni"
+				}
+			],
+			"type": "parent"
+		},
+		{
+			"identifiers": [
+				{
+					"idtype": "grid",
+					"value": "An id grid"
+				},
+				{
+					"idtype": "wkdata",
+					"value": "An id wkdata"
+				}
+			],
+			"type": "child",
+			"label": "ulh"
+		},
+		{
+			"identifiers": [
+				{
+					"idtype": "wkdata",
+					"value": "An id wkdata"
+				},
+				{
+					"idtype": "fundref",
+					"value": "An id fundref"
+				},
+				{
+					"idtype": "ror",
+					"value": "An id ror"
+				},
+				{
+					"idtype": "isni",
+					"value": "An id isni"
+				}
+			],
+			"type": "related",
+			"label": "uclv"
+		}
+	],
+	"addresses": [
+		{
+			"city": "Villa Clara",
+			"country": "Cuban",
+			"country_code": "ISO 3166-1 alpha-2 code",
+			"lat": -53.87,
+			"lng": -63.96,
+			"line_1": "mollit dolore, proident reprehenderit ad"
+		},
+		{
+			"city": "La Habana",
+			"country": "Cuban",
+			"country_code": "ISO 3166-1 alpha-2 code",
+			"lat": -22.79,
+			"lng": -20.64,
+			"line_1": "ullamco, ippoi",
+			"line_2": "in aute eiusmod nulla",
+			"line_3": "in eiusmod",
+			"postcode": "25000",
+			"primary": true,
+			"state": "Vedado",
+			"state_code": "ISO 3166-2 region code"
+		}
+	]
+};
 
 @Component({
 	selector: 'toco-org-root',
@@ -14,58 +126,10 @@ import { InputContent, FormFieldType, TextInputAppearance } from '@toco/tools/fo
 })
 export class OrgRootComponent
 {
-	//TODO: esto debe ser una función que retorna el valor de "viewContent" correcto 
-	// cuando se da click en una organización en la lista de organizaciones, todo esto 
-	// saldrá mediante enrutamiento usando "router-outlet". 
-    /**
-     * Returns the view's content. 
-     */
-    public viewContent: InputContent[] = [
-		{
-			name: "wikipedia_url",
-			label: "URL of the wikipedia page for the institute",
-			type: FormFieldType.url,
-			required: false,
-			value: "www.wiki.elitaute.com",
-			width: "45%",
-			appearance: TextInputAppearance.outline,
-			ariaLabel: "URL of the wikipedia page for the institute"
-		},
-		{
-			name: "email_address",
-			label: "Contact email address for the institute",
-			type: FormFieldType.email,
-			required: true,
-			value: 'first@gmail.com',
-			width: "45%",
-			appearance: TextInputAppearance.outline,
-			ariaLabel: "Contact email address for the institute"
-		},
-		// {
-		//   name: "name",
-		//   label: "Nombre",
-		//   type: FormFieldType.text,
-		//   required: true,
-		//   value: this.institution.name ? this.institution.name : null,
-		//   width: "100%"
-		// },
-		// {
-		//   name: "description",
-		//   label: "Descripción",
-		//   type: FormFieldType.textarea,
-		//   required: false,
-		//   value: this.institution.description ? this.institution.description : null,
-		//   width: "100%"
-		// },
-		// {
-		//   name: "address",
-		//   label: "Dirección",
-		//   type: FormFieldType.textarea,
-		//   required: false,
-		//   value: this.institution.data["address"] ? this.institution.data["address"] : null,
-		//   width: "100%"
-		// }
-	];
+	/**
+	 * Represents an organization. 
+	 */
+	public org: Organization;
 
 	// begin Layout stuff
 	layoutPosition = [
@@ -109,28 +173,32 @@ export class OrgRootComponent
 
 	params: HttpParams;
 	sr: SearchResponse<Organization>;
-	constructor(
-		private searchService: SearchService,
-	) {
 
-	}
+	public constructor(private _searchService: SearchService)
+	{ }
 
-	ngOnInit() {
+	public ngOnInit(): void
+	{
+		this.org = orgExample;
+
 		this.params = new HttpParams();
 		this.getRecords();
 	}
 
-	pageChange(event?: PageEvent) {
+	public pageChange(event?: PageEvent): void
+	{
 		this.pageSize = event.pageSize;
 		this.pageIndex = event.pageIndex;
 		this.getRecords();
 	}
-	getRecords() {
+
+	public getRecords(): void
+	{
 		this.params = this.params.set('size', this.pageSize.toString());
 		this.params = this.params.set('page', (this.pageIndex + 1).toString());
 
 
-		this.searchService.getOrganizations(this.params).subscribe(
+		this._searchService.getOrganizations(this.params).subscribe(
 			(response: SearchResponse<Organization>) => {
 				console.log(response);
 				// this.pageEvent.length = response.hits.total;

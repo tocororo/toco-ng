@@ -3,12 +3,10 @@
  *   All rights reserved.
  */
 
-import { Component, OnInit, Input } from '@angular/core';
-import { FormFieldControl_Experimental } from '../form-field.control.experimental';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatOption } from '@angular/material';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+
+import { FormFieldControl_Experimental } from '../form-field.control.experimental';
 
 export interface SelectOption{
   value: any;

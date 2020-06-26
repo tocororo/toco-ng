@@ -11,6 +11,11 @@ import { ActionContent } from '../../action/action.control';
 import { FormFieldContent_Experimental } from '../../experimental/form-field.control.experimental';
 import { FormFieldContent } from '../../form-field.control';
 
+export interface FormContainerAction
+{
+    doit(data: any): void;
+}
+
 /**
  * An interface that represents the content of an expansion control.
  */
@@ -39,24 +44,20 @@ export interface PanelContent
     formGroup: FormGroup;
 
     /**
-     * action and action labels for each panels
+     * Returns the action and action labels for each panels.
      */
     action?: FormContainerAction;
     actionLabel?: string;
 
     /**
-     * wheather the panel is open or not.
+     * Returns true is the panel is open; otherwise, false.
      */
     open?: boolean;
+
     /**
-     * In case you need an extra value associated with the panel, to identify it or whathever
+     * In case you need an extra value associated with the panel, to identify it or whathever.
      */
     value?: any;
-}
-
-export interface FormContainerAction
-{
-    doit(data: any): void;
 }
 
 /**
@@ -78,20 +79,19 @@ export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
     public panels: PanelContent[];
 
     @Input()
-    public useAccordion = true;
+    public useAccordion: boolean = true;
 
     @Input()
-    public useContainer = true;
+    public useContainer: boolean = true;
 
     @Input()
-    public actionButtonIsStepperNext = false;
-
-
-    @Input()
-    public action: FormContainerAction;
+    public actionButtonIsStepperNext: boolean = false;
 
     @Input()
     public entity: Entity;
+
+    @Input()
+    public action: FormContainerAction;
 
     /**
      * An string that represents the action label of the last panel.
@@ -100,7 +100,7 @@ export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
     public actionLabel: string;
 
     @Input()
-    public deleteValuesAfterAction = true;
+    public deleteValuesAfterAction: boolean = true;
 
     /**
      * The current expanded panel position.
@@ -191,7 +191,7 @@ export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
      */
     public doAction(): void
     {
-        /* Preparing all data. */
+        /* Prepares all data. */
 
         const data = { };
 
@@ -201,19 +201,20 @@ export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
             });
         });
 
-        if (this.action) {
+        if (this.action)
+        {
             this.action.doit(data);
         }
 
-        if (this.deleteValuesAfterAction) {
+        if (this.deleteValuesAfterAction)
+        {
             this.panels.forEach(panel => {
-              panel.content.forEach( form => {
+              panel.content.forEach(form => {
                   form.value = null;
               });
             });
         }
     }
-
 
     private sendDataUnsubscribe(): void
     {

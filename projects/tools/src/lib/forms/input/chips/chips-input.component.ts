@@ -23,10 +23,13 @@ export class InputChipsComponent implements OnInit
 
 	public readonly separatorKeysCodes: number[];
 
+	public selectable: boolean;
+
 	public constructor()
 	{
 		this.items = undefined;
 		this.separatorKeysCodes = [ENTER, COMMA];
+		this.selectable = true;
 	}
 
 	public ngOnInit(): void
