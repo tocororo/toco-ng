@@ -1,9 +1,11 @@
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
-import { PanelContent, InputContent, ActionContent, FormFieldType, TextInputAppearance } from '@toco/tools/forms';
+import { PanelContent, InputContent, ActionContent, FormFieldType, TextInputAppearance, OperationAction } from '@toco/tools/forms';
+import { SearchService } from '@toco/tools/backend';
 import { FormFieldContent_Experimental } from '@toco/tools/forms/experimental/form-field.control.experimental';
 
 @Component({
@@ -13,24 +15,39 @@ import { FormFieldContent_Experimental } from '@toco/tools/forms/experimental/fo
 })
 export class OrgEditComponent implements OnInit
 {
+    /**
+     * Represents the `OperationAction` enum for internal use. 
+     */
+	public readonly operationAction: typeof OperationAction;
+
 	/**
-	 * Represents an organization. 
+	 * Represents the current organization. 
 	 */
-	@Input()
 	public org: Organization;
 
-	public panels: PanelContent[];
 	public formGroup: FormGroup;
+	public panels: PanelContent[];
 	// public action: FormContainerAction;
 	// public actionLabel: string;
 
-	public constructor(private _formBuilder: FormBuilder)
-	{ }
+	public constructor(private _router: Router, private _activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder, private _searchService: SearchService)
+	{
+		this.operationAction = OperationAction;
+	}
 
 	public ngOnInit(): void
 	{
-		this.formGroup = this._formBuilder.group({});
+		/* Gets the `Organization` data. */
+		this._activatedRoute.data.subscribe(
+			(data: { 'org': Organization }) => {
+				this.org = data.org;
 
+				console.log(this.org);
+			}
+		)
+
+		/* Creates the controls. */
+		this.formGroup = this._formBuilder.group({});
 		this.panels = [
 			{
 				title: "Edita organización",
@@ -57,12 +74,10 @@ export class OrgEditComponent implements OnInit
 	}
 
     /**
-     * Returns the panel's content.
+     * Returns the panel's content. 
      */
 	private _getContent(): (InputContent | ActionContent | FormFieldContent_Experimental)[]
 	{
-		console.log('org...:', this.org);
-		
 		return [
 			{
 				name: "name",
@@ -261,6 +276,12 @@ export class OrgEditComponent implements OnInit
 			// 	];
 	}
 
-	// public doAction(): void
-	// { }
+	/**
+	 * Does the tasks for the operation action. 
+	 * @param op The operation action. 
+	 */
+	public doOperationAction(op: OperationAction): void
+	{
+		this._router.navigate(['../', { 'operation': op }]);
+	}
 }

@@ -52,7 +52,7 @@ export class Hit<T> extends EntityBase {
   created = '';
   updated = '';
   links = new Links();
-  metadata:T;
+  metadata: T;
   revision = 0;
 }
 

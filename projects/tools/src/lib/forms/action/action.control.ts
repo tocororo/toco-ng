@@ -2,6 +2,18 @@
 import { IconValue, HintValue, FormFieldContent, defaultFormFieldContent } from '../form-field.control';
 
 /**
+ * An enum that represents the operation action. 
+ */
+export enum OperationAction
+{
+    back = 'back',
+    cancel = 'cancel',
+    reset = 'reset',
+    delete = 'delete',
+    submit = 'submit'
+}
+
+/**
  * An interface that represents the content of an `ActionControl`. 
  */
 export interface ActionContent extends FormFieldContent

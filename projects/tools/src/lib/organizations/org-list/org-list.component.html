@@ -1,7 +1,14 @@
 
-<div *ngIf="hitList">
+<!-- <div *ngIf="hitList">
   <div *ngFor="let hit of hitList.hits">
       <toco-org-view [org]="hit.metadata"></toco-org-view>
   </div>
+</div> -->
 
-</div>
+
+
+<button mat-raised-button color="primary" (click)="doOperation()">Adiciona</button>
+<!-- <input-text #input_search [content]="searchContent"></input-text> -->
+
+<!-- <toco-table></toco-table> -->
+<toco-table [content]="tableContent"></toco-table>

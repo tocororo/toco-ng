@@ -6,7 +6,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpBackend } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { Response } from '@toco/tools/core';
 import { SearchResponse, Record, Source, Organization } from '@toco/tools/entities';
@@ -76,4 +76,9 @@ export class SearchService {
 		return this.http.get<SearchResponse<Organization>>(req, options);
 	}
 
+	updateOrganizations(data: Organization): Observable<Organization>
+	{
+		//TODO: Do this method...
+		return of(null);
+	}
 }

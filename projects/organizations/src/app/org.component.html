@@ -20,10 +20,13 @@
       [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = pageChange($event)">
     </mat-paginator>
   </div>
-</mat-drawer-container>
+</mat-drawer-container> -->
 
 
-<router-outlet></router-outlet> -->
+<h1>Organizaciones</h1>
+
+<router-outlet></router-outlet>
+<!-- The Router renders the componentes here. -->
   
-<toco-org-edit [org]="org"></toco-org-edit>
+<!-- <toco-org-edit [org]="org" (clickOperationAction)="doOperationAction($event)"></toco-org-edit> -->
 <!-- <toco-org-view [org]="org"></toco-org-view> -->

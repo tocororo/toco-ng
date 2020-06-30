@@ -1,10 +1,8 @@
+
 import { Component, OnInit, OnChanges, Input, ViewChild } from '@angular/core';
-import { Journal, TermSource, VocabulariesInmutableNames, JournalVersion, Response } from '@toco/tools/entities';
+import { TermSource, VocabulariesInmutableNames, JournalVersion } from '@toco/tools/entities';
 import { SourceService } from '@toco/tools/backend';
 import { MatSnackBar } from '@angular/material';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { MessageHandler, StatusCode } from '@toco/tools/core';
 import { JournalInstitutionsComponent } from '../journal-institutions/journal-institutions.component';
 
 /**
