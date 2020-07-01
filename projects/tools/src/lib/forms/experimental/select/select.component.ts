@@ -8,77 +8,80 @@ import { FormControl } from '@angular/forms';
 
 import { FormFieldControl_Experimental } from '../form-field.control.experimental';
 
-export interface SelectOption{
-  value: any;
-  label: string;
-  // selected?: boolean;
+export interface SelectOption
+{
+	value: any;
+	label: string;
+	// selected?: boolean;
 }
 
 /***
  * extraContent recibe una funcion llamada getOptions() que se encarga de contruir un SelectOption[]
  */
 @Component({
-  selector: 'toco-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss'],
-  host: {
-    '[style.minWidth]': 'content.minWidth',
-    '[style.width]': 'content.width'
-  }
+	selector: 'toco-select',
+	templateUrl: './select.component.html',
+	styleUrls: ['./select.component.scss'],
+	host: {
+		'[style.minWidth]': 'content.minWidth',
+		'[style.width]': 'content.width'
+	}
 })
 export class SelectComponent extends FormFieldControl_Experimental implements OnInit {
 
-  internalControl = new FormControl();
+	public internalControl = new FormControl();
 
-  public selectOptions: SelectOption[] = null;
+	public selectOptions: SelectOption[];
 
+	selectedValue: any;
 
-  selectedValue: any;
-  constructor() {
-    super();
-  }
+	multiple = false;
 
+	public constructor()
+	{
+		super();
 
-  multiple = false;
+		this.selectOptions = null;
+	}
 
+	public ngOnInit(): void
+	{
+		this.multiple = this.content.extraContent['multiple'] ? this.content.extraContent['multiple'] : false;
 
-  ngOnInit() {
+		this.content.formGroup.addControl(this.content.name, this.internalControl);
 
-    this.multiple = this.content.extraContent['multiple']?this.content.extraContent['multiple'] : false;
+		if (this.content.extraContent.observable)
+		{
+			this.content.extraContent.observable.subscribe(
 
-    this.content.formGroup.addControl(this.content.name, this.internalControl);
+				// next
+				(response: any) => {
+					this.selectOptions = this.content.extraContent.getOptions(response);
+				},
 
-    if (this.content.extraContent.observable) {
+				// error
+				(error: any) => { console.log(error); }
+				,
 
-      this.content.extraContent.observable.subscribe(
+				// complete
+				() => { }
 
-        // next
-        (response: any) => {
-          this.selectOptions = this.content.extraContent.getOptions(response);
-        },
-  
-        // error
-        (error: any) => { console.log(error); }
-        ,
-  
-        // complete
-        () => { }
-  
-      );
-    } else {
-      this.selectOptions = this.content.extraContent.getOptions();
-    }
+			);
+		}
+		else
+		{
+			this.selectOptions = this.content.extraContent.getOptions();
+		}
 
+		this.internalControl.setValue(this.content.value);
+		this.onSelectionChange();
+	}
 
-    this.internalControl.setValue(this.content.value);
-    this.onSelectionChange();
-
-  }
-
-  onSelectionChange() {
-    if (this.content.extraContent.selectionChange) {
-        this.content.extraContent.selectionChange(this.content.value);
-      }
-  }
-
+	public onSelectionChange(): void
+	{
+		if (this.content.extraContent.selectionChange)
+		{
+			this.content.extraContent.selectionChange(this.content.value);
+		}
+	}
 }

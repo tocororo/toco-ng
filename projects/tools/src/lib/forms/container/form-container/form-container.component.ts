@@ -41,6 +41,9 @@ export interface PanelContent
      */
     content: (InputContent | ActionContent | FormFieldContent_Experimental)[] | any[];
 
+    /**
+     * Returns the `FormGroup` that contains all controls.
+     */
     formGroup: FormGroup;
 
     /**

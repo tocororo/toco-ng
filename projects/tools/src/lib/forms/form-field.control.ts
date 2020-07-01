@@ -5,10 +5,11 @@
 
 
 import { Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 import { Common } from '@toco/tools/core';
 import { IconService } from '@toco/tools/core';
-import { FormGroup } from '@angular/forms';
+
 /**
  * An enum that describes how inline contents of a block are horizontally aligned if the contents 
  * do not completely fill the line box. 
@@ -267,6 +268,9 @@ export enum FormFieldType
  */
 export interface FormFieldContent
 {
+    /**
+     * Returns the `FormGroup` which this control belongs to. 
+     */
     formGroup?: FormGroup;
 
     /**

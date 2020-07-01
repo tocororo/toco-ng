@@ -1,4 +1,12 @@
 
+<toco-form-container 
+  [panels]="panels"
+  [useAccordion]="false"
+  [useContainer] = "true"
+  [actionButtonIsStepperNext] = "false"
+  [formGroup]="formGroup">
+</toco-form-container>
+
 <mat-card *ngIf="org">
   <mat-card-header>
     <div mat-card-avatar class="example-header-image"></div>
@@ -18,12 +26,11 @@
     <input-chips [desc]="'A list of types describing the institute'"
       [items]="org.types"></input-chips>
 
-    <toco-form-fields [fields]="content"></toco-form-fields>
+    <!-- <toco-form-fields [fields]="content"></toco-form-fields> -->
+    <p>Add more components here!</p>
   </mat-card-content>
 
   <mat-card-actions>
-    <button mat-button color="primary" (click)="doAction()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="doOperationAction(operationAction.back)">Go Back</button>
   </mat-card-actions>
 </mat-card>
-
-<mat-divider></mat-divider>

@@ -8,8 +8,6 @@
 </toco-form-container>
 
 <button mat-raised-button color="primary" (click)="doOperationAction(operationAction.cancel)">Cancel</button>
-<button mat-raised-button color="primary" [disabled]="formGroup.invalid" (click)="doOperationAction(operationAction.reset)">Reset</button>
-<button mat-raised-button color="primary" [disabled]="formGroup.invalid" (click)="doOperationAction(operationAction.delete)">Delete</button>
-<button mat-raised-button color="primary" [disabled]="formGroup.invalid" (click)="doOperationAction(operationAction.submit)">Submit</button>
-<!-- <button mat-raised-button disabled>Disabled</button> -->
-<!-- <a mat-raised-button routerLink=".">Link</a> -->
+<button mat-raised-button color="primary" [disabled]="isResetActionDisabled" (click)="doOperationAction(operationAction.reset)">Reset</button>
+<button mat-raised-button color="primary" (click)="doOperationAction(operationAction.delete)">Delete</button>
+<button mat-raised-button color="primary" [disabled]="isSubmitActionDisabled" (click)="doOperationAction(operationAction.submit)">Submit</button>

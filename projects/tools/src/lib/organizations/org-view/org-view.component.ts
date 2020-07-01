@@ -1,8 +1,11 @@
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
-import { InputContent } from '@toco/tools/forms';
+import { InputContent, OperationAction, PanelContent, ActionContent, FormFieldType, TextInputAppearance } from '@toco/tools/forms';
+import { FormFieldContent_Experimental } from '@toco/tools/forms/experimental/form-field.control.experimental';
 
 @Component({
 	selector: 'toco-org-view',
@@ -11,25 +14,71 @@ import { InputContent } from '@toco/tools/forms';
 })
 export class OrgViewComponent implements OnInit
 {
+    /**
+     * Represents the `OperationAction` enum for internal use. 
+     */
+	public readonly operationAction: typeof OperationAction;
+
 	/**
-	 * Represents an organization. 
+	 * Represents the current organization. 
 	 */
-	@Input()
 	public org: Organization;
 
-	@Input()
-	public content: InputContent[];
+	public formGroup: FormGroup;
+	public panels: PanelContent[];
 
-	@Input()
-	public fullView = false;
-
-	public constructor()
-	{ }
+	public constructor(private _router: Router, private _activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder)
+	{
+		this.operationAction = OperationAction;
+	}
 
 	public ngOnInit(): void
 	{
+		/* Gets the `Organization` data. */
+		this._activatedRoute.data.subscribe(
+			(data: { 'org': Organization }) => {
+				this.org = data.org;
+			}
+		);
+
+		/* Creates the controls. */
+		this.formGroup = this._formBuilder.group({});
+		this.panels = [
+			{
+				title: "Muestra la organización seleccionada",
+				description: "",
+				iconName: "",
+				formGroup: this.formGroup,
+				content: this._getContent()
+			}
+		];
 	}
 
-	public doAction(): void
-	{ }
+    /**
+     * Returns the panel's content. 
+     */
+	private _getContent(): (InputContent | ActionContent | FormFieldContent_Experimental)[]
+	{
+		return [
+			{
+				name: "name",
+				label: "Name typically used to refer to the institute",
+				type: FormFieldType.text,
+				required: true,
+				value: this.org.name,
+				width: "100%",
+				appearance: TextInputAppearance.outline,
+				ariaLabel: "Name typically used to refer to the institute"
+			}
+		]
+	}
+
+	/**
+	 * Does the tasks for the operation action. 
+	 * @param op The operation action. 
+	 */
+	public doOperationAction(op: OperationAction): void
+	{
+		this._router.navigate(['../', { 'operation': op }]);
+	}
 }

@@ -214,7 +214,8 @@ export abstract class InputControl extends FormFieldControl
         //         ? { 'whitespaces': 'If not is empty dont put only spaces.' }
         //         : null;
         // });
-        
+
+        /* Adds this control to the `FormGroup`. */
         if (this.content.formGroup != undefined) this.content.formGroup.addControl(this.content.name, this.internalControl);
 
 

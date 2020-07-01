@@ -50,7 +50,7 @@ export class OrgEditComponent implements OnInit
 		this.formGroup = this._formBuilder.group({});
 		this.panels = [
 			{
-				title: "Edita organización",
+				title: "Edita la organización seleccionada",
 				description: "",
 				iconName: "",
 				formGroup: this.formGroup,
@@ -95,7 +95,7 @@ export class OrgEditComponent implements OnInit
 				type: FormFieldType.select,
 				required: true,
 				value: this.org.status,
-				width: '100%',
+				width: '45%',
 				appearance: TextInputAppearance.outline,
 				ariaLabel: "Institute status",
 				extraContent: {
@@ -123,7 +123,7 @@ export class OrgEditComponent implements OnInit
 				label: "URL of the wikipedia page for the institute",
 				type: FormFieldType.url,
 				required: false,
-				value: this.org.wikipedia_url,
+				value: /*'df gfr'*/this.org.wikipedia_url,
 				width: "45%",
 				appearance: TextInputAppearance.outline,
 				ariaLabel: "URL of the wikipedia page for the institute"
@@ -282,6 +282,33 @@ export class OrgEditComponent implements OnInit
 	 */
 	public doOperationAction(op: OperationAction): void
 	{
-		this._router.navigate(['../', { 'operation': op }]);
+		if(op == OperationAction.submit)
+		{
+			//TODO: Do the tasks for the submit action. 
+		}
+
+		/* Currently, it does not do any task for the cancel action. */
+
+		if(op != OperationAction.reset)
+		{
+			this._router.navigate(['../', { 'operation': op }]);
+		}
+	}
+
+	/**
+	 * Returns true if the reset action is disabled; otherwise, false. 
+	 */
+	public get isResetActionDisabled(): boolean
+	{
+		//TODO: Implement this.
+		return false;
+	}
+
+	/**
+	 * Returns true if the submit action is disabled; otherwise, false. 
+	 */
+	public get isSubmitActionDisabled(): boolean
+	{
+		return this.formGroup.invalid;
 	}
 }

@@ -2,10 +2,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { OrgListComponent, OrgEditComponent, OrgViewComponent } from '@toco/tools/organizations';
+import { OrgListComponent, OrgEditComponent, OrgViewComponent, OrgAddComponent } from '@toco/tools/organizations';
 
 import { OrganizationDetailResolverService } from './organization-detail-resolver.service.ts';
-import { of } from 'rxjs';
 
 const routes: Routes = [
 	{
@@ -24,27 +23,24 @@ const routes: Routes = [
     },
     {
         path: 'organizaciones/adicionar',
-        component: OrgEditComponent,
-		resolve: {
-			'org': OrganizationDetailResolverService
-		}
+        component: OrgAddComponent
     },
 	{
 		path:'organizaciones',
 		component: OrgListComponent,
-		// resolve: {
-		// 	'org': OrganizationDetailResolverService
-		// }
 	},
 	{
 		path: '',
 		redirectTo: '/organizaciones',
 		pathMatch: 'full'
 	},
-	// {
-	// 	path: '**',
-	// 	component: PageNotFoundComponent
-	// }
+	{
+		path: '**',
+		redirectTo: '/organizaciones',
+		pathMatch: 'full'
+		//TODO: Hacer un componente 'PageNotFoundComponent' para mostrarlo aquí. 
+		//component: PageNotFoundComponent
+	}
 ];
 
 @NgModule({

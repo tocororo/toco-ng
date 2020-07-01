@@ -5,7 +5,6 @@ import { PageEvent } from '@angular/material';
 
 import { Organization, SearchResponse } from '@toco/tools/entities';
 import { SearchService } from '@toco/tools/backend';
-import { OperationAction } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-root',
@@ -14,11 +13,6 @@ import { OperationAction } from '@toco/tools/forms';
 })
 export class OrgRootComponent
 {
-	/**
-	 * Represents an organization. 
-	 */
-	public org: Organization;
-
 	// begin Layout stuff
 	layoutPosition = [
 		{
@@ -67,8 +61,6 @@ export class OrgRootComponent
 
 	public ngOnInit(): void
 	{
-//		this.org = orgExample;
-
 		this.params = new HttpParams();
 		this.getRecords();
 	}
@@ -85,7 +77,6 @@ export class OrgRootComponent
 		this.params = this.params.set('size', this.pageSize.toString());
 		this.params = this.params.set('page', (this.pageIndex + 1).toString());
 
-
 		this._searchService.getOrganizations(this.params).subscribe(
 			(response: SearchResponse<Organization>) => {
 				console.log(response);
@@ -99,28 +90,5 @@ export class OrgRootComponent
 
 			}
 		);
-	}
-
-	/**
-	 * Navigates to the correct view depending on the specified `operationAction`. 
-	 * @param operationAction The operation action. 
-	 */
-	public doOperationAction(operationAction: OperationAction): void
-	{
-		switch(operationAction)
-		{
-			case OperationAction.back:
-			case OperationAction.cancel:
-				{}
-
-			case OperationAction.reset:
-				{}
-
-			case OperationAction.delete:
-				{}
-
-			case OperationAction.submit:
-				{}
-		}
 	}
 }
