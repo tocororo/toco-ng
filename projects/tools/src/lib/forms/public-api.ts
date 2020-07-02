@@ -28,6 +28,7 @@ export * from './input/email/email-value';
 export * from './input/email/email-input.component';
 export * from './input/identifier/identifier-value';
 export * from './input/identifier/identifier-input.component';
+export * from './input/identifiers/identifiers-input.component';
 export * from './input/issn/issn-value';
 export * from './input/issn/issn-input.component';
 export * from './input/rnps/rnps-value';

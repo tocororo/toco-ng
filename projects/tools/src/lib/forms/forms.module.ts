@@ -28,6 +28,7 @@ import { TermParentComponent } from './experimental/term-parent/term-parent.comp
 import { SelectComponent } from './experimental/select/select.component';
 import { TextareaComponent } from './experimental/textarea/textarea.component';
 import { InputIdentifierComponent } from './input/identifier/identifier-input.component';
+import { InputIdentifiersComponent } from './input/identifiers/identifiers-input.component';
 import { SelectFilterComponent } from './experimental/select-filter/select-filter.component';
 import { SelectTreeComponent } from './experimental/select-tree/select-tree.component';
 
@@ -39,6 +40,7 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
     InputTextComponent,
     InputEmailComponent,
     InputIdentifierComponent,
+    InputIdentifiersComponent,
     InputIssnInternalComponent,
     InputIssnComponent,
     InputRnpsComponent,
@@ -65,6 +67,7 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
     InputTextComponent,
     InputEmailComponent,
     InputIdentifierComponent,
+    InputIdentifiersComponent,
     InputIssnComponent,
     InputRnpsComponent,
     InputUrlComponent,
