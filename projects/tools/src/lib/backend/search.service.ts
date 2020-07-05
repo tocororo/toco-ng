@@ -40,7 +40,7 @@ export class SearchService {
 	getAggregation(field, size = 10): Observable<Response<any>> {
 		let params = new HttpParams();
 		const options = {
-			params: params.set('size', size.toString())
+			params: params.set('size', size.toString(10))
 		};
 		const req = this.env.sceibaApi + this.prefix + '/aggs/' + field;
 		return this.http.get<Response<any>>(req, options);

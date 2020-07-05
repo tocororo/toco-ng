@@ -38,7 +38,7 @@ export class SourcesComponent implements OnInit
     public ngOnInit(): void
     {
         /* Sets an initial search value. */
-        //this._inputSearch.internalControl.setValue('cl');
+        //this._inputSearch.formControl.setValue('cl');
 
         /***************************/
 

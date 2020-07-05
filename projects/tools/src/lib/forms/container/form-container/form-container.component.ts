@@ -1,15 +1,14 @@
 
 import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
 import { PartialObserver, Subscription } from 'rxjs';
-import { FormGroup } from '@angular/forms';
 
 import { Entity } from '@toco/tools/entities';
 import { Response } from '@toco/tools/core';
 
+import { FormFieldContent, FormSection } from '../../form-field.control';
 import { InputContent } from '../../input/input.control';
 import { ActionContent } from '../../action/action.control';
 import { FormFieldContent_Experimental } from '../../experimental/form-field.control.experimental';
-import { FormFieldContent } from '../../form-field.control';
 
 export interface FormContainerAction
 {
@@ -41,10 +40,15 @@ export interface PanelContent
      */
     content: (InputContent | ActionContent | FormFieldContent_Experimental)[] | any[];
 
+    //TODO: Poner el `PanelContent` a heredar desde `ContainerContent`. 
     /**
      * Returns the `FormGroup` that contains all controls.
      */
-    formGroup: FormGroup;
+//    formGroup: FormGroup;
+    /**
+     * Returns the `FormSection` that represents the `FormGroup` or `FormArray` that contains the child controls.
+     */
+    formSection: FormSection;
 
     /**
      * Returns the action and action labels for each panels.
@@ -138,7 +142,7 @@ export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
     private setFormGroupToPanels(){
         this.panels.forEach(panel => {
             panel.content.forEach((element: FormFieldContent) => {
-                element.formGroup = panel.formGroup;
+                element.parentFormSection = panel.formSection;
             });
         });
     }
@@ -229,7 +233,7 @@ export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
 
     public addPanel(panel: PanelContent){
         panel.content.forEach( element => {
-            element.formGroup = panel.formGroup;
+            element.parentFormSection = panel.formSection;
         });
         this.panels.push(panel);
 
@@ -237,7 +241,9 @@ export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
     public deletePanel(panelIndex){
 
         this.panels[panelIndex].content.forEach( content => {
-            this.panels[panelIndex].formGroup.removeControl(content.name);
+//            this.panels[panelIndex].formSection.removeControl(content.name);
+            console.log('Called removeControl.');
+            
         });
         this.panels.splice(panelIndex, 1);
         console.log(this.panels, panelIndex)

@@ -1,8 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, ControlContainer } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
-import { InputControl, InputContent } from '../input.control';
+import { ContainerControl } from '../input.control';
 import { IdentifierValue } from '../identifier/identifier-value';
 
 /**
@@ -17,9 +17,9 @@ import { IdentifierValue } from '../identifier/identifier-value';
 		'[style.width]': 'content.width'
 	}
 })
-export class InputIdentifiersComponent extends InputControl implements OnInit
+export class InputIdentifiersComponent extends ContainerControl implements OnInit
 {
-	public constructor(/*private controlContainer: ControlContainer*/)
+	public constructor()
 	{
         super(
             /* Constructs a new `FormGroup` instance. */
@@ -31,9 +31,7 @@ export class InputIdentifiersComponent extends InputControl implements OnInit
 
 	public ngOnInit(): void
 	{
-		//TODO: Make a cycle over the list of identifiers calling the line below.
-
-        /* Sets the default values. */
+		/* Sets the default values. */
         this.init(IdentifierValue.identifier_Label, false, true);
 	}
 }

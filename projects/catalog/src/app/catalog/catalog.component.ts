@@ -148,8 +148,8 @@ export class CatalogComponent implements OnInit, OnChanges{
     this.activatedRoute.queryParamMap.subscribe({
       next: params => {
         this.filtersParams = params;
-        // this.searchParams = this.searchParams.set('size', this.pageSize.toString());
-        // this.searchParams = this.searchParams.set('page', this.pageIndex.toString());
+        // this.searchParams = this.searchParams.set('size', this.pageSize.toString(10));
+        // this.searchParams = this.searchParams.set('page', this.pageIndex.toString(10));
 
         if (params.has("size")) {
           // this.pageSize = Number.parseInt(params.get("size"), 10);
@@ -157,7 +157,7 @@ export class CatalogComponent implements OnInit, OnChanges{
         } else {
           this.searchParams = this.searchParams.set(
             "size",
-            this.pageSize.toString()
+            this.pageSize.toString(10)
           );
         }
         if (params.has("page")) {
@@ -166,7 +166,7 @@ export class CatalogComponent implements OnInit, OnChanges{
         } else {
           this.searchParams = this.searchParams.set(
             "page",
-            (this.pageIndex + 1).toString()
+            (this.pageIndex + 1).toString(10)
           );
         }
 

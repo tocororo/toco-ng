@@ -1,5 +1,9 @@
 
-<div>
+<!-- [formControlName]="content.name" -->
+<mat-label>{{ content.label }}</mat-label>
+<div id="identifiers-form-field" [formGroup]="formSection" [attr.aria-label]="content.ariaLabel">
     <p>Casa !!!</p>
-    <!-- <input-identifier *ngFor="let identifierContent of content.extraContent" [content]="identifierContent"></input-identifier> -->
+    <input-identifier *ngFor="let identifierContent of content.formSectionContent" 
+        [parentFormSection]="formSection" [content]="identifierContent">
+    </input-identifier>
 </div>

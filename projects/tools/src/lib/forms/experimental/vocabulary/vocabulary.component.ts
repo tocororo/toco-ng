@@ -6,7 +6,6 @@
 import { Component, OnInit } from "@angular/core";
 import {
   FormControl,
-  ControlContainer,
   AbstractControl,
   ValidationErrors
 } from "@angular/forms";
@@ -75,15 +74,14 @@ export class VocabularyComponent extends FormFieldControl_Experimental
     }
   };
 
-  constructor(
-    private service: TaxonomyService,
-    /*private controlContainer: ControlContainer*/
-  ) {
+  constructor(private service: TaxonomyService)
+  {
     super();
   }
 
-  ngOnInit() {
-    this.content.formGroup.addControl(this.content.name, this.internalControl);
+  ngOnInit()
+  {
+//    this.content.parentFormSection.addControl(this.content.name, this.internalControl);
 
     if (this.content.required) {
       this.internalControl.setValidators(

@@ -30,7 +30,7 @@ import { Common } from '@toco/tools/core';
 		'[class.should-label-float]': 'shouldLabelFloat',
 		'[attr.aria-describedby]': 'describedBy',
 		'(blur)': '_onTouched()'
-		/* It does not need to do '(change/input)': '_onChange(internalControl.value)' because the `input` event
+		/* It does not need to do '(change/input)': '_onChange(formControl.value)' because the `input` event
 		 * is already bound. */
 	}
 })
@@ -52,7 +52,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 	/**
 	 * Tracks the value and validity state of the internal control that contains the code.
 	 */
-	public readonly internalControl: FormControl;
+	public readonly formControl: FormControl;
 	public readonly internalFormGroup: FormGroup;
 	private readonly _firstGroup: FormControl;
 	private _firstGroupOldValue: string;   /* It is used by `handleInput_firstGroup` method. */
@@ -162,7 +162,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 			ExtraValidators.issnConfirmCheckDigit(this._firstGroup, this._secondGroup, IssnValue.groupLength)
 		]
 		);
-		this.internalControl = new FormControl(Common.emptyString, [
+		this.formControl = new FormControl(Common.emptyString, [
 			ExtraValidators.issnValidator(this.internalFormGroup)
 		]);
 
@@ -214,7 +214,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 
 		this.internalFormGroup.setValue({ 'firstGroup': newIssn.firstGroup, 'secondGroup': newIssn.secondGroup });
 
-		this.internalControl.setValue(newIssn.firstGroup + '-' + newIssn.secondGroup );
+		this.formControl.setValue(newIssn.firstGroup + '-' + newIssn.secondGroup );
 
 		this.stateChanges.next();
 	}
@@ -541,7 +541,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 	 */
 	private _changedInput(isFirstGroup: boolean): void
 	{
-		this._onChange(this.internalControl.value);
+		this._onChange(this.formControl.value);
 
 		if (isFirstGroup)
 		{

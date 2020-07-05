@@ -10,7 +10,7 @@ import { FormFieldType } from '../../form-field.control';
 import { InputContent } from '../../input/input.control';
 import { ActionContent } from '../../action/action.control';
 import { FormFieldContent_Experimental } from '../../experimental/form-field.control.experimental';
-import { FormGroup, ControlContainer } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 /**
  * @description
@@ -34,13 +34,12 @@ export class FormFieldsComponent implements OnInit
 
     public readonly formFieldType: typeof FormFieldType = FormFieldType;
 
-    public constructor(/*private controlContainer: ControlContainer*/)
+    public constructor()
     { }
 
     public ngOnInit(): void
     {
         if (this.fields == undefined) this.fields = [];
         console.log(this.fields);
-
     }
 }

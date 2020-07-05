@@ -5,10 +5,15 @@
 
 
 import { Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormArray, AbstractControl } from '@angular/forms';
 
 import { Common } from '@toco/tools/core';
 import { IconService } from '@toco/tools/core';
+
+/**
+ * Defines a form section that represents the `FormGroup` or `FormArray` class. 
+ */
+export type FormSection = FormGroup | FormArray;
 
 /**
  * An enum that describes how inline contents of a block are horizontally aligned if the contents 
@@ -241,6 +246,9 @@ export enum FormFieldType
     /** An identifier control. */
     identifier= 'identifier',
 
+    /** A list of identifier controls. */
+    identifiers= 'identifiers',
+
     /** An issn control. */
     issn= 'issn',
     
@@ -268,10 +276,15 @@ export enum FormFieldType
  */
 export interface FormFieldContent
 {
+    //TODO: A final este campo se borra de aquí porque está en la clase `FormFieldControl`. 
     /**
      * Returns the `FormGroup` which this control belongs to. 
      */
-    formGroup?: FormGroup;
+    //formGroup?: FormGroup;
+    /**
+     * Returns the `FormSection` that represents the `FormGroup` or `FormArray` which this control belongs to. 
+     */
+    parentFormSection?: FormSection;
 
     /**
      * Returns the control's minimum width. 
@@ -351,7 +364,6 @@ export interface FormFieldContent
 export function defaultFormFieldContent(): FormFieldContent
 {
     return {
-        'formGroup': undefined,
         'minWidth': '15em',
         'width': '15em',
 
@@ -384,10 +396,16 @@ export abstract class FormFieldControl
     public readonly iconSource: typeof IconSource;
 
     /**
+     * Input field that contains the `FormSection` that represents the `FormGroup` or `FormArray` which this control belongs to. 
+     */
+    @Input()
+    public parentFormSection: FormSection;
+
+    /**
      * Input field that contains the content of this class. 
      */
     @Input()
-    public content: any;  /* content: FormFieldContent */
+    public content: FormFieldContent;  /* content: any */
 
     /**
      * Constructs a new instance of this class. 
@@ -396,6 +414,9 @@ export abstract class FormFieldControl
     {
         this.contentPosition = ContentPosition;
         this.iconSource = IconSource;
+
+        this.parentFormSection = undefined;
+        this.content = undefined;
     }
 
     /**
@@ -447,6 +468,27 @@ export abstract class FormFieldControl
      * It also checks if the specified `content.value` is correct. For internal use only. 
 	 */
 	protected abstract initValue(): void;
+
+	/**
+	 * Adds the specified control as a child to the `parentFormSection`. 
+     * @param control Form control to be added. 
+	 */
+	protected addAsChildControl(control: AbstractControl): void
+	{
+        console.log('Added childInputControl: ', control);
+
+        if(this.parentFormSection instanceof FormGroup)  /* `parentFormSection` is an instance of `FormGroup`. */
+        {
+            this.parentFormSection.addControl(this.content.name, control);
+        }
+        else  /* `parentFormSection` is an instance of `FormArray`. */
+        {
+            /* Updates the control's name to the correct name because the control has a `FormArray` as its parent. */
+            this.content.name = this.parentFormSection.length.toString(10);
+
+            this.parentFormSection.push(control);
+        }
+	}
 
     /**
      * Returns true if the specified `IconValue` has the specified `ContentPosition` value; otherwise, false. 

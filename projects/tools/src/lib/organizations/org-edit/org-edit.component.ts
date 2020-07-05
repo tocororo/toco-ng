@@ -53,7 +53,7 @@ export class OrgEditComponent implements OnInit
 				title: "Edita la organización seleccionada",
 				description: "",
 				iconName: "",
-				formGroup: this.formGroup,
+				formSection: this.formGroup,
 				content: this._getContent()
 			}
 		];
@@ -138,6 +138,52 @@ export class OrgEditComponent implements OnInit
 				appearance: TextInputAppearance.outline,
 				ariaLabel: "Contact email address for the institute"
 			},
+
+
+			{
+				name: "identifiers",
+				label: "Organization Identifiers, different from GRID mapping",
+				type: FormFieldType.identifiers,
+				required: true,
+				value: undefined,
+				width: "100%",
+				appearance: TextInputAppearance.outline,
+				ariaLabel: "Organization Identifiers, different from GRID mapping",
+				extraContent: [
+					{
+						name: "name1",
+						label: "Name typically used to refer to the institute",
+						type: FormFieldType.text,
+						required: true,
+						value: this.org.identifiers[0],
+						width: "100%",
+						appearance: TextInputAppearance.outline,
+						ariaLabel: "Name typically used to refer to the institute"
+					},
+					{
+						name: "name2",
+						label: "Name typically used to refer to the institute",
+						type: FormFieldType.text,
+						required: true,
+						value: this.org.identifiers[1],
+						width: "100%",
+						appearance: TextInputAppearance.outline,
+						ariaLabel: "Name typically used to refer to the institute"
+					},
+					{
+						name: "name3",
+						label: "Name typically used to refer to the institute",
+						type: FormFieldType.text,
+						required: true,
+						value: this.org.identifiers[2],
+						width: "100%",
+						appearance: TextInputAppearance.outline,
+						ariaLabel: "Name typically used to refer to the institute"
+					}
+				]
+			},
+
+
 			// {
 			// 	name: "description",
 			// 	label: "Descripción",

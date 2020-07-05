@@ -74,8 +74,8 @@ export class OrgRootComponent
 
 	public getRecords(): void
 	{
-		this.params = this.params.set('size', this.pageSize.toString());
-		this.params = this.params.set('page', (this.pageIndex + 1).toString());
+		this.params = this.params.set('size', this.pageSize.toString(10));
+		this.params = this.params.set('page', (this.pageIndex + 1).toString(10));
 
 		this._searchService.getOrganizations(this.params).subscribe(
 			(response: SearchResponse<Organization>) => {

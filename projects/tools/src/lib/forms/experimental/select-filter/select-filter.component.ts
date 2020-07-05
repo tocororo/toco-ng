@@ -48,7 +48,7 @@ export class SelectFilterComponent extends FormFieldControl_Experimental impleme
 
   ngOnInit() {
 
-    this.content.formGroup.addControl(this.content.name, this.internalControl);
+//    this.content.parentFormSection.addControl(this.content.name, this.internalControl);
 
 
     this.multiple = this.content.extraContent['multiple'] ? this.content.extraContent['multiple'] : false;

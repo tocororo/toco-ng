@@ -68,7 +68,9 @@ export class SelectTreeComponent extends FormFieldControl_Experimental
   }
 
   ngOnInit() {
-    this.content.formGroup.addControl(this.content.name, this.internalControl);
+
+//    this.content.parentFormSection.addControl(this.content.name, this.internalControl);
+
     if (this.content.extraContent){
       if (this.content.extraContent.observable) {
         this.content.extraContent.observable.subscribe(

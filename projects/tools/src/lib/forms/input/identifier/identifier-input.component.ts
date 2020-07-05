@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, ValidationErrors, ControlContainer } from '@angular/forms';
+import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
 import { Common } from '@toco/tools/core';
 
@@ -21,7 +21,7 @@ import { IdentifierValue } from './identifier-value';
 })
 export class InputIdentifierComponent extends InputControl implements OnInit
 {
-    public constructor(/*private controlContainer: ControlContainer*/)
+    public constructor()
     {
         super(
             /* Constructs a new `FormControl` instance. */
@@ -43,7 +43,7 @@ export class InputIdentifierComponent extends InputControl implements OnInit
      */
     public getErrorMessage(): string
     {
-        let validationErrors: ValidationErrors = this.internalControl.errors;
+        let validationErrors: ValidationErrors = this.formControl.errors;
 
         /* Shows the identifier errors. */
         if (validationErrors)

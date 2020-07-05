@@ -345,13 +345,13 @@ export class TableComponent implements OnInit, OnDestroy
         /* For each filter property. */
         Object.keys(this._content.filter).forEach((filterName: string) => {
             /* Saves the initial values. */
-            this._filterValues[filterName] = this._content.filter[filterName].internalControl.value;
+            this._filterValues[filterName] = this._content.filter[filterName].formControl.value;
 
             /* Disposes the resources held by the subscription. */
             if (this._filterValuesSubscription[filterName] != undefined) this._filterValuesSubscription[filterName].unsubscribe();
 
             /* Subscribes to observe the changes in the control value when there is an external change. */
-            this._filterValuesSubscription[filterName] = this._content.filter[filterName].internalControl.valueChanges.pipe(
+            this._filterValuesSubscription[filterName] = this._content.filter[filterName].formControl.valueChanges.pipe(
                 /* Waits 500ms after each keystroke before considering the term. */
                 debounceTime(500),
                 /* Ignores new term if same as previous term. */

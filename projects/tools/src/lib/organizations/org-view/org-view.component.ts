@@ -48,7 +48,7 @@ export class OrgViewComponent implements OnInit
 				title: "Muestra la organización seleccionada",
 				description: "",
 				iconName: "",
-				formGroup: this.formGroup,
+				formSection: this.formGroup,
 				content: this._getContent()
 			}
 		];

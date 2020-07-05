@@ -29,7 +29,7 @@ export class CatalogService extends HttpService {
                 }
             }
             const options = {
-                params: params.set('size', count.toString()).set('page', (page).toString())
+                params: params.set('size', count.toString(10)).set('page', (page).toString(10))
             };
             return this.http.get<Response<any>>(this.env.sceibaApi + 'source/journals', options);
         }

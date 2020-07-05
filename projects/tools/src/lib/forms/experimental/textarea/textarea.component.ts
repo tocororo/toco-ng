@@ -19,9 +19,10 @@ export class TextareaComponent extends FormFieldControl_Experimental implements 
     super();
   }
 
-  ngOnInit() {
-    this.content.formGroup.addControl(this.content.name, this.internalControl);
+  ngOnInit()
+  {
+//    this.content.parentFormSection.addControl(this.content.name, this.internalControl);
+
     this.internalControl.setValue(this.content.value);
   }
-
 }

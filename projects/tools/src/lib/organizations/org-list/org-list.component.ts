@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { UserService, SortDirection, PageRequest, Page } from '@toco/tools/core';
-import { TableContent, TableComponent, CellContentWrap, InputContent, TextAlign, TextInputAppearance, IconValue, IconSource, HintPosition, HintValue, ContentPosition, InputTextComponent } from '@toco/tools/forms';
+import { TableContent, TableComponent, CellContentWrap, InputContent, TextAlign, TextInputAppearance, IconValue, IconSource, HintPosition, HintValue, ContentPosition, InputTextComponent, ContainerContent, FormFieldType } from '@toco/tools/forms';
 import { HitList, Organization } from '@toco/tools/entities';
 import { OrganizationService, ENDPOINT_APIS } from '@toco/tools/backend';
 
@@ -16,6 +16,11 @@ import { OrganizationService, ENDPOINT_APIS } from '@toco/tools/backend';
 })
 export class OrgListComponent implements OnInit
 {
+    /**
+     * Contains the content of the input-identifiers class. 
+     */
+    public inputIdentifiersContent: ContainerContent;
+
 	// @Input()
 	// public hitList: HitList<Organization>;
 
@@ -42,8 +47,10 @@ export class OrgListComponent implements OnInit
 
 	public ngOnInit(): void
 	{
+        this.inputIdentifiersContent = this._initInputIdentifiersContent();
+
         /* Sets an initial search value. */
-        //this._inputSearch.internalControl.setValue('cl');
+        //this._inputSearch.formControl.setValue('cl');
 
         /***************************/
 
@@ -53,7 +60,43 @@ export class OrgListComponent implements OnInit
         /***************************/
 
         // this._tableControl.page.subscribe((value) => console.log('page', value));
-	}
+    }
+    
+    private _initInputIdentifiersContent(): ContainerContent
+    {
+        return {
+            'name': "identifiers",
+            'label': "Organization Identifiers, different from GRID mapping",
+            'type': FormFieldType.identifiers,
+            'required': true,
+            'value': undefined,
+            'width': "100%",
+//            'appearance': TextInputAppearance.outline,
+            'ariaLabel': "Organization Identifiers, different from GRID mapping",
+            'formSectionContent': [
+                {
+                    'name': "wikipedia_url",
+                    'label': "URL of the wikipedia page for the institute",
+                    'type': FormFieldType.url,
+                    'required': false,
+                    'value': 'www.wiki.elitaute.com'/*this.org.wikipedia_url*/,
+                    'width': "45%",
+                    'appearance': TextInputAppearance.outline,
+                    'ariaLabel': "URL of the wikipedia page for the institute"
+                },
+                {
+                    'name': "email_address",
+                    'label': "Contact email address for the institute",
+                    'type': FormFieldType.email,
+                    'required': true,
+                    'value': 'first@gmail.com'/*this.org.email_address*/,
+                    'width': "45%",
+                    'appearance': TextInputAppearance.outline,
+                    'ariaLabel': "Contact email address for the institute"
+                }
+            ]
+        };
+    }
 
     private _initSearchContent(): InputContent
     {

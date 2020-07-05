@@ -134,7 +134,7 @@ export class TaxonomyService {
 
   getTermListByIDs(ids: number[]): Observable<Response<any>> {
     let p = '';
-    ids.forEach(n => p = p + n.toString() + ',');
+    ids.forEach(n => p = p + n.toString(10) + ',');
     p = p.substring(0, p.length - 1);
     let params = new HttpParams();
     const options = {
@@ -147,7 +147,7 @@ export class TaxonomyService {
   getTermByID(termID, level=10): Observable<Response<any>> {
     let params = new HttpParams();
     const options = {
-      params: params.set('level', level.toString())
+      params: params.set('level', level.toString(10))
     };
     const req = this.env.sceibaApi + this.prefix + '/term/id/' + termID;
     return this.http.get<Response<any>>(req, options);
@@ -156,7 +156,7 @@ export class TaxonomyService {
   getTermByUUID(termUUID, level=10): Observable<Response<any>> {
     let params = new HttpParams();
     const options = {
-      params: params.set('level', level.toString())
+      params: params.set('level', level.toString(10))
     };
     const req = this.env.sceibaApi + this.prefix + '/term/' + termUUID;
     return this.http.get<Response<any>>(req, options);
@@ -165,7 +165,7 @@ export class TaxonomyService {
   getTermsTreeByVocab(vocabId, level=10): Observable<Response<any>> {
     let params = new HttpParams();
     const options = {
-      params: params.set('level', level.toString())
+      params: params.set('level', level.toString(10))
     };
     const req = this.env.sceibaApi + this.prefix + '/term/tree/' + vocabId;
     return this.http.get<Response<any>>(req, options);

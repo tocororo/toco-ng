@@ -48,7 +48,7 @@ export class SelectComponent extends FormFieldControl_Experimental implements On
 	{
 		this.multiple = this.content.extraContent['multiple'] ? this.content.extraContent['multiple'] : false;
 
-		this.content.formGroup.addControl(this.content.name, this.internalControl);
+//		this.content.parentFormSection.addControl(this.content.name, this.internalControl);
 
 		if (this.content.extraContent.observable)
 		{

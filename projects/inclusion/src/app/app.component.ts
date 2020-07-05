@@ -47,7 +47,7 @@ export class AppComponent implements OnInit
     {
 
         /* Sets an initial search value. */
-        //this._inputSearch.internalControl.setValue('cl');
+        //this._inputSearch.formControl.setValue('cl');
 
         /***************************/
 
