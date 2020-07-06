@@ -1,12 +1,11 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
-import { PanelContent, InputContent, ActionContent, FormFieldType, TextInputAppearance, OperationAction } from '@toco/tools/forms';
+import { PanelContent, FormFieldType, TextInputAppearance, OperationAction } from '@toco/tools/forms';
 import { SearchService } from '@toco/tools/backend';
-import { FormFieldContent_Experimental } from '@toco/tools/forms/experimental/form-field.control.experimental';
 
 @Component({
 	selector: 'toco-org-edit',
@@ -25,12 +24,13 @@ export class OrgEditComponent implements OnInit
 	 */
 	public org: Organization;
 
+	//TODO: el `formGroup` se coge por decorador ViewChild(toco-form-container). 
 	public formGroup: FormGroup;
-	public panels: PanelContent[];
+	public panelsContent: PanelContent[];
 	// public action: FormContainerAction;
 	// public actionLabel: string;
 
-	public constructor(private _router: Router, private _activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder, private _searchService: SearchService)
+	public constructor(private _router: Router, private _activatedRoute: ActivatedRoute, private _searchService: SearchService)
 	{
 		this.operationAction = OperationAction;
 	}
@@ -47,14 +47,12 @@ export class OrgEditComponent implements OnInit
 		)
 
 		/* Creates the controls. */
-		this.formGroup = this._formBuilder.group({});
-		this.panels = [
+		this.panelsContent = [
 			{
 				title: "Edita la organización seleccionada",
 				description: "",
 				iconName: "",
-				formSection: this.formGroup,
-				content: this._getContent()
+				formSectionContent: this._getContent()
 			}
 		];
 
@@ -76,7 +74,7 @@ export class OrgEditComponent implements OnInit
     /**
      * Returns the panel's content. 
      */
-	private _getContent(): (InputContent | ActionContent | FormFieldContent_Experimental)[]
+	private _getContent(): any[]
 	{
 		return [
 			{
@@ -140,48 +138,48 @@ export class OrgEditComponent implements OnInit
 			},
 
 
-			{
-				name: "identifiers",
-				label: "Organization Identifiers, different from GRID mapping",
-				type: FormFieldType.identifiers,
-				required: true,
-				value: undefined,
-				width: "100%",
-				appearance: TextInputAppearance.outline,
-				ariaLabel: "Organization Identifiers, different from GRID mapping",
-				extraContent: [
-					{
-						name: "name1",
-						label: "Name typically used to refer to the institute",
-						type: FormFieldType.text,
-						required: true,
-						value: this.org.identifiers[0],
-						width: "100%",
-						appearance: TextInputAppearance.outline,
-						ariaLabel: "Name typically used to refer to the institute"
-					},
-					{
-						name: "name2",
-						label: "Name typically used to refer to the institute",
-						type: FormFieldType.text,
-						required: true,
-						value: this.org.identifiers[1],
-						width: "100%",
-						appearance: TextInputAppearance.outline,
-						ariaLabel: "Name typically used to refer to the institute"
-					},
-					{
-						name: "name3",
-						label: "Name typically used to refer to the institute",
-						type: FormFieldType.text,
-						required: true,
-						value: this.org.identifiers[2],
-						width: "100%",
-						appearance: TextInputAppearance.outline,
-						ariaLabel: "Name typically used to refer to the institute"
-					}
-				]
-			},
+			// {
+			// 	name: "identifiers",
+			// 	label: "Organization Identifiers, different from GRID mapping",
+			// 	type: FormFieldType.identifiers,
+			// 	required: true,
+			// 	value: undefined,
+			// 	width: "100%",
+			// 	appearance: TextInputAppearance.outline,
+			// 	ariaLabel: "Organization Identifiers, different from GRID mapping",
+			// 	extraContent: [
+			// 		{
+			// 			name: "name1",
+			// 			label: "Name typically used to refer to the institute",
+			// 			type: FormFieldType.text,
+			// 			required: true,
+			// 			value: this.org.identifiers[0],
+			// 			width: "100%",
+			// 			appearance: TextInputAppearance.outline,
+			// 			ariaLabel: "Name typically used to refer to the institute"
+			// 		},
+			// 		{
+			// 			name: "name2",
+			// 			label: "Name typically used to refer to the institute",
+			// 			type: FormFieldType.text,
+			// 			required: true,
+			// 			value: this.org.identifiers[1],
+			// 			width: "100%",
+			// 			appearance: TextInputAppearance.outline,
+			// 			ariaLabel: "Name typically used to refer to the institute"
+			// 		},
+			// 		{
+			// 			name: "name3",
+			// 			label: "Name typically used to refer to the institute",
+			// 			type: FormFieldType.text,
+			// 			required: true,
+			// 			value: this.org.identifiers[2],
+			// 			width: "100%",
+			// 			appearance: TextInputAppearance.outline,
+			// 			ariaLabel: "Name typically used to refer to the institute"
+			// 		}
+			// 	]
+			// },
 
 
 			// {
