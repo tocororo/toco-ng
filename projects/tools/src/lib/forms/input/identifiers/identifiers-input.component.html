@@ -1,9 +1,14 @@
 
-<!-- [formControlName]="content.name" -->
-<mat-label>{{ content.label }}</mat-label>
-<div id="identifiers-form-field" [formGroup]="formSection" [attr.aria-label]="content.ariaLabel">
-    <p>Casa !!!</p>
+<fieldset id="identifiers-form-field" *ngIf="parentFormSection" [formGroup]="formSection" [formGroupName]="content.name" [attr.aria-label]="content.ariaLabel">
+    <legend id="identifiers-form-field-legend">{{ content.label }}</legend>
     <input-identifier *ngFor="let identifierContent of content.formSectionContent" 
         [parentFormSection]="formSection" [content]="identifierContent">
     </input-identifier>
-</div>
+</fieldset>
+
+<fieldset id="identifiers-form-field" *ngIf="!parentFormSection" [formGroup]="formSection" [attr.aria-label]="content.ariaLabel">
+    <legend id="identifiers-form-field-legend">{{ content.label }}</legend>
+    <input-identifier *ngFor="let identifierContent of content.formSectionContent" 
+        [parentFormSection]="formSection" [content]="identifierContent">
+    </input-identifier>
+</fieldset>

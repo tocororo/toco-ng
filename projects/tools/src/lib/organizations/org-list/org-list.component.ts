@@ -75,25 +75,27 @@ export class OrgListComponent implements OnInit
             'ariaLabel': "Organization Identifiers, different from GRID mapping",
             'formSectionContent': [
                 {
-                    'name': "wikipedia_url",
-                    'label': "URL of the wikipedia page for the institute",
-                    'type': FormFieldType.url,
-                    'required': false,
-                    'value': 'www.wiki.elitaute.com'/*this.org.wikipedia_url*/,
-                    'width': "45%",
+                    'name': 'isni',   //idtype
+                    'label': 'isni',  //idtype
+                    'type': FormFieldType.identifier,
+                    'required': true,
+                    'value': 'Un_id_isni',
+                    'width': '50%',
                     'appearance': TextInputAppearance.outline,
-                    'ariaLabel': "URL of the wikipedia page for the institute"
+                    'ariaLabel': "Identificador isni",
+                    'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
                 },
                 {
-                    'name': "email_address",
-                    'label': "Contact email address for the institute",
-                    'type': FormFieldType.email,
+                    'name': 'grid',   //grid
+                    'label': 'grid',  //grid
+                    'type': FormFieldType.identifier,
                     'required': true,
-                    'value': 'first@gmail.com'/*this.org.email_address*/,
-                    'width': "45%",
+                    'value': 'Un_id_grid',
+                    'width': '50%',
                     'appearance': TextInputAppearance.outline,
-                    'ariaLabel': "Contact email address for the institute"
-                }
+                    'ariaLabel': "Identificador grid",
+                    'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
+                },
             ]
         };
     }
