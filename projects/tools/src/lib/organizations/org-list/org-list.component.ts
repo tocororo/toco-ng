@@ -17,9 +17,9 @@ import { OrganizationService, ENDPOINT_APIS } from '@toco/tools/backend';
 export class OrgListComponent implements OnInit
 {
     /**
-     * Contains the content of the input-identifiers class. 
+     * Contains the content of the `IdentifiersComponent` class. 
      */
-    public inputIdentifiersContent: ContainerContent;
+    public identifiersContent: ContainerContent;
 
 	// @Input()
 	// public hitList: HitList<Organization>;
@@ -47,7 +47,7 @@ export class OrgListComponent implements OnInit
 
 	public ngOnInit(): void
 	{
-        this.inputIdentifiersContent = this._initInputIdentifiersContent();
+        this.identifiersContent = this._initIdentifiersContent();
 
         /* Sets an initial search value. */
         //this._inputSearch.formControl.setValue('cl');
@@ -62,7 +62,7 @@ export class OrgListComponent implements OnInit
         // this._tableControl.page.subscribe((value) => console.log('page', value));
     }
     
-    private _initInputIdentifiersContent(): ContainerContent
+    private _initIdentifiersContent(): ContainerContent
     {
         return {
             'name': "identifiers",

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InputIdentifiersComponent } from './identifiers-input.component';
+import { IdentifiersComponent } from './identifiers.component';
 
-describe('InputIdentifiersComponent', () => {
-  let component: InputIdentifiersComponent;
-  let fixture: ComponentFixture<InputIdentifiersComponent>;
+describe('IdentifiersComponent', () => {
+  let component: IdentifiersComponent;
+  let fixture: ComponentFixture<IdentifiersComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InputIdentifiersComponent ]
+      declarations: [ IdentifiersComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InputIdentifiersComponent);
+    fixture = TestBed.createComponent(IdentifiersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

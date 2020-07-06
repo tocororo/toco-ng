@@ -2,22 +2,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { ContainerControl } from '../input.control';
-import { IdentifierValue } from '../identifier/identifier-value';
+import { ContainerControl } from '../../input/input.control';
+import { IdentifierValue } from '../../input/identifier/identifier-value';
 
 /**
  * Represents a control that contains a list of identifiers. 
  */
 @Component({
-	selector: 'input-identifiers',
-	templateUrl: './identifiers-input.component.html',
-	styleUrls: ['./identifiers-input.component.scss'],
+	selector: 'container-identifiers',
+	templateUrl: './identifiers.component.html',
+	styleUrls: ['./identifiers.component.scss'],
 	host: {
 		'[style.minWidth]': 'content.minWidth',
 		'[style.width]': 'content.width'
 	}
 })
-export class InputIdentifiersComponent extends ContainerControl implements OnInit
+export class IdentifiersComponent extends ContainerControl implements OnInit
 {
 	public constructor()
 	{

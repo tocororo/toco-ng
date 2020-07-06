@@ -225,6 +225,9 @@ export class HintValue
  */
 export enum FormFieldType
 {
+    /** A list of identifier controls. */
+    identifiers = 'identifiers',
+
     /** A text control. */
     text = 'text',
 
@@ -238,37 +241,34 @@ export enum FormFieldType
     checkbox = 'checkbox',
 
     /** A url control. */
-    url= 'url',
+    url = 'url',
 
     /** An email control. */
-    email= 'email',
+    email = 'email',
 
     /** An identifier control. */
-    identifier= 'identifier',
-
-    /** A list of identifier controls. */
-    identifiers= 'identifiers',
+    identifier = 'identifier',
 
     /** An issn control. */
-    issn= 'issn',
+    issn = 'issn',
     
     /** An rnps control. */
-    rnps= 'rnps',
+    rnps = 'rnps',
 
     /** An vocabulary control. */
-    vocabulary= 'vocabulary',
+    vocabulary = 'vocabulary',
 
     /** An term parent control. */
-    term_parent= 'term_parent',
+    term_parent = 'term_parent',
 
     /** Generic select control. */
-    select= 'select',
+    select = 'select',
 
     /** Generic select with a filter control. */
-    select_filter= 'select_filter',
+    select_filter = 'select_filter',
 
     /** Generic select with a filter control. */
-    select_tree= 'select_tree',
+    select_tree = 'select_tree'
 }
 
 /**

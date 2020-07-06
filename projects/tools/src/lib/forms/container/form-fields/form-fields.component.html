@@ -64,6 +64,8 @@ fxLayoutGap="1em" class="form-field-component">
             ></mat-datepicker>
         </mat-form-field>
 
+        <container-identifiers *ngSwitchCase="formFieldType.identifiers" [content]="field"></container-identifiers>
+
         <toco-textarea *ngSwitchCase="formFieldType.textarea" [content]="field"></toco-textarea>
 
         <input-url *ngSwitchCase="formFieldType.url" [content]="field"></input-url>
@@ -71,8 +73,6 @@ fxLayoutGap="1em" class="form-field-component">
         <input-email *ngSwitchCase="formFieldType.email" [content]="field"></input-email>
 
         <input-identifier *ngSwitchCase="formFieldType.identifier" [content]="field"></input-identifier>
-
-        <input-identifiers *ngSwitchCase="formFieldType.identifiers" [content]="field"></input-identifiers>
 
         <input-issn *ngSwitchCase="formFieldType.issn" [content]="field"></input-issn>
 

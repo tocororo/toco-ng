@@ -11,6 +11,7 @@ export * from './forms.module';
 export * from './container/form-container/form-container.component';
 export * from './container/form-container/form-container.service';
 export * from './container/form-fields/form-fields.component';
+export * from './container/identifiers/identifiers.component';
 export * from './container/table/table.component';
 export * from './forms.service';
 
@@ -28,7 +29,6 @@ export * from './input/email/email-value';
 export * from './input/email/email-input.component';
 export * from './input/identifier/identifier-value';
 export * from './input/identifier/identifier-input.component';
-export * from './input/identifiers/identifiers-input.component';
 export * from './input/issn/issn-value';
 export * from './input/issn/issn-input.component';
 export * from './input/rnps/rnps-value';
