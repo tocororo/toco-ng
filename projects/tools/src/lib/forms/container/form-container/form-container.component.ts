@@ -10,9 +10,9 @@ export interface FormContainerAction
 }
 
 /**
- * An interface that represents the content of a panel. 
+ * An interface that represents the content of an expansion control. 
  */
-export interface PanelContent extends ContainerContent
+export interface PanelContent_Depr extends ContainerContent
 {
     /**
      * Returns the panel's title. 
@@ -28,6 +28,11 @@ export interface PanelContent extends ContainerContent
      * Returns the panel's icon name. 
      */
     iconName: string;
+
+    /**
+     * Returns the panel's content.
+     */
+//    content: any[];
 
     /**
      * Returns the action and action labels for each panel. 
@@ -47,11 +52,7 @@ export interface PanelContent extends ContainerContent
 @Component({
     selector: 'toco-form-container',
     templateUrl: './form-container.component.html',
-    styleUrls: ['./form-container.component.scss'],
-	host: {
-		'[style.minWidth]': 'content.minWidth',
-		'[style.width]': 'content.width'
-	}
+    styleUrls: ['./form-container.component.scss']
 })
 export class FormContainerComponent extends ContainerControl implements OnInit, OnChanges
 {
@@ -59,7 +60,7 @@ export class FormContainerComponent extends ContainerControl implements OnInit, 
      * Input field that contains the content of this class. The array of panels to show. TODO: Should this be an observable?, any change in the panels? 
      */
     @Input()
-    public panelsContent: PanelContent[];
+    public panelsContent: PanelContent_Depr[];
 
     @Input()
     public useAccordion: boolean = true;

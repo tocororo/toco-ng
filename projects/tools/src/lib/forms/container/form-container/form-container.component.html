@@ -23,7 +23,7 @@
                     <!-- <button mat-button *ngIf="newStep > 0" color="warn" (click)="prevStep()">Anterior</button>
                     <button mat-button *ngIf="newStep != count-1" color="primary" (click)="nextStep()">Siguente</button> -->
         
-                    <button *ngIf="panel.actionLabel" mat-button color="accent" (click)="panel.action.doit(newStep)">{{panel.actionLabel}}</button>
+                    <button *ngIf="panel.actionLabel" mat-button color="accent" (click)="panel.action.doit(newStep)">{{ panel.actionLabel }}</button>
                     <!-- <button *ngIf="i == l-1 && actionButtonIsStepperNext" mat-button matStepperNext color="primary" (click)="doAction()">{{actionLabel}}</button> -->
                 </mat-action-row>
 

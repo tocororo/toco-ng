@@ -12,6 +12,7 @@ export * from './container/form-container/form-container.component';
 export * from './container/form-container/form-container.service';
 export * from './container/form-fields/form-fields.component';
 export * from './container/identifiers/identifiers.component';
+export * from './container/panel/panel.component';
 export * from './container/table/table.component';
 export * from './forms.service';
 
