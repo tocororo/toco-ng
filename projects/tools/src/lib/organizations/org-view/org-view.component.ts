@@ -1,10 +1,10 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
-import { OperationAction, PanelContent, FormFieldType, TextInputAppearance } from '@toco/tools/forms';
+import { OperationAction, FormFieldType, TextInputAppearance, PanelContent_Depr } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-view',
@@ -24,7 +24,7 @@ export class OrgViewComponent implements OnInit
 	public org: Organization;
 
 	public formGroup: FormGroup;
-	public panels: PanelContent[];
+	public panelsContent: PanelContent_Depr[];
 
 	public constructor(private _router: Router, private _activatedRoute: ActivatedRoute)
 	{
@@ -41,7 +41,7 @@ export class OrgViewComponent implements OnInit
 		);
 
 		/* Creates the controls. */
-		this.panels = [
+		this.panelsContent = [
 			{
 				title: "Muestra la organización seleccionada",
 				description: "",

@@ -1,7 +1,6 @@
 
 import { Input } from '@angular/core';
 
-import { FormFieldType, FormFieldContent } from '../form-field.control';
 import { InputContent } from '../input/input.control';
 
 /**

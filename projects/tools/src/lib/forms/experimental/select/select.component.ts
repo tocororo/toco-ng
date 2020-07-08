@@ -6,7 +6,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
+import { Common } from '@toco/tools/core';
+
 import { FormFieldControl_Experimental } from '../form-field.control.experimental';
+import { InputControl } from '../../input/input.control';
 
 export interface SelectOption
 {
@@ -27,28 +30,32 @@ export interface SelectOption
 		'[style.width]': 'content.width'
 	}
 })
-export class SelectComponent extends FormFieldControl_Experimental implements OnInit {
-
-	public internalControl = new FormControl();
-
+export class SelectComponent extends InputControl/*FormFieldControl_Experimental*/ implements OnInit
+{
 	public selectOptions: SelectOption[];
+
+	public multiple: boolean = false;
 
 	selectedValue: any;
 
-	multiple = false;
-
 	public constructor()
 	{
-		super();
+        super(
+            /* Constructs a new `FormControl` instance. */
+            new FormControl(Common.emptyString)
+        );
 
 		this.selectOptions = null;
 	}
 
 	public ngOnInit(): void
 	{
+        /* Sets the default values. */
+//		this.init(undefined, false, true);
+
 		this.multiple = this.content.extraContent['multiple'] ? this.content.extraContent['multiple'] : false;
 
-//		this.content.parentFormSection.addControl(this.content.name, this.internalControl);
+//		this.content.parentFormSection.addControl(this.content.name, this.formControl);
 
 		if (this.content.extraContent.observable)
 		{
@@ -73,7 +80,7 @@ export class SelectComponent extends FormFieldControl_Experimental implements On
 			this.selectOptions = this.content.extraContent.getOptions();
 		}
 
-		this.internalControl.setValue(this.content.value);
+		this.formControl.setValue(this.content.value);
 		this.onSelectionChange();
 	}
 

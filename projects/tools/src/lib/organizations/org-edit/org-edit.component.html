@@ -1,10 +1,16 @@
+<!-- <toco-form-container 
+    [panelsContent]="panelsContent"
+    [useAccordion]="false"
+    [useContainer]="true"
+    [actionButtonIsStepperNext]="false"
+    [formGroup]="formGroup">
+</toco-form-container> -->
 
 <toco-form-container 
-    [panels]="panelsContent"
+    [panelsContent]="panelsContent"
     [useAccordion]="false"
-    [useContainer] = "true"
-    [actionButtonIsStepperNext] = "false"
-    [formGroup]="formGroup">
+    [useContainer]="true"
+    [actionButtonIsStepperNext]="false">
 </toco-form-container>
 
 <button mat-raised-button color="primary" (click)="doOperationAction(operationAction.cancel)">Cancel</button>

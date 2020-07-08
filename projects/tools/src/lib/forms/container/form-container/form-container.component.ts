@@ -30,11 +30,6 @@ export interface PanelContent_Depr extends ContainerContent
     iconName: string;
 
     /**
-     * Returns the panel's content.
-     */
-//    content: any[];
-
-    /**
      * Returns the action and action labels for each panel. 
      */
     action?: FormContainerAction;
@@ -57,7 +52,7 @@ export interface PanelContent_Depr extends ContainerContent
 export class FormContainerComponent extends ContainerControl implements OnInit, OnChanges
 {
     /**
-     * Input field that contains the content of this class. The array of panels to show. TODO: Should this be an observable?, any change in the panels? 
+     * Input field that contains the content of this class. The array of panels to show. 
      */
     @Input()
     public panelsContent: PanelContent_Depr[];
@@ -110,9 +105,17 @@ export class FormContainerComponent extends ContainerControl implements OnInit, 
 
     public ngOnInit(): void
     {
-        console.log("on INIT", this.panelsContent);
+        console.log("on INIT call", this.panelsContent);
 
-		/* Sets the default values. */
+        /* Sets the default values. */
+        this.content = {
+            name: "FormContainerComponent",
+            label: "FormContainerComponent_Label",
+            type: undefined,
+            value: 'FormContainerComponent',
+//            width: "100%",
+            ariaLabel: "FormContainerComponent"
+        };
         this.init(undefined, false, false);
 
         // if actionLabel is undefined, means that there is no actionLabel, the user must decide!!!
@@ -122,7 +125,7 @@ export class FormContainerComponent extends ContainerControl implements OnInit, 
 
     public ngOnChanges(): void
     {
-        console.log("on CHANGES Call", this.panelsContent)
+        console.log("on CHANGES call", this.panelsContent)
 
 //        this.setFormGroupToPanels();
     }

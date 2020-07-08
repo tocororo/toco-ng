@@ -1,7 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
-import { PanelContent, FormFieldType } from '@toco/tools/forms';
 import { FormGroup, FormBuilder } from '@angular/forms';
+
+import { FormFieldType, PanelContent_Depr } from '@toco/tools/forms';
 
 @Component({
   selector: 'toco-aggregations',
@@ -10,15 +11,16 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class AggregationsComponent implements OnInit {
 
-  panels: PanelContent[] = null;
-  formGroup: FormGroup;
+  public panels: PanelContent_Depr[];
+  public formGroup: FormGroup;
 
+  public constructor(private formBuilder: FormBuilder)
+  {
+    this.panels = null;
+  }
 
-  constructor(
-    private formBuilder: FormBuilder,
-  ) {}
-
-  ngOnInit() {
+  public ngOnInit(): void
+  {
     this.formGroup = this.formBuilder.group({});
 
     this.formGroup.valueChanges.subscribe(

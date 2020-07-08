@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
-import { PanelContent, FormFieldType, TextInputAppearance, OperationAction } from '@toco/tools/forms';
+import { PanelContent_Depr, FormFieldType, TextInputAppearance, OperationAction } from '@toco/tools/forms';
 import { SearchService } from '@toco/tools/backend';
 
 @Component({
@@ -26,7 +26,7 @@ export class OrgEditComponent implements OnInit
 
 	//TODO: el `formGroup` se coge por decorador ViewChild(toco-form-container). 
 	public formGroup: FormGroup;
-	public panelsContent: PanelContent[];
+	public panelsContent: PanelContent_Depr[];
 	// public action: FormContainerAction;
 	// public actionLabel: string;
 
@@ -353,6 +353,7 @@ export class OrgEditComponent implements OnInit
 	 */
 	public get isSubmitActionDisabled(): boolean
 	{
-		return this.formGroup.invalid;
+		return false;
+//		return this.formGroup.invalid;
 	}
 }

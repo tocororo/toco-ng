@@ -6,16 +6,11 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 
-import { FormFieldType } from '../../form-field.control';
-import { InputContent } from '../../input/input.control';
-import { ActionContent } from '../../action/action.control';
-import { FormFieldContent_Experimental } from '../../experimental/form-field.control.experimental';
-import { FormGroup } from '@angular/forms';
+import { FormFieldType, FormSection } from '../../form-field.control';
 
 /**
- * @description
- * This componente defines a form fields collection.
- * `fields` is an input atribute, that represents an array of `FormFieldContent` interface.
+ * This component represents a components' factory. 
+ * //TODO: Pensar en cómo hacer esto de forma dinámica con facilidades que brinda Angular. 
  */
 @Component({
     selector: 'toco-form-fields',
@@ -26,20 +21,31 @@ export class FormFieldsComponent implements OnInit
 {
     // TODO: for datepicker, !!!! use https://stackblitz.com/edit/angular-material2-year-picker-7z9k4t?file=app%2Fcustom-datepicker%2Fyear-picker-component%2Fyear-picker.component.html
 
-    @Input()
-    public fields: Array<InputContent | ActionContent | FormFieldContent_Experimental> | Array<any>;
+    /**
+     * Represents the `FormFieldType` enum for internal use. 
+     */
+    public readonly formFieldType: typeof FormFieldType;
 
+    /**
+     * Input field that contains the `FormSection` that represents the `FormGroup` or `FormArray` which the inserted control belongs to. 
+     */
     @Input()
-    public containerFormGroup: FormGroup;
+    public parentFormSection: FormSection;
 
-    public readonly formFieldType: typeof FormFieldType = FormFieldType;
+    /**
+     * Input field that represents an array of types which types inherit from `FormFieldContent` interface. 
+     */
+    @Input()
+    public fieldsContent: Array<any>;
 
     public constructor()
-    { }
+    {
+        this.formFieldType = FormFieldType;
+    }
 
     public ngOnInit(): void
     {
-        if (this.fields == undefined) this.fields = [];
-        console.log(this.fields);
+        if (this.fieldsContent == undefined) this.fieldsContent = [];
+        console.log('FormFieldsComponent: parentFormSection: ', this.parentFormSection, 'fieldsContent: ', this.fieldsContent);
     }
 }
