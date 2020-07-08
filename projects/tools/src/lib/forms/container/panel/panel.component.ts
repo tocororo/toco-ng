@@ -61,7 +61,7 @@ export class PanelComponent extends ContainerControl implements OnInit
 	{
         super(
             /* Constructs a new `FormGroup` instance. */
-            new FormGroup({ }, [ ])
+//            new FormGroup({ }, [ ])
         );
 	}
 

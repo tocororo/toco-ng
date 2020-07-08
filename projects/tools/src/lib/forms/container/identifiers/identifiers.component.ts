@@ -23,9 +23,9 @@ export class IdentifiersComponent extends ContainerControl implements OnInit
 	{
         super(
             /* Constructs a new `FormGroup` instance. */
-            new FormGroup({ }, [
-//                Validators.pattern('^[a-zA-Z\-\_]*$')
-            ])
+//             new FormGroup({ }, [
+// //                Validators.pattern('^[a-zA-Z\-\_]*$')
+//             ])
         );
 	}
 

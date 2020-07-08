@@ -4,8 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
-import { PanelContent_Depr, FormFieldType, TextInputAppearance, OperationAction } from '@toco/tools/forms';
-import { SearchService } from '@toco/tools/backend';
+import { PanelContent_Depr, FormFieldType, TextInputAppearance, OperationAction, FormSection } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-edit',
@@ -20,19 +19,23 @@ export class OrgEditComponent implements OnInit
 	public readonly operationAction: typeof OperationAction;
 
 	/**
+	 * Tracks the value and validity state of the internal child controls that contains the `toco-form-container` control. 
+	 */
+    public formSection: FormSection;
+
+	/**
 	 * Represents the current organization. 
 	 */
 	public org: Organization;
 
-	//TODO: el `formGroup` se coge por decorador ViewChild(toco-form-container). 
-	public formGroup: FormGroup;
 	public panelsContent: PanelContent_Depr[];
 	// public action: FormContainerAction;
 	// public actionLabel: string;
 
-	public constructor(private _router: Router, private _activatedRoute: ActivatedRoute, private _searchService: SearchService)
+	public constructor(private _router: Router, private _activatedRoute: ActivatedRoute)
 	{
 		this.operationAction = OperationAction;
+		this.formSection = new FormGroup({ }, [ ]);
 	}
 
 	public ngOnInit(): void
@@ -59,11 +62,11 @@ export class OrgEditComponent implements OnInit
 		// this.action = {
 		// 	doit(data: any): void
 		// 	{
-		// 		if (this.formGroup.valid)
+		// 		if (this.formSection.valid)
 		// 		{
-		// 			/* Gets the result from `formGroup`. */
+		// 			/* Gets the result from `formSection`. */
 		// 			// const result: Organization = new Organization();
-		// 			// result.load_from_data(this.formGroup.value);
+		// 			// result.load_from_data(this.formSection.value);
 		// 		}
 		// 	}
 		// };
@@ -92,12 +95,12 @@ export class OrgEditComponent implements OnInit
 				label: 'Institute status',
 				type: FormFieldType.select,
 				required: true,
-				value: this.org.status,
+				value: [this.org.status],
 				width: '45%',
 				appearance: TextInputAppearance.outline,
 				ariaLabel: "Institute status",
 				extraContent: {
-					multiple: false,
+					multiple: true,
 					getOptions: () => {
 						return [
 							{
@@ -353,7 +356,6 @@ export class OrgEditComponent implements OnInit
 	 */
 	public get isSubmitActionDisabled(): boolean
 	{
-		return false;
-//		return this.formGroup.invalid;
+		return this.formSection.invalid;
 	}
 }

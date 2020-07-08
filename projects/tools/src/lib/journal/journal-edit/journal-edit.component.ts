@@ -168,7 +168,8 @@ export class JournalEditComponent implements OnInit {
     this.indexesFormGroup = null;
   }
 
-  initStep0Identifiers() {
+  initStep0Identifiers()
+  {
     this.identifiersFormGroup = this.formBuilder.group({});
 
     this.identifiersPanel = [

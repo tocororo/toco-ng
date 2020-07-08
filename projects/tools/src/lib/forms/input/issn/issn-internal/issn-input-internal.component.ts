@@ -446,7 +446,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 	{
 		if (((event.target as Element).tagName.toLowerCase() != 'input') || (this.empty))
 		{
-			this._elementRef.nativeElement.querySelector<HTMLElement>('#first-group-input-element')!.focus();
+			this._elementRef.nativeElement.querySelector<HTMLElement>('.first-group-input-element')!.focus();
 		}
 	}
 
@@ -484,14 +484,14 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 		if (firstGroupValueLength == IssnValue.groupLength)
 		{
 			/* Sets the focus to the second group. */
-			if (this._firstGroup.valid) this._elementRef.nativeElement.querySelector<HTMLElement>('#second-group-input-element')!.focus();
+			if (this._firstGroup.valid) this._elementRef.nativeElement.querySelector<HTMLElement>('.second-group-input-element')!.focus();
 		}
 		else if (firstGroupValueLength > IssnValue.groupLength)
 		{
 			/* Sets the old value. */
 			this._firstGroup.setValue(this._firstGroupOldValue);
 			/* Sets the focus to the second group. */
-			if (this._firstGroup.valid) this._elementRef.nativeElement.querySelector<HTMLElement>('#second-group-input-element')!.focus();
+			if (this._firstGroup.valid) this._elementRef.nativeElement.querySelector<HTMLElement>('.second-group-input-element')!.focus();
 		}
 
 		/* The first group's value really changed. */

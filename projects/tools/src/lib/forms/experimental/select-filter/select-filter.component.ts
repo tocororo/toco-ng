@@ -3,166 +3,161 @@
  *   All rights reserved.
  */
 
-import { Component, OnInit, Input } from '@angular/core';
-import { FormFieldControl_Experimental } from '../form-field.control.experimental';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { SelectOption } from '../select/select.component';
 import { isArray } from 'util';
 
-
+import { FormFieldControl_Experimental } from '../form-field.control.experimental';
+import { SelectOption } from '../select/select.component';
 
 @Component({
-  selector: 'toco-select-filter',
-  templateUrl: './select-filter.component.html',
-  styleUrls: ['./select-filter.component.scss'],
-  host: {
-    '[style.minWidth]': 'content.minWidth',
-    '[style.width]': 'content.width'
-  }
+	selector: 'toco-select-filter',
+	templateUrl: './select-filter.component.html',
+	styleUrls: ['./select-filter.component.scss'],
+	host: {
+		'[style.minWidth]': 'content.minWidth',
+		'[style.width]': 'content.width'
+	}
 })
 export class SelectFilterComponent extends FormFieldControl_Experimental implements OnInit {
 
-  internalControl = new FormControl();
+	internalControl = new FormControl();
 
-  formControl = new FormControl();
+	formControl = new FormControl();
 
-  public selectOptions: SelectOption[] = null;
+	public selectOptions: SelectOption[] = null;
 
-  public chipsList: SelectOption[] = [];
+	public chipsList: SelectOption[] = [];
 
-  public filteredOptions: Observable<SelectOption[]>;
+	public filteredOptions: Observable<SelectOption[]>;
 
+	searchText = 'Seleccione las opciones';
+	selectedValue: any;
 
-  searchText = 'Seleccione las opciones';
-  selectedValue: any;
-  constructor() {
-    super();
-  }
-
-
-  multiple = false;
-
-  loading = true;
-
-  ngOnInit() {
-
-//    this.content.parentFormSection.addControl(this.content.name, this.internalControl);
+	public constructor()
+	{
+		super();
+	}
 
 
-    this.multiple = this.content.extraContent['multiple'] ? this.content.extraContent['multiple'] : false;
+	public multiple: boolean = false;
 
-    if (this.content.extraContent.observable) {
-      this.content.extraContent.observable.subscribe(
+	loading = true;
 
-        // next
-        (response: any) => {
+	public ngOnInit(): void
+	{
+		//    this.content.parentFormSection.addControl(this.content.name, this.internalControl);
 
-          this.selectOptions = this.content.extraContent.getOptions(response);
+		this.multiple = this.content.extraContent['multiple'] ? this.content.extraContent['multiple'] : false;
 
-          this.selectOptions.forEach(option => {
+		if (this.content.extraContent.observable) {
+			this.content.extraContent.observable.subscribe(
 
-            if (this.multiple) {
+				// next
+				(response: any) => {
 
-              try {
-                const index = this.content.value.indexOf(option.value);
-                if (index >= 0) {
-                  this.addChips(option);
-                }
-              } catch (error) {
-              }
+					this.selectOptions = this.content.extraContent.getOptions(response);
 
-            } else {
-              if (option.value == this.content.value) {
-                this.addChips(option);
-              }
-            }
+					this.selectOptions.forEach(option => {
 
-          });
-          if (this.multiple &&
-            (this.content.value == null ||
-              this.content.value == undefined ||
-              !isArray(this.content.value ) ) ) {
-        this.content.value = [];
-      }
+						if (this.multiple) {
 
-      this._updateFilteredOptions();
-      this.loading = false;
+							try {
+								const index = this.content.value.indexOf(option.value);
+								if (index >= 0) {
+									this.addChips(option);
+								}
+							} catch (error) {
+							}
 
-    },
+						} else {
+							if (option.value == this.content.value) {
+								this.addChips(option);
+							}
+						}
 
-    // error
-    (error: any) => { console.log(error); }
-      ,
+					});
+					if (this.multiple &&
+						(this.content.value == null ||
+							this.content.value == undefined ||
+							!isArray(this.content.value))) {
+						this.content.value = [];
+					}
 
-      // complete
-      () => { }
+					this._updateFilteredOptions();
+					this.loading = false;
 
-      );
-  } else {
-  this.selectOptions = this.content.extraContent.getOptions();
-}
+				},
 
-  }
+				// error
+				(error: any) => { console.log(error); }
+				,
 
-onSelectionChange() {
-  if (this.content.extraContent.selectionChange) {
-    this.content.extraContent.selectionChange(this.content.value);
-  }
-}
+				// complete
+				() => { }
 
+			);
+		}
+		else
+		{
+			this.selectOptions = this.content.extraContent.getOptions();
+		}
 
-addChips(item: SelectOption) {
+	}
 
-  if (this.multiple) {
-    this.chipsList.unshift(item);
-    this.content.value.unshift(item.value);
-  } else {
-    // if not is multiple, then the element in the chipsList goes back to the options
-    if (this.chipsList.length > 0) {
-      this.selectOptions.push(this.chipsList[0]);
-    }
-    this.chipsList = [item];
-    this.content.value = item.value;
-  }
+	onSelectionChange() {
+		if (this.content.extraContent.selectionChange) {
+			this.content.extraContent.selectionChange(this.content.value);
+		}
+	}
 
-  this.internalControl.setValue(this.content.value);
+	addChips(item: SelectOption) {
 
+		if (this.multiple) {
+			this.chipsList.unshift(item);
+			this.content.value.unshift(item.value);
+		} else {
+			// if not is multiple, then the element in the chipsList goes back to the options
+			if (this.chipsList.length > 0) {
+				this.selectOptions.push(this.chipsList[0]);
+			}
+			this.chipsList = [item];
+			this.content.value = item.value;
+		}
 
-  this.selectOptions = this.selectOptions.filter(option => option.value !== item.value);
+		this.internalControl.setValue(this.content.value);
 
-  this.formControl.setValue('');
-  this._updateFilteredOptions();
+		this.selectOptions = this.selectOptions.filter(option => option.value !== item.value);
 
-}
+		this.formControl.setValue('');
+		this._updateFilteredOptions();
+	}
 
+	removeChip(index: number) {
 
-removeChip(index: number) {
+		this.selectOptions.push(this.chipsList[index]);
 
-  this.selectOptions.push(this.chipsList[index]);
+		if (this.multiple) {
+			this.content.value = (this.content.value as []).filter((e: SelectOption) => e.value !== this.chipsList[index].value);
+		} else {
+			this.content.value = '';
+		}
 
-  if (this.multiple) {
-    this.content.value = (this.content.value as []).filter((e: SelectOption) => e.value !== this.chipsList[index].value);
-  } else {
-    this.content.value = '';
-  }
+		this.internalControl.setValue(this.content.value);
 
-  this.internalControl.setValue(this.content.value);
+		this.chipsList.splice(index, 1);
+		this._updateFilteredOptions();
+	}
 
-  this.chipsList.splice(index, 1);
-  this._updateFilteredOptions();
-}
-
-
-  private _updateFilteredOptions() {
-
-  this.filteredOptions = this.formControl.valueChanges.pipe<string, SelectOption[]>(
-    startWith(''),
-    map(value => {
-      const filterValue = (value) ? value.toLowerCase() : '';
-      return this.selectOptions.filter(option => option.label.toLowerCase().includes(filterValue));
-    }));
-}
-
+	private _updateFilteredOptions()
+	{
+		this.filteredOptions = this.formControl.valueChanges.pipe<string, SelectOption[]>(
+			startWith(''),
+			map(value => {
+				const filterValue = (value) ? value.toLowerCase() : '';
+				return this.selectOptions.filter(option => option.label.toLowerCase().includes(filterValue));
+			}));
+	}
 }

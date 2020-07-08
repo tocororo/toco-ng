@@ -1,11 +1,11 @@
 
-#text-mat-form-field
+.text-mat-form-field
 {
 	width: 100%;
 	cursor: text;
 }
 
-#input-text-element
+.input-text-element
 {
 	background: none;
 	border: none;
@@ -14,23 +14,23 @@
 	font: inherit;
 }
 
-#text-mat-icon-prefix
+.text-mat-icon-prefix
 {
 	margin-right: 8px;
 }
 
-#text-mat-icon-prefix.standard
+.text-mat-icon-prefix.standard
 {
 	position: relative;
 	top: 4px;
 }
 
-#text-mat-icon-suffix
+.text-mat-icon-suffix
 {
 	margin-left: 8px;
 }
 
-#text-mat-icon-suffix.standard
+.text-mat-icon-suffix.standard
 {
 	position: relative;
 	top: 4px;

@@ -85,10 +85,7 @@ export class FormContainerComponent extends ContainerControl implements OnInit, 
 
     public constructor()
     {
-        super(
-            /* Constructs a new `FormGroup` instance. */
-            new FormGroup({ }, [ ])
-        );
+        super();
 
         /* By default, the first panel is expanded. */
         this.step = 0;

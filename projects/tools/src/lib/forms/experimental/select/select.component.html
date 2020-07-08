@@ -1,12 +1,19 @@
 
+<!-- <mat-form-field appearance="outline">
+  <mat-label>Select</mat-label>
+  <mat-select>
+    <mat-option value="option">Option</mat-option>
+  </mat-select>
+</mat-form-field> -->
+
 <mat-form-field 
   *ngIf="selectOptions"
-  id="select-mat-form-field"
+  class="select-mat-form-field"
   [appearance]="content.appearance"
-  [formGroup]="parentFormSection">
+  [formGroup]="parentFormSection"
 >
   <mat-label>
-    {{content.label}}
+    {{ content.label }}
   </mat-label>
 
   <mat-select 
@@ -17,7 +24,6 @@
     [attr.aria-label]="content.ariaLabel"
     [(value)]="content.value"
     (selectionChange)="onSelectionChange()"
-    [formControlName]="content.name"
   >
     <mat-option 
       *ngFor="let option of selectOptions" 
@@ -35,7 +41,6 @@
     [attr.aria-label]="content.ariaLabel"
     [(value)]="content.value"
     (selectionChange)="onSelectionChange()"
-    [formControlName]="content.name"
   >
     <mat-option 
       *ngFor="let option of selectOptions" 

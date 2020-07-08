@@ -66,6 +66,7 @@ fxLayoutGap="1em" class="form-field-component">
 
         <container-identifiers *ngSwitchCase="formFieldType.identifiers" [parentFormSection]="parentFormSection" [content]="fieldContent"></container-identifiers>
 
+
         <input-url *ngSwitchCase="formFieldType.url" [parentFormSection]="parentFormSection" [content]="fieldContent"></input-url>
         
         <input-email *ngSwitchCase="formFieldType.email" [parentFormSection]="parentFormSection" [content]="fieldContent"></input-email>
@@ -82,14 +83,13 @@ fxLayoutGap="1em" class="form-field-component">
 
         <toco-textarea *ngSwitchCase="formFieldType.textarea" [content]="fieldContent"></toco-textarea>
 
-        <toco-select *ngSwitchCase="formFieldType.select" [content]="fieldContent"></toco-select>
+        <toco-select *ngSwitchCase="formFieldType.select" [parentFormSection]="parentFormSection" [content]="fieldContent"></toco-select>
 
         <toco-select-filter *ngSwitchCase="formFieldType.select_filter" [content]="fieldContent"></toco-select-filter>
 
         <toco-select-tree *ngSwitchCase="formFieldType.select_tree" [content]="fieldContent"></toco-select-tree>
 
         <input-text *ngSwitchDefault [parentFormSection]="parentFormSection" [content]="fieldContent"></input-text>
-
 
     </ng-container>
 

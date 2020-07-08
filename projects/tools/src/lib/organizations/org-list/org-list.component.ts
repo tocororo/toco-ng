@@ -1,11 +1,12 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { UserService, SortDirection, PageRequest, Page } from '@toco/tools/core';
-import { TableContent, TableComponent, CellContentWrap, InputContent, TextAlign, TextInputAppearance, IconValue, IconSource, HintPosition, HintValue, ContentPosition, InputTextComponent, ContainerContent, FormFieldType } from '@toco/tools/forms';
+import { TableContent, TableComponent, CellContentWrap, InputContent, TextAlign, TextInputAppearance, IconValue, IconSource, HintPosition, HintValue, ContentPosition, ContainerContent, FormFieldType, FormSection } from '@toco/tools/forms';
 import { HitList, Organization } from '@toco/tools/entities';
 import { OrganizationService, ENDPOINT_APIS } from '@toco/tools/backend';
 
@@ -16,6 +17,11 @@ import { OrganizationService, ENDPOINT_APIS } from '@toco/tools/backend';
 })
 export class OrgListComponent implements OnInit
 {
+	/**
+	 * Tracks the value and validity state of the internal child controls that contains the `container-identifiers` control. 
+	 */
+    public formSection: FormSection;
+
     /**
      * Contains the content of the `IdentifiersComponent` class. 
      */
@@ -43,7 +49,9 @@ export class OrgListComponent implements OnInit
 
     public constructor(private _router: Router, private _activatedRoute: ActivatedRoute, private _organizationService: OrganizationService)
     //public constructor(private _userService: UserService)
-	{ }
+	{
+        this.formSection = new FormGroup({ }, [ ]);
+    }
 
 	public ngOnInit(): void
 	{

@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
-import { OperationAction, FormFieldType, TextInputAppearance, PanelContent_Depr } from '@toco/tools/forms';
+import { OperationAction, FormFieldType, TextInputAppearance, PanelContent_Depr, FormSection } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-view',
@@ -19,16 +19,21 @@ export class OrgViewComponent implements OnInit
 	public readonly operationAction: typeof OperationAction;
 
 	/**
+	 * Tracks the value and validity state of the internal child controls that contains the `toco-form-container` control. 
+	 */
+    public formSection: FormSection;
+
+	/**
 	 * Represents the current organization. 
 	 */
 	public org: Organization;
 
-	public formGroup: FormGroup;
 	public panelsContent: PanelContent_Depr[];
 
 	public constructor(private _router: Router, private _activatedRoute: ActivatedRoute)
 	{
 		this.operationAction = OperationAction;
+		this.formSection = new FormGroup({ }, [ ]);
 	}
 
 	public ngOnInit(): void

@@ -8,18 +8,32 @@ import { FormControl } from '@angular/forms';
 
 import { Common } from '@toco/tools/core';
 
-import { FormFieldControl_Experimental } from '../form-field.control.experimental';
 import { InputControl } from '../../input/input.control';
 
+/**
+ * An interface that represents a selectable option. 
+ */
 export interface SelectOption
 {
+	/**
+	 * Returns the value that is stored internally. 
+	 */
 	value: any;
+
+	/**
+	 * Returns the label that is showed. 
+	 */
 	label: string;
+
+	/**
+	 * Returns true if this option is selected; otherwise, false. 
+	 */
 	// selected?: boolean;
 }
 
 /***
- * extraContent recibe una funcion llamada getOptions() que se encarga de contruir un SelectOption[]
+ * The `extraContent` recibe una funcion llamada getOptions() que se encarga de contruir un SelectOption[]. 
+ * Si es multiple, entonces el `value` es un array de valores. 
  */
 @Component({
 	selector: 'toco-select',
@@ -36,8 +50,6 @@ export class SelectComponent extends InputControl/*FormFieldControl_Experimental
 
 	public multiple: boolean = false;
 
-	selectedValue: any;
-
 	public constructor()
 	{
         super(
@@ -50,8 +62,10 @@ export class SelectComponent extends InputControl/*FormFieldControl_Experimental
 
 	public ngOnInit(): void
 	{
+		console.log('SelectComponent OnInit');
+		
         /* Sets the default values. */
-//		this.init(undefined, false, true);
+		this.init(undefined, false, false);
 
 		this.multiple = this.content.extraContent['multiple'] ? this.content.extraContent['multiple'] : false;
 
@@ -80,7 +94,6 @@ export class SelectComponent extends InputControl/*FormFieldControl_Experimental
 			this.selectOptions = this.content.extraContent.getOptions();
 		}
 
-		this.formControl.setValue(this.content.value);
 		this.onSelectionChange();
 	}
 
@@ -90,5 +103,7 @@ export class SelectComponent extends InputControl/*FormFieldControl_Experimental
 		{
 			this.content.extraContent.selectionChange(this.content.value);
 		}
+
+		console.log('Select value: ', this.formControl.value);
 	}
 }

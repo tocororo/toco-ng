@@ -1,17 +1,10 @@
 
-<!-- <toco-form-container 
-  [panels]="panels"
-  [useAccordion]="false"
-  [useContainer] = "true"
-  [actionButtonIsStepperNext] = "false"
-  [formGroup]="formGroup">
-</toco-form-container> -->
-
 <toco-form-container 
-    [panelsContent]="panelsContent"
-    [useAccordion]="false"
-    [useContainer]="true"
-    [actionButtonIsStepperNext]="false">
+  [formSection]="formSection"
+  [panelsContent]="panelsContent"
+  [useAccordion]="false"
+  [useContainer]="true"
+  [actionButtonIsStepperNext]="false">
 </toco-form-container>
 
 <mat-card *ngIf="org">

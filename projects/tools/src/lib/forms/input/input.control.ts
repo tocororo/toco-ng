@@ -375,10 +375,12 @@ export interface ContainerContent extends FormFieldContent
 export abstract class ContainerControl extends FormFieldControl
 {
 	/**
-	 * Tracks the value and validity state of the internal child controls that contains this control. 
+	 * Input field that tracks the value and validity state of the internal child controls 
+     * that contains this control. 
      * Implementation notes: 
      *  - Represents the `FormGroup` or `FormArray` that contains the child controls. 
 	 */
+    @Input()
     public formSection: FormSection;
 
     /**
@@ -389,14 +391,12 @@ export abstract class ContainerControl extends FormFieldControl
 
     /**
      * Constructs a new instance of this class. 
-     * @param fs An instance of the `FormGroup` or `FormArray` class that contains the internal child controls. 
-     * It tracks the value and validity state of the internal child controls. 
      */
-    public constructor(fs: FormSection)
+    public constructor()
     {
         super();
 
-        this.formSection = fs;
+        this.formSection = undefined;
         this.content = undefined;
     }
 
@@ -410,7 +410,7 @@ export abstract class ContainerControl extends FormFieldControl
     {
         if (this.formSection == undefined)
         {
-            throw new Error('There is not reference to the internal control; it must be a `FormGroup` or `FormArray`.');
+            throw new Error('There is not reference to the internal control (FormSection); it must be a `FormGroup` or `FormArray`.');
         }
 
         /* Sets the default values. */
