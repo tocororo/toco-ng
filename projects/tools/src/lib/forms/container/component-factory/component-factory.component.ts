@@ -13,11 +13,11 @@ import { FormFieldType, FormSection } from '../../form-field.control';
  * //TODO: Pensar en cómo hacer esto de forma dinámica con facilidades que brinda Angular. 
  */
 @Component({
-    selector: 'toco-form-fields',
-    templateUrl: './form-fields.component.html',
-    styleUrls: ['./form-fields.component.scss']
+    selector: 'component-factory',
+    templateUrl: './component-factory.component.html',
+    styleUrls: ['./component-factory.component.scss']
 })
-export class FormFieldsComponent implements OnInit
+export class ComponentFactory implements OnInit
 {
     // TODO: for datepicker, !!!! use https://stackblitz.com/edit/angular-material2-year-picker-7z9k4t?file=app%2Fcustom-datepicker%2Fyear-picker-component%2Fyear-picker.component.html
 
@@ -46,6 +46,6 @@ export class FormFieldsComponent implements OnInit
     public ngOnInit(): void
     {
         if (this.fieldsContent == undefined) this.fieldsContent = [];
-        console.log('FormFieldsComponent: parentFormSection: ', this.parentFormSection, 'fieldsContent: ', this.fieldsContent);
+        console.log('ComponentFactory: parentFormSection: ', this.parentFormSection, 'fieldsContent: ', this.fieldsContent);
     }
 }

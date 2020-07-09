@@ -3,7 +3,6 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { ContainerControl, ContainerContent } from '../../input/input.control';
 import { FormContainerAction } from '../form-container/form-container.component';
-import { FormGroup } from '@angular/forms';
 
 /**
  * An interface that represents the content of a panel. 
@@ -30,15 +29,20 @@ export interface PanelContent extends ContainerContent
      */
     action?: FormContainerAction;
     actionLabel?: string;
-
-    /**
-     * Returns true is the panel is open; otherwise, false. 
-     */
-    open?: boolean;
 }
 
 /**
  * Represents a control that contains a panel. 
+ * Usage notes: 
+ * - If the `PanelComponent` is not within a `ContainerControl`, it can be used as: 
+ * <container-panel [formSection]="formSection" [content]="identifiersContent"></container-panel>
+ * Where `formSection` is created in the constructor, for example, as this: 
+ * this.formSection = new FormGroup({ }, [ ]);
+ * - If the `PanelComponent` is within a `ContainerControl`, it must be used as: 
+ * <container-panel [parentFormSection]="parentFormSection" [formSection]="formSection" [content]="identifiersContent"></container-panel>
+ * Where `parentFormSection` is the `PanelComponent`'s parent `FormSection`, 
+ * and `formSection` is created in the constructor, for example, as this: 
+ * this.formSection = new FormGroup({ }, [ ]);
  */
 @Component({
 	selector: 'container-panel',
@@ -59,10 +63,7 @@ export class PanelComponent extends ContainerControl implements OnInit
 
 	public constructor()
 	{
-        super(
-            /* Constructs a new `FormGroup` instance. */
-//            new FormGroup({ }, [ ])
-        );
+        super();
 	}
 
 	public ngOnInit(): void

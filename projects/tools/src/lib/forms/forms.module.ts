@@ -10,8 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { IconService } from '@toco/tools/core';
 
+import { ComponentFactory } from './container/component-factory/component-factory.component';
 import { FormContainerComponent } from './container/form-container/form-container.component';
-import { FormFieldsComponent } from './container/form-fields/form-fields.component';
 import { IdentifiersComponent } from './container/identifiers/identifiers.component';
 import { PanelComponent } from './container/panel/panel.component';
 import { TableComponent } from './container/table/table.component';
@@ -35,8 +35,8 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
 
 @NgModule({
   declarations: [
+    ComponentFactory,
     FormContainerComponent,
-    FormFieldsComponent,
     IdentifiersComponent,
     PanelComponent,
     TableComponent,
@@ -63,8 +63,8 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
   ],
 
   exports: [
+    ComponentFactory,
     FormContainerComponent,
-    FormFieldsComponent,
     IdentifiersComponent,
     PanelComponent,
     TableComponent,

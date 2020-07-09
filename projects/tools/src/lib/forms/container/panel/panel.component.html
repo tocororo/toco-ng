@@ -1,56 +1,22 @@
 
 <!-- //TODO: Terminar de definir el template del panel. -->
 
-<mat-accordion *ngIf="(useAccordion)" class="toco-form-container" multi="true">
+<mat-card class="panel-mat-card" [ngStyle]="{'margin-bottom': '1em'}">
+    <mat-card-header>
+        <mat-card-title>
+            {{ content.title }}
+        </mat-card-title>
+        <mat-card-subtitle *ngIf="content.description">
+            {{ content.description }}
+            <mat-icon>{{ content.iconName }}</mat-icon>
+        </mat-card-subtitle>
+    </mat-card-header>
 
-    <mat-expansion-panel *ngFor="let panel of content; let newStep = index; let count=count"
-        [expanded]="panel.open" (opened)="setStep(newStep)">
+    <mat-card-content>
+        <component-factory [parentFormSection]="formSection" [fieldsContent]="content.formSectionContent"></component-factory>
+    </mat-card-content>
 
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                {{ panel.title }}
-            </mat-panel-title>
-            <mat-panel-description>
-                {{ panel.description }}
-                <mat-icon>{{ panel.iconName }}</mat-icon>
-            </mat-panel-description>
-        </mat-expansion-panel-header>
-
-        <toco-form-fields [fieldsContent]="panel.formSectionContent"></toco-form-fields>
-
-        <mat-action-row *ngIf="panel.actionLabel">
-            <!-- <button mat-button *ngIf="newStep > 0" color="warn" (click)="prevStep()">Anterior</button>
-            <button mat-button *ngIf="newStep != count-1" color="primary" (click)="nextStep()">Siguente</button> -->
-
-            <button *ngIf="panel.actionLabel" mat-button color="accent" (click)="panel.action.doit(newStep)">{{panel.actionLabel}}</button>
-            <!-- <button *ngIf="i == l-1 && actionButtonIsStepperNext" mat-button matStepperNext color="primary" (click)="doAction()">{{actionLabel}}</button> -->
-        </mat-action-row>
-
-    </mat-expansion-panel>
-
-    <button *ngIf="actionLabel" mat-raised-button color="primary" (click)="doAction()">{{actionLabel}}</button>
-</mat-accordion>
-
-<div *ngIf="(!useAccordion)" class="toco-form-container">
-    <div *ngFor="let panel of content; let i=index; let count=count">
-        <mat-card [ngStyle]="{'margin-bottom': '1em'}">
-            <mat-card-header>
-                <mat-card-title>
-                    {{ panel.title }}
-                </mat-card-title>
-                <mat-card-subtitle *ngIf="panel.description">
-                    {{ panel.description }}
-                    <mat-icon>{{ panel.iconName }}</mat-icon>
-                </mat-card-subtitle>
-            </mat-card-header>
-    
-            <mat-card-content>
-                <toco-form-fields [fieldsContent]="panel.formSectionContent"></toco-form-fields>
-            </mat-card-content>
-    
-            <mat-card-actions *ngIf="i == count-1 && actionLabel" fxLayout="row" fxLayoutAlign="end center">
-                <button mat-button color="primary" (click)="doAction()">{{ actionLabel }}</button>
-            </mat-card-actions>
-        </mat-card>
-    </div>
-</div>
+    <mat-card-actions *ngIf="actionLabel" fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button color="primary" (click)="doAction()">{{ actionLabel }}</button>
+    </mat-card-actions>
+</mat-card>

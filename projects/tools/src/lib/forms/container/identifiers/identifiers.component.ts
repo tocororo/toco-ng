@@ -1,6 +1,5 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 
 import { ContainerControl } from '../../input/input.control';
 import { IdentifierValue } from '../../input/identifier/identifier-value';
@@ -21,17 +20,12 @@ export class IdentifiersComponent extends ContainerControl implements OnInit
 {
 	public constructor()
 	{
-        super(
-            /* Constructs a new `FormGroup` instance. */
-//             new FormGroup({ }, [
-// //                Validators.pattern('^[a-zA-Z\-\_]*$')
-//             ])
-        );
+        super();
 	}
 
 	public ngOnInit(): void
 	{
 		/* Sets the default values. */
-        this.init(IdentifierValue.identifier_Label, false, true);
+        this.init('Identifiers', false, false);
 	}
 }

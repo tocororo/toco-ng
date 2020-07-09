@@ -8,9 +8,9 @@
  * Public API surface of forms. 
  */
 export * from './forms.module';
+export * from './container/component-factory/component-factory.component';
 export * from './container/form-container/form-container.component';
 export * from './container/form-container/form-container.service';
-export * from './container/form-fields/form-fields.component';
 export * from './container/identifiers/identifiers.component';
 export * from './container/panel/panel.component';
 export * from './container/table/table.component';

@@ -2,7 +2,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 import { ContainerContent, ContainerControl } from '../../input/input.control';
-import { FormGroup } from '@angular/forms';
 
 export interface FormContainerAction
 {
