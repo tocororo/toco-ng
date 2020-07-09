@@ -228,6 +228,7 @@ export enum FormFieldType
     /** A list of identifier controls. */
     identifiers = 'identifiers',
 
+
     /** A text control. */
     text = 'text',
 
@@ -276,15 +277,12 @@ export enum FormFieldType
  */
 export interface FormFieldContent
 {
-    //TODO: A final este campo se borra de aquí porque está en la clase `FormFieldControl`. 
-    /**
-     * Returns the `FormGroup` which this control belongs to. 
-     */
-    //formGroup?: FormGroup;
     /**
      * Returns the `FormSection` that represents the `FormGroup` or `FormArray` which this control belongs to. 
      */
     parentFormSection?: FormSection;
+
+
 
     /**
      * Returns the control's minimum width. 
@@ -364,6 +362,8 @@ export interface FormFieldContent
 export function defaultFormFieldContent(): FormFieldContent
 {
     return {
+        'parentFormSection': undefined,
+
         'minWidth': '15em',
         'width': '15em',
 
@@ -396,16 +396,10 @@ export abstract class FormFieldControl
     public readonly iconSource: typeof IconSource;
 
     /**
-     * Input field that contains the `FormSection` that represents the `FormGroup` or `FormArray` which this control belongs to. 
-     */
-    @Input()
-    public parentFormSection: FormSection;
-
-    /**
      * Input field that contains the content of this class. 
      */
     @Input()
-    public content: FormFieldContent;  /* content: any */
+    public content: FormFieldContent;
 
     /**
      * Constructs a new instance of this class. 
@@ -415,7 +409,6 @@ export abstract class FormFieldControl
         this.contentPosition = ContentPosition;
         this.iconSource = IconSource;
 
-        this.parentFormSection = undefined;
         this.content = undefined;
     }
 
@@ -470,23 +463,23 @@ export abstract class FormFieldControl
 	protected abstract initValue(): void;
 
 	/**
-	 * Adds the specified control as a child to the `parentFormSection`. 
+	 * Adds the specified control as a child to the `content.parentFormSection`. 
      * @param control Form control to be added. 
 	 */
 	protected addAsChildControl(control: AbstractControl): void
 	{
         console.log('Added childInputControl: ', control);
 
-        if(this.parentFormSection instanceof FormGroup)  /* `parentFormSection` is an instance of `FormGroup`. */
+        if(this.content.parentFormSection instanceof FormGroup)  /* `content.parentFormSection` is an instance of `FormGroup`. */
         {
-            this.parentFormSection.addControl(this.content.name, control);
+            this.content.parentFormSection.addControl(this.content.name, control);
         }
-        else  /* `parentFormSection` is an instance of `FormArray`. */
+        else  /* `content.parentFormSection` is an instance of `FormArray`. */
         {
             /* Updates the control's name to the correct name because the control has a `FormArray` as its parent. */
-            this.content.name = this.parentFormSection.length.toString(10);
+            this.content.name = this.content.parentFormSection.length.toString(10);
 
-            this.parentFormSection.push(control);
+            this.content.parentFormSection.push(control);
         }
 	}
 

@@ -17,11 +17,6 @@ import { OrganizationService, ENDPOINT_APIS } from '@toco/tools/backend';
 })
 export class OrgListComponent implements OnInit
 {
-	/**
-	 * Tracks the value and validity state of the internal child controls that contains the `container-identifiers` control. 
-	 */
-    public formSection: FormSection;
-
     /**
      * Contains the content of the `IdentifiersComponent` class. 
      */
@@ -49,12 +44,12 @@ export class OrgListComponent implements OnInit
 
     public constructor(private _router: Router, private _activatedRoute: ActivatedRoute, private _organizationService: OrganizationService)
     //public constructor(private _userService: UserService)
-	{
-        this.formSection = new FormGroup({ }, [ ]);
-    }
+	{ }
 
 	public ngOnInit(): void
 	{
+        console.log('OrgListComponent ngOnInit');
+
         this.identifiersContent = this._initIdentifiersContent();
 
         /* Sets an initial search value. */
@@ -73,6 +68,7 @@ export class OrgListComponent implements OnInit
     private _initIdentifiersContent(): ContainerContent
     {
         return {
+            'formSection': new FormGroup({ }, [ ]),
             'name': "identifiers",
             'label': "Organization Identifiers, different from GRID mapping",
             'type': FormFieldType.identifiers,

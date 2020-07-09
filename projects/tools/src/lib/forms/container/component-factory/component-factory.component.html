@@ -64,18 +64,18 @@ fxLayoutGap="1em" class="form-field-component">
             ></mat-datepicker>
         </mat-form-field>
 
-        <container-identifiers *ngSwitchCase="formFieldType.identifiers" [parentFormSection]="parentFormSection" [content]="fieldContent"></container-identifiers>
+        <container-identifiers *ngSwitchCase="formFieldType.identifiers" [content]="fieldContent"></container-identifiers>
 
 
-        <input-url *ngSwitchCase="formFieldType.url" [parentFormSection]="parentFormSection" [content]="fieldContent"></input-url>
+        <input-url *ngSwitchCase="formFieldType.url" [content]="fieldContent"></input-url>
         
-        <input-email *ngSwitchCase="formFieldType.email" [parentFormSection]="parentFormSection" [content]="fieldContent"></input-email>
+        <input-email *ngSwitchCase="formFieldType.email" [content]="fieldContent"></input-email>
 
-        <input-identifier *ngSwitchCase="formFieldType.identifier" [parentFormSection]="parentFormSection" [content]="fieldContent"></input-identifier>
+        <input-identifier *ngSwitchCase="formFieldType.identifier" [content]="fieldContent"></input-identifier>
 
-        <input-issn *ngSwitchCase="formFieldType.issn" [parentFormSection]="parentFormSection" [content]="fieldContent"></input-issn>
+        <input-issn *ngSwitchCase="formFieldType.issn" [content]="fieldContent"></input-issn>
 
-        <input-rnps *ngSwitchCase="formFieldType.rnps" [parentFormSection]="parentFormSection" [content]="fieldContent"></input-rnps>
+        <input-rnps *ngSwitchCase="formFieldType.rnps" [content]="fieldContent"></input-rnps>
 
         <toco-vocabulary *ngSwitchCase="formFieldType.vocabulary" [content]="fieldContent"></toco-vocabulary>
 
@@ -83,13 +83,13 @@ fxLayoutGap="1em" class="form-field-component">
 
         <toco-textarea *ngSwitchCase="formFieldType.textarea" [content]="fieldContent"></toco-textarea>
 
-        <toco-select *ngSwitchCase="formFieldType.select" [parentFormSection]="parentFormSection" [content]="fieldContent"></toco-select>
+        <toco-select *ngSwitchCase="formFieldType.select" [content]="fieldContent"></toco-select>
 
         <toco-select-filter *ngSwitchCase="formFieldType.select_filter" [content]="fieldContent"></toco-select-filter>
 
         <toco-select-tree *ngSwitchCase="formFieldType.select_tree" [content]="fieldContent"></toco-select-tree>
 
-        <input-text *ngSwitchDefault [parentFormSection]="parentFormSection" [content]="fieldContent"></input-text>
+        <input-text *ngSwitchDefault [content]="fieldContent"></input-text>
 
     </ng-container>
 

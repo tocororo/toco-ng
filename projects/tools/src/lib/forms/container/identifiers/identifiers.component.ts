@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ContainerControl } from '../../input/input.control';
-import { IdentifierValue } from '../../input/identifier/identifier-value';
 
 /**
  * Represents a control that contains a list of identifiers. 
@@ -25,6 +24,8 @@ export class IdentifiersComponent extends ContainerControl implements OnInit
 
 	public ngOnInit(): void
 	{
+		console.log('IdentifiersComponent ngOnInit');
+
 		/* Sets the default values. */
         this.init('Identifiers', false, false);
 	}

@@ -6,11 +6,15 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 
-import { FormFieldType, FormSection } from '../../form-field.control';
+import { FormFieldType } from '../../form-field.control';
 
 /**
  * This component represents a components' factory. 
  * //TODO: Pensar en cómo hacer esto de forma dinámica con facilidades que brinda Angular. 
+ * Entonces cuando esta clase sea modificada o desaparezca, el campo 
+ * `parentFormSection` sale de adentro del `content` para un campo `Input` dentro de la clase `FormFieldControl`, 
+ * `formSection` sale de adentro del `content` para un campo `Input` dentro de la clase `ContainerControl`, 
+ * `formControl` sale de adentro del `content` para un campo `Input` dentro de la clase `InputControl`. 
  */
 @Component({
     selector: 'component-factory',
@@ -27,12 +31,6 @@ export class ComponentFactory implements OnInit
     public readonly formFieldType: typeof FormFieldType;
 
     /**
-     * Input field that contains the `FormSection` that represents the `FormGroup` or `FormArray` which the inserted control belongs to. 
-     */
-    @Input()
-    public parentFormSection: FormSection;
-
-    /**
      * Input field that represents an array of types which types inherit from `FormFieldContent` interface. 
      */
     @Input()
@@ -46,6 +44,6 @@ export class ComponentFactory implements OnInit
     public ngOnInit(): void
     {
         if (this.fieldsContent == undefined) this.fieldsContent = [];
-        console.log('ComponentFactory: parentFormSection: ', this.parentFormSection, 'fieldsContent: ', this.fieldsContent);
+        console.log('ComponentFactory fieldsContent: ', this.fieldsContent);
     }
 }
