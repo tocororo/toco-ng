@@ -1,48 +1,15 @@
 
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { timer, Subscription } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { Common, BrowserSessionStorageService } from '@toco/tools/core';
-import { TableContent, TableComponent, CellContentWrap } from '@toco/tools/forms';
-
-interface PeriodicElement
-{
-    titulo: string;
-    issn: number;
-    status: boolean;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-    { titulo: 'Hydrogen', issn: 1, status: false },
-    { titulo: 'Helium', issn: 2, status: false },
-    //{ titulo: 'Lithium-1 Lithium-2 Lithium-3 Lithium-4 Lithium-5 Lithium-6 Lithium-1 Lithium-2 Lithium-3 Lithium-4 Lithium-5 Lithium-6 Lithium-1 Lithium-2 Lithium-3 Lithium-4 Lithium-5 Lithium-6 Lithium-1 Lithium-2 Lithium-3 Lithium-4 Lithium-5 Lithium-6', issn: 3, status: true },
-    //{ titulo: 'Lithium-1Lithium-2Lithium-3Lithium-4Lithium-5Lithium-6Lithium-1Lithium-2Lithium-3Lithium-4Lithium-5Lithium-6Lithium-1Lithium-2Lithium-3Lithium-4Lithium-5Lithium-6Lithium-1Lithium-2Lithium-3Lithium-4Lithium-5Lithium-6', issn: 3, status: true },
-    { titulo: 'Lithium1Lithium2Lithium3Lithium4Lithium5Lithium6Lithium1Lithium2Lithium3Lithium4Lithium5Lithium6Lithium1Lithium2Lithium3Lithium4Lithium5Lithium6Lithium1Lithium2Lithium3Lithium4Lithium5Lithium6', issn: 3, status: true },
-    { titulo: 'Beryllium', issn: 4, status: true },
-    { titulo: 'Boron', issn: 5, status: false },
-    { titulo: 'Carbon', issn: 6, status: true },
-    { titulo: 'Nitrogen', issn: 7, status: false },
-    { titulo: 'Oxygen', issn: 8, status: false },
-    { titulo: 'Fluorine', issn: 9, status: true },
-    { titulo: 'Neon', issn: 10, status: true },
-    { titulo: 'Hydrogen', issn: 11, status: false },
-    { titulo: 'Helium', issn: 12, status: false },
-    { titulo: 'Lithium', issn: 13, status: false },
-    { titulo: 'Beryllium', issn: 14, status: false },
-    { titulo: 'Boron', issn: 15, status: true },
-    { titulo: 'Carbon', issn: 16, status: false },
-    { titulo: 'Nitrogen', issn: 17, status: false },
-    { titulo: 'Oxygen', issn: 18, status: false },
-    { titulo: 'Fluorine', issn: 19, status: false },
-    { titulo: 'Neon', issn: 20, status: true }
-];
+import { BrowserSessionStorageService, UserService, SortDirection } from '@toco/tools/core';
+import { TableContent, TableComponent, CellContentWrap, InputContent, TextAlign, TextInputAppearance, IconValue, IconSource, HintPosition, HintValue, ContentPosition, InputTextComponent } from '@toco/tools/forms';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy
+export class AppComponent implements OnInit
 {
     title = 'Registro de Publicaciones Científicas';
 
@@ -50,33 +17,24 @@ export class AppComponent implements OnInit, OnDestroy
     // superior, en principio esta app puede usarse para otros osde
     organization = 'Ministerio de Educación Superior';
 
-	private _journalsObserver = {
-		next: (value: number) => {
-            /* Initializes the `page`. */
-            //this._tableControl.page = [];
-            this._tableControl.page = ELEMENT_DATA;
-		},
-        error: (err: any) => { Common.logError('initializing journals', AppComponent.name, err); },
-        complete: () => {
-            /* It finished the loading of the data. In this way, it hides the loading progress control. */
-            this._tableControl.loading = false;
+    /**
+     * The search filter. 
+     */
+	public searchContent: InputContent;
 
-            Common.logComplete('initializing journals', AppComponent.name);
-        }
-	};
-	
-    private _journalsSubscription: Subscription = null;
+    @ViewChild('input_search', { static: true })
+    private _inputSearch: InputTextComponent;
+
+    /**
+     * The sources list.
+     * Use this field to initialize only; to change value use the `_tableControl` field.
+     */
+    public tableContent: TableContent<any>;
 
     @ViewChild(TableComponent, { static: true })
     private _tableControl: TableComponent;
 
-    /**
-     * The journals list. 
-     * Use this field to initialize only; to change value use the `_tableControl` field. 
-     */
-    public content: TableContent;
-
-    public constructor(private _browserSessionStorageService: BrowserSessionStorageService)
+    public constructor(private _userService: UserService, private _browserSessionStorageService: BrowserSessionStorageService)
     {
         // Delete this ...
         _browserSessionStorageService.set('green123', 'green0123456789');
@@ -87,37 +45,73 @@ export class AppComponent implements OnInit, OnDestroy
 
     public ngOnInit(): void
     {
-        /* It begins the loading of the data. In this way, it shows the loading progress control. */
-        this._tableControl.loading = true;
 
-        this.content = {
-            'columnsObjectProperty': ['titulo', 'issn', 'status'],
-            'columnsHeaderText': ['Título', 'ISSN', 'Status'],
+        /* Sets an initial search value. */
+        //this._inputSearch.internalControl.setValue('cl');
+
+        /***************************/
+
+        this.searchContent = this._initSearchContent();
+        this.tableContent = this._initTableContent();
+
+        /***************************/
+
+        // this._tableControl.page.subscribe((value) => console.log('page', value));
+    }
+
+    private _initSearchContent(): InputContent
+    {
+        return {
+            'width': '65%',
+
+            'label': 'Write a text to search',
+    
+            'textAlign': TextAlign.left,
+            'ariaLabel': 'Search',
+    
+            'appearance': TextInputAppearance.outline,
+    
+            'prefixIcon': new IconValue(IconSource.external, ContentPosition.prefix, 'search'),
+    
+            'startHint': new HintValue(HintPosition.start, 'Searches when typing stops.')
+        };
+    }
+
+    private _initTableContent(): TableContent<any>
+    {
+        return {
+            'columnsObjectProperty': ['id', 'name', 'registrationDate'],
+            'columnsHeaderText': ['id', 'name', 'registrationDate'],
             'columnsWidth': ['60%', '22%', '18%'],
             'columnContentWrap': [CellContentWrap.ellipsis, CellContentWrap.ellipsis, CellContentWrap.responsible],
             'createCssClassesForRow': (rowData: any) => {
                 return {
-                    'new-release': rowData['status'],
-                    'selected-row': (rowData[this.content.propertyNameToIdentify]) == this._tableControl.selectedRow
+                    'new-release': rowData['version_to_review'],
+                    'selected-row': (rowData[this.tableContent.propertyNameToIdentify]) == this._tableControl.selectedRow
                 };
             },
-            'propertyNameToIdentify': 'issn',
+            'propertyNameToIdentify': 'id',
+
+            'filter': {
+                'search': this._inputSearch,
+                //'registration': undefined
+            },
+            'sort': {
+                'active': 'id',
+                'direction': SortDirection.desc
+            },
+            'pageIndex': 0,
             'pageSize': 5,
             'pageSizeOptions': [5, 10, 20, 50],
             //'hidePageSize': true,
-            'showFirstLastButtons': true
+            'showFirstLastButtons': true,
+
+            'endpoint': this._userService.page.bind(this._userService),
+
+            actions: [
+                { icon: 'visibility', route: 'view', tooltip: 'Ver' },
+                { icon: 'edit', route: 'edit', tooltip: 'Editar' },
+            ]
         };
-
-        this._journalsSubscription = timer(1500)
-            .subscribe(this._journalsObserver);
-    }
-
-    public ngOnDestroy(): void
-    {
-		/* Disposes the resources held by the subscription. */
-		if (this._journalsSubscription)
-		{
-			this._journalsSubscription.unsubscribe();
-		}
     }
 }

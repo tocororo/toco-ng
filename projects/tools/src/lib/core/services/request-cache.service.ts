@@ -1,80 +1,33 @@
 
-import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse } from '@angular/common/http';
 
-import { MessageService } from './message.service';
+/**
+ * Returns a constant that is used in the `HttpHeaders` to do request although the request exists in cache. 
+ */
+export const REFRESH_X_CACHE: string = 'refresh-x-cache';
 
 /**
- * Represents the request cache entry. 
+ * Represents the base abstract class for all services that implement the cachable URL request. 
+ * See `CachableUrl` service. 
  */
-export interface RequestCacheEntry
+export abstract class Cachable
 {
-	url: string;
-	response: HttpResponse<any>;
-	lastRead: number;
+    /**
+     * Returns a number greater than zero if the specified request is cachable; 
+	 * that number represents the maximum cache age in milliseconds. 
+	 * Return zero if the specified request is NOT cachable. 
+     * @param req The outgoing request object to handle. 
+     */
+    abstract isCachable(req: HttpRequest<any>): number
 }
 
 /**
  * Represents the base abstract class for all services that implement the request cache. 
- * See `RequestCacheWithMap` service. 
+ * See `RequestCacheDifferentTimeWithMap` service. 
  */
 export abstract class RequestCache
 {
 	abstract get(req: HttpRequest<any>): HttpResponse<any> | undefined;
 
-	abstract set(req: HttpRequest<any>, response: HttpResponse<any>): void
-}
-
-/**
- * Returns the maximum cache age in milliseconds. 
- */
-const maxAge: number = 30000;
-
-/**
- * A service that implements the request cache using `Map` collection. 
- */
-@Injectable({
-	providedIn: 'root'
-})
-export class RequestCacheWithMap implements RequestCache
-{
-	private _cache: Map<string, RequestCacheEntry>;
-
-	public constructor(private _messageService: MessageService)
-	{
-		this._cache = new Map<string, RequestCacheEntry>();
-	}
-
-	public get(req: HttpRequest<any>): HttpResponse<any> | undefined
-	{
-		const cached: RequestCacheEntry = this._cache.get(req.urlWithParams);
-
-		if (!cached)
-		{
-			return undefined;
-		}
-
-		if ((cached.lastRead + maxAge) < Date.now())  /* Found expired cached. */
-		{
-			/* Removes expired cache entry. */
-			this._cache.delete(req.urlWithParams);
-
-			this._messageService.add(`Found expired cached response for '${ req.urlWithParams }'.`);
-			return undefined;
-		}
-		else
-		{
-			this._messageService.add(`Found cached response for '${ req.urlWithParams }'.`);
-			return cached.response;
-		}
-	}
-
-	public set(req: HttpRequest<any>, response: HttpResponse<any>): void
-	{
-		this._messageService.add(`Caching response from '${ req.urlWithParams }'.`);
-
-		this._cache.set(req.urlWithParams, { url: req.urlWithParams, response, lastRead: Date.now() });
-
-		this._messageService.add(`Request cache size: ${ this._cache.size }.`);
-	}
+	abstract set(req: HttpRequest<any>, maxAgeInCache: number, response: HttpResponse<any>): void;
 }

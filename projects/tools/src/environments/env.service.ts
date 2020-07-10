@@ -3,8 +3,9 @@
  *   All rights reserved.
  */
 
-
 import { Injectable } from '@angular/core';
+
+import { Params } from '@toco/tools/core';
 
 @Injectable({
     providedIn: 'root'
@@ -21,6 +22,13 @@ export class EnvService {
     public oauthScope = '';
     public organizationUUID = '';
     public extraArgs: any = null;
-    constructor()
+
+    /**
+     * A collection of key/value elements, where the keys are cachable URLs, 
+     * and the values are maximum cache ages in milliseconds. 
+     */
+    public cachableUrls: Params<number>;
+
+    public constructor()
     { }
 }
