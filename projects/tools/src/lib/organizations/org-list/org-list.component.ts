@@ -66,7 +66,10 @@ export class OrgListComponent implements OnInit
 
         // this._tableControl.page.subscribe((value) => console.log('page', value));
     }
-    
+
+    /**
+     * Returns the identifiers' content. 
+     */
     private _initIdentifiersContent(): ContainerContent
     {
         return {

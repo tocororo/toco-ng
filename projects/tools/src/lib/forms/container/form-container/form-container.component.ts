@@ -101,16 +101,17 @@ export class FormContainerComponent extends ContainerControl implements OnInit, 
 
     public ngOnInit(): void
     {
-        console.log("on INIT call", this.panelsContent);
+        console.log('on INIT call', this.panelsContent);
 
         /* Sets the default values. */
         this.content = {
-            name: "FormContainerComponent",
-            label: "FormContainerComponent_Label",
-            type: undefined,
-            value: 'FormContainerComponent',
-//            width: "100%",
-            ariaLabel: "FormContainerComponent"
+            'formSection': this.panelsContent[0].formSection,
+            'name': 'FormContainerComponent',
+            'label': 'FormContainerComponent_Label',
+            'type': undefined,
+            'value': 'FormContainerComponent',
+//            'width': '100%',
+            'ariaLabel': 'FormContainerComponent'
         };
         this.init(undefined, false, false);
 
@@ -121,7 +122,7 @@ export class FormContainerComponent extends ContainerControl implements OnInit, 
 
     public ngOnChanges(): void
     {
-        console.log("on CHANGES call", this.panelsContent)
+        console.log('on CHANGES call', this.panelsContent)
 
 //        this.setFormGroupToPanels();
     }

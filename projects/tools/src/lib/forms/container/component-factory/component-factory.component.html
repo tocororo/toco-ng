@@ -66,6 +66,8 @@ fxLayoutGap="1em" class="form-field-component">
 
         <container-identifiers *ngSwitchCase="formFieldType.identifiers" [content]="fieldContent"></container-identifiers>
 
+        <container-panel *ngSwitchCase="formFieldType.panel" [content]="fieldContent"></container-panel>
+
 
         <input-url *ngSwitchCase="formFieldType.url" [content]="fieldContent"></input-url>
         

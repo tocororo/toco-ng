@@ -228,6 +228,10 @@ export enum FormFieldType
     /** A list of identifier controls. */
     identifiers = 'identifiers',
 
+    /** A panel control. */
+    panel = 'panel',
+
+
 
     /** A text control. */
     text = 'text',
@@ -279,6 +283,7 @@ export interface FormFieldContent
 {
     /**
      * Returns the `FormSection` that represents the `FormGroup` or `FormArray` which this control belongs to. 
+     * By default, its value is `undefined`. 
      */
     parentFormSection?: FormSection;
 

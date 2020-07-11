@@ -1,9 +1,7 @@
 
-<!-- //TODO: Terminar de definir el template del panel. -->
-
-<mat-card class="panel-mat-card" [ngStyle]="{'margin-bottom': '1em'}">
+<mat-card class="panel-mat-card" [formGroup]="content.formSection" [attr.aria-label]="content.ariaLabel">
     <mat-card-header>
-        <mat-card-title>
+        <mat-card-title *ngIf="content.title">
             {{ content.title }}
         </mat-card-title>
         <mat-card-subtitle *ngIf="content.description">
@@ -15,8 +13,4 @@
     <mat-card-content>
         <component-factory [fieldsContent]="content.formSectionContent"></component-factory>
     </mat-card-content>
-
-    <mat-card-actions *ngIf="actionLabel" fxLayout="row" fxLayoutAlign="end center">
-        <button mat-button color="primary" (click)="doAction()">{{ actionLabel }}</button>
-    </mat-card-actions>
 </mat-card>

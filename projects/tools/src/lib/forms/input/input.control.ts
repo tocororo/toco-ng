@@ -41,8 +41,8 @@ export interface InputContent extends FormFieldContent
 	/**
 	 * Tracks the value and validity state of the internal control that contains the text input. 
      * Implementation notes: There are two cases: 
-     *  - You only have the `this.formControl` field as the `InputEmailComponent` class. 
-     *  - You have the `this.formControl` and `InputControl.internalComponent` fields as the `InputIssnComponent` class. 
+     *  - You only have the `content.formControl` field as the `InputEmailComponent` class. 
+     *  - You have the `content.formControl` and `InputControl.internalComponent` fields as the `InputIssnComponent` class. 
      *  - It must be specified; otherwise, an exception is thrown. 
 	 */
     formControl?: FormControl;
@@ -378,6 +378,7 @@ export interface ContainerContent extends FormFieldContent
 
     /**
      * Returns an array of contents that represents the `FormSection`'s child controls. 
+     * By default, its value is `[]`. 
      */
     formSectionContent?: any[];
 }

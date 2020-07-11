@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
-import { PanelContent_Depr, FormFieldType, TextInputAppearance, OperationAction, FormSection } from '@toco/tools/forms';
+import { FormFieldType, TextInputAppearance, OperationAction, FormSection, PanelContent, ContainerContent, HintValue, HintPosition } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-edit',
@@ -19,23 +19,24 @@ export class OrgEditComponent implements OnInit
 	public readonly operationAction: typeof OperationAction;
 
 	/**
-	 * Tracks the value and validity state of the internal child controls that contains the `toco-form-container` control. 
-	 */
-    private formSection: FormSection;
-
-	/**
 	 * Represents the current organization. 
 	 */
-	public org: Organization;
+	private org: Organization;
 
-	public panelsContent: PanelContent_Depr[];
-	// public action: FormContainerAction;
-	// public actionLabel: string;
+	/**
+	 * Tracks the value and validity state of the internal child controls that contains this component. 
+	 */
+    private panelFormSection: FormSection;
+
+    /**
+     * Contains the panel's content. 
+     */
+	public panelContent: PanelContent;
 
 	public constructor(private _router: Router, private _activatedRoute: ActivatedRoute)
 	{
 		this.operationAction = OperationAction;
-		this.formSection = new FormGroup({ }, [ ]);
+		this.panelFormSection = new FormGroup({ }, [ ]);
 	}
 
 	public ngOnInit(): void
@@ -49,25 +50,17 @@ export class OrgEditComponent implements OnInit
 			}
 		)
 
-		/* Creates the controls. */
-		this.panelsContent = [
-			{
-				'formSection' : this.formSection,
-				'title': 'Edita la organización seleccionada',
-				'description': '',
-				'iconName': '',
-				'formSectionContent': this._getContent()
-			}
-		];
+		/* Creates the panel's content. */
+		this.panelContent = this._initPanelContent();
 
 		// this.action = {
 		// 	doit(data: any): void
 		// 	{
-		// 		if (this.formSection.valid)
+		// 		if (this.panelFormSection.valid)
 		// 		{
-		// 			/* Gets the result from `formSection`. */
+		// 			/* Gets the result from `panelFormSection`. */
 		// 			// const result: Organization = new Organization();
-		// 			// result.load_from_data(this.formSection.value);
+		// 			// result.load_from_data(this.panelFormSection.value);
 		// 		}
 		// 	}
 		// };
@@ -78,125 +71,138 @@ export class OrgEditComponent implements OnInit
     /**
      * Returns the panel's content. 
      */
-	private _getContent(): any[]
-	{
-		return [
-			{
-				'name': 'name',
-				'label': 'Name typically used to refer to the institute',
-				'type': FormFieldType.text,
-				'required': true,
-				'value': this.org.name,
-				'width': '100%',
-				'appearance': TextInputAppearance.outline,
-				'ariaLabel': 'Name typically used to refer to the institute'
-			},
-			{
-				'name': 'status',
-				'label': 'Institute status',
-				'type': FormFieldType.select,
-				'required': true,
-				'value': this.org.status,
-				'width': '45%',
-				'appearance': TextInputAppearance.outline,
-				'ariaLabel': 'Institute status',
-				'extraContent': {
-					'multiple': false,
-					'getOptions': () => {
-						return [
-							{
-								'label': 'Active',
-								'value': 'active'
-							},
-							{
-								'label': 'Closed',
-								'value': 'closed'
-							},
-							{
-								'label': 'Unknown',
-								'value': 'unknown'
-							}
-						];
+    private _initPanelContent(): PanelContent
+    {
+		return {
+			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
+			'formSection' : this.panelFormSection,
+			'name': 'panel',
+			'label': 'Edita la organización seleccionada',
+			'type': FormFieldType.panel,
+			'title': 'Edita la organización seleccionada',
+			'description': '',
+			'iconName': undefined /*''*/,
+			'formSectionContent': [
+				{
+					'name': 'name',
+					'label': 'Name typically used to refer to the institute',
+					'type': FormFieldType.text,
+					'required': true,
+					'value': this.org.name,
+					'width': '100%',
+					'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'Name typically used to refer to the institute'
+				},
+				{
+					'name': 'status',
+					'label': 'Institute status',
+					'type': FormFieldType.select,
+					'required': true,
+					'value': this.org.status,
+					'width': '45%',
+					'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'Institute status',
+					'extraContent': {
+						'multiple': false,
+						'getOptions': () => {
+							return [
+								{
+									'label': 'Active',
+									'value': 'active'
+								},
+								{
+									'label': 'Closed',
+									'value': 'closed'
+								},
+								{
+									'label': 'Unknown',
+									'value': 'unknown'
+								}
+							];
+						}
 					}
-				}
-			},
-			{
-				'name': 'wikipedia_url',
-				'label': 'URL of the wikipedia page for the institute',
-				'type': FormFieldType.url,
-				'required': false,
-				'value': this.org.wikipedia_url,
-				'width': '45%',
-				'appearance': TextInputAppearance.outline,
-				'ariaLabel': 'URL of the wikipedia page for the institute'
-			},
-			{
-				'name': 'email_address',
-				'label': 'Contact email address for the institute',
-				'type': FormFieldType.email,
-				'required': true,
-				'value': this.org.email_address,
-				'width': '45%',
-				'appearance': TextInputAppearance.outline,
-				'ariaLabel': 'Contact email address for the institute'
-			},
+				},
+
+				this._initIdentifiersContent(),
+
+				{
+					'name': 'wikipedia_url',
+					'label': 'URL of the wikipedia page for the institute',
+					'type': FormFieldType.url,
+					'required': false,
+					'value': this.org.wikipedia_url,
+					'width': '45%',
+					'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'URL of the wikipedia page for the institute'
+				},
+				{
+					'name': 'email_address',
+					'label': 'Contact email address for the institute',
+					'type': FormFieldType.email,
+					'required': true,
+					'value': this.org.email_address,
+					'width': '45%',
+					'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'Contact email address for the institute'
+				},
 
 
-			// {
-			// 	name: 'identifiers',
-			// 	label: 'Organization Identifiers, different from GRID mapping',
-			// 	type: FormFieldType.identifiers,
-			// 	required: true,
-			// 	value: undefined,
-			// 	width: '100%',
-			// 	appearance: TextInputAppearance.outline,
-			// 	ariaLabel: 'Organization Identifiers, different from GRID mapping',
-			// 	extraContent: [
-			// 		{
-			// 			name: 'name1',
-			// 			label: 'Name typically used to refer to the institute',
-			// 			type: FormFieldType.text,
-			// 			required: true,
-			// 			value: this.org.identifiers[0],
-			// 			width: '100%',
-			// 			appearance: TextInputAppearance.outline,
-			// 			ariaLabel: 'Name typically used to refer to the institute'
-			// 		},
-			// 		{
-			// 			name: 'name2',
-			// 			label: 'Name typically used to refer to the institute',
-			// 			type: FormFieldType.text,
-			// 			required: true,
-			// 			value: this.org.identifiers[1],
-			// 			width: '100%',
-			// 			appearance: TextInputAppearance.outline,
-			// 			ariaLabel: 'Name typically used to refer to the institute'
-			// 		},
-			// 		{
-			// 			name: 'name3',
-			// 			label: 'Name typically used to refer to the institute',
-			// 			type: FormFieldType.text,
-			// 			required: true,
-			// 			value: this.org.identifiers[2],
-			// 			width: '100%',
-			// 			appearance: TextInputAppearance.outline,
-			// 			ariaLabel: 'Name typically used to refer to the institute'
-			// 		}
-			// 	]
-			// },
+				// {
+				// 	name: 'identifiers',
+				// 	label: 'Organization Identifiers, different from GRID mapping',
+				// 	type: FormFieldType.identifiers,
+				// 	required: true,
+				// 	value: undefined,
+				// 	width: '100%',
+				// 	appearance: TextInputAppearance.outline,
+				// 	ariaLabel: 'Organization Identifiers, different from GRID mapping',
+				// 	extraContent: [
+				// 		{
+				// 			name: 'name1',
+				// 			label: 'Name typically used to refer to the institute',
+				// 			type: FormFieldType.text,
+				// 			required: true,
+				// 			value: this.org.identifiers[0],
+				// 			width: '100%',
+				// 			appearance: TextInputAppearance.outline,
+				// 			ariaLabel: 'Name typically used to refer to the institute'
+				// 		},
+				// 		{
+				// 			name: 'name2',
+				// 			label: 'Name typically used to refer to the institute',
+				// 			type: FormFieldType.text,
+				// 			required: true,
+				// 			value: this.org.identifiers[1],
+				// 			width: '100%',
+				// 			appearance: TextInputAppearance.outline,
+				// 			ariaLabel: 'Name typically used to refer to the institute'
+				// 		},
+				// 		{
+				// 			name: 'name3',
+				// 			label: 'Name typically used to refer to the institute',
+				// 			type: FormFieldType.text,
+				// 			required: true,
+				// 			value: this.org.identifiers[2],
+				// 			width: '100%',
+				// 			appearance: TextInputAppearance.outline,
+				// 			ariaLabel: 'Name typically used to refer to the institute'
+				// 		}
+				// 	]
+				// },
 
 
-			// {
-			// 	name: 'description',
-			// 	label: 'Descripción',
-			// 	type: FormFieldType.textarea,
-			// 	required: false,
-			// 	value: this.data.term.description
-			// 		? this.data.term.description
-			// 		: null,
-			// 	width: '100%'
-			// }
-		];
+				// {
+				// 	name: 'description',
+				// 	label: 'Descripción',
+				// 	type: FormFieldType.textarea,
+				// 	required: false,
+				// 	value: this.data.term.description
+				// 		? this.data.term.description
+				// 		: null,
+				// 	width: '100%'
+				// }
+			]
+		};
 
 			// case VocabulariesInmutableNames.DATABASES:
 			// 	return [
@@ -324,12 +330,67 @@ export class OrgEditComponent implements OnInit
 			// 	];
 	}
 
+    /**
+     * Returns the identifiers' content. 
+     */
+    private _initIdentifiersContent(): ContainerContent
+    {
+        return {
+            'formSection': new FormGroup({ }, [ ]),
+            'name': "identifiers",
+            'label': "Organization Identifiers, different from GRID mapping",
+            'type': FormFieldType.identifiers,
+            'required': true,
+            'width': "100%",
+//            'appearance': TextInputAppearance.outline,
+            'ariaLabel': "Organization Identifiers, different from GRID mapping",
+            'formSectionContent': [
+                {
+                    'name': 'isni',   //idtype
+                    'label': 'isni',  //idtype
+                    'type': FormFieldType.identifier,
+                    'required': true,
+                    'value': 'Un_id_isni',
+                    'width': '50%',
+                    'appearance': TextInputAppearance.outline,
+                    'ariaLabel': "Identificador isni",
+                    'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
+                },
+                {
+                    'name': 'grid',   //grid
+                    'label': 'grid',  //grid
+                    'type': FormFieldType.identifier,
+                    'required': true,
+                    'value': 'Un_id_grid',
+                    'width': '50%',
+                    'appearance': TextInputAppearance.outline,
+                    'ariaLabel': "Identificador grid",
+                    'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
+                },
+                // {
+                //     'name': 'issn',   //grid
+                //     'label': 'ISSN',  //grid
+                //     'type': FormFieldType.issn,
+                //     'required': true,
+                //     'value': undefined,
+                //     'width': '50%',
+                //     'appearance': TextInputAppearance.outline,
+                //     'ariaLabel': "ISSN",
+                //     'startHint': new HintValue(HintPosition.start, 'Haciendo una prueba con ISSN!')
+                // },
+            ]
+        };
+    }
+
 	/**
 	 * Does the tasks for the operation action. 
 	 * @param op The operation action. 
 	 */
 	public doOperationAction(op: OperationAction): void
 	{
+		console.log('panelFormSection', this.panelFormSection);
+		return;
+
 		if(op == OperationAction.submit)
 		{
 			//TODO: Do the tasks for the submit action. 
@@ -357,6 +418,6 @@ export class OrgEditComponent implements OnInit
 	 */
 	public get isSubmitActionDisabled(): boolean
 	{
-		return this.formSection.invalid;
+		return this.panelFormSection.invalid;
 	}
 }

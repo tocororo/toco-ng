@@ -6,11 +6,17 @@
   </mat-select>
 </mat-form-field> -->
 
+
+<!-- <mat-form-field 
+  *ngIf="selectOptions"
+  class="select-mat-form-field"
+  [appearance]="content.appearance"
+  [formGroup]="content.parentFormSection"
+> -->
 <mat-form-field 
   *ngIf="selectOptions"
   class="select-mat-form-field"
   [appearance]="content.appearance"
-  [formGroup]="parentFormSection"
 >
   <mat-label>
     {{ content.label }}
