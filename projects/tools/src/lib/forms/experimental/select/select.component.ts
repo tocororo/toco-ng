@@ -13,7 +13,7 @@ import { InputControl } from '../../input/input.control';
 /**
  * An interface that represents a selectable option. 
  */
-export interface SelectOption
+interface SelectOption
 {
 	/**
 	 * Returns the label that is showed. 
@@ -46,15 +46,24 @@ export interface SelectOption
 })
 export class SelectComponent extends InputControl/*FormFieldControl_Experimental*/ implements OnInit
 {
+	/**
+	 * Returns the options list that can be selected. 
+	 * By default, its value is `[]`. 
+	 */
 	public selectOptions: SelectOption[];
 
-	public multiple: boolean = false;
+	/**
+	 * Returns true if the selection can be multiple; otherwise, false. 
+	 * By default, its value is `false`. 
+	 */
+	public multiple: boolean;
 
 	public constructor()
 	{
         super();
 
-		this.selectOptions = undefined;
+		this.selectOptions = [ ];
+		this.multiple = false;
 	}
 
 	public ngOnInit(): void
@@ -63,13 +72,27 @@ export class SelectComponent extends InputControl/*FormFieldControl_Experimental
 
         /* Sets this `content.formControl` by default. */
         if (this.content.formControl == undefined) this.content.formControl = new FormControl(Common.emptyString);
-		
+
         /* Sets the default values. */
 		this.init(undefined, false, false);
 
-		this.multiple = this.content.extraContent['multiple'] ? this.content.extraContent['multiple'] : false;
+		this.onSelectionChange();
+	}
 
-//		this.content.parentFormSection.addControl(this.content.name, this.content.formControl);
+    /**
+     * Initializes the `content` input property. 
+     * @param label The label to set. If the value is `undefined`, sets the label to `content.label`. 
+     * @param isAbbreviation If it is true then the `label` argument represents an abbreviation; otherwise, false. 
+     * @param alwaysHint If it is true then there is always at leat one hint start-aligned. 
+     */
+    protected init(label: string | undefined, isAbbreviation: boolean, alwaysHint: boolean): void
+    {
+        /* Sets the default values. */
+
+		super.init(label, isAbbreviation, alwaysHint);
+
+//		if (this.content.appearance == undefined) this.content.appearance = false;
+		this.multiple = this.content.extraContent['multiple'] ? this.content.extraContent['multiple'] : false;
 
 		if (this.content.extraContent.observable)
 		{
@@ -93,13 +116,11 @@ export class SelectComponent extends InputControl/*FormFieldControl_Experimental
 		{
 			this.selectOptions = this.content.extraContent.getOptions();
 		}
-
-		this.onSelectionChange();
-	}
+    }
 
 	public onSelectionChange(): void
 	{
-		if (this.content.extraContent.selectionChange)
+		if ((this.content.extraContent) && (this.content.extraContent.selectionChange))
 		{
 			this.content.extraContent.selectionChange(this.content.value);
 		}

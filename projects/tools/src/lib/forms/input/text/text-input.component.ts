@@ -2,8 +2,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-import { InputControl } from '../input.control';
 import { Common } from '@toco/tools/core';
+
+import { InputControl } from '../input.control';
 
 /**
  * Represents a control that allows the writing of a text. 

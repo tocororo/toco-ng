@@ -34,6 +34,7 @@ export * from './input/issn/issn-value';
 export * from './input/issn/issn-input.component';
 export * from './input/rnps/rnps-value';
 export * from './input/rnps/rnps-input.component';
+export * from './input/select/select-input.component';
 export * from './input/text/text-input.component';
 export * from './input/url/url-value';
 export * from './input/url/url-input.component';

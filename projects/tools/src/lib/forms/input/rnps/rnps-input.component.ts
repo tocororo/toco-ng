@@ -2,10 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
-import { InputControl } from '../input.control';
-import { RnpsValue } from './rnps-value';
 import { ExtraValidators } from '@toco/tools/core';
 import { Common } from '@toco/tools/core';
+
+import { InputControl } from '../input.control';
+import { RnpsValue } from './rnps-value';
 
 /**
  * Represents a control that allows the writing of an RNPS. 

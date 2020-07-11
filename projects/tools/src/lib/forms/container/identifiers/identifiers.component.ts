@@ -27,7 +27,7 @@ export class IdentifiersComponent extends ContainerControl implements OnInit
 		console.log('IdentifiersComponent ngOnInit');
 
 		/* Sets the default values. */
-        this.init('Identifiers', false, false);
+        this.init(undefined, false, false);
 	}
 
     /**

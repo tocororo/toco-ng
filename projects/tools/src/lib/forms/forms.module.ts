@@ -22,6 +22,7 @@ import { InputEmailComponent } from './input/email/email-input.component';
 import { InputIssnInternalComponent } from './input/issn/issn-internal/issn-input-internal.component';
 import { InputIssnComponent } from './input/issn/issn-input.component';
 import { InputRnpsComponent } from './input/rnps/rnps-input.component';
+import { InputSelectComponent } from './input/select/select-input.component';
 import { InputUrlComponent } from './input/url/url-input.component';
 import { InputChipsComponent } from './input/chips/chips-input.component';
 
@@ -46,6 +47,7 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
     InputIssnInternalComponent,
     InputIssnComponent,
     InputRnpsComponent,
+    InputSelectComponent,
     InputUrlComponent,
     InputChipsComponent,
     VocabularyComponent,
@@ -73,6 +75,7 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
     InputIdentifierComponent,
     InputIssnComponent,
     InputRnpsComponent,
+    InputSelectComponent,
     InputUrlComponent,
     InputChipsComponent,
     VocabularyComponent,

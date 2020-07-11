@@ -4,7 +4,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ContainerControl, ContainerContent } from '../../input/input.control';
 
 /**
- * An interface that represents the content of a panel. 
+ * An interface that represents the content of a panel control. 
  * Implementation notes: 
  *  - Maybe the 'label' and 'title' fields have the same values, but they are different fields 
  * with different functionalities; you need both in the implementation code. 
@@ -68,7 +68,7 @@ export class PanelComponent extends ContainerControl implements OnInit
 	public ngOnInit(): void
 	{
 		/* Sets the default values. */
-        this.init('Panel', false, false);
+        this.init(undefined, false, false);
     }
 
     /**

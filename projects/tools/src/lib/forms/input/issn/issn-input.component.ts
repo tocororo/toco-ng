@@ -1,8 +1,9 @@
 
 import { Component, OnInit } from '@angular/core';
 
-import { InputControl } from '../input.control';
 import { IssnType_Abbreviation, IssnValue } from './issn-value';
+
+import { InputControl } from '../input.control';
 
 /**
  * Represents a control that allows the writing of an ISSN. 

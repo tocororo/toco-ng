@@ -4,13 +4,14 @@
  */
 
 import { Component, OnInit } from "@angular/core";
-import { FormFieldControl_Experimental } from "../form-field.control.experimental";
 import { FormControl } from "@angular/forms";
 import { FlatTreeControl } from "@angular/cdk/tree";
 import { MatTreeFlattener, MatTreeFlatDataSource } from "@angular/material";
 import { SelectionModel } from "@angular/cdk/collections";
 import { of } from "rxjs";
-import { SelectOption } from "../select/select.component";
+
+import { FormFieldControl_Experimental } from "../form-field.control.experimental";
+import { SelectOption } from '../../input/select/select-input.component';
 
 export interface SelectOptionNode {
   element: SelectOption;

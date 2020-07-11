@@ -101,7 +101,7 @@
       },
       "established": {
         "type": "integer",
-        "description": "he year the institute opened, CE"
+        "description": "The year the institute opened, CE"
       },
       "links": {
         "type": "array",

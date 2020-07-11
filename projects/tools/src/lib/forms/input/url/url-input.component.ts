@@ -2,9 +2,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
+import { Common } from '@toco/tools/core';
+
 import { InputControl } from '../input.control';
 import { UrlValue } from './url-value';
-import { Common } from '@toco/tools/core';
 
 /**
  * Represents a control that allows the writing of a url. 

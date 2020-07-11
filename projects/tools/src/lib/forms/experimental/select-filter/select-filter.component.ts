@@ -10,7 +10,7 @@ import { startWith, map } from 'rxjs/operators';
 import { isArray } from 'util';
 
 import { FormFieldControl_Experimental } from '../form-field.control.experimental';
-import { SelectOption } from '../select/select.component';
+import { SelectOption } from '../../input/select/select-input.component';
 
 @Component({
 	selector: 'toco-select-filter',

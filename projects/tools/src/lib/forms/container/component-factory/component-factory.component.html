@@ -79,13 +79,15 @@ fxLayoutGap="1em" class="form-field-component">
 
         <input-rnps *ngSwitchCase="formFieldType.rnps" [content]="fieldContent"></input-rnps>
 
+        <input-select *ngSwitchCase="formFieldType.select" [content]="fieldContent"></input-select>
+
         <toco-vocabulary *ngSwitchCase="formFieldType.vocabulary" [content]="fieldContent"></toco-vocabulary>
 
         <toco-term-parent *ngSwitchCase="formFieldType.term_parent" [content]="fieldContent"></toco-term-parent>
 
         <toco-textarea *ngSwitchCase="formFieldType.textarea" [content]="fieldContent"></toco-textarea>
 
-        <toco-select *ngSwitchCase="formFieldType.select" [content]="fieldContent"></toco-select>
+        <!-- <toco-select *ngSwitchCase="formFieldType.select" [content]="fieldContent"></toco-select> -->
 
         <toco-select-filter *ngSwitchCase="formFieldType.select_filter" [content]="fieldContent"></toco-select-filter>
 
