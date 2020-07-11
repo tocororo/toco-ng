@@ -1,8 +1,9 @@
 
-<mat-form-field class="issn-mat-form-field" [appearance]="content.appearance" [formGroup]="content.parentFormSection">
+<mat-form-field class="issn-mat-form-field" [appearance]="content.appearance">
     <mat-label>{{ content.label }}</mat-label>
 
-    <input-issn-internal #internalComponent [required]="content.required" [style.textAlign]="content.textAlign" [attr.aria-label]="content.ariaLabel" (input)="handleInput()" [formControlName]="content.name"></input-issn-internal>
+    <input-issn-internal #internalComponent [required]="content.required" [style.textAlign]="content.textAlign" [attr.aria-label]="content.ariaLabel" (input)="handleInput()"></input-issn-internal>
+    <!-- <input-issn-internal #internalComponent [required]="content.required" [style.textAlign]="content.textAlign" [attr.aria-label]="content.ariaLabel" (input)="handleInput()" [formControlName]="content.name"></input-issn-internal> -->
 
     <!-- At the moment of writing this code (2019-08-03), I think that there is an error in `ng-container` or 
          `mat-icon` or something related because I can not put the `mat-icon` tag within an `ng-container` tag 

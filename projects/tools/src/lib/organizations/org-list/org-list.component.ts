@@ -21,6 +21,7 @@ export class OrgListComponent implements OnInit
      * Contains the content of the `IdentifiersComponent` class. 
      */
     public identifiersContent: ContainerContent;
+    // public identifiersContent_Complex: ContainerContent;
 
 	// @Input()
 	// public hitList: HitList<Organization>;
@@ -51,6 +52,7 @@ export class OrgListComponent implements OnInit
         console.log('OrgListComponent ngOnInit');
 
         this.identifiersContent = this._initIdentifiersContent();
+        // this.identifiersContent_Complex = this._initIdentifiersContent_Complex();
 
         /* Sets an initial search value. */
         //this._inputSearch.formControl.setValue('cl');
@@ -100,6 +102,91 @@ export class OrgListComponent implements OnInit
                     'ariaLabel': "Identificador grid",
                     'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
                 },
+                {
+                    'name': 'issn',   //grid
+                    'label': 'ISSN',  //grid
+                    'type': FormFieldType.issn,
+                    'required': true,
+                    //'value': 'Un_id_grid',
+                    'width': '50%',
+                    'appearance': TextInputAppearance.outline,
+                    'ariaLabel': "ISSN",
+                    'startHint': new HintValue(HintPosition.start, 'Un ISSN!')
+                },
+            ]
+        };
+    }
+
+    private _initIdentifiersContent_Complex(): ContainerContent
+    {
+        return {
+            'formSection': new FormGroup({ }, [ ]),
+            'name': "identifiers_1",
+            'label': "Organization Identifiers 1, different from GRID mapping",
+            'type': FormFieldType.identifiers,
+            'required': true,
+            'value': undefined,
+            'width': "100%",
+//            'appearance': TextInputAppearance.outline,
+            'ariaLabel': "Organization Identifiers 1, different from GRID mapping",
+            'formSectionContent': [
+                {
+                    'name': 'isni',   //idtype
+                    'label': 'isni',  //idtype
+                    'type': FormFieldType.identifier,
+                    'required': true,
+                    'value': 'Un_id_isni',
+                    'width': '50%',
+                    'appearance': TextInputAppearance.outline,
+                    'ariaLabel': "Identificador isni",
+                    'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
+                },
+                {
+                    'name': 'grid',   //grid
+                    'label': 'grid',  //grid
+                    'type': FormFieldType.identifier,
+                    'required': true,
+                    'value': 'Un_id_grid',
+                    'width': '50%',
+                    'appearance': TextInputAppearance.outline,
+                    'ariaLabel': "Identificador grid",
+                    'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
+                },
+                {
+                    'formSection': new FormGroup({ }, [ ]),
+                    'name': "identifiers_2",
+                    'label': "Organization Identifiers 2, different from GRID mapping",
+                    'type': FormFieldType.identifiers,
+                    'required': true,
+                    'value': undefined,
+                    'width': "100%",
+        //            'appearance': TextInputAppearance.outline,
+                    'ariaLabel': "Organization Identifiers 2, different from GRID mapping",
+                    'formSectionContent': [
+                        {
+                            'name': 'isni',   //idtype
+                            'label': 'isni',  //idtype
+                            'type': FormFieldType.identifier,
+                            'required': true,
+                            'value': 'Un_id_isni',
+                            'width': '50%',
+                            'appearance': TextInputAppearance.outline,
+                            'ariaLabel': "Identificador isni",
+                            'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
+                        },
+                        {
+                            'name': 'grid',   //grid
+                            'label': 'grid',  //grid
+                            'type': FormFieldType.identifier,
+                            'required': true,
+                            'value': 'Un_id_grid',
+                            'width': '50%',
+                            'appearance': TextInputAppearance.outline,
+                            'ariaLabel': "Identificador grid",
+                            'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
+                        },
+                    ]
+                }
             ]
         };
     }
@@ -184,6 +271,11 @@ export class OrgListComponent implements OnInit
 	
 	public doOperation(): void
 	{
-		this._router.navigate(['organizaciones/adicionar']);
+        console.log('identifiersContent.parentFormSection: ', this.identifiersContent.parentFormSection);
+        console.log('identifiersContent.formSection: ', this.identifiersContent.formSection);
+        // console.log('identifiersContent.parentFormSection: ', this.identifiersContent_Complex.parentFormSection);
+        // console.log('identifiersContent.formSection: ', this.identifiersContent_Complex.formSection);
+
+//		this._router.navigate(['organizaciones/adicionar']);
 	}
 }

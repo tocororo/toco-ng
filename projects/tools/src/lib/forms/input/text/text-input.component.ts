@@ -21,14 +21,16 @@ export class InputTextComponent extends InputControl implements OnInit
 {
     public constructor()
     {
-        super(
-            /* Constructs a new `FormControl` instance. */
-            new FormControl(Common.emptyString)
-        );
+        super();
     }
 
     public ngOnInit(): void
     {
+        console.log('Debuguear esto...');
+
+        /* Sets this `content.formControl` by default. */
+        if (this.content.formControl == undefined) this.content.formControl = new FormControl(Common.emptyString);
+
         /* Sets the default values. */
         this.init(undefined, false, true);
     }

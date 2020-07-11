@@ -409,7 +409,8 @@ export abstract class FormFieldControl
         this.contentPosition = ContentPosition;
         this.iconSource = IconSource;
 
-        this.content = undefined;
+        /* It must be initialize. */
+        this.content = { };
     }
 
     /**
@@ -421,8 +422,6 @@ export abstract class FormFieldControl
     protected init(label: string | undefined, isAbbreviation: boolean, alwaysHint: boolean): void
     {
         /* Sets the default values. */
-
-        if (this.content == undefined) this.content = { };
 
         if (label == undefined)
         {

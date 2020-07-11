@@ -16,14 +16,14 @@ import { InputControl } from '../../input/input.control';
 export interface SelectOption
 {
 	/**
-	 * Returns the value that is stored internally. 
-	 */
-	value: any;
-
-	/**
 	 * Returns the label that is showed. 
 	 */
 	label: string;
+
+	/**
+	 * Returns the value that is stored internally. 
+	 */
+	value: any;
 
 	/**
 	 * Returns true if this option is selected; otherwise, false. 
@@ -52,24 +52,24 @@ export class SelectComponent extends InputControl/*FormFieldControl_Experimental
 
 	public constructor()
 	{
-        super(
-            /* Constructs a new `FormControl` instance. */
-            new FormControl(Common.emptyString)
-        );
+        super();
 
-		this.selectOptions = null;
+		this.selectOptions = undefined;
 	}
 
 	public ngOnInit(): void
 	{
 		console.log('SelectComponent OnInit');
+
+        /* Sets this `content.formControl` by default. */
+        if (this.content.formControl == undefined) this.content.formControl = new FormControl(Common.emptyString);
 		
         /* Sets the default values. */
 		this.init(undefined, false, false);
 
 		this.multiple = this.content.extraContent['multiple'] ? this.content.extraContent['multiple'] : false;
 
-//		this.content.parentFormSection.addControl(this.content.name, this.formControl);
+//		this.content.parentFormSection.addControl(this.content.name, this.content.formControl);
 
 		if (this.content.extraContent.observable)
 		{
@@ -104,6 +104,6 @@ export class SelectComponent extends InputControl/*FormFieldControl_Experimental
 			this.content.extraContent.selectionChange(this.content.value);
 		}
 
-		console.log('Select value: ', this.formControl.value);
+		console.log('Select value: ', this.content.formControl.value);
 	}
 }

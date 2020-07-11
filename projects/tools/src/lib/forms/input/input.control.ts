@@ -186,7 +186,6 @@ export abstract class InputControl extends FormFieldControl
         super();
 
         this.validationError_required = '';
-        this.content = undefined;
     }
 
     /**
@@ -400,8 +399,6 @@ export abstract class ContainerControl extends FormFieldControl
     public constructor()
     {
         super();
-
-        this.content = undefined;
     }
 
     /**

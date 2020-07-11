@@ -31,19 +31,19 @@ export class InputRnpsComponent extends InputControl implements OnInit
 
     public constructor()
     {
-        super(
-            /* Constructs a new `FormControl` instance. */
-            new FormControl(Common.emptyString, [
-                ExtraValidators.equalLength(RnpsValue.codeLength),
-                Validators.pattern('^[0-9]*$')
-            ])
-        );
-
-        this._codeOldValue = this.formControl.value;
+        super();
     }
 
     public ngOnInit(): void
     {
+        /* Sets this `content.formControl` by default. */
+        if (this.content.formControl == undefined) this.content.formControl = new FormControl(Common.emptyString, [
+            ExtraValidators.equalLength(RnpsValue.codeLength),
+            Validators.pattern('^[0-9]*$')
+        ])
+
+        this._codeOldValue = this.content.formControl.value;
+
         /* Sets the default values. */
         this.init(RnpsValue.rnps_Abbreviation, true, true);
     }
@@ -55,7 +55,7 @@ export class InputRnpsComponent extends InputControl implements OnInit
     {
         let result: string = Common.emptyString;
         let result_alreadyHaveErrorInfo: boolean = false;
-        let validationErrors: ValidationErrors = this.formControl.errors;
+        let validationErrors: ValidationErrors = this.content.formControl.errors;
 
         /* Shows the code errors. */
         if (validationErrors)
@@ -92,15 +92,15 @@ export class InputRnpsComponent extends InputControl implements OnInit
 	 */
 	public handleSpecificInput(): void
 	{
-		if (this.formControl.value.length > RnpsValue.codeLength)
+		if (this.content.formControl.value.length > RnpsValue.codeLength)
 		{
 			/* Sets the old value. */
-			this.formControl.setValue(this._codeOldValue);
+			this.content.formControl.setValue(this._codeOldValue);
         }
         else
         {
             /* Updates the old values. */
-            this._codeOldValue = this.formControl.value;
+            this._codeOldValue = this.content.formControl.value;
         }
     }
 }

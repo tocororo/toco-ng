@@ -18,7 +18,7 @@
 
   <mat-select 
     *ngIf="multiple" multiple
-    [formControl]="formControl"
+    [formControl]="content.formControl"
     [required]="content.required"
     [style.textAlign]="content.textAlign"
     [attr.aria-label]="content.ariaLabel"
@@ -35,7 +35,7 @@
 
   <mat-select 
     *ngIf="!multiple"
-    [formControl]="formControl"
+    [formControl]="content.formControl"
     [required]="content.required"
     [style.textAlign]="content.textAlign"
     [attr.aria-label]="content.ariaLabel"

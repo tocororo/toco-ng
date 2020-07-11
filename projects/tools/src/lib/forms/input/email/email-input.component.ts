@@ -22,16 +22,16 @@ export class InputEmailComponent extends InputControl implements OnInit
 {
     public constructor()
     {
-        super(
-            /* Constructs a new `FormControl` instance. */
-            new FormControl(Common.emptyString, [
-                Validators.email
-            ])
-        );
+        super();
     }
 
     public ngOnInit(): void
     {
+        /* Sets this `content.formControl` by default. */
+        if (this.content.formControl == undefined) this.content.formControl = new FormControl(Common.emptyString, [
+            Validators.email
+        ])
+
         /* Sets the default values. */
         this.init(EmailValue.email_Label, false, true);
     }
@@ -41,7 +41,7 @@ export class InputEmailComponent extends InputControl implements OnInit
      */
     public getErrorMessage(): string
     {
-        let validationErrors: ValidationErrors = this.formControl.errors;
+        let validationErrors: ValidationErrors = this.content.formControl.errors;
 
         /* Shows the email errors. */
         if (validationErrors)

@@ -25,11 +25,14 @@ export class InputIssnComponent extends InputControl implements OnInit
 
 	public constructor()
 	{
-		super(undefined);
+		super();
 	}
 
 	public ngOnInit(): void
 	{
+        /* Sets this `content.formControl` by default. */
+		if (this.content.formControl == undefined) this.content.formControl = undefined;
+		
         /* Sets the default values. */
 		this.init(IssnType_Abbreviation.ISSN, true, true);
 	}

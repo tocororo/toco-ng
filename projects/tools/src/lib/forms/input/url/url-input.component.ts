@@ -22,17 +22,17 @@ export class InputUrlComponent extends InputControl implements OnInit
 {
     public constructor()
     {
-        super(
-            /* Constructs a new `FormControl` instance. */
-            new FormControl(Common.emptyString, [
-                Validators.pattern(/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/i)
-                //Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/i)
-            ])
-        );
+        super();
     }
 
     public ngOnInit(): void
     {
+        /* Sets this `content.formControl` by default. */
+        if (this.content.formControl == undefined) this.content.formControl = new FormControl(Common.emptyString, [
+            Validators.pattern(/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/i)
+            //Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/i)
+        ]);
+
         /* Sets the default values. */
         this.init(UrlValue.url_Label, false, true);
     }
@@ -42,7 +42,7 @@ export class InputUrlComponent extends InputControl implements OnInit
      */
     public getErrorMessage(): string
     {
-        let validationErrors: ValidationErrors = this.formControl.errors;
+        let validationErrors: ValidationErrors = this.content.formControl.errors;
 
         /* Shows the url errors. */
         if (validationErrors)
