@@ -14,7 +14,6 @@ export * from './container/form-container/form-container.service';
 export * from './container/panel/panel-container.component';
 export * from './container/simple/simple-container.component';
 export * from './container/table/table.component';
-export * from './forms.service';
 
 export * from './experimental/select/select.component';
 export * from './experimental/select-filter/select-filter.component';

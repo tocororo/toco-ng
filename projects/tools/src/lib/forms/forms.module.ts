@@ -15,7 +15,6 @@ import { FormContainerComponent } from './container/form-container/form-containe
 import { ContainerPanelComponent } from './container/panel/panel-container.component';
 import { ContainerSimpleComponent } from './container/simple/simple-container.component';
 import { TableComponent } from './container/table/table.component';
-import { FormsService } from './forms.service';
 
 import { InputTextComponent } from './input/text/text-input.component';
 import { InputEmailComponent } from './input/email/email-input.component';
@@ -85,9 +84,7 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
     TextareaComponent
   ],
 
-  providers: [
-    FormsService
-  ]
+  providers: []
 })
 export class TocoFormsModule {
   public constructor(private _iconService: IconService) {
