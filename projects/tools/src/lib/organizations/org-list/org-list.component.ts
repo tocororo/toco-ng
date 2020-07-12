@@ -49,8 +49,6 @@ export class OrgListComponent implements OnInit
 
 	public ngOnInit(): void
 	{
-        console.log('OrgListComponent ngOnInit');
-
         this.identifiersContent = this._initIdentifiersContent();
         // this.identifiersContent_Complex = this._initIdentifiersContent_Complex();
 
@@ -279,6 +277,6 @@ export class OrgListComponent implements OnInit
         // console.log('identifiersContent.parentFormSection: ', this.identifiersContent_Complex.parentFormSection);
         // console.log('identifiersContent.formSection: ', this.identifiersContent_Complex.formSection);
 
-//		this._router.navigate(['organizaciones/adicionar']);
+		this._router.navigate(['organizaciones/adicionar']);
 	}
 }

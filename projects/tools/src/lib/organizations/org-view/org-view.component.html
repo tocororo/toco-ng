@@ -1,35 +1,6 @@
 
-<toco-form-container 
-  [panelsContent]="panelsContent"
-  [useAccordion]="false"
-  [useContainer]="true"
-  [actionButtonIsStepperNext]="false">
-</toco-form-container>
+<container-panel [content]="panelContent"></container-panel>
 
-<mat-card *ngIf="org">
-  <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title class="title-padding">{{ org.name }}</mat-card-title>
-    <mat-card-subtitle class="title-padding">Iroko Organization UUID: {{ org.id }}</mat-card-subtitle>
-    <mat-card-subtitle class="cursor-default title-padding" [ngStyle]="{'backgroundColor': 'green', 'color': 'white'}">
-      Institute Status: {{ org.status }}</mat-card-subtitle>
-  </mat-card-header>
+<h3>Add the rest of content to `panelContent.formSectionContent` field!</h3>
 
-  <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-
-  <mat-card-content>
-    <input-chips [desc]="'A list of other names the institute is known as'"
-      [items]="org.aliases"></input-chips>
-    <input-chips [desc]="'A list of short acronyms the institute is known as'"
-      [items]="org.acronyms"></input-chips>
-    <input-chips [desc]="'A list of types describing the institute'"
-      [items]="org.types"></input-chips>
-
-    <!-- <component-factory [fieldsContent]="content"></component-factory> -->
-    <p>Add more components here!</p>
-  </mat-card-content>
-
-  <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="doOperationAction(operationAction.back)">Go Back</button>
-  </mat-card-actions>
-</mat-card>
+<button mat-raised-button color="primary" (click)="doOperationAction(operationAction.back)">Go Back</button>

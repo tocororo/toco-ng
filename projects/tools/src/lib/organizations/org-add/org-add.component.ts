@@ -1,10 +1,10 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
-import { OperationAction } from '@toco/tools/forms';
+import { OperationAction, FormSection, PanelContent, FormFieldType } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-add',
@@ -23,19 +23,46 @@ export class OrgAddComponent implements OnInit
 	 */
 	public org: Organization;
 
-	public formGroup: FormGroup;
+	/**
+	 * Tracks the value and validity state of the internal child controls that contains this component. 
+	 */
+	private panelFormSection: FormSection;
+	
+    /**
+     * Contains the panel's content. 
+     */
+	public panelContent: PanelContent;
 
-	public constructor(private _router: Router, private _activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder)
+	public constructor(private _router: Router, private _activatedRoute: ActivatedRoute)
 	{
 		this.operationAction = OperationAction;
+		this.panelFormSection = new FormGroup({ }, [ ]);
 	}
 
 	public ngOnInit()
 	{
-		/* Creates the controls. */
-		this.formGroup = this._formBuilder.group({});
+		/* Creates the panel's content. */
+		this.panelContent = this._initPanelContent();
+	}
 
-		//TODO: Create the controls that contains the `formGroup`. 
+    /**
+     * Returns the panel's content. 
+     */
+    private _initPanelContent(): PanelContent
+    {
+		return {
+			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
+			'formSection' : this.panelFormSection,
+			'name': 'panel',
+			'label': 'Adiciona una nueva organización',
+			'type': FormFieldType.panel,
+			'title': 'Adiciona una nueva organización',
+			'description': '',
+			'iconName': undefined /*''*/,
+			'formSectionContent': [
+				//TODO: Poner los campos.'
+			]
+		};
 	}
 
 	/**
@@ -59,6 +86,6 @@ export class OrgAddComponent implements OnInit
 	 */
 	public get isSubmitActionDisabled(): boolean
 	{
-		return this.formGroup.invalid;
+		return this.panelFormSection.invalid;
 	}
 }

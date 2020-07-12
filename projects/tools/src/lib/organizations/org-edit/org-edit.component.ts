@@ -57,7 +57,7 @@ export class OrgEditComponent implements OnInit
 			(data: { 'org': Organization }) => {
 				this.org = data.org;
 
-				console.log('Data showed for editing: ', this.org);
+				console.log('Data got for editing: ', this.org);
 			}
 		)
 
