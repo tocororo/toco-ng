@@ -27,8 +27,6 @@ export class InputTextComponent extends InputControl implements OnInit
 
     public ngOnInit(): void
     {
-        console.log('Debuguear esto...');
-
         /* Sets this `content.formControl` by default. */
         if (this.content.formControl == undefined) this.content.formControl = new FormControl(Common.emptyString);
 

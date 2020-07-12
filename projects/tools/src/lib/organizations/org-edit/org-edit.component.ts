@@ -33,10 +33,21 @@ export class OrgEditComponent implements OnInit
      */
 	public panelContent: PanelContent;
 
+    /**
+     * Contains the addresses panel's content. 
+     */
+	public addressesPanelContent: PanelContent;
+
+	/**
+	 * Tracks the value and validity state of the internal child controls that contains this component. 
+	 */
+    private addressesPanelFormSection: FormSection;
+
 	public constructor(private _router: Router, private _activatedRoute: ActivatedRoute)
 	{
 		this.operationAction = OperationAction;
 		this.panelFormSection = new FormGroup({ }, [ ]);
+		this.addressesPanelFormSection = new FormGroup({ }, [ ]);
 	}
 
 	public ngOnInit(): void
@@ -46,12 +57,15 @@ export class OrgEditComponent implements OnInit
 			(data: { 'org': Organization }) => {
 				this.org = data.org;
 
-				console.log(this.org);
+				console.log('Data showed for editing: ', this.org);
 			}
 		)
 
 		/* Creates the panel's content. */
 		this.panelContent = this._initPanelContent();
+
+		/* Creates the addresses panel's content. */
+		this.addressesPanelContent = this._initAddressesPanelContent();
 
 		// this.action = {
 		// 	doit(data: any): void
@@ -245,6 +259,10 @@ export class OrgEditComponent implements OnInit
 					'multiple': true
 				},
 
+				//TODO: Poner el campo 'labels.'
+
+				//TODO: Poner el campo 'relationships.'
+
 
 				// {
 				// 	name: 'description',
@@ -256,6 +274,139 @@ export class OrgEditComponent implements OnInit
 				// 		: null,
 				// 	width: '100%'
 				// }
+			]
+		};
+	}
+
+	/**
+     * Returns the addresses panel's content. 
+     */
+    private _initAddressesPanelContent(): PanelContent
+    {
+		return {
+			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
+			'formSection' : this.addressesPanelFormSection,
+			'name': 'addressesPanel',
+			'label': 'An array of addresses associated with the institute',
+			'type': FormFieldType.panel,
+			'title': 'An array of addresses associated with the institute',
+			'description': '',
+			'iconName': undefined /*''*/,
+			'formSectionContent': [
+				{
+					'name': 'city',
+					'label': 'The name of the city',
+					'type': FormFieldType.text,
+					'required': true,
+					'value': this.org.addresses[0].city,
+					'width': '45%',
+					'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'The name of the city'
+				},
+				{
+					'name': 'country',
+					'label': 'The name of the country',
+					'type': FormFieldType.text,
+					'required': true,
+					'value': this.org.addresses[0].country,
+					'width': '45%',
+					'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'The name of the country'
+				},
+				{
+					'name': 'country_code',
+					'label': 'The ISO 3166-1 alpha-2 code of the country',
+					'type': FormFieldType.text,
+					'required': true,
+					'value': this.org.addresses[0].country_code,
+					'width': '45%',
+					'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'The ISO 3166-1 alpha-2 code of the country'
+				},
+				{
+					'name': 'lat',
+					'label': 'Latitute of the institute',
+					'type': FormFieldType.text,
+					'required': true,
+					'value': this.org.addresses[0].lat,
+					'width': '45%',
+					'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'Latitute of the institute'
+				},
+				{
+					'name': 'lng',
+					'label': 'Longitude of the institute',
+					'type': FormFieldType.text,
+					'required': true,
+					'value': this.org.addresses[0].lng,
+					'width': '45%',
+					'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'Longitude of the institute'
+				},
+				{
+					'name': 'line_1',
+					'label': 'First line of the address',
+					'type': FormFieldType.text,
+					'required': true,
+					'value': this.org.addresses[0].line_1,
+					'width': '45%',
+					'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'First line of the address'
+				},
+				{
+					'name': 'line_2',
+					'label': 'Second line of the address',
+					'type': FormFieldType.text,
+					'required': false,
+					'value': this.org.addresses[0].line_2,
+					'width': '45%',
+					'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'Second line of the address'
+				},
+				{
+					'name': 'line_3',
+					'label': 'Third line of the address',
+					'type': FormFieldType.text,
+					'required': false,
+					'value': this.org.addresses[0].line_3,
+					'width': '45%',
+					'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'Third line of the address'
+				},
+				{
+					'name': 'postcode',
+					'label': 'The postcode/zipcode',
+					'type': FormFieldType.text,
+					'required': true,
+					'value': this.org.addresses[0].postcode,
+					'width': '45%',
+					'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'The postcode/zipcode'
+				},
+
+				//TODO: Poner aquí el campo 'primary' de tipo 'boolean' (checkbox). 
+
+				{
+					'name': 'state',
+					'label': 'The name of the state/region',
+					'type': FormFieldType.text,
+					'required': true,
+					'value': this.org.addresses[0].state,
+					'width': '45%',
+					'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'The name of the state/region'
+				},
+				{
+					'name': 'state_code',
+					'label': 'The ISO 3166-2 region code',
+					'type': FormFieldType.text,
+					'required': true,
+					'value': this.org.addresses[0].state_code,
+					'width': '45%',
+					'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'The ISO 3166-2 region code'
+				},
+				//TODO: Poner el resto de los campos. 
 			]
 		};
 	}
@@ -342,7 +493,15 @@ export class OrgEditComponent implements OnInit
 		// 		}
 		// 	]
 		// };
-    }
+	}
+	
+    /**
+     * Returns the addresses' content. 
+     */
+    private _initAddressesContent(): ContainerContent
+    {
+		return {};
+	}
 
 	/**
 	 * Does the tasks for the operation action. 
@@ -351,6 +510,7 @@ export class OrgEditComponent implements OnInit
 	public doOperationAction(op: OperationAction): void
 	{
 		console.log('panelFormSection', this.panelFormSection);
+		console.log('addressesPanelFormSection', this.addressesPanelFormSection);
 		return;
 
 		if(op == OperationAction.submit)

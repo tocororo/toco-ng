@@ -176,7 +176,7 @@
             }
           }
         }
-      },
+        },
       "addresses": {
         "type": "array",
         "description": "An array of addresses associated with the institute",

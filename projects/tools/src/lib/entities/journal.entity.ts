@@ -13,20 +13,24 @@ export class SocialNetworks  extends EntityBase {
   twitter = '';
   linkedin = '';
 }
+
 export class IssnOrg extends EntityBase {
   issn: '';
   title: '';
 }
+
 export class ISSN extends EntityBase {
     p  = '';
     e  = '';
     l  = '';
     issn_org = new IssnOrg();
 }
+
 export class RNPS extends EntityBase {
   p  = '';
   e  = '';
 }
+
 export class JournalData extends SourceData {
 
     subtitle  = '';
@@ -49,12 +53,9 @@ export class JournalData extends SourceData {
     }
 }
 
-
 export class Journal extends Source {
   data: JournalData = new JournalData();
   versions: Array<JournalVersion> = new Array<JournalVersion>();
-
-
 }
 
 export class JournalVersion extends SourceVersion {

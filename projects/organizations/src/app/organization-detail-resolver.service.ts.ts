@@ -95,14 +95,6 @@ const orgExample: any = {
 	],
 	"addresses": [
 		{
-			"city": "Villa Clara",
-			"country": "Cuban",
-			"country_code": "ISO 3166-1 alpha-2 code",
-			"lat": -53.87,
-			"lng": -63.96,
-			"line_1": "mollit dolore, proident reprehenderit ad"
-		},
-		{
 			"city": "La Habana",
 			"country": "Cuban",
 			"country_code": "ISO 3166-1 alpha-2 code",
@@ -114,7 +106,62 @@ const orgExample: any = {
 			"postcode": "25000",
 			"primary": true,
 			"state": "Vedado",
-			"state_code": "ISO 3166-2 region code"
+			"state_code": "ISO 3166-2 RC-25",
+			"geonames_city": {
+				"id": 123,
+				"city": "La Habana City",
+				"geonames_admin1": {
+					"id": "11111",
+					"name": "Región La Habana",
+					"ascii_name": "QQQQQ"
+				},
+				"geonames_admin2": {
+					"id": "22222",
+					"name": "Región La Habana",
+					"ascii_name": "WWWWW"
+				},
+				"nuts_level1": {
+					"id": "33333",
+					"name": "Región La Habana",
+					"ascii_name": "EEEEE"
+				},
+				"nuts_level2": {
+					"id": "44444",
+					"name": "Región La Habana",
+					"ascii_name": "RRRRR"
+				},
+				"nuts_level3": {
+					"id": "55555",
+					"name": "Región La Habana",
+					"ascii_name": "TTTTT"
+				}
+			}
+		},
+		{
+			"city": "Villa Clara",
+			"country": "Cuban",
+			"country_code": "ISO 3166-1 alpha-2 code",
+			"lat": -53.87,
+			"lng": -63.96,
+			"line_1": "mollit dolore, proident reprehenderit ad",
+			"postcode": "73000",
+			"primary": false,
+			"state": "Vedado",
+			"state_code": "ISO 3166-2 RC-73",
+			"geonames_city": {
+				"id": 123,
+				"city": "La Habana City",
+				"geonames_admin1": {
+					"id": "11111",
+					"name": "Región La Habana",
+					"ascii_name": "QQQQQ"
+				},
+				"nuts_level1": {
+					"id": "33333",
+					"name": "Región La Habana",
+					"ascii_name": "EEEEE"
+				}
+			}
 		}
 	]
 };

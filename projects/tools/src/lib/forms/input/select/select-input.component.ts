@@ -83,8 +83,6 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
 
 	public ngOnInit(): void
 	{
-		console.log('InputSelectComponent OnInit');
-
         /* Sets this `content.formControl` by default. */
         if (this.content.formControl == undefined) this.content.formControl = new FormControl(Common.emptyString);
 
