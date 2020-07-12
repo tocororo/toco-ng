@@ -12,8 +12,8 @@ import { IconService } from '@toco/tools/core';
 
 import { ComponentFactory } from './container/component-factory/component-factory.component';
 import { FormContainerComponent } from './container/form-container/form-container.component';
-import { IdentifiersComponent } from './container/identifiers/identifiers.component';
-import { PanelComponent } from './container/panel/panel.component';
+import { ContainerPanelComponent } from './container/panel/panel-container.component';
+import { ContainerSimpleComponent } from './container/simple/simple-container.component';
 import { TableComponent } from './container/table/table.component';
 import { FormsService } from './forms.service';
 
@@ -38,8 +38,8 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
   declarations: [
     ComponentFactory,
     FormContainerComponent,
-    IdentifiersComponent,
-    PanelComponent,
+    ContainerPanelComponent,
+    ContainerSimpleComponent,
     TableComponent,
     InputTextComponent,
     InputEmailComponent,
@@ -67,8 +67,8 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
   exports: [
     ComponentFactory,
     FormContainerComponent,
-    IdentifiersComponent,
-    PanelComponent,
+    ContainerPanelComponent,
+    ContainerSimpleComponent,
     TableComponent,
     InputTextComponent,
     InputEmailComponent,

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IdentifiersComponent } from './identifiers.component';
+import { ContainerPanelComponent } from './panel-container.component';
 
-describe('IdentifiersComponent', () => {
-  let component: IdentifiersComponent;
-  let fixture: ComponentFixture<IdentifiersComponent>;
+describe('ContainerPanelComponent', () => {
+  let component: ContainerPanelComponent;
+  let fixture: ComponentFixture<ContainerPanelComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IdentifiersComponent ]
+      declarations: [ ContainerPanelComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IdentifiersComponent);
+    fixture = TestBed.createComponent(ContainerPanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

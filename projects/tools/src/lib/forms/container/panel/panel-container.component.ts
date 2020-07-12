@@ -31,28 +31,28 @@ export interface PanelContent extends ContainerContent
 }
 
 /**
- * Represents a control that contains a panel. 
+ * Represents a container control that is showed as a panel. 
  * Usage notes: 
- *  - If the `PanelComponent` is not within a `ContainerControl`, it can be used as: 
+ *  - If the `ContainerPanelComponent` is not within a `ContainerControl`, it can be used as: 
  * <container-panel [content]="panelContent"></container-panel>
  * Where `content.formSection` is created, for example, as this: 
  * this.content.formSection = new FormGroup({ }, [ ]);
- *  - If the `PanelComponent` is within a `ContainerControl`, it must be used as: 
+ *  - If the `ContainerPanelComponent` is within a `ContainerControl`, it must be used as: 
  * <container-panel [content]="panelContent"></container-panel>
- * Where `content.parentFormSection` is the `PanelComponent`'s parent `FormSection`, 
+ * Where `content.parentFormSection` is the `ContainerPanelComponent`'s parent `FormSection`, 
  * and `content.formSection` is created, for example, as this: 
  * this.content.formSection = new FormGroup({ }, [ ]);
  */
 @Component({
 	selector: 'container-panel',
-	templateUrl: './panel.component.html',
-	styleUrls: ['./panel.component.scss'],
+	templateUrl: './panel-container.component.html',
+	styleUrls: ['./panel-container.component.scss'],
 	host: {
 		'[style.minWidth]': 'content.minWidth',
 		'[style.width]': 'content.width'
 	}
 })
-export class PanelComponent extends ContainerControl implements OnInit
+export class ContainerPanelComponent extends ContainerControl implements OnInit
 {
     /**
      * Input field that contains the content of this class. 
@@ -82,5 +82,8 @@ export class PanelComponent extends ContainerControl implements OnInit
         /* Sets the default values. */
 
         super.init(label, isAbbreviation, alwaysHint);
+
+        /* The `content.title`, `content.description`, and `content.iconName` fields 
+        have the `undefined` value by default. */
     }
 }

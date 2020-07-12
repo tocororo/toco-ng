@@ -225,11 +225,11 @@ export class HintValue
  */
 export enum FormFieldType
 {
-    /** A list of identifier controls. */
-    identifiers = 'identifiers',
+    /** A container control that is showed very simple. */
+    container_simple = 'container_simple',
 
-    /** A panel control. */
-    panel = 'panel',
+    /** A container control that is showed as a panel. */
+    container_panel = 'container_panel',
 
 
 

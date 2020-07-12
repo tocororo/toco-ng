@@ -18,7 +18,7 @@ import { OrganizationService, ENDPOINT_APIS } from '@toco/tools/backend';
 export class OrgListComponent implements OnInit
 {
     /**
-     * Contains the content of the `IdentifiersComponent` class. 
+     * Contains the content of the identifiers section. 
      */
     public identifiersContent: ContainerContent;
     // public identifiersContent_Complex: ContainerContent;
@@ -74,7 +74,7 @@ export class OrgListComponent implements OnInit
             'formSection': new FormGroup({ }, [ ]),
             'name': "identifiers",
             'label': "Organization Identifiers, different from GRID mapping",
-            'type': FormFieldType.identifiers,
+            'type': FormFieldType.container_simple,
             'required': true,
             'value': undefined,
             'width': "100%",
@@ -124,7 +124,7 @@ export class OrgListComponent implements OnInit
             'formSection': new FormGroup({ }, [ ]),
             'name': "identifiers_1",
             'label': "Organization Identifiers 1, different from GRID mapping",
-            'type': FormFieldType.identifiers,
+            'type': FormFieldType.container_simple,
             'required': true,
             'value': undefined,
             'width': "100%",
@@ -157,7 +157,7 @@ export class OrgListComponent implements OnInit
                     'formSection': new FormGroup({ }, [ ]),
                     'name': "identifiers_2",
                     'label': "Organization Identifiers 2, different from GRID mapping",
-                    'type': FormFieldType.identifiers,
+                    'type': FormFieldType.container_simple,
                     'required': true,
                     'value': undefined,
                     'width': "100%",

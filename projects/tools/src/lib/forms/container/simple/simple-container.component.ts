@@ -4,18 +4,18 @@ import { Component, OnInit } from '@angular/core';
 import { ContainerControl } from '../../input/input.control';
 
 /**
- * Represents a control that contains a list of identifiers. 
+ * Represents a container control that is showed very simple. 
  */
 @Component({
-	selector: 'container-identifiers',
-	templateUrl: './identifiers.component.html',
-	styleUrls: ['./identifiers.component.scss'],
+	selector: 'container-simple',
+	templateUrl: './simple-container.component.html',
+	styleUrls: ['./simple-container.component.scss'],
 	host: {
 		'[style.minWidth]': 'content.minWidth',
 		'[style.width]': 'content.width'
 	}
 })
-export class IdentifiersComponent extends ContainerControl implements OnInit
+export class ContainerSimpleComponent extends ContainerControl implements OnInit
 {
 	public constructor()
 	{
@@ -24,8 +24,6 @@ export class IdentifiersComponent extends ContainerControl implements OnInit
 
 	public ngOnInit(): void
 	{
-		console.log('IdentifiersComponent ngOnInit');
-
 		/* Sets the default values. */
         this.init(undefined, false, false);
 	}

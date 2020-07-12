@@ -55,7 +55,7 @@ export class OrgAddComponent implements OnInit
 			'formSection' : this.panelFormSection,
 			'name': 'panel',
 			'label': 'Adiciona una nueva organización',
-			'type': FormFieldType.panel,
+			'type': FormFieldType.container_panel,
 			'title': 'Adiciona una nueva organización',
 			'description': '',
 			'iconName': undefined /*''*/,

@@ -64,7 +64,7 @@ export class OrgViewComponent implements OnInit
 			'formSection' : this.panelFormSection,
 			'name': 'panel',
 			'label': 'Muestra la organización seleccionada',
-			'type': FormFieldType.panel,
+			'type': FormFieldType.container_panel,
 			'title': 'Muestra la organización seleccionada',
 			'description': '',
 			'iconName': undefined /*''*/,
