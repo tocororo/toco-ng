@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 @Component({
 	selector: 'input-label-diff-lang',
 	templateUrl: './label-diff-lang-input.component.html',
-	styleUrls: ['./label-diff-lang-input.component.scss']
+	styleUrls: ['./label-diff-lang-input.component.scss'],
+    host: {
+        '[style.minWidth]': 'content.minWidth',
+        '[style.width]': 'content.width'
+    }
 })
 export class InputLabelDiffLangComponent implements OnInit
 {

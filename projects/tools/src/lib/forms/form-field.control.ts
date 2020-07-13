@@ -225,11 +225,14 @@ export class HintValue
  */
 export enum FormFieldType
 {
+    /** A container control that is showed as a panel. */
+    container_panel = 'container_panel',
+
     /** A container control that is showed very simple. */
     container_simple = 'container_simple',
 
-    /** A container control that is showed as a panel. */
-    container_panel = 'container_panel',
+    /** A container control that is showed very simple using `FormArray`. */
+    container_simple_fa = 'container_simple_fa',
 
 
 
