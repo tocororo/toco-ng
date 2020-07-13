@@ -31,6 +31,7 @@ export * from './input/identifier/identifier-value';
 export * from './input/identifier/identifier-input.component';
 export * from './input/issn/issn-value';
 export * from './input/issn/issn-input.component';
+export * from './input/label-diff-lang/label-diff-lang-input.component';
 export * from './input/rnps/rnps-value';
 export * from './input/rnps/rnps-input.component';
 export * from './input/select/select-input.component';
