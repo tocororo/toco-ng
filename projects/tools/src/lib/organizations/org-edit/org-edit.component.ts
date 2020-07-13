@@ -1,7 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormArray } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
 import { FormFieldType, TextInputAppearance, OperationAction, FormSection, PanelContent, ContainerContent, HintValue, HintPosition } from '@toco/tools/forms';
@@ -33,21 +33,28 @@ export class OrgEditComponent implements OnInit
      */
 	public panelContent: PanelContent;
 
+	/**
+	 * Tracks the value and validity state of the internal child controls that contains this component. 
+	 */
+	private addressesPanelFormSection: FormSection;
+
     /**
      * Contains the addresses panel's content. 
      */
 	public addressesPanelContent: PanelContent;
 
-	/**
-	 * Tracks the value and validity state of the internal child controls that contains this component. 
-	 */
-    private addressesPanelFormSection: FormSection;
+
+	private labelsSimpleFaFormSection: FormSection;
+	public  labelsSimpleFaContent: ContainerContent;
+
 
 	public constructor(private _router: Router, private _activatedRoute: ActivatedRoute)
 	{
 		this.operationAction = OperationAction;
 		this.panelFormSection = new FormGroup({ }, [ ]);
 		this.addressesPanelFormSection = new FormGroup({ }, [ ]);
+
+		this.labelsSimpleFaFormSection = new FormArray([ ], [ ]);
 	}
 
 	public ngOnInit(): void
@@ -66,6 +73,8 @@ export class OrgEditComponent implements OnInit
 
 		/* Creates the addresses panel's content. */
 		this.addressesPanelContent = this._initAddressesPanelContent();
+
+		this.labelsSimpleFaContent = this._initLabelsSimpleFaContent();
 
 		// this.action = {
 		// 	doit(data: any): void
@@ -89,7 +98,7 @@ export class OrgEditComponent implements OnInit
     {
 		return {
 			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
-			'formSection' : this.panelFormSection,
+			'formSection': this.panelFormSection,
 			'name': 'panel',
 			'label': 'Edita la organización seleccionada',
 			'type': FormFieldType.container_panel,
@@ -285,7 +294,7 @@ export class OrgEditComponent implements OnInit
     {
 		return {
 			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
-			'formSection' : this.addressesPanelFormSection,
+			'formSection': this.addressesPanelFormSection,
 			'name': 'addressesPanel',
 			'label': 'An array of addresses associated with the institute',
 			'type': FormFieldType.container_panel,
@@ -411,6 +420,52 @@ export class OrgEditComponent implements OnInit
 		};
 	}
 
+    private _initLabelsSimpleFaContent(): ContainerContent
+    {
+		return {
+			'formSection': this.labelsSimpleFaFormSection,
+			'name': 'labelsSimpleFa',
+			'label': 'The name of the institute in different languages',
+			'type': FormFieldType.container_simple_fa,
+			'value': this.org.labels,
+			'formSectionContent': [
+				{
+					'formSection': new FormGroup({ }, [ ]),
+					'name': "label_diff_lang",
+					'label': "0",
+					'type': FormFieldType.container_simple,
+					'required': true,
+					'width': "100%",
+		//            'appearance': TextInputAppearance.outline,
+					'ariaLabel': "0",
+					'formSectionContent': [
+						{
+							'name': 'label',
+							'label': 'The institute name in a language variant',
+							'type': FormFieldType.text,
+							'required': true,
+							/* 'value': undefined, this is the default behavior. */
+							'width': '70%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': "The institute name in a language variant",
+						},
+						{
+							'name': 'iso639',
+							'label': 'The ISO-639-1 language code',
+							'type': FormFieldType.text,
+							'required': true,
+							/* 'value': undefined, this is the default behavior. */
+							'width': '30%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': "The ISO-639-1 language code",
+							//'startHint': new HintValue(HintPosition.start, 'ISO-639-1 language code')
+						},
+					]
+				}
+			]
+		};
+	}
+
     /**
      * Returns the identifiers' content. 
      */
@@ -511,6 +566,7 @@ export class OrgEditComponent implements OnInit
 	{
 		console.log('panelFormSection', this.panelFormSection);
 		console.log('addressesPanelFormSection', this.addressesPanelFormSection);
+		console.log('labelsSimpleFaFormSection', this.labelsSimpleFaFormSection);
 		return;
 
 		if(op == OperationAction.submit)

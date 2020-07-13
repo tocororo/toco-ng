@@ -1,6 +1,9 @@
 
 import { Component, OnInit } from '@angular/core';
 
+import { ContainerControl } from '../../input/input.control';
+import { FormArray } from '@angular/forms';
+
 /**
  * Represents a container control that is showed very simple using `FormArray`. 
  * It is similar to `ContainerSimpleComponent`, but using `FormArray`. 
@@ -14,11 +17,29 @@ import { Component, OnInit } from '@angular/core';
 		'[style.width]': 'content.width'
 	}
 })
-export class ContainerSimpleFaComponent implements OnInit
+export class ContainerSimpleFaComponent extends ContainerControl implements OnInit
 {
 	public constructor()
-	{ }
+	{
+		super();
+	}
 
-	ngOnInit() {
+	public ngOnInit(): void
+	{
+		/* Sets the default values. */
+        this.init(undefined, false, false);
+	}
+
+    /**
+     * Initializes the `content` input property. 
+     * @param label The label to set. If the value is `undefined`, sets the label to `content.label`. 
+     * @param isAbbreviation If it is true then the `label` argument represents an abbreviation; otherwise, false. 
+     * @param alwaysHint If it is true then there is always at leat one hint start-aligned. 
+     */
+    protected init(label: string | undefined, isAbbreviation: boolean, alwaysHint: boolean): void
+    {
+        /* Sets the default values. */
+
+        super.init(label, isAbbreviation, alwaysHint);
 	}
 }

@@ -5,7 +5,7 @@
 
 
 import { Input, ViewChild } from '@angular/core';
-import { Validators, ValidationErrors, FormControl } from '@angular/forms';
+import { Validators, ValidationErrors, FormControl, FormArray, AbstractControl } from '@angular/forms';
 
 import { Common } from '@toco/tools/core';
 
@@ -475,4 +475,90 @@ export abstract class ContainerControl extends FormFieldControl
             }
         );
     }
+
+    /**
+     * Adds a new `AbstractControl` at the end of the `content.formSection`. 
+     * The `content.formSection` must be an instance of `FormArray`. 
+     * @param control Form control to be added at the end of the array. 
+     */
+	public addToFormArray(control: AbstractControl): void
+	{
+        console.log('addToFormArray', control);
+
+        if (this.content.formSection instanceof FormArray)
+        {
+            this.content.formSection.push(control);
+        }
+        else
+        {
+            throw new Error('The `content.formSection` must be an instance of `FormArray`.');
+        }
+	}
+
+    /**
+     * Removes the control at the given `index` in the `content.formSection`. 
+     * The `content.formSection` must be an instance of `FormArray`. 
+     * @param index Index in the array to remove the control. 
+     */
+	public removeFromFormArray(index: number): void
+	{
+        console.log('removeFromFormArray', index);
+
+        if (this.content.formSection instanceof FormArray)
+        {
+            this.content.formSection.removeAt(index);
+        }
+        else
+        {
+            throw new Error('The `content.formSection` must be an instance of `FormArray`.');
+        }
+    }
+
+    /**
+     * Removes all controls in the `content.formSection`. 
+     * The `content.formSection` must be an instance of `FormArray`. 
+     */
+	public clearFormArray(): void
+	{
+        console.log('clearFormArray');
+
+        if (this.content.formSection instanceof FormArray)
+        {
+            this.content.formSection.clear();
+        }
+        else
+        {
+            throw new Error('The `content.formSection` must be an instance of `FormArray`.');
+        }
+    }
+    
+    /**
+     * This is one of the way how clear units fields.
+     */
+    // clearAllUnits()
+    // {
+    //     const control = <FormArray>this.exampleForm.controls['units'];
+
+    //     while (control.length)
+    //     {
+    //         control.removeAt(control.length - 1);
+    //     }
+    //     control.clearValidators();
+    //     control.push(this.getUnit());
+    // }
+
+    /**
+     * Create form unit
+     */
+    // private getUnit()
+    // {
+    //     const numberPatern = '^[0-9.,]+$';
+
+    //     return this.formBuilder.group({
+    //         unitName: ['', Validators.required],
+    //         qty: [1, [Validators.required, Validators.pattern(numberPatern)]],
+    //         unitPrice: ['', [Validators.required, Validators.pattern(numberPatern)]],
+    //         unitTotalPrice: [{ value: '', disabled: true }]
+    //     });
+    // }
 }

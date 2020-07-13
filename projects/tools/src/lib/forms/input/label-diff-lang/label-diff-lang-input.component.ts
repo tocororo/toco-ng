@@ -1,6 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
 
+import { InputControl } from '../input.control';
+
 /**
  * Represents a control that allows the writing of a name of something in different language. 
  */
@@ -13,11 +15,15 @@ import { Component, OnInit } from '@angular/core';
         '[style.width]': 'content.width'
     }
 })
-export class InputLabelDiffLangComponent implements OnInit
+export class InputLabelDiffLangComponent extends InputControl implements OnInit
 {
 	public constructor()
-	{ }
-
-	ngOnInit() {
+	{
+		super();
 	}
+
+    public ngOnInit(): void
+    {
+		//TODO:...
+    }
 }
