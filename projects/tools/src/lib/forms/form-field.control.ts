@@ -256,23 +256,26 @@ export enum FormFieldType
 
     /** An issn control. */
     issn = 'issn',
+
+    /** A control that allows the writing of a name of something in different language. */
+    label_diff_lang = 'label_diff_lang',
     
-    /** An rnps control. */
+    /** A rnps control. */
     rnps = 'rnps',
 
-    /** An vocabulary control. */
+    /** A vocabulary control. */
     vocabulary = 'vocabulary',
 
-    /** An term parent control. */
+    /** A term parent control. */
     term_parent = 'term_parent',
 
-    /** Generic select control. */
+    /** A select control. */
     select = 'select',
 
-    /** Generic select with a filter control. */
+    /** A select with a filter control. */
     select_filter = 'select_filter',
 
-    /** Generic select with a filter control. */
+    /** A select with a filter control. */
     select_tree = 'select_tree'
 }
 

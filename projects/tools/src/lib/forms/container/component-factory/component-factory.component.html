@@ -77,6 +77,8 @@ fxLayoutGap="1em" class="form-field-component">
 
         <input-issn *ngSwitchCase="formFieldType.issn" [content]="fieldContent"></input-issn>
 
+        <input-label-diff-lang *ngSwitchCase="formFieldType.label_diff_lang" [content]="fieldContent"></input-label-diff-lang>
+
         <input-rnps *ngSwitchCase="formFieldType.rnps" [content]="fieldContent"></input-rnps>
 
         <input-select *ngSwitchCase="formFieldType.select" [content]="fieldContent"></input-select>
