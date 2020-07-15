@@ -71,6 +71,9 @@ fxLayoutGap="1em" class="form-field-component">
         <container-simple-fa *ngSwitchCase="formFieldType.container_simple_fa" [content]="fieldContent"></container-simple-fa>
 
 
+        <container-label-diff-lang *ngSwitchCase="formFieldType.container_label_diff_lang" [content]="fieldContent"></container-label-diff-lang>
+
+
         <input-url *ngSwitchCase="formFieldType.url" [content]="fieldContent"></input-url>
         
         <input-email *ngSwitchCase="formFieldType.email" [content]="fieldContent"></input-email>
@@ -78,8 +81,6 @@ fxLayoutGap="1em" class="form-field-component">
         <input-identifier *ngSwitchCase="formFieldType.identifier" [content]="fieldContent"></input-identifier>
 
         <input-issn *ngSwitchCase="formFieldType.issn" [content]="fieldContent"></input-issn>
-
-        <input-label-diff-lang *ngSwitchCase="formFieldType.label_diff_lang" [content]="fieldContent"></input-label-diff-lang>
 
         <input-rnps *ngSwitchCase="formFieldType.rnps" [content]="fieldContent"></input-rnps>
 

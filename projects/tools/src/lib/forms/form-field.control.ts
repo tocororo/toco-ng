@@ -236,6 +236,11 @@ export enum FormFieldType
 
 
 
+    /** A container control that allows the writing of a name of something in different language. */
+    container_label_diff_lang = 'container_label_diff_lang',
+
+
+
     /** A text control. */
     text = 'text',
 
@@ -260,9 +265,6 @@ export enum FormFieldType
     /** An issn control. */
     issn = 'issn',
 
-    /** A control that allows the writing of a name of something in different language. */
-    label_diff_lang = 'label_diff_lang',
-    
     /** A rnps control. */
     rnps = 'rnps',
 

@@ -431,9 +431,9 @@ export class OrgEditComponent implements OnInit
 			'formSectionContent': [
 				{
 					'formSection': new FormGroup({ }, [ ]),
-					'name': "label_diff_lang",
+					'name': "containerLabelDiffLang",
 					'label': "0",
-					'type': FormFieldType.container_simple,
+					'type': FormFieldType.container_label_diff_lang,
 					'required': true,
 					'width': "100%",
 		//            'appearance': TextInputAppearance.outline,

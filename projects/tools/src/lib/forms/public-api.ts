@@ -16,13 +16,14 @@ export * from './container/simple/simple-container.component';
 export * from './container/simple-fa/simple-container-fa.component';
 export * from './container/table/table.component';
 
+export * from './container-specific/label-diff-lang/label-diff-lang-container.component';
+
 export * from './experimental/select/select.component';
 export * from './experimental/select-filter/select-filter.component';
 export * from './experimental/select-tree/select-tree.component';
 export * from './experimental/term-parent/term-parent.component';
 export * from './experimental/textarea/textarea.component';
 export * from './experimental/vocabulary/vocabulary.component';
-
 
 export * from './action/action.control';
 export * from './input/chips/chips-input.component';
@@ -32,7 +33,6 @@ export * from './input/identifier/identifier-value';
 export * from './input/identifier/identifier-input.component';
 export * from './input/issn/issn-value';
 export * from './input/issn/issn-input.component';
-export * from './input/label-diff-lang/label-diff-lang-input.component';
 export * from './input/rnps/rnps-value';
 export * from './input/rnps/rnps-input.component';
 export * from './input/select/select-input.component';

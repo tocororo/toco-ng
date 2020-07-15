@@ -17,11 +17,12 @@ import { ContainerSimpleComponent } from './container/simple/simple-container.co
 import { ContainerSimpleFaComponent } from './container/simple-fa/simple-container-fa.component';
 import { TableComponent } from './container/table/table.component';
 
+import { ContainerLabelDiffLangComponent } from './container-specific/label-diff-lang/label-diff-lang-container.component';
+
 import { InputTextComponent } from './input/text/text-input.component';
 import { InputEmailComponent } from './input/email/email-input.component';
 import { InputIssnInternalComponent } from './input/issn/issn-internal/issn-input-internal.component';
 import { InputIssnComponent } from './input/issn/issn-input.component';
-import { InputLabelDiffLangComponent } from './input/label-diff-lang/label-diff-lang-input.component';
 import { InputRnpsComponent } from './input/rnps/rnps-input.component';
 import { InputSelectComponent } from './input/select/select-input.component';
 import { InputUrlComponent } from './input/url/url-input.component';
@@ -43,12 +44,12 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
     ContainerSimpleComponent,
     ContainerSimpleFaComponent,
     TableComponent,
+    ContainerLabelDiffLangComponent,
     InputTextComponent,
     InputEmailComponent,
     InputIdentifierComponent,
     InputIssnInternalComponent,
     InputIssnComponent,
-    InputLabelDiffLangComponent,
     InputRnpsComponent,
     InputSelectComponent,
     InputUrlComponent,
@@ -74,11 +75,11 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
     ContainerSimpleComponent,
     ContainerSimpleFaComponent,
     TableComponent,
+    ContainerLabelDiffLangComponent,
     InputTextComponent,
     InputEmailComponent,
     InputIdentifierComponent,
     InputIssnComponent,
-    InputLabelDiffLangComponent,
     InputRnpsComponent,
     InputSelectComponent,
     InputUrlComponent,
