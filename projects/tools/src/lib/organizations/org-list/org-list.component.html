@@ -9,10 +9,10 @@
 <!-- <container-simple [content]="identifiersContent"></container-simple> -->
 <!-- <container-simple [content]="identifiersContent_Complex"></container-simple> -->
 
-<br />
-
-<button mat-raised-button color="primary" (click)="doOperation()">Add Organization</button>
-<!-- <input-text #input_search [content]="searchContent"></input-text> -->
+<div [ngStyle]="{'margin': '1em 0 1em 0'}">
+  <button mat-raised-button color="primary" (click)="doOperation()">Add Organization</button>
+  <!-- <input-text #input_search [content]="searchContent"></input-text> -->
+</div>
 
 <!-- <toco-table></toco-table> -->
 <toco-table [content]="tableContent"></toco-table>

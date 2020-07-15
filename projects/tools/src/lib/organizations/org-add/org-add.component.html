@@ -3,5 +3,7 @@
 
 <h3>Add the rest of <span [ngStyle]="{ 'color': 'red' }">readonly</span> content to `panelContent.formSectionContent` field!</h3>
 
-<button mat-raised-button color="primary" (click)="doOperationAction(operationAction.cancel)">Cancel</button>
-<button mat-raised-button color="primary" [disabled]="isSubmitActionDisabled" (click)="doOperationAction(operationAction.submit)">Submit</button>
+<div [ngStyle]="{'margin': '1em 0 1em 0'}">
+    <button mat-raised-button color="primary" (click)="doOperationAction(operationAction.cancel)">Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="isSubmitActionDisabled" (click)="doOperationAction(operationAction.submit)">Submit</button>
+</div>
