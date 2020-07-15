@@ -1,6 +1,26 @@
 
 import { EntityBase } from './entity';
 
+/**
+ * Entity for `LabelDiffLang` based on schema `organization-v1.0.0.json`. 
+ * The name of the institute in different language. 
+ */
+export class LabelDiffLang extends EntityBase
+{
+	/**
+	 * The institute name in a language variant. 
+	 */
+	label: string = '';
+
+	/**
+	 * The ISO-639-1 language code. 
+	 */
+	iso639: string = '';
+}
+
+/**
+ * Entity for `GeoNamesAdmin` based on schema `organization-v1.0.0.json`. 
+ */
 export class GeoNamesAdmin extends EntityBase
 {
 	/**
@@ -46,23 +66,24 @@ export class GeoNamesCity extends EntityBase
 	geonames_admin2?: GeoNamesAdmin = undefined;
 
 	/**
-	 * nuts_level1
+	 * nuts_level1. 
 	 */
 	nuts_level1: GeoNamesAdmin = undefined;
 
 	/**
-	 * nuts_level2
+	 * nuts_level2. 
 	 */
 	nuts_level2?: GeoNamesAdmin = undefined;
 
 	/**
-	 * nuts_level3
+	 * nuts_level3. 
 	 */
 	nuts_level3?: GeoNamesAdmin = undefined;
 }
 
 /**
  * Entity for `Address` based on schema `organization-v1.0.0.json`. 
+ * Address associated with the institute. 
  */
 export class Address extends EntityBase
 {
@@ -137,19 +158,78 @@ export class Address extends EntityBase
  */
 export class Organization extends EntityBase
 {
+	/**
+	 * Iroko Organization UUID, pid_type = orgid. 
+	 */
 	id = '';
+
+	/**
+	 * Organization Identifiers, different from GRID mapping. 
+	 */
 	identifiers = new Object();
+
+	/**
+	 * The name typically used to refer to the institute. 
+	 */
 	name = '';
+
+	/**
+	 * For an active institute, this is always set to active. 
+	 */
 	status = '';
+
+	/**
+	 * A list of other names the institute is known as. 
+	 */
 	aliases = new Array<string>();
+
+	/**
+	 * A list of short acronyms the institute is known as (e.g. MRC for the Medical Research Council). 
+	 */
 	acronyms = new Array<string>();
+
+	/**
+	 * A list of types describing the institute. 
+	 */
 	types = new Array<string>();
+
+	/**
+	 * URL of the wikipedia page for the institute. 
+	 */
 	wikipedia_url = '';
+
+	/**
+	 * A contact email address for the institute. 
+	 */
 	email_address = '';
+
+	/**
+	 * IP addresses known to belong to the institute. 
+	 */
 	ip_addresses = new Array<string>();
+
+	/**
+	 * The year the institute opened, CE. 
+	 */
 	established = -1;
+
+	/**
+	 * An array of URLs linking to things like the homepage for the institute. 
+	 */
 	links = new Array<string>();
-	labels = new Array<any>();
+
+	/**
+	 * The name of the institute in different languages. 
+	 */
+	labels = new Array<LabelDiffLang>();
+
+	/**
+	 * Any relationships the institute has to others. 
+	 */
 	relationships = new Array<any>();
+
+	/**
+	 * An array of addresses associated with the institute. 
+	 */
 	addresses = new Array<Address>();
 }

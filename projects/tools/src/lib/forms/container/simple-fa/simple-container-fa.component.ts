@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ContainerControl } from '../../input/input.control';
-import { FormArray } from '@angular/forms';
 
 /**
  * Represents a container control that is showed very simple using `FormArray`. 
@@ -38,7 +37,9 @@ export class ContainerSimpleFaComponent extends ContainerControl implements OnIn
      */
     protected init(label: string | undefined, isAbbreviation: boolean, alwaysHint: boolean): void
     {
-        /* Sets the default values. */
+		/* Sets the default values. */
+		
+		console.log('ContainerSimpleFaComponent init.');
 
         super.init(label, isAbbreviation, alwaysHint);
 	}
