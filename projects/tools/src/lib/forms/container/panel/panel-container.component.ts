@@ -1,7 +1,7 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 
-import { ContainerControl, ContainerContent } from '../../input/input.control';
+import { ContainerContent, ContainerControl } from '../container.control';
 
 /**
  * An interface that represents the content of a panel control. 

@@ -1,7 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 
-import { ContainerControl } from '../../input/input.control';
+import { ContainerControl } from '../../container/container.control';
 
 /**
  * Represents a container control that allows the writing of a name of something in different language. 

@@ -1,7 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 
-import { ContainerControl } from '../../input/input.control';
+import { ContainerControl } from '../container.control';
 
 /**
  * Represents a container control that is showed very simple. 

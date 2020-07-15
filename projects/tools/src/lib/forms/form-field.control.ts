@@ -370,30 +370,6 @@ export interface FormFieldContent
 }
 
 /**
- * Returns a new object that represents the default `FormFieldContent`. 
- */
-export function defaultFormFieldContent(): FormFieldContent
-{
-    return {
-        'parentFormSection': undefined,
-
-        'minWidth': '15em',
-        'width': '15em',
-
-        'label': Common.emptyString,
-
-        'required': false,
-        'textAlign': TextAlign.left,
-        'ariaLabel': 'Text Input',
-        'value': undefined,
-
-        'type': FormFieldType.text,
-        'name': 'name',
-        'extraContent': undefined
-    };
-}
-
-/**
  * Represents the base abstract class for a control that is treated as a form field. 
  */
 export abstract class FormFieldControl

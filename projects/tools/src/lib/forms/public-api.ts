@@ -15,6 +15,7 @@ export * from './container/panel/panel-container.component';
 export * from './container/simple/simple-container.component';
 export * from './container/simple-fa/simple-container-fa.component';
 export * from './container/table/table.component';
+export * from './container/container.control';
 
 export * from './container-specific/label-diff-lang/label-diff-lang-container.component';
 
@@ -40,4 +41,5 @@ export * from './input/text/text-input.component';
 export * from './input/url/url-value';
 export * from './input/url/url-input.component';
 export * from './input/input.control';
+
 export * from './form-field.control';
