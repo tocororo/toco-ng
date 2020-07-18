@@ -44,11 +44,21 @@ export abstract class ContainerControl extends FormFieldControl
     public content: ContainerContent;
 
     /**
+     * If the `content.formSection` represents a `FormArray`, then this field returns a pattern content 
+     * that is added in the `content.formSectionContent` for each element that is added in the `FormArray`; 
+     * otherwise, returns `undefined`. 
+     * By default, its value is `undefined`. 
+     */
+    private _formArrayPatternContent: any;
+
+    /**
      * Constructs a new instance of this class. 
      */
     public constructor()
     {
         super();
+
+        this._formArrayPatternContent = undefined;
     }
 
     /**
@@ -93,6 +103,40 @@ export abstract class ContainerControl extends FormFieldControl
         {
             this.addAsChildControl(this.content.formSection);
         }
+
+        if (this.content.formSection instanceof FormArray)
+        {
+            this.initFormSectionContentToFormArray();
+        }
+    }
+
+    /**
+     * Initializes the `content.formSectionContent` correctly depending on the `content.value`. 
+     * In this case, `content.value` is an array; for each element in the `content.value`, one element 
+     * is added in the `content.formSectionContent`, therefore one element is added 
+     * in the `content.formSection` `FormArray`. 
+     */
+    protected initFormSectionContentToFormArray(): void
+    {
+        // Hacer la clonación
+        // this._formArrayPatternContent = Clonar el `content.formSectionContent[0]`. 
+
+
+        /* In this case, `content.value` is an array. */
+
+        if ((this.content.value != undefined) && (this.content.value.length != 0))
+        {
+            /* The `FormArray` will contain one element for each element in the `content.value`. */
+
+            //TODO...
+            //this.content.formSectionContent = Clonar el `this._formArrayPatternContent`;
+            // Poniendo algunas propiedades especificas para cada uno. 
+        }
+        else
+        {
+            /* The `FormArray` will be empty. */
+            this.content.formSectionContent = [ ];
+        }
     }
 
 	/**
@@ -110,6 +154,17 @@ export abstract class ContainerControl extends FormFieldControl
         // this.content.formControl.markAsTouched({
         //     onlySelf: true
         // });
+    }
+
+    /**
+     * If the `content.formSection` represents a `FormArray`, then this field returns a pattern content 
+     * that is added in the `content.formSectionContent` for each element that is added in the `FormArray`; 
+     * otherwise, returns `undefined`. 
+     * By default, its value is `undefined`. 
+     */
+    public get FormArrayPatternContent(): any
+    {
+        return this._formArrayPatternContent;
     }
 
     /**
