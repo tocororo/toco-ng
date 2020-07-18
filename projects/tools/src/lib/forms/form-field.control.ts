@@ -367,6 +367,45 @@ export interface FormFieldContent
      * By default, its value is `undefined`. 
      */
     extraContent?: any;
+
+    /**
+     * Returns the function that clones a `FormFieldContent` object. 
+     * It clones the object smartly depending on the type of property. 
+     * By default, its value is `cloneFormFieldContent` global function. 
+     * Almost never the user need to set this field, therefore it is almost always set 
+     * internally to `cloneFormFieldContent` global function. 
+     */
+    cloneContent?: (target: FormFieldContent) => FormFieldContent;
+}
+
+/**
+ * Returns a new object that represents the clone of the specified `FormFieldContent` target. 
+ * It clones the object smartly depending on the type of property. 
+ * @param target The `FormFieldContent` object to clone. 
+ */
+export function cloneFormFieldContent(target: FormFieldContent): FormFieldContent
+{
+    let result: FormFieldContent = { };
+
+    result.parentFormSection = target.parentFormSection;
+
+    if (target.minWidth != undefined) result.minWidth = target.minWidth;
+    if (target.width != undefined) result.width = target.width;
+
+    if (target.label != undefined) result.label = target.label;
+
+    if (target.required != undefined) result.required = target.required;
+    if (target.textAlign != undefined) result.textAlign = target.textAlign;
+    if (target.ariaLabel != undefined) result.ariaLabel = target.ariaLabel;
+    result.value = target.value;
+
+    result.type = target.type;
+    result.name = target.name;
+    if (target.extraContent != undefined) result.extraContent = target.extraContent;
+
+    result.cloneContent = cloneFormFieldContent;
+
+    return result;
 }
 
 /**
@@ -442,6 +481,9 @@ export abstract class FormFieldControl
         /******************************* Other properties. ********************************/
         if (this.content.type == undefined) this.content.type = FormFieldType.text;
         if (this.content.name == undefined) this.content.name = label.toLowerCase().replace(/ /g, '_');  /* Sets the `name` in lowercase and replaces the spaces by underscores. */
+
+        /* Sets its `cloneContent` method. */
+        this.content.cloneContent = cloneFormFieldContent;
     }
 
 	/**

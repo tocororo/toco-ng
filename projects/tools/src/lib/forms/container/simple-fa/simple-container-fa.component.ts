@@ -50,5 +50,7 @@ export class ContainerSimpleFaComponent extends ContainerControl implements OnIn
 		// {
 		// 	console.log(val);
 		// }
+
+		// console.log('ContainerSimpleFaComponent: ', this.content);
 	}
 }

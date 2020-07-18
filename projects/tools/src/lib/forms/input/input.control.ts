@@ -34,7 +34,7 @@ export enum TextInputAppearance
 }
 
 /**
- * An interface that represents the content of an `InputControl`. 
+ * A base interface that represents the content of an `InputControl`. 
  */
 export interface InputContent extends FormFieldContent
 {

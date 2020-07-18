@@ -42,7 +42,7 @@ export interface TableAction {
 }
 
 /**
- * An interface that represents the content of a table control. 
+ * A interface that represents the content of a table control. 
  * The generic parameter T always refers to the type of data that it is dealing with. 
  */
 export interface TableContent<T>

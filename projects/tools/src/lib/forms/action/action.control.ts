@@ -14,7 +14,7 @@ export enum OperationAction
 }
 
 /**
- * An interface that represents the content of an `ActionControl`. 
+ * A base interface that represents the content of an `ActionControl`. 
  */
 export interface ActionContent extends FormFieldContent
 {
