@@ -4,7 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormArray } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
-import { FormFieldType, TextInputAppearance, OperationAction, FormSection, PanelContent, ContainerContent, HintValue, HintPosition, cloneContainerContent, cloneInputContent } from '@toco/tools/forms';
+import { FormFieldType, TextInputAppearance, OperationAction, FormSection, PanelContent, 
+	ContainerContent, HintValue, HintPosition } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-edit',
@@ -438,7 +439,6 @@ export class OrgEditComponent implements OnInit
 					'width': "100%",
 		//            'appearance': TextInputAppearance.outline,
 					'ariaLabel': "0",
-					'cloneContent': cloneContainerContent,
 					'formSectionContent': [
 						{
 							'name': 'label',
@@ -448,8 +448,7 @@ export class OrgEditComponent implements OnInit
 							/* 'value': undefined, this is the default behavior. */
 							'width': '70%',
 							'appearance': TextInputAppearance.outline,
-							'ariaLabel': "The institute name in a language variant",
-							'cloneContent': cloneInputContent,
+							'ariaLabel': "The institute name in a language variant"
 						},
 						{
 							'name': 'iso639',
@@ -460,7 +459,6 @@ export class OrgEditComponent implements OnInit
 							'width': '30%',
 							'appearance': TextInputAppearance.outline,
 							'ariaLabel': "The ISO-639-1 language code",
-							'cloneContent': cloneInputContent,
 							//'startHint': new HintValue(HintPosition.start, 'ISO-639-1 language code')
 						},
 					]

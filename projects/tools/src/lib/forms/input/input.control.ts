@@ -10,7 +10,7 @@ import { Validators, ValidationErrors, FormControl } from '@angular/forms';
 import { Common } from '@toco/tools/core';
 
 import { ContentPosition, IconValue, HintPosition, HintValue,
-    FormFieldContent, FormFieldControl, cloneFormFieldContent } from '../form-field.control';
+    FormFieldContent, FormFieldControl } from '../form-field.control';
 
 /**
  * An enum that represents the appearance style of an `InputControl`. 
@@ -96,55 +96,6 @@ export interface InputContent extends FormFieldContent
 	 * By default, its value is `undefined`. 
 	 */
     endHint?: HintValue;
-
-
-
-    /**
-     * Returns the function that clones a `InputContent` object. 
-     * It clones the object smartly depending on the type of property. 
-     * By default, its value is `cloneInputContent` global function. 
-     * Almost never the user need to set this field, therefore it is almost always set 
-     * internally to `cloneInputContent` global function. 
-     */
-    cloneContent?: (target: InputContent) => InputContent;
-}
-
-/**
- * Returns a new object that represents the clone of the specified `FormControl` target. 
- * @param target The `FormControl` object to clone. 
- */
-export function cloneFormControl(target: FormControl): FormControl
-{
-    //TODO: Hacer este method copiando el control y los validadores de `target`. 
-    return undefined;
-}
-
-/**
- * Returns a new object that represents the clone of the specified `InputContent` target. 
- * It clones the object smartly depending on the type of property. 
- * @param target The `InputContent` object to clone. 
- */
-export function cloneInputContent(target: InputContent): InputContent
-{
-    let result: InputContent = cloneFormFieldContent(target);
-
-    /* If `target.formControl` field is `undefined`, then it will be defined later. */
-    if (target.formControl != undefined) result.formControl = cloneFormControl(target.formControl);
-
-    if (target.appearance != undefined) result.appearance = target.appearance;
-
-    if (target.prefixIcon != undefined) result.prefixIcon = target.prefixIcon;
-    if (target.suffixIcon != undefined) result.suffixIcon = target.suffixIcon;
-
-    if (target.prefixText != undefined) result.prefixText = target.prefixText;
-    if (target.suffixText != undefined) result.suffixText = target.suffixText;
-
-    if (target.startHint != undefined) result.startHint = target.startHint;
-    if (target.endHint != undefined) result.endHint = target.endHint;
-
-    result.cloneContent = cloneInputContent;
-
-    return result;
 }
 
 /**
@@ -253,9 +204,6 @@ export abstract class InputControl extends FormFieldControl
             if (this.content.startHint != undefined) this.content.startHint.setDefaultValueIfUndefined_setPosition(HintPosition.start);
             if (this.content.endHint != undefined) this.content.endHint.setDefaultValueIfUndefined_setPosition(HintPosition.end);
         }
-
-        /* Sets its `cloneContent` method. */
-        this.content.cloneContent = cloneInputContent;
 
         /* Adds this control as a child to the `content.parentFormSection`. It must be called at the end. */
         if (this.content.parentFormSection != undefined)

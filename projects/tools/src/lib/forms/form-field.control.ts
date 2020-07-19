@@ -5,11 +5,10 @@
 
 
 import { Input } from '@angular/core';
-import { FormGroup, FormArray, AbstractControl } from '@angular/forms';
+import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
 
-import { Common } from '@toco/tools/core';
+import { Common, Params } from '@toco/tools/core';
 import { IconService } from '@toco/tools/core';
-import { ContainerControl } from './container/container.control';
 
 /**
  * Defines a form section that represents the `FormGroup` or `FormArray` class. 
@@ -368,43 +367,70 @@ export interface FormFieldContent
      * By default, its value is `undefined`. 
      */
     extraContent?: any;
-
-    /**
-     * Returns the function that clones a `FormFieldContent` object. 
-     * It clones the object smartly depending on the type of property. 
-     * By default, its value is `cloneFormFieldContent` global function. 
-     * Almost never the user need to set this field, therefore it is almost always set 
-     * internally to `cloneFormFieldContent` global function. 
-     */
-    cloneContent?: (target: FormFieldContent) => FormFieldContent;
 }
 
 /**
- * Returns a new object that represents the clone of the specified `FormFieldContent` target. 
- * It clones the object smartly depending on the type of property. 
- * @param target The `FormFieldContent` object to clone. 
+ * Returns a new object that represents the clone of the specified `FormControl` target. 
+ * @param target The `FormControl` object to clone. 
  */
-export function cloneFormFieldContent(target: FormFieldContent): FormFieldContent
+export function cloneFormControl(target: FormControl): FormControl
 {
-    let result: FormFieldContent = { };
+    //TODO: Hacer este method copiando el control y los validadores de `target`. 
+    return undefined;
+}
 
-    if (target.parentFormSection != undefined) result.parentFormSection = target.parentFormSection;
+/**
+ * Returns a new object that represents the clone of the specified `FormSection` target. 
+ * @param target The `FormSection` object to clone. 
+ */
+export function cloneFormSection(target: FormSection): FormSection
+{
+    //TODO: Hacer este method copiando todos los controles y validadores de `target`. 
+    return (target instanceof FormGroup) ? (new FormGroup({ }, [ ])) : (new FormArray([ ], [ ]));;
+}
 
-    if (target.minWidth != undefined) result.minWidth = target.minWidth;
-    if (target.width != undefined) result.width = target.width;
+/**
+ * Returns a new object that represents the clone of the specified content target. 
+ * It clones the object smartly depending on the type of property. 
+ * @param target The content object to clone. 
+ */
+export function cloneContent(target: Params<any>): any
+{
+    let result: any = { };
 
-    if (target.label != undefined) result.label = target.label;
+    for(let prop in target)
+    {
+        switch(prop)
+        {
+            /* The `formControl` property special case. */
+            case 'formControl':
+            {
+                result[prop] = cloneFormControl(target.formControl);
+            }
 
-    if (target.required != undefined) result.required = target.required;
-    if (target.textAlign != undefined) result.textAlign = target.textAlign;
-    if (target.ariaLabel != undefined) result.ariaLabel = target.ariaLabel;
-    if (target.value != undefined) result.value = target.value;
+            /* The `formSection` property special case. */
+            case 'formSection':
+            {
+                result[prop] = cloneFormSection(target.formSection);
+            }
 
-    result.type = target.type;
-    result.name = target.name;
-    if (target.extraContent != undefined) result.extraContent = target.extraContent;
+            /* The `formSectionContent` property special case. */
+            case 'formSectionContent':
+            {
+                result[prop] = [ ];
+                for(let content of target.formSectionContent)
+                {
+                    result[prop].push(cloneContent(content));
+                }
+            }
 
-    result.cloneContent = cloneFormFieldContent;
+            /* Copies the property without problem. */
+            default:
+            {
+                result[prop] = target[prop];
+            }
+        }
+    }
 
     return result;
 }
@@ -482,9 +508,6 @@ export abstract class FormFieldControl
         /******************************* Other properties. ********************************/
         if (this.content.type == undefined) this.content.type = FormFieldType.text;
         if (this.content.name == undefined) this.content.name = label.toLowerCase().replace(/ /g, '_');  /* Sets the `name` in lowercase and replaces the spaces by underscores. */
-
-        /* Sets its `cloneContent` method. */
-        this.content.cloneContent = cloneFormFieldContent;
     }
 
 	/**

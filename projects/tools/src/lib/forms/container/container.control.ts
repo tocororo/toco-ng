@@ -4,10 +4,10 @@
  */
 
 
-import { Input, AfterViewInit } from '@angular/core';
-import { FormArray, AbstractControl, FormGroup } from '@angular/forms';
+import { Input } from '@angular/core';
+import { FormArray, AbstractControl } from '@angular/forms';
 
-import { FormSection, FormFieldContent, FormFieldControl, cloneFormFieldContent } from '../form-field.control';
+import { FormSection, FormFieldContent, FormFieldControl, cloneContent } from '../form-field.control';
 
 /**
  * A base interface that represents the content of a `ContainerControl`. 
@@ -30,55 +30,12 @@ export interface ContainerContent extends FormFieldContent
      * By default, its value is `[]`. 
      */
     formSectionContent?: any[];
-
-
-
-    /**
-     * Returns the function that clones a `ContainerContent` object. 
-     * It clones the object smartly depending on the type of property. 
-     * By default, its value is `cloneContainerContent` global function. 
-     * Almost never the user need to set this field, therefore it is almost always set 
-     * internally to `cloneContainerContent` global function. 
-     */
-    cloneContent?: (target: ContainerContent) => ContainerContent;
-}
-
-/**
- * Returns a new object that represents the clone of the specified `FormSection` target. 
- * @param target The `FormSection` object to clone. 
- */
-export function cloneFormSection(target: FormSection): FormSection
-{
-    //TODO: Hacer este method copiando todos los controles y validadores de `target`. 
-    return (target instanceof FormGroup) ? (new FormGroup({ }, [ ])) : (new FormArray([ ], [ ]));;
-}
-
-/**
- * Returns a new object that represents the clone of the specified `ContainerContent` target. 
- * It clones the object smartly depending on the type of property. 
- * @param target The `ContainerContent` object to clone. 
- */
-export function cloneContainerContent(target: ContainerContent): ContainerContent
-{
-    let result: ContainerContent = cloneFormFieldContent(target);
-
-    result.formSection = cloneFormSection(target.formSection);
-
-    result.formSectionContent = [ ];
-    for(let content of target.formSectionContent)
-    {
-        result.formSectionContent.push(content.cloneContent(content));
-    }
-
-    result.cloneContent = cloneContainerContent;
-
-    return result;
 }
 
 /**
  * Represents the base abstract class for a control that contains one or more controls. 
  */
-export abstract class ContainerControl extends FormFieldControl implements AfterViewInit
+export abstract class ContainerControl extends FormFieldControl
 {
     /**
      * Input field that contains the content of this class. 
@@ -126,9 +83,6 @@ export abstract class ContainerControl extends FormFieldControl implements After
             throw new Error('The `content.formSectionContent` array can not be undefined, and must have at least one element.');
         }
 
-        /* Sets its `cloneContent` method. */
-        this.content.cloneContent = cloneContainerContent;
-
         if (this.content.formSection instanceof FormArray)
         {
             this.initFormSectionContentToFormArray();
@@ -160,21 +114,6 @@ export abstract class ContainerControl extends FormFieldControl implements After
     }
 
     /**
-     * A callback method that is invoked immediately after 
-     * Angular has completed initialization of a component's view. 
-     * It is invoked only once when the view is instantiated. 
-     */
-    public ngAfterViewInit(): void
-    {
-        // if (this.content.formSection instanceof FormArray)
-        // {
-        //     console.log('Begin debug here!');
-
-        //     this.initFormSectionContentToFormArray();
-        // }
-    }
-
-    /**
      * Initializes the `content.formSectionContent` correctly depending on the `content.value`. 
      * In this case, `content.value` is an array; for each element in the `content.value`, one element 
      * is added in the `content.formSectionContent`, therefore one element is added 
@@ -198,7 +137,7 @@ export abstract class ContainerControl extends FormFieldControl implements After
 
             for(let val of this.content.value)
             {
-                refContent = this._formArrayPatternContent.cloneContent(this._formArrayPatternContent);
+                refContent = cloneContent(this._formArrayPatternContent);
                 index++;
 
                 /* Overwrites some properties for the cloned content. For now, the `refContent.name` field 
