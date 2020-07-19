@@ -199,17 +199,17 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 	 * Returns the value of the control. The value can be checked using the `isComplete` instance method.
 	 */
 	@Input()
-	public get value(): IssnValue | null
+	public get value(): IssnValue | undefined
 	{
 		return new IssnValue(this._firstGroup.value, this._secondGroup.value);
 	}
 
 	/**
-	 * Sets the value of the control. If the value is null, sets an empty ISSN.
+	 * Sets the value of the control. If the value is undefined, sets an empty ISSN.
 	 * It does not check if the value is complete.
 	 * @param newIssn The new ISSN to set.
 	 */
-	public set value(newIssn: IssnValue | null)
+	public set value(newIssn: IssnValue | undefined)
 	{
 		newIssn = newIssn || IssnValue.defaultIssnValue;
 
@@ -451,7 +451,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 		}
 	}
 
-	public writeValue(issn: IssnValue | null): void
+	public writeValue(issn: IssnValue | undefined): void
 	{
 		this.value = issn;
 	}

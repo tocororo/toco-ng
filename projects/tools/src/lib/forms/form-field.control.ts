@@ -9,6 +9,7 @@ import { FormGroup, FormArray, AbstractControl } from '@angular/forms';
 
 import { Common } from '@toco/tools/core';
 import { IconService } from '@toco/tools/core';
+import { ContainerControl } from './container/container.control';
 
 /**
  * Defines a form section that represents the `FormGroup` or `FormArray` class. 
@@ -387,7 +388,7 @@ export function cloneFormFieldContent(target: FormFieldContent): FormFieldConten
 {
     let result: FormFieldContent = { };
 
-    result.parentFormSection = target.parentFormSection;
+    if (target.parentFormSection != undefined) result.parentFormSection = target.parentFormSection;
 
     if (target.minWidth != undefined) result.minWidth = target.minWidth;
     if (target.width != undefined) result.width = target.width;
@@ -397,7 +398,7 @@ export function cloneFormFieldContent(target: FormFieldContent): FormFieldConten
     if (target.required != undefined) result.required = target.required;
     if (target.textAlign != undefined) result.textAlign = target.textAlign;
     if (target.ariaLabel != undefined) result.ariaLabel = target.ariaLabel;
-    result.value = target.value;
+    if (target.value != undefined) result.value = target.value;
 
     result.type = target.type;
     result.name = target.name;

@@ -4,7 +4,7 @@
  */
 
 
-import { Input } from '@angular/core';
+import { Input, AfterViewInit } from '@angular/core';
 import { FormArray, AbstractControl, FormGroup } from '@angular/forms';
 
 import { FormSection, FormFieldContent, FormFieldControl, cloneFormFieldContent } from '../form-field.control';
@@ -44,6 +44,16 @@ export interface ContainerContent extends FormFieldContent
 }
 
 /**
+ * Returns a new object that represents the clone of the specified `FormSection` target. 
+ * @param target The `FormSection` object to clone. 
+ */
+export function cloneFormSection(target: FormSection): FormSection
+{
+    //TODO: Hacer este method copiando todos los controles y validadores de `target`. 
+    return (target instanceof FormGroup) ? (new FormGroup({ }, [ ])) : (new FormArray([ ], [ ]));;
+}
+
+/**
  * Returns a new object that represents the clone of the specified `ContainerContent` target. 
  * It clones the object smartly depending on the type of property. 
  * @param target The `ContainerContent` object to clone. 
@@ -52,7 +62,7 @@ export function cloneContainerContent(target: ContainerContent): ContainerConten
 {
     let result: ContainerContent = cloneFormFieldContent(target);
 
-    result.formSection = (target.formSection instanceof FormGroup) ? (new FormGroup({ }, [ ])) : (new FormArray([ ], [ ]));
+    result.formSection = cloneFormSection(target.formSection);
 
     result.formSectionContent = [ ];
     for(let content of target.formSectionContent)
@@ -68,7 +78,7 @@ export function cloneContainerContent(target: ContainerContent): ContainerConten
 /**
  * Represents the base abstract class for a control that contains one or more controls. 
  */
-export abstract class ContainerControl extends FormFieldControl
+export abstract class ContainerControl extends FormFieldControl implements AfterViewInit
 {
     /**
      * Input field that contains the content of this class. 
@@ -111,11 +121,19 @@ export abstract class ContainerControl extends FormFieldControl
             throw new Error('There is not reference to the internal control (FormSection); it must be a `FormGroup` or `FormArray`.');
         }
 
-        if (this.content.formSectionContent == undefined) this.content.formSectionContent = [ ];
-        this._setParentFormSectionToChildren();
+        if ((this.content.formSectionContent == undefined) || (this.content.formSectionContent.length == 0))
+        {
+            throw new Error('The `content.formSectionContent` array can not be undefined, and must have at least one element.');
+        }
 
         /* Sets its `cloneContent` method. */
         this.content.cloneContent = cloneContainerContent;
+
+        if (this.content.formSection instanceof FormArray)
+        {
+            this.initFormSectionContentToFormArray();
+        }
+        this._setParentFormSectionToChildren();
 
         // let temp: string = (isAbbreviation) ? this.content.label : this.content.label.toLowerCase();
         // this.validationError_required = `You must write a valid ${ temp }.`;
@@ -139,13 +157,21 @@ export abstract class ContainerControl extends FormFieldControl
         {
             this.addAsChildControl(this.content.formSection);
         }
+    }
 
-        if (this.content.formSection instanceof FormArray)
-        {
-            console.log('Begin debug here!');
+    /**
+     * A callback method that is invoked immediately after 
+     * Angular has completed initialization of a component's view. 
+     * It is invoked only once when the view is instantiated. 
+     */
+    public ngAfterViewInit(): void
+    {
+        // if (this.content.formSection instanceof FormArray)
+        // {
+        //     console.log('Begin debug here!');
 
-            this.initFormSectionContentToFormArray();
-        }
+        //     this.initFormSectionContentToFormArray();
+        // }
     }
 
     /**
@@ -156,8 +182,10 @@ export abstract class ContainerControl extends FormFieldControl
      */
     protected initFormSectionContentToFormArray(): void
     {
-        /* Clones the `content.formSectionContent[0]`. */
-        this._formArrayPatternContent = this.content.formSectionContent[0].cloneContent(this.content.formSectionContent[0]);
+        /* Saves the pattern content, that is, `content.formSectionContent[0]`. */
+        this._formArrayPatternContent = this.content.formSectionContent[0];
+        /* The `FormArray` is empty initially. */
+        this.content.formSectionContent = [ ];
 
         /* In this case, `content.value` is an array. */
 
@@ -165,17 +193,22 @@ export abstract class ContainerControl extends FormFieldControl
         {
             /* The `FormArray` will contain one element for each element in the `content.value`. */
 
+            let refContent: any;
+            let index: number = -1;
+
             for(let val of this.content.value)
             {
-                this.content.formSectionContent.push(this._formArrayPatternContent.cloneContent(this._formArrayPatternContent));
+                refContent = this._formArrayPatternContent.cloneContent(this._formArrayPatternContent);
+                index++;
 
-                //TODO: Poner algunas propiedades especificas para cada content, como es el value, label, name, etc. 
+                /* Overwrites some properties for the cloned content. For now, the `refContent.name` field 
+                does not need to be overwritten. */
+                refContent.label = index.toString(10);
+                refContent.value = val;
+                refContent.ariaLabel = refContent.label;
+
+                this.content.formSectionContent.push(refContent);
             }
-        }
-        else
-        {
-            /* The `FormArray` will be empty. */
-            this.content.formSectionContent = [ ];
         }
     }
 
