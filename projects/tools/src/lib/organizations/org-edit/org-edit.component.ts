@@ -1,11 +1,11 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormArray } from '@angular/forms';
+import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
 import { FormFieldType, TextInputAppearance, OperationAction, FormSection, PanelContent, 
-	ContainerContent, HintValue, HintPosition } from '@toco/tools/forms';
+	ContainerContent, HintValue, HintPosition, cloneFormSection } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-edit',

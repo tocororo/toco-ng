@@ -5,7 +5,7 @@
 
 
 import { Input } from '@angular/core';
-import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
+import { FormGroup, FormArray, AbstractControl, FormControl, FormBuilder } from '@angular/forms';
 
 import { Common, Params } from '@toco/tools/core';
 import { IconService } from '@toco/tools/core';
@@ -375,8 +375,7 @@ export interface FormFieldContent
  */
 export function cloneFormControl(target: FormControl): FormControl
 {
-    //TODO: Hacer este method copiando el control y los validadores de `target`. 
-    return undefined;
+    return new FormControl(target.value, target.validator, target.asyncValidator);
 }
 
 /**
@@ -385,8 +384,34 @@ export function cloneFormControl(target: FormControl): FormControl
  */
 export function cloneFormSection(target: FormSection): FormSection
 {
-    //TODO: Hacer este method copiando todos los controles y validadores de `target`. 
-    return (target instanceof FormGroup) ? (new FormGroup({ }, [ ])) : (new FormArray([ ], [ ]));;
+    if (target instanceof FormGroup)
+    {
+        /* Creates an empty `FormGroup` with its validators. */
+        let result: FormGroup = new FormGroup({ }, target.validator, target.asyncValidator);
+
+        /* Adds the controls to `FormGroup`. */
+        for(let ctr in target.controls)
+        {
+            if((target.controls[ctr]) instanceof FormControl) result.addControl(ctr, cloneFormControl((target.controls[ctr]) as FormControl));
+            else result.addControl(ctr, cloneFormSection((target.controls[ctr]) as FormSection));
+        }
+
+        return result;
+    }
+    else
+    {
+        /* Creates an empty `FormArray` with its validators. */
+        let result: FormArray = new FormArray([ ], target.validator, target.asyncValidator);
+
+        /* Adds the controls to the `FormArray`. */
+        for(let ctr of target.controls)
+        {
+            if(ctr instanceof FormControl) result.push(cloneFormControl(ctr));
+            else result.push(cloneFormSection(ctr as FormSection));
+        }
+
+        return result;
+    }
 }
 
 /**
