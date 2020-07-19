@@ -5,7 +5,8 @@
 
 
 import { Input } from '@angular/core';
-import { FormGroup, FormArray, AbstractControl, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
+import { isObject } from 'util';
 
 import { Common, Params } from '@toco/tools/core';
 import { IconService } from '@toco/tools/core';
@@ -416,10 +417,12 @@ export function cloneFormSection(target: FormSection): FormSection
 
 /**
  * Returns a new object that represents the clone of the specified content target. 
+ * It also sets the initial `value` field of each content representing a `FormControl`. 
  * It clones the object smartly depending on the type of property. 
  * @param target The content object to clone. 
+ * @param value The initial `value` field of each content representing a `FormControl`. 
  */
-export function cloneContent(target: Params<any>): any
+export function cloneContent(target: Params<any>, value: any): any
 {
     let result: any = { };
 
@@ -431,12 +434,14 @@ export function cloneContent(target: Params<any>): any
             case 'formControl':
             {
                 result[prop] = cloneFormControl(target.formControl);
+                break;
             }
 
             /* The `formSection` property special case. */
             case 'formSection':
             {
                 result[prop] = cloneFormSection(target.formSection);
+                break;
             }
 
             /* The `formSectionContent` property special case. */
@@ -445,17 +450,22 @@ export function cloneContent(target: Params<any>): any
                 result[prop] = [ ];
                 for(let content of target.formSectionContent)
                 {
-                    result[prop].push(cloneContent(content));
+                    result[prop].push(cloneContent(content, value[content.name]));
                 }
+                break;
             }
 
             /* Copies the property without problem. */
             default:
             {
                 result[prop] = target[prop];
+                break;
             }
         }
     }
+
+    /* If this content (`result`) represents a `FormControl`, then the `value` field is initialized. */
+    if (!isObject(value)) result['value'] = value;
 
     return result;
 }

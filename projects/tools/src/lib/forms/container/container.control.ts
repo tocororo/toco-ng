@@ -137,13 +137,12 @@ export abstract class ContainerControl extends FormFieldControl
 
             for(let val of this.content.value)
             {
-                refContent = cloneContent(this._formArrayPatternContent);
+                refContent = cloneContent(this._formArrayPatternContent, val);
                 index++;
 
-                /* Overwrites some properties for the cloned content. For now, the `refContent.name` field 
-                does not need to be overwritten. */
-                refContent.label = index.toString(10);
-                refContent.value = val;
+                /* Overwrites some properties for the cloned content. */
+                refContent.name = index.toString(10);
+                refContent.label = ((refContent.label == undefined) ? (refContent.name) : (refContent.label + refContent.name));
                 refContent.ariaLabel = refContent.label;
 
                 this.content.formSectionContent.push(refContent);

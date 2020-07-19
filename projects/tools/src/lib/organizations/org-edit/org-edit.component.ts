@@ -1,11 +1,11 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormArray } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
 import { FormFieldType, TextInputAppearance, OperationAction, FormSection, PanelContent, 
-	ContainerContent, HintValue, HintPosition, cloneFormSection } from '@toco/tools/forms';
+	ContainerContent, HintValue, HintPosition } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-edit',
@@ -432,13 +432,13 @@ export class OrgEditComponent implements OnInit
 			'formSectionContent': [
 				{
 					'formSection': new FormGroup({ }, [ ]),
-					'name': "containerLabelDiffLang",
-					'label': "0",
+					'name': "0",
+					'label': "Label diff lang ",
 					'type': FormFieldType.container_label_diff_lang,
 					'required': true,
 					'width': "100%",
 		//            'appearance': TextInputAppearance.outline,
-					'ariaLabel': "0",
+					'ariaLabel': "Label diff lang ",
 					'formSectionContent': [
 						{
 							'name': 'label',
