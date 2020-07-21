@@ -5,7 +5,9 @@
 
 
 import { Input } from '@angular/core';
-import { FormArray, AbstractControl } from '@angular/forms';
+import { FormArray } from '@angular/forms';
+
+import { Common } from '@toco/tools/core';
 
 import { FormSection, FormFieldContent, FormFieldControl, cloneContent } from '../form-field.control';
 
@@ -15,8 +17,8 @@ import { FormSection, FormFieldContent, FormFieldControl, cloneContent } from '.
 export interface ContainerContent extends FormFieldContent
 {
 	/**
-	 * Returns the `FormSection` that tracks the value and validity state of the internal child controls 
-     * that contains this control. 
+	 * Returns the `FormSection` that tracks the value and validity state of the internal 
+     * child controls that contains this control. 
      * Implementation notes: 
      *  - Represents the `FormGroup` or `FormArray` that contains the child controls. 
      *  - It must be specified; otherwise, an exception is thrown. 
@@ -27,7 +29,8 @@ export interface ContainerContent extends FormFieldContent
 
     /**
      * Returns an array of contents that represents the `FormSection`'s child controls. 
-     * By default, its value is `[]`. 
+     * Implementation notes: 
+     *  - It must be specified, and must have at least one element; otherwise, an exception is thrown. 
      */
     formSectionContent?: any[];
 }
@@ -44,12 +47,23 @@ export abstract class ContainerControl extends FormFieldControl
     public content: ContainerContent;
 
     /**
-     * If the `content.formSection` represents a `FormArray`, then this field returns a pattern content 
-     * that is added in the `content.formSectionContent` for each element that is added in the `FormArray`; 
-     * otherwise, returns `undefined`. 
+     * If the `content.formSection` represents a `FormArray`, then this field returns 
+     * a pattern content that is `content.formSectionContent[0]` value; otherwise, returns `undefined`. 
+     * It is used for adding a new element in the `content.formSectionContent`, that is, 
+     * for adding a new control in the `FormArray`. 
      * By default, its value is `undefined`. 
      */
     private _formArrayPatternContent: any;
+
+    /**
+     * If the `content.formSection` represents a `FormArray`, then this field returns 
+     * a pattern value that is a clone of the `content.value[0]` value, and sets all 
+     * its properties/values of built-in type to `undefined`; otherwise, returns `undefined`. 
+     * It is used for adding a new element in the `content.formSectionContent`, that is, 
+     * for adding a new control in the `FormArray`. 
+     * By default, its value is `undefined`. 
+     */
+    private _formArrayPatternValue: any;
 
     /**
      * Constructs a new instance of this class. 
@@ -59,6 +73,7 @@ export abstract class ContainerControl extends FormFieldControl
         super();
 
         this._formArrayPatternContent = undefined;
+        this._formArrayPatternValue = undefined;
     }
 
     /**
@@ -85,8 +100,14 @@ export abstract class ContainerControl extends FormFieldControl
 
         if (this.content.formSection instanceof FormArray)
         {
+            if ((this.content.value == undefined) || (this.content.value.length == 0))
+            {
+                throw new Error('This is a control that is constructed dynamically using `FormArray`. The `content.value` array can not be undefined, and must have at least one element.');
+            }
+
             this.initFormSectionContentToFormArray();
         }
+
         this._setParentFormSectionToChildren();
 
         // let temp: string = (isAbbreviation) ? this.content.label : this.content.label.toLowerCase();
@@ -116,38 +137,47 @@ export abstract class ContainerControl extends FormFieldControl
     /**
      * Initializes the `content.formSectionContent` correctly depending on the `content.value`. 
      * In this case, `content.value` is an array; for each element in the `content.value`, one element 
-     * is added in the `content.formSectionContent`, therefore one element is added 
+     * is added in the `content.formSectionContent`; therefore one element is added 
      * in the `content.formSection` `FormArray`. 
      */
     protected initFormSectionContentToFormArray(): void
     {
+        /* At this point, `content.formSectionContent` has one element, 
+        and `content.value` has at least one element. */
+
         /* Saves the pattern content, that is, `content.formSectionContent[0]`. */
         this._formArrayPatternContent = this.content.formSectionContent[0];
         /* The `FormArray` is empty initially. */
         this.content.formSectionContent = [ ];
 
-        /* In this case, `content.value` is an array. */
+        /* Saves the pattern value, that is, `content.value[0]`. 
+        Creates a new value that represents the clone of the specified `content.value[0]` value, and 
+        sets all its properties/values of built-in type to `undefined`. */
+        this._formArrayPatternValue = Common.cloneValueToUndefined(this.content.value[0]);
 
-        if ((this.content.value != undefined) && (this.content.value.length != 0))
+        //TODO: Poner la lógica del campo `alwaysShowFirstElement` ...
+
+        /* The `FormArray` will contain one element for each element in the `content.value`. */
+        for(let val of this.content.value)
         {
-            /* The `FormArray` will contain one element for each element in the `content.value`. */
-
-            let refContent: any;
-            let index: number = -1;
-
-            for(let val of this.content.value)
-            {
-                refContent = cloneContent(this._formArrayPatternContent, val);
-                index++;
-
-                /* Overwrites some properties for the cloned content. */
-                refContent.name = index.toString(10);
-                refContent.label = ((refContent.label == undefined) ? (refContent.name) : (refContent.label + refContent.name));
-                refContent.ariaLabel = refContent.label;
-
-                this.content.formSectionContent.push(refContent);
-            }
+            this._initOneElemFormSectionContentToFormArray(val);
         }
+    }
+
+    /**
+     * Initializes one element in the `content.formSectionContent` correctly depending on the specified `value`. 
+     * @param value The initial `value` field of each content representing a `FormControl`. 
+     */
+    private _initOneElemFormSectionContentToFormArray(value: any): void
+    {
+        let refContent: any = cloneContent(this._formArrayPatternContent, value);
+
+        /* Overwrites some properties for the cloned content. */
+        refContent.name = this.content.formSectionContent.length.toString(10);  /* The element is added in the array after the last position. */
+        refContent.label = ((refContent.label == undefined) ? (refContent.name) : (refContent.label + refContent.name));
+        refContent.ariaLabel = refContent.label;
+
+        this.content.formSectionContent.push(refContent);
     }
 
 	/**
@@ -168,14 +198,27 @@ export abstract class ContainerControl extends FormFieldControl
     }
 
     /**
-     * If the `content.formSection` represents a `FormArray`, then this field returns a pattern content 
-     * that is added in the `content.formSectionContent` for each element that is added in the `FormArray`; 
-     * otherwise, returns `undefined`. 
+     * If the `content.formSection` represents a `FormArray`, then this field returns 
+     * a pattern content that is `content.formSectionContent[0]` value; otherwise, returns `undefined`. 
+     * It is used for adding a new element in the `content.formSectionContent`, that is, 
+     * for adding a new control in the `FormArray`. 
      * By default, its value is `undefined`. 
      */
     public get FormArrayPatternContent(): any
     {
         return this._formArrayPatternContent;
+    }
+
+    /**
+     * If the `content.formSection` represents a `FormArray`, then this field returns 
+     * a pattern value that is a clone of the `content.value[0]` value, and sets all 
+     * its properties/values of built-in type to `undefined`; otherwise, returns `undefined`. 
+     * It is used for adding a new element in the `content.formSectionContent`. 
+     * By default, its value is `undefined`. 
+     */
+    public get FormArrayPatternValue(): any
+    {
+        return this._formArrayPatternValue;
     }
 
     /**
@@ -192,17 +235,21 @@ export abstract class ContainerControl extends FormFieldControl
     }
 
     /**
-     * Adds a new `AbstractControl` at the end of the `content.formSection`. 
+     * Adds an empty element at the end of the `content.formSectionContent`; therefore one element 
+     * is added at the end of the `content.formSection` `FormArray`.  
      * The `content.formSection` must be an instance of `FormArray`. 
-     * @param control Form control to be added at the end of the array. 
      */
-	public addToFormArray(control: AbstractControl): void
+	public addToFormArray(): void
 	{
-        console.log('addToFormArray', control);
+        console.log('addToFormArray');
 
         if (this.content.formSection instanceof FormArray)
         {
-            this.content.formSection.push(control);
+            this._initOneElemFormSectionContentToFormArray(this._formArrayPatternValue);
+            // this._initOneElemFormSectionContentToFormArray({
+            //     'label': undefined,
+            //     'iso639': undefined
+            // });
         }
         else
         {
@@ -211,9 +258,10 @@ export abstract class ContainerControl extends FormFieldControl
 	}
 
     /**
-     * Removes the control at the given `index` in the `content.formSection`. 
+     * Removes the element at the given `index` in the `content.formSectionContent`; therefore 
+     * the element at the given `index` is removed in the `content.formSection` `FormArray`. 
      * The `content.formSection` must be an instance of `FormArray`. 
-     * @param index Index in the array to remove the control. 
+     * @param index Index in the array to remove the element. 
      */
 	public removeFromFormArray(index: number): void
 	{
@@ -221,7 +269,7 @@ export abstract class ContainerControl extends FormFieldControl
 
         if (this.content.formSection instanceof FormArray)
         {
-            this.content.formSection.removeAt(index);
+            this.content.formSectionContent.splice(index, 1);
         }
         else
         {
@@ -230,7 +278,8 @@ export abstract class ContainerControl extends FormFieldControl
     }
 
     /**
-     * Removes all controls in the `content.formSection`. 
+     * Removes all elements in the `content.formSectionContent`; therefore 
+     * all elements are removed in the `content.formSection` `FormArray`. 
      * The `content.formSection` must be an instance of `FormArray`. 
      */
 	public clearFormArray(): void
@@ -239,7 +288,7 @@ export abstract class ContainerControl extends FormFieldControl
 
         if (this.content.formSection instanceof FormArray)
         {
-            this.content.formSection.clear();
+            this.content.formSectionContent = [ ];
         }
         else
         {

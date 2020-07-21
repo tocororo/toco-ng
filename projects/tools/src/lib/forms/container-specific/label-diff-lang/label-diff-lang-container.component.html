@@ -3,7 +3,7 @@
     <legend class="container-simple-form-field-legend">{{ content.label }}</legend>
 
     <component-factory [fieldsContent]="content.formSectionContent"></component-factory>
-    <button mat-raised-button color="primary" (click)="content.parentFormSection.removeFromFormArray(content.label)">
+    <button mat-raised-button color="primary" (click)="content.parentFormSection.removeFromFormArray(content.name)">
         <mat-icon>remove_circle</mat-icon>
     </button>
 
