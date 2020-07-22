@@ -4,13 +4,13 @@
  */
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, SecurityContext } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '@toco/tools/shared';
-import { CoreModule } from '@toco/tools/core';
+import { CoreModule, HTTP_INTERCEPTOR_PROVIDERS, CACHABLE_URL_PROVIDER, REQUEST_CACHE_DIFFERENT_TIME_WITH_MAP_PROVIDER } from '@toco/tools/core';
 import { CatalogModule } from '@toco/tools/catalog';
 import { AuthenticationModule } from '@toco/tools/authentication';
 import { NotificationModule } from '@toco/tools/notification';
@@ -24,6 +24,7 @@ import { StaticPagesComponent } from './static-pages/static-pages.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MarkdownModule } from 'ngx-markdown';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,12 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
   entryComponents: [
     SourceViewSaveDialog
   ],
-  providers: [],
+  providers: [
+    EnvServiceProvider,
+    CACHABLE_URL_PROVIDER,
+    REQUEST_CACHE_DIFFERENT_TIME_WITH_MAP_PROVIDER,
+    HTTP_INTERCEPTOR_PROVIDERS
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -16,5 +16,5 @@ import { CachingInterceptor } from './http.interceptor';
  */
 export const HTTP_INTERCEPTOR_PROVIDERS = [
     //{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationService, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true }
+    //{ provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true }
 ];

@@ -25,6 +25,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
         OAuthModule.forRoot(),
         AuthenticateRoutingModule
     ],
+    exports: [
+        AuthenticationComponent
+    ],
 
     //TODO: esto se elimina de aquí y se pone en el fichero `core/services/http-interceptor.order.ts`.
     providers: [
