@@ -28,19 +28,18 @@
                     </div>
     
                 </div>
+            </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="element-row"
+            [class.expanded-row]="expandedElement === element" (click)="expandedElement = element">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+    </table>
 
-            </div>
-        </td>
-    </ng-container>
+    <h1 *ngIf="paginator.length == 0">No hay Notificaciones para mostrar</h1>
 
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="element-row"
-        [class.expanded-row]="expandedElement === element" (click)="expandedElement = element">
-    </tr>
-    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
-</table>
-
-<h1 *ngIf="paginator.length == 0">No hay Notificaciones para mostrar</h1>
-
-<mat-paginator [length]="paginator.length" [pageSize]="paginator.pageSize" [pageSizeOptions]="pageSizeOptions" (page)="getNotificationsListData()">
-</mat-paginator>
+    <mat-paginator [length]="paginator.length" [pageSize]="paginator.pageSize" [pageSizeOptions]="pageSizeOptions" (page)="getNotificationsListData()">
+    </mat-paginator>
+</div>
