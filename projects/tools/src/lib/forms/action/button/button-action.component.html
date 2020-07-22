@@ -1,22 +1,15 @@
 
-<!-- <button mat-raised-button
-	color="primary"
-	(click)="content.parentFormSection.removeFromFormArray(content.name)"
->
-	<mat-icon>remove_circle</mat-icon>
-</button> -->
-
-
-<!--<button mat-icon-button-->
+<!-- <button mat-icon-button -->
 <button mat-raised-button
 	class="action-button"
 	color="primary"
 	[attr.aria-label]="content.ariaLabel"
-	matTooltip="{{ content.tooltip.label }}"
+	[matTooltip]="content.tooltip.label"
 	(click)="content.click(getInstance)"
 >
 	<!-- Only renders one of these two `mat-icon` or nothing. -->
 	<mat-icon *ngIf="content.icon && iconSourceState(content.icon, iconSource.internal)" class="mat-icon notranslate" matPrefix [svgIcon]="content.icon.name"></mat-icon>
 	<mat-icon *ngIf="content.icon && iconSourceState(content.icon, iconSource.external)" class="mat-icon notranslate" matPrefix>{{ content.icon.name }}</mat-icon>
 	<!-- <mat-icon>{{ content.icon.name }}</mat-icon> -->
+	{{ content.label }}
 </button>

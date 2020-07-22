@@ -5,7 +5,7 @@ import { FormGroup, FormArray } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
 import { FormFieldType, TextInputAppearance, OperationAction, FormSection, PanelContent, 
-	ContainerContent, HintValue, HintPosition } from '@toco/tools/forms';
+	ContainerContent, HintValue, HintPosition, IconValue, IconSource, ContentPosition } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-edit',
@@ -432,13 +432,13 @@ export class OrgEditComponent implements OnInit
 			'formSectionContent': [
 				{
 					'formSection': new FormGroup({ }, [ ]),
-					'name': "0",
-					'label': "Label diff lang ",
+					'name': '0',
+					'label': 'Label diff lang ',
 					'type': FormFieldType.container_label_diff_lang,
 					'required': true,
-					'width': "100%",
+					'width': '100%',
 		//            'appearance': TextInputAppearance.outline,
-					'ariaLabel': "Label diff lang ",
+					'ariaLabel': 'Label diff lang ',
 					'formSectionContent': [
 						{
 							'name': 'label',
@@ -448,7 +448,7 @@ export class OrgEditComponent implements OnInit
 							/* 'value': undefined, this is the default behavior. */
 							'width': '70%',
 							'appearance': TextInputAppearance.outline,
-							'ariaLabel': "The institute name in a language variant"
+							'ariaLabel': 'The institute name in a language variant'
 						},
 						{
 							'name': 'iso639',
@@ -458,9 +458,21 @@ export class OrgEditComponent implements OnInit
 							/* 'value': undefined, this is the default behavior. */
 							'width': '30%',
 							'appearance': TextInputAppearance.outline,
-							'ariaLabel': "The ISO-639-1 language code",
+							'ariaLabel': 'The ISO-639-1 language code',
 							//'startHint': new HintValue(HintPosition.start, 'ISO-639-1 language code')
 						},
+						{
+							'label': 'Remove',
+							'type': FormFieldType.action_button,
+							'width': '30%',
+							// 'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'Remove',
+							'icon': new IconValue(IconSource.external, ContentPosition.prefix, 'remove_circle'),
+							'tooltip': new HintValue(HintPosition.start, 'Remove label'),
+							'click': (sender: any): void => {
+								sender.content.parentFormSection.parentFormSection.removeFromFormArray(sender.content.parentFormSection.name);
+							}
+						}
 					]
 				}
 			]
@@ -474,13 +486,13 @@ export class OrgEditComponent implements OnInit
     {
         return {
             'formSection': new FormGroup({ }, [ ]),
-            'name': "identifiers",
-            'label': "Organization Identifiers, different from GRID mapping",
+            'name': 'identifiers',
+            'label': 'Organization Identifiers, different from GRID mapping',
             'type': FormFieldType.container_simple,
             'required': true,
-            'width': "100%",
+            'width': '100%',
 //            'appearance': TextInputAppearance.outline,
-            'ariaLabel': "Organization Identifiers, different from GRID mapping",
+            'ariaLabel': 'Organization Identifiers, different from GRID mapping',
             'formSectionContent': [
                 {
                     'name': 'isni',   //idtype
@@ -490,7 +502,7 @@ export class OrgEditComponent implements OnInit
                     'value': 'Un_id_isni',
                     'width': '50%',
                     'appearance': TextInputAppearance.outline,
-                    'ariaLabel': "Identificador isni",
+                    'ariaLabel': 'Identificador isni',
                     'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
                 },
                 {
@@ -501,7 +513,7 @@ export class OrgEditComponent implements OnInit
                     'value': 'Un_id_grid',
                     'width': '50%',
                     'appearance': TextInputAppearance.outline,
-                    'ariaLabel': "Identificador grid",
+                    'ariaLabel': 'Identificador grid',
                     'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
                 },
             ]
