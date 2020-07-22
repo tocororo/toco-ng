@@ -8,6 +8,10 @@
  * Public API surface of forms. 
  */
 export * from './forms.module';
+
+export * from './action/button/button-action.component';
+export * from './action/action.control';
+
 export * from './container/component-factory/component-factory.component';
 export * from './container/form-container/form-container.component';
 export * from './container/form-container/form-container.service';
@@ -26,7 +30,6 @@ export * from './experimental/term-parent/term-parent.component';
 export * from './experimental/textarea/textarea.component';
 export * from './experimental/vocabulary/vocabulary.component';
 
-export * from './action/action.control';
 export * from './input/chips/chips-input.component';
 export * from './input/email/email-value';
 export * from './input/email/email-input.component';

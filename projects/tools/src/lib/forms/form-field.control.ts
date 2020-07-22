@@ -226,6 +226,11 @@ export class HintValue
  */
 export enum FormFieldType
 {
+    /** A button control. */
+    action_button = 'action_button',
+
+
+
     /** A container control that is showed as a panel. */
     container_panel = 'container_panel',
 

@@ -131,7 +131,7 @@ export interface IInternalComponent
 }
 
 /**
- * Represents the base abstract class for a control that allows the writing/selection of a text.
+ * Represents the base abstract class for a control that allows the writing/selection of a text. 
  */
 export abstract class InputControl extends FormFieldControl
 {
