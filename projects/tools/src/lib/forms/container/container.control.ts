@@ -180,6 +180,19 @@ export abstract class ContainerControl extends FormFieldControl
         this.content.formSectionContent.push(refContent);
     }
 
+    /**
+     * Sets the parent `FormSection` to its children if they have got nothing. 
+     */
+    private _setParentFormSectionToChildren(): void
+    {
+        this.content.formSectionContent.forEach(
+            (ffc: FormFieldContent): void => {
+                /* Sets the parent `FormSection` to its children if they have got nothing. */
+                if (ffc.parentFormSection == undefined) ffc.parentFormSection = this.content.formSection;
+            }
+        );
+    }
+
 	/**
 	 * Initializes the control's value. It uses the `content.value` and it is already different of `undefined`. 
      * It also checks if the specified `content.value` is correct. For internal use only. 
@@ -221,18 +234,13 @@ export abstract class ContainerControl extends FormFieldControl
         return this._formArrayPatternValue;
     }
 
-    /**
-     * Sets the parent `FormSection` to its children if they have got nothing. 
-     */
-    private _setParentFormSectionToChildren(): void
-    {
-        this.content.formSectionContent.forEach(
-            (ffc: FormFieldContent): void => {
-                /* Sets the parent `FormSection` to its children if they have got nothing. */
-                if (ffc.parentFormSection == undefined) ffc.parentFormSection = this.content.formSection;
-            }
-        );
-    }
+	/**
+	 * Returns true if this container is empty; otherwise, false. 
+	 */
+	public get isEmpty(): boolean
+	{
+		return (this.content.formSectionContent.length == 0);
+	}
 
     /**
      * Adds an empty element at the end of the `content.formSectionContent`; therefore one element 
