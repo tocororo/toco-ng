@@ -32,8 +32,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatListModule } from '@angular/material/list';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatStepperModule } from '@angular/material/stepper'
 
-import {MatStepperModule} from '@angular/material/stepper'
 /**
  * A module that contains all angular material modules that are needed. 
  */

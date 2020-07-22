@@ -1,58 +1,7 @@
 
-import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { PartialObserver, Subscription } from 'rxjs';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
-import { Entity, Response } from '@toco/tools/entities';
-
-import { InputContent } from '../../input/input.control';
-import { ActionContent } from '../../action/action.control';
-import { FormFieldContent_Experimental } from '../../experimental/form-field.control.experimental';
-import { FormGroup } from '@angular/forms';
-import { FormFieldContent } from '../../form-field.control';
-import { element } from 'protractor';
-
-/**
- * An interface that represents the content of an expansion control.
- */
-export interface PanelContent
-{
-    /**
-     * Returns the panel's title.
-     */
-    title: string;
-
-    /**
-     * Returns the panel's description.
-     */
-    description: string;
-
-    /**
-     * Returns the panel's icon name.
-     */
-    iconName: string;
-
-    /**
-     * Returns the panel's content.
-     */
-    content: (InputContent | ActionContent | FormFieldContent_Experimental)[] | any[];
-
-    formGroup: FormGroup;
-
-    /**
-     * action and action labels for each panels
-     */
-    action?: FormContainerAction;
-    actionLabel?: string;
-
-    /**
-     * wheather the panel is open or not.
-     */
-    open?: boolean;
-    /**
-     * In case you need an extra value associated with the panel, to identify it or whathever
-     */
-    value?: any;
-}
+import { ContainerContent, ContainerControl } from '../container.control';
 
 export interface FormContainerAction
 {
@@ -60,109 +9,127 @@ export interface FormContainerAction
 }
 
 /**
- * @description
- * Represents a form container.
- * Creates a form to show the array of panels and sends that information to the server.
+ * An interface that represents the content of an expansion control. 
+ */
+export interface PanelContent_Depr extends ContainerContent
+{
+    /**
+     * Returns the panel's title. 
+     */
+    title: string;
+
+    /**
+     * Returns the panel's description. 
+     */
+    description: string;
+
+    /**
+     * Returns the panel's icon name. 
+     */
+    iconName: string;
+
+    /**
+     * Returns the action and action labels for each panel. 
+     */
+    action?: FormContainerAction;
+    actionLabel?: string;
+
+    /**
+     * Returns true is the panel is open; otherwise, false. 
+     */
+    open?: boolean;
+}
+
+/**
+ * Represents a control that contains a list of panels and sends that information to the server. 
  */
 @Component({
     selector: 'toco-form-container',
     templateUrl: './form-container.component.html',
     styleUrls: ['./form-container.component.scss']
 })
-export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
+export class FormContainerComponent extends ContainerControl implements OnInit, OnChanges
 {
     /**
-     * The array of panels to show. TODO: this should be an observable?, any changes in the panels
+     * Input field that contains the content of this class. The array of panels to show. 
      */
     @Input()
-    public panels: PanelContent[];
+    public panelsContent: PanelContent_Depr[];
 
     @Input()
-    public useAccordion = true;
+    public useAccordion: boolean = true;
 
     @Input()
-    public useContainer = true;
+    public useContainer: boolean = true;
 
     @Input()
-    public actionButtonIsStepperNext = false;
-
+    public actionButtonIsStepperNext: boolean = false;
 
     @Input()
     public action: FormContainerAction;
 
-    @Input()
-    public entity: Entity;
-
     /**
-     * An string that represents the action label of the last panel.
+     * An string that represents the action label of the last panel. 
      */
     @Input()
     public actionLabel: string;
 
     @Input()
-    public deleteValuesAfterAction = true;
+    public deleteValuesAfterAction: boolean = true;
 
     /**
-     * The current expanded panel position.
+     * The current expanded panel position. 
      */
     public step: number;
 
-    // tslint:disable-next-line: member-ordering
-    private sendDataObserver: PartialObserver<Response<any>> = {
-        next: (response: Response<any>) => {
-            /**
-             * TODO: make somthing with response
-             */
-        },
-
-        error: (err: any) => {
-                console.log('The observable got an error notification: ' + err + '.');
-        },
-
-        complete: () => {
-            console.log('The observable got a complete notification.');
-        }
-    };
-
-    private sendDataSubscription: Subscription = null;
-
     public constructor()
     {
+        super();
+
         /* By default, the first panel is expanded. */
         this.step = 0;
     }
 
-    private setFormGroupToPanels(){
-        this.panels.forEach(panel => {
-            panel.content.forEach((element: FormFieldContent) => {
-                element.formGroup = panel.formGroup;
-            });
-        });
-    }
+    // private setFormGroupToPanels(): void
+    // {
+    //     this.panelsContent.forEach(panel => {
+    //         panel.content.forEach((element: FormFieldContent) => {
+    //             element.parentFormSection = panel.formSection;
+    //         });
+    //     });
+    // }
 
     public ngOnInit(): void
     {
+        console.log('on INIT call', this.panelsContent);
+
+        /* Sets the default values. */
+        this.content = {
+            'formSection': this.panelsContent[0].formSection,
+            'name': 'FormContainerComponent',
+            'label': 'FormContainerComponent_Label',
+            'type': undefined,
+            'value': 'FormContainerComponent',
+//            'width': '100%',
+            'ariaLabel': 'FormContainerComponent'
+        };
+        this.init(undefined, false, false);
+
         // if actionLabel is undefined, means that there is no actionLabel, the user must decide!!!
         // if (this.actionLabel == undefined) this.actionLabel = 'Adicionar';
-        console.log("on INIT", this.panels)
-        this.setFormGroupToPanels();
+//        this.setFormGroupToPanels();
     }
 
-    // tslint:disable-next-line: indent
-    public ngOnDestroy(): void
+    public ngOnChanges(): void
     {
-        console.log("on DESTROY Call", this.panels)
-        this.sendDataUnsubscribe();
+        console.log('on CHANGES call', this.panelsContent)
+
+//        this.setFormGroupToPanels();
     }
 
-    public ngOnChanges(): void{
-        console.log("on CHANGES Call", this.panels)
-
-        this.setFormGroupToPanels();
-    }
     /**
-     * Sets the new expanded panel position.
-     * @param newStep The new position.
+     * Sets the new expanded panel position. 
+     * @param newStep The new position. 
      */
     public setStep(newStep: number): void
     {
@@ -170,7 +137,7 @@ export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
     }
 
     /**
-     * Sets the expanded panel position to the next position.
+     * Sets the expanded panel position to the next position. 
      */
     public nextStep(): void
     {
@@ -178,7 +145,7 @@ export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
     }
 
     /**
-     * Sets the expanded panel position to the previous position.
+     * Sets the expanded panel position to the previous position. 
      */
     public prevStep(): void
     {
@@ -186,56 +153,35 @@ export class FormContainerComponent implements OnInit, OnDestroy, OnChanges
     }
 
     /**
-     * Sends data to the server. Collects all added information from the component.
-     * Creates a JSON object based on `form.name` and `form.value` fields.
+     * Sends data to the server. Collects all added information from the component. 
+     * Creates a JSON object based on `form.name` and `form.value` fields. 
      */
     public doAction(): void
     {
-        /* Preparing all data. */
+        //TODO: poner este method in `ContainerControl`. 
+
+        /* Prepares all data. */
 
         const data = { };
 
-        this.panels.forEach(panel => {
-            panel.content.forEach(form => {
-                data[form.name] = form.value;
+        this.panelsContent.forEach(panel => {
+            panel.formSectionContent.forEach(controlContent => {
+                data[controlContent.name] = controlContent.value;
             });
         });
 
-        if (this.action) {
+        if (this.action)
+        {
             this.action.doit(data);
         }
 
-        if (this.deleteValuesAfterAction) {
-            this.panels.forEach(panel => {
-              panel.content.forEach( form => {
-                  form.value = null;
-              });
+        if (this.deleteValuesAfterAction)
+        {
+            this.panelsContent.forEach(panel => {
+                panel.formSectionContent.forEach(controlContent => {
+                    controlContent.value = undefined;
+                });
             });
         }
-    }
-
-
-    private sendDataUnsubscribe(): void
-    {
-        if (this.sendDataSubscription)
-        {
-            this.sendDataSubscription.unsubscribe();
-        }
-    }
-
-    public addPanel(panel: PanelContent){
-        panel.content.forEach( element => {
-            element.formGroup = panel.formGroup;
-        });
-        this.panels.push(panel);
-
-    }
-    public deletePanel(panelIndex){
-
-        this.panels[panelIndex].content.forEach( content => {
-            this.panels[panelIndex].formGroup.removeControl(content.name);
-        });
-        this.panels.splice(panelIndex, 1);
-        console.log(this.panels, panelIndex)
     }
 }

@@ -1,11 +1,13 @@
+
 import { Component, OnInit, Inject } from '@angular/core';
-import { SourceTypes, Journal, Source, SourceVersion, Response, ResponseStatus, JournalVersion } from '@toco/tools/entities';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MessageHandler, StatusCode } from '@toco/tools/core';
 import { MatSnackBar, MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
-import { SourceService } from '@toco/tools/backend';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
+import { MessageHandler, StatusCode, Response, ResponseStatus } from '@toco/tools/core';
+import { SourceTypes, Journal, Source, SourceVersion, JournalVersion } from '@toco/tools/entities';
+import { SourceService } from '@toco/tools/backend';
 
 @Component({
   selector: 'toco-source-view',

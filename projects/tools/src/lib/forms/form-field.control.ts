@@ -5,10 +5,17 @@
 
 
 import { Input } from '@angular/core';
+import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
+import { isObject } from 'util';
 
-import { Common } from '@toco/tools/core';
+import { Common, Params } from '@toco/tools/core';
 import { IconService } from '@toco/tools/core';
-import { FormGroup } from '@angular/forms';
+
+/**
+ * Defines a form section that represents the `FormGroup` or `FormArray` class. 
+ */
+export type FormSection = FormGroup | FormArray;
+
 /**
  * An enum that describes how inline contents of a block are horizontally aligned if the contents 
  * do not completely fill the line box. 
@@ -219,6 +226,22 @@ export class HintValue
  */
 export enum FormFieldType
 {
+    /** A container control that is showed as a panel. */
+    container_panel = 'container_panel',
+
+    /** A container control that is showed very simple. */
+    container_simple = 'container_simple',
+
+    /** A container control that is showed very simple using `FormArray`. */
+    container_simple_fa = 'container_simple_fa',
+
+
+
+    /** A container control that allows the writing of a name of something in different language. */
+    container_label_diff_lang = 'container_label_diff_lang',
+
+
+
     /** A text control. */
     text = 'text',
 
@@ -232,34 +255,34 @@ export enum FormFieldType
     checkbox = 'checkbox',
 
     /** A url control. */
-    url= 'url',
+    url = 'url',
 
     /** An email control. */
-    email= 'email',
+    email = 'email',
 
     /** An identifier control. */
-    identifier= 'identifier',
+    identifier = 'identifier',
 
     /** An issn control. */
-    issn= 'issn',
-    
-    /** An rnps control. */
-    rnps= 'rnps',
+    issn = 'issn',
 
-    /** An vocabulary control. */
-    vocabulary= 'vocabulary',
+    /** A rnps control. */
+    rnps = 'rnps',
 
-    /** An term parent control. */
-    term_parent= 'term_parent',
+    /** A vocabulary control. */
+    vocabulary = 'vocabulary',
 
-    /** Generic select control. */
-    select= 'select',
+    /** A term parent control. */
+    term_parent = 'term_parent',
 
-    /** Generic select with a filter control. */
-    select_filter= 'select_filter',
+    /** A select control. */
+    select = 'select',
 
-    /** Generic select with a filter control. */
-    select_tree= 'select_tree',
+    /** A select with a filter control. */
+    select_filter = 'select_filter',
+
+    /** A select with a filter control. */
+    select_tree = 'select_tree'
 }
 
 /**
@@ -267,7 +290,13 @@ export enum FormFieldType
  */
 export interface FormFieldContent
 {
-    formGroup?: FormGroup;
+    /**
+     * Returns the `FormSection` that represents the `FormGroup` or `FormArray` which this control belongs to. 
+     * By default, its value is `undefined`. 
+     */
+    parentFormSection?: FormSection;
+
+
 
     /**
      * Returns the control's minimum width. 
@@ -342,26 +371,103 @@ export interface FormFieldContent
 }
 
 /**
- * Returns a new object that represents the default `FormFieldContent`. 
+ * Returns a new object that represents the clone of the specified `FormControl` target. 
+ * @param target The `FormControl` object to clone. 
  */
-export function defaultFormFieldContent(): FormFieldContent
+export function cloneFormControl(target: FormControl): FormControl
 {
-    return {
-        'formGroup': undefined,
-        'minWidth': '15em',
-        'width': '15em',
+    return new FormControl(target.value, target.validator, target.asyncValidator);
+}
 
-        'label': Common.emptyString,
+/**
+ * Returns a new object that represents the clone of the specified `FormSection` target. 
+ * @param target The `FormSection` object to clone. 
+ */
+export function cloneFormSection(target: FormSection): FormSection
+{
+    if (target instanceof FormGroup)
+    {
+        /* Creates an empty `FormGroup` with its validators. */
+        let result: FormGroup = new FormGroup({ }, target.validator, target.asyncValidator);
 
-        'required': false,
-        'textAlign': TextAlign.left,
-        'ariaLabel': 'Text Input',
-        'value': undefined,
+        /* Adds the controls to `FormGroup`. */
+        for(let ctr in target.controls)
+        {
+            if((target.controls[ctr]) instanceof FormControl) result.addControl(ctr, cloneFormControl((target.controls[ctr]) as FormControl));
+            else result.addControl(ctr, cloneFormSection((target.controls[ctr]) as FormSection));
+        }
 
-        'type': FormFieldType.text,
-        'name': 'name',
-        'extraContent': undefined
-    };
+        return result;
+    }
+    else
+    {
+        /* Creates an empty `FormArray` with its validators. */
+        let result: FormArray = new FormArray([ ], target.validator, target.asyncValidator);
+
+        /* Adds the controls to the `FormArray`. */
+        for(let ctr of target.controls)
+        {
+            if(ctr instanceof FormControl) result.push(cloneFormControl(ctr));
+            else result.push(cloneFormSection(ctr as FormSection));
+        }
+
+        return result;
+    }
+}
+
+/**
+ * Returns a new object that represents the clone of the specified content target. 
+ * It also sets the initial `value` field of each content representing a `FormControl`. 
+ * It clones the object smartly depending on the type of property. 
+ * @param target The content object to clone. 
+ * @param value The initial `value` field of each content representing a `FormControl`. 
+ */
+export function cloneContent(target: Params<any>, value: any): any
+{
+    let result: any = { };
+
+    for(let prop in target)
+    {
+        switch(prop)
+        {
+            /* The `formControl` property special case. */
+            case 'formControl':
+            {
+                result[prop] = cloneFormControl(target.formControl);
+                break;
+            }
+
+            /* The `formSection` property special case. */
+            case 'formSection':
+            {
+                result[prop] = cloneFormSection(target.formSection);
+                break;
+            }
+
+            /* The `formSectionContent` property special case. */
+            case 'formSectionContent':
+            {
+                result[prop] = [ ];
+                for(let content of target.formSectionContent)
+                {
+                    result[prop].push(cloneContent(content, value[content.name]));
+                }
+                break;
+            }
+
+            /* Copies the property without problem. */
+            default:
+            {
+                result[prop] = target[prop];
+                break;
+            }
+        }
+    }
+
+    /* If this content (`result`) represents a `FormControl`, then the `value` field is initialized. */
+    if (!isObject(value)) result['value'] = value;
+
+    return result;
 }
 
 /**
@@ -383,7 +489,7 @@ export abstract class FormFieldControl
      * Input field that contains the content of this class. 
      */
     @Input()
-    public content: any;  /* content: FormFieldContent */
+    public content: FormFieldContent;
 
     /**
      * Constructs a new instance of this class. 
@@ -392,6 +498,9 @@ export abstract class FormFieldControl
     {
         this.contentPosition = ContentPosition;
         this.iconSource = IconSource;
+
+        /* It must be initialize. */
+        this.content = { };
     }
 
     /**
@@ -403,8 +512,6 @@ export abstract class FormFieldControl
     protected init(label: string | undefined, isAbbreviation: boolean, alwaysHint: boolean): void
     {
         /* Sets the default values. */
-
-        if (this.content == undefined) this.content = { };
 
         if (label == undefined)
         {
@@ -443,6 +550,27 @@ export abstract class FormFieldControl
      * It also checks if the specified `content.value` is correct. For internal use only. 
 	 */
 	protected abstract initValue(): void;
+
+	/**
+	 * Adds the specified control as a child to the `content.parentFormSection`. 
+     * @param control Form control to be added. 
+	 */
+	protected addAsChildControl(control: AbstractControl): void
+	{
+        console.log('Added childInputControl: ', control);
+
+        if(this.content.parentFormSection instanceof FormGroup)  /* `content.parentFormSection` is an instance of `FormGroup`. */
+        {
+            this.content.parentFormSection.addControl(this.content.name, control);
+        }
+        else  /* `content.parentFormSection` is an instance of `FormArray`. */
+        {
+            /* Updates the control's name to the correct name because the control has a `FormArray` as its parent. */
+            this.content.name = this.content.parentFormSection.length.toString(10);
+
+            this.content.parentFormSection.push(control);
+        }
+	}
 
     /**
      * Returns true if the specified `IconValue` has the specified `ContentPosition` value; otherwise, false. 

@@ -3,10 +3,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { SortDirection, FilterValues, PageRequest, Page, UserService } from '@toco/tools/core';
+import { SortDirection, PageRequest, Page, UserService, Response, ResponseStatus } from '@toco/tools/core';
 import { SourceService } from '@toco/tools/backend';
 import { TableContent, TableComponent, CellContentWrap, InputTextComponent, InputContent, TextAlign, TextInputAppearance, IconValue, IconSource, ContentPosition, HintValue, HintPosition } from '@toco/tools/forms';
-import { Response, ResponseStatus } from '@toco/tools/entities';
 
 @Component({
     selector: 'toco-sources',
@@ -39,7 +38,7 @@ export class SourcesComponent implements OnInit
     public ngOnInit(): void
     {
         /* Sets an initial search value. */
-        //this._inputSearch.internalControl.setValue('cl');
+        //this._inputSearch.formControl.setValue('cl');
 
         /***************************/
 

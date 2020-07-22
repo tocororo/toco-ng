@@ -1,7 +1,18 @@
 
-<div *ngIf="hitList">
+<!-- <div *ngIf="hitList">
   <div *ngFor="let hit of hitList.hits">
-      <lib-org-view [org]="hit.metadata"></lib-org-view>
+      <toco-org-view [org]="hit.metadata"></toco-org-view>
   </div>
+</div> -->
 
+
+<!-- <container-simple [content]="identifiersContent"></container-simple> -->
+<!-- <container-simple [content]="identifiersContent_Complex"></container-simple> -->
+
+<div [ngStyle]="{'margin': '1em 0 1em 0'}">
+  <button mat-raised-button color="primary" (click)="doOperation()">Add Organization</button>
+  <!-- <input-text #input_search [content]="searchContent"></input-text> -->
 </div>
+
+<!-- <toco-table></toco-table> -->
+<toco-table [content]="tableContent"></toco-table>

@@ -1,8 +1,20 @@
 
-import { IconValue, HintValue, FormFieldContent, defaultFormFieldContent } from '../form-field.control';
+import { IconValue, HintValue, FormFieldContent } from '../form-field.control';
 
 /**
- * An interface that represents the content of an `ActionControl`. 
+ * An enum that represents the operation action. 
+ */
+export enum OperationAction
+{
+    back = 'back',
+    cancel = 'cancel',
+    reset = 'reset',
+    delete = 'delete',
+    submit = 'submit'
+}
+
+/**
+ * A base interface that represents the content of an `ActionControl`. 
  */
 export interface ActionContent extends FormFieldContent
 {
@@ -17,17 +29,4 @@ export interface ActionContent extends FormFieldContent
 	 * By default, its value is `null`. 
 	 */
     hint?: HintValue;
-}
-
-/**
- * Returns a new object that represents the default `ActionContent`. 
- */
-export function defaultActionContent(): ActionContent
-{
-    let result: ActionContent = defaultFormFieldContent();
-
-    result.icon = null;
-    result.hint = null;
-
-    return result;
 }

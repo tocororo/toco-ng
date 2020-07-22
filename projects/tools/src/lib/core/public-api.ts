@@ -15,6 +15,7 @@ export * from './services/backend-data-source';
 export * from './services/browser-storage.service';
 export * from './services/http-interceptor.order';
 export * from './services/http.interceptor';
+export * from './services/http.service';
 export * from './services/icon.service';
 export * from './services/message.service';
 export * from './services/request-cache-different-time.service';

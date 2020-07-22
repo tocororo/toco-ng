@@ -134,7 +134,7 @@ export class TreeFilterComponent implements OnInit, FilterComponent {
     this.checklistSelection.selected.forEach(node => {
       valueEmiter = valueEmiter + ',' + node.term.id;
     });
-    this.filterService.changeAutocompleteFilter(this.data.idVocab.toString(), valueEmiter);
+    this.filterService.changeAutocompleteFilter(this.data.idVocab.toString(10), valueEmiter);
   }
 
 

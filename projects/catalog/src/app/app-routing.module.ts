@@ -16,6 +16,7 @@ import { SourceViewComponent } from './source-view/source-view.component';
 import { SourceResolver } from './source-resolver'
 import { SourcesComponent } from './sources/sources.component';
 import { SourceEditComponent } from './source-edit/source-edit.component';
+
 const routes: Routes = [
     {
         path: '',

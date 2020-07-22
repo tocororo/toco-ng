@@ -7,6 +7,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
+export interface Response<T>
+{
+    message?: string;
+    status?: string;
+    data?: T;
+}
+
+export const ResponseStatus = {
+    SUCCESS: 'success',
+    ERROR: 'error'
+};
+
 @Injectable()
 export class HttpService
 {

@@ -61,7 +61,7 @@ export class UserService
                 ({ id, name, registrationDate }) => {
                     return id.toString(10).includes(search) ||
                     name.toLowerCase().includes(search) /*||
-                    registrationDate.toString().toLowerCase().includes(search)*/;
+                    registrationDate.toString(10).toLowerCase().includes(search)*/;
                 }
             );
         }

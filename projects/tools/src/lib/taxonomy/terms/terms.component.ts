@@ -7,8 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { MessageHandler, StatusCode } from '@toco/tools/core';
-import { Vocabulary, Term, TermNode, Response } from '@toco/tools/entities';
+import { MessageHandler, StatusCode, Response } from '@toco/tools/core';
+import { Vocabulary, Term, TermNode } from '@toco/tools/entities';
 
 import { TaxonomyService } from '@toco/tools/backend';
 import { TermGenericComponent } from '../term-generic/term-generic.component';
@@ -222,7 +222,7 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
                 if (userPermission.vocabulary_editor_actions) {
                     const arr: Array<string> = userPermission.vocabulary_editor_actions;
 
-                    if (arr.includes(id.toString())) {
+                    if (arr.includes(id.toString(10))) {
                         return true
                     }
 

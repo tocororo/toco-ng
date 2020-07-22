@@ -1,11 +1,16 @@
+/*
+ *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
+ *   All rights reserved.
+ */
+
 
 import { Input, ViewChild } from '@angular/core';
-import { AbstractControl, Validators, ValidationErrors } from '@angular/forms';
+import { Validators, ValidationErrors, FormControl } from '@angular/forms';
 
 import { Common } from '@toco/tools/core';
 
 import { ContentPosition, IconValue, HintPosition, HintValue,
-    FormFieldContent, FormFieldControl, defaultFormFieldContent } from '../form-field.control';
+    FormFieldContent, FormFieldControl } from '../form-field.control';
 
 /**
  * An enum that represents the appearance style of an `InputControl`. 
@@ -29,10 +34,21 @@ export enum TextInputAppearance
 }
 
 /**
- * An interface that represents the content of an `InputControl`. 
+ * A base interface that represents the content of an `InputControl`. 
  */
 export interface InputContent extends FormFieldContent
 {
+	/**
+	 * Tracks the value and validity state of the internal control that contains the text input. 
+     * Implementation notes: There are two cases: 
+     *  - You only have the `content.formControl` field as the `InputEmailComponent` class. 
+     *  - You have the `content.formControl` and `InputControl.internalComponent` fields as the `InputIssnComponent` class. 
+     *  - It must be specified; otherwise, an exception is thrown. 
+	 */
+    formControl?: FormControl;
+
+
+
     /**
      * Returns the control's appearance. 
      * By default, its value is `TextInputAppearance.standard`. 
@@ -43,13 +59,13 @@ export interface InputContent extends FormFieldContent
 
     /**
      * Returns the control's prefix icon. 
-     * By default, its value is `null`. 
+     * By default, its value is `undefined`. 
      */
     prefixIcon?: IconValue;
 
     /**
      * Returns the control's suffix icon. 
-     * By default, its value is `null`. 
+     * By default, its value is `undefined`. 
      */
     suffixIcon?: IconValue;
 
@@ -71,36 +87,15 @@ export interface InputContent extends FormFieldContent
 
 	/**
 	 * Returns the control's start hint. 
-	 * By default, its value is `null`. 
+	 * By default, its value is `undefined`. 
 	 */
     startHint?: HintValue;
 
 	/**
 	 * Returns the control's end hint. 
-	 * By default, its value is `null`. 
+	 * By default, its value is `undefined`. 
 	 */
     endHint?: HintValue;
-}
-
-/**
- * Returns a new object that represents the default `InputContent`. 
- */
-export function defaultInputContent(): InputContent
-{
-    let result: InputContent = defaultFormFieldContent();
-
-    result.appearance = TextInputAppearance.standard;
-
-    result.prefixIcon = null;
-    result.suffixIcon = null;
-
-    result.prefixText = undefined;
-    result.suffixText = undefined;
-
-    result.startHint = null;
-    result.endHint = null;
-
-    return result;
 }
 
 /**
@@ -112,12 +107,12 @@ export interface IInternalComponent
 	/**
 	 * Tracks the value and validity state of the internal control that contains the text input. 
 	 */
-    readonly internalControl: AbstractControl;
+    readonly formControl: FormControl;
 
 	/**
 	 * Returns or sets the value of the control. 
 	 */
-    value: any | null;
+    value: any | undefined;
 
 	/**
 	 * Returns true if the control is empty; otherwise, false. 
@@ -140,19 +135,11 @@ export interface IInternalComponent
  */
 export abstract class InputControl extends FormFieldControl
 {
-	/**
-	 * Tracks the value and validity state of the internal control that contains the text input. 
-     * Implementation notes: There are two cases: 
-     *  - You only have the `internalControl` field as the `InputEmailComponent` class. 
-     *  - You have the `internalControl` and `internalComponent` fields as the `InputIssnComponent` class. 
-	 */
-    public internalControl: AbstractControl;
-
-	/**
+    /**
 	 * Tracks the value and validity state of the internal component that contains the text input. 
      * Implementation notes: There are two cases: 
-     *  - You only have the `internalControl` field as the `InputEmailComponent` class. 
-     *  - You have the `internalControl` and `internalComponent` fields as the `InputIssnComponent` class. 
+     *  - You only have the `content.formControl` field as the `InputEmailComponent` class. 
+     *  - You have the `content.formControl` and `internalComponent` fields as the `InputIssnComponent` class. 
 	 */
 	@ViewChild('internalComponent', { static: true })
     protected readonly internalComponent: IInternalComponent;
@@ -170,14 +157,12 @@ export abstract class InputControl extends FormFieldControl
 
     /**
      * Constructs a new instance of this class. 
-     * @param ic An instance that extends the `AbstractControl` class. It tracks the value and 
-     * validity state of the internal control that contains the text input. 
      */
-    public constructor(ic: AbstractControl = null)
+    public constructor()
     {
         super();
 
-        this.internalControl = ic;
+        this.validationError_required = '';
     }
 
     /**
@@ -188,37 +173,14 @@ export abstract class InputControl extends FormFieldControl
      */
     protected init(label: string | undefined, isAbbreviation: boolean, alwaysHint: boolean): void
     {
-        if (this.internalControl == undefined)
+        if (this.content.formControl == undefined)
         {
-            if (this.internalComponent == undefined) throw new Error('There is not reference to the internal control.');
+            if (this.internalComponent == undefined) throw new Error('There is not reference to the internal control; it must be a `FormControl`.');
 
-            this.internalControl = this.internalComponent.internalControl;
+            this.content.formControl = this.internalComponent.formControl;
         }
 
         /* Sets the default values. */
-
-        // this.internalControl.setValidators((control: AbstractControl): ValidationErrors | null => {
-        //     console.log((control.value || ''))
-        //     const isWhitespace = (control.value || '').trim().length === 0;
-        //     const isValid = !isWhitespace;
-        //     console.log(isValid)
-        //     return isValid ? null : { 'whitespace': true };
-
-        //     console.log((this.internalControl.value === '' && this.internalControl.value.trim() === ''))
-        //     console.log(this.internalControl.value )
-        //     console.log(this.internalControl.value.trim() )
-        //     const contrim = this.internalControl.value.trim();
-
-        //     console.log(this.internalControl.value.split(' ').length)
-        //     return (this.internalControl.value === '' && this.internalControl.value.trim() === '')
-        //         ? { 'whitespaces': 'If not is empty dont put only spaces.' }
-        //         : null;
-        // });
-        
-        if (this.content.formGroup != undefined) this.content.formGroup.addControl(this.content.name, this.internalControl);
-
-
-        
 
         super.init(label, isAbbreviation, alwaysHint);
 
@@ -242,6 +204,14 @@ export abstract class InputControl extends FormFieldControl
             if (this.content.startHint != undefined) this.content.startHint.setDefaultValueIfUndefined_setPosition(HintPosition.start);
             if (this.content.endHint != undefined) this.content.endHint.setDefaultValueIfUndefined_setPosition(HintPosition.end);
         }
+
+        /* Adds this control as a child to the `content.parentFormSection`. It must be called at the end. */
+        if (this.content.parentFormSection != undefined)
+        {
+            console.log('addAsChildControl(this.content.formControl)');
+
+            this.addAsChildControl(this.content.formControl);
+        }
     }
 
 	/**
@@ -251,10 +221,10 @@ export abstract class InputControl extends FormFieldControl
 	protected initValue(): void
 	{
         /* In this way, checks if the specified `content.value` is correct. */
-        this.internalControl.setValue(this.content.value);
+        this.content.formControl.setValue(this.content.value);
 
         /* Marks the control as `touched`. */
-        this.internalControl.markAsTouched({
+        this.content.formControl.markAsTouched({
             onlySelf: true
         });
 	}
@@ -264,7 +234,7 @@ export abstract class InputControl extends FormFieldControl
 	 */
 	public get empty(): boolean
 	{
-        if (this.internalComponent == undefined) return (!this.internalControl.value);
+        if (this.internalComponent == undefined) return (!this.content.formControl.value);
         return this.internalComponent.empty;
     }
 
@@ -288,7 +258,7 @@ export abstract class InputControl extends FormFieldControl
          * control to touched. 
          * Thus, it reveals an error message only if the control is invalid and 
          * the control is either dirty or touched. */
-        if (this.internalComponent == undefined) return ((this.internalControl.invalid) && (this.internalControl.dirty || this.internalControl.touched));
+        if (this.internalComponent == undefined) return ((this.content.formControl.invalid) && (this.content.formControl.dirty || this.content.formControl.touched));
         return this.internalComponent.errorState;
     }
 
@@ -309,14 +279,14 @@ export abstract class InputControl extends FormFieldControl
         if (!this.errorState)
         {
             /* ... sets the new value of the control in the `content`. */
-            this.content.value = this.internalControl.value;
+            this.content.value = this.content.formControl.value;
         }
 
         /* If the control is not marked as `touched` ... */
-        if (this.internalControl.untouched)
+        if (this.content.formControl.untouched)
         {
             /* ... marks the control as `touched`. */
-            this.internalControl.markAsTouched({
+            this.content.formControl.markAsTouched({
                 onlySelf: true
            });
         }
@@ -344,7 +314,7 @@ export abstract class InputControl extends FormFieldControl
 
         if (this.internalComponent != undefined) return this.internalComponent.getErrorMessage();
 
-        let validationErrors: ValidationErrors = this.internalControl.errors;
+        let validationErrors: ValidationErrors = this.content.formControl.errors;
 
         /* Shows the text errors. */
         if (validationErrors)

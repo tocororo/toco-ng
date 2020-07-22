@@ -1,14 +1,14 @@
 
 import { Component, OnInit, Inject, Output, OnDestroy, EventEmitter } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { of, Subscription, PartialObserver, Observable } from 'rxjs';
+import { of, PartialObserver, Observable } from 'rxjs';
 import { catchError, finalize, startWith, map } from 'rxjs/operators';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { MessageHandler, StatusCode } from '@toco/tools/core';
-import { Vocabulary, Response } from '@toco/tools/entities';
+import { MessageHandler, StatusCode, Response } from '@toco/tools/core';
+import { Vocabulary } from '@toco/tools/entities';
 import { FormContainerComponent, PanelContent, FormFieldType, FormContainerAction, HintValue, HintPosition } from '@toco/tools/forms';
 
 import { TaxonomyService } from '@toco/tools/backend';
@@ -277,7 +277,7 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
                 if (userPermission.vocabulary_editor_actions) {
                     const arr: Array<string> = userPermission.vocabulary_editor_actions;
 
-                    if (arr.includes(id.toString())) {
+                    if (arr.includes(id.toString(10))) {
                         return true
                     }
 

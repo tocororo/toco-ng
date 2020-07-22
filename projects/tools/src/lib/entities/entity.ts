@@ -5,17 +5,23 @@
 
 
 
-/*** La idea de esta clase es tener un deserializador */
+/*** La idea de esta clase es tener un deserializador. */
 export class EntityBase extends Object {
 
-  load_from_data(data: any, exclude: string[] = []) {
-    const keys = Object.keys(this);
+  public load_from_data(data: any, exclude: string[] = []): void
+  {
+    const keys: string[] = Object.keys(this);
 
-    for (const key of keys) {
-      if (data[key] && !exclude.includes(key)) {
-        if (this[key] instanceof EntityBase) {
-          this[key].load_from_data(data[key]);
-        } else {
+    for (const key of keys)
+    {
+      if (data[key] && !exclude.includes(key))
+      {
+        if (this[key] instanceof EntityBase)
+        {
+          this[key].load_from_data(data[key], exclude);
+        }
+        else
+        {
           this[key] = data[key];
         }
       }

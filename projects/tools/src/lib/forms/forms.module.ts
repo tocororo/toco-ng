@@ -3,7 +3,6 @@
  *   All rights reserved.
  */
 
-
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@toco/tools/shared';
 import { RouterModule } from '@angular/router';
@@ -11,17 +10,23 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { IconService } from '@toco/tools/core';
 
+import { ComponentFactory } from './container/component-factory/component-factory.component';
 import { FormContainerComponent } from './container/form-container/form-container.component';
-import { FormFieldsComponent } from './container/form-fields/form-fields.component';
+import { ContainerPanelComponent } from './container/panel/panel-container.component';
+import { ContainerSimpleComponent } from './container/simple/simple-container.component';
+import { ContainerSimpleFaComponent } from './container/simple-fa/simple-container-fa.component';
 import { TableComponent } from './container/table/table.component';
-import { FormsService } from './forms.service';
+
+import { ContainerLabelDiffLangComponent } from './container-specific/label-diff-lang/label-diff-lang-container.component';
 
 import { InputTextComponent } from './input/text/text-input.component';
 import { InputEmailComponent } from './input/email/email-input.component';
 import { InputIssnInternalComponent } from './input/issn/issn-internal/issn-input-internal.component';
 import { InputIssnComponent } from './input/issn/issn-input.component';
 import { InputRnpsComponent } from './input/rnps/rnps-input.component';
+import { InputSelectComponent } from './input/select/select-input.component';
 import { InputUrlComponent } from './input/url/url-input.component';
+import { InputChipsComponent } from './input/chips/chips-input.component';
 
 import { VocabularyComponent } from './experimental/vocabulary/vocabulary.component';
 import { TermParentComponent } from './experimental/term-parent/term-parent.component';
@@ -33,16 +38,22 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
 
 @NgModule({
   declarations: [
+    ComponentFactory,
     FormContainerComponent,
-    FormFieldsComponent,
+    ContainerPanelComponent,
+    ContainerSimpleComponent,
+    ContainerSimpleFaComponent,
     TableComponent,
+    ContainerLabelDiffLangComponent,
     InputTextComponent,
     InputEmailComponent,
     InputIdentifierComponent,
     InputIssnInternalComponent,
     InputIssnComponent,
     InputRnpsComponent,
+    InputSelectComponent,
     InputUrlComponent,
+    InputChipsComponent,
     VocabularyComponent,
     TermParentComponent,
     SelectComponent,
@@ -58,15 +69,21 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
   ],
 
   exports: [
+    ComponentFactory,
     FormContainerComponent,
-    FormFieldsComponent,
+    ContainerPanelComponent,
+    ContainerSimpleComponent,
+    ContainerSimpleFaComponent,
     TableComponent,
+    ContainerLabelDiffLangComponent,
     InputTextComponent,
     InputEmailComponent,
     InputIdentifierComponent,
     InputIssnComponent,
     InputRnpsComponent,
+    InputSelectComponent,
     InputUrlComponent,
+    InputChipsComponent,
     VocabularyComponent,
     TermParentComponent,
     SelectComponent,
@@ -74,9 +91,7 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
     TextareaComponent
   ],
 
-  providers: [
-    FormsService
-  ]
+  providers: []
 })
 export class TocoFormsModule {
   public constructor(private _iconService: IconService) {

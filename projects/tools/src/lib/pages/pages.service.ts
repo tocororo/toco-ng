@@ -5,7 +5,7 @@ import { Observable } from "rxjs";
 
 import { EnvService } from '@tocoenv/tools/env.service';
 
-import { Response } from "@toco/tools/entities";
+import { Response } from '@toco/tools/core';
 
 @Injectable()
 export class PagesService {

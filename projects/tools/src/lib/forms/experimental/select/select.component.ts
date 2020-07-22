@@ -3,84 +3,128 @@
  *   All rights reserved.
  */
 
-import { Component, OnInit, Input } from '@angular/core';
-import { FormFieldControl_Experimental } from '../form-field.control.experimental';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatOption } from '@angular/material';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
 
-export interface SelectOption{
-  value: any;
-  label: string;
-  // selected?: boolean;
+import { Common } from '@toco/tools/core';
+
+import { InputControl } from '../../input/input.control';
+
+/**
+ * An interface that represents a selectable option. 
+ */
+interface SelectOption
+{
+	/**
+	 * Returns the label that is showed. 
+	 */
+	label: string;
+
+	/**
+	 * Returns the value that is stored internally. 
+	 */
+	value: any;
+
+	/**
+	 * Returns true if this option is selected; otherwise, false. 
+	 */
+	// selected?: boolean;
 }
 
 /***
- * extraContent recibe una funcion llamada getOptions() que se encarga de contruir un SelectOption[]
+ * The `extraContent` recibe una funcion llamada getOptions() que se encarga de contruir un SelectOption[]. 
+ * Si es multiple, entonces el `value` es un array de valores. 
  */
 @Component({
-  selector: 'toco-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss'],
-  host: {
-    '[style.minWidth]': 'content.minWidth',
-    '[style.width]': 'content.width'
-  }
+	selector: 'toco-select',
+	templateUrl: './select.component.html',
+	styleUrls: ['./select.component.scss'],
+	host: {
+		'[style.minWidth]': 'content.minWidth',
+		'[style.width]': 'content.width'
+	}
 })
-export class SelectComponent extends FormFieldControl_Experimental implements OnInit {
+export class SelectComponent extends InputControl/*FormFieldControl_Experimental*/ implements OnInit
+{
+	/**
+	 * Returns the options list that can be selected. 
+	 * By default, its value is `[]`. 
+	 */
+	public selectOptions: SelectOption[];
 
-  internalControl = new FormControl();
+	/**
+	 * Returns true if the selection can be multiple; otherwise, false. 
+	 * By default, its value is `false`. 
+	 */
+	public multiple: boolean;
 
-  public selectOptions: SelectOption[] = null;
+	public constructor()
+	{
+        super();
 
+		this.selectOptions = [ ];
+		this.multiple = false;
+	}
 
-  selectedValue: any;
-  constructor() {
-    super();
-  }
+	public ngOnInit(): void
+	{
+		console.log('SelectComponent OnInit');
 
+        /* Sets this `content.formControl` by default. */
+        if (this.content.formControl == undefined) this.content.formControl = new FormControl(Common.emptyString);
 
-  multiple = false;
+        /* Sets the default values. */
+		this.init(undefined, false, false);
 
+		this.onSelectionChange();
+	}
 
-  ngOnInit() {
+    /**
+     * Initializes the `content` input property. 
+     * @param label The label to set. If the value is `undefined`, sets the label to `content.label`. 
+     * @param isAbbreviation If it is true then the `label` argument represents an abbreviation; otherwise, false. 
+     * @param alwaysHint If it is true then there is always at leat one hint start-aligned. 
+     */
+    protected init(label: string | undefined, isAbbreviation: boolean, alwaysHint: boolean): void
+    {
+        /* Sets the default values. */
 
-    this.multiple = this.content.extraContent['multiple']?this.content.extraContent['multiple'] : false;
+		super.init(label, isAbbreviation, alwaysHint);
 
-    this.content.formGroup.addControl(this.content.name, this.internalControl);
+//		if (this.content.appearance == undefined) this.content.appearance = false;
+		this.multiple = this.content.extraContent['multiple'] ? this.content.extraContent['multiple'] : false;
 
-    if (this.content.extraContent.observable) {
+		if (this.content.extraContent.observable)
+		{
+			this.content.extraContent.observable.subscribe(
 
-      this.content.extraContent.observable.subscribe(
+				// next
+				(response: any) => {
+					this.selectOptions = this.content.extraContent.getOptions(response);
+				},
 
-        // next
-        (response: any) => {
-          this.selectOptions = this.content.extraContent.getOptions(response);
-        },
-  
-        // error
-        (error: any) => { console.log(error); }
-        ,
-  
-        // complete
-        () => { }
-  
-      );
-    } else {
-      this.selectOptions = this.content.extraContent.getOptions();
+				// error
+				(error: any) => { console.log(error); }
+				,
+
+				// complete
+				() => { }
+
+			);
+		}
+		else
+		{
+			this.selectOptions = this.content.extraContent.getOptions();
+		}
     }
 
+	public onSelectionChange(): void
+	{
+		if ((this.content.extraContent) && (this.content.extraContent.selectionChange))
+		{
+			this.content.extraContent.selectionChange(this.content.value);
+		}
 
-    this.internalControl.setValue(this.content.value);
-    this.onSelectionChange();
-
-  }
-
-  onSelectionChange() {
-    if (this.content.extraContent.selectionChange) {
-        this.content.extraContent.selectionChange(this.content.value);
-      }
-  }
-
+		console.log('Select value: ', this.content.formControl.value);
+	}
 }

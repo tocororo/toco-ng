@@ -9,9 +9,9 @@ import { Observable, Subject, throwError } from 'rxjs';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 
 import { OAuthStorage, OAuthResourceServerErrorHandler, OAuthModuleConfig, OAuthService } from 'angular-oauth2-oidc';
-import { Response } from '../entities/response';
 import { EnvService } from '@tocoenv/tools/env.service';
 import { catchError } from 'rxjs/operators';
+import { Response } from '@toco/tools/core';
 
 /**
  * This service handles the behavior when a user authentications and

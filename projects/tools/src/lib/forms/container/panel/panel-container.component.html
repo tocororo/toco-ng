@@ -1,0 +1,16 @@
+
+<mat-card class="container-panel-mat-card" [formGroup]="content.formSection" [attr.aria-label]="content.ariaLabel">
+    <mat-card-header>
+        <mat-card-title *ngIf="content.title">
+            {{ content.title }}
+        </mat-card-title>
+        <mat-card-subtitle *ngIf="content.description">
+            {{ content.description }}
+            <mat-icon>{{ content.iconName }}</mat-icon>
+        </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <component-factory [fieldsContent]="content.formSectionContent"></component-factory>
+    </mat-card-content>
+</mat-card>

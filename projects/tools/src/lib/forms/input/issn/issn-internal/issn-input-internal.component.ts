@@ -6,10 +6,11 @@ import { MatFormFieldControl } from '@angular/material/form-field';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
-import { IInternalComponent } from '../../input.control';
-import { IssnValue } from '../issn-value';
 import { ExtraValidators } from '@toco/tools/core';
 import { Common } from '@toco/tools/core';
+
+import { IInternalComponent } from '../../input.control';
+import { IssnValue } from '../issn-value';
 
 /**
  * Custom `MatFormFieldControl` for ISSN input, i.e., a control that represents an
@@ -30,7 +31,7 @@ import { Common } from '@toco/tools/core';
 		'[class.should-label-float]': 'shouldLabelFloat',
 		'[attr.aria-describedby]': 'describedBy',
 		'(blur)': '_onTouched()'
-		/* It does not need to do '(change/input)': '_onChange(internalControl.value)' because the `input` event
+		/* It does not need to do '(change/input)': '_onChange(formControl.value)' because the `input` event
 		 * is already bound. */
 	}
 })
@@ -52,7 +53,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 	/**
 	 * Tracks the value and validity state of the internal control that contains the code.
 	 */
-	public readonly internalControl: FormControl;
+	public readonly formControl: FormControl;
 	public readonly internalFormGroup: FormGroup;
 	private readonly _firstGroup: FormControl;
 	private _firstGroupOldValue: string;   /* It is used by `handleInput_firstGroup` method. */
@@ -162,7 +163,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 			ExtraValidators.issnConfirmCheckDigit(this._firstGroup, this._secondGroup, IssnValue.groupLength)
 		]
 		);
-		this.internalControl = new FormControl(Common.emptyString, [
+		this.formControl = new FormControl(Common.emptyString, [
 			ExtraValidators.issnValidator(this.internalFormGroup)
 		]);
 
@@ -198,23 +199,23 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 	 * Returns the value of the control. The value can be checked using the `isComplete` instance method.
 	 */
 	@Input()
-	public get value(): IssnValue | null
+	public get value(): IssnValue | undefined
 	{
 		return new IssnValue(this._firstGroup.value, this._secondGroup.value);
 	}
 
 	/**
-	 * Sets the value of the control. If the value is null, sets an empty ISSN.
+	 * Sets the value of the control. If the value is undefined, sets an empty ISSN.
 	 * It does not check if the value is complete.
 	 * @param newIssn The new ISSN to set.
 	 */
-	public set value(newIssn: IssnValue | null)
+	public set value(newIssn: IssnValue | undefined)
 	{
 		newIssn = newIssn || IssnValue.defaultIssnValue;
 
 		this.internalFormGroup.setValue({ 'firstGroup': newIssn.firstGroup, 'secondGroup': newIssn.secondGroup });
 
-		this.internalControl.setValue(newIssn.firstGroup + '-' + newIssn.secondGroup );
+		this.formControl.setValue(newIssn.firstGroup + '-' + newIssn.secondGroup );
 
 		this.stateChanges.next();
 	}
@@ -446,11 +447,11 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 	{
 		if (((event.target as Element).tagName.toLowerCase() != 'input') || (this.empty))
 		{
-			this._elementRef.nativeElement.querySelector<HTMLElement>('#first-group-input-element')!.focus();
+			this._elementRef.nativeElement.querySelector<HTMLElement>('.first-group-input-element')!.focus();
 		}
 	}
 
-	public writeValue(issn: IssnValue | null): void
+	public writeValue(issn: IssnValue | undefined): void
 	{
 		this.value = issn;
 	}
@@ -484,14 +485,14 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 		if (firstGroupValueLength == IssnValue.groupLength)
 		{
 			/* Sets the focus to the second group. */
-			if (this._firstGroup.valid) this._elementRef.nativeElement.querySelector<HTMLElement>('#second-group-input-element')!.focus();
+			if (this._firstGroup.valid) this._elementRef.nativeElement.querySelector<HTMLElement>('.second-group-input-element')!.focus();
 		}
 		else if (firstGroupValueLength > IssnValue.groupLength)
 		{
 			/* Sets the old value. */
 			this._firstGroup.setValue(this._firstGroupOldValue);
 			/* Sets the focus to the second group. */
-			if (this._firstGroup.valid) this._elementRef.nativeElement.querySelector<HTMLElement>('#second-group-input-element')!.focus();
+			if (this._firstGroup.valid) this._elementRef.nativeElement.querySelector<HTMLElement>('.second-group-input-element')!.focus();
 		}
 
 		/* The first group's value really changed. */
@@ -541,7 +542,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 	 */
 	private _changedInput(isFirstGroup: boolean): void
 	{
-		this._onChange(this.internalControl.value);
+		this._onChange(this.formControl.value);
 
 		if (isFirstGroup)
 		{

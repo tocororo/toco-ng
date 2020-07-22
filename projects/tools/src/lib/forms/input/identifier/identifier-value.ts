@@ -14,9 +14,9 @@ export class IdentifierValue
 	 */
 	public identifier: string;
 
-	public constructor(u: string)
+	public constructor(id: string)
 	{
-		this.identifier = u;
+		this.identifier = id;
 	}
 
     /**

@@ -1,5 +1,5 @@
 
-#input-issn-container
+.input-issn-container
 {
 	display: flex;
 }
@@ -14,20 +14,20 @@
 	//text-align: left;
 }
 
-#second-group-input-element
+.second-group-input-element
 {
 	margin-left: 8px;
 }
 
 /* Hides the spacer characters when the label is not floating. */
-#issn-span-spacer
+.issn-span-spacer
 {
 	opacity: 0;
 	transition: opacity 200ms;
 }
 
 /* Shows the spacer characters when the label is floating. */
-:host(.should-label-float) #issn-span-spacer
+:host(.should-label-float) .issn-span-spacer
 {
 	opacity: 1;
 }

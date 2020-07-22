@@ -1,36 +1,28 @@
-<mat-form-field 
-  [formGroup]="content.formGroup" 
-  *ngIf="selectOptions" 
-  [ngStyle]="{'width': '100%'}"
->
-  <mat-label>
-    {{content.label}}
-  </mat-label>
-  <mat-select 
-    [formControl]="internalControl" 
-    [(value)]="content.value" 
-    (selectionChange)="onSelectionChange()" 
-    *ngIf="multiple" multiple
-  >
-    <mat-option 
-      *ngFor="let option of selectOptions" 
-      [value]="option.value"
-    >
-      {{option.label}}
-    </mat-option>
-  </mat-select>
-  <mat-select 
-    [formControl]="internalControl" 
-    [(value)]="content.value" 
-    (selectionChange)="onSelectionChange()" 
-    *ngIf="!multiple"
-  >
-    <mat-option 
-      *ngFor="let option of selectOptions" 
-      [value]="option.value"
-    >
-      {{option.label}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
 
+<mat-form-field
+  class="select-mat-form-field"
+  [appearance]="content.appearance"
+>
+
+  <mat-label>
+    {{ content.label }}
+  </mat-label>
+
+  <mat-select 
+    [formControl]="content.formControl"
+    [required]="content.required"
+    [style.textAlign]="content.textAlign"
+    [attr.aria-label]="content.ariaLabel"
+    [(value)]="content.value"
+    [multiple]="multiple"
+    (selectionChange)="onSelectionChange()"
+  >
+    <mat-option 
+      *ngFor="let option of selectOptions" 
+      [value]="option.value"
+    >
+      {{ option.label }}
+    </mat-option>
+  </mat-select>
+
+</mat-form-field>

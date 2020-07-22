@@ -6,20 +6,17 @@
 import { Component, OnInit } from "@angular/core";
 import {
   FormControl,
-  ControlContainer,
-  Validators,
   AbstractControl,
   ValidationErrors
 } from "@angular/forms";
 import { Observable, PartialObserver } from "rxjs";
 import { startWith, map } from "rxjs/operators";
 
-import { Term, Vocabulary, TermNode, Response } from "@toco/tools/entities";
+import { Response } from "@toco/tools/core";
+import { Term, TermNode } from "@toco/tools/entities";
 import { TaxonomyService } from "@toco/tools/backend";
 
 import { FormFieldControl_Experimental } from "../form-field.control.experimental";
-import { NullAstVisitor } from "@angular/compiler";
-import { InputControl } from "../../input/input.control";
 
 /**
  * A control to select a term or terms in a vocabulary.
@@ -77,15 +74,14 @@ export class VocabularyComponent extends FormFieldControl_Experimental
     }
   };
 
-  constructor(
-    private service: TaxonomyService,
-    /*private controlContainer: ControlContainer*/
-  ) {
+  constructor(private service: TaxonomyService)
+  {
     super();
   }
 
-  ngOnInit() {
-    this.content.formGroup.addControl(this.content.name, this.internalControl);
+  ngOnInit()
+  {
+//    this.content.parentFormSection.addControl(this.content.name, this.internalControl);
 
     if (this.content.required) {
       this.internalControl.setValidators(

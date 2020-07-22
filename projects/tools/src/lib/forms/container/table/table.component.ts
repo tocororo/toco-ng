@@ -42,7 +42,7 @@ export interface TableAction {
 }
 
 /**
- * An interface that represents the content of a table control. 
+ * A interface that represents the content of a table control. 
  * The generic parameter T always refers to the type of data that it is dealing with. 
  */
 export interface TableContent<T>
@@ -345,13 +345,13 @@ export class TableComponent implements OnInit, OnDestroy
         /* For each filter property. */
         Object.keys(this._content.filter).forEach((filterName: string) => {
             /* Saves the initial values. */
-            this._filterValues[filterName] = this._content.filter[filterName].internalControl.value;
+            this._filterValues[filterName] = this._content.filter[filterName].content.formControl.value;
 
             /* Disposes the resources held by the subscription. */
             if (this._filterValuesSubscription[filterName] != undefined) this._filterValuesSubscription[filterName].unsubscribe();
 
             /* Subscribes to observe the changes in the control value when there is an external change. */
-            this._filterValuesSubscription[filterName] = this._content.filter[filterName].internalControl.valueChanges.pipe(
+            this._filterValuesSubscription[filterName] = this._content.filter[filterName].content.formControl.valueChanges.pipe(
                 /* Waits 500ms after each keystroke before considering the term. */
                 debounceTime(500),
                 /* Ignores new term if same as previous term. */

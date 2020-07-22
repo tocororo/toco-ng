@@ -8,8 +8,10 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { OAuthStorage } from "angular-oauth2-oidc";
 
-import { Response, SourceVersion } from "@toco/tools/entities";
 import { EnvService } from "@tocoenv/tools/env.service";
+
+import { Response } from "@toco/tools/core";
+import { SourceVersion } from "@toco/tools/entities";
 
 @Injectable()
 export class SourceService {
@@ -34,8 +36,8 @@ export class SourceService {
 
   getMySources(size: number = 10, page: number = 1): Observable<Response<any>> {
     let params = new HttpParams();
-    params = params.set("size", size.toString());
-    params = params.set("page", page.toString());
+    params = params.set("size", size.toString(10));
+    params = params.set("page", page.toString(10));
 
     const options = {
       params: params
@@ -92,7 +94,7 @@ export class SourceService {
   countSourcesByTerm(uuid, level = 0): Observable<Response<any>> {
     let params = new HttpParams();
     const options = {
-      params: params.set("level", level.toString())
+      params: params.set("level", level.toString(10))
     };
     const req =
       this.env.sceibaApi + this.prefix + "/relations/" + uuid + "/count";

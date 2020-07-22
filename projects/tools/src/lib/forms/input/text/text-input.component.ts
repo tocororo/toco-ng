@@ -1,9 +1,10 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl, ControlContainer } from '@angular/forms';
+import { FormControl } from '@angular/forms';
+
+import { Common } from '@toco/tools/core';
 
 import { InputControl } from '../input.control';
-import { Common } from '@toco/tools/core';
 
 /**
  * Represents a control that allows the writing of a text. 
@@ -19,16 +20,16 @@ import { Common } from '@toco/tools/core';
 })
 export class InputTextComponent extends InputControl implements OnInit
 {
-    public constructor(/*private controlContainer: ControlContainer*/)
+    public constructor()
     {
-        super(
-            /* Constructs a new `FormControl` instance. */
-            new FormControl(Common.emptyString)
-        );
+        super();
     }
 
     public ngOnInit(): void
     {
+        /* Sets this `content.formControl` by default. */
+        if (this.content.formControl == undefined) this.content.formControl = new FormControl(Common.emptyString);
+
         /* Sets the default values. */
         this.init(undefined, false, true);
     }

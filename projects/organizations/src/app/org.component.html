@@ -1,0 +1,29 @@
+
+<!-- <button mat-icon-button (click)="drawer.toggle()" matTooltip="Filtrar búsqueda">
+  <mat-icon>filter_list</mat-icon>
+</button>
+
+<mat-drawer-container>
+  <mat-drawer #drawer mode="push">
+    <app-aggregations fxLayout="row wrap" fxLayout.xs="column wrap" fxFlex="{{ currentlayout.width }}"
+      fxLayoutAlign="start center" fxLayoutAlign.xs="center center" fxLayoutGap="1em"
+      class=" back-grey mat-elevation-z8"></app-aggregations>
+  </mat-drawer>
+
+  <div *ngIf="sr">
+
+    <mat-paginator [length]="sr.hits.total" [pageSize]="pageSize" [pageIndex]="pageIndex"
+      [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true" (page)="pageEvent = pageChange($event)">
+    </mat-paginator>
+    <toco-org-list [hitList]="sr.hits"></toco-org-list>
+    <mat-paginator [length]="sr.hits.total" [pageSize]="pageSize" [pageIndex]="pageIndex"
+      [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = pageChange($event)">
+    </mat-paginator>
+  </div>
+</mat-drawer-container> -->
+
+
+<h1>Organizaciones</h1>
+
+<router-outlet></router-outlet>
+<!-- The Router renders the componentes here. -->

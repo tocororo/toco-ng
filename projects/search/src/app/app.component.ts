@@ -77,8 +77,8 @@ export class AppComponent implements OnInit {
     this.getRecords();
   }
   getRecords() {
-    this.params = this.params.set('size', this.pageSize.toString());
-    this.params = this.params.set('page', ( this.pageIndex + 1 ).toString());
+    this.params = this.params.set('size', this.pageSize.toString(10));
+    this.params = this.params.set('page', ( this.pageIndex + 1 ).toString(10));
 
 
     this.searchService.getRecords(this.params).subscribe(

@@ -5,7 +5,7 @@
 
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl, ControlContainer, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
@@ -34,13 +34,15 @@ export class TermParentComponent extends FormFieldControl_Experimental implement
     currentTerm: Term = null;
     parentTerm: Term = null;
 
-    constructor(/*private controlContainer: ControlContainer*/) {
+    constructor()
+    {
         super();
     }
 
     ngOnInit() {
 
-        this.content.formGroup.addControl(this.content.name, this.internalControl);
+//        this.content.parentFormSection.addControl(this.content.name, this.internalControl);
+
         console.log(this.content.value)
         console.log(this.content.required);
 

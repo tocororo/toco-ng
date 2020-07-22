@@ -1,0 +1,21 @@
+
+<!-- <toco-form-container 
+    [panelsContent]="panelContent"
+    [useAccordion]="false"
+    [useContainer]="true"
+    [actionButtonIsStepperNext]="false">
+</toco-form-container> -->
+
+<container-panel [content]="panelContent"></container-panel>
+
+<container-panel [content]="addressesPanelContent"></container-panel>
+
+<br />
+<!-- <container-simple-fa [content]="labelsSimpleFaContent"></container-simple-fa> -->
+
+<div [ngStyle]="{'margin': '1em 0 1em 0'}">
+    <button mat-raised-button color="primary" (click)="doOperationAction(operationAction.cancel)">Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="isResetActionDisabled" (click)="doOperationAction(operationAction.reset)">Reset</button>
+    <button mat-raised-button color="primary" (click)="doOperationAction(operationAction.delete)">Delete</button>
+    <button mat-raised-button color="primary" [disabled]="isSubmitActionDisabled" (click)="doOperationAction(operationAction.submit)">Submit</button>
+</div>

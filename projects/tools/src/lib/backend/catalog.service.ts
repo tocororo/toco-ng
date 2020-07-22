@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { HttpService, Response } from '@toco/tools/entities';
+import { HttpService, Response } from '@toco/tools/core';
 import { FilterHttpMap } from '@toco/tools/filters';
 
 import { EnvService } from '@tocoenv/tools/env.service';
@@ -29,7 +29,7 @@ export class CatalogService extends HttpService {
                 }
             }
             const options = {
-                params: params.set('size', count.toString()).set('page', (page).toString())
+                params: params.set('size', count.toString(10)).set('page', (page).toString(10))
             };
             return this.http.get<Response<any>>(this.env.sceibaApi + 'source/journals', options);
         }

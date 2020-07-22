@@ -1,28 +1,26 @@
 
-import { Component, OnInit, OnChanges } from '@angular/core';
-import { PanelContent, FormFieldType, SelectOption, FormContainerAction } from '@toco/tools/forms';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { TaxonomyService, SearchService, SourceService } from '@toco/tools/backend';
-import { TermNode, VocabulariesInmutableNames, Source } from '@toco/tools/entities';
-import { EnvService } from '@tocoenv/tools/env.service';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
+import { FormFieldType, PanelContent_Depr } from '@toco/tools/forms';
 
 @Component({
-  selector: 'app-aggregations',
+  selector: 'toco-aggregations',
   templateUrl: './aggregations.component.html',
   styleUrls: ['./aggregations.component.scss']
 })
 export class AggregationsComponent implements OnInit {
 
-  panels: PanelContent[] = null;
-  formGroup: FormGroup;
+  public panels: PanelContent_Depr[];
+  public formGroup: FormGroup;
 
+  public constructor(private formBuilder: FormBuilder)
+  {
+    this.panels = null;
+  }
 
-  constructor(
-    private formBuilder: FormBuilder,
-  ) {}
-
-  ngOnInit() {
+  public ngOnInit(): void
+  {
     this.formGroup = this.formBuilder.group({});
 
     this.formGroup.valueChanges.subscribe(
@@ -42,9 +40,8 @@ export class AggregationsComponent implements OnInit {
         title: 'Filtros:',
         description: '',
         iconName: '',
-        formGroup: this.formGroup,
         open: false,
-        content: [
+        formSectionContent: [
           {
             name: 'types',
             label: 'Tipos',
