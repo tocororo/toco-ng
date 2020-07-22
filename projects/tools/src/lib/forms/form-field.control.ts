@@ -515,9 +515,9 @@ export abstract class FormFieldControl
 
         if (label == undefined)
         {
-            if (this.content.label == undefined) {
-                console.log(this.content);
-                throw new Error("The control's label is not specified.");
+            if (this.content.label == undefined)
+            {
+                throw new Error(`For the '${ this.content.name }' control, the 'content.label' value can not be undefined.`);
             }
 
             label = this.content.label;
@@ -557,16 +557,14 @@ export abstract class FormFieldControl
 	 */
 	protected addAsChildControl(control: AbstractControl): void
 	{
-        console.log('Added childInputControl: ', control);
-
         if(this.content.parentFormSection instanceof FormGroup)  /* `content.parentFormSection` is an instance of `FormGroup`. */
         {
             this.content.parentFormSection.addControl(this.content.name, control);
         }
         else  /* `content.parentFormSection` is an instance of `FormArray`. */
         {
-            /* Updates the control's name to the correct name because the control has a `FormArray` as its parent. */
-            this.content.name = this.content.parentFormSection.length.toString(10);
+            /* The control's name is already correct, that is, `content.name` equals the `content.parentFormSection`'s last position 
+            (because the control has a `FormArray` as its parent). */
 
             this.content.parentFormSection.push(control);
         }

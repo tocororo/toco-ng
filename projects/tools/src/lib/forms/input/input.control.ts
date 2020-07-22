@@ -173,16 +173,16 @@ export abstract class InputControl extends FormFieldControl
      */
     protected init(label: string | undefined, isAbbreviation: boolean, alwaysHint: boolean): void
     {
-        if (this.content.formControl == undefined)
-        {
-            if (this.internalComponent == undefined) throw new Error('There is not reference to the internal control; it must be a `FormControl`.');
-
-            this.content.formControl = this.internalComponent.formControl;
-        }
-
         /* Sets the default values. */
 
         super.init(label, isAbbreviation, alwaysHint);
+
+        if (this.content.formControl == undefined)
+        {
+            if (this.internalComponent == undefined) throw new Error(`For the '${ this.content.name }' control, the 'content.formControl' value can not be undefined; it must be a 'FormControl' value.`);
+
+            this.content.formControl = this.internalComponent.formControl;
+        }
 
         let temp: string = (isAbbreviation) ? this.content.label : this.content.label.toLowerCase();
         this.validationError_required = `You must write a valid ${ temp }.`;
