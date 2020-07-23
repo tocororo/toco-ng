@@ -38,7 +38,7 @@ export enum TextInputAppearance
  */
 export interface InputContent extends FormFieldContent
 {
-	/**
+    /**
 	 * Returns the `FormControl` that tracks the value and validity state of the internal control that contains the text input. 
      * Implementation notes: There are two cases: 
      *  - You only have the `content.formControl` field as the `InputEmailComponent` class. 
@@ -210,7 +210,7 @@ export abstract class InputControl extends FormFieldControl
         {
             console.log('addAsChildControl(this.content.formControl)');
 
-            this.addAsChildControl(this.content.formControl);
+            this.addAsChildControl(this, this.content.formControl);
         }
     }
 

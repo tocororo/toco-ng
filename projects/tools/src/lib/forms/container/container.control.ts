@@ -18,10 +18,12 @@ export interface ContainerContent extends FormFieldContent
 {
     /**
      * Returns an array of controls that represents the `ContainerControl`'s child controls. 
-     * It is set internally. 
+     * It is always set internally. 
      * By default, its value is `[]`. 
      */
     containerControlChildren?: any[];
+
+
 
 	/**
 	 * Returns the `FormSection` that tracks the value and validity state of the internal 
@@ -36,6 +38,9 @@ export interface ContainerContent extends FormFieldContent
      * Returns an array of contents that represents the `FormSection`'s child controls. 
      * Implementation notes: 
      *  - It must be specified, and must have at least one element; otherwise, an exception is thrown. 
+     *  - If the `content.formSection` field represent a `FormArray`, then the `name` field 
+     * of all elements in the `content.formSectionContent` array represents the position 
+     * in the array like string. 
      */
     formSectionContent?: any[];
 }
@@ -103,7 +108,7 @@ export abstract class ContainerControl extends FormFieldControl
             throw new Error(`For the '${ this.content.name }' control, the 'content.formSectionContent' array can not be undefined, and must have at least one element.`);
         }
 
-        this._setParentFormSectionToChildren();
+        this._setParentToChildren();
 
         if (this.content.formSection instanceof FormArray)
         {
@@ -135,7 +140,7 @@ export abstract class ContainerControl extends FormFieldControl
         /* Adds this control as a child to the `content.parentFormSection`. It must be called at the end. */
         if (this.content.parentFormSection != undefined)
         {
-            this.addAsChildControl(this.content.formSection);
+            this.addAsChildControl(this, this.content.formSection);
         }
     }
 
@@ -186,16 +191,38 @@ export abstract class ContainerControl extends FormFieldControl
     }
 
     /**
-     * Sets the parent `FormSection` to its children if they have got nothing. 
+     * Sets the parent control to its children. 
      */
-    private _setParentFormSectionToChildren(): void
+    private _setParentToChildren(): void
     {
+        /* Initializes the `content.containerControlChildren`. */
+        this.content.containerControlChildren = [ ];
+
         this.content.formSectionContent.forEach(
             (ffc: FormFieldContent): void => {
+                /* Sets the parent `ContainerControl` to its children. */
+                ffc.parentContainerControl = this;
+
                 /* Sets the parent `FormSection` to its children if they have got nothing. */
                 if (ffc.parentFormSection == undefined) ffc.parentFormSection = this.content.formSection;
             }
         );
+    }
+
+    /**
+     * Updates the elements' index in the `content.formSectionContent` array from 
+     * the specified `index` onwards. 
+     * @param index Index in the array to begin updating. 
+     */
+    private _updateIndex(index: number): void
+    {
+        const length: number = this.content.formSectionContent.length;
+
+        while(index < length)
+        {
+            this.content.formSectionContent[index].name = index.toString(10);
+            index++;
+        }
     }
 
 	/**
@@ -221,6 +248,15 @@ export abstract class ContainerControl extends FormFieldControl
     public get getInstance(): ContainerControl
     {
         return this;
+    }
+
+    /**
+     * Returns an array of controls that represents the `ContainerControl`'s child controls. 
+     * It is always set internally. 
+     */
+    public get containerControlChildren(): any[]
+    {
+        return this.content.containerControlChildren;
     }
 
     /**
@@ -257,7 +293,7 @@ export abstract class ContainerControl extends FormFieldControl
 
     /**
      * Adds an empty element at the end of the `content.formSectionContent`; therefore one element 
-     * is added at the end of the `content.formSection` `FormArray`.  
+     * is added at the end of the `content.formSection` `FormArray`. 
      * The `content.formSection` must be an instance of `FormArray`. 
      */
 	public addToFormArray(): void
@@ -286,8 +322,11 @@ export abstract class ContainerControl extends FormFieldControl
 
         if (this.content.formSection instanceof FormArray)
         {
+            this.content.containerControlChildren.splice(index, 1);
             this.content.formSectionContent.splice(index, 1);
             this.content.formSection.removeAt(index);
+
+            this._updateIndex(index);
         }
         else
         {
@@ -306,6 +345,7 @@ export abstract class ContainerControl extends FormFieldControl
 
         if (this.content.formSection instanceof FormArray)
         {
+            this.content.containerControlChildren = [ ];
             this.content.formSectionContent = [ ];
             this.content.formSection.clear();
         }

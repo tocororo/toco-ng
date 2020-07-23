@@ -8,10 +8,10 @@ import { Input } from '@angular/core';
 import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
 import { isObject } from 'util';
 
-import { ContainerControl } from './container/container.control';
-
 import { Common, Params } from '@toco/tools/core';
 import { IconService } from '@toco/tools/core';
+
+import { ContainerControl } from './container/container.control';
 
 /**
  * Defines a form section that represents the `FormGroup` or `FormArray` class. 
@@ -299,10 +299,12 @@ export interface FormFieldContent
 {
     /**
      * Returns the parent `ContainerControl` of this control. 
-     * It is set internally. 
+     * It is always set internally. 
      * By default, its value is `undefined`. 
      */
     parentContainerControl?: ContainerControl;
+
+
 
     /**
      * Returns the parent `FormSection` that represents the parent `FormGroup` or `FormArray` of this control. 
@@ -570,22 +572,40 @@ export abstract class FormFieldControl
      */
     public abstract get getInstance(): FormFieldControl;
 
+    /**
+     * Returns the parent `ContainerControl` of this control. 
+     * It is always set internally. 
+     */
+    public get parentContainerControl(): ContainerControl
+    {
+        return this.content.parentContainerControl;
+    }
+
 	/**
-	 * Adds the specified control as a child to the `content.parentFormSection`. 
-     * @param control Form control to be added. 
+	 * Adds the specified `control`/`internalControl` as a child 
+     * to the `content.containerControlChildren`/`content.parentFormSection` respectively. 
+     * @param control Form control to be added (descendant from `FormFieldControl`). 
+     * @param internalControl Internal form control to be added (`FormControl`, `FormGroup`, or `FormArray`). 
 	 */
-	protected addAsChildControl(control: AbstractControl): void
+	protected addAsChildControl(control: any, internalControl: AbstractControl): void
 	{
+        /* Adds the specified `control` as a child to the `content.containerControlChildren`. */
+
+        this.content.parentContainerControl.content.containerControlChildren.push(control);
+
+        /* Adds the specified `internalControl` as a child to the `content.parentFormSection`. */
+
         if(this.content.parentFormSection instanceof FormGroup)  /* `content.parentFormSection` is an instance of `FormGroup`. */
         {
-            this.content.parentFormSection.addControl(this.content.name, control);
+            this.content.parentFormSection.addControl(this.content.name, internalControl);
         }
         else  /* `content.parentFormSection` is an instance of `FormArray`. */
         {
-            /* The control's name is already correct, that is, `content.name` equals the `content.parentFormSection`'s last position 
-            (because the control has a `FormArray` as its parent). */
+            /* The `internalControl`'s name is already correct, that is, 
+            `content.name` equals the `content.parentFormSection`'s last position 
+            (because the `internalControl` has a `FormArray` as its parent). */
 
-            this.content.parentFormSection.push(control);
+            this.content.parentFormSection.push(internalControl);
         }
 	}
 

@@ -470,7 +470,7 @@ export class OrgEditComponent implements OnInit
 							'icon': new IconValue(IconSource.external, ContentPosition.prefix, 'remove_circle'),
 							'tooltip': new HintValue(HintPosition.start, 'Remove label'),
 							'click': (sender: ActionControl): void => {
-								sender.content.parentContainerControl.content.parentContainerControl.removeFromFormArray(+(sender.content.parentContainerControl.content.name));
+								sender.parentContainerControl.parentContainerControl.removeFromFormArray(+(sender.parentContainerControl.content.name));
 							}
 						}
 					]
