@@ -8,6 +8,8 @@ import { Input } from '@angular/core';
 import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
 import { isObject } from 'util';
 
+import { ContainerControl } from './container/container.control';
+
 import { Common, Params } from '@toco/tools/core';
 import { IconService } from '@toco/tools/core';
 
@@ -296,7 +298,14 @@ export enum FormFieldType
 export interface FormFieldContent
 {
     /**
-     * Returns the `FormSection` that represents the `FormGroup` or `FormArray` which this control belongs to. 
+     * Returns the parent `ContainerControl` of this control. 
+     * It is set internally. 
+     * By default, its value is `undefined`. 
+     */
+    parentContainerControl?: ContainerControl;
+
+    /**
+     * Returns the parent `FormSection` that represents the parent `FormGroup` or `FormArray` of this control. 
      * By default, its value is `undefined`. 
      */
     parentFormSection?: FormSection;
@@ -554,7 +563,12 @@ export abstract class FormFieldControl
 	 * Initializes the control's value. It uses the `content.value` and it is already different of `undefined`. 
      * It also checks if the specified `content.value` is correct. For internal use only. 
 	 */
-	protected abstract initValue(): void;
+    protected abstract initValue(): void;
+
+    /**
+     * Returns this instance. 
+     */
+    public abstract get getInstance(): FormFieldControl;
 
 	/**
 	 * Adds the specified control as a child to the `content.parentFormSection`. 

@@ -107,7 +107,7 @@ export abstract class ActionControl extends FormFieldControl
     /**
      * Returns this instance. 
      */
-    public get getInstance()
+    public get getInstance(): ActionControl
     {
         return this;
     }

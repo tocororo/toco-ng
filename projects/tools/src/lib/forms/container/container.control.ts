@@ -16,6 +16,13 @@ import { FormSection, FormFieldContent, FormFieldControl, cloneContent } from '.
  */
 export interface ContainerContent extends FormFieldContent
 {
+    /**
+     * Returns an array of controls that represents the `ContainerControl`'s child controls. 
+     * It is set internally. 
+     * By default, its value is `[]`. 
+     */
+    containerControlChildren?: any[];
+
 	/**
 	 * Returns the `FormSection` that tracks the value and validity state of the internal 
      * child controls that contains this control. 
@@ -24,8 +31,6 @@ export interface ContainerContent extends FormFieldContent
      *  - It must be specified; otherwise, an exception is thrown. 
 	 */
     formSection?: FormSection;
-
-
 
     /**
      * Returns an array of contents that represents the `FormSection`'s child controls. 
@@ -208,6 +213,14 @@ export abstract class ContainerControl extends FormFieldControl
         // this.content.formControl.markAsTouched({
         //     onlySelf: true
         // });
+    }
+
+    /**
+     * Returns this instance. 
+     */
+    public get getInstance(): ContainerControl
+    {
+        return this;
     }
 
     /**

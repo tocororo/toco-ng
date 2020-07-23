@@ -5,7 +5,7 @@ import { FormGroup, FormArray } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
 import { FormFieldType, TextInputAppearance, OperationAction, FormSection, PanelContent, 
-	ContainerContent, HintValue, HintPosition, IconValue, IconSource, ContentPosition } from '@toco/tools/forms';
+	ContainerContent, HintValue, HintPosition, IconValue, IconSource, ContentPosition, ActionControl } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-edit',
@@ -469,8 +469,8 @@ export class OrgEditComponent implements OnInit
 							'ariaLabel': 'Remove',
 							'icon': new IconValue(IconSource.external, ContentPosition.prefix, 'remove_circle'),
 							'tooltip': new HintValue(HintPosition.start, 'Remove label'),
-							'click': (sender: any): void => {
-								sender.content.parentFormSection.parentFormSection.removeFromFormArray(sender.content.parentFormSection.name);
+							'click': (sender: ActionControl): void => {
+								sender.content.parentContainerControl.content.parentContainerControl.removeFromFormArray(+(sender.content.parentContainerControl.content.name));
 							}
 						}
 					]

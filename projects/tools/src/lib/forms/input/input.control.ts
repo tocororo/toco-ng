@@ -39,7 +39,7 @@ export enum TextInputAppearance
 export interface InputContent extends FormFieldContent
 {
 	/**
-	 * Tracks the value and validity state of the internal control that contains the text input. 
+	 * Returns the `FormControl` that tracks the value and validity state of the internal control that contains the text input. 
      * Implementation notes: There are two cases: 
      *  - You only have the `content.formControl` field as the `InputEmailComponent` class. 
      *  - You have the `content.formControl` and `InputControl.internalComponent` fields as the `InputIssnComponent` class. 
@@ -227,7 +227,15 @@ export abstract class InputControl extends FormFieldControl
         this.content.formControl.markAsTouched({
             onlySelf: true
         });
-	}
+    }
+
+    /**
+     * Returns this instance. 
+     */
+    public get getInstance(): InputControl
+    {
+        return this;
+    }
 
 	/**
 	 * Returns true if the control is empty; otherwise, false. 
