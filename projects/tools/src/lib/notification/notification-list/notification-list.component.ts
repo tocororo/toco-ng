@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { MatTableDataSource, MatPaginator, MatSnackBar } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSnackBar, MatPaginatorIntl } from '@angular/material';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -19,11 +19,15 @@ import { NotificationInfo } from '../notification-button/notification-button.com
             transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
         ]),
     ],
+    providers: [
+        { provide: MatPaginatorIntl, useValue: customPaginatorLabel() }
+    ]
 })
 export class NotificationListComponent implements OnInit {
 
     dataSource = new MatTableDataSource<NotificationInfo>();
-    columnsToDisplay = ['emiter', 'classification'];
+    columnsToDisplay = ['emiter', 'classification', 'action'];
+    columnsLabels = ['Emisor', 'Clasificación', ''];
     expandedElement: Notification;
 
     pageSizeOptions: number[] = [5, 10, 15, 20];
@@ -81,4 +85,11 @@ export class NotificationListComponent implements OnInit {
             }
         );
     }
+}
+export function customPaginatorLabel(): MatPaginatorIntl {
+    const customPaginatorIntl = new MatPaginatorIntl();
+
+    customPaginatorIntl.itemsPerPageLabel = 'Elementos por página:';
+
+    return customPaginatorIntl;
 }
