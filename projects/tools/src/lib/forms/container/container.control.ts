@@ -38,11 +38,19 @@ export interface ContainerContent extends FormFieldContent
      * Returns an array of contents that represents the `FormSection`'s child controls. 
      * Implementation notes: 
      *  - It must be specified, and must have at least one element; otherwise, an exception is thrown. 
-     *  - If the `content.formSection` field represent a `FormArray`, then the `name` field 
+     *  - If the `content.formSection` field represents a `FormArray`, then the `name` field 
      * of all elements in the `content.formSectionContent` array represents the position 
      * in the array like string. 
      */
     formSectionContent?: any[];
+
+    /**
+     * Returns true if the container must always show its first child control, 
+     * independently if there is or is not a value to show; otherwise, false. 
+     * This field has sense only when the `content.formSection` field represents a `FormArray`. 
+     * By default, its value is `false`. 
+     */
+    alwaysShowFirstElement?: boolean;
 }
 
 /**
@@ -117,6 +125,8 @@ export abstract class ContainerControl extends FormFieldControl
                 throw new Error(`The '${ this.content.name }' control is constructed dynamically using 'FormArray'. Its 'content.value' array can not be undefined, and must have at least one element.`);
             }
 
+            if (this.content.alwaysShowFirstElement == undefined) this.content.alwaysShowFirstElement = false;
+
             this.initFormSectionContentToFormArray();
         }
 
@@ -165,7 +175,12 @@ export abstract class ContainerControl extends FormFieldControl
         sets all its properties/values of built-in type to `undefined`. */
         this._formArrayPatternValue = Common.cloneValueToUndefined(this.content.value[0]);
 
-        //TODO: Poner la lógica del campo `alwaysShowFirstElement` ...
+        /* Sets the logic of the `content.alwaysShowFirstElement` field. */
+        //TODO: ...
+        // if ((this.content.alwaysShowFirstElement) 
+        //     && ()
+        // )
+        // {}
 
         /* The `FormArray` will contain one element for each element in the `content.value`. */
         for(let val of this.content.value)
@@ -184,8 +199,8 @@ export abstract class ContainerControl extends FormFieldControl
 
         /* Overwrites some properties for the cloned content. */
         refContent.name = this.content.formSectionContent.length.toString(10);  /* The element is added in the array after the last position. */
-        refContent.label = ((refContent.label == undefined) ? (refContent.name) : (refContent.label + refContent.name));
-        refContent.ariaLabel = refContent.label;
+        // refContent.label = ((refContent.label == undefined) ? (refContent.name) : (refContent.label + refContent.name));
+        // refContent.ariaLabel = refContent.label;
 
         this.content.formSectionContent.push(refContent);
     }
