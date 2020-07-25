@@ -595,17 +595,17 @@ export abstract class FormFieldControl
 
         /* Adds the specified `internalControl` as a child to the `content.parentFormSection`. */
 
-        if(this.content.parentFormSection instanceof FormGroup)  /* `content.parentFormSection` is an instance of `FormGroup`. */
-        {
-            this.content.parentFormSection.addControl(this.content.name, internalControl);
-        }
-        else  /* `content.parentFormSection` is an instance of `FormArray`. */
+        if(this.content.parentContainerControl.isDynamic)  /* `content.parentFormSection` is an instance of `FormArray`. */
         {
             /* The `internalControl`'s name is already correct, that is, 
             `content.name` equals the `content.parentFormSection`'s last position 
             (because the `internalControl` has a `FormArray` as its parent). */
 
-            this.content.parentFormSection.push(internalControl);
+            (this.content.parentFormSection as FormArray).push(internalControl);
+        }
+        else  /* `content.parentFormSection` is an instance of `FormGroup`. */
+        {
+            (this.content.parentFormSection as FormGroup).addControl(this.content.name, internalControl);
         }
 	}
 
