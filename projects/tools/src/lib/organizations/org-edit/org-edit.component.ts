@@ -5,7 +5,8 @@ import { FormGroup, FormArray } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
 import { FormFieldType, TextInputAppearance, OperationAction, FormSection, PanelContent, 
-	ContainerContent, HintValue, HintPosition, IconValue, IconSource, ContentPosition, ActionControl } from '@toco/tools/forms';
+	ContainerContent, HintValue, HintPosition, IconValue, IconSource, ContentPosition, 
+	ActionControl, ActionContent } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-edit',
@@ -246,20 +247,20 @@ export class OrgEditComponent implements OnInit
 					'multiple': true
 				},
 
-				this._initLabelsSimpleFaContent(),
+				this._initLabelsSimpleContent(),
 
-				this._initRelationshipsSimpleFaContent(),
+				this._initRelationshipsSimpleContent(),
 
-				this._initAddressesSimpleFaContent()
+				this._initAddressesSimpleContent()
 			]
 		};
 	}
 
-    private _initLabelsSimpleFaContent(): ContainerContent
+    private _initLabelsSimpleContent(): ContainerContent
     {
 		return {
 			'formSection': new FormArray([ ], [ ]),
-			'name': 'labelsSimpleFa',
+			'name': 'labelsSimple',
 			'label': 'The name of the institute in different languages',
 			'type': FormFieldType.container_simple,
 			'value': this.org.labels,
@@ -296,18 +297,8 @@ export class OrgEditComponent implements OnInit
 							'ariaLabel': 'The ISO-639-1 language code',
 							//'startHint': new HintValue(HintPosition.start, 'ISO-639-1 language code')
 						},
-						{
-							'label': 'Remove',
-							'type': FormFieldType.action_button,
-							'width': '30%',
-							// 'appearance': TextInputAppearance.outline,
-							'ariaLabel': 'Remove',
-							'icon': new IconValue(IconSource.external, ContentPosition.prefix, 'remove_circle'),
-							'tooltip': new HintValue(HintPosition.start, 'Remove label'),
-							'click': (sender: ActionControl): void => {
-								sender.parentContainerControl.parentContainerControl.removeFromFormArray(+(sender.parentContainerControl.content.name));
-							}
-						}
+
+						this._initRemoveButtonContent('Remove label')
 					]
 				}
 			]
@@ -317,11 +308,11 @@ export class OrgEditComponent implements OnInit
     /**
      * Returns the relationships' content. 
      */
-    private _initRelationshipsSimpleFaContent(): ContainerContent
+    private _initRelationshipsSimpleContent(): ContainerContent
     {
 		return {
 			'formSection': new FormArray([ ], [ ]),
-			'name': 'relationshipsSimpleFa',
+			'name': 'relationshipsSimple',
 			'label': 'Any relationships the institute has to others',
 			'type': FormFieldType.container_simple,
 			'value': this.org.relationships,
@@ -373,18 +364,8 @@ export class OrgEditComponent implements OnInit
 							'appearance': TextInputAppearance.outline,
 							'ariaLabel': 'The name of the related institute'
 						},
-						{
-							'label': 'Remove',
-							'type': FormFieldType.action_button,
-							'width': '30%',
-							// 'appearance': TextInputAppearance.outline,
-							'ariaLabel': 'Remove',
-							'icon': new IconValue(IconSource.external, ContentPosition.prefix, 'remove_circle'),
-							'tooltip': new HintValue(HintPosition.start, 'Remove label'),
-							'click': (sender: ActionControl): void => {
-								sender.parentContainerControl.parentContainerControl.removeFromFormArray(+(sender.parentContainerControl.content.name));
-							}
-						}
+
+						this._initRemoveButtonContent('Remove relationship')
 					]
 				}
 			]
@@ -394,11 +375,11 @@ export class OrgEditComponent implements OnInit
     /**
      * Returns the addresses' content. 
      */
-    private _initAddressesSimpleFaContent(): ContainerContent
+    private _initAddressesSimpleContent(): ContainerContent
     {
 		return {
 			'formSection': new FormArray([ ], [ ]),
-			'name': 'addressesSimpleFa',
+			'name': 'addressesSimple',
 			'label': 'An array of addresses associated with the institute',
 			'type': FormFieldType.container_simple,
 			'value': this.org.addresses,
@@ -519,18 +500,7 @@ export class OrgEditComponent implements OnInit
 
 						//TODO: Poner el resto de los campos. 
 
-						{
-							'label': 'Remove',
-							'type': FormFieldType.action_button,
-							'width': '30%',
-							// 'appearance': TextInputAppearance.outline,
-							'ariaLabel': 'Remove',
-							'icon': new IconValue(IconSource.external, ContentPosition.prefix, 'remove_circle'),
-							'tooltip': new HintValue(HintPosition.start, 'Remove label'),
-							'click': (sender: ActionControl): void => {
-								sender.parentContainerControl.parentContainerControl.removeFromFormArray(+(sender.parentContainerControl.content.name));
-							}
-						}
+						this._initRemoveButtonContent('Remove address')
 					]
 				}
 			]
@@ -622,6 +592,26 @@ export class OrgEditComponent implements OnInit
 	}
 
 	/**
+	 * Returns the remove button's content. 
+	 * @param tooltip The tooltip to show. 
+	 */
+	private _initRemoveButtonContent(tooltip: string): ActionContent
+	{
+		return {
+			'label': 'Remove',
+			'type': FormFieldType.action_button,
+			'width': '30%',
+			// 'appearance': TextInputAppearance.outline,
+			'ariaLabel': 'Remove',
+			'icon': new IconValue(IconSource.external, ContentPosition.prefix, 'remove_circle'),
+			'tooltip': new HintValue(HintPosition.start, tooltip),
+			'click': (sender: ActionControl): void => {
+				sender.parentContainerControl.parentContainerControl.removeFromFormArray(+(sender.parentContainerControl.content.name));
+			}
+		};
+	}
+
+	/**
 	 * Does the tasks for the operation action. 
 	 * @param op The operation action. 
 	 */
@@ -629,7 +619,7 @@ export class OrgEditComponent implements OnInit
 	{
 		// console.log('panelFormSection', this.panelFormSection);
 		// console.log('addressesPanelFormSection', this.addressesPanelFormSection);
-		// console.log('labelsSimpleFaFormSection', this.labelsSimpleFaFormSection);
+		// console.log('labelsSimpleFormSection', this.labelsSimpleFormSection);
 		// return;
 
 		if(op == OperationAction.submit)
