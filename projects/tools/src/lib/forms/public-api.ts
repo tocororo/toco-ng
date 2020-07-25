@@ -17,7 +17,6 @@ export * from './container/form-container/form-container.component';
 export * from './container/form-container/form-container.service';
 export * from './container/panel/panel-container.component';
 export * from './container/simple/simple-container.component';
-export * from './container/simple-fa/simple-container-fa.component';
 export * from './container/table/table.component';
 export * from './container/container.control';
 

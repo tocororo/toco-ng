@@ -4,4 +4,17 @@
 
     <component-factory [fieldsContent]="content.formSectionContent"></component-factory>
 
+    <ng-container *ngIf="isDynamic">
+        <button mat-raised-button color="primary" (click)="addToFormArray()">
+            <!-- <mat-icon>add box</mat-icon> -->
+            <mat-icon>add_circle</mat-icon>
+            Add new item
+        </button>
+        <button mat-raised-button color="primary" [disabled]="isEmpty" (click)="clearFormArray()">
+            <!-- <mat-icon>remove box</mat-icon> -->
+            <mat-icon>remove_circle</mat-icon>
+            Clear all
+        </button>
+    </ng-container>
+
 </fieldset>

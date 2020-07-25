@@ -261,7 +261,7 @@ export class OrgEditComponent implements OnInit
 			'formSection': new FormArray([ ], [ ]),
 			'name': 'labelsSimpleFa',
 			'label': 'The name of the institute in different languages',
-			'type': FormFieldType.container_simple_fa,
+			'type': FormFieldType.container_simple,
 			'value': this.org.labels,
 			'width': '100%',
 			'formSectionContent': [
@@ -323,7 +323,7 @@ export class OrgEditComponent implements OnInit
 			'formSection': new FormArray([ ], [ ]),
 			'name': 'relationshipsSimpleFa',
 			'label': 'Any relationships the institute has to others',
-			'type': FormFieldType.container_simple_fa,
+			'type': FormFieldType.container_simple,
 			'value': this.org.relationships,
 			'width': '100%',
 			'formSectionContent': [
@@ -400,7 +400,7 @@ export class OrgEditComponent implements OnInit
 			'formSection': new FormArray([ ], [ ]),
 			'name': 'addressesSimpleFa',
 			'label': 'An array of addresses associated with the institute',
-			'type': FormFieldType.container_simple_fa,
+			'type': FormFieldType.container_simple,
 			'value': this.org.addresses,
 			'width': '100%',
 			'formSectionContent': [

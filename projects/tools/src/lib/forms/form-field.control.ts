@@ -239,9 +239,6 @@ export enum FormFieldType
     /** A container control that is showed very simple. */
     container_simple = 'container_simple',
 
-    /** A container control that is showed very simple using `FormArray`. */
-    container_simple_fa = 'container_simple_fa',
-
 
 
     /** A container control that allows the writing of a name of something in different language. */
