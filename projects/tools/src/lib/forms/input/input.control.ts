@@ -7,7 +7,7 @@
 import { Input, ViewChild } from '@angular/core';
 import { Validators, ValidationErrors, FormControl } from '@angular/forms';
 
-import { Common } from '@toco/tools/core';
+import { emptyString } from '@toco/tools/core';
 
 import { ContentPosition, IconValue, HintPosition, HintValue,
     FormFieldContent, FormFieldControl } from '../form-field.control';
@@ -308,7 +308,7 @@ export abstract class InputControl extends FormFieldControl
     {
         /* By default, its implementation is returning the empty string. */
 
-        return Common.emptyString;
+        return emptyString;
     }
 
     /**
@@ -333,7 +333,7 @@ export abstract class InputControl extends FormFieldControl
             }
         }
 
-        return Common.emptyString;
+        return emptyString;
 	}
     
 	/**

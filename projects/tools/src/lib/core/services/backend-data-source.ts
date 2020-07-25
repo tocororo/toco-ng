@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 import { InputControl } from '@toco/tools/forms';
 
-import { MAX_SAFE_INTEGER, Params } from '../utils/common';
+import { MAX_SAFE_INTEGER, Params } from '../utils/helpers';
 
 /**
  * The data sort direction. 

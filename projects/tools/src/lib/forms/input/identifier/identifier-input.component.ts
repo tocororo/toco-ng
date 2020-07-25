@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
-import { Common } from '@toco/tools/core';
+import { emptyString } from '@toco/tools/core';
 
 import { InputControl } from '../input.control';
 import { IdentifierValue } from './identifier-value';
@@ -29,7 +29,7 @@ export class InputIdentifierComponent extends InputControl implements OnInit
     public ngOnInit(): void
     {
         /* Sets this `content.formControl` by default. */
-        if (this.content.formControl == undefined) this.content.formControl = new FormControl(Common.emptyString, [
+        if (this.content.formControl == undefined) this.content.formControl = new FormControl(emptyString, [
             Validators.pattern('^[a-zA-Z\-\_]*$')
             //Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/i)
         ])
@@ -59,6 +59,6 @@ export class InputIdentifierComponent extends InputControl implements OnInit
             }
         }
 
-        return Common.emptyString;
+        return emptyString;
     }
 }

@@ -2,8 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
-import { ExtraValidators } from '@toco/tools/core';
-import { Common } from '@toco/tools/core';
+import { ExtraValidators, emptyString } from '@toco/tools/core';
 
 import { InputControl } from '../input.control';
 import { RnpsValue } from './rnps-value';
@@ -38,7 +37,7 @@ export class InputRnpsComponent extends InputControl implements OnInit
     public ngOnInit(): void
     {
         /* Sets this `content.formControl` by default. */
-        if (this.content.formControl == undefined) this.content.formControl = new FormControl(Common.emptyString, [
+        if (this.content.formControl == undefined) this.content.formControl = new FormControl(emptyString, [
             ExtraValidators.equalLength(RnpsValue.codeLength),
             Validators.pattern('^[0-9]*$')
         ])
@@ -54,7 +53,7 @@ export class InputRnpsComponent extends InputControl implements OnInit
      */
     public getErrorMessage(): string
     {
-        let result: string = Common.emptyString;
+        let result: string = emptyString;
         let result_alreadyHaveErrorInfo: boolean = false;
         let validationErrors: ValidationErrors = this.content.formControl.errors;
 

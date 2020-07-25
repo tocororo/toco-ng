@@ -7,7 +7,7 @@
 import { Input } from '@angular/core';
 import { FormArray } from '@angular/forms';
 
-import { Common } from '@toco/tools/core';
+import { cloneValueToUndefined } from '@toco/tools/core';
 
 import { FormSection, FormFieldContent, FormFieldControl, cloneContent } from '../form-field.control';
 
@@ -183,7 +183,7 @@ export abstract class ContainerControl extends FormFieldControl
         /* Saves the pattern value, that is, `content.value[0]`. 
         Creates a new value that represents the clone of the specified `content.value[0]` value, and 
         sets all its properties/values of built-in type to `undefined`. */
-        this._formArrayPatternValue = Common.cloneValueToUndefined(this.content.value[0]);
+        this._formArrayPatternValue = cloneValueToUndefined(this.content.value[0]);
 
         /* Sets the logic of the `content.alwaysShowFirstElement` field. */
         //TODO: ...

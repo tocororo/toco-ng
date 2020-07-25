@@ -8,7 +8,7 @@ import { Input } from '@angular/core';
 import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
 import { isObject } from 'util';
 
-import { Common, Params } from '@toco/tools/core';
+import { Params, emptyString } from '@toco/tools/core';
 import { IconService } from '@toco/tools/core';
 
 import { ContainerControl } from './container/container.control';
@@ -195,7 +195,7 @@ export class HintValue
      */
     public constructor(
         p: HintPosition = HintPosition.none,
-        l: string = Common.emptyString)
+        l: string = emptyString)
 	{
         this.position = p;
         this.label = l;
@@ -209,7 +209,7 @@ export class HintValue
     public setDefaultValueIfUndefined(): void
     {
         if (this.position == undefined) this.position = HintPosition.none;
-        if (this.label == undefined) this.label = Common.emptyString;
+        if (this.label == undefined) this.label = emptyString;
     }
 
     /**
@@ -219,7 +219,7 @@ export class HintValue
     public setDefaultValueIfUndefined_setPosition(hintPosition: HintPosition): void
     {
         this.position = hintPosition;
-        if (this.label == undefined) this.label = Common.emptyString;
+        if (this.label == undefined) this.label = emptyString;
     }
 }
 

@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
-import { Common } from '@toco/tools/core';
+import { emptyString } from '@toco/tools/core';
 
 import { InputControl } from '../input.control';
 import { EmailValue } from './email-value';
@@ -29,7 +29,7 @@ export class InputEmailComponent extends InputControl implements OnInit
     public ngOnInit(): void
     {
         /* Sets this `content.formControl` by default. */
-        if (this.content.formControl == undefined) this.content.formControl = new FormControl(Common.emptyString, [
+        if (this.content.formControl == undefined) this.content.formControl = new FormControl(emptyString, [
             Validators.email
         ])
 
@@ -58,6 +58,6 @@ export class InputEmailComponent extends InputControl implements OnInit
             }
         }
 
-        return Common.emptyString;
+        return emptyString;
     }
 }
