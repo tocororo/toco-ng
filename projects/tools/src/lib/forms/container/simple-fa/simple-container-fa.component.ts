@@ -42,15 +42,5 @@ export class ContainerSimpleFaComponent extends ContainerControl implements OnIn
 		console.log('ContainerSimpleFaComponent init.');
 
 		super.init(label, isAbbreviation, alwaysHint);
-
-		// this.content.formSectionContent[0].formSectionContent[0].value = this.content.value[0].label;
-		// this.content.formSectionContent[0].formSectionContent[1].value = this.content.value[0].iso639;
-
-		// for(let val of this.content.value)
-		// {
-		// 	console.log(val);
-		// }
-
-		// console.log('ContainerSimpleFaComponent: ', this.content);
 	}
 }

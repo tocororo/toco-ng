@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -23,8 +23,8 @@ export class OrgListComponent implements OnInit
     public identifiersContent: ContainerContent;
     // public identifiersContent_Complex: ContainerContent;
 
-	// @Input()
-	// public hitList: HitList<Organization>;
+	@Input()
+	public hitList: HitList<Organization>;
 
     /**
      * The search filter. 
@@ -72,14 +72,14 @@ export class OrgListComponent implements OnInit
     {
         return {
             'formSection': new FormGroup({ }, [ ]),
-            'name': "identifiers",
-            'label': "Organization Identifiers, different from GRID mapping",
+            'name': 'identifiers',
+            'label': 'Organization Identifiers, different from GRID mapping',
             'type': FormFieldType.container_simple,
             'required': true,
             'value': undefined,
-            'width': "100%",
+            'width': '100%',
 //            'appearance': TextInputAppearance.outline,
-            'ariaLabel': "Organization Identifiers, different from GRID mapping",
+            'ariaLabel': 'Organization Identifiers, different from GRID mapping',
             'formSectionContent': [
                 {
                     'name': 'isni',   //idtype
@@ -89,7 +89,7 @@ export class OrgListComponent implements OnInit
                     'value': 'Un_id_isni',
                     'width': '50%',
                     'appearance': TextInputAppearance.outline,
-                    'ariaLabel': "Identificador isni",
+                    'ariaLabel': 'Identificador isni',
                     'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
                 },
                 {
@@ -100,7 +100,7 @@ export class OrgListComponent implements OnInit
                     'value': 'Un_id_grid',
                     'width': '50%',
                     'appearance': TextInputAppearance.outline,
-                    'ariaLabel': "Identificador grid",
+                    'ariaLabel': 'Identificador grid',
                     'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
                 },
                 {
@@ -111,7 +111,7 @@ export class OrgListComponent implements OnInit
                     //'value': 'Un_id_grid',
                     'width': '50%',
                     'appearance': TextInputAppearance.outline,
-                    'ariaLabel': "ISSN",
+                    'ariaLabel': 'ISSN',
                     'startHint': new HintValue(HintPosition.start, 'Un ISSN!')
                 },
             ]
@@ -122,14 +122,14 @@ export class OrgListComponent implements OnInit
     {
         return {
             'formSection': new FormGroup({ }, [ ]),
-            'name': "identifiers_1",
-            'label': "Organization Identifiers 1, different from GRID mapping",
+            'name': 'identifiers_1',
+            'label': 'Organization Identifiers 1, different from GRID mapping',
             'type': FormFieldType.container_simple,
             'required': true,
             'value': undefined,
-            'width': "100%",
+            'width': '100%',
 //            'appearance': TextInputAppearance.outline,
-            'ariaLabel': "Organization Identifiers 1, different from GRID mapping",
+            'ariaLabel': 'Organization Identifiers 1, different from GRID mapping',
             'formSectionContent': [
                 {
                     'name': 'isni',   //idtype
@@ -139,7 +139,7 @@ export class OrgListComponent implements OnInit
                     'value': 'Un_id_isni',
                     'width': '50%',
                     'appearance': TextInputAppearance.outline,
-                    'ariaLabel': "Identificador isni",
+                    'ariaLabel': 'Identificador isni',
                     'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
                 },
                 {
@@ -150,19 +150,19 @@ export class OrgListComponent implements OnInit
                     'value': 'Un_id_grid',
                     'width': '50%',
                     'appearance': TextInputAppearance.outline,
-                    'ariaLabel': "Identificador grid",
+                    'ariaLabel': 'Identificador grid',
                     'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
                 },
                 {
                     'formSection': new FormGroup({ }, [ ]),
-                    'name': "identifiers_2",
-                    'label': "Organization Identifiers 2, different from GRID mapping",
+                    'name': 'identifiers_2',
+                    'label': 'Organization Identifiers 2, different from GRID mapping',
                     'type': FormFieldType.container_simple,
                     'required': true,
                     'value': undefined,
-                    'width': "100%",
+                    'width': '100%',
         //            'appearance': TextInputAppearance.outline,
-                    'ariaLabel': "Organization Identifiers 2, different from GRID mapping",
+                    'ariaLabel': 'Organization Identifiers 2, different from GRID mapping',
                     'formSectionContent': [
                         {
                             'name': 'isni',   //idtype
@@ -172,7 +172,7 @@ export class OrgListComponent implements OnInit
                             'value': 'Un_id_isni',
                             'width': '50%',
                             'appearance': TextInputAppearance.outline,
-                            'ariaLabel': "Identificador isni",
+                            'ariaLabel': 'Identificador isni',
                             'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
                         },
                         {
@@ -183,7 +183,7 @@ export class OrgListComponent implements OnInit
                             'value': 'Un_id_grid',
                             'width': '50%',
                             'appearance': TextInputAppearance.outline,
-                            'ariaLabel': "Identificador grid",
+                            'ariaLabel': 'Identificador grid',
                             'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
                         },
                     ]

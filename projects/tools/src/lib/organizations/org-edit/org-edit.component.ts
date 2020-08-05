@@ -5,7 +5,7 @@ import { FormGroup, FormArray } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
 import { FormFieldType, TextInputAppearance, OperationAction, FormSection, PanelContent, 
-	ContainerContent, HintValue, HintPosition } from '@toco/tools/forms';
+	ContainerContent, HintValue, HintPosition, IconValue, IconSource, ContentPosition, ActionControl } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-edit',
@@ -34,28 +34,10 @@ export class OrgEditComponent implements OnInit
      */
 	public panelContent: PanelContent;
 
-	/**
-	 * Tracks the value and validity state of the internal child controls that contains this component. 
-	 */
-	private addressesPanelFormSection: FormSection;
-
-    /**
-     * Contains the addresses panel's content. 
-     */
-	public addressesPanelContent: PanelContent;
-
-
-	private labelsSimpleFaFormSection: FormSection;
-	public  labelsSimpleFaContent: ContainerContent;
-
-
 	public constructor(private _router: Router, private _activatedRoute: ActivatedRoute)
 	{
 		this.operationAction = OperationAction;
 		this.panelFormSection = new FormGroup({ }, [ ]);
-		this.addressesPanelFormSection = new FormGroup({ }, [ ]);
-
-		this.labelsSimpleFaFormSection = new FormArray([ ], [ ]);
 	}
 
 	public ngOnInit(): void
@@ -71,11 +53,6 @@ export class OrgEditComponent implements OnInit
 
 		/* Creates the panel's content. */
 		this.panelContent = this._initPanelContent();
-
-		/* Creates the addresses panel's content. */
-		this.addressesPanelContent = this._initAddressesPanelContent();
-
-		this.labelsSimpleFaContent = this._initLabelsSimpleFaContent();
 
 		// this.action = {
 		// 	doit(data: any): void
@@ -143,7 +120,7 @@ export class OrgEditComponent implements OnInit
 					'multiple': false
 				},
 
-				this._initIdentifiersContent(),
+				this._initIdentifiersContent('Organization Identifiers, different from GRID mapping'),
 
 				{
 					'name': 'aliases',
@@ -269,154 +246,11 @@ export class OrgEditComponent implements OnInit
 					'multiple': true
 				},
 
-				//TODO: Poner el campo 'labels.'
+				this._initLabelsSimpleFaContent(),
 
-				//TODO: Poner el campo 'relationships.'
+				this._initRelationshipsSimpleFaContent(),
 
-
-				// {
-				// 	name: 'description',
-				// 	label: 'Descripción',
-				// 	type: FormFieldType.textarea,
-				// 	required: false,
-				// 	value: this.data.term.description
-				// 		? this.data.term.description
-				// 		: null,
-				// 	width: '100%'
-				// }
-			]
-		};
-	}
-
-	/**
-     * Returns the addresses panel's content. 
-     */
-    private _initAddressesPanelContent(): PanelContent
-    {
-		return {
-			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
-			'formSection': this.addressesPanelFormSection,
-			'name': 'addressesPanel',
-			'label': 'An array of addresses associated with the institute',
-			'type': FormFieldType.container_panel,
-			'title': 'An array of addresses associated with the institute',
-			'description': '',
-			'iconName': undefined /*''*/,
-			'formSectionContent': [
-				{
-					'name': 'city',
-					'label': 'The name of the city',
-					'type': FormFieldType.text,
-					'required': true,
-					'value': this.org.addresses[0].city,
-					'width': '45%',
-					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'The name of the city'
-				},
-				{
-					'name': 'country',
-					'label': 'The name of the country',
-					'type': FormFieldType.text,
-					'required': true,
-					'value': this.org.addresses[0].country,
-					'width': '45%',
-					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'The name of the country'
-				},
-				{
-					'name': 'country_code',
-					'label': 'The ISO 3166-1 alpha-2 code of the country',
-					'type': FormFieldType.text,
-					'required': true,
-					'value': this.org.addresses[0].country_code,
-					'width': '45%',
-					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'The ISO 3166-1 alpha-2 code of the country'
-				},
-				{
-					'name': 'lat',
-					'label': 'Latitute of the institute',
-					'type': FormFieldType.text,
-					'required': true,
-					'value': this.org.addresses[0].lat,
-					'width': '45%',
-					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'Latitute of the institute'
-				},
-				{
-					'name': 'lng',
-					'label': 'Longitude of the institute',
-					'type': FormFieldType.text,
-					'required': true,
-					'value': this.org.addresses[0].lng,
-					'width': '45%',
-					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'Longitude of the institute'
-				},
-				{
-					'name': 'line_1',
-					'label': 'First line of the address',
-					'type': FormFieldType.text,
-					'required': true,
-					'value': this.org.addresses[0].line_1,
-					'width': '45%',
-					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'First line of the address'
-				},
-				{
-					'name': 'line_2',
-					'label': 'Second line of the address',
-					'type': FormFieldType.text,
-					'required': false,
-					'value': this.org.addresses[0].line_2,
-					'width': '45%',
-					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'Second line of the address'
-				},
-				{
-					'name': 'line_3',
-					'label': 'Third line of the address',
-					'type': FormFieldType.text,
-					'required': false,
-					'value': this.org.addresses[0].line_3,
-					'width': '45%',
-					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'Third line of the address'
-				},
-				{
-					'name': 'postcode',
-					'label': 'The postcode/zipcode',
-					'type': FormFieldType.text,
-					'required': true,
-					'value': this.org.addresses[0].postcode,
-					'width': '45%',
-					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'The postcode/zipcode'
-				},
-
-				//TODO: Poner aquí el campo 'primary' de tipo 'boolean' (checkbox). 
-
-				{
-					'name': 'state',
-					'label': 'The name of the state/region',
-					'type': FormFieldType.text,
-					'required': true,
-					'value': this.org.addresses[0].state,
-					'width': '45%',
-					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'The name of the state/region'
-				},
-				{
-					'name': 'state_code',
-					'label': 'The ISO 3166-2 region code',
-					'type': FormFieldType.text,
-					'required': true,
-					'value': this.org.addresses[0].state_code,
-					'width': '45%',
-					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'The ISO 3166-2 region code'
-				},
-				//TODO: Poner el resto de los campos. 
+				this._initAddressesSimpleFaContent()
 			]
 		};
 	}
@@ -424,21 +258,22 @@ export class OrgEditComponent implements OnInit
     private _initLabelsSimpleFaContent(): ContainerContent
     {
 		return {
-			'formSection': this.labelsSimpleFaFormSection,
+			'formSection': new FormArray([ ], [ ]),
 			'name': 'labelsSimpleFa',
 			'label': 'The name of the institute in different languages',
 			'type': FormFieldType.container_simple_fa,
 			'value': this.org.labels,
+			'width': '100%',
 			'formSectionContent': [
 				{
 					'formSection': new FormGroup({ }, [ ]),
-					'name': "0",
-					'label': "Label diff lang ",
+					'name': '0',
+					'label': 'Label diff lang ',
 					'type': FormFieldType.container_label_diff_lang,
 					'required': true,
-					'width': "100%",
+					'width': '100%',
 		//            'appearance': TextInputAppearance.outline,
-					'ariaLabel': "Label diff lang ",
+					'ariaLabel': 'Label diff lang ',
 					'formSectionContent': [
 						{
 							'name': 'label',
@@ -448,7 +283,7 @@ export class OrgEditComponent implements OnInit
 							/* 'value': undefined, this is the default behavior. */
 							'width': '70%',
 							'appearance': TextInputAppearance.outline,
-							'ariaLabel': "The institute name in a language variant"
+							'ariaLabel': 'The institute name in a language variant'
 						},
 						{
 							'name': 'iso639',
@@ -458,9 +293,244 @@ export class OrgEditComponent implements OnInit
 							/* 'value': undefined, this is the default behavior. */
 							'width': '30%',
 							'appearance': TextInputAppearance.outline,
-							'ariaLabel': "The ISO-639-1 language code",
+							'ariaLabel': 'The ISO-639-1 language code',
 							//'startHint': new HintValue(HintPosition.start, 'ISO-639-1 language code')
 						},
+						{
+							'label': 'Remove',
+							'type': FormFieldType.action_button,
+							'width': '30%',
+							// 'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'Remove',
+							'icon': new IconValue(IconSource.external, ContentPosition.prefix, 'remove_circle'),
+							'tooltip': new HintValue(HintPosition.start, 'Remove label'),
+							'click': (sender: ActionControl): void => {
+								sender.parentContainerControl.parentContainerControl.removeFromFormArray(+(sender.parentContainerControl.content.name));
+							}
+						}
+					]
+				}
+			]
+		};
+	}
+
+    /**
+     * Returns the relationships' content. 
+     */
+    private _initRelationshipsSimpleFaContent(): ContainerContent
+    {
+		return {
+			'formSection': new FormArray([ ], [ ]),
+			'name': 'relationshipsSimpleFa',
+			'label': 'Any relationships the institute has to others',
+			'type': FormFieldType.container_simple_fa,
+			'value': this.org.relationships,
+			'width': '100%',
+			'formSectionContent': [
+				{
+					'formSection': new FormGroup({ }, [ ]),
+					'name': '0',
+					'label': 'Relationship',
+					'type': FormFieldType.container_label_diff_lang,
+					'required': true,
+					'width': '100%',
+		//            'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'Relationship',
+					'formSectionContent': [
+
+						this._initIdentifiersContent('Related Organization Identifiers'),
+
+						{
+							'name': 'type',
+							'label': 'The relationship type',
+							'type': FormFieldType.select,
+							'required': true,
+							'width': '45%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'The relationship type',
+							'selectOptions': [
+								{
+									'label': 'Parent',
+									'value': 'parent'
+								},
+								{
+									'label': 'Related',
+									'value': 'related'
+								},
+								{
+									'label': 'Child',
+									'value': 'child'
+								}
+							],
+							'multiple': false
+						},
+						{
+							'name': 'label',
+							'label': 'The name of the related institute',
+							'type': FormFieldType.text,
+							'required': true,
+							'width': '45%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'The name of the related institute'
+						},
+						{
+							'label': 'Remove',
+							'type': FormFieldType.action_button,
+							'width': '30%',
+							// 'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'Remove',
+							'icon': new IconValue(IconSource.external, ContentPosition.prefix, 'remove_circle'),
+							'tooltip': new HintValue(HintPosition.start, 'Remove label'),
+							'click': (sender: ActionControl): void => {
+								sender.parentContainerControl.parentContainerControl.removeFromFormArray(+(sender.parentContainerControl.content.name));
+							}
+						}
+					]
+				}
+			]
+		};
+	}
+
+    /**
+     * Returns the addresses' content. 
+     */
+    private _initAddressesSimpleFaContent(): ContainerContent
+    {
+		return {
+			'formSection': new FormArray([ ], [ ]),
+			'name': 'addressesSimpleFa',
+			'label': 'An array of addresses associated with the institute',
+			'type': FormFieldType.container_simple_fa,
+			'value': this.org.addresses,
+			'width': '100%',
+			'formSectionContent': [
+				{
+					'formSection': new FormGroup({ }, [ ]),
+					'name': '0',
+					'label': 'Address',
+					'type': FormFieldType.container_label_diff_lang,
+					'required': true,
+					'width': '100%',
+		//            'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'Address',
+					'formSectionContent': [
+						{
+							'name': 'city',
+							'label': 'The name of the city',
+							'type': FormFieldType.text,
+							'required': true,
+							'width': '45%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'The name of the city'
+						},
+						{
+							'name': 'country',
+							'label': 'The name of the country',
+							'type': FormFieldType.text,
+							'required': true,
+							'width': '45%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'The name of the country'
+						},
+						{
+							'name': 'country_code',
+							'label': 'The ISO 3166-1 alpha-2 code of the country',
+							'type': FormFieldType.text,
+							'required': true,
+							'width': '45%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'The ISO 3166-1 alpha-2 code of the country'
+						},
+						{
+							'name': 'lat',
+							'label': 'Latitute of the institute',
+							'type': FormFieldType.text,
+							'required': true,
+							'width': '45%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'Latitute of the institute'
+						},
+						{
+							'name': 'lng',
+							'label': 'Longitude of the institute',
+							'type': FormFieldType.text,
+							'required': true,
+							'width': '45%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'Longitude of the institute'
+						},
+						{
+							'name': 'line_1',
+							'label': 'First line of the address',
+							'type': FormFieldType.text,
+							'required': true,
+							'width': '45%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'First line of the address'
+						},
+						{
+							'name': 'line_2',
+							'label': 'Second line of the address',
+							'type': FormFieldType.text,
+							'required': false,
+							'width': '45%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'Second line of the address'
+						},
+						{
+							'name': 'line_3',
+							'label': 'Third line of the address',
+							'type': FormFieldType.text,
+							'required': false,
+							'width': '45%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'Third line of the address'
+						},
+						{
+							'name': 'postcode',
+							'label': 'The postcode/zipcode',
+							'type': FormFieldType.text,
+							'required': true,
+							'width': '45%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'The postcode/zipcode'
+						},
+
+						//TODO: Poner aquí el campo 'primary' de tipo 'boolean' (checkbox). 
+
+						{
+							'name': 'state',
+							'label': 'The name of the state/region',
+							'type': FormFieldType.text,
+							'required': true,
+							'width': '45%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'The name of the state/region'
+						},
+						{
+							'name': 'state_code',
+							'label': 'The ISO 3166-2 region code',
+							'type': FormFieldType.text,
+							'required': true,
+							'width': '45%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'The ISO 3166-2 region code'
+						},
+
+						//TODO: Poner el resto de los campos. 
+
+						{
+							'label': 'Remove',
+							'type': FormFieldType.action_button,
+							'width': '30%',
+							// 'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'Remove',
+							'icon': new IconValue(IconSource.external, ContentPosition.prefix, 'remove_circle'),
+							'tooltip': new HintValue(HintPosition.start, 'Remove label'),
+							'click': (sender: ActionControl): void => {
+								sender.parentContainerControl.parentContainerControl.removeFromFormArray(+(sender.parentContainerControl.content.name));
+							}
+						}
 					]
 				}
 			]
@@ -470,17 +540,17 @@ export class OrgEditComponent implements OnInit
     /**
      * Returns the identifiers' content. 
      */
-    private _initIdentifiersContent(): ContainerContent
+    private _initIdentifiersContent(description: string): ContainerContent
     {
         return {
             'formSection': new FormGroup({ }, [ ]),
-            'name': "identifiers",
-            'label': "Organization Identifiers, different from GRID mapping",
+            'name': 'identifiers',
+            'label': description,
             'type': FormFieldType.container_simple,
             'required': true,
-            'width': "100%",
+            'width': '100%',
 //            'appearance': TextInputAppearance.outline,
-            'ariaLabel': "Organization Identifiers, different from GRID mapping",
+            'ariaLabel': description,
             'formSectionContent': [
                 {
                     'name': 'isni',   //idtype
@@ -490,7 +560,7 @@ export class OrgEditComponent implements OnInit
                     'value': 'Un_id_isni',
                     'width': '50%',
                     'appearance': TextInputAppearance.outline,
-                    'ariaLabel': "Identificador isni",
+                    'ariaLabel': 'Identificador isni',
                     'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
                 },
                 {
@@ -501,7 +571,7 @@ export class OrgEditComponent implements OnInit
                     'value': 'Un_id_grid',
                     'width': '50%',
                     'appearance': TextInputAppearance.outline,
-                    'ariaLabel': "Identificador grid",
+                    'ariaLabel': 'Identificador grid',
                     'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
                 },
             ]
@@ -550,14 +620,6 @@ export class OrgEditComponent implements OnInit
 		// 	]
 		// };
 	}
-	
-    /**
-     * Returns the addresses' content. 
-     */
-    private _initAddressesContent(): ContainerContent
-    {
-		return {};
-	}
 
 	/**
 	 * Does the tasks for the operation action. 
@@ -565,10 +627,10 @@ export class OrgEditComponent implements OnInit
 	 */
 	public doOperationAction(op: OperationAction): void
 	{
-		console.log('panelFormSection', this.panelFormSection);
-		console.log('addressesPanelFormSection', this.addressesPanelFormSection);
-		console.log('labelsSimpleFaFormSection', this.labelsSimpleFaFormSection);
-		return;
+		// console.log('panelFormSection', this.panelFormSection);
+		// console.log('addressesPanelFormSection', this.addressesPanelFormSection);
+		// console.log('labelsSimpleFaFormSection', this.labelsSimpleFaFormSection);
+		// return;
 
 		if(op == OperationAction.submit)
 		{

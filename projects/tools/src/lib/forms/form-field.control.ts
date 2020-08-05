@@ -11,6 +11,8 @@ import { isObject } from 'util';
 import { Common, Params } from '@toco/tools/core';
 import { IconService } from '@toco/tools/core';
 
+import { ContainerControl } from './container/container.control';
+
 /**
  * Defines a form section that represents the `FormGroup` or `FormArray` class. 
  */
@@ -226,6 +228,11 @@ export class HintValue
  */
 export enum FormFieldType
 {
+    /** A button control. */
+    action_button = 'action_button',
+
+
+
     /** A container control that is showed as a panel. */
     container_panel = 'container_panel',
 
@@ -291,7 +298,16 @@ export enum FormFieldType
 export interface FormFieldContent
 {
     /**
-     * Returns the `FormSection` that represents the `FormGroup` or `FormArray` which this control belongs to. 
+     * Returns the parent `ContainerControl` of this control. 
+     * It is always set internally. 
+     * By default, its value is `undefined`. 
+     */
+    parentContainerControl?: ContainerControl;
+
+
+
+    /**
+     * Returns the parent `FormSection` that represents the parent `FormGroup` or `FormArray` of this control. 
      * By default, its value is `undefined`. 
      */
     parentFormSection?: FormSection;
@@ -515,9 +531,9 @@ export abstract class FormFieldControl
 
         if (label == undefined)
         {
-            if (this.content.label == undefined) {
-                console.log(this.content);
-                throw new Error("The control's label is not specified.");
+            if (this.content.label == undefined)
+            {
+                throw new Error(`For the '${ this.content.name }' control, the 'content.label' value can not be undefined.`);
             }
 
             label = this.content.label;
@@ -549,26 +565,47 @@ export abstract class FormFieldControl
 	 * Initializes the control's value. It uses the `content.value` and it is already different of `undefined`. 
      * It also checks if the specified `content.value` is correct. For internal use only. 
 	 */
-	protected abstract initValue(): void;
+    protected abstract initValue(): void;
+
+    /**
+     * Returns this instance. 
+     */
+    public abstract get getInstance(): FormFieldControl;
+
+    /**
+     * Returns the parent `ContainerControl` of this control. 
+     * It is always set internally. 
+     */
+    public get parentContainerControl(): ContainerControl
+    {
+        return this.content.parentContainerControl;
+    }
 
 	/**
-	 * Adds the specified control as a child to the `content.parentFormSection`. 
-     * @param control Form control to be added. 
+	 * Adds the specified `control`/`internalControl` as a child 
+     * to the `content.containerControlChildren`/`content.parentFormSection` respectively. 
+     * @param control Form control to be added (descendant from `FormFieldControl`). 
+     * @param internalControl Internal form control to be added (`FormControl`, `FormGroup`, or `FormArray`). 
 	 */
-	protected addAsChildControl(control: AbstractControl): void
+	protected addAsChildControl(control: any, internalControl: AbstractControl): void
 	{
-        console.log('Added childInputControl: ', control);
+        /* Adds the specified `control` as a child to the `content.containerControlChildren`. */
+
+        this.content.parentContainerControl.content.containerControlChildren.push(control);
+
+        /* Adds the specified `internalControl` as a child to the `content.parentFormSection`. */
 
         if(this.content.parentFormSection instanceof FormGroup)  /* `content.parentFormSection` is an instance of `FormGroup`. */
         {
-            this.content.parentFormSection.addControl(this.content.name, control);
+            this.content.parentFormSection.addControl(this.content.name, internalControl);
         }
         else  /* `content.parentFormSection` is an instance of `FormArray`. */
         {
-            /* Updates the control's name to the correct name because the control has a `FormArray` as its parent. */
-            this.content.name = this.content.parentFormSection.length.toString(10);
+            /* The `internalControl`'s name is already correct, that is, 
+            `content.name` equals the `content.parentFormSection`'s last position 
+            (because the `internalControl` has a `FormArray` as its parent). */
 
-            this.content.parentFormSection.push(control);
+            this.content.parentFormSection.push(internalControl);
         }
 	}
 

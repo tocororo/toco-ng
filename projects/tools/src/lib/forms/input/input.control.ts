@@ -38,8 +38,8 @@ export enum TextInputAppearance
  */
 export interface InputContent extends FormFieldContent
 {
-	/**
-	 * Tracks the value and validity state of the internal control that contains the text input. 
+    /**
+	 * Returns the `FormControl` that tracks the value and validity state of the internal control that contains the text input. 
      * Implementation notes: There are two cases: 
      *  - You only have the `content.formControl` field as the `InputEmailComponent` class. 
      *  - You have the `content.formControl` and `InputControl.internalComponent` fields as the `InputIssnComponent` class. 
@@ -131,7 +131,7 @@ export interface IInternalComponent
 }
 
 /**
- * Represents the base abstract class for a control that allows the writing/selection of a text.
+ * Represents the base abstract class for a control that allows the writing/selection of a text. 
  */
 export abstract class InputControl extends FormFieldControl
 {
@@ -173,16 +173,16 @@ export abstract class InputControl extends FormFieldControl
      */
     protected init(label: string | undefined, isAbbreviation: boolean, alwaysHint: boolean): void
     {
-        if (this.content.formControl == undefined)
-        {
-            if (this.internalComponent == undefined) throw new Error('There is not reference to the internal control; it must be a `FormControl`.');
-
-            this.content.formControl = this.internalComponent.formControl;
-        }
-
         /* Sets the default values. */
 
         super.init(label, isAbbreviation, alwaysHint);
+
+        if (this.content.formControl == undefined)
+        {
+            if (this.internalComponent == undefined) throw new Error(`For the '${ this.content.name }' control, the 'content.formControl' value can not be undefined; it must be a 'FormControl' value.`);
+
+            this.content.formControl = this.internalComponent.formControl;
+        }
 
         let temp: string = (isAbbreviation) ? this.content.label : this.content.label.toLowerCase();
         this.validationError_required = `You must write a valid ${ temp }.`;
@@ -210,7 +210,7 @@ export abstract class InputControl extends FormFieldControl
         {
             console.log('addAsChildControl(this.content.formControl)');
 
-            this.addAsChildControl(this.content.formControl);
+            this.addAsChildControl(this, this.content.formControl);
         }
     }
 
@@ -227,7 +227,15 @@ export abstract class InputControl extends FormFieldControl
         this.content.formControl.markAsTouched({
             onlySelf: true
         });
-	}
+    }
+
+    /**
+     * Returns this instance. 
+     */
+    public get getInstance(): InputControl
+    {
+        return this;
+    }
 
 	/**
 	 * Returns true if the control is empty; otherwise, false. 

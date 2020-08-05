@@ -16,6 +16,15 @@ import { FormSection, FormFieldContent, FormFieldControl, cloneContent } from '.
  */
 export interface ContainerContent extends FormFieldContent
 {
+    /**
+     * Returns an array of controls that represents the `ContainerControl`'s child controls. 
+     * It is always set internally. 
+     * By default, its value is `[]`. 
+     */
+    containerControlChildren?: any[];
+
+
+
 	/**
 	 * Returns the `FormSection` that tracks the value and validity state of the internal 
      * child controls that contains this control. 
@@ -25,14 +34,23 @@ export interface ContainerContent extends FormFieldContent
 	 */
     formSection?: FormSection;
 
-
-
     /**
      * Returns an array of contents that represents the `FormSection`'s child controls. 
      * Implementation notes: 
      *  - It must be specified, and must have at least one element; otherwise, an exception is thrown. 
+     *  - If the `content.formSection` field represents a `FormArray`, then the `name` field 
+     * of all elements in the `content.formSectionContent` array represents the position 
+     * in the array like string. 
      */
     formSectionContent?: any[];
+
+    /**
+     * Returns true if the container must always show its first child control, 
+     * independently if there is or is not a value to show; otherwise, false. 
+     * This field has sense only when the `content.formSection` field represents a `FormArray`. 
+     * By default, its value is `false`. 
+     */
+    alwaysShowFirstElement?: boolean;
 }
 
 /**
@@ -90,25 +108,27 @@ export abstract class ContainerControl extends FormFieldControl
 
         if (this.content.formSection == undefined)
         {
-            throw new Error('There is not reference to the internal control (FormSection); it must be a `FormGroup` or `FormArray`.');
+            throw new Error(`For the '${ this.content.name }' control, the 'content.formSection' value can not be undefined; it must be a 'FormGroup' or 'FormArray' value.`);
         }
 
         if ((this.content.formSectionContent == undefined) || (this.content.formSectionContent.length == 0))
         {
-            throw new Error('The `content.formSectionContent` array can not be undefined, and must have at least one element.');
+            throw new Error(`For the '${ this.content.name }' control, the 'content.formSectionContent' array can not be undefined, and must have at least one element.`);
         }
+
+        this._setParentToChildren();
 
         if (this.content.formSection instanceof FormArray)
         {
             if ((this.content.value == undefined) || (this.content.value.length == 0))
             {
-                throw new Error('This is a control that is constructed dynamically using `FormArray`. The `content.value` array can not be undefined, and must have at least one element.');
+                throw new Error(`The '${ this.content.name }' control is constructed dynamically using 'FormArray'. Its 'content.value' array can not be undefined, and must have at least one element.`);
             }
+
+            if (this.content.alwaysShowFirstElement == undefined) this.content.alwaysShowFirstElement = false;
 
             this.initFormSectionContentToFormArray();
         }
-
-        this._setParentFormSectionToChildren();
 
         // let temp: string = (isAbbreviation) ? this.content.label : this.content.label.toLowerCase();
         // this.validationError_required = `You must write a valid ${ temp }.`;
@@ -130,7 +150,7 @@ export abstract class ContainerControl extends FormFieldControl
         /* Adds this control as a child to the `content.parentFormSection`. It must be called at the end. */
         if (this.content.parentFormSection != undefined)
         {
-            this.addAsChildControl(this.content.formSection);
+            this.addAsChildControl(this, this.content.formSection);
         }
     }
 
@@ -155,7 +175,12 @@ export abstract class ContainerControl extends FormFieldControl
         sets all its properties/values of built-in type to `undefined`. */
         this._formArrayPatternValue = Common.cloneValueToUndefined(this.content.value[0]);
 
-        //TODO: Poner la lógica del campo `alwaysShowFirstElement` ...
+        /* Sets the logic of the `content.alwaysShowFirstElement` field. */
+        //TODO: ...
+        // if ((this.content.alwaysShowFirstElement) 
+        //     && ()
+        // )
+        // {}
 
         /* The `FormArray` will contain one element for each element in the `content.value`. */
         for(let val of this.content.value)
@@ -174,10 +199,45 @@ export abstract class ContainerControl extends FormFieldControl
 
         /* Overwrites some properties for the cloned content. */
         refContent.name = this.content.formSectionContent.length.toString(10);  /* The element is added in the array after the last position. */
-        refContent.label = ((refContent.label == undefined) ? (refContent.name) : (refContent.label + refContent.name));
-        refContent.ariaLabel = refContent.label;
+        // refContent.label = ((refContent.label == undefined) ? (refContent.name) : (refContent.label + refContent.name));
+        // refContent.ariaLabel = refContent.label;
 
         this.content.formSectionContent.push(refContent);
+    }
+
+    /**
+     * Sets the parent control to its children. 
+     */
+    private _setParentToChildren(): void
+    {
+        /* Initializes the `content.containerControlChildren`. */
+        this.content.containerControlChildren = [ ];
+
+        this.content.formSectionContent.forEach(
+            (ffc: FormFieldContent): void => {
+                /* Sets the parent `ContainerControl` to its children. */
+                ffc.parentContainerControl = this;
+
+                /* Sets the parent `FormSection` to its children if they have got nothing. */
+                if (ffc.parentFormSection == undefined) ffc.parentFormSection = this.content.formSection;
+            }
+        );
+    }
+
+    /**
+     * Updates the elements' index in the `content.formSectionContent` array from 
+     * the specified `index` onwards. 
+     * @param index Index in the array to begin updating. 
+     */
+    private _updateIndex(index: number): void
+    {
+        const length: number = this.content.formSectionContent.length;
+
+        while(index < length)
+        {
+            this.content.formSectionContent[index].name = index.toString(10);
+            index++;
+        }
     }
 
 	/**
@@ -198,13 +258,30 @@ export abstract class ContainerControl extends FormFieldControl
     }
 
     /**
+     * Returns this instance. 
+     */
+    public get getInstance(): ContainerControl
+    {
+        return this;
+    }
+
+    /**
+     * Returns an array of controls that represents the `ContainerControl`'s child controls. 
+     * It is always set internally. 
+     */
+    public get containerControlChildren(): any[]
+    {
+        return this.content.containerControlChildren;
+    }
+
+    /**
      * If the `content.formSection` represents a `FormArray`, then this field returns 
      * a pattern content that is `content.formSectionContent[0]` value; otherwise, returns `undefined`. 
      * It is used for adding a new element in the `content.formSectionContent`, that is, 
      * for adding a new control in the `FormArray`. 
      * By default, its value is `undefined`. 
      */
-    public get FormArrayPatternContent(): any
+    public get formArrayPatternContent(): any
     {
         return this._formArrayPatternContent;
     }
@@ -216,27 +293,22 @@ export abstract class ContainerControl extends FormFieldControl
      * It is used for adding a new element in the `content.formSectionContent`. 
      * By default, its value is `undefined`. 
      */
-    public get FormArrayPatternValue(): any
+    public get formArrayPatternValue(): any
     {
         return this._formArrayPatternValue;
     }
 
-    /**
-     * Sets the parent `FormSection` to its children if they have got nothing. 
-     */
-    private _setParentFormSectionToChildren(): void
-    {
-        this.content.formSectionContent.forEach(
-            (ffc: FormFieldContent): void => {
-                /* Sets the parent `FormSection` to its children if they have got nothing. */
-                if (ffc.parentFormSection == undefined) ffc.parentFormSection = this.content.formSection;
-            }
-        );
-    }
+	/**
+	 * Returns true if this container is empty; otherwise, false. 
+	 */
+	public get isEmpty(): boolean
+	{
+		return (this.content.formSectionContent.length == 0);
+	}
 
     /**
      * Adds an empty element at the end of the `content.formSectionContent`; therefore one element 
-     * is added at the end of the `content.formSection` `FormArray`.  
+     * is added at the end of the `content.formSection` `FormArray`. 
      * The `content.formSection` must be an instance of `FormArray`. 
      */
 	public addToFormArray(): void
@@ -246,14 +318,10 @@ export abstract class ContainerControl extends FormFieldControl
         if (this.content.formSection instanceof FormArray)
         {
             this._initOneElemFormSectionContentToFormArray(this._formArrayPatternValue);
-            // this._initOneElemFormSectionContentToFormArray({
-            //     'label': undefined,
-            //     'iso639': undefined
-            // });
         }
         else
         {
-            throw new Error('The `content.formSection` must be an instance of `FormArray`.');
+            throw new Error(`For the '${ this.content.name }' control, the 'content.formSection' value must be an instance of 'FormArray'.`);
         }
 	}
 
@@ -269,11 +337,15 @@ export abstract class ContainerControl extends FormFieldControl
 
         if (this.content.formSection instanceof FormArray)
         {
+            this.content.containerControlChildren.splice(index, 1);
             this.content.formSectionContent.splice(index, 1);
+            this.content.formSection.removeAt(index);
+
+            this._updateIndex(index);
         }
         else
         {
-            throw new Error('The `content.formSection` must be an instance of `FormArray`.');
+            throw new Error(`For the '${ this.content.name }' control, the 'content.formSection' value must be an instance of 'FormArray'.`);
         }
     }
 
@@ -288,41 +360,13 @@ export abstract class ContainerControl extends FormFieldControl
 
         if (this.content.formSection instanceof FormArray)
         {
+            this.content.containerControlChildren = [ ];
             this.content.formSectionContent = [ ];
+            this.content.formSection.clear();
         }
         else
         {
-            throw new Error('The `content.formSection` must be an instance of `FormArray`.');
+            throw new Error(`For the '${ this.content.name }' control, the 'content.formSection' value must be an instance of 'FormArray'.`);
         }
     }
-    
-    /**
-     * This is one of the way how clear units fields.
-     */
-    // clearAllUnits()
-    // {
-    //     const control = <FormArray>this.exampleForm.controls['units'];
-
-    //     while (control.length)
-    //     {
-    //         control.removeAt(control.length - 1);
-    //     }
-    //     control.clearValidators();
-    //     control.push(this.getUnit());
-    // }
-
-    /**
-     * Create form unit
-     */
-    // private getUnit()
-    // {
-    //     const numberPatern = '^[0-9.,]+$';
-
-    //     return this.formBuilder.group({
-    //         unitName: ['', Validators.required],
-    //         qty: [1, [Validators.required, Validators.pattern(numberPatern)]],
-    //         unitPrice: ['', [Validators.required, Validators.pattern(numberPatern)]],
-    //         unitTotalPrice: [{ value: '', disabled: true }]
-    //     });
-    // }
 }

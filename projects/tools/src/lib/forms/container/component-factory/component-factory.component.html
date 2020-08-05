@@ -64,6 +64,9 @@ fxLayoutGap="1em" class="form-field-component">
             ></mat-datepicker>
         </mat-form-field>
 
+        <action-button *ngSwitchCase="formFieldType.action_button" [content]="fieldContent"></action-button>
+
+
         <container-panel *ngSwitchCase="formFieldType.container_panel" [content]="fieldContent"></container-panel>
 
         <container-simple *ngSwitchCase="formFieldType.container_simple" [content]="fieldContent"></container-simple>
