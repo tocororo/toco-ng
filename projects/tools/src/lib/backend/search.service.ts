@@ -17,13 +17,13 @@ export class SearchService {
 
 	private prefix = 'records';
 
-	private headers = new HttpHeaders(
-	    {
-	      'Accept': 'application/json',
-	      'Content-Type': 'application/json',
-	      'Access-Control-Allow-Origin': '*'
-	    }
-	);
+	// private headers = new HttpHeaders(
+	//     {
+	//       'Accept': 'application/json',
+	//       'Content-Type': 'application/json',
+	//       'Access-Control-Allow-Origin': '*'
+	//     }
+	// );
 	http: HttpClient;
 	constructor(private env: EnvService, private handler: HttpBackend) {
 
@@ -69,7 +69,7 @@ export class SearchService {
 	getOrganizations(params: HttpParams): Observable<SearchResponse<Organization>> {
 		const options = {
 			params: params,
-			headers: this.headers
+			// headers: this.headers
 		};
 		console.log(params);
 		const req = this.env.sceibaApi + 'organizations';
