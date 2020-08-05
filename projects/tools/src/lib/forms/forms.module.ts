@@ -16,7 +16,6 @@ import { ComponentFactory } from './container/component-factory/component-factor
 import { FormContainerComponent } from './container/form-container/form-container.component';
 import { ContainerPanelComponent } from './container/panel/panel-container.component';
 import { ContainerSimpleComponent } from './container/simple/simple-container.component';
-import { ContainerSimpleFaComponent } from './container/simple-fa/simple-container-fa.component';
 import { TableComponent } from './container/table/table.component';
 
 import { ContainerLabelDiffLangComponent } from './container-specific/label-diff-lang/label-diff-lang-container.component';
@@ -45,7 +44,6 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
     FormContainerComponent,
     ContainerPanelComponent,
     ContainerSimpleComponent,
-    ContainerSimpleFaComponent,
     TableComponent,
     ContainerLabelDiffLangComponent,
     InputTextComponent,
@@ -77,7 +75,6 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
     FormContainerComponent,
     ContainerPanelComponent,
     ContainerSimpleComponent,
-    ContainerSimpleFaComponent,
     TableComponent,
     ContainerLabelDiffLangComponent,
     InputTextComponent,

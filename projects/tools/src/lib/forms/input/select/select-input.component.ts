@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { isArray } from 'util';
 
-import { Common } from '@toco/tools/core';
+import { emptyString } from '@toco/tools/core';
 
 import { InputControl, InputContent } from '../input.control';
 
@@ -84,7 +84,7 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
 	public ngOnInit(): void
 	{
         /* Sets this `content.formControl` by default. */
-        if (this.content.formControl == undefined) this.content.formControl = new FormControl(Common.emptyString);
+        if (this.content.formControl == undefined) this.content.formControl = new FormControl(emptyString);
 
         /* Sets the default values. */
 		this.init(undefined, false, false);

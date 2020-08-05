@@ -7,7 +7,7 @@
 import { Input } from '@angular/core';
 import { FormArray } from '@angular/forms';
 
-import { Common } from '@toco/tools/core';
+import { cloneValueToUndefined } from '@toco/tools/core';
 
 import { FormSection, FormFieldContent, FormFieldControl, cloneContent } from '../form-field.control';
 
@@ -84,6 +84,13 @@ export abstract class ContainerControl extends FormFieldControl
     private _formArrayPatternValue: any;
 
     /**
+     * Returns true if the container control is dynamic, that is, the `content.formSection` field 
+     * represents a `FormArray`; otherwise, false. 
+     * By default, its value is `false`. 
+     */
+    private _isDynamic: boolean;
+
+    /**
      * Constructs a new instance of this class. 
      */
     public constructor()
@@ -92,6 +99,7 @@ export abstract class ContainerControl extends FormFieldControl
 
         this._formArrayPatternContent = undefined;
         this._formArrayPatternValue = undefined;
+        this._isDynamic = false;
     }
 
     /**
@@ -116,9 +124,11 @@ export abstract class ContainerControl extends FormFieldControl
             throw new Error(`For the '${ this.content.name }' control, the 'content.formSectionContent' array can not be undefined, and must have at least one element.`);
         }
 
+        this._isDynamic = this.content.formSection instanceof FormArray;
+
         this._setParentToChildren();
 
-        if (this.content.formSection instanceof FormArray)
+        if (this._isDynamic)
         {
             if ((this.content.value == undefined) || (this.content.value.length == 0))
             {
@@ -173,7 +183,7 @@ export abstract class ContainerControl extends FormFieldControl
         /* Saves the pattern value, that is, `content.value[0]`. 
         Creates a new value that represents the clone of the specified `content.value[0]` value, and 
         sets all its properties/values of built-in type to `undefined`. */
-        this._formArrayPatternValue = Common.cloneValueToUndefined(this.content.value[0]);
+        this._formArrayPatternValue = cloneValueToUndefined(this.content.value[0]);
 
         /* Sets the logic of the `content.alwaysShowFirstElement` field. */
         //TODO: ...
@@ -298,6 +308,16 @@ export abstract class ContainerControl extends FormFieldControl
         return this._formArrayPatternValue;
     }
 
+    /**
+     * Returns true if the container control is dynamic, that is, the `content.formSection` field 
+     * represents a `FormArray`; otherwise, false. 
+     * By default, its value is `false`. 
+     */
+    public get isDynamic(): boolean
+    {
+        return this._isDynamic;
+    }
+
 	/**
 	 * Returns true if this container is empty; otherwise, false. 
 	 */
@@ -315,7 +335,7 @@ export abstract class ContainerControl extends FormFieldControl
 	{
         console.log('addToFormArray');
 
-        if (this.content.formSection instanceof FormArray)
+        if (this._isDynamic)
         {
             this._initOneElemFormSectionContentToFormArray(this._formArrayPatternValue);
         }
@@ -335,11 +355,11 @@ export abstract class ContainerControl extends FormFieldControl
 	{
         console.log('removeFromFormArray', index);
 
-        if (this.content.formSection instanceof FormArray)
+        if (this._isDynamic)
         {
             this.content.containerControlChildren.splice(index, 1);
             this.content.formSectionContent.splice(index, 1);
-            this.content.formSection.removeAt(index);
+            (this.content.formSection as FormArray).removeAt(index);
 
             this._updateIndex(index);
         }
@@ -358,11 +378,11 @@ export abstract class ContainerControl extends FormFieldControl
 	{
         console.log('clearFormArray');
 
-        if (this.content.formSection instanceof FormArray)
+        if (this._isDynamic)
         {
             this.content.containerControlChildren = [ ];
             this.content.formSectionContent = [ ];
-            this.content.formSection.clear();
+            (this.content.formSection as FormArray).clear();
         }
         else
         {

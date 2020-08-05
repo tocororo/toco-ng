@@ -6,7 +6,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-import { Common } from '@toco/tools/core';
+import { emptyString } from '@toco/tools/core';
 
 import { InputControl } from '../../input/input.control';
 
@@ -71,7 +71,7 @@ export class SelectComponent extends InputControl/*FormFieldControl_Experimental
 		console.log('SelectComponent OnInit');
 
         /* Sets this `content.formControl` by default. */
-        if (this.content.formControl == undefined) this.content.formControl = new FormControl(Common.emptyString);
+        if (this.content.formControl == undefined) this.content.formControl = new FormControl(emptyString);
 
         /* Sets the default values. */
 		this.init(undefined, false, false);

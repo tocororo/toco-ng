@@ -1,5 +1,5 @@
 
-import { Common } from '@toco/tools/core';
+import { emptyString } from '@toco/tools/core';
 
 /**
  * Represents the abbreviation for an ISSN type. 
@@ -78,7 +78,7 @@ export class IssnValue
 	/**
 	 * The default ISSN value. 
 	 */
-	public static readonly defaultIssnValue: IssnValue = new IssnValue(Common.emptyString, Common.emptyString);
+	public static readonly defaultIssnValue: IssnValue = new IssnValue(emptyString, emptyString);
 
 	public static createIssnValueFromString(value: string) {
 		try {

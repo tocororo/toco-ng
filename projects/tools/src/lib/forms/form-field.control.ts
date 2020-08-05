@@ -8,7 +8,7 @@ import { Input } from '@angular/core';
 import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
 import { isObject } from 'util';
 
-import { Common, Params } from '@toco/tools/core';
+import { Params, emptyString } from '@toco/tools/core';
 import { IconService } from '@toco/tools/core';
 
 import { ContainerControl } from './container/container.control';
@@ -195,7 +195,7 @@ export class HintValue
      */
     public constructor(
         p: HintPosition = HintPosition.none,
-        l: string = Common.emptyString)
+        l: string = emptyString)
 	{
         this.position = p;
         this.label = l;
@@ -209,7 +209,7 @@ export class HintValue
     public setDefaultValueIfUndefined(): void
     {
         if (this.position == undefined) this.position = HintPosition.none;
-        if (this.label == undefined) this.label = Common.emptyString;
+        if (this.label == undefined) this.label = emptyString;
     }
 
     /**
@@ -219,7 +219,7 @@ export class HintValue
     public setDefaultValueIfUndefined_setPosition(hintPosition: HintPosition): void
     {
         this.position = hintPosition;
-        if (this.label == undefined) this.label = Common.emptyString;
+        if (this.label == undefined) this.label = emptyString;
     }
 }
 
@@ -238,9 +238,6 @@ export enum FormFieldType
 
     /** A container control that is showed very simple. */
     container_simple = 'container_simple',
-
-    /** A container control that is showed very simple using `FormArray`. */
-    container_simple_fa = 'container_simple_fa',
 
 
 
@@ -595,17 +592,17 @@ export abstract class FormFieldControl
 
         /* Adds the specified `internalControl` as a child to the `content.parentFormSection`. */
 
-        if(this.content.parentFormSection instanceof FormGroup)  /* `content.parentFormSection` is an instance of `FormGroup`. */
-        {
-            this.content.parentFormSection.addControl(this.content.name, internalControl);
-        }
-        else  /* `content.parentFormSection` is an instance of `FormArray`. */
+        if(this.content.parentContainerControl.isDynamic)  /* `content.parentFormSection` is an instance of `FormArray`. */
         {
             /* The `internalControl`'s name is already correct, that is, 
             `content.name` equals the `content.parentFormSection`'s last position 
             (because the `internalControl` has a `FormArray` as its parent). */
 
-            this.content.parentFormSection.push(internalControl);
+            (this.content.parentFormSection as FormArray).push(internalControl);
+        }
+        else  /* `content.parentFormSection` is an instance of `FormGroup`. */
+        {
+            (this.content.parentFormSection as FormGroup).addControl(this.content.name, internalControl);
         }
 	}
 

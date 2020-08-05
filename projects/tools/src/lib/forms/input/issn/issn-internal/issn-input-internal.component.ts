@@ -6,8 +6,7 @@ import { MatFormFieldControl } from '@angular/material/form-field';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
-import { ExtraValidators } from '@toco/tools/core';
-import { Common } from '@toco/tools/core';
+import { ExtraValidators, emptyString } from '@toco/tools/core';
 
 import { IInternalComponent } from '../../input.control';
 import { IssnValue } from '../issn-value';
@@ -131,7 +130,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 
 		this.id = `${ InputIssnInternalComponent._controlNameWithDash }-${ InputIssnInternalComponent._nextId++ }`;
 
-		this._placeholder = Common.emptyString;
+		this._placeholder = emptyString;
 
 		this.focused = false;
 
@@ -141,7 +140,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 
 		this.controlType = InputIssnInternalComponent._controlNameWithDash;
 
-		this.describedBy = Common.emptyString;
+		this.describedBy = emptyString;
 
 		this._onChange = (_: any) => { };
 
@@ -151,10 +150,10 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 
 		/* Constructs a new `FormGroup` instance. */
 		this.internalFormGroup = new FormGroup({
-			'firstGroup': this._firstGroup = new FormControl((this._firstGroupOldValue = Common.emptyString), [
+			'firstGroup': this._firstGroup = new FormControl((this._firstGroupOldValue = emptyString), [
 				ExtraValidators.equalLength(IssnValue.groupLength),
 				Validators.pattern('^[0-9]*$')]),
-			'secondGroup': this._secondGroup = new FormControl((this._secondGroupOldValue = Common.emptyString), [
+			'secondGroup': this._secondGroup = new FormControl((this._secondGroupOldValue = emptyString), [
 				ExtraValidators.equalLength(IssnValue.groupLength),
 				Validators.pattern('^[0-9]*[0-9xX]$')])
 		},
@@ -163,7 +162,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 			ExtraValidators.issnConfirmCheckDigit(this._firstGroup, this._secondGroup, IssnValue.groupLength)
 		]
 		);
-		this.formControl = new FormControl(Common.emptyString, [
+		this.formControl = new FormControl(emptyString, [
 			ExtraValidators.issnValidator(this.internalFormGroup)
 		]);
 
@@ -321,7 +320,7 @@ export class InputIssnInternalComponent implements OnDestroy, IInternalComponent
 		//console.log(this._secondGroup.errors);
 		//console.log(this.internalFormGroup.errors);
 
-		let result: string = Common.emptyString;
+		let result: string = emptyString;
 		let result_alreadyHaveErrorInfo: boolean = false;
 		let validationErrors: ValidationErrors = this._firstGroup.errors;
 
