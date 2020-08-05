@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { FormFieldType, PanelContent_Depr } from '@toco/tools/forms';
 
 @Component({
-  selector: 'toco-aggregations',
+  selector: 'app-aggregations',
   templateUrl: './aggregations.component.html',
   styleUrls: ['./aggregations.component.scss']
 })

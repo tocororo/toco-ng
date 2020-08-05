@@ -80,14 +80,17 @@ export class OrgRootComponent
 		this._searchService.getOrganizations(this.params).subscribe(
 			(response: SearchResponse<Organization>) => {
 				console.log(response);
+				console.log("RESPONSE", response);
+				
 				// this.pageEvent.length = response.hits.total;
 				this.sr = response;
 			},
 			(error: any) => {
-
+				console.log("ERROPR");
+				
 			},
 			() => {
-
+				console.log("END...");
 			}
 		);
 	}
