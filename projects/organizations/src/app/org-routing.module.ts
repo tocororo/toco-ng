@@ -8,35 +8,35 @@ import { OrganizationDetailResolverService } from './organization-detail-resolve
 
 const routes: Routes = [
 	{
-		path:'organizaciones/:id/ver',
+		path:':id/ver',
 		component: OrgViewComponent,
 		resolve: {
 			'org': OrganizationDetailResolverService
 		}
 	},
 	{
-		path:'organizaciones/:id/editar',
+		path:':id/editar',
 		component: OrgEditComponent,
 		resolve: {
 			'org': OrganizationDetailResolverService
 		}
     },
     {
-        path: 'organizaciones/adicionar',
+        path: ':adicionar',
         component: OrgAddComponent
     },
 	{
-		path:'organizaciones',
+		path:'',
 		component: OrgListComponent,
 	},
-	{
-		path: '',
-		redirectTo: '/organizaciones',
-		pathMatch: 'full'
-	},
+	// {
+	// 	path: '',
+	// 	redirectTo: '',
+	// 	pathMatch: 'full'
+	// },
 	{
 		path: '**',
-		redirectTo: '/organizaciones',
+		redirectTo: '',
 		pathMatch: 'full'
 		//TODO: Hacer un componente 'PageNotFoundComponent' para mostrarlo aquí. 
 		//component: PageNotFoundComponent
