@@ -51,7 +51,7 @@ export class AggregationsComponent implements OnInit {
       for (let index = 0; index < this.selectedAggr[aggrKey].length; index++) {
         const element = this.selectedAggr[aggrKey][index];
         if (element == bucket.key) {
-          console.log(this.selectedAggr, aggrKey, bucket);
+          // console.log(this.selectedAggr, aggrKey, bucket);
           // console.log("--------------------");
           
           return true;

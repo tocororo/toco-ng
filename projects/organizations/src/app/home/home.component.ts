@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-home",
@@ -7,15 +7,14 @@ import { Router } from "@angular/router";
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
-  constructor(private router: Router) {}
-  query = "";
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+
   ngOnInit() {}
 
   queryChange(event?: string) {
-    console.log(event);
-    this.query = event;
     this.router.navigate(["search"], {
-      queryParams: {'q': this.query, },
+      relativeTo: this.activatedRoute,
+      queryParams: { q: event },
       queryParamsHandling: "",
     });
   }

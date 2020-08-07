@@ -4,7 +4,12 @@ import { SearchResponse, Organization } from "@toco/tools/entities";
 import { SearchService } from "@toco/tools/backend";
 import { PageEvent } from "@angular/material";
 import { AggregationsSelection } from "@toco/tools/search/aggregations/aggregations.component";
-import { ActivatedRoute, Router, NavigationExtras } from "@angular/router";
+import {
+  ActivatedRoute,
+  Router,
+  NavigationExtras,
+  Params,
+} from "@angular/router";
 
 @Component({
   selector: "app-search",
@@ -57,8 +62,8 @@ export class SearchComponent implements OnInit {
 
   params: HttpParams;
   sr: SearchResponse<Organization>;
-  queryParams;
-
+  queryParams: Params;
+  navigationExtras: NavigationExtras;
   public constructor(
     private _searchService: SearchService,
     private activatedRoute: ActivatedRoute,
@@ -66,91 +71,60 @@ export class SearchComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    
+    this.query = "";
     this.activatedRoute.queryParamMap.subscribe({
-      next: (params) => {
-        this.params = new HttpParams();
-        console.log(params);
-        for (let index = 0; index < params.keys.length; index++) {
-            const key = params.keys[index];
-            console.log(params.get(key));
-            switch (key) {
-                case 'size':
-                    this.pageSize = Number.parseInt(params.get(key));
-                    break;
-                case 'page':
-                    this.pageIndex = Number.parseInt(params.get(key));
-                    break;
-                case 'q':
-                    this.query = params.get(key);
-                    break;
-                default:
-                    if (!this.aggrsSelection.hasOwnProperty(key)){
-                        this.aggrsSelection[key] = [];
-                    }
-                    this.aggrsSelection[key].push(params.get(key));
-                    break;
-            }
+      next: (initQueryParams) => {
+        this.aggrsSelection = {};
+        console.log(initQueryParams);
+        for (let index = 0; index < initQueryParams.keys.length; index++) {
+          const key = initQueryParams.keys[index];
+          console.log(initQueryParams.get(key));
+          switch (key) {
+            case "size":
+              this.pageSize = Number.parseInt(initQueryParams.get(key));
+              break;
+            case "page":
+              this.pageIndex = Number.parseInt(initQueryParams.get(key));
+              break;
+            case "q":
+              this.query = initQueryParams.get(key);
+              break;
+            default:
+              if (!this.aggrsSelection.hasOwnProperty(key)) {
+                this.aggrsSelection[key] = [];
+              }
+              this.aggrsSelection[key].push(initQueryParams.get(key));
+              break;
+          }
         }
-        this.getRecords();
+        console.log(this.aggrsSelection);
         
+        this.updateFetchParams();
+        this.fetchSearchRequest();
       },
       error: (e) => {},
       complete: () => {},
     });
-    this.getRecords();
   }
 
-  public pageChange(event?: PageEvent): void {
-    this.pageSize = event.pageSize;
-    this.pageIndex = event.pageIndex;
-    this.getRecords();
-  }
-
-  public aggrChange(event?: AggregationsSelection): void {
-    console.log(event);
-    this.aggrsSelection = event;
-    this.getRecords();
-  }
-
-  queryChange(event?: string) {
-    console.log(event);
-    this.query = event;
-    this.getRecords();
-  }
-
-  private updateParams() {
-    this.queryParams = {};
+  private updateFetchParams() {
     this.params = new HttpParams();
 
     this.params = this.params.set("size", this.pageSize.toString(10));
-    this.queryParams["size"] = this.pageSize.toString(10);
 
     this.params = this.params.set("page", (this.pageIndex + 1).toString(10));
-    this.queryParams["page"] = this.pageIndex.toString(10);
 
     this.params = this.params.set("q", this.query);
-    this.queryParams["q"] = this.query;
 
     for (const aggrKey in this.aggrsSelection) {
       this.aggrsSelection[aggrKey].forEach((bucketKey) => {
         this.params = this.params.set(aggrKey, bucketKey);
-        this.queryParams[aggrKey] = bucketKey;
       });
     }
   }
 
-  public getRecords(): void {
-    this.updateParams();
-    console.log(this.params, this.queryParams);
-    const navigationExtras: NavigationExtras = {
-      relativeTo: this.activatedRoute,
-      queryParams: this.queryParams,
-      queryParamsHandling: "",
-    };
-    this.router.navigate(["."], navigationExtras);
-    this.searchRequest()
-  }
-  public searchRequest() {
+  public fetchSearchRequest() {
     this._searchService.getOrganizations(this.params).subscribe(
       (response: SearchResponse<Organization>) => {
         console.log(response);
@@ -166,5 +140,46 @@ export class SearchComponent implements OnInit {
         console.log("END...");
       }
     );
+  }
+
+  public pageChange(event?: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.updateQueryParams();
+  }
+
+  public aggrChange(event?: AggregationsSelection): void {
+    console.log(event);
+    this.aggrsSelection = event;
+    this.updateQueryParams();
+  }
+
+  queryChange(event?: string) {
+    console.log(event);
+    this.query = event;
+    this.updateQueryParams();
+  }
+
+  private updateQueryParams() {
+    this.queryParams = {};
+
+    this.queryParams["size"] = this.pageSize.toString(10);
+
+    this.queryParams["page"] = this.pageIndex.toString(10);
+
+    this.queryParams["q"] = this.query;
+
+    for (const aggrKey in this.aggrsSelection) {
+      this.aggrsSelection[aggrKey].forEach((bucketKey) => {
+        this.queryParams[aggrKey] = bucketKey;
+      });
+    }
+    this.navigationExtras = {
+      relativeTo: this.activatedRoute,
+      queryParams: this.queryParams,
+      queryParamsHandling: "",
+    };
+
+    this.router.navigate(["."], this.navigationExtras);
   }
 }
