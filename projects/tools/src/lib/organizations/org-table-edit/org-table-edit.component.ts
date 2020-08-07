@@ -1,30 +1,25 @@
-
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ContainerContent, TableContent, FormFieldType, TextInputAppearance, HintValue, HintPosition, InputContent, TextAlign, IconValue, IconSource, ContentPosition, CellContentWrap, TableComponent } from '@toco/tools/forms';
 import { FormGroup } from '@angular/forms';
+import { SortDirection, PageRequest, Page } from '@toco/tools/core';
 import { Observable } from 'rxjs';
+import { Organization } from '@toco/tools/entities';
+import { ENDPOINT_APIS, OrganizationService } from '@toco/tools/backend';
 import { map } from 'rxjs/operators';
-
-import { UserService, SortDirection, PageRequest, Page } from '@toco/tools/core';
-import { TableContent, TableComponent, CellContentWrap, InputContent, TextAlign, TextInputAppearance, IconValue, IconSource, HintPosition, HintValue, ContentPosition, ContainerContent, FormFieldType, FormSection } from '@toco/tools/forms';
-import { HitList, Organization } from '@toco/tools/entities';
-import { OrganizationService, ENDPOINT_APIS } from '@toco/tools/backend';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-	selector: 'toco-org-list',
-	templateUrl: './org-list.component.html',
-	styleUrls: ['./org-list.component.scss']
+  selector: 'toco-org-table-edit',
+  templateUrl: './org-table-edit.component.html',
+  styleUrls: ['./org-table-edit.component.scss']
 })
-export class OrgListComponent implements OnInit
-{
+export class OrgTableEditComponent implements OnInit {
+
     /**
      * Contains the content of the identifiers section. 
      */
     public identifiersContent: ContainerContent;
     // public identifiersContent_Complex: ContainerContent;
-
-	@Input()
-	public hitList: HitList<Organization>;
 
     /**
      * The search filter. 
@@ -279,4 +274,5 @@ export class OrgListComponent implements OnInit
 
 		this._router.navigate(['organizaciones/adicionar']);
 	}
+
 }

@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { Aggr, AggrBucket } from "@toco/tools/entities";
 
+export interface AggregationsSelection{
+  [id: string]: string[] 
+}
 
 @Component({
   selector: "toco-search-aggregations",
@@ -23,10 +26,10 @@ export class AggregationsComponent implements OnInit {
    *
    */
   @Input()
-  selectedAggr: { [id: string]: string[] } = {};
+  selectedAggr: AggregationsSelection = {};
 
   @Output()
-  keySelect = new EventEmitter<{ [id: string]: string[] }>();
+  keySelect = new EventEmitter<AggregationsSelection>();
 
   keys: string[] = [];
 
@@ -39,16 +42,32 @@ export class AggregationsComponent implements OnInit {
         this.keys.push(key);
       }
     }
+
   }
 
   isSelected(aggrKey, bucket: AggrBucket) {
+
     if (this.selectedAggr.hasOwnProperty(aggrKey)) {
-      this.selectedAggr[aggrKey].forEach((key) => {
-        if (key == bucket.key) {
+      for (let index = 0; index < this.selectedAggr[aggrKey].length; index++) {
+        const element = this.selectedAggr[aggrKey][index];
+        if (element == bucket.key) {
+          console.log(this.selectedAggr, aggrKey, bucket);
+          // console.log("--------------------");
+          
           return true;
         }
-      });
+      }
+      // this.selectedAggr[aggrKey].forEach((key) => {
+      //   if (key == bucket.key) {
+      //     console.log(this.selectedAggr, aggrKey, bucket);
+      //     console.log("--------------------");
+          
+      //     return true;
+      //   }
+      // });
     }
+    // console.log("FALSE");
+    
     return false;
   }
 

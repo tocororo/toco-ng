@@ -2,9 +2,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { OrgListComponent, OrgEditComponent, OrgViewComponent, OrgAddComponent } from '@toco/tools/organizations';
+import { OrgEditComponent, OrgViewComponent, OrgAddComponent } from '@toco/tools/organizations';
 
 import { OrganizationDetailResolverService } from './organization-detail-resolver.service.ts';
+import { HomeComponent } from './home/home.component';
+import { SearchComponent } from './search/search.component';
+
 
 const routes: Routes = [
 	{
@@ -22,12 +25,16 @@ const routes: Routes = [
 		}
     },
     {
-        path: ':adicionar',
+        path: 'adicionar',
         component: OrgAddComponent
-    },
+	},
+	{
+		path: 'search',
+		component: SearchComponent
+	},
 	{
 		path:'',
-		component: OrgListComponent,
+		component: HomeComponent,
 	},
 	// {
 	// 	path: '',

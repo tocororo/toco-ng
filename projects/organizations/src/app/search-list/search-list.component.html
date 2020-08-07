@@ -1,0 +1,8 @@
+
+<div *ngIf="hitList">
+  <div *ngFor="let hit of hitList.hits">
+    <h2>{{hit.metadata.name}}</h2>
+      <!-- <toco-org-view [org]="hit.metadata"></toco-org-view> -->
+  </div>
+</div>
+

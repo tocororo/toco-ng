@@ -5,6 +5,8 @@ import { RecordListComponent } from './record-list/record-list.component';
 import { RecordComponent } from './record/record.component';
 import { SharedModule } from '../shared';
 import { AggregationsComponent } from './aggregations/aggregations.component';
+import { QueryInputComponent } from './query-input/query-input.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -12,15 +14,18 @@ import { AggregationsComponent } from './aggregations/aggregations.component';
     RecordListComponent,
     RecordComponent,
     AggregationsComponent,
+    QueryInputComponent,
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ],
   exports: [
     RecordListComponent,
     RecordComponent,
-    AggregationsComponent
+    AggregationsComponent,
+    QueryInputComponent
 ],
 })
 export class SearchModule { }

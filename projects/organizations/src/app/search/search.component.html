@@ -1,0 +1,36 @@
+<mat-drawer-container autosize>
+    <mat-drawer #drawer mode="side">
+      <!-- <app-aggregations fxLayout="row wrap" fxLayout.xs="column wrap" fxFlex="{{ currentlayout.width }}"
+        fxLayoutAlign="start center" fxLayoutAlign.xs="center center" fxLayoutGap="1em"
+        class=" back-grey mat-elevation-z8"></app-aggregations> -->
+      <toco-org-search></toco-org-search>
+      <toco-search-aggregations
+        *ngIf="sr"
+        [aggregations]="sr.aggregations"
+        [selectedAggr]="aggrsSelection"
+        (keySelect)="aggrChange($event)"
+  
+      ></toco-search-aggregations>
+    </mat-drawer>
+  
+    <button
+      mat-icon-button
+      (click)="drawer.toggle()"
+      matTooltip="Filtrar búsqueda"
+    >
+      <mat-icon>filter_list</mat-icon>
+    </button>
+    <div *ngIf="sr">
+      <toco-search-query-input [query]="query" (queryChange)="queryChange($event)"></toco-search-query-input>
+      <search-list [hitList]="sr.hits"></search-list>
+      <mat-paginator
+        [length]="sr.hits.total"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="pageEvent = pageChange($event)"
+      >
+      </mat-paginator>
+    </div>
+  </mat-drawer-container>
+  

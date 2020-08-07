@@ -15,11 +15,17 @@ import { OrgRootComponent } from './org.component';
 import { AggregationsComponent } from './aggregations/aggregations.component';
 import { InMemoryDataService }  from './in-memory-data.service';
 import { SearchModule } from '@toco/tools/search';
+import { HomeComponent } from './home/home.component';
+import { SearchComponent } from './search/search.component';
+import { SearchListComponent } from './search-list/search-list.component';
 
 @NgModule({
 	declarations: [
 		OrgRootComponent,
-		AggregationsComponent
+		AggregationsComponent,
+		HomeComponent,
+		SearchComponent,
+		SearchListComponent
 	],
 
 	imports: [
