@@ -72,6 +72,12 @@ export class OrgRootComponent
 		this.getRecords();
 	}
 
+	public aggrChange(event?: { [id: string]: string[] }): void
+	{
+		console.log(event);
+		
+	}
+
 	public getRecords(): void
 	{
 		this.params = this.params.set('size', this.pageSize.toString(10));

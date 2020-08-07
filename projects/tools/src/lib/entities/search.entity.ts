@@ -21,8 +21,10 @@ class AggrMeta extends EntityBase {
 }
 
 export class Aggr extends EntityBase {
-  buckets ?: Array<AggrBucket> = new Array<AggrBucket>();
-  meta = new AggrMeta();
+  buckets : Array<AggrBucket> = new Array<AggrBucket>();
+  meta ? = new AggrMeta();
+  doc_count_error_upper_bound  = 0;
+  sum_other_doc_count  = 0;
 }
 
 export class Record extends EntityBase {

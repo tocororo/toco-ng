@@ -14,6 +14,7 @@ import { OrgRoutingModule } from './org-routing.module';
 import { OrgRootComponent } from './org.component';
 import { AggregationsComponent } from './aggregations/aggregations.component';
 import { InMemoryDataService }  from './in-memory-data.service';
+import { SearchModule } from '@toco/tools/search';
 
 @NgModule({
 	declarations: [
@@ -34,7 +35,8 @@ import { InMemoryDataService }  from './in-memory-data.service';
 		OrganizationsModule,
 		// AuthenticationModule,
 		TocoFormsModule,
-		OrgRoutingModule
+		OrgRoutingModule, 
+		SearchModule
 	],
 
 	providers: [
