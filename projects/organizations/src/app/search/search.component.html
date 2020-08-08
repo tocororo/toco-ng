@@ -1,9 +1,9 @@
 <mat-drawer-container autosize>
-    <mat-drawer #drawer mode="side">
+    <mat-drawer #drawer mode="side" opened>
       <!-- <app-aggregations fxLayout="row wrap" fxLayout.xs="column wrap" fxFlex="{{ currentlayout.width }}"
         fxLayoutAlign="start center" fxLayoutAlign.xs="center center" fxLayoutGap="1em"
         class=" back-grey mat-elevation-z8"></app-aggregations> -->
-      <toco-org-search></toco-org-search>
+      <!-- <toco-org-search></toco-org-search> -->
       <toco-search-aggregations
         *ngIf="sr"
         [aggregations]="sr.aggregations"
@@ -20,7 +20,7 @@
     >
       <mat-icon>filter_list</mat-icon>
     </button>
-    <div *ngIf="sr">
+    <div class="m-1" *ngIf="sr">
       <toco-search-query-input [query]="query" (queryChange)="queryChange($event)"></toco-search-query-input>
       <search-list [hitList]="sr.hits"></search-list>
       <mat-paginator
