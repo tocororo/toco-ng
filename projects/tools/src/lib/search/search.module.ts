@@ -1,23 +1,24 @@
+
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { SharedModule } from '@toco/tools/shared';
 
-import { RecordListComponent } from './record-list/record-list.component';
 import { RecordComponent } from './record/record.component';
-import { SharedModule } from '../shared';
-
+import { RecordListComponent } from './record-list/record-list.component';
 
 @NgModule({
   declarations: [
-    RecordListComponent,
     RecordComponent,
+    RecordListComponent
   ],
+
   imports: [
-    CommonModule,
     SharedModule
   ],
+
   exports: [
-    RecordListComponent,
     RecordComponent,
-],
+    RecordListComponent
+  ]
 })
-export class SearchModule { }
+export class SearchModule
+{ }
