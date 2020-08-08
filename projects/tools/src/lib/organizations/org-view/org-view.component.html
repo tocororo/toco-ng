@@ -1,8 +1,33 @@
 
-<container-panel [content]="panelContent"></container-panel>
+<h1>Muestra la organización seleccionada</h1>
 
-<h3>Add the rest of content to `panelContent.formSectionContent` field!</h3>
+<mat-card *ngIf="org" class="container-panel-mat-card" [attr.aria-label]="'Muestra la organización seleccionada'">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title class="title-padding">{{ org.name }}</mat-card-title>
+    <mat-card-subtitle class="title-padding">UUID Organización en Iroko: {{ org.id }}</mat-card-subtitle>
+    <mat-card-subtitle class="cursor-default title-padding" [ngStyle]="{'backgroundColor': 'green', 'color': 'white'}">
+      Estatus de la Organización: {{ org.status }}
+    </mat-card-subtitle>
+  </mat-card-header>
 
+  <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+
+  <mat-card-content>
+    <mat-label>{{ org.email_address }}</mat-label>
+
+    <static-chips [desc]="'A list of other names the institute is known as'" [items]="org.aliases"></static-chips>
+    <static-chips [desc]="'A list of short acronyms the institute is known as'" [items]="org.acronyms"></static-chips>
+    <static-chips [desc]="'A list of IP addresses known to belong to the institute'" [items]="org.ip_addresses"></static-chips>
+    <static-chips [desc]="'A list of URLs linking to things like the homepage for the institute'" [items]="org.links"></static-chips>
+    <static-chips [desc]="'A list of types describing the institute'" [items]="org.types"></static-chips>
+
+    <!-- <static-chips [desc]="Empty"></static-chips> -->
+    <!-- <static-chips></static-chips> -->
+  </mat-card-content>
+</mat-card>
+
+<!-- The actions are going to be placed outside the `mat-card` tag. -->
 <div [ngStyle]="{'margin': '1em 0 1em 0'}">
-    <button mat-raised-button color="primary" (click)="doOperationAction(operationAction.back)">Go Back</button>
+  <button mat-raised-button color="primary" (click)="doOperationAction(operationAction.back)">Go Back</button>
 </div>
