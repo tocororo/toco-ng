@@ -10,3 +10,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .m-2{
     margin: 2em;
 }
+.query-input .mat-form-field-wrapper{
+    padding-bottom: 0 !important;
+}
