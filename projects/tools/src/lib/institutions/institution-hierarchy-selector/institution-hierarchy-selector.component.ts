@@ -144,8 +144,8 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
         title: "Organismo",
         description: "",
         iconName: "",
-        formGroup: this.externalFormGroup,
-        content: [
+        formSection: this.externalFormGroup,
+        formSectionContent: [
           {
             name: "organization",
             label: "Organismo",
@@ -224,8 +224,8 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
         title: "Institución",
         description: "Institución a la que pertenece la revista",
         iconName: "",
-        formGroup: this.externalFormGroup,
-        content: [
+        formSection: this.externalFormGroup,
+        formSectionContent: [
           {
             name: "institution",
             label: "Institución",
@@ -339,8 +339,8 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
         title: "Unidad",
         description: "Complete la información sobre la Unidad.",
         iconName: "",
-        formGroup: this.externalFormGroup,
-        content: [
+        formSection: this.externalFormGroup,
+        formSectionContent: [
           {
             name: "entity",
             label: "Unidad",

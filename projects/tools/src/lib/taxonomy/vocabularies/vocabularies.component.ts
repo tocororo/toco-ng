@@ -60,8 +60,8 @@ export class VocabularyDialogComponent implements OnInit {
                     title: this.vocab.isNew ? 'Nuevo Vocabulario' : 'Editar Vocabulario',
                     description: '',
                     iconName: '',
-                    formGroup: this.formGroup,
-                    content: [
+                    formSection: this.formGroup,
+                    formSectionContent: [
                         {
                             name: 'name',
                             label: 'Identificador',
@@ -115,7 +115,7 @@ export class VocabularyDialogComponent implements OnInit {
     }
 
     acceptAction() {
-        
+
 
     }
 }
@@ -258,7 +258,7 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
     }
 
     hasPermission(permission: string, id?: number): boolean {
-        
+
         const userPermission = JSON.parse(this.oautheStorage.getItem('user_permissions'));
         if (!userPermission) {
             return false;

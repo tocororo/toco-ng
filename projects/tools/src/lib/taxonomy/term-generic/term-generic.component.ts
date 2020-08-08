@@ -82,8 +82,8 @@ export class TermGenericComponent implements OnInit {
 				title: "Término",
 				description: "",
 				iconName: "",
-				formGroup: this.formGroup,
-				content: this._getContent()
+				formSection: this.formGroup,
+				formSectionContent: this._getContent()
 			}
 		];
 

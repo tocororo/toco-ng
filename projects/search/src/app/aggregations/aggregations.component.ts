@@ -58,9 +58,9 @@ export class AggregationsComponent implements OnInit {
 				title: 'Colección:',
 				description: '',
 				iconName: '',
-				formGroup: this.formGroup,
-				open: false,
-				content: [
+				formSection: this.formGroup,
+				// open: false,
+				formSectionContent: [
 					{
 						type: FormFieldType.checkbox,
 						name: 'approved',
@@ -101,9 +101,9 @@ export class AggregationsComponent implements OnInit {
 				title: 'Ordenar por:',
 				description: '',
 				iconName: '',
-				formGroup: this.formGroup,
-				open: false,
-				content: [
+				formSection: this.formGroup,
+				// open: false,
+				formSectionContent: [
 					{
 						type: FormFieldType.select,
 						name: 'sort',
@@ -137,12 +137,12 @@ export class AggregationsComponent implements OnInit {
 				]
 			},
 			{
-				formGroup: this.formGroup,
+				formSection: this.formGroup,
 				title: 'Tipos de Indizaciones:',
 				iconName: '',
 				description: '',
-				open: false,
-				content: [
+				// open: false,
+				formSectionContent: [
 					{
 						name: 'grupo_mes',
 						label: 'Grupo MES',
@@ -180,7 +180,7 @@ export class AggregationsComponent implements OnInit {
 			name: 'source',
 			label: 'Fuentes',
 			type: FormFieldType.select_filter,
-			formGroup: this.formGroup,
+			formSection: this.formGroup,
 			width: '100%',
 			extraContent: {
 				multiple: true,

@@ -54,8 +54,8 @@ export class JournalInclusionComponent implements OnInit {
         title: "Introduzca el ISSN de la revista que desea incluir.",
         description: "",
         iconName: "",
-        formGroup: this.findFormGroup,
-        content: [
+        formSection: this.findFormGroup,
+        formSectionContent: [
           {
             name: "idenfifier",
             label: "Identificador",
@@ -77,8 +77,8 @@ export class JournalInclusionComponent implements OnInit {
     //     title: "Seleccione su rol en la revista",
     //     description: "",
     //     iconName: "",
-    //     formGroup: this.personFormGroup,
-    //     content: [
+    //     formSection: this.personFormGroup,
+    //     formSectionContent: [
     //       {
     //         name: "role",
     //         label: "Rol",
@@ -111,8 +111,8 @@ export class JournalInclusionComponent implements OnInit {
     //     title: "Acuerdo Legal",
     //     description: "",
     //     iconName: "",
-    //     formGroup: this.agreementFormGroup,
-    //     content: [
+    //     formSection: this.agreementFormGroup,
+    //     formSectionContent: [
     //       {
     //         name: "role",
     //         label: "Rol",
@@ -292,7 +292,7 @@ export class JournalInclusionComponent implements OnInit {
   `
 })
 export class JournalInclusionAcceptComponent implements OnInit {
-  
+
   agreementPanel: PanelContent[] = [];
   agreementFormGroup: FormGroup;
 
@@ -316,8 +316,8 @@ export class JournalInclusionAcceptComponent implements OnInit {
         title: "Acuerdo Legal",
         description: "",
         iconName: "",
-        formGroup: this.agreementFormGroup,
-        content: [
+        formSection: this.agreementFormGroup,
+        formSectionContent: [
           {
             name: "role",
             label: "Rol",
@@ -355,7 +355,7 @@ export class JournalInclusionAcceptComponent implements OnInit {
         if (this.agreementFormGroup.status == 'VALID'){
           this.accept(this.agreementFormGroup.value['role']);
         }
-        
+
       }
     };
   }

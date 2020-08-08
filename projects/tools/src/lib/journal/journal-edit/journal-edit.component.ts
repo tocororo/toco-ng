@@ -177,8 +177,8 @@ export class JournalEditComponent implements OnInit {
         title: "Identificadores",
         description: "",
         iconName: "",
-        formGroup: this.identifiersFormGroup,
-        content: [
+        formSection: this.identifiersFormGroup,
+        formSectionContent: [
           {
             name: "issn_p",
             label: "ISSN Impreso",
@@ -244,8 +244,8 @@ export class JournalEditComponent implements OnInit {
         title: "Datos de la Revista",
         description: "",
         iconName: "",
-        formGroup: this.informationFormGroup,
-        content: [
+        formSection: this.informationFormGroup,
+        formSectionContent: [
           {
             name: "title",
             label: "Título",
@@ -474,8 +474,8 @@ export class JournalEditComponent implements OnInit {
         title: "Redes Sociales",
         description: "",
         iconName: "",
-        formGroup: this.informationFormGroup,
-        content: [
+        formSection: this.informationFormGroup,
+        formSectionContent: [
           {
             name: "facebook",
             label: "Facebook",
@@ -579,14 +579,14 @@ export class JournalEditComponent implements OnInit {
       title: termSource.term.name,
       description: "",
       iconName: "",
-      formGroup: this.indexesFormGroup,
+      formSection: this.indexesFormGroup,
       actionLabel: "Eliminar",
       action: {
         doit: index => {
           const panels = [];
           for (let i = 0; i < this.indexesPanel.length; i++) {
             if (i === index) {
-              this.indexesPanel[i].content.forEach(element => {
+              this.indexesPanel[i].formSectionContent.forEach(element => {
                 this.indexesFormGroup.removeControl(element.name);
               });
             } else {
@@ -597,7 +597,7 @@ export class JournalEditComponent implements OnInit {
         }
       },
       value: termSource.term,
-      content: [
+      formSectionContent: [
         {
           name: "url_" + termSource.term_id,
           label: "URL de la revista en el índice",
@@ -636,9 +636,9 @@ export class JournalEditComponent implements OnInit {
         title: "",
         description: "",
         iconName: "",
-        formGroup: this.finalFormGroup,
+        formSection: this.finalFormGroup,
 
-        content: [
+        formSectionContent: [
           {
             name: "comment",
             label: "Puede agregar aquí un comentario.",
@@ -792,8 +792,8 @@ export class JournalEditAddIndexComponent implements OnInit {
         title: "Adicionar un Índice",
         description: "",
         iconName: "",
-        formGroup: this.indexFormGroup,
-        content: [
+        formSection: this.indexFormGroup,
+        formSectionContent: [
           {
             name: "indexes",
             label: "Indices",

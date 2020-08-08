@@ -30,8 +30,8 @@ export class ExtraInstitutionSelectorComponent implements OnInit {
           title: "Institución",
           description: "",
           iconName: "",
-          formGroup: this.externalFormGroup,
-          content: [
+          formSection: this.externalFormGroup,
+          formSectionContent: [
             {
               name: "name",
               label: "Nombre",
