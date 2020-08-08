@@ -1,6 +1,9 @@
 
 import { Component, Input } from '@angular/core';
 
+/**
+ * Represents a static control that shows an array of texts using chips. 
+ */
 @Component({
 	selector: 'static-chips',
 	templateUrl: './chips-static.component.html',
@@ -10,7 +13,7 @@ export class StaticChipsComponent
 {
     /**
      * The control's appearance. 
-     * By default, its value is `outline`. 
+     * By default, its value is `'outline'`. 
      */
 	@Input()
 	public appearance: string;
@@ -27,12 +30,12 @@ export class StaticChipsComponent
 	 * By default, its value is `[]`. 
 	 */
 	@Input()
-	public items: string[];
+	public value: string[];
 
 	public constructor()
 	{
 		this.appearance = 'outline';
 		this.desc = undefined;
-		this.items = [];
+		this.value = [];
 	}
 }

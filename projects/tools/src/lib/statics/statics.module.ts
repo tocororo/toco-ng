@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@toco/tools/shared';
 
 import { StaticChipsComponent } from './chips/chips-static.component';
+import { StaticTextComponent } from './text/text-static.component';
 
 @NgModule({
 	declarations: [
-		StaticChipsComponent
+		StaticChipsComponent,
+		StaticTextComponent
 	],
 
 	imports: [
@@ -14,7 +16,8 @@ import { StaticChipsComponent } from './chips/chips-static.component';
 	],
 
 	exports: [
-		StaticChipsComponent
+		StaticChipsComponent,
+		StaticTextComponent
 	]
 })
 export class StaticsModule

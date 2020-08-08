@@ -1,10 +1,10 @@
 
-<mat-form-field *ngIf="items.length" class="chips-mat-form-field control-without-interactivity" [appearance]="appearance">
+<mat-form-field *ngIf="value.length" class="chips-mat-form-field control-without-interactivity" [appearance]="appearance">
 	<mat-label>{{ desc }}</mat-label>
-	<mat-chip-list [selectable]="'false'">
-    <mat-chip *ngFor="let item of items" [selectable]="'false'" [disableRipple]="'true'">{{ item }}</mat-chip>
+	<mat-chip-list [selectable]="'false'" [attr.aria-label]="desc">
+    <mat-chip *ngFor="let item of value" [selectable]="'false'" [disableRipple]="'true'">{{ item }}</mat-chip>
   </mat-chip-list>
 </mat-form-field>
 
 <!-- TODO: Poner aquí fieldset/legend tag como en `simple-container.component.html`. -->
-<div *ngIf="!items.length">There is not any item to show!</div>
+<div *ngIf="!value.length">There is not any item to show!</div>
