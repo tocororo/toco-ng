@@ -282,7 +282,7 @@ export class JournalInclusionComponent implements OnInit {
 
 
   <toco-form-container
-  [panels]="agreementPanel"
+  [panelsContent]="agreementPanel"
   [useAccordion]="false"
   [formGroup]="agreementFormGroup"
   [action]="acceptAction"

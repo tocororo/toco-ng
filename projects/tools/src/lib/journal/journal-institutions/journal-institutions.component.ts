@@ -247,7 +247,7 @@ export class JournalAddInstitutionComponent implements OnInit {
     <toco-form-container
       *ngIf="formGroup && institutionPanel"
       #level1PanelContainer
-      [panels]="institutionPanel"
+      [panelsContent]="institutionPanel"
       [useContainer]="false"
       fxLayout="row"
       [deleteValuesAfterAction]="false"

@@ -760,7 +760,7 @@ export class JournalEditComponent implements OnInit {
   template: `
     <toco-form-container
       #indexPanelContainer
-      [panels]="indexPanel"
+      [panelsContent]="indexPanel"
       [useAccordion]="false"
       fxLayout="row"
       [formGroup]="indexFormGroup"

@@ -18,7 +18,7 @@
 
 <toco-form-container
   *ngIf="isStartProcess"
-  [panels]="findPanel"
+  [panelsContent]="findPanel"
   [useAccordion]="false"
   [formGroup]="findFormGroup"
   [action]="searchJournalAction"
@@ -73,7 +73,7 @@
       <p>se muestra aqui la información sobre esa persona</p>
       <form [formGroup]="personFormGroup">
         <toco-form-container
-          [panels]="personPanel"
+          [panelsContent]="personPanel"
           [useAccordion]="false"
           [formGroup]="personFormGroup"
         >
@@ -102,7 +102,7 @@
       <p>algo mas...</p>
       <form [formGroup]="personFormGroup">
         <toco-form-container
-          [panels]="agreementPanel"
+          [panelsContent]="agreementPanel"
           [useAccordion]="false"
           [formGroup]="agreementFormGroup"
         >

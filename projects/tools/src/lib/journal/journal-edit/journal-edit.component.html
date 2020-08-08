@@ -22,7 +22,7 @@
         <form [formGroup]="identifiersFormGroup">
           <toco-form-container
             #informationPanelContainer
-            [panels]="identifiersPanel"
+            [panelsContent]="identifiersPanel"
             [useAccordion]="false"
             fxLayout="row"
             [formGroup]="identifiersFormGroup"
@@ -42,7 +42,7 @@
         <form [formGroup]="informationFormGroup">
           <toco-form-container
             #informationPanelContainer
-            [panels]="informationPanel"
+            [panelsContent]="informationPanel"
             [useAccordion]="false"
             fxLayout="row"
             [formGroup]="informationFormGroup"
@@ -105,7 +105,7 @@
         <form [formGroup]="indexesFormGroup">
           <toco-form-container
             #indexPanelContainer
-            [panels]="indexesPanel"
+            [panelsContent]="indexesPanel"
             [useAccordion]="true"
             fxLayout="row"
             [formGroup]="indexesFormGroup"
@@ -129,7 +129,7 @@
             Aceptar
           </button>
         </div>
-        
+
       </mat-step>
 
       <mat-step *ngIf="showFinalStep">
@@ -144,7 +144,7 @@
         <form [formGroup]="finalFormGroup">
           <toco-form-container
             #indexPanelContainer
-            [panels]="finalPanel"
+            [panelsContent]="finalPanel"
             [useAccordion]="false"
             fxLayout="row"
             [formGroup]="finalFormGroup"
