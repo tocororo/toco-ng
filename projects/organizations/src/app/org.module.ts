@@ -18,6 +18,7 @@ import { SearchModule } from '@toco/tools/search';
 import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
 import { SearchListComponent } from './search-list/search-list.component';
+import { CoreModule } from '@toco/tools/core';
 
 @NgModule({
 	declarations: [
@@ -31,6 +32,7 @@ import { SearchListComponent } from './search-list/search-list.component';
 	imports: [
 		BrowserAnimationsModule,
 		SharedModule,
+		CoreModule,
 		// The `HttpClientInMemoryWebApiModule` module intercepts HTTP requests 
 		// and returns simulated server responses. 
 		// Remove it when a real server is ready to receive requests. 

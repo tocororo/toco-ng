@@ -12,17 +12,27 @@
   
       ></toco-search-aggregations>
     </mat-drawer>
-  
-    <button
-      mat-icon-button
-      (click)="drawer.toggle()"
-      matTooltip="Filtrar búsqueda"
-    >
-      <mat-icon>filter_list</mat-icon>
-    </button>
+
+    <mat-toolbar color="primary">
+
+      <button
+        mat-icon-button
+        (click)="drawer.toggle()"
+        matTooltip="Filtros avanzados"
+      >
+        <mat-icon>filter_list</mat-icon>
+      </button>
+
+      <span>Búsqueda</span>
+
+    </mat-toolbar>
+
     <div class="m-1" *ngIf="sr">
-      <toco-search-query-input [query]="query" (queryChange)="queryChange($event)"></toco-search-query-input>
+
+      <toco-search-query-input [query]="query" class="p-1" (queryChange)="queryChange($event)"></toco-search-query-input>
+
       <search-list [hitList]="sr.hits"></search-list>
+
       <mat-paginator
         [length]="sr.hits.total"
         [pageSize]="pageSize"
