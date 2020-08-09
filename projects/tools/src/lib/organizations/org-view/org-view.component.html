@@ -24,15 +24,20 @@
 
     <static-text [desc]="'URL of the wikipedia page for the institute'" [value]="org.wikipedia_url"></static-text>
 
+
+
+    <!-- Testing `static-text`. -->
     <static-text [desc]="'Text align to the left (default)'" [value]="'Testing control'" [textAlign]="'left'"></static-text>
     <static-text [desc]="'Text align to the center'" [value]="'Testing control'" [textAlign]="'center'"></static-text>
     <static-text [desc]="'Text align to the right'" [value]="'Testing control'" [textAlign]="'right'"></static-text>
     <static-text [desc]="'Text align justified'" [value]="'Testing control'" [textAlign]="'justify'"></static-text>
     <static-text [desc]="'Empty or undefined text'"></static-text>
+    <static-text></static-text>
 
-    <!-- TODO: Hacer estos test: -->
-    <!-- <static-chips [desc]="Empty"></static-chips> -->
-    <!-- <static-chips></static-chips> -->
+    <!-- Testing `static-chips`. -->
+    <static-chips [desc]="'Empty list of items'"></static-chips>
+    <static-chips></static-chips>
+
   </mat-card-content>
 </mat-card>
 
