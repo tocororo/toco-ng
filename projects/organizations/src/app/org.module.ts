@@ -19,6 +19,9 @@ import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
 import { SearchListComponent } from './search-list/search-list.component';
 import { CoreModule } from '@toco/tools/core';
+import { StaticPagesComponent } from './static-pages/static-pages.component';
+import { MarkdownModule } from 'ngx-markdown';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
 	declarations: [
@@ -26,7 +29,8 @@ import { CoreModule } from '@toco/tools/core';
 		AggregationsComponent,
 		HomeComponent,
 		SearchComponent,
-		SearchListComponent
+		SearchListComponent,
+		StaticPagesComponent
 	],
 
 	imports: [
@@ -44,7 +48,11 @@ import { CoreModule } from '@toco/tools/core';
 		// AuthenticationModule,
 		TocoFormsModule,
 		OrgRoutingModule, 
-		SearchModule
+		SearchModule,
+		HttpClientModule,
+		MarkdownModule.forRoot({
+			loader: HttpClient
+		  })
 	],
 
 	providers: [

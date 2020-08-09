@@ -7,6 +7,7 @@ import { OrgEditComponent, OrgViewComponent, OrgAddComponent } from '@toco/tools
 import { OrganizationDetailResolverService } from './organization-detail-resolver.service.ts';
 import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
+import { StaticPagesComponent } from './static-pages/static-pages.component';
 
 
 const routes: Routes = [
@@ -36,11 +37,26 @@ const routes: Routes = [
 		path:'',
 		component: HomeComponent,
 	},
-	// {
-	// 	path: '',
-	// 	redirectTo: '',
-	// 	pathMatch: 'full'
-	// },
+    {
+        path: 'faq',
+        component: StaticPagesComponent,
+        data: {src: 'assets/markdown/faq.md', title: 'FAQ'}
+    },
+    {
+        path: 'about',
+        component: StaticPagesComponent,
+        data: {src: 'assets/markdown/about.md', title: 'Sobre Nosotros'}
+    },
+    {
+        path: 'help',
+        component: StaticPagesComponent,
+        data: {src: 'assets/markdown/help.md', title: 'Ayuda'}
+    },
+    {
+        path: 'contact',
+        component: StaticPagesComponent,
+        data: {src: 'assets/markdown/contact.md', title: 'Contacto'}
+    },
 	{
 		path: '**',
 		redirectTo: '',
