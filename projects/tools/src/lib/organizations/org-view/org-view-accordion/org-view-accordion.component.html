@@ -1,0 +1,47 @@
+
+<!-- TODO: En dependencia del valor de `appearance`, se aplican las clases CSS para lograr la apariencia deseada. 
+     Actualmente, `appearance = 'outline'` es el único que está hecho. -->
+<fieldset class="static-accordion-fieldset">
+	<legend class="static-accordion-fieldset-legend">{{ desc }}</legend>
+
+	<div class="static-accordion-buttons">
+		<button mat-raised-button color="primary" (click)="getAccordion.openAll()">Expand All</button>
+		<button mat-raised-button color="primary" (click)="getAccordion.closeAll()">Collapse All</button>
+	</div>
+
+	<mat-accordion class="static-mat-accordion" multi [attr.aria-label]="desc">
+		<mat-expansion-panel *ngFor="let val of value">
+			<mat-expansion-panel-header>
+				<mat-panel-title>
+					Personal data
+				</mat-panel-title>
+				<mat-panel-description>
+					Type your name and age
+					<mat-icon>account_circle</mat-icon>
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+
+			<toco-org-view-addresses 
+			>
+			</toco-org-view-addresses>
+		</mat-expansion-panel>
+
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title>
+					Day of the trip
+				</mat-panel-title>
+				<mat-panel-description>
+					Inform the date you wish to travel
+					<mat-icon>date_range</mat-icon>
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+
+			<mat-form-field>
+				<mat-label>Date</mat-label>
+				<input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly>
+			</mat-form-field>
+			<mat-datepicker #picker></mat-datepicker>
+		</mat-expansion-panel>
+	</mat-accordion>
+</fieldset>

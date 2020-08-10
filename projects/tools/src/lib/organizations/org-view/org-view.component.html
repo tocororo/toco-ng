@@ -33,8 +33,12 @@
       [columnsHeaderText]="['The institute name in a language variant', 'The ISO-639-1 language code']"
     >
     </static-table>
-
-    
+    <toco-org-view-accordion [desc]="'Any relationships the institute has to others'" [value]="org.relationships"
+    >
+    </toco-org-view-accordion>
+    <toco-org-view-accordion [desc]="'An array of addresses associated with the institute'" [value]="org.addresses"
+    >
+    </toco-org-view-accordion>
 
   </mat-card-content>
 </mat-card>
