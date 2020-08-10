@@ -15,7 +15,11 @@
 
   <mat-card-content>
 
-
+    <static-table [desc]="'Organization Identifiers, different from GRID mapping'" [value]="org.identifiers"
+      [columnsObjectProperty]="['idtype', 'value']"
+      [columnsHeaderText]="['The identifier type', 'The identifier value']"
+    >
+    </static-table>
     <static-chips [desc]="'A list of other names the institute is known as'" [value]="org.aliases"></static-chips>
     <static-chips [desc]="'A list of short acronyms the institute is known as'" [value]="org.acronyms"></static-chips>
     <static-chips [desc]="'A list of types describing the institute'" [value]="org.types"></static-chips>
@@ -24,7 +28,11 @@
     <static-chips [desc]="'A list of IP addresses known to belong to the institute'" [value]="org.ip_addresses"></static-chips>
     <static-text [desc]="'The year the institute opened, CE'" [value]="org.established"></static-text>
     <static-chips [desc]="'A list of URLs linking to things like the homepage for the institute'" [value]="org.links"></static-chips>
-
+    <static-table [desc]="'The name of the institute in different languages'" [value]="org.labels"
+      [columnsObjectProperty]="['label', 'iso639']"
+      [columnsHeaderText]="['The institute name in a language variant', 'The ISO-639-1 language code']"
+    >
+    </static-table>
 
   </mat-card-content>
 </mat-card>
