@@ -2,6 +2,23 @@
 import { EntityBase } from './entity';
 
 /**
+ * Entity for `Identifier` based on schema `organization-v1.0.0.json`. 
+ * Organization Identifier, different from GRID mapping. 
+ */
+export class Identifier extends EntityBase
+{
+	/**
+	 * The identifier type. 
+	 */
+	idtype: string = '';
+
+	/**
+	 * The identifier value. 
+	 */
+	value: string = '';
+}
+
+/**
  * Entity for `LabelDiffLang` based on schema `organization-v1.0.0.json`. 
  * The name of the institute in different language. 
  */
@@ -27,7 +44,7 @@ export class Relationships extends EntityBase
 	/**
 	 * Organization Identifiers, different from GRID mapping. 
 	 */
-	identifiers = new Object();
+	identifiers: Array<Identifier> = new Array<Identifier>();
 
 	/**
 	 * The relationship type. 
@@ -188,7 +205,7 @@ export class Organization extends EntityBase
 	/**
 	 * Organization Identifiers, different from GRID mapping. 
 	 */
-	identifiers: Object = new Object();
+	identifiers: Array<Identifier> = new Array<Identifier>();
 
 	/**
 	 * The name typically used to refer to the institute. 
@@ -216,7 +233,7 @@ export class Organization extends EntityBase
 	types: Array<string> = new Array<string>();
 
 	/**
-	 * URL of the wikipedia page for the institute. 
+	 * A URL of the wikipedia page for the institute. 
 	 */
 	wikipedia_url: string = '';
 

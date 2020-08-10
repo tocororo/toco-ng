@@ -3,40 +3,28 @@
 
 <mat-card *ngIf="org" class="container-panel-mat-card" [attr.aria-label]="'Muestra la organización seleccionada'">
   <mat-card-header>
+
     <div mat-card-avatar class="example-header-image"></div>
     <mat-card-title class="title-padding">{{ org.name }}</mat-card-title>
     <mat-card-subtitle class="title-padding">UUID Organización en Iroko: {{ org.id }}</mat-card-subtitle>
     <mat-card-subtitle class="cursor-default title-padding" [ngStyle]="{'backgroundColor': 'green', 'color': 'white'}">
       Estatus de la Organización: {{ org.status }}
     </mat-card-subtitle>
+
   </mat-card-header>
 
-  <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-
   <mat-card-content>
-    <mat-label>{{ org.email_address }}</mat-label>
+
 
     <static-chips [desc]="'A list of other names the institute is known as'" [value]="org.aliases"></static-chips>
     <static-chips [desc]="'A list of short acronyms the institute is known as'" [value]="org.acronyms"></static-chips>
-    <static-chips [desc]="'A list of IP addresses known to belong to the institute'" [value]="org.ip_addresses"></static-chips>
-    <static-chips [desc]="'A list of URLs linking to things like the homepage for the institute'" [value]="org.links"></static-chips>
     <static-chips [desc]="'A list of types describing the institute'" [value]="org.types"></static-chips>
+    <static-text [desc]="'A URL of the wikipedia page for the institute'" [value]="org.wikipedia_url"></static-text>
+    <static-text [desc]="'A contact email address for the institute'" [value]="org.email_address"></static-text>
+    <static-chips [desc]="'A list of IP addresses known to belong to the institute'" [value]="org.ip_addresses"></static-chips>
+    <static-text [desc]="'The year the institute opened, CE'" [value]="org.established"></static-text>
+    <static-chips [desc]="'A list of URLs linking to things like the homepage for the institute'" [value]="org.links"></static-chips>
 
-    <static-text [desc]="'URL of the wikipedia page for the institute'" [value]="org.wikipedia_url"></static-text>
-
-
-
-    <!-- Testing `static-text`. -->
-    <static-text [desc]="'Text align to the left (default)'" [value]="'Testing control'" [textAlign]="'left'"></static-text>
-    <static-text [desc]="'Text align to the center'" [value]="'Testing control'" [textAlign]="'center'"></static-text>
-    <static-text [desc]="'Text align to the right'" [value]="'Testing control'" [textAlign]="'right'"></static-text>
-    <static-text [desc]="'Text align justified'" [value]="'Testing control'" [textAlign]="'justify'"></static-text>
-    <static-text [desc]="'Empty or undefined text'"></static-text>
-    <static-text></static-text>
-
-    <!-- Testing `static-chips`. -->
-    <static-chips [desc]="'Empty list of items'"></static-chips>
-    <static-chips></static-chips>
 
   </mat-card-content>
 </mat-card>

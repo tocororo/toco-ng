@@ -1,0 +1,23 @@
+
+<!-- TODO: En dependencia del valor de `appearance`, se aplican las clases CSS para lograr la apariencia deseada. 
+     Actualmente, `appearance = 'outline'` es el único que está hecho. -->
+<fieldset class="static-table-fieldset">
+    <legend class="static-table-fieldset-legend">{{ desc }}</legend>
+
+    <table mat-table [dataSource]="value" class="mat-elevation-z8" [attr.aria-label]="desc">
+        <!-- The content that is showed when the `dataSource` is not empty. -->
+        <ng-container *ngFor="let column of columnsObjectProperty; let pos = index" [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef>
+                {{ columnsHeaderText[pos] }}
+            </th>
+
+            <td mat-cell *matCellDef="let element">
+                {{ element[column] }}
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsObjectProperty; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsObjectProperty;"></tr>
+    </table>
+
+</fieldset>

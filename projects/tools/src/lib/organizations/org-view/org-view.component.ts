@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Organization } from '@toco/tools/entities';
-import { OperationAction, PanelContent } from '@toco/tools/forms';
+import { OperationAction } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-view',
