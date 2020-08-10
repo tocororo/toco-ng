@@ -12,7 +12,7 @@ import {
   EventEmitter
 } from "@angular/core";
 import {
-  PanelContent,
+  PanelContent_Depr,
   FormFieldType,
   SelectOption,
   FormContainerAction
@@ -59,7 +59,7 @@ export class FiltersComponent implements OnInit {
   @Output()
   paramsChange: EventEmitter<Params> = new EventEmitter();
 
-  panels: PanelContent[] = null;
+  panels: PanelContent_Depr[] = null;
   formGroup: FormGroup;
 
   institutionTree: SelectOptionNode[] = [];
@@ -203,7 +203,7 @@ export class FiltersComponent implements OnInit {
                       2
                     )
                   : this.taxonomyService.getTermsTreeByVocab(
-                      VocabulariesInmutableNames.INTITUTION
+                      VocabulariesInmutableNames.CUBAN_INTITUTIONS
                     ),
               getOptions: (response: any) => {
                 if (this.organizationUUID != "") {
@@ -265,7 +265,7 @@ export class FiltersComponent implements OnInit {
             extraContent: {
               multiple: true,
               selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.grupo_mes).split(","),
-              vocab: VocabulariesInmutableNames.MES_GROUPS
+              vocab: VocabulariesInmutableNames.INDEXES_CLASIFICATION
             }
           },
           {
@@ -278,7 +278,7 @@ export class FiltersComponent implements OnInit {
             extraContent: {
               multiple: true,
               selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.miar_types).split(","),
-              vocab: VocabulariesInmutableNames.MIAR_DATABASES
+              vocab: VocabulariesInmutableNames.INDEXES
             }
           }
         ]

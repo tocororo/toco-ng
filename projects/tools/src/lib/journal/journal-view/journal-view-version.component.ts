@@ -75,19 +75,19 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
       this.currentJournal.data.term_sources.forEach(
         (termSource: TermSource) => {
           switch (termSource.term.vocabulary_id.toString()) {
-            case VocabulariesInmutableNames.INTITUTION:
+            case VocabulariesInmutableNames.CUBAN_INTITUTIONS:
               this.currentInstitutionTerms.push(termSource);
               break;
-            case VocabulariesInmutableNames.DATABASES:
+            case VocabulariesInmutableNames.INDEXES:
               this.currentDataBaseTerms.push(termSource);
               break;
-            case VocabulariesInmutableNames.MES_GROUPS:
+            case VocabulariesInmutableNames.INDEXES_CLASIFICATION:
               this.currentGroupTerms.push(termSource);
               break;
             case VocabulariesInmutableNames.LICENCES:
               this.currentLicenceTerms.push(termSource);
               break;
-            case VocabulariesInmutableNames.PROVINCES:
+            case VocabulariesInmutableNames.CUBAN_PROVINCES:
               this.currentProvinceTerms.push(termSource);
               break;
             case VocabulariesInmutableNames.SUBJECTS:
@@ -160,7 +160,7 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
         !(
           ts.term.vocabulary_id ==
             VocabulariesInmutableNames.EXTRA_INSTITUTIONS ||
-          ts.term.vocabulary_id == VocabulariesInmutableNames.INTITUTION
+          ts.term.vocabulary_id == VocabulariesInmutableNames.CUBAN_INTITUTIONS
         )
       ) {
         newts.push(ts);
@@ -171,7 +171,7 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
       if (
         ts.term.vocabulary_id ==
           VocabulariesInmutableNames.EXTRA_INSTITUTIONS ||
-        ts.term.vocabulary_id == VocabulariesInmutableNames.INTITUTION
+        ts.term.vocabulary_id == VocabulariesInmutableNames.CUBAN_INTITUTIONS
       ) {
         newts.push(ts);
       }

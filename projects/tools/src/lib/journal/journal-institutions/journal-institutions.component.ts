@@ -9,7 +9,7 @@ import {
   SourceInstitutionRole
 } from "@toco/tools/entities";
 import {
-  PanelContent,
+  PanelContent_Depr,
   FormContainerAction,
   FormFieldType
 } from "@toco/tools/forms";
@@ -70,7 +70,7 @@ export class JournalInstitutionsComponent implements OnInit,  OnChanges {
     if (this.journalVersion) {
       const institutions: TermSource[] = this.journalVersion.data.term_sources.filter(
         ts =>
-        ts.term.vocabulary_id == VocabulariesInmutableNames.INTITUTION
+        ts.term.vocabulary_id == VocabulariesInmutableNames.CUBAN_INTITUTIONS
         || ts.term.vocabulary_id == VocabulariesInmutableNames.EXTRA_INSTITUTIONS
       );
       console.log(institutions);
@@ -259,7 +259,7 @@ export class JournalAddInstitutionComponent implements OnInit {
 export class JournalAddExtraInstitutionComponent implements OnInit {
   term: Term;
 
-  institutionPanel: PanelContent[] = null;
+  institutionPanel: PanelContent_Depr[] = null;
 
   formGroup: FormGroup;
   addTerm;

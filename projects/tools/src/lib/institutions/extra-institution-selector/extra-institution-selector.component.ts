@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Term, VocabulariesInmutableNames } from '@toco/tools/entities';
 import { TermHelper } from '@toco/tools/taxonomy';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { PanelContent, FormFieldType } from '@toco/tools/forms';
+import { PanelContent_Depr, FormFieldType } from '@toco/tools/forms';
 
 @Component({
   selector: 'toco-extra-institution-selector',
@@ -17,7 +17,7 @@ export class ExtraInstitutionSelectorComponent implements OnInit {
   @Input()
   public externalFormGroup: FormGroup;
 
-  institutionPanel: PanelContent[] = null;
+  institutionPanel: PanelContent_Depr[] = null;
 
   constructor(
     private formBuilder: FormBuilder,

@@ -11,7 +11,7 @@ export class ExtraInstitutionViewerComponent implements OnInit {
   @Input()
   term: Term;
   valid = false;
-  vocab_country = VocabulariesInmutableNames.PROVINCES;
+  vocab_country = VocabulariesInmutableNames.CUBAN_PROVINCES;
 
   constructor() { }
 

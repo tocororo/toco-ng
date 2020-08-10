@@ -5,7 +5,7 @@ import {
   VocabulariesInmutableNames,
   TermSource
 } from "@toco/tools/entities";
-import { PanelContent, FormFieldType, SelectOption } from "@toco/tools/forms";
+import { PanelContent_Depr, FormFieldType, SelectOption } from "@toco/tools/forms";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { TaxonomyService } from "@toco/tools/backend";
 
@@ -31,15 +31,15 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
 
   public level1: Term = null;
 
-  level1Panel: PanelContent[] = null;
+  level1Panel: PanelContent_Depr[] = null;
 
   // institution
   public level2: Term = null;
-  level2Panel: PanelContent[] = null;
+  level2Panel: PanelContent_Depr[] = null;
 
   // entity
   public level3: Term = null;
-  level3Panel: PanelContent[] = null;
+  level3Panel: PanelContent_Depr[] = null;
 
   public isManageByEntity = true;
 
@@ -155,7 +155,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
             value: this.level1 ? this.level1.uuid : "",
             extraContent: {
               observable: this.taxonomyService.getTermsTreeByVocab(
-                VocabulariesInmutableNames.INTITUTION,
+                VocabulariesInmutableNames.CUBAN_INTITUTIONS,
                 0
               ),
               getOptions: (response: any) => {
@@ -469,7 +469,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
     this.level3.data["email"] = this.externalFormGroup.value["email"];
     this.level3.data["website"] = this.externalFormGroup.value["website"];
     this.level3.data["address"] = this.externalFormGroup.value["address"];
-    this.level3.vocabulary_id = VocabulariesInmutableNames.INTITUTION;
+    this.level3.vocabulary_id = VocabulariesInmutableNames.CUBAN_INTITUTIONS;
   }
 
   private deleteLevel3PanelFields() {

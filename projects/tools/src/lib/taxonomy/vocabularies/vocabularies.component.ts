@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { MessageHandler, StatusCode, Response } from '@toco/tools/core';
 import { Vocabulary } from '@toco/tools/entities';
-import { FormContainerComponent, PanelContent, FormFieldType, FormContainerAction, HintValue, HintPosition } from '@toco/tools/forms';
+import { FormContainerComponent, PanelContent_Depr, FormFieldType, FormContainerAction, HintValue, HintPosition } from '@toco/tools/forms';
 
 import { TaxonomyService } from '@toco/tools/backend';
 import { OAuthStorage } from 'angular-oauth2-oidc';
@@ -22,7 +22,7 @@ import { OAuthStorage } from 'angular-oauth2-oidc';
 })
 export class VocabularyDialogComponent implements OnInit {
 
-    public panels: PanelContent[];
+    public panels: PanelContent_Depr[];
     public formGroup: FormGroup;
     public action: FormContainerAction;
     public actionLabel = 'Aceptar';

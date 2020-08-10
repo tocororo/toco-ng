@@ -68,20 +68,20 @@ export class JournalViewInfoComponent implements OnInit, OnChanges{
             this.journalVersion.data.term_sources.forEach((term: TermSource) => {
 
                 switch (term.term.vocabulary_id.toString()) {
-                    case VocabulariesInmutableNames.INTITUTION:
+                    case VocabulariesInmutableNames.CUBAN_INTITUTIONS:
                     case VocabulariesInmutableNames.EXTRA_INSTITUTIONS:
                         this.institutionTerms.push(term);
                         break;
-                    case VocabulariesInmutableNames.DATABASES:
+                    case VocabulariesInmutableNames.INDEXES:
                         this.dataBaseTerms.push(term);
                         break;
-                    case VocabulariesInmutableNames.MES_GROUPS:
+                    case VocabulariesInmutableNames.INDEXES_CLASIFICATION:
                         this.groupTerms.push(term);
                         break;
                     case VocabulariesInmutableNames.LICENCES:
                         this.licenceTerms.push(term);
                         break;
-                    case VocabulariesInmutableNames.PROVINCES:
+                    case VocabulariesInmutableNames.CUBAN_PROVINCES:
                         this.provinceTerms.push(term);
                         break;
                     case VocabulariesInmutableNames.SUBJECTS:

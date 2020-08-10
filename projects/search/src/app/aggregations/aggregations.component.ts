@@ -9,7 +9,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { EnvService } from '@tocoenv/tools/env.service';
 
 import { TermNode, VocabulariesInmutableNames, Source } from '@toco/tools/entities';
-import { PanelContent, FormFieldType, SelectOption } from '@toco/tools/forms';
+import { PanelContent_Depr, FormFieldType, SelectOption } from '@toco/tools/forms';
 import { TaxonomyService, SourceService } from '@toco/tools/backend';
 
 @Component({
@@ -19,7 +19,7 @@ import { TaxonomyService, SourceService } from '@toco/tools/backend';
 })
 export class AggregationsComponent implements OnInit {
 
-	panels: PanelContent[] = null;
+	panels: PanelContent_Depr[] = null;
 	formGroup: FormGroup;
 
 	organismoUUID = '';
@@ -77,7 +77,7 @@ export class AggregationsComponent implements OnInit {
 						width: '100%',
 						value: this.organismoUUID,
 						extraContent: {
-							observable: this.taxonomyService.getTermsTreeByVocab(VocabulariesInmutableNames.INTITUTION, 0),
+							observable: this.taxonomyService.getTermsTreeByVocab(VocabulariesInmutableNames.CUBAN_INTITUTIONS, 0),
 							getOptions: (response: any) => {
 								const opts: SelectOption[] = []
 								response.data.tree.term_node.forEach((node: TermNode) => {
@@ -153,7 +153,7 @@ export class AggregationsComponent implements OnInit {
 						extraContent: {
 							multiple: true,
 							selectedTermsIds: null,
-							vocab: VocabulariesInmutableNames.MES_GROUPS
+							vocab: VocabulariesInmutableNames.INDEXES_CLASIFICATION
 						},
 					},
 					{
@@ -166,7 +166,7 @@ export class AggregationsComponent implements OnInit {
 						extraContent: {
 							multiple: true,
 							selectedTermsIds: null,
-							vocab: VocabulariesInmutableNames.MIAR_DATABASES
+							vocab: VocabulariesInmutableNames.INDEXES
 						},
 					},
 				]
@@ -176,7 +176,7 @@ export class AggregationsComponent implements OnInit {
 
 	initSourcesPanel() {
 		this.formGroup.removeControl('source');
-		this.panels[0].content[2] = {
+		this.panels[0].formSectionContent[2] = {
 			name: 'source',
 			label: 'Fuentes',
 			type: FormFieldType.select_filter,

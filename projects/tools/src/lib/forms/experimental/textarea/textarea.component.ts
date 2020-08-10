@@ -22,7 +22,7 @@ export class TextareaComponent extends FormFieldControl_Experimental implements 
   ngOnInit()
   {
 //    this.content.parentFormSection.addControl(this.content.name, this.internalControl);
-
+    console.log(this.content)
     this.internalControl.setValue(this.content.value);
   }
 }

@@ -5,7 +5,8 @@ import {
   FormFieldType,
   HintValue,
   HintPosition,
-  SelectOption
+  SelectOption,
+  PanelContent_Depr
 } from "@toco/tools/forms";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { CatalogService, SourceService } from "@toco/tools/backend";
@@ -31,13 +32,13 @@ export class JournalInclusionComponent implements OnInit {
   public isStartProcess = true;
 
   public searchJournalAction: FormContainerAction;
-  findPanel: PanelContent[] = [];
+  findPanel: PanelContent_Depr[] = [];
   findFormGroup: FormGroup;
 
-  personPanel: PanelContent[] = [];
+  personPanel: PanelContent_Depr[] = [];
   personFormGroup: FormGroup;
 
-  agreementPanel: PanelContent[] = [];
+  agreementPanel: PanelContent_Depr[] = [];
   agreementFormGroup: FormGroup;
 
   constructor(
@@ -293,7 +294,7 @@ export class JournalInclusionComponent implements OnInit {
 })
 export class JournalInclusionAcceptComponent implements OnInit {
 
-  agreementPanel: PanelContent[] = [];
+  agreementPanel: PanelContent_Depr[] = [];
   agreementFormGroup: FormGroup;
 
   accept;

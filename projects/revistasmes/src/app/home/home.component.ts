@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit {
         this.service.getOrganizationInfo(this.organizationUUID).subscribe(
             response => {
                 if (response && response.data && response.data.home_statics) {
+                  console.log(response)
                     
                     this.institutionsCount = response.data.home_statics.institutions_count;
 
@@ -56,7 +57,7 @@ export class HomeComponent implements OnInit {
 
                     this.sourcesCount = response.data.home_statics.soources_count;
 
-                    response.data.home_statics.ultimas.forEach( (j: Journal) => {
+                    response.data.home_statics.last_sources.forEach( (j: Journal) => {
                         let jl = new Journal();
                         jl.load_from_data(j);
                         this.lastSources.push( jl );

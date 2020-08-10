@@ -37,7 +37,7 @@ import {
 } from "@toco/tools/entities";
 import { FilterHttpMap } from "@toco/tools/filters";
 import {
-  PanelContent,
+  PanelContent_Depr,
   FormFieldType,
   HintValue,
   HintPosition,
@@ -87,11 +87,11 @@ export class JournalEditComponent implements OnInit {
   public showFinalStep = true;
 
   // journal identifiers variables for step 0
-  identifiersPanel: PanelContent[] = null;
+  identifiersPanel: PanelContent_Depr[] = null;
   identifiersFormGroup: FormGroup;
 
   // journal information variables for step 1
-  informationPanel: PanelContent[] = null;
+  informationPanel: PanelContent_Depr[] = null;
   informationFormGroup: FormGroup;
 
   organizationFormGroup: FormGroup;
@@ -103,11 +103,11 @@ export class JournalEditComponent implements OnInit {
   // entityFormGroup: FormGroup;
 
   // indexes (databases), variables for step 3
-  indexesPanel: PanelContent[] = null;
+  indexesPanel: PanelContent_Depr[] = null;
   indexesFormGroup: FormGroup;
   indexAction: FormContainerAction;
 
-  finalPanel: PanelContent[] = null;
+  finalPanel: PanelContent_Depr[] = null;
   finalFormGroup: FormGroup;
 
   // actions, if needed
@@ -449,7 +449,7 @@ export class JournalEditComponent implements OnInit {
                     termSource => termSource.term_id
                   )
                 : null,
-              vocab: VocabulariesInmutableNames.PROVINCES
+              vocab: VocabulariesInmutableNames.CUBAN_PROVINCES
             }
           },
           {
@@ -524,7 +524,7 @@ export class JournalEditComponent implements OnInit {
 
     console.log(this.journalVersion.data.term_sources)
     this.journalVersion.data.term_sources.forEach(element => {
-      if (element.term.vocabulary_id == VocabulariesInmutableNames.MIAR_DATABASES) {
+      if (element.term.vocabulary_id == VocabulariesInmutableNames.INDEXES) {
         panel.push(this.getPanelIndex(element));
       }
     });
@@ -771,7 +771,7 @@ export class JournalEditComponent implements OnInit {
   `
 })
 export class JournalEditAddIndexComponent implements OnInit {
-  indexPanel: PanelContent[] = null;
+  indexPanel: PanelContent_Depr[] = null;
   indexFormGroup: FormGroup;
   termsIdsToExclude: [];
   addIndexPanel;
@@ -804,7 +804,7 @@ export class JournalEditAddIndexComponent implements OnInit {
               multiple: false,
               selectedTermsIds: null,
               excludeTermsIds: this.termsIdsToExclude,
-              vocab: VocabulariesInmutableNames.MIAR_DATABASES
+              vocab: VocabulariesInmutableNames.INDEXES
             }
           },
           {
