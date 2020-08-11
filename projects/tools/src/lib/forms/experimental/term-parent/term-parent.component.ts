@@ -5,7 +5,7 @@
 
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormControl, AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
@@ -24,7 +24,7 @@ import { FormFieldControl_Experimental } from '../form-field.control.experimenta
 })
 export class TermParentComponent extends FormFieldControl_Experimental implements OnInit {
 
-    internalControl = new FormControl();
+    // internalControl = new FormControl();
 
 
     formControl = new FormControl();
@@ -41,7 +41,10 @@ export class TermParentComponent extends FormFieldControl_Experimental implement
 
     ngOnInit() {
 
-//        this.content.parentFormSection.addControl(this.content.name, this.internalControl);
+        (this.content.parentFormSection as FormGroup).addControl(
+            this.content.name,
+            this.internalControl
+          );
 
         console.log(this.content.value)
         console.log(this.content.required);
