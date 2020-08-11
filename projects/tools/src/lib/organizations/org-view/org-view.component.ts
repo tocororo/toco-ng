@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Organization } from '@toco/tools/entities';
@@ -27,6 +27,7 @@ export class OrgViewComponent implements OnInit
 	/**
 	 * Represents the current organization. 
 	 */
+	@Input()
 	public org: Organization;
 
 	public constructor(private _router: Router, private _activatedRoute: ActivatedRoute)
@@ -37,14 +38,7 @@ export class OrgViewComponent implements OnInit
 
 	public ngOnInit(): void
 	{
-		/* Gets the `Organization` data. */
-		this._activatedRoute.data.subscribe(
-			(data) => {
-				this.org = data.org.metadata;
 
-				console.log('Data got for viewing: ', this.org);
-			}
-		)
 	}
 
 	/**

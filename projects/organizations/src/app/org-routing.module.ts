@@ -2,18 +2,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { OrgEditComponent, OrgViewComponent, OrgAddComponent } from '@toco/tools/organizations';
+import { OrgEditComponent, OrgAddComponent } from '@toco/tools/organizations';
 
 import { OrganizationDetailResolverService } from './organization-detail-resolver.service.ts';
 import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
 import { StaticPagesComponent } from './static-pages/static-pages.component';
+import { OrgViewerComponent } from './org-viewer/org-viewer.component';
 
 
 const routes: Routes = [
 	{
 		path:':uuid/view',
-		component: OrgViewComponent,
+		component: OrgViewerComponent,
 		resolve: {
 			'org': OrganizationDetailResolverService
 		}
