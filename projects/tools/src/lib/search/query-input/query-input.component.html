@@ -1,6 +1,6 @@
-<div fxLayout="row" [ngStyle]="{'align-items': 'center'}">
+<div fxLayout="row" [ngStyle]="{'align-items': 'center', 'width.%': width }">
     
-    <mat-form-field *ngIf="appearance == 'outline';else templateMatFormField" appearance="{{appearance}}" class="query-input" [ngStyle]="{'width.%': width }">
+    <mat-form-field *ngIf="appearance == 'outline';else templateMatFormField" appearance="{{appearance}}" class="query-input" [ngStyle]="{'width.%': 100 }">
         <mat-label>Buscar</mat-label>
         <input matInput placeholder="{{placeholder}}" type="search" [value]="query" [formControl]="queryCtrl" (keyup.enter)= "riseQuery()">
     </mat-form-field>

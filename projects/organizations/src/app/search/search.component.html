@@ -1,5 +1,16 @@
+
+    <mat-toolbar color="accent"
+    fxLayout="row wrap"
+    fxLayout.xs="column"
+    fxLayoutAlign="space-between center"
+    style="height: 80px;"
+  >
+  
+    <span>Búsqueda</span>
+  
+  </mat-toolbar>
 <mat-drawer-container autosize>
-    <mat-drawer #drawer mode="side" opened>
+    <mat-drawer #drawer mode="side" opened position="start">
       <!-- <app-aggregations fxLayout="row wrap" fxLayout.xs="column wrap" fxFlex="{{ currentlayout.width }}"
         fxLayoutAlign="start center" fxLayoutAlign.xs="center center" fxLayoutGap="1em"
         class=" back-grey mat-elevation-z8"></app-aggregations> -->
@@ -13,23 +24,19 @@
       ></toco-search-aggregations>
     </mat-drawer>
 
-    <mat-toolbar color="primary">
-
-      <button
-        mat-icon-button
-        (click)="drawer.toggle()"
-        matTooltip="Filtros avanzados"
-      >
-        <mat-icon>filter_list</mat-icon>
-      </button>
-
-      <span>Búsqueda</span>
-
-    </mat-toolbar>
-
     <div class="m-1" *ngIf="sr">
 
-      <toco-search-query-input [query]="query" class="p-1" (queryChange)="queryChange($event)"></toco-search-query-input>
+      <div fxLayout="row nowrap" fxLayoutAlign="space-between center">
+        <button
+          mat-icon-button
+          (click)="drawer.toggle()"
+          matTooltip="Filtros avanzados"
+        >
+          <mat-icon>filter_list</mat-icon>
+        </button>
+        <toco-search-query-input [query]="query" class="p-1" (queryChange)="queryChange($event)" style="width: 100%;"></toco-search-query-input>
+      </div>
+
 
       <search-list [hitList]="sr.hits"></search-list>
 

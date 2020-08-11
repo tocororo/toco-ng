@@ -51,9 +51,9 @@ export class SearchComponent implements OnInit {
   // end Layout stuff
 
   // begin paginator stuff
-  pageSize = 25;
+  pageSize = 5;
   pageIndex = 0;
-  pageSizeOptions: number[] = [15, 25, 50, 100];
+  pageSizeOptions: number[] = [5, 15, 25, 50, 100];
   // end paginator stuff
 
   query = "";
