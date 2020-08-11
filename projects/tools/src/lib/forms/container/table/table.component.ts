@@ -331,7 +331,7 @@ export class TableComponent implements OnInit, OnDestroy
         /************************** Internal control properties. **************************/
 
         /******************************* Other properties. ********************************/
-        if (this._content.endpoint == undefined) this._content.endpoint = undefined;
+        /* The `_content.endpoint` field is `undefined` by default. */
 
         /************************ Must be the last initialization. ************************/
         this.checkColumn();
@@ -711,9 +711,9 @@ export class TableComponent implements OnInit, OnDestroy
     public applyFilters(filter: Partial<FilterValues>): void
     {
         /* This method is accepting a partial representation of the filter model. 
-         * It combines the specified filter with the last one by accessing the `Subject<FilterValues>` 
-         * and merging both filters via the spread operator. This way old filter properties 
-         * won't be overridden when only one property is updated. 
+         * It combines the specified filter with the last one by merging both filters 
+         * via the spread operator. This way old filter properties won't be overridden 
+         * when only one property is updated. 
          * It is not necessary to call the `trim()` method over its properties because it is called 
          * in the backend internally. */
 
@@ -727,13 +727,14 @@ export class TableComponent implements OnInit, OnDestroy
      * Assumes that the backend will call the `trim()` method over its properties. 
      * It combines the specified filter property with the last one. This way old filter properties 
      * won't be overridden when only one property is updated. 
-     * @param filter The partial representation of the filter model to combine. 
+     * @param name The filter name. 
+     * @param value The filter value. 
      */
     public applyFilter(name: string, value: any): void
     {
-        /* It combines the specified filter property with the last one by accessing the `Subject<FilterValues>` 
-         * and merging both filters via the spread operator. This way old filter properties 
-         * won't be overridden when only one property is updated. 
+        /* It combines the specified filter property with the last one by merging both filters 
+         * via the spread operator. This way old filter properties won't be overridden 
+         * when only one property is updated. 
          * It is not necessary to call the `trim()` method over its properties because it is called 
          * in the backend internally. */
 

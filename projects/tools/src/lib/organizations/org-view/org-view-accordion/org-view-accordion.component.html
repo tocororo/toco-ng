@@ -1,0 +1,26 @@
+
+<!-- TODO: En dependencia del valor de `appearance`, se aplican las clases CSS para lograr la apariencia deseada. 
+     Actualmente, `appearance = 'outline'` es el único que está hecho. -->
+<fieldset class="static-accordion-fieldset">
+	<legend class="static-accordion-fieldset-legend">{{ desc }}</legend>
+
+	<div class="static-accordion-buttons">
+		<button mat-raised-button color="primary" (click)="getAccordion.openAll()">Expand All</button>
+		<button mat-raised-button color="primary" (click)="getAccordion.closeAll()">Collapse All</button>
+	</div>
+
+	<mat-accordion class="static-mat-accordion" multi [attr.aria-label]="desc">
+		<mat-expansion-panel *ngFor="let val of value; let pos = index">
+			<mat-expansion-panel-header>
+				<mat-panel-title>
+					{{ getPanelTitle(pos) }}
+				</mat-panel-title>
+			</mat-expansion-panel-header>
+
+			<ng-container [ngSwitch]="orgViewAccordionType">
+				<toco-org-view-relationship *ngSwitchCase="orgViewAccordion_Type.Relationships" [value]="val"></toco-org-view-relationship>
+				<toco-org-view-address *ngSwitchCase="orgViewAccordion_Type.Addresses" [value]="val"></toco-org-view-address>
+			</ng-container>
+		</mat-expansion-panel>
+	</mat-accordion>
+</fieldset>
