@@ -10,12 +10,12 @@ export enum OrgViewAccordionType
 	/**
 	 * The `OrgViewAccordionComponent` is used to show relationships. 
 	 */
-	Relationships = 'Relationship ',
+	Relationships = 'Relationship',
 
 	/**
 	 * The `OrgViewAccordionComponent` is used to show addresses. 
 	 */
-	Addresses = 'Address '
+	Addresses = 'Address'
 };
 
 @Component({
@@ -82,7 +82,7 @@ export class OrgViewAccordionComponent implements OnInit
 		/* Initializae the `_panelsTitle` array. */
 		for (let i: number = 0; i < panelsTitleCount; )
 		{
-			this._panelsTitle.push(`${ this.orgViewAccordionType }(${ ++i }) of (${ panelsTitleCount })`);
+			this._panelsTitle.push(`${ this.orgViewAccordionType } (${ ++i }) of (${ panelsTitleCount })`);
 		}
 	}
 

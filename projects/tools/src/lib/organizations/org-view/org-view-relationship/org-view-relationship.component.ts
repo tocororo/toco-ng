@@ -4,11 +4,11 @@ import { Component, Input } from '@angular/core';
 import { Relationship } from '@toco/tools/entities';
 
 @Component({
-	selector: 'toco-org-view-relationships',
-	templateUrl: './org-view-relationships.component.html',
-	styleUrls: ['./org-view-relationships.component.scss']
+	selector: 'toco-org-view-relationship',
+	templateUrl: './org-view-relationship.component.html',
+	styleUrls: ['./org-view-relationship.component.scss']
 })
-export class OrgViewRelationshipsComponent
+export class OrgViewRelationshipComponent
 {
 	/**
 	 * A relationship the organization has to other. 

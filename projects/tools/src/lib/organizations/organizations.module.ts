@@ -9,8 +9,8 @@ import { StaticsModule } from '@toco/tools/statics';
 import { OrgListComponent } from './org-list/org-list.component';
 import { OrgViewComponent } from './org-view/org-view.component';
 import { OrgViewAccordionComponent } from './org-view/org-view-accordion/org-view-accordion.component';
-import { OrgViewAddressesComponent } from './org-view/org-view-addresses/org-view-addresses.component';
-import { OrgViewRelationshipsComponent } from './org-view/org-view-relationships/org-view-relationships.component';
+import { OrgViewAddressComponent } from './org-view/org-view-address/org-view-address.component';
+import { OrgViewRelationshipComponent } from './org-view/org-view-relationship/org-view-relationship.component';
 import { OrgEditComponent } from './org-edit/org-edit.component';
 import { OrgAddComponent } from './org-add/org-add.component';
 
@@ -19,8 +19,8 @@ import { OrgAddComponent } from './org-add/org-add.component';
 		OrgListComponent,
 		OrgViewComponent,
 		OrgViewAccordionComponent,
-		OrgViewAddressesComponent,
-		OrgViewRelationshipsComponent,
+		OrgViewAddressComponent,
+		OrgViewRelationshipComponent,
 		OrgEditComponent,
 		OrgAddComponent
 	],

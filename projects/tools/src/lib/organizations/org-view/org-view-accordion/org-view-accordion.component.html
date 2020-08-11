@@ -18,8 +18,8 @@
 			</mat-expansion-panel-header>
 
 			<ng-container [ngSwitch]="orgViewAccordionType">
-				<toco-org-view-relationships *ngSwitchCase="orgViewAccordion_Type.Relationships" [value]="val"></toco-org-view-relationships>
-				<toco-org-view-addresses *ngSwitchCase="orgViewAccordion_Type.Addresses" [value]="val"></toco-org-view-addresses>
+				<toco-org-view-relationship *ngSwitchCase="orgViewAccordion_Type.Relationships" [value]="val"></toco-org-view-relationship>
+				<toco-org-view-address *ngSwitchCase="orgViewAccordion_Type.Addresses" [value]="val"></toco-org-view-address>
 			</ng-container>
 		</mat-expansion-panel>
 	</mat-accordion>

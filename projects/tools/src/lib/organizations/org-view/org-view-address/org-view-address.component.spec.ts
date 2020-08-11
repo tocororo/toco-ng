@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OrgViewAddressesComponent } from './org-view-addresses.component';
+import { OrgViewAddressComponent } from './org-view-address.component';
 
-describe('OrgViewAddressesComponent', () => {
-  let component: OrgViewAddressesComponent;
-  let fixture: ComponentFixture<OrgViewAddressesComponent>;
+describe('OrgViewAddressComponent', () => {
+  let component: OrgViewAddressComponent;
+  let fixture: ComponentFixture<OrgViewAddressComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrgViewAddressesComponent ]
+      declarations: [ OrgViewAddressComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrgViewAddressesComponent);
+    fixture = TestBed.createComponent(OrgViewAddressComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
