@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Organization, SearchResponse, HitList } from '@toco/tools/entities';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Organization, SearchResponse, HitList, Aggr } from '@toco/tools/entities';
 import { FormControl } from '@angular/forms';
 import { SearchService } from '@toco/tools/backend';
 import { HttpParams } from '@angular/common/http';
@@ -17,14 +17,24 @@ export class OrgSearchComponent implements OnInit {
 
   params= new HttpParams();
 
+  @Input()
+  orgFilter: { type: string, value: string};
+
+  @Output()
+  selectedOrg: EventEmitter<Organization> = new EventEmitter<Organization>();
+
   constructor( private _orgService: SearchService) {
-    this.params = this.params.set('size', '10');
-    this.params = this.params.set('page', '1');
+
     console.log(this.orgCtrl);
 
   }
 
   ngOnInit() {
+    this.params = this.params.set('size', '10');
+    this.params = this.params.set('page', '1');
+    if (this.orgFilter != undefined) {
+      this.params = this.params.set(this.orgFilter.type, this.orgFilter.value);
+    }
     this.orgCtrl.valueChanges
     .subscribe({
       next: (orgValueChanges) => {
@@ -37,6 +47,9 @@ export class OrgSearchComponent implements OnInit {
                 this.filteredOrg = response.hits
               }
           });
+        } else if (typeof orgValueChanges === 'object') {
+          console.log(orgValueChanges);
+          this.selectedOrg.emit(orgValueChanges);
         }
 
       }

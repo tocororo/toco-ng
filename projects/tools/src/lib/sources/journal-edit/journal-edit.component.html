@@ -1,14 +1,18 @@
 <mat-card [ngStyle]="{ margin: '1em' }">
-  <mat-card-header  *ngIf="showEditHeader" fxLayout="column wrap" fxLayoutAlign="start center">
-    <div fxLayout="row wrap" fxLayoutAlign="space-between center" [ngStyle]="{'width': '100%'}">
+  <mat-card-header
+    *ngIf="showEditHeader"
+    fxLayout="column wrap"
+    fxLayoutAlign="start center"
+  >
+    <div
+      fxLayout="row wrap"
+      fxLayoutAlign="space-between center"
+      [ngStyle]="{ width: '100%' }"
+    >
       <h2>
         {{ pageTitle }}
       </h2>
-      <button
-        mat-stroked-button
-        color="warn"
-        (click)="cancelStepper()"
-      >
+      <button mat-stroked-button color="warn" (click)="cancelStepper()">
         Cancelar
       </button>
     </div>
@@ -67,7 +71,7 @@
         <ng-template matStepLabel>Instituciones</ng-template>
         <h2>Instituciones</h2>
         <form [formGroup]="organizationFormGroup">
-          <toco-journal-institutions
+          <!-- <toco-journal-institutions
             [source]="source"
             [journalVersion]="journalVersion"
             [organizationFormGroup]="organizationFormGroup"
@@ -75,7 +79,9 @@
             [enableEdit]="true"
             [ngStyle]="{ margin: '1em' }"
           >
-          </toco-journal-institutions>
+          </toco-journal-institutions> -->
+          <toco-source-organizations [source]="source">
+          </toco-source-organizations>
         </form>
         <div fxLayout="row wrap" fxLayoutAlign="space-between center">
           <button mat-stroked-button color="accent" matStepperPrevious>
@@ -112,7 +118,11 @@
             [deleteValuesAfterAction]="false"
           ></toco-form-container>
         </form>
-        <div *ngIf="showFinalStep" fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div
+          *ngIf="showFinalStep"
+          fxLayout="row wrap"
+          fxLayoutAlign="space-between center"
+        >
           <button mat-stroked-button color="accent" matStepperPrevious>
             Atrás
           </button>
@@ -120,7 +130,11 @@
             Siguiente
           </button>
         </div>
-        <div *ngIf="!showFinalStep" fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div
+          *ngIf="!showFinalStep"
+          fxLayout="row wrap"
+          fxLayoutAlign="space-between center"
+        >
           <button mat-stroked-button color="accent" matStepperPrevious>
             Atrás
           </button>
@@ -129,7 +143,6 @@
             Aceptar
           </button>
         </div>
-
       </mat-step>
 
       <mat-step *ngIf="showFinalStep">

@@ -1,6 +1,5 @@
-<ng-container *ngIf="organizationFormGroup && initOrganizationPanel">
+<ng-container>
     <mat-toolbar
-      *ngIf="enableEdit"
       fxLayout="row wrap"
       fxLayoutAlign="space-between center"
       fxLayoutGap="20px"
@@ -12,10 +11,10 @@
         fxLayoutGap="20px"
       >
         <button mat-raised-button (click)="addOrg(true)">
-          Institucion Cubana Oficial
+          Organizacion Cubana
         </button>
         <button mat-raised-button (click)="addOrg(false)">
-          Otra Institucion
+          Otras
         </button>
       </div>
     </mat-toolbar>
@@ -23,32 +22,22 @@
     <mat-accordion>
       <mat-expansion-panel
         *ngFor="let org of source.organizations; let index = index"
+        [expanded]='false'
       >
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{ roles[org.role].label }}
           </mat-panel-title>
           <mat-panel-description>
-            {{ org.name }}
+            {{ org.organization.name }}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <ng-container *ngIf="panel.inst.term.vocabulary_id == vocab.INTITUTION">
-          <toco-institution-hierarchy-viewer
-            [term]="panel.inst.term"
-            [node]="panel.inst['h']"
-          ></toco-institution-hierarchy-viewer>
-        </ng-container>
-        <ng-container
-          *ngIf="panel.inst.term.vocabulary_id == vocab.EXTRA_INSTITUTIONS"
-        >
-          <toco-extra-institution-viewer [term]="panel.inst.term">
-          </toco-extra-institution-viewer>
-        </ng-container>
-        <mat-action-row *ngIf="enableEdit">
+        <toco-org-view [org]="org.organization" ></toco-org-view>
+        <mat-action-row>
           <button
             mat-stroked-button
-            [disabled]="panels.length === 1"
-            (click)="setAsMain(index)"
+            [disabled]="org.length === 1"
+            (click)="setAsMain(org.organization)"
           >
             Establecer como Principal
           </button>
@@ -57,8 +46,8 @@
           </button>
           <button
             mat-stroked-button
-            [disabled]="panels.length === 1"
-            (click)="removeInst(index)"
+            [disabled]="org.length === 1"
+            (click)="removeInst(org.organization)"
           >
             Eliminar
           </button>
