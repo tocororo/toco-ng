@@ -8,6 +8,7 @@
 
 import { Entity, EntityBase } from './entity';
 import { TermNode, Term } from './taxonomy.entity';
+import { Organization } from './organization.entity';
 
 export const SourceSystems = {
   OJS: { label: 'Open Journal System', value: 'OJS' },
@@ -25,7 +26,7 @@ export const SourceTypes = {
     OTHER: { label: 'Otro', value: 'OTHER' },
 };
 
-export const SourceInstitutionRole = {
+export const SourceOrganizationRole = {
   MAIN: {label: 'Principal', value: 'MAIN'},
   COLABORATOR: {label: 'Colaborador', value: 'COLABORATOR'}
 };
@@ -78,11 +79,18 @@ export class SourceVersion extends Entity {
     data: SourceData = new SourceData();
 }
 
+export class SourceOrganization extends Entity {
+  organization: Organization = new Organization();
+  role: string = '';
+} 
+
 export class Source extends Entity {
     uuid = '';
     name = '';
 
     term_sources?: Array<TermSource> = new Array<TermSource>(0);
+
+    organizations?: Array<SourceOrganization> = new Array<SourceOrganization>();
 
     source_type = '';
     source_status = '';
