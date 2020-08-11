@@ -125,37 +125,37 @@ export class OrgEditComponent implements OnInit
 
 				{
 					'name': 'aliases',
-					'label': 'A list of other names the institute is known as',
+					'label': 'The list of other names the institute is known as',
 					'type': FormFieldType.select,
 					'required': false,
 					'value': this.org.aliases,
 					'width': '100%',
 					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'A list of other names the institute is known as',
+					'ariaLabel': 'The list of other names the institute is known as',
 					/* The 'selectOptions' field is gotten from the 'value' field. */
 					'multiple': true
 				},
 				{
 					'name': 'acronyms',
-					'label': 'A list of short acronyms the institute is known as (e.g. MRC for the Medical Research Council)',
+					'label': 'The of short acronyms the institute is known as (e.g. MRC for the Medical Research Council)',
 					'type': FormFieldType.select,
 					'required': false,
 					'value': this.org.acronyms,
 					'width': '100%',
 					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'A list of short acronyms the institute is known as (e.g. MRC for the Medical Research Council)',
+					'ariaLabel': 'The list of short acronyms the institute is known as (e.g. MRC for the Medical Research Council)',
 					/* The 'selectOptions' field is gotten from the 'value' field. */
 					'multiple': true
 				},
 				{
 					'name': 'types',
-					'label': 'A list of types describing the institute',
+					'label': 'The list of types describing the institute',
 					'type': FormFieldType.select,
 					'required': true,
 					'value': this.org.types,
 					'width': '100%',
 					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'A list of types describing the institute',
+					'ariaLabel': 'The list of types describing the institute',
 					'selectOptions': [
 						{
 							'label': 'Education',
@@ -214,35 +214,35 @@ export class OrgEditComponent implements OnInit
 				},
 				{
 					'name': 'ip_addresses',
-					'label': 'IP addresses known to belong to the institute',
+					'label': 'The list of IP addresses known to belong to the institute',
 					'type': FormFieldType.select,
 					'required': false,
 					'value': this.org.ip_addresses,
 					'width': '100%',
 					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'IP addresses known to belong to the institute',
+					'ariaLabel': 'The list of IP addresses known to belong to the institute',
 					/* The 'selectOptions' field is gotten from the 'value' field. */
 					'multiple': true
 				},
 				{
 					'name': 'established',
-					'label': 'The year the institute opened, CE',
+					'label': 'Year the institute opened, CE',
 					'type': FormFieldType.text,
 					'required': true,
 					'value': this.org.established,
 					'width': '45%',
 					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'The year the institute opened, CE'
+					'ariaLabel': 'Year the institute opened, CE'
 				},
 				{
 					'name': 'links',
-					'label': 'An array of URLs linking to things like the homepage for the institute',
+					'label': 'The list of URLs linking to things like the homepage for the institute',
 					'type': FormFieldType.select,
 					'required': false,
 					'value': this.org.links,
 					'width': '100%',
 					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'An array of URLs linking to things like the homepage for the institute',
+					'ariaLabel': 'The list of URLs linking to things like the homepage for the institute',
 					/* The 'selectOptions' field is gotten from the 'value' field. */
 					'multiple': true
 				},
@@ -261,7 +261,7 @@ export class OrgEditComponent implements OnInit
 		return {
 			'formSection': new FormArray([ ], [ ]),
 			'name': 'labelsSimple',
-			'label': 'The name of the institute in different languages',
+			'label': 'Name of the institute in different languages',
 			'type': FormFieldType.container_simple,
 			'value': this.org.labels,
 			'width': '100%',
@@ -278,23 +278,23 @@ export class OrgEditComponent implements OnInit
 					'formSectionContent': [
 						{
 							'name': 'label',
-							'label': 'The institute name in a language variant',
+							'label': 'Institute name in a language variant',
 							'type': FormFieldType.text,
 							'required': true,
 							/* 'value': undefined, this is the default behavior. */
 							'width': '70%',
 							'appearance': TextInputAppearance.outline,
-							'ariaLabel': 'The institute name in a language variant'
+							'ariaLabel': 'Institute name in a language variant'
 						},
 						{
 							'name': 'iso639',
-							'label': 'The ISO-639-1 language code',
+							'label': 'ISO-639-1 language code',
 							'type': FormFieldType.text,
 							'required': true,
 							/* 'value': undefined, this is the default behavior. */
 							'width': '30%',
 							'appearance': TextInputAppearance.outline,
-							'ariaLabel': 'The ISO-639-1 language code',
+							'ariaLabel': 'ISO-639-1 language code',
 							//'startHint': new HintValue(HintPosition.start, 'ISO-639-1 language code')
 						},
 
@@ -333,12 +333,12 @@ export class OrgEditComponent implements OnInit
 
 						{
 							'name': 'type',
-							'label': 'The relationship type',
+							'label': 'Relationship type',
 							'type': FormFieldType.select,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
-							'ariaLabel': 'The relationship type',
+							'ariaLabel': 'Relationship type',
 							'selectOptions': [
 								{
 									'label': 'Parent',
@@ -357,12 +357,12 @@ export class OrgEditComponent implements OnInit
 						},
 						{
 							'name': 'label',
-							'label': 'The name of the related institute',
+							'label': 'Name of the related institute',
 							'type': FormFieldType.text,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
-							'ariaLabel': 'The name of the related institute'
+							'ariaLabel': 'Name of the related institute'
 						},
 
 						this._initRemoveButtonContent('Remove relationship')
@@ -397,30 +397,30 @@ export class OrgEditComponent implements OnInit
 					'formSectionContent': [
 						{
 							'name': 'city',
-							'label': 'The name of the city',
+							'label': 'Name of the city',
 							'type': FormFieldType.text,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
-							'ariaLabel': 'The name of the city'
+							'ariaLabel': 'Name of the city'
 						},
 						{
 							'name': 'country',
-							'label': 'The name of the country',
+							'label': 'Name of the country',
 							'type': FormFieldType.text,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
-							'ariaLabel': 'The name of the country'
+							'ariaLabel': 'Name of the country'
 						},
 						{
 							'name': 'country_code',
-							'label': 'The ISO 3166-1 alpha-2 code of the country',
+							'label': 'ISO 3166-1 alpha-2 code of the country',
 							'type': FormFieldType.text,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
-							'ariaLabel': 'The ISO 3166-1 alpha-2 code of the country'
+							'ariaLabel': 'ISO 3166-1 alpha-2 code of the country'
 						},
 						{
 							'name': 'lat',
@@ -469,33 +469,34 @@ export class OrgEditComponent implements OnInit
 						},
 						{
 							'name': 'postcode',
-							'label': 'The postcode/zipcode',
+							'label': 'Postcode/zipcode',
 							'type': FormFieldType.text,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
-							'ariaLabel': 'The postcode/zipcode'
+							'ariaLabel': 'Postcode/zipcode'
 						},
 
 						//TODO: Poner aquí el campo 'primary' de tipo 'boolean' (checkbox). 
+						//This address identifies the main location
 
 						{
 							'name': 'state',
-							'label': 'The name of the state/region',
+							'label': 'Name of the state/region',
 							'type': FormFieldType.text,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
-							'ariaLabel': 'The name of the state/region'
+							'ariaLabel': 'Name of the state/region'
 						},
 						{
 							'name': 'state_code',
-							'label': 'The ISO 3166-2 region code',
+							'label': 'ISO 3166-2 region code',
 							'type': FormFieldType.text,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
-							'ariaLabel': 'The ISO 3166-2 region code'
+							'ariaLabel': 'ISO 3166-2 region code'
 						},
 
 						//TODO: Poner el resto de los campos. 

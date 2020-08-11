@@ -1,31 +1,36 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
-import { RecordListComponent } from './record-list/record-list.component';
+import { NgModule } from '@angular/core';
+import { SharedModule } from '@toco/tools/shared';
+
 import { RecordComponent } from './record/record.component';
-import { SharedModule } from '../shared';
 import { AggregationsComponent } from './aggregations/aggregations.component';
 import { QueryInputComponent } from './query-input/query-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { RecordListComponent } from './record-list/record-list.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
-    RecordListComponent,
     RecordComponent,
     AggregationsComponent,
     QueryInputComponent,
+    RecordListComponent
   ],
+
   imports: [
     CommonModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
+
   exports: [
-    RecordListComponent,
     RecordComponent,
     AggregationsComponent,
-    QueryInputComponent
-],
+    QueryInputComponent,
+    RecordListComponent
+  ]
 })
-export class SearchModule { }
+export class SearchModule
+{ }

@@ -1,8 +1,51 @@
 
-<container-panel [content]="panelContent"></container-panel>
+<h1>Muestra la organización seleccionada</h1>
 
-<h3>Add the rest of content to `panelContent.formSectionContent` field!</h3>
+<mat-card *ngIf="org" class="container-panel-mat-card" [attr.aria-label]="'Muestra la organización seleccionada'">
+  <mat-card-header>
 
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title class="title-padding">{{ org.name }}</mat-card-title>
+    <mat-card-subtitle class="title-padding">UUID Organización en Iroko: {{ org.id }}</mat-card-subtitle>
+    <mat-card-subtitle class="cursor-default title-padding" [ngStyle]="{'backgroundColor': 'green', 'color': 'white'}">
+      Estatus de la Organización: {{ org.status }}
+    </mat-card-subtitle>
+
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <static-table [desc]="'Organization Identifiers, different from GRID mapping'" [value]="org.identifiers"
+      [columnsObjectProperty]="['idtype', 'value']"
+      [columnsHeaderText]="['Identifier type', 'Identifier value']"
+    >
+    </static-table>
+    <static-chips [desc]="'The list of other names the institute is known as'" [value]="org.aliases"></static-chips>
+    <static-chips [desc]="'The list of short acronyms the institute is known as'" [value]="org.acronyms"></static-chips>
+    <static-chips [desc]="'The list of types describing the institute'" [value]="org.types"></static-chips>
+    <static-text [desc]="'URL of the wikipedia page for the institute'" [value]="org.wikipedia_url"></static-text>
+    <static-text [desc]="'Contact email address for the institute'" [value]="org.email_address"></static-text>
+    <static-chips [desc]="'The list of IP addresses known to belong to the institute'" [value]="org.ip_addresses"></static-chips>
+    <static-text [desc]="'Year the institute opened, CE'" [value]="org.established"></static-text>
+    <static-chips [desc]="'The list of URLs linking to things like the homepage for the institute'" [value]="org.links"></static-chips>
+    <static-table [desc]="'Name of the institute in different languages'" [value]="org.labels"
+      [columnsObjectProperty]="['label', 'iso639']"
+      [columnsHeaderText]="['Institute name in a language variant', 'ISO-639-1 language code']"
+    >
+    </static-table>
+    <toco-org-view-accordion [desc]="'Any relationships the institute has to others'" [value]="org.relationships"
+      [orgViewAccordionType]="orgViewAccordionType.Relationships"
+    >
+    </toco-org-view-accordion>
+    <toco-org-view-accordion [desc]="'An array of addresses associated with the institute'" [value]="org.addresses"
+      [orgViewAccordionType]="orgViewAccordionType.Addresses"
+    >
+    </toco-org-view-accordion>
+
+  </mat-card-content>
+</mat-card>
+
+<!-- The actions are going to be placed outside the `mat-card` tag. -->
 <div [ngStyle]="{'margin': '1em 0 1em 0'}">
-    <button mat-raised-button color="primary" (click)="doOperationAction(operationAction.back)">Go Back</button>
+  <button mat-raised-button color="primary" (click)="doOperationAction(operationAction.back)">Go Back</button>
 </div>

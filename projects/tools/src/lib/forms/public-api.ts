@@ -29,7 +29,6 @@ export * from './experimental/term-parent/term-parent.component';
 export * from './experimental/textarea/textarea.component';
 export * from './experimental/vocabulary/vocabulary.component';
 
-export * from './input/chips/chips-input.component';
 export * from './input/email/email-value';
 export * from './input/email/email-input.component';
 export * from './input/identifier/identifier-value';
