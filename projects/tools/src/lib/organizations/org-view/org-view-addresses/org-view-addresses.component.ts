@@ -1,7 +1,7 @@
 
 import { Component, Input } from '@angular/core';
 
-import { Relationships } from '@toco/tools/entities';
+import { Address } from '@toco/tools/entities';
 
 @Component({
 	selector: 'toco-org-view-addresses',
@@ -11,11 +11,11 @@ import { Relationships } from '@toco/tools/entities';
 export class OrgViewAddressesComponent
 {
 	/**
-	 * The array of data that should be rendered by the accordion, where each object represents one row. 
+	 * An address associated with the organization. 
      * By default, its value is `undefined`. 
 	 */
 	@Input()
-	public value: Relationships;
+	public value: Address;
 
 	public constructor()
 	{

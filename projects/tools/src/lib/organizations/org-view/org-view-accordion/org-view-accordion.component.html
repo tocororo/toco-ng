@@ -17,7 +17,10 @@
 				</mat-panel-title>
 			</mat-expansion-panel-header>
 
-			<toco-org-view-addresses [value]="val"></toco-org-view-addresses>
+			<ng-container [ngSwitch]="orgViewAccordionType">
+				<toco-org-view-relationships *ngSwitchCase="orgViewAccordion_Type.Relationships" [value]="val"></toco-org-view-relationships>
+				<toco-org-view-addresses *ngSwitchCase="orgViewAccordion_Type.Addresses" [value]="val"></toco-org-view-addresses>
+			</ng-container>
 		</mat-expansion-panel>
 	</mat-accordion>
 </fieldset>

@@ -26,6 +26,11 @@ export enum OrgViewAccordionType
 export class OrgViewAccordionComponent implements OnInit
 {
     /**
+     * Represents the `OrgViewAccordionType` enum for internal use. 
+     */
+	public readonly orgViewAccordion_Type: typeof OrgViewAccordionType;
+
+    /**
      * The control's appearance. 
      * By default, its value is `'outline'`. 
      */
@@ -60,6 +65,8 @@ export class OrgViewAccordionComponent implements OnInit
 
 	public constructor()
 	{
+		this.orgViewAccordion_Type = OrgViewAccordionType;
+
 		this.appearance = 'outline';
 		this.desc = undefined;
 		this.value = [];
