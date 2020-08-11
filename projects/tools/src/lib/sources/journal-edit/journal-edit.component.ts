@@ -579,7 +579,7 @@ export class JournalEditComponent implements OnInit {
 
   private getPanelIndex(termSource: TermSource) {
     return {
-      title: termSource.term.name,
+      title: termSource.term.description,
       description: "",
       iconName: "",
       formSection: this.indexesFormGroup,
@@ -747,8 +747,8 @@ export class JournalEditComponent implements OnInit {
   }
 
   public finishStepper() {
-    // console.log(this.journalVersion)
-    this.fillJournalFields();
+    console.log(this.journalVersion, this)
+    // this.fillJournalFields();
     // console.log(this.journalVersion)
     this.journalEditDone.emit(this.journalVersion);
   }
