@@ -12,25 +12,31 @@ import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
 
 import { OrgRoutingModule } from './org-routing.module';
 import { OrgRootComponent } from './org.component';
-import { AggregationsComponent } from './aggregations/aggregations.component';
 import { InMemoryDataService }  from './in-memory-data.service';
 import { SearchModule } from '@toco/tools/search';
 import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
 import { SearchListComponent } from './search-list/search-list.component';
+import { CoreModule } from '@toco/tools/core';
+import { StaticPagesComponent } from './static-pages/static-pages.component';
+import { MarkdownModule } from 'ngx-markdown';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { OrgViewerComponent } from './org-viewer/org-viewer.component';
 
 @NgModule({
 	declarations: [
 		OrgRootComponent,
-		AggregationsComponent,
 		HomeComponent,
 		SearchComponent,
-		SearchListComponent
+		SearchListComponent,
+		StaticPagesComponent,
+		OrgViewerComponent
 	],
 
 	imports: [
 		BrowserAnimationsModule,
 		SharedModule,
+		CoreModule,
 		// The `HttpClientInMemoryWebApiModule` module intercepts HTTP requests 
 		// and returns simulated server responses. 
 		// Remove it when a real server is ready to receive requests. 
@@ -42,7 +48,11 @@ import { SearchListComponent } from './search-list/search-list.component';
 		// AuthenticationModule,
 		TocoFormsModule,
 		OrgRoutingModule, 
-		SearchModule
+		SearchModule,
+		HttpClientModule,
+		MarkdownModule.forRoot({
+			loader: HttpClient
+		  })
 	],
 
 	providers: [

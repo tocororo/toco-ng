@@ -1,4 +1,18 @@
-<mat-form-field appearance="{{appearance}}" [ngStyle]="{'width': '100%'}">
-    <mat-label>Buscar</mat-label>
-    <input matInput placeholder="{{placeholder}}" type="search" [value]="query" [formControl]="queryCtrl" (keyup.enter)= "riseQuery()">
-</mat-form-field>
+<div fxLayout="row" [ngStyle]="{'align-items': 'center', 'width.%': width }">
+    
+    <mat-form-field *ngIf="appearance == 'outline';else templateMatFormField" appearance="{{appearance}}" class="query-input" [ngStyle]="{'width.%': 100 }">
+        <mat-label>Buscar</mat-label>
+        <input matInput placeholder="{{placeholder}}" type="search" [value]="query" [formControl]="queryCtrl" (keyup.enter)= "riseQuery()">
+    </mat-form-field>
+    
+    <ng-template #templateMatFormField>
+        <mat-form-field [ngStyle]="{'width.%': width }">
+            <mat-label>Buscar</mat-label>
+            <input matInput placeholder="{{placeholder}}" type="search" [value]="query" [formControl]="queryCtrl" (keyup.enter)= "riseQuery()">
+        </mat-form-field>
+    </ng-template>
+    
+    <button mat-raised-button *ngIf="showButton && appearance == 'outline'" (click)="riseQuery()" color="primary" [ngStyle]="{'height': '59.5px', 'margin-left': '1em'}">Buscar</button>
+    <button mat-raised-button *ngIf="showButton && appearance != 'outline'" (click)="riseQuery()" color="primary" [ngStyle]="{'margin-left': '1em'}">Buscar</button>
+
+</div>

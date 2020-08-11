@@ -18,6 +18,12 @@ export class QueryInputComponent implements OnInit {
   @Input()
   appearance: string = 'outline';
 
+  @Input()
+  showButton = true;
+
+  @Input()
+  width: number = 100;
+
   @Output()
   queryChange = new EventEmitter<string>();
   
@@ -39,7 +45,7 @@ export class QueryInputComponent implements OnInit {
     // })
   }
   riseQuery(){
-    this.queryChange.emit(this.queryCtrl.value);
+    this.queryChange.emit(this.queryCtrl.value? this.queryCtrl.value :'');
   }
 
 }
