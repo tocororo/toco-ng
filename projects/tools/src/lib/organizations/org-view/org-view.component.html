@@ -17,20 +17,20 @@
 
     <static-table [desc]="'Organization Identifiers, different from GRID mapping'" [value]="org.identifiers"
       [columnsObjectProperty]="['idtype', 'value']"
-      [columnsHeaderText]="['The identifier type', 'The identifier value']"
+      [columnsHeaderText]="['Identifier type', 'Identifier value']"
     >
     </static-table>
-    <static-chips [desc]="'A list of other names the institute is known as'" [value]="org.aliases"></static-chips>
-    <static-chips [desc]="'A list of short acronyms the institute is known as'" [value]="org.acronyms"></static-chips>
-    <static-chips [desc]="'A list of types describing the institute'" [value]="org.types"></static-chips>
-    <static-text [desc]="'A URL of the wikipedia page for the institute'" [value]="org.wikipedia_url"></static-text>
-    <static-text [desc]="'A contact email address for the institute'" [value]="org.email_address"></static-text>
-    <static-chips [desc]="'A list of IP addresses known to belong to the institute'" [value]="org.ip_addresses"></static-chips>
-    <static-text [desc]="'The year the institute opened, CE'" [value]="org.established"></static-text>
-    <static-chips [desc]="'A list of URLs linking to things like the homepage for the institute'" [value]="org.links"></static-chips>
-    <static-table [desc]="'The name of the institute in different languages'" [value]="org.labels"
+    <static-chips [desc]="'The list of other names the institute is known as'" [value]="org.aliases"></static-chips>
+    <static-chips [desc]="'The list of short acronyms the institute is known as'" [value]="org.acronyms"></static-chips>
+    <static-chips [desc]="'The list of types describing the institute'" [value]="org.types"></static-chips>
+    <static-text [desc]="'URL of the wikipedia page for the institute'" [value]="org.wikipedia_url"></static-text>
+    <static-text [desc]="'Contact email address for the institute'" [value]="org.email_address"></static-text>
+    <static-chips [desc]="'The list of IP addresses known to belong to the institute'" [value]="org.ip_addresses"></static-chips>
+    <static-text [desc]="'Year the institute opened, CE'" [value]="org.established"></static-text>
+    <static-chips [desc]="'The list of URLs linking to things like the homepage for the institute'" [value]="org.links"></static-chips>
+    <static-table [desc]="'Name of the institute in different languages'" [value]="org.labels"
       [columnsObjectProperty]="['label', 'iso639']"
-      [columnsHeaderText]="['The institute name in a language variant', 'The ISO-639-1 language code']"
+      [columnsHeaderText]="['Institute name in a language variant', 'ISO-639-1 language code']"
     >
     </static-table>
     <toco-org-view-accordion [desc]="'Any relationships the institute has to others'" [value]="org.relationships"
