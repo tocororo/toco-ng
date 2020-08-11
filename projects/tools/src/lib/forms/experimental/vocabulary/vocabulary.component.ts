@@ -52,7 +52,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
 
   private termsTreeObserver: PartialObserver<Response<any>> = {
     next: (response: Response<any>) => {
-      // console.log(this.vocab)
+      console.log("VOCABULARY COMPONENT RESPONSE ",response)
 
       this.terms = response.data.tree.term_node;
 
@@ -62,7 +62,6 @@ export class VocabularyComponent extends FormFieldControl_Experimental
         );
       });
 
-      this.loading = !this.loading;
     },
 
     error: (err: any) => {
@@ -71,6 +70,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
 
     complete: () => {
       console.log("The observable got a complete notification.");
+      this.loading = !this.loading;
     }
   };
 

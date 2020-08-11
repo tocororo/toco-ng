@@ -37,7 +37,7 @@ import {
 } from "@toco/tools/entities";
 import { FilterHttpMap } from "@toco/tools/filters";
 import {
-  PanelContent,
+  PanelContent_Depr,
   FormFieldType,
   HintValue,
   HintPosition,
@@ -87,11 +87,11 @@ export class JournalEditComponent implements OnInit {
   public showFinalStep = true;
 
   // journal identifiers variables for step 0
-  identifiersPanel: PanelContent[] = null;
+  identifiersPanel: PanelContent_Depr[] = null;
   identifiersFormGroup: FormGroup;
 
   // journal information variables for step 1
-  informationPanel: PanelContent[] = null;
+  informationPanel: PanelContent_Depr[] = null;
   informationFormGroup: FormGroup;
 
   organizationFormGroup: FormGroup;
@@ -103,11 +103,11 @@ export class JournalEditComponent implements OnInit {
   // entityFormGroup: FormGroup;
 
   // indexes (databases), variables for step 3
-  indexesPanel: PanelContent[] = null;
+  indexesPanel: PanelContent_Depr[] = null;
   indexesFormGroup: FormGroup;
   indexAction: FormContainerAction;
 
-  finalPanel: PanelContent[] = null;
+  finalPanel: PanelContent_Depr[] = null;
   finalFormGroup: FormGroup;
 
   // actions, if needed
@@ -177,8 +177,8 @@ export class JournalEditComponent implements OnInit {
         title: "Identificadores",
         description: "",
         iconName: "",
-        formGroup: this.identifiersFormGroup,
-        content: [
+        formSection: this.identifiersFormGroup,
+        formSectionContent: [
           {
             name: "issn_p",
             label: "ISSN Impreso",
@@ -244,8 +244,8 @@ export class JournalEditComponent implements OnInit {
         title: "Datos de la Revista",
         description: "",
         iconName: "",
-        formGroup: this.informationFormGroup,
-        content: [
+        formSection: this.informationFormGroup,
+        formSectionContent: [
           {
             name: "title",
             label: "Título",
@@ -449,7 +449,7 @@ export class JournalEditComponent implements OnInit {
                     termSource => termSource.term_id
                   )
                 : null,
-              vocab: VocabulariesInmutableNames.PROVINCES
+              vocab: VocabulariesInmutableNames.CUBAN_PROVINCES
             }
           },
           {
@@ -474,8 +474,8 @@ export class JournalEditComponent implements OnInit {
         title: "Redes Sociales",
         description: "",
         iconName: "",
-        formGroup: this.informationFormGroup,
-        content: [
+        formSection: this.informationFormGroup,
+        formSectionContent: [
           {
             name: "facebook",
             label: "Facebook",
@@ -524,7 +524,7 @@ export class JournalEditComponent implements OnInit {
 
     console.log(this.journalVersion.data.term_sources)
     this.journalVersion.data.term_sources.forEach(element => {
-      if (element.term.vocabulary_id == VocabulariesInmutableNames.MIAR_DATABASES) {
+      if (element.term.vocabulary_id == VocabulariesInmutableNames.INDEXES) {
         panel.push(this.getPanelIndex(element));
       }
     });
@@ -579,14 +579,14 @@ export class JournalEditComponent implements OnInit {
       title: termSource.term.name,
       description: "",
       iconName: "",
-      formGroup: this.indexesFormGroup,
+      formSection: this.indexesFormGroup,
       actionLabel: "Eliminar",
       action: {
         doit: index => {
           const panels = [];
           for (let i = 0; i < this.indexesPanel.length; i++) {
             if (i === index) {
-              this.indexesPanel[i].content.forEach(element => {
+              this.indexesPanel[i].formSectionContent.forEach(element => {
                 this.indexesFormGroup.removeControl(element.name);
               });
             } else {
@@ -597,7 +597,7 @@ export class JournalEditComponent implements OnInit {
         }
       },
       value: termSource.term,
-      content: [
+      formSectionContent: [
         {
           name: "url_" + termSource.term_id,
           label: "URL de la revista en el índice",
@@ -636,9 +636,9 @@ export class JournalEditComponent implements OnInit {
         title: "",
         description: "",
         iconName: "",
-        formGroup: this.finalFormGroup,
+        formSection: this.finalFormGroup,
 
-        content: [
+        formSectionContent: [
           {
             name: "comment",
             label: "Puede agregar aquí un comentario.",
@@ -760,7 +760,7 @@ export class JournalEditComponent implements OnInit {
   template: `
     <toco-form-container
       #indexPanelContainer
-      [panels]="indexPanel"
+      [panelsContent]="indexPanel"
       [useAccordion]="false"
       fxLayout="row"
       [formGroup]="indexFormGroup"
@@ -771,7 +771,7 @@ export class JournalEditComponent implements OnInit {
   `
 })
 export class JournalEditAddIndexComponent implements OnInit {
-  indexPanel: PanelContent[] = null;
+  indexPanel: PanelContent_Depr[] = null;
   indexFormGroup: FormGroup;
   termsIdsToExclude: [];
   addIndexPanel;
@@ -792,8 +792,8 @@ export class JournalEditAddIndexComponent implements OnInit {
         title: "Adicionar un Índice",
         description: "",
         iconName: "",
-        formGroup: this.indexFormGroup,
-        content: [
+        formSection: this.indexFormGroup,
+        formSectionContent: [
           {
             name: "indexes",
             label: "Indices",
@@ -804,7 +804,7 @@ export class JournalEditAddIndexComponent implements OnInit {
               multiple: false,
               selectedTermsIds: null,
               excludeTermsIds: this.termsIdsToExclude,
-              vocab: VocabulariesInmutableNames.MIAR_DATABASES
+              vocab: VocabulariesInmutableNames.INDEXES
             }
           },
           {

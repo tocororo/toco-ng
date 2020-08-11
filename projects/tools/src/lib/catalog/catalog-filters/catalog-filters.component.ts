@@ -56,7 +56,7 @@ export class CatalogFiltersComponent extends FilterContainerComponent {
       .subscribe(response => {
         if (response) {
           response.data.vocabularies.forEach(vocab => {
-            if (VocabulariesInmutableNames.INTITUTION === vocab.id
+            if (VocabulariesInmutableNames.CUBAN_INTITUTIONS === vocab.id
               && this.env.organizationUUID !== '') {
               console.log(this.env.organizationUUID);
               this.taxonomyService.getTermByUUID(this.env.organizationUUID).subscribe(termsResponse => {

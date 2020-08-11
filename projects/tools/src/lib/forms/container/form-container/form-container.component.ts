@@ -56,6 +56,7 @@ export class FormContainerComponent extends ContainerControl implements OnInit, 
     @Input()
     public panelsContent: PanelContent_Depr[];
 
+
     @Input()
     public useAccordion: boolean = true;
 
@@ -90,14 +91,12 @@ export class FormContainerComponent extends ContainerControl implements OnInit, 
         this.step = 0;
     }
 
-    // private setFormGroupToPanels(): void
-    // {
-    //     this.panelsContent.forEach(panel => {
-    //         panel.content.forEach((element: FormFieldContent) => {
-    //             element.parentFormSection = panel.formSection;
-    //         });
-    //     });
-    // }
+    private setFormGroupToPanels(): void
+    {
+        this.panelsContent.forEach(panel => {
+            panel.formSection  = panel.formSection;
+            });
+    }
 
     public ngOnInit(): void
     {
@@ -111,20 +110,21 @@ export class FormContainerComponent extends ContainerControl implements OnInit, 
             'type': undefined,
             'value': 'FormContainerComponent',
 //            'width': '100%',
-            'ariaLabel': 'FormContainerComponent'
-        };
+            'ariaLabel': 'FormContainerComponent',
+            'formSectionContent': this.panelsContent[0].formSectionContent
+        }
         this.init(undefined, false, false);
 
         // if actionLabel is undefined, means that there is no actionLabel, the user must decide!!!
         // if (this.actionLabel == undefined) this.actionLabel = 'Adicionar';
-//        this.setFormGroupToPanels();
+       this.setFormGroupToPanels();
     }
 
     public ngOnChanges(): void
     {
         console.log('on CHANGES call', this.panelsContent)
 
-//        this.setFormGroupToPanels();
+       this.setFormGroupToPanels();
     }
 
     /**

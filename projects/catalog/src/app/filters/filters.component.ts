@@ -12,7 +12,7 @@ import {
   EventEmitter
 } from "@angular/core";
 import {
-  PanelContent,
+  PanelContent_Depr,
   FormFieldType,
   SelectOption,
   FormContainerAction
@@ -59,7 +59,7 @@ export class FiltersComponent implements OnInit {
   @Output()
   paramsChange: EventEmitter<Params> = new EventEmitter();
 
-  panels: PanelContent[] = null;
+  panels: PanelContent_Depr[] = null;
   formGroup: FormGroup;
 
   institutionTree: SelectOptionNode[] = [];
@@ -110,7 +110,7 @@ export class FiltersComponent implements OnInit {
 
         // this.params = convertToParamMap(this.filters);
         console.log(values);
-        
+
         console.log(this.filters);
         let res: Params = {};
         this.filters.forEach((value:string, key:string) => {
@@ -120,7 +120,7 @@ export class FiltersComponent implements OnInit {
           }
         });
         // console.log(this.filters.keys());
-        
+
         // for (const key in this.filters.keys()) {
         //   console.log(key)
         //   console.log(this.filters[key]);
@@ -129,7 +129,7 @@ export class FiltersComponent implements OnInit {
         //   }
         // }
         console.log(res);
-        
+
         this.paramsChange.emit(res);
       },
       (err: any) => {
@@ -145,9 +145,9 @@ export class FiltersComponent implements OnInit {
         title: "Revistas por Tipo:",
         description: "",
         iconName: "",
-        formGroup: this.formGroup,
-        open: this.filters.get(CatalogFilterKeys.source_type) != '',
-        content: [
+        formSection: this.formGroup,
+        // open: this.filters.get(CatalogFilterKeys.source_type) != '',
+        formSectionContent: [
           {
             name: CatalogFilterKeys.source_type,
             label: "Tipo de Revista",
@@ -184,9 +184,9 @@ export class FiltersComponent implements OnInit {
         title: "Revistas por Institución:",
         description: "",
         iconName: "",
-        formGroup: this.formGroup,
-        open: this.filters.get(CatalogFilterKeys.institutions) != '',
-        content: [
+        formSection: this.formGroup,
+        // open: this.filters.get(CatalogFilterKeys.institutions) != '',
+        formSectionContent: [
           {
             name: CatalogFilterKeys.institutions,
             label: "Instituciones",
@@ -203,7 +203,7 @@ export class FiltersComponent implements OnInit {
                       2
                     )
                   : this.taxonomyService.getTermsTreeByVocab(
-                      VocabulariesInmutableNames.INTITUTION
+                      VocabulariesInmutableNames.CUBAN_INTITUTIONS
                     ),
               getOptions: (response: any) => {
                 if (this.organizationUUID != "") {
@@ -227,12 +227,12 @@ export class FiltersComponent implements OnInit {
         ]
       },
       {
-        formGroup: this.formGroup,
+        formSection: this.formGroup,
         title: "Cobertura Temática:",
         iconName: "",
         description: "",
-        open: this.filters.get(CatalogFilterKeys.subjects) != '',
-        content: [
+        // open: this.filters.get(CatalogFilterKeys.subjects) != '',
+        formSectionContent: [
           {
             name: CatalogFilterKeys.subjects,
             label: "Materias",
@@ -249,12 +249,12 @@ export class FiltersComponent implements OnInit {
         ]
       },
       {
-        formGroup: this.formGroup,
+        formSection: this.formGroup,
         title: "Indizaciones:",
         iconName: "",
         description: "",
-        open: this.filters.get(CatalogFilterKeys.grupo_mes) != '' || this.filters.get(CatalogFilterKeys.miar_types) != '',
-        content: [
+        // open: this.filters.get(CatalogFilterKeys.grupo_mes) != '' || this.filters.get(CatalogFilterKeys.miar_types) != '',
+        formSectionContent: [
           {
             name: CatalogFilterKeys.grupo_mes,
             label: "Grupo MES",
@@ -265,7 +265,7 @@ export class FiltersComponent implements OnInit {
             extraContent: {
               multiple: true,
               selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.grupo_mes).split(","),
-              vocab: VocabulariesInmutableNames.MES_GROUPS
+              vocab: VocabulariesInmutableNames.INDEXES_CLASIFICATION
             }
           },
           {
@@ -278,7 +278,7 @@ export class FiltersComponent implements OnInit {
             extraContent: {
               multiple: true,
               selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.miar_types).split(","),
-              vocab: VocabulariesInmutableNames.MIAR_DATABASES
+              vocab: VocabulariesInmutableNames.INDEXES
             }
           }
         ]
@@ -287,9 +287,9 @@ export class FiltersComponent implements OnInit {
         title: "Estado:",
         description: "",
         iconName: "",
-        formGroup: this.formGroup,
-        open: this.filters.get(CatalogFilterKeys.source_status) != '' && this.filters.get(CatalogFilterKeys.source_status) != 'ALL',
-        content: [
+        formSection: this.formGroup,
+        // open: this.filters.get(CatalogFilterKeys.source_status) != '' && this.filters.get(CatalogFilterKeys.source_status) != 'ALL',
+        formSectionContent: [
           {
             name: CatalogFilterKeys.source_status,
             label: "Estado",

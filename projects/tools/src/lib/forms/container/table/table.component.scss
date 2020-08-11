@@ -5,6 +5,7 @@ table
     width: 100%;
     padding: 2em 1em 0 1em;
     //min-width: 400px;
+    //box-shadow: none;
 }
 
 tr.mat-header-row
@@ -49,7 +50,6 @@ th
     background-color: rgba(245, 247, 247, 1) !important;
     border-top: 1px solid rgba(189, 195, 199, 1)/*green*/;
     border-bottom: 1px solid transparent /*rgba(189, 195, 199, 1)*//*green*/;
-    
 }
 
 th:first-of-type
@@ -168,14 +168,14 @@ tr.row-data:active
     background-color: rgba(238, 238, 238, 1);
 }
 
-/* Cetres the table headers. */
+/* Centers the table headers. */
 :host ::ng-deep .mat-sort-header-container
 { 
     //display: flex;
     justify-content: center;
 }
 
-/* Cetres the cells. */
+/* Centers the cells. */
 // td
 // {
 //     text-align: center/* !important*/;

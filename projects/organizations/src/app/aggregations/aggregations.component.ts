@@ -40,7 +40,7 @@ export class AggregationsComponent implements OnInit {
         title: 'Filtros:',
         description: '',
         iconName: '',
-        open: false,
+        // open: false,
         formSectionContent: [
           {
             name: 'types',

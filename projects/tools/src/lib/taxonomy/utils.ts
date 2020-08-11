@@ -8,7 +8,7 @@ export class TermHelper {
     let result = null;
     if (term) {
       switch (term.vocabulary_id) {
-        case VocabulariesInmutableNames.INTITUTION:
+        case VocabulariesInmutableNames.CUBAN_INTITUTIONS:
           result = [
             {
               name: "name",
@@ -72,7 +72,7 @@ export class TermHelper {
             }
           ];
           break;
-        case VocabulariesInmutableNames.DATABASES:
+        case VocabulariesInmutableNames.INDEXES:
           result = [
             {
               name: "name",
@@ -132,7 +132,7 @@ export class TermHelper {
               extraContent: {
                 multiple: false,
                 selectedTermsIds: term.class_ids ? term.class_ids : null,
-                vocab: VocabulariesInmutableNames.MIAR_TYPES
+                vocab: VocabulariesInmutableNames.INDEXES_CLASIFICATION
               },
               width: "48%"
             },
@@ -146,7 +146,7 @@ export class TermHelper {
               extraContent: {
                 multiple: false,
                 selectedTermsIds: term.class_ids ? term.class_ids : null,
-                vocab: VocabulariesInmutableNames.MES_GROUPS
+                vocab: VocabulariesInmutableNames.INDEXES_CLASIFICATION
               },
               width: "48%"
             }

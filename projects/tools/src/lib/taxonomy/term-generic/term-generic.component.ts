@@ -7,7 +7,7 @@ import { Component, OnInit, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 import {
-	PanelContent,
+	PanelContent_Depr,
 	FormFieldType,
 	FormContainerAction,
 	HintValue,
@@ -34,7 +34,7 @@ import { FormFieldContent_Experimental } from '@toco/tools/forms/experimental/fo
 	styleUrls: ["./term-generic.component.scss"]
 })
 export class TermGenericComponent implements OnInit {
-	public panels: PanelContent[] = [];
+	public panels: PanelContent_Depr[] = [];
 	public formGroup: FormGroup;
 	public action: FormContainerAction;
 	public actionLabel = "Adicionar";
@@ -82,8 +82,8 @@ export class TermGenericComponent implements OnInit {
 				title: "Término",
 				description: "",
 				iconName: "",
-				formGroup: this.formGroup,
-				content: this._getContent()
+				formSection: this.formGroup,
+				formSectionContent: this._getContent()
 			}
 		];
 
@@ -108,7 +108,7 @@ export class TermGenericComponent implements OnInit {
 
 					// if the term is an index, then set miar_class and group_mes
 					// clasifications
-					if (this.vocab.id == VocabulariesInmutableNames.DATABASES) {
+					if (this.vocab.id == VocabulariesInmutableNames.INDEXES) {
 						result.class_ids = [];
 
 						const miar = this.formGroup.value["miar_class"];
@@ -136,7 +136,7 @@ export class TermGenericComponent implements OnInit {
 	{
 		// TODO: use TermHelper
 		switch (this.vocab.id) {
-			case VocabulariesInmutableNames.INTITUTION:
+			case VocabulariesInmutableNames.CUBAN_INTITUTIONS:
 				return [
 					{
 						name: "name",
@@ -208,7 +208,7 @@ export class TermGenericComponent implements OnInit {
 					}
 				];
 
-			case VocabulariesInmutableNames.DATABASES:
+			case VocabulariesInmutableNames.INDEXES:
 				return [
 					{
 						name: "name",
@@ -274,7 +274,7 @@ export class TermGenericComponent implements OnInit {
 							selectedTermsIds: this.data.term.class_ids
 								? this.data.term.class_ids
 								: null,
-							vocab: VocabulariesInmutableNames.MIAR_TYPES
+							vocab: VocabulariesInmutableNames.INDEXES_CLASIFICATION
 						},
 						width: "48%"
 					},
@@ -290,7 +290,7 @@ export class TermGenericComponent implements OnInit {
 							selectedTermsIds: this.data.term.class_ids
 								? this.data.term.class_ids
 								: null,
-							vocab: VocabulariesInmutableNames.MES_GROUPS
+							vocab: VocabulariesInmutableNames.INDEXES_CLASIFICATION
 						},
 						width: "48%"
 					}
@@ -339,10 +339,10 @@ export class TermGenericComponent implements OnInit {
 	{
 		switch (this.vocab.id)
 		{
-			case VocabulariesInmutableNames.INTITUTION:
+			case VocabulariesInmutableNames.CUBAN_INTITUTIONS:
 				return new TermInstitutionData();
 
-			case VocabulariesInmutableNames.DATABASES:
+			case VocabulariesInmutableNames.INDEXES:
 				return new TermIndexData();
 
 			default:

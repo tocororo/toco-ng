@@ -111,7 +111,8 @@ export abstract class ContainerControl extends FormFieldControl
     protected init(label: string | undefined, isAbbreviation: boolean, alwaysHint: boolean): void
     {
         /* Sets the default values. */
-
+        console.log(this.content);
+        
         super.init(label, isAbbreviation, alwaysHint);
 
         if (this.content.formSection == undefined)

@@ -9,7 +9,7 @@ import {
   SourceInstitutionRole
 } from "@toco/tools/entities";
 import {
-  PanelContent,
+  PanelContent_Depr,
   FormContainerAction,
   FormFieldType
 } from "@toco/tools/forms";
@@ -20,7 +20,7 @@ import { TermHelper } from "@toco/tools/taxonomy";
 import { InstitutionHierarchySelectorComponent } from "@toco/tools/institutions/institution-hierarchy-selector/institution-hierarchy-selector.component";
 
 export interface JournalInstitutionsPanel {
-  open: boolean;
+  // open: boolean;
   inst: TermSource;
 }
 @Component({
@@ -70,7 +70,7 @@ export class JournalInstitutionsComponent implements OnInit,  OnChanges {
     if (this.journalVersion) {
       const institutions: TermSource[] = this.journalVersion.data.term_sources.filter(
         ts =>
-        ts.term.vocabulary_id == VocabulariesInmutableNames.INTITUTION
+        ts.term.vocabulary_id == VocabulariesInmutableNames.CUBAN_INTITUTIONS
         || ts.term.vocabulary_id == VocabulariesInmutableNames.EXTRA_INSTITUTIONS
       );
       console.log(institutions);
@@ -85,9 +85,9 @@ export class JournalInstitutionsComponent implements OnInit,  OnChanges {
         }
       }
       institutions.forEach(i => {
-        this.panels.push({ open: false, inst: i });
+        this.panels.push({ /* open: false, */ inst: i });
       });
-      
+
       console.log(this.panels)
       this.organizationFormGroup.setValue({ institutions: this.panels });
       console.log(this.organizationFormGroup);
@@ -95,7 +95,7 @@ export class JournalInstitutionsComponent implements OnInit,  OnChanges {
       this.initOrganizationPanel = true;
     }
   }
-  
+
 
   addInst(extra = false) {
     let newInst = new TermSource();
@@ -120,9 +120,9 @@ export class JournalInstitutionsComponent implements OnInit,  OnChanges {
             termSource.term = term;
             this.dialog.closeAll();
             if (index > 0 && index < this.panels.length) {
-              this.panels[index] = { open: true, inst: termSource };
+              this.panels[index] = { /* open: true, */ inst: termSource };
             } else {
-              this.panels.push({ open: true, inst: termSource });
+              this.panels.push({ /* open: true, */ inst: termSource });
             }
             this.organizationFormGroup.setValue({ institutions: this.panels });
             console.log(this.organizationFormGroup);
@@ -133,7 +133,7 @@ export class JournalInstitutionsComponent implements OnInit,  OnChanges {
     } else {
       // dialogRef = termSource.term.vocabulary_id =
       //   VocabulariesInmutableNames.INTITUTION;
-      this.dialog.open(JournalAddInstitutionComponent, { 
+      this.dialog.open(JournalAddInstitutionComponent, {
         width: '90%',
         minWidth: '15em',
         data: {
@@ -145,9 +145,9 @@ export class JournalInstitutionsComponent implements OnInit,  OnChanges {
             termSource.term = hierarchy.term;
             termSource["h"] = hierarchy;
             if (index >= 0 && index < this.panels.length) {
-              this.panels[index] = { open: true, inst: termSource };
+              this.panels[index] = { /* open: true, */ inst: termSource };
             } else {
-              this.panels.push({ open: true, inst: termSource });
+              this.panels.push({ /* open: true, */ inst: termSource });
             }
 
             this.organizationFormGroup.setValue({ institutions: this.panels });
@@ -247,7 +247,7 @@ export class JournalAddInstitutionComponent implements OnInit {
     <toco-form-container
       *ngIf="formGroup && institutionPanel"
       #level1PanelContainer
-      [panels]="institutionPanel"
+      [panelsContent]="institutionPanel"
       [useContainer]="false"
       fxLayout="row"
       [deleteValuesAfterAction]="false"
@@ -259,7 +259,7 @@ export class JournalAddInstitutionComponent implements OnInit {
 export class JournalAddExtraInstitutionComponent implements OnInit {
   term: Term;
 
-  institutionPanel: PanelContent[] = null;
+  institutionPanel: PanelContent_Depr[] = null;
 
   formGroup: FormGroup;
   addTerm;
@@ -280,8 +280,8 @@ export class JournalAddExtraInstitutionComponent implements OnInit {
         title: "Institución",
         description: "",
         iconName: "",
-        formGroup: this.formGroup,
-        content: [
+        formSection: this.formGroup,
+        formSectionContent: [
           {
             name: "name",
             label: "Nombre",

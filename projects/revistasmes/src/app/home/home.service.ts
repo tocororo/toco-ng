@@ -15,6 +15,6 @@ export class HomeService {
   constructor(private env: EnvService, protected http: HttpClient) { }
 
   getOrganizationInfo(organization: string): Observable<Response<any>> {
-    return this.http.get<Response<any>>(this.env.sceibaApi + '/source/info/' + organization);
+    return this.http.get<Response<any>>(this.env.sceibaApi + 'source/info/' + organization);
 }
 }

@@ -5,7 +5,8 @@ import {
   FormFieldType,
   HintValue,
   HintPosition,
-  SelectOption
+  SelectOption,
+  PanelContent_Depr
 } from "@toco/tools/forms";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { CatalogService, SourceService } from "@toco/tools/backend";
@@ -31,13 +32,13 @@ export class JournalInclusionComponent implements OnInit {
   public isStartProcess = true;
 
   public searchJournalAction: FormContainerAction;
-  findPanel: PanelContent[] = [];
+  findPanel: PanelContent_Depr[] = [];
   findFormGroup: FormGroup;
 
-  personPanel: PanelContent[] = [];
+  personPanel: PanelContent_Depr[] = [];
   personFormGroup: FormGroup;
 
-  agreementPanel: PanelContent[] = [];
+  agreementPanel: PanelContent_Depr[] = [];
   agreementFormGroup: FormGroup;
 
   constructor(
@@ -54,8 +55,8 @@ export class JournalInclusionComponent implements OnInit {
         title: "Introduzca el ISSN de la revista que desea incluir.",
         description: "",
         iconName: "",
-        formGroup: this.findFormGroup,
-        content: [
+        formSection: this.findFormGroup,
+        formSectionContent: [
           {
             name: "idenfifier",
             label: "Identificador",
@@ -77,8 +78,8 @@ export class JournalInclusionComponent implements OnInit {
     //     title: "Seleccione su rol en la revista",
     //     description: "",
     //     iconName: "",
-    //     formGroup: this.personFormGroup,
-    //     content: [
+    //     formSection: this.personFormGroup,
+    //     formSectionContent: [
     //       {
     //         name: "role",
     //         label: "Rol",
@@ -111,8 +112,8 @@ export class JournalInclusionComponent implements OnInit {
     //     title: "Acuerdo Legal",
     //     description: "",
     //     iconName: "",
-    //     formGroup: this.agreementFormGroup,
-    //     content: [
+    //     formSection: this.agreementFormGroup,
+    //     formSectionContent: [
     //       {
     //         name: "role",
     //         label: "Rol",
@@ -282,7 +283,7 @@ export class JournalInclusionComponent implements OnInit {
 
 
   <toco-form-container
-  [panels]="agreementPanel"
+  [panelsContent]="agreementPanel"
   [useAccordion]="false"
   [formGroup]="agreementFormGroup"
   [action]="acceptAction"
@@ -292,8 +293,8 @@ export class JournalInclusionComponent implements OnInit {
   `
 })
 export class JournalInclusionAcceptComponent implements OnInit {
-  
-  agreementPanel: PanelContent[] = [];
+
+  agreementPanel: PanelContent_Depr[] = [];
   agreementFormGroup: FormGroup;
 
   accept;
@@ -316,8 +317,8 @@ export class JournalInclusionAcceptComponent implements OnInit {
         title: "Acuerdo Legal",
         description: "",
         iconName: "",
-        formGroup: this.agreementFormGroup,
-        content: [
+        formSection: this.agreementFormGroup,
+        formSectionContent: [
           {
             name: "role",
             label: "Rol",
@@ -355,7 +356,7 @@ export class JournalInclusionAcceptComponent implements OnInit {
         if (this.agreementFormGroup.status == 'VALID'){
           this.accept(this.agreementFormGroup.value['role']);
         }
-        
+
       }
     };
   }
