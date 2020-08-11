@@ -20,7 +20,7 @@ import { EnvService } from '@tocoenv/tools/env.service';
 import { CatalogService } from '@toco/tools/backend';
 import { CatalogFiltersComponent } from '../catalog-filters/catalog-filters.component';
 import { MatSnackBar, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { JournalViewInfoComponent } from '@toco/tools/journal/journal-view/journal-view-info.component';
+import { JournalViewInfoComponent } from '@toco/tools/sources/journal-view/journal-view-info.component';
 import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 
 @Component({

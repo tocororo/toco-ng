@@ -38,7 +38,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA
 } from "@angular/material";
-import { JournalViewInfoComponent } from "@toco/tools/journal/journal-view/journal-view-info.component";
+import { JournalViewInfoComponent } from "@toco/tools/sources/journal-view/journal-view-info.component";
 import { ScrollStrategyOptions } from "@angular/cdk/overlay";
 import {
   FiltersComponent,

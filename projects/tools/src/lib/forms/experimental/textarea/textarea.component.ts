@@ -1,28 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { FormFieldControl_Experimental } from '../form-field.control.experimental';
-import { FormControl } from '@angular/forms';
+import { Component, OnInit } from "@angular/core";
+import { FormFieldControl_Experimental } from "../form-field.control.experimental";
+import { FormControl, FormGroup } from "@angular/forms";
 
 @Component({
-  selector: 'toco-textarea',
-  templateUrl: './textarea.component.html',
-  styleUrls: ['./textarea.component.scss'],
+  selector: "toco-textarea",
+  templateUrl: "./textarea.component.html",
+  styleUrls: ["./textarea.component.scss"],
   host: {
-    '[style.minWidth]': 'content.minWidth',
-    '[style.width]': 'content.width'
-}
+    "[style.minWidth]": "content.minWidth",
+    "[style.width]": "content.width",
+  },
 })
-export class TextareaComponent extends FormFieldControl_Experimental implements OnInit {
+export class TextareaComponent extends FormFieldControl_Experimental
+  implements OnInit {
+  // internalControl = new FormControl();
 
-  internalControl = new FormControl();
-
-  constructor() { 
+  constructor() {
     super();
   }
 
-  ngOnInit()
-  {
-//    this.content.parentFormSection.addControl(this.content.name, this.internalControl);
-    console.log(this.content)
+  ngOnInit() {
+    (this.content.parentFormSection as FormGroup).addControl(
+      this.content.name,
+      this.internalControl
+    );
+    console.log(this.content);
     this.internalControl.setValue(this.content.value);
   }
 }

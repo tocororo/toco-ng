@@ -5,7 +5,7 @@ fxLayoutGap="1em" class="form-field-component">
 
     <ng-container *ngFor="let fieldContent of fieldsContent" [ngSwitch]="fieldContent.type">
 
-        <ng-container 
+        <!-- <ng-container 
             *ngSwitchCase="formFieldType.checkbox"
             [formGroup]="fieldContent.formGroup"
         >
@@ -20,7 +20,7 @@ fxLayoutGap="1em" class="form-field-component">
             >
                 {{ fieldContent.label }}
             </mat-checkbox>
-        </ng-container>
+        </ng-container> -->
 <!-- 
         <mat-form-field 
             *ngSwitchCase="formFieldType.textarea"
@@ -40,7 +40,7 @@ fxLayoutGap="1em" class="form-field-component">
         </mat-form-field> -->
 
 
-        <mat-form-field 
+        <!-- <mat-form-field 
             *ngSwitchCase="formFieldType.datepicker"
             [style.width]="fieldContent.width"
             [formGroup]="fieldContent.formGroup"
@@ -62,7 +62,10 @@ fxLayoutGap="1em" class="form-field-component">
                 #picker
                 startView="multi-year"
             ></mat-datepicker>
-        </mat-form-field>
+        </mat-form-field> -->
+        <toco-checkbox *ngSwitchCase="formFieldType.datepicker" [content]="fieldContent"></toco-checkbox>
+        <toco-datepicker *ngSwitchCase="formFieldType.datepicker" [content]="fieldContent"></toco-datepicker>
+
 
         <action-button *ngSwitchCase="formFieldType.action_button" [content]="fieldContent"></action-button>
 

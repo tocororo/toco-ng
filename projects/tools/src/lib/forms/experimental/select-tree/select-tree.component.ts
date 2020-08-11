@@ -4,7 +4,7 @@
  */
 
 import { Component, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormGroup } from "@angular/forms";
 import { FlatTreeControl } from "@angular/cdk/tree";
 import { MatTreeFlattener, MatTreeFlatDataSource } from "@angular/material";
 import { SelectionModel } from "@angular/cdk/collections";
@@ -45,7 +45,7 @@ export class SelectTreeComponent extends FormFieldControl_Experimental
   implements OnInit {
   data: SelectOptionNode[];
 
-  internalControl = new FormControl();
+  // internalControl = new FormControl();
 
   treeControl: FlatTreeControl<FlatTreeNode>;
   treeFlattener: MatTreeFlattener<SelectOptionNode, FlatTreeNode>;
@@ -70,7 +70,10 @@ export class SelectTreeComponent extends FormFieldControl_Experimental
 
   ngOnInit() {
 
-//    this.content.parentFormSection.addControl(this.content.name, this.internalControl);
+    (this.content.parentFormSection as FormGroup).addControl(
+      this.content.name,
+      this.internalControl
+    );
 
     if (this.content.extraContent){
       if (this.content.extraContent.observable) {

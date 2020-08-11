@@ -7,11 +7,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CatalogComponent } from '@toco/tools/catalog';
+
 import { AuthenticationService } from '@toco/tools/authentication/authentication.service';
 import { NotificationListComponent } from '@toco/tools/notification';
 
-import { JournalInclusionComponent } from '@toco/tools/journal/journal-inclusion/journal-inclusion.component';
+import { JournalInclusionComponent } from '@toco/tools/sources/journal-inclusion/journal-inclusion.component';
 import { SourceViewComponent } from './source-view/source-view.component';
 import { SourceResolver } from './source-resolver'
 import { SourcesComponent } from './sources/sources.component';

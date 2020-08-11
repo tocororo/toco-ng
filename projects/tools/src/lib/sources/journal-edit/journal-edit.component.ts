@@ -405,7 +405,8 @@ export class JournalEditComponent implements OnInit {
                     termSource => termSource.term_id
                   )
                 : null,
-              vocab: VocabulariesInmutableNames.LICENCES
+              vocab: VocabulariesInmutableNames.LICENCES, 
+              level: 0
             }
           },
           {
@@ -449,7 +450,8 @@ export class JournalEditComponent implements OnInit {
                     termSource => termSource.term_id
                   )
                 : null,
-              vocab: VocabulariesInmutableNames.CUBAN_PROVINCES
+              vocab: VocabulariesInmutableNames.CUBAN_PROVINCES, 
+              level: 0
             }
           },
           {
@@ -465,7 +467,8 @@ export class JournalEditComponent implements OnInit {
                     termSource => termSource.term_id
                   )
                 : null,
-              vocab: VocabulariesInmutableNames.SUBJECTS
+              vocab: VocabulariesInmutableNames.SUBJECTS, 
+              level: 0
             }
           }
         ]

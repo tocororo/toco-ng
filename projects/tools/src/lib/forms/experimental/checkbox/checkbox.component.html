@@ -1,0 +1,15 @@
+<ng-container 
+[formGroup]="content.parentFormSection"
+>
+<mat-checkbox
+    [style.width]="content.width"
+    [style.minWidth]="content.minWidth"
+    [value]="content.value"
+    (input)="$event.target.value"
+    name="{{ content.name }}"
+    required="{{ content.required }}"
+    [formControlName]="content.name"
+>
+    {{ content.label }}
+</mat-checkbox>
+</ng-container>

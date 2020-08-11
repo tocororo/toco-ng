@@ -9,8 +9,8 @@ import { Term, Journal, JournalVersion } from '@toco/tools/entities';
 import { EnvService } from '@tocoenv/tools/env.service';
 import { HomeService } from './home.service';
 import { CatalogService } from '@toco/tools/backend';
-import { DialogCatalogJournalInfoDialog } from '@toco/tools/catalog';
 import { MessageHandler, StatusCode } from '@toco/tools/core';
+import { DialogCatalogJournalInfoDialog } from 'projects/catalog/src/app/catalog/catalog.component';
 
 @Component({
     selector: 'app-home',

@@ -35,6 +35,8 @@ import { TextareaComponent } from './experimental/textarea/textarea.component';
 import { InputIdentifierComponent } from './input/identifier/identifier-input.component';
 import { SelectFilterComponent } from './experimental/select-filter/select-filter.component';
 import { SelectTreeComponent } from './experimental/select-tree/select-tree.component';
+import { DatepickerComponent } from './experimental/datepicker/datepicker.component';
+import { CheckboxComponent } from './experimental/checkbox/checkbox.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
     SelectComponent,
     SelectFilterComponent,
     TextareaComponent,
-    SelectTreeComponent
+    SelectTreeComponent,
+    DatepickerComponent,
+    CheckboxComponent
   ],
 
   imports: [
