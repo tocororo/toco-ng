@@ -12,21 +12,21 @@ import { StaticPagesComponent } from './static-pages/static-pages.component';
 
 const routes: Routes = [
 	{
-		path:':id/ver',
+		path:':uuid/view',
 		component: OrgViewComponent,
 		resolve: {
 			'org': OrganizationDetailResolverService
 		}
 	},
 	{
-		path:':id/editar',
+		path:':uuid/edit',
 		component: OrgEditComponent,
 		resolve: {
 			'org': OrganizationDetailResolverService
 		}
     },
     {
-        path: 'adicionar',
+        path: 'add',
         component: OrgAddComponent
 	},
 	{
