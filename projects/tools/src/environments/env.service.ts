@@ -13,6 +13,7 @@ import { Params } from '@toco/tools/core';
 export class EnvService {
 
     public sceibaApi = '';
+    public cuorApi = '';
     public sceibaHost = '';
     public appHost = '';
     public appName = '';
@@ -24,8 +25,8 @@ export class EnvService {
     public extraArgs: any = null;
 
     /**
-     * A collection of key/value elements, where the keys are cachable URLs, 
-     * and the values are maximum cache ages in milliseconds. 
+     * A collection of key/value elements, where the keys are cachable URLs,
+     * and the values are maximum cache ages in milliseconds.
      */
     public cachableUrls: Params<number>;
 
