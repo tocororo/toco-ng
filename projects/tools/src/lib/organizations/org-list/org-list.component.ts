@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -23,8 +23,8 @@ export class OrgListComponent implements OnInit
     public identifiersContent: ContainerContent;
     // public identifiersContent_Complex: ContainerContent;
 
-	// @Input()
-	// public hitList: HitList<Organization>;
+	@Input()
+	public hitList: HitList<Organization>;
 
     /**
      * The search filter. 

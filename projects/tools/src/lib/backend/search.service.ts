@@ -19,7 +19,7 @@ export class SearchService {
 
 	// private headers = new HttpHeaders(
 	//     {
-	//       ''Accept: 'application/json',
+	//       'Accept': 'application/json',
 	//       'Content-Type': 'application/json',
 	//       'Access-Control-Allow-Origin': '*'
 	//     }
@@ -73,6 +73,8 @@ export class SearchService {
 		};
 		console.log(params);
 		const req = this.env.sceibaApi + 'organizations';
+		console.log(req);
+		
 		return this.http.get<SearchResponse<Organization>>(req, options);
 	}
 
