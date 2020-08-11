@@ -32,7 +32,6 @@
             {{ org.organization.name }}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <toco-org-view [org]="org.organization" ></toco-org-view>
         <mat-action-row>
           <button
             mat-stroked-button
@@ -40,9 +39,6 @@
             (click)="setAsMain(org.organization)"
           >
             Establecer como Principal
-          </button>
-          <button mat-stroked-button (click)="editInst(index)">
-            Editar
           </button>
           <button
             mat-stroked-button
@@ -52,6 +48,7 @@
             Eliminar
           </button>
         </mat-action-row>
+        <toco-org-view [org]="org.organization" ></toco-org-view>
       </mat-expansion-panel>
     </mat-accordion>
   </ng-container>

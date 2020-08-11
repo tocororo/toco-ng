@@ -53,7 +53,7 @@ export class SourceOrganizationsComponent implements OnInit {
   }
 
   removeInst(organization: Organization){
-    this.source.organizations.indexOf()
+    this.source.organizations = this.source.organizations.filter((o) => o.organization.id != organization.id);
   }
 
 }
