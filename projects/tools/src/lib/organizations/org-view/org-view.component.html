@@ -34,9 +34,11 @@
     >
     </static-table>
     <toco-org-view-accordion [desc]="'Any relationships the institute has to others'" [value]="org.relationships"
+      [orgViewAccordionType]="orgViewAccordionType.Relationships"
     >
     </toco-org-view-accordion>
     <toco-org-view-accordion [desc]="'An array of addresses associated with the institute'" [value]="org.addresses"
+      [orgViewAccordionType]="orgViewAccordionType.Addresses"
     >
     </toco-org-view-accordion>
 

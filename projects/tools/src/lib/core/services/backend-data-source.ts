@@ -26,7 +26,7 @@ export enum SortDirection
      * Sorts the data in the original order or does not sort them. 
      */
     orig = ''
-};
+}
 
 /**
  * A collection of key/value elements, where the key is the filter name and the value is the control 
