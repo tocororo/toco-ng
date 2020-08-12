@@ -27,6 +27,7 @@ export class EntityBase extends Object {
       }
     }
   }
+
 }
 
 
@@ -47,7 +48,8 @@ export class Entity extends EntityBase {
     /**
      * return JSON.stringify, using a function to exclude object fields id and uuid
      */
-    stringify(): string  {
+    entitystringify(): string  {
+
       return JSON.stringify(this, (k, v) => {
         if (k !== 'id' && k !== 'uuid' && k !== 'isNew') {
           return v;

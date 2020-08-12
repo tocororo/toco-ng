@@ -1,5 +1,5 @@
 
-import { EntityBase } from './entity';
+import { EntityBase, Entity } from './entity';
 
 /**
  * Entity for `Identifier` based on schema `organization-v1.0.0.json`. 
@@ -196,12 +196,9 @@ export class Address extends EntityBase
 /**
  * Entity for `Organizations` based on schema `organization-v1.0.0.json`. 
  */
-export class Organization extends EntityBase
+export class Organization extends Entity
 {
-	/**
-	 * Iroko Organization UUID, pid_type = orgid. 
-	 */
-	id: string = '';
+	
 
 	/**
 	 * Organization Identifiers, different from GRID mapping. 
@@ -272,4 +269,6 @@ export class Organization extends EntityBase
 	 * An array of addresses associated with the institute. 
 	 */
 	addresses: Array<Address> = new Array<Address>();
+
+
 }

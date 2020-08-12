@@ -78,6 +78,7 @@ export class AppComponent {
         );
     }
     ngOnInit(): void {
+
         this.authenticateSuscription = this.authenticateService.authenticationSubjectObservable
             .subscribe(this.authenticateObserver);
 
@@ -107,4 +108,5 @@ export class AppComponent {
         this.oauthStorage.removeItem('email');
         this.authenticateService.logguedChange(false);
     }
+
 }

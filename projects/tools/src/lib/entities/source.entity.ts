@@ -51,6 +51,10 @@ export const SourceStatus = {
     UNOFFICIAL: { label: 'Incluido Extraoficialmente', value: 'UNOFFICIAL'}
 };
 
+export class SourceOrganization extends EntityBase {
+  organization: Organization = new Organization();
+  role: string = '';
+}
 
 export class SourceData extends EntityBase {
     title = '';
@@ -58,7 +62,7 @@ export class SourceData extends EntityBase {
     term_sources ?: Array<TermSource> = new Array<TermSource>();
     oaiurl ? = '';
     source_system ? = '';
-
+    organizations?: Array<SourceOrganization> = new Array<SourceOrganization>();
 }
 
 export class TermSource extends EntityBase {
@@ -77,20 +81,17 @@ export class SourceVersion extends Entity {
     reviewed = false;
 
     data: SourceData = new SourceData();
+
+
 }
 
-export class SourceOrganization extends Entity {
-  organization: Organization = new Organization();
-  role: string = '';
-} 
+
 
 export class Source extends Entity {
     uuid = '';
     name = '';
 
     term_sources?: Array<TermSource> = new Array<TermSource>(0);
-
-    organizations?: Array<SourceOrganization> = new Array<SourceOrganization>();
 
     source_type = '';
     source_status = '';

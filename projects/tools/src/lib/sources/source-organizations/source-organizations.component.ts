@@ -20,7 +20,11 @@ export class SourceOrganizationsComponent implements OnInit {
   public roles = SourceOrganizationRole;
   constructor(public dialog: MatDialog) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.source.data.organizations);
+    this.source.data.organizations  = this.source.data.organizations.filter((element) => element.organization && element.role);
+    console.log(this.source.data.organizations );
+  }
 
   addOrg(cuban = true) {
     this.dialog.open(SourceOrganizationSelectDialog, {
@@ -28,14 +32,14 @@ export class SourceOrganizationsComponent implements OnInit {
         filter: cuban ? { type: "country", value: "Cuba" } : null,
         selectOrg: (org: Organization) => {
           if (
-            !this.source.organizations.find((o) => o.organization.id == org.id)
+            !this.source.data.organizations.find((o) => o.organization.id == org.id)
           ) {
             let selected = new SourceOrganization();
             selected.organization = org;
             selected.role = cuban
               ? SourceOrganizationRole.MAIN.value
               : SourceOrganizationRole.COLABORATOR.value;
-            this.source.organizations.push(selected);
+            this.source.data.organizations.push(selected);
           }
         },
       },
@@ -43,7 +47,7 @@ export class SourceOrganizationsComponent implements OnInit {
   }
 
   setAsMain(organization: Organization){
-    this.source.organizations.forEach(element => {
+    this.source.data.organizations.forEach(element => {
       if(organization.id == element.organization.id){
         element.role = SourceOrganizationRole.MAIN.value
       } else {
@@ -53,7 +57,7 @@ export class SourceOrganizationsComponent implements OnInit {
   }
 
   removeInst(organization: Organization){
-    this.source.organizations = this.source.organizations.filter((o) => o.organization.id != organization.id);
+    this.source.data.organizations = this.source.data.organizations.filter((o) => o.organization.id != organization.id);
   }
 
 }

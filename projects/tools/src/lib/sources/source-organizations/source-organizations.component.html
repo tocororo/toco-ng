@@ -21,7 +21,7 @@
   
     <mat-accordion>
       <mat-expansion-panel
-        *ngFor="let org of source.organizations; let index = index"
+        *ngFor="let org of source.data.organizations; let index = index"
         [expanded]='false'
       >
         <mat-expansion-panel-header>

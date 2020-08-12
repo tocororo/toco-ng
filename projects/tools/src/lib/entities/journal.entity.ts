@@ -60,23 +60,23 @@ export class Journal extends Source {
 
 export class JournalVersion extends SourceVersion {
   data: JournalData = new JournalData();
-  /** WARNING: helper variable in the client side. Do not rely on this unless you know what you are doing */
-  organization?: Term = null;
-  /** WARNING: helper variable in the client side. Do not rely on this unless you know what you are doing */
-  institution?: Term = null;
-  /** WARNING: helper variable in the client side. Do not rely on this unless you know what you are doing */
-  entity?: Term = null;
+  // /** WARNING: helper variable in the client side. Do not rely on this unless you know what you are doing */
+  // organization?: Term = null;
+  // /** WARNING: helper variable in the client side. Do not rely on this unless you know what you are doing */
+  // institution?: Term = null;
+  // /** WARNING: helper variable in the client side. Do not rely on this unless you know what you are doing */
+  // entity?: Term = null;
 
-  stringify(): string  {
-    return JSON.stringify(this, (k, v) => {
-      if (k !== 'id' &&
-          k !== 'uuid' &&
-          k !== 'isNew' &&
-          k !== 'organization' &&
-          k !== 'institution' &&
-          k !== 'entity' ) {
-        return v;
-      }
-    });
-  }
+  // entitystringify(): string  {
+  //   return JSON.stringify(this, (k, v) => {
+  //     if (k !== 'id' &&
+  //         k !== 'uuid' &&
+  //         k !== 'isNew' &&
+  //         k !== 'organization' &&
+  //         k !== 'institution' &&
+  //         k !== 'entity' ) {
+  //       return v;
+  //     }
+  //   });
+  // }
 }

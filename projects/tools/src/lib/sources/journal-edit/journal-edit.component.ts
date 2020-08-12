@@ -706,17 +706,19 @@ export class JournalEditComponent implements OnInit {
       this.journalVersion.data.term_sources.push(ts);
     });
 
-    this.organizationFormGroup.value[
-      "institutions"
-    ].forEach((panel: JournalInstitutionsPanel) => {
-      const ts = new TermSource();
-      ts.load_from_data(panel.inst);
-      ts.term_id = panel.inst.term.id;
-      ts.source_id = this.journalVersion.source_id;
-      this.journalVersion.data.term_sources.push(ts);
+    this.journalVersion.data.organizations = this.source.data.organizations;
 
-    }
-    );
+    // this.organizationFormGroup.value[
+    //   "institutions"
+    // ].forEach((panel: JournalInstitutionsPanel) => {
+    //   const ts = new TermSource();
+    //   ts.load_from_data(panel.inst);
+    //   ts.term_id = panel.inst.term.id;
+    //   ts.source_id = this.journalVersion.source_id;
+    //   this.journalVersion.data.term_sources.push(ts);
+
+    // }
+    // );
 
     // this.institutions.forEach(inst => {
     //   this.journalVersion.data.term_sources.push(inst);
@@ -747,9 +749,9 @@ export class JournalEditComponent implements OnInit {
   }
 
   public finishStepper() {
-    console.log(this.journalVersion, this)
-    // this.fillJournalFields();
-    // console.log(this.journalVersion)
+    // console.log(this.journalVersion, this)
+    this.fillJournalFields();
+    console.log(this.journalVersion)
     this.journalEditDone.emit(this.journalVersion);
   }
   public cancelStepper() {
