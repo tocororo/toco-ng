@@ -72,7 +72,7 @@ export class AggregationsComponent implements OnInit {
 					{
 						name: 'organismo',
 						label: 'Organismo',
-						type: FormFieldType.select,
+						type: FormFieldType.select_expr,
 						required: true,
 						width: '100%',
 						value: this.organismoUUID,
@@ -105,7 +105,7 @@ export class AggregationsComponent implements OnInit {
 				// open: false,
 				formSectionContent: [
 					{
-						type: FormFieldType.select,
+						type: FormFieldType.select_expr,
 						name: 'sort',
 						label: '',
 						width: '100%',

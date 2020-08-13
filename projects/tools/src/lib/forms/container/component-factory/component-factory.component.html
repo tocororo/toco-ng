@@ -96,7 +96,7 @@ fxLayoutGap="1em" class="form-field-component">
 
         <toco-textarea *ngSwitchCase="formFieldType.textarea" [content]="fieldContent"></toco-textarea>
 
-        <!-- <toco-select *ngSwitchCase="formFieldType.select" [content]="fieldContent"></toco-select> -->
+        <toco-select *ngSwitchCase="formFieldType.select_expr" [content]="fieldContent"></toco-select>
 
         <toco-select-filter *ngSwitchCase="formFieldType.select_filter" [content]="fieldContent"></toco-select-filter>
 

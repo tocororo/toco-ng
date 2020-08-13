@@ -275,7 +275,7 @@ export class JournalEditComponent implements OnInit {
           {
             name: "source_type",
             label: "Tipo de Revista",
-            type: FormFieldType.select,
+            type: FormFieldType.select_expr,
             required: true,
             width: "30%",
             value: this.source ? this.source.source_type : "",
@@ -332,7 +332,7 @@ export class JournalEditComponent implements OnInit {
           {
             name: "source_system",
             label: "Tipo de Sistema que soporta la revista",
-            type: FormFieldType.select,
+            type: FormFieldType.select_expr,
             required: false,
             width: "35%",
             value: this.journalVersion
@@ -512,6 +512,7 @@ export class JournalEditComponent implements OnInit {
         ]
       }
     ];
+
   }
 
   initStep2() {

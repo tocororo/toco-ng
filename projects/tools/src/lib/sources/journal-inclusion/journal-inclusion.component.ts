@@ -83,7 +83,7 @@ export class JournalInclusionComponent implements OnInit {
     //       {
     //         name: "role",
     //         label: "Rol",
-    //         type: FormFieldType.select,
+    //         type: FormFieldType.select_expr,
     //         required: true,
     //         width: "45%",
     //         value: this.journal ? this.journal.source_type : "",
@@ -117,7 +117,7 @@ export class JournalInclusionComponent implements OnInit {
     //       {
     //         name: "role",
     //         label: "Rol",
-    //         type: FormFieldType.select,
+    //         type: FormFieldType.select_expr,
     //         required: true,
     //         width: "45%",
     //         value: this.journal ? this.journal.source_type : "",
@@ -322,7 +322,7 @@ export class JournalInclusionAcceptComponent implements OnInit {
           {
             name: "role",
             label: "Rol",
-            type: FormFieldType.select,
+            type: FormFieldType.select_expr,
             required: true,
             width: "100%",
             value: null,

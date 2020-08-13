@@ -34,7 +34,7 @@
   </mat-card-subtitle>
   <mat-card-content *ngIf="!loading">
     <mat-chip-list class="mat-chip-list-stacked" fxLayout="row" fxLayoutAlign="start center" style="margin-bottom: .5em"
-      id="chiplist-{{extraContent.vocab.name}}">
+      id="chiplist-{{extraContent.vocab}}">
       <mat-chip *ngFor="let item of chipsList; let i=index" (removed)="removeChip(i)" [removable]="true">
         {{ getTermNameInATree(item) }}
         <mat-icon matChipRemove>cancel</mat-icon>

@@ -97,6 +97,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
       this.content.name,
       this.internalControl
     );
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAa funcionando")
 
     if (this.content.required) {
       this.internalControl.setValidators(
@@ -164,6 +165,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
     this.internalControl.setValue(this.content.value);
     this.setValidation();
   }
+  
   private removeTermFromValue(term: Term) {
     this.content.value = (this.content.value as []).filter(
       (e: Term) => e.id !== term.id

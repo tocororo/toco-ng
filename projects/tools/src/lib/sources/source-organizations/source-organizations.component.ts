@@ -5,6 +5,7 @@ import {
   Organization,
   SourceOrganization,
   SourcePersonRole,
+  SourceData,
 } from "@toco/tools/entities";
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material";
 
@@ -15,31 +16,36 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material";
 })
 export class SourceOrganizationsComponent implements OnInit {
   @Input()
-  public source: Source;
+  public sourceData: SourceData;
+
+  @Input()
+  public editable: boolean = true;
 
   public roles = SourceOrganizationRole;
   constructor(public dialog: MatDialog) {}
 
   ngOnInit() {
-    console.log(this.source.data.organizations);
-    this.source.data.organizations  = this.source.data.organizations.filter((element) => element.organization && element.role);
-    console.log(this.source.data.organizations );
+    console.log(this.sourceData.organizations);
+    this.sourceData.organizations  = this.sourceData.organizations.filter((element) => element.organization && element.role);
+    console.log(this.sourceData.organizations );
   }
 
   addOrg(cuban = true) {
     this.dialog.open(SourceOrganizationSelectDialog, {
+      width: '500px',
       data: {
+
         filter: cuban ? { type: "country", value: "Cuba" } : null,
         selectOrg: (org: Organization) => {
           if (
-            !this.source.data.organizations.find((o) => o.organization.id == org.id)
+            !this.sourceData.organizations.find((o) => o.organization.id == org.id)
           ) {
             let selected = new SourceOrganization();
             selected.organization = org;
             selected.role = cuban
               ? SourceOrganizationRole.MAIN.value
               : SourceOrganizationRole.COLABORATOR.value;
-            this.source.data.organizations.push(selected);
+            this.sourceData.organizations.push(selected);
           }
         },
       },
@@ -47,7 +53,7 @@ export class SourceOrganizationsComponent implements OnInit {
   }
 
   setAsMain(organization: Organization){
-    this.source.data.organizations.forEach(element => {
+    this.sourceData.organizations.forEach(element => {
       if(organization.id == element.organization.id){
         element.role = SourceOrganizationRole.MAIN.value
       } else {
@@ -57,7 +63,7 @@ export class SourceOrganizationsComponent implements OnInit {
   }
 
   removeInst(organization: Organization){
-    this.source.data.organizations = this.source.data.organizations.filter((o) => o.organization.id != organization.id);
+    this.sourceData.organizations = this.sourceData.organizations.filter((o) => o.organization.id != organization.id);
   }
 
 }
@@ -65,7 +71,7 @@ export class SourceOrganizationsComponent implements OnInit {
 @Component({
   selector: "toco-source-organizations-select-dialog",
   template: `<mat-dialog-content class="height-auto">
-    <toco-org-search
+    <toco-org-search 
       [orgFilter]="data.filter"
       (selectedOrg)="selectedOrg($event)"
     >

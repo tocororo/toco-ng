@@ -169,7 +169,7 @@ export class SourceEditComponent implements OnInit {
           // {
           //   name: 'source_type',
           //   label: 'Tipo de Revista',
-          //   type: FormFieldType.select,
+          //   type: FormFieldType.select_expr,
           //   required: true,
           //   width: '45%',
           //   value: this.journalVersion ? this.journalVersion.source_type : '',

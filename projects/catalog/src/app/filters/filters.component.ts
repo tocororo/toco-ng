@@ -146,12 +146,12 @@ export class FiltersComponent implements OnInit {
         description: "",
         iconName: "",
         formSection: this.formGroup,
-        // open: this.filters.get(CatalogFilterKeys.source_type) != '',
+        open: this.filters.get(CatalogFilterKeys.source_type) != '',
         formSectionContent: [
           {
             name: CatalogFilterKeys.source_type,
             label: "Tipo de Revista",
-            type: FormFieldType.select,
+            type: FormFieldType.select_expr,
             required: true,
             width: "100%",
             value: this.filters.get(CatalogFilterKeys.source_type),
@@ -185,9 +185,10 @@ export class FiltersComponent implements OnInit {
         description: "",
         iconName: "",
         formSection: this.formGroup,
-        // open: this.filters.get(CatalogFilterKeys.institutions) != '',
+        open: this.filters.get(CatalogFilterKeys.institutions) != '',
         formSectionContent: [
           {
+            parentFormSection: this.formGroup,
             name: CatalogFilterKeys.institutions,
             label: "Instituciones",
             type: FormFieldType.select_tree,
@@ -231,9 +232,10 @@ export class FiltersComponent implements OnInit {
         title: "Cobertura Temática:",
         iconName: "",
         description: "",
-        // open: this.filters.get(CatalogFilterKeys.subjects) != '',
+        open: this.filters.get(CatalogFilterKeys.subjects) != '',
         formSectionContent: [
           {
+            parentFormSection: this.formGroup,
             name: CatalogFilterKeys.subjects,
             label: "Materias",
             type: FormFieldType.vocabulary,
@@ -243,7 +245,8 @@ export class FiltersComponent implements OnInit {
             extraContent: {
               multiple: true,
               selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.subjects).split(","),
-              vocab: VocabulariesInmutableNames.SUBJECTS
+              vocab: VocabulariesInmutableNames.SUBJECTS,
+              level: 0
             }
           }
         ]
@@ -253,9 +256,10 @@ export class FiltersComponent implements OnInit {
         title: "Indizaciones:",
         iconName: "",
         description: "",
-        // open: this.filters.get(CatalogFilterKeys.grupo_mes) != '' || this.filters.get(CatalogFilterKeys.miar_types) != '',
+        open: this.filters.get(CatalogFilterKeys.grupo_mes) != '' || this.filters.get(CatalogFilterKeys.miar_types) != '',
         formSectionContent: [
           {
+            parentFormSection: this.formGroup,
             name: CatalogFilterKeys.grupo_mes,
             label: "Grupo MES",
             type: FormFieldType.vocabulary,
@@ -269,6 +273,7 @@ export class FiltersComponent implements OnInit {
             }
           },
           {
+            parentFormSection: this.formGroup,
             name: CatalogFilterKeys.miar_types,
             label: "Tipos de MIAR",
             type: FormFieldType.vocabulary,
@@ -278,7 +283,8 @@ export class FiltersComponent implements OnInit {
             extraContent: {
               multiple: true,
               selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.miar_types).split(","),
-              vocab: VocabulariesInmutableNames.INDEXES
+              vocab: VocabulariesInmutableNames.INDEXES,
+              level: 0
             }
           }
         ]
@@ -288,12 +294,12 @@ export class FiltersComponent implements OnInit {
         description: "",
         iconName: "",
         formSection: this.formGroup,
-        // open: this.filters.get(CatalogFilterKeys.source_status) != '' && this.filters.get(CatalogFilterKeys.source_status) != 'ALL',
+        open:this.filters.get(CatalogFilterKeys.source_status) != '' && this.filters.get(CatalogFilterKeys.source_status) != 'ALL',
         formSectionContent: [
           {
             name: CatalogFilterKeys.source_status,
             label: "Estado",
-            type: FormFieldType.select,
+            type: FormFieldType.select_expr,
             required: true,
             width: "100%",
             value: this.filters.get(CatalogFilterKeys.source_status),

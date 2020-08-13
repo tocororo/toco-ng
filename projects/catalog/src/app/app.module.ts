@@ -25,6 +25,7 @@ import { SourceEditComponent } from './source-edit/source-edit.component';
 import { FiltersComponent } from './filters/filters.component';
 import { CatalogComponent, DialogCatalogJournalInfoDialog } from './catalog/catalog.component';
 import { SourcesModule } from '@toco/tools/sources';
+import { FiltersService } from '@toco/tools/filters';
 
 @NgModule({
     declarations: [
@@ -61,7 +62,8 @@ import { SourcesModule } from '@toco/tools/sources';
         REQUEST_CACHE_DIFFERENT_TIME_WITH_MAP_PROVIDER,
         HTTP_INTERCEPTOR_PROVIDERS,
         CatalogService,
-        SearchService
+        SearchService, 
+        FiltersService
     ],
 
     bootstrap: [AppComponent]

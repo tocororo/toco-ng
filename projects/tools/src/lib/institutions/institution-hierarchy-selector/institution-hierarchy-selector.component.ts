@@ -149,7 +149,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
           {
             name: "organization",
             label: "Organismo",
-            type: FormFieldType.select,
+            type: FormFieldType.select_expr,
             required: true,
             width: "100%",
             value: this.level1 ? this.level1.uuid : "",
@@ -229,7 +229,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
           {
             name: "institution",
             label: "Institución",
-            type: FormFieldType.select,
+            type: FormFieldType.select_expr,
             required: true,
             width: "100%",
             value: this.level2 ? this.level2.uuid : null,
@@ -344,7 +344,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
           {
             name: "entity",
             label: "Unidad",
-            type: FormFieldType.select,
+            type: FormFieldType.select_expr,
             required: true,
             width: "100%",
             value: this.level3 ? this.level3.uuid : "new",

@@ -282,6 +282,9 @@ export enum FormFieldType
     /** A select control. */
     select = 'select',
 
+    /** A select control. */
+    select_expr = 'select_expr',
+
     /** A select with a filter control. */
     select_filter = 'select_filter',
 
