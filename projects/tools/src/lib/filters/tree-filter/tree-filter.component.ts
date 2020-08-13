@@ -42,6 +42,7 @@ interface TreeFilterData {
 export class TreeFilterComponent implements OnInit, FilterComponent {
   @Input() data: TreeFilterData;
 
+  chipsList: [];
 
   treeControl: FlatTreeControl<FlatTreeNode>;
   treeFlattener: MatTreeFlattener<TermNode, FlatTreeNode>;
@@ -250,5 +251,8 @@ export class TreeFilterComponent implements OnInit, FilterComponent {
       }
     }
     return null;
+  }
+  removeChip(i){
+    console.log(i);
   }
 }
