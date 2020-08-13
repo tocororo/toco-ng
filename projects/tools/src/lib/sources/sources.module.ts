@@ -27,6 +27,8 @@ import { ExtraInstitutionSelectorComponent } from '../institutions/extra-institu
 import { CatalogFiltersComponent } from './catalog-filters/catalog-filters.component';
 import { CatalogComponent, DialogCatalogJournalInfoDialog } from './catalog/catalog.component';
 import { SourcesListComponent } from './sources-list/sources-list.component';
+import { SourceOrganizationsComponent, SourceOrganizationSelectDialog } from './source-organizations/source-organizations.component';
+import { OrganizationsModule } from '../organizations';
 
 @NgModule({
     declarations: [
@@ -45,21 +47,25 @@ import { SourcesListComponent } from './sources-list/sources-list.component';
         CatalogComponent,
         CatalogFiltersComponent,
         SourcesListComponent,
-        DialogCatalogJournalInfoDialog
+        DialogCatalogJournalInfoDialog,
+        SourceOrganizationsComponent,
+        SourceOrganizationSelectDialog
     ],
     entryComponents: [
         JournalEditAddIndexComponent,
         JournalAddInstitutionComponent,
         JournalAddExtraInstitutionComponent,
         JournalInclusionAcceptComponent,
-        DialogCatalogJournalInfoDialog
+        DialogCatalogJournalInfoDialog,
+        SourceOrganizationSelectDialog
     ],
     imports: [
         SharedModule,
         CoreModule,
         ReactiveFormsModule,
         TocoFormsModule, 
-        InstitutionsModule
+        InstitutionsModule, 
+        OrganizationsModule
     ],
 
     exports: [

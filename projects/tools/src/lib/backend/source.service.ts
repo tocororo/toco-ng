@@ -12,6 +12,7 @@ import { EnvService } from "@tocoenv/tools/env.service";
 
 import { Response } from "@toco/tools/core";
 import { SourceVersion } from "@toco/tools/entities";
+import { stringToKeyValue } from "@angular/flex-layout/extended/typings/style/style-transforms";
 
 @Injectable()
 export class SourceService {
@@ -20,8 +21,8 @@ export class SourceService {
   private httpOptions = {
     headers: new HttpHeaders({
       "Content-Type": "application/json",
-      Authorization: "Bearer "
-    })
+      Authorization: "Bearer ",
+    }),
   };
 
   private token = "";
@@ -40,7 +41,7 @@ export class SourceService {
     params = params.set("page", page.toString(10));
 
     const options = {
-      params: params
+      params: params,
       // headers: this.headers
     };
     // this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
@@ -51,13 +52,52 @@ export class SourceService {
 
   newSource(source: any): void {}
 
+  private adhocstringgify(source: SourceVersion) {
+    let orgs: string = JSON.stringify(source.data.organizations);
+    console.log("-------------------", orgs);
+
+    let all = source.entitystringify();
+    console.log("-------------------", all);
+
+    let from = all.search('"organizations"') + 16;
+
+    let p1 = all.substr(0, from);
+    console.log(p1);
+
+    let p2 = all.substr(from);
+    console.log(p2);
+
+    let len = this.count_to_len(p2);
+    console.log(len);
+
+    let p3 = all.substr(from + len);
+    console.log(p3);
+
+    return p1 + orgs + p3;
+  }
+  private count_to_len(p2: string) {
+    if (p2[0] == "[") {
+      let len = 1;
+      let count = 1;
+      for (let index = 1; index < p2.length; index++) {
+        const element = p2[index];
+        len++;
+        if (p2[index] === "[") count++;
+        if (p2[index] === "]") count--;
+        if (count === 0) return len;
+      }
+    }
+  }
   editSource(source: SourceVersion, uuid: any): Observable<Response<any>> {
-    console.log(source.stringify());
+    // this.adhocstringgify(source)
+    // console.log(source)
+    // let valu = source.entitystringify();
+    // console.log("s: ", valu)
 
     const req = this.env.sceibaApi + this.prefix + "/" + uuid + "/edit";
     return this.http.post<Response<any>>(
       req,
-      source.stringify(),
+      this.adhocstringgify(source),
       this.httpOptions
     );
   }
@@ -94,7 +134,7 @@ export class SourceService {
   countSourcesByTerm(uuid, level = 0): Observable<Response<any>> {
     let params = new HttpParams();
     const options = {
-      params: params.set("level", level.toString(10))
+      params: params.set("level", level.toString(10)),
     };
     const req =
       this.env.sceibaApi + this.prefix + "/relations/" + uuid + "/count";

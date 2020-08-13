@@ -94,7 +94,7 @@ export class TaxonomyService {
     // tslint:disable-next-line: max-line-length
     return this.http.post<Response<any>>(
       this.env.sceibaApi + this.prefix + '/vocabulary/new',
-      vocab.stringify());
+      vocab.entitystringify());
   }
 
   editVocabulary(vocab: Vocabulary): Observable<Response<any>> {
@@ -104,7 +104,7 @@ export class TaxonomyService {
     // tslint:disable-next-line: max-line-length
     return this.http.post<Response<any>>(
       this.env.sceibaApi + this.prefix + '/vocabulary/edit/' + vocab.id,
-      vocab.stringify());
+      vocab.entitystringify());
   }
 
   getVocabularies(): Observable<Response<any>> {
@@ -113,12 +113,12 @@ export class TaxonomyService {
 
   newTerm(term: Term): Observable<Response<any>> {
     // this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
-    let a = term.stringify()
+    let a = term.entitystringify()
     console.log(a);
     // tslint:disable-next-line: max-line-length
     return this.http.post<Response<any>>(
       this.env.sceibaApi + this.prefix + '/term/new',
-      term.stringify());
+      term.entitystringify());
       // ,
       // this.httpOptions);
   }
@@ -127,7 +127,7 @@ export class TaxonomyService {
     // this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
     return this.http.post<Response<any>>(
       this.env.sceibaApi + this.prefix + '/term/edit/' + term.uuid,
-      term.stringify());
+      term.entitystringify());
       // ,
       // this.httpOptions);
   }

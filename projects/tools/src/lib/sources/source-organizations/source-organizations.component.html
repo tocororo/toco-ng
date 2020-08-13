@@ -1,0 +1,55 @@
+<ng-container>
+    <mat-toolbar
+      fxLayout="row wrap"
+      fxLayoutAlign="space-between center"
+      fxLayoutGap="20px"
+    >
+      <span>Adicionar</span>
+      <div
+        fxLayout="row wrap"
+        fxLayoutAlign="space-between center"
+        fxLayoutGap="20px"
+      >
+        <button mat-raised-button (click)="addOrg(true)">
+          Organizacion Cubana
+        </button>
+        <button mat-raised-button (click)="addOrg(false)">
+          Otras
+        </button>
+      </div>
+    </mat-toolbar>
+  
+    <mat-accordion>
+      <mat-expansion-panel
+        *ngFor="let org of source.data.organizations; let index = index"
+        [expanded]='false'
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ roles[org.role].label }}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{ org.organization.name }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-action-row>
+          <button
+            mat-stroked-button
+            [disabled]="org.length === 1"
+            (click)="setAsMain(org.organization)"
+          >
+            Establecer como Principal
+          </button>
+          <button
+            mat-stroked-button
+            [disabled]="org.length === 1"
+            (click)="removeInst(org.organization)"
+          >
+            Eliminar
+          </button>
+        </mat-action-row>
+        <toco-org-view [org]="org.organization" ></toco-org-view>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </ng-container>
+  

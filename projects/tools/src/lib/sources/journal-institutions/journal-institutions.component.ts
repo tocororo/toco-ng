@@ -6,7 +6,7 @@ import {
   TermSource,
   VocabulariesInmutableNames,
   TermNode,
-  SourceInstitutionRole
+  SourceOrganizationRole
 } from "@toco/tools/entities";
 import {
   PanelContent_Depr,
@@ -45,7 +45,7 @@ export class JournalInstitutionsComponent implements OnInit,  OnChanges {
   enableEdit = false;
 
   public initOrganizationPanel = false;
-  public roles = SourceInstitutionRole;
+  public roles = SourceOrganizationRole;
   public vocab = VocabulariesInmutableNames;
   panels: JournalInstitutionsPanel[] = [];
 
@@ -78,10 +78,10 @@ export class JournalInstitutionsComponent implements OnInit,  OnChanges {
       if (institutions.length == 1) {
         if (!institutions[0].data) {
           institutions[0].data = {
-            role: SourceInstitutionRole.MAIN.value
+            role: SourceOrganizationRole.MAIN.value
           };
         } else {
-          institutions[0].data["role"] = SourceInstitutionRole.MAIN.value;
+          institutions[0].data["role"] = SourceOrganizationRole.MAIN.value;
         }
       }
       institutions.forEach(i => {
@@ -100,7 +100,7 @@ export class JournalInstitutionsComponent implements OnInit,  OnChanges {
   addInst(extra = false) {
     let newInst = new TermSource();
     newInst.source_id = this.source.id;
-    newInst.data = { role: SourceInstitutionRole.COLABORATOR.value };
+    newInst.data = { role: SourceOrganizationRole.COLABORATOR.value };
     newInst.term = new Term();
     newInst.term.isNew = true;
 
@@ -176,11 +176,11 @@ export class JournalInstitutionsComponent implements OnInit,  OnChanges {
     this.panels.forEach((p, i) => {
       if (i == index) {
         p.inst.data = {
-          role: SourceInstitutionRole.MAIN.value
+          role: SourceOrganizationRole.MAIN.value
         };
       } else {
         p.inst.data = {
-          role: SourceInstitutionRole.COLABORATOR.value
+          role: SourceOrganizationRole.COLABORATOR.value
         };
       }
     })
