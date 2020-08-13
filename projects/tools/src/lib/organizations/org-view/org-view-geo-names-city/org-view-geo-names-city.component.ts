@@ -10,6 +10,20 @@ import { GeoNamesCity } from '@toco/tools/entities';
 })
 export class OrgViewGeoNamesCityComponent
 {
+    /**
+     * The control's appearance. 
+     * By default, its value is `'outline'`. 
+     */
+	@Input()
+	public appearance: string;
+
+	/**
+	 * The control's description. 
+	 * By default, its value is `undefined` and it is not showed. 
+	 */
+	@Input()
+	public desc: string;
+
 	/**
 	 * A linked GeoNames data associated with the organization. 
      * By default, its value is `undefined`. 
