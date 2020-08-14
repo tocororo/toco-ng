@@ -1,6 +1,7 @@
 
 import { Component, Input } from '@angular/core';
 
+import { Params } from '@toco/tools/core';
 import { GeoNamesCity } from '@toco/tools/entities';
 
 @Component({
@@ -31,8 +32,84 @@ export class OrgViewGeoNamesCityComponent
 	@Input()
 	public value: GeoNamesCity;
 
+	private _geonames_admin1: Params<any>[];
+	private _geonames_admin2: Params<any>[];
+	private _nuts_level1: Params<any>[];
+	private _nuts_level2: Params<any>[];
+	private _nuts_level3: Params<any>[];
+
 	public constructor()
 	{
+		this.appearance = 'outline';
+		this.desc = undefined;
 		this.value = undefined;
+
+		this._geonames_admin1 = [];
+		this._geonames_admin2 = [];
+		this._nuts_level1 = [];
+		this._nuts_level2 = [];
+		this._nuts_level3 = [];
+	}
+
+	public ngOnInit(): void
+	{
+		if (this.value)
+		{
+			this._createValueAsArray(this.value.geonames_admin1, this._geonames_admin1);
+			if (this.value.geonames_admin2) this._createValueAsArray(this.value.geonames_admin2, this._geonames_admin2);
+			this._createValueAsArray(this.value.nuts_level1, this._nuts_level1);
+			if (this.value.nuts_level2) this._createValueAsArray(this.value.nuts_level2, this._nuts_level2);
+			if (this.value.nuts_level3) this._createValueAsArray(this.value.nuts_level3, this._nuts_level3);
+		}
+	}
+
+	private _createValueAsArray(objFromCopy: Params<any>, arrayToFill: Params<any>[]): void
+	{
+		Object.keys(objFromCopy).forEach((key: string): void => {
+			arrayToFill.push({
+				'property': key,
+				'value': objFromCopy[key]
+			});
+		});
+	}
+
+	/**
+	 * Returns the `geonames_admin1` value as an array for using by `StaticTableComponent`. 
+	 */
+	public get getGeoNamesAdmin1(): Params<any>[]
+	{
+		return this._geonames_admin1;
+	}
+
+	/**
+	 * Returns the `geonames_admin2` value as an array for using by `StaticTableComponent`. 
+	 */
+	public get getGeoNamesAdmin2(): Params<any>[]
+	{
+		return this._geonames_admin2;
+	}
+
+	/**
+	 * Returns the `nuts_level1` value as an array for using by `StaticTableComponent`. 
+	 */
+	public get getNutsLevel1(): Params<any>[]
+	{
+		return this._nuts_level1;
+	}
+
+	/**
+	 * Returns the `nuts_level2` value as an array for using by `StaticTableComponent`. 
+	 */
+	public get getNutsLevel2(): Params<any>[]
+	{
+		return this._nuts_level2;
+	}
+
+	/**
+	 * Returns the `nuts_level3` value as an array for using by `StaticTableComponent`. 
+	 */
+	public get getNutsLevel3(): Params<any>[]
+	{
+		return this._nuts_level3;
 	}
 }
