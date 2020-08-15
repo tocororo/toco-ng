@@ -55,7 +55,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
   terms: TermNode[] = [];
 
   loading = true;
-  
+
   extraContent: VocabularyComponentExtraContent;
 
   // selectedTermsIds = [];
@@ -97,7 +97,6 @@ export class VocabularyComponent extends FormFieldControl_Experimental
       this.content.name,
       this.internalControl
     );
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAa funcionando")
 
     if (this.content.required) {
       this.internalControl.setValidators(
@@ -135,7 +134,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
         this.extraContent.excludeTermsIds = [];
       }
       this.content.value = [];
-      
+
       if (this.extraContent.level == undefined) {
         this.extraContent.level = 10;
       }
@@ -165,7 +164,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
     this.internalControl.setValue(this.content.value);
     this.setValidation();
   }
-  
+
   private removeTermFromValue(term: Term) {
     this.content.value = (this.content.value as []).filter(
       (e: Term) => e.id !== term.id

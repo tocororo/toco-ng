@@ -272,13 +272,13 @@
     <toco-journal-view-term
       title="Grupo:"
       [terms]="groupTerms"
-      [vocab_id]="vocabularies.MES_GROUPS"
+      [vocab_id]="vocabularies.INDEXES_CLASIFICATION"
     ></toco-journal-view-term>
 
     <toco-journal-view-term
       title="Provincia:"
       [terms]="provinceTerms"
-      [vocab_id]="vocabularies.PROVINCES"
+      [vocab_id]="vocabularies.CUBAN_PROVINCES"
     ></toco-journal-view-term>
 
     <toco-journal-view-term
@@ -301,7 +301,7 @@
         <mat-accordion>
           <ng-container *ngFor="let termSource of dataBaseTerms">
             <mat-expansion-panel
-              *ngIf="termSource.term.vocabulary_id == vocabularies.DATABASES"
+              *ngIf="termSource.term.vocabulary_id == vocabularies.INDEXES"
               (opened)="panelOpenState = true"
               (closed)="panelOpenState = false"
             >

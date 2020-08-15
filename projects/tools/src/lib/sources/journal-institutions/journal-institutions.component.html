@@ -33,7 +33,7 @@
           {{ panel.inst.term.name }}
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <ng-container *ngIf="panel.inst.term.vocabulary_id == vocab.INTITUTION">
+      <ng-container *ngIf="panel.inst.term.vocabulary_id == vocab.CUBAN_INTITUTIONS">
         <toco-institution-hierarchy-viewer
           [term]="panel.inst.term"
           [node]="panel.inst['h']"
