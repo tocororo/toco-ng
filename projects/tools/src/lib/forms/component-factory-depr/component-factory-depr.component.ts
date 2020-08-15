@@ -6,7 +6,7 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 
-import { FormFieldType } from '../../form-field.control';
+import { FormFieldType } from '../form-field.control';
 
 /**
  * This component represents a components' factory. 
@@ -17,11 +17,11 @@ import { FormFieldType } from '../../form-field.control';
  * `formControl` sale de adentro del `content` para un campo `Input` dentro de la clase `InputControl`. 
  */
 @Component({
-    selector: 'component-factory',
-    templateUrl: './component-factory.component.html',
-    styleUrls: ['./component-factory.component.scss']
+    selector: 'component-factory-depr',
+    templateUrl: './component-factory-depr.component.html',
+    styleUrls: ['./component-factory-depr.component.scss']
 })
-export class ComponentFactory implements OnInit
+export class ComponentFactory_Depr implements OnInit
 {
     // TODO: for datepicker, !!!! use https://stackblitz.com/edit/angular-material2-year-picker-7z9k4t?file=app%2Fcustom-datepicker%2Fyear-picker-component%2Fyear-picker.component.html
 
@@ -34,16 +34,17 @@ export class ComponentFactory implements OnInit
      * Input field that represents an array of types which types inherit from `FormFieldContent` interface. 
      */
     @Input()
-    public fieldsContent: Array<any>;
+    public fieldsContent: any[];
 
     public constructor()
     {
         this.formFieldType = FormFieldType;
+
+        this.fieldsContent = [];
     }
 
     public ngOnInit(): void
     {
-        if (this.fieldsContent == undefined) this.fieldsContent = [];
-        console.log('ComponentFactory fieldsContent: ', this.fieldsContent);
+        console.log('ComponentFactory_Depr fieldsContent: ', this.fieldsContent);
     }
 }

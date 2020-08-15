@@ -17,7 +17,7 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
         
-                <component-factory [fieldsContent]="panel.formSectionContent"></component-factory>
+                <component-factory-depr [fieldsContent]="panel.formSectionContent"></component-factory-depr>
         
                 <mat-action-row *ngIf="panel.actionLabel">
                     <!-- <button mat-button *ngIf="newStep > 0" color="warn" (click)="prevStep()">Anterior</button>
@@ -46,7 +46,7 @@
                     </mat-card-header>
             
                     <mat-card-content>
-                        <component-factory [fieldsContent]="panel.formSectionContent"></component-factory>
+                        <component-factory-depr [fieldsContent]="panel.formSectionContent"></component-factory-depr>
                     </mat-card-content>
             
                     <mat-card-actions *ngIf="i == count-1 && actionLabel" fxLayout="row" fxLayoutAlign="end center">
@@ -59,7 +59,7 @@
 
     <div fxLayout="column" *ngIf="!useContainer">
         <div *ngFor="let panel of panelsContent; let i=index; let count=count" class="toco-form-container">
-            <component-factory [fieldsContent]="panel.formSectionContent"></component-factory>
+            <component-factory-depr [fieldsContent]="panel.formSectionContent"></component-factory-depr>
         </div>
         <div  *ngIf="actionLabel" fxLayout="row" fxLayoutAlign="end center">
             <button mat-button color="primary" (click)="doAction()">{{ actionLabel }}</button>

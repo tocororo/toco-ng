@@ -12,7 +12,9 @@ import { IconService } from '@toco/tools/core';
 
 import { ActionButtonComponent } from './action/button/button-action.component';
 
-import { ComponentFactory } from './container/component-factory/component-factory.component';
+import { ComponentFactory } from './component-factory/component-factory.component';
+import { ComponentFactory_Depr } from './component-factory-depr/component-factory-depr.component';
+
 import { FormContainerComponent } from './container/form-container/form-container.component';
 import { ContainerPanelComponent } from './container/panel/panel-container.component';
 import { ContainerSimpleComponent } from './container/simple/simple-container.component';
@@ -40,6 +42,7 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
   declarations: [
     ActionButtonComponent,
     ComponentFactory,
+    ComponentFactory_Depr,
     FormContainerComponent,
     ContainerPanelComponent,
     ContainerSimpleComponent,
@@ -70,6 +73,7 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
   exports: [
     ActionButtonComponent,
     ComponentFactory,
+    ComponentFactory_Depr,
     FormContainerComponent,
     ContainerPanelComponent,
     ContainerSimpleComponent,
