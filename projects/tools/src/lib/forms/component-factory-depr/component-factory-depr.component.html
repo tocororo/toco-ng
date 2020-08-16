@@ -1,40 +1,41 @@
 
 <div fxLayout="row wrap" fxLayout.xs="column"
-fxLayoutAlign="space-between end" fxLayoutAlign.xs="space-between center"
-fxLayoutGap="1em" class="form-field-component">
+    fxLayoutAlign="space-between end" fxLayoutAlign.xs="space-between center"
+    fxLayoutGap="1em" class="form-field-component"
+>
 
-    <ng-container *ngFor="let fieldContent of fieldsContent" [ngSwitch]="fieldContent.type">
+    <ng-container *ngFor="let componentContent of componentsContent" [ngSwitch]="componentContent.type">
 
         <ng-container 
             *ngSwitchCase="formFieldType.checkbox"
-            [formGroup]="fieldContent.formGroup"
+            [formGroup]="componentContent.formGroup"
         >
             <mat-checkbox
-                [style.width]="fieldContent.width"
-                [style.minWidth]="fieldContent.minWidth"
-                [value]="fieldContent.value"
+                [style.width]="componentContent.width"
+                [style.minWidth]="componentContent.minWidth"
+                [value]="componentContent.value"
                 (input)="$event.target.value"
-                name="{{ fieldContent.name }}"
-                required="{{ fieldContent.required }}"
-                [formControlName]="fieldContent.name"
+                name="{{ componentContent.name }}"
+                required="{{ componentContent.required }}"
+                [formControlName]="componentContent.name"
             >
-                {{ fieldContent.label }}
+                {{ componentContent.label }}
             </mat-checkbox>
         </ng-container>
 <!-- 
         <mat-form-field 
             *ngSwitchCase="formFieldType.textarea"
-            [style.width]="fieldContent.width"
-            [style.minWidth]="fieldContent.minWidth"
-            [formGroup]="fieldContent.formGroup"
+            [style.width]="componentContent.width"
+            [style.minWidth]="componentContent.minWidth"
+            [formGroup]="componentContent.formGroup"
         >
             <textarea 
-                matInput [value]="fieldContent.value"
+                matInput [value]="componentContent.value"
                 (input)="$event.target.value"
-                name="{{ fieldContent.name }}"
-                placeholder="{{ fieldContent.label }}"
-                required="{{ fieldContent.required }}"
-                [formControlName]="fieldContent.name"
+                name="{{ componentContent.name }}"
+                placeholder="{{ componentContent.label }}"
+                required="{{ componentContent.required }}"
+                [formControlName]="componentContent.name"
                 minRows="20"
             ></textarea>
         </mat-form-field> -->
@@ -42,18 +43,18 @@ fxLayoutGap="1em" class="form-field-component">
 
         <mat-form-field 
             *ngSwitchCase="formFieldType.datepicker"
-            [style.width]="fieldContent.width"
-            [formGroup]="fieldContent.formGroup"
+            [style.width]="componentContent.width"
+            [formGroup]="componentContent.formGroup"
         >
             <input 
                 matInput
-                [value]="fieldContent.value"
+                [value]="componentContent.value"
                 (input)="$event.target.value"
                 [matDatepicker]="picker"
-                name="{{ fieldContent.name }}"
-                placeholder="{{ fieldContent.label }}"
-                required="{{ fieldContent.required }}"
-                [formControlName]="fieldContent.name"
+                name="{{ componentContent.name }}"
+                placeholder="{{ componentContent.label }}"
+                required="{{ componentContent.required }}"
+                [formControlName]="componentContent.name"
             >
             <mat-datepicker-toggle
                 matSuffix [for]="picker"
@@ -64,42 +65,42 @@ fxLayoutGap="1em" class="form-field-component">
             ></mat-datepicker>
         </mat-form-field>
 
-        <action-button *ngSwitchCase="formFieldType.action_button" [content]="fieldContent"></action-button>
+        <action-button *ngSwitchCase="formFieldType.action_button" [content]="componentContent"></action-button>
 
 
-        <container-panel *ngSwitchCase="formFieldType.container_panel" [content]="fieldContent"></container-panel>
+        <container-panel *ngSwitchCase="formFieldType.container_panel" [content]="componentContent"></container-panel>
 
-        <container-simple *ngSwitchCase="formFieldType.container_simple" [content]="fieldContent"></container-simple>
-
-
-        <container-label-diff-lang *ngSwitchCase="formFieldType.container_label_diff_lang" [content]="fieldContent"></container-label-diff-lang>
+        <container-simple *ngSwitchCase="formFieldType.container_simple" [content]="componentContent"></container-simple>
 
 
-        <input-url *ngSwitchCase="formFieldType.url" [content]="fieldContent"></input-url>
+        <container-label-diff-lang *ngSwitchCase="formFieldType.container_label_diff_lang" [content]="componentContent"></container-label-diff-lang>
+
+
+        <input-url *ngSwitchCase="formFieldType.url" [content]="componentContent"></input-url>
         
-        <input-email *ngSwitchCase="formFieldType.email" [content]="fieldContent"></input-email>
+        <input-email *ngSwitchCase="formFieldType.email" [content]="componentContent"></input-email>
 
-        <input-identifier *ngSwitchCase="formFieldType.identifier" [content]="fieldContent"></input-identifier>
+        <input-identifier *ngSwitchCase="formFieldType.identifier" [content]="componentContent"></input-identifier>
 
-        <input-issn *ngSwitchCase="formFieldType.issn" [content]="fieldContent"></input-issn>
+        <input-issn *ngSwitchCase="formFieldType.issn" [content]="componentContent"></input-issn>
 
-        <input-rnps *ngSwitchCase="formFieldType.rnps" [content]="fieldContent"></input-rnps>
+        <input-rnps *ngSwitchCase="formFieldType.rnps" [content]="componentContent"></input-rnps>
 
-        <input-select *ngSwitchCase="formFieldType.select" [content]="fieldContent"></input-select>
+        <input-select *ngSwitchCase="formFieldType.select" [content]="componentContent"></input-select>
 
-        <toco-vocabulary *ngSwitchCase="formFieldType.vocabulary" [content]="fieldContent"></toco-vocabulary>
+        <toco-vocabulary *ngSwitchCase="formFieldType.vocabulary" [content]="componentContent"></toco-vocabulary>
 
-        <toco-term-parent *ngSwitchCase="formFieldType.term_parent" [content]="fieldContent"></toco-term-parent>
+        <toco-term-parent *ngSwitchCase="formFieldType.term_parent" [content]="componentContent"></toco-term-parent>
 
-        <toco-textarea *ngSwitchCase="formFieldType.textarea" [content]="fieldContent"></toco-textarea>
+        <toco-textarea *ngSwitchCase="formFieldType.textarea" [content]="componentContent"></toco-textarea>
 
-        <!-- <toco-select *ngSwitchCase="formFieldType.select" [content]="fieldContent"></toco-select> -->
+        <!-- <toco-select *ngSwitchCase="formFieldType.select" [content]="componentContent"></toco-select> -->
 
-        <toco-select-filter *ngSwitchCase="formFieldType.select_filter" [content]="fieldContent"></toco-select-filter>
+        <toco-select-filter *ngSwitchCase="formFieldType.select_filter" [content]="componentContent"></toco-select-filter>
 
-        <toco-select-tree *ngSwitchCase="formFieldType.select_tree" [content]="fieldContent"></toco-select-tree>
+        <toco-select-tree *ngSwitchCase="formFieldType.select_tree" [content]="componentContent"></toco-select-tree>
 
-        <input-text *ngSwitchDefault [content]="fieldContent"></input-text>
+        <input-text *ngSwitchDefault [content]="componentContent"></input-text>
 
     </ng-container>
 

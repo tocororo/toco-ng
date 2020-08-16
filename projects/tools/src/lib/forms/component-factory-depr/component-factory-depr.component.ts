@@ -32,19 +32,20 @@ export class ComponentFactory_Depr implements OnInit
 
     /**
      * Input field that represents an array of types which types inherit from `FormFieldContent` interface. 
+     * This array contains the content of the components that the factory is going to create. 
      */
     @Input()
-    public fieldsContent: any[];
+    public componentsContent: any[];
 
     public constructor()
     {
         this.formFieldType = FormFieldType;
 
-        this.fieldsContent = [];
+        this.componentsContent = [];
     }
 
     public ngOnInit(): void
     {
-        console.log('ComponentFactory_Depr fieldsContent: ', this.fieldsContent);
+        console.log('ComponentFactory_Depr componentsContent: ', this.componentsContent);
     }
 }

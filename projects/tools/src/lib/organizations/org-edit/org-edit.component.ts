@@ -6,7 +6,9 @@ import { FormGroup, FormArray } from '@angular/forms';
 import { Organization } from '@toco/tools/entities';
 import { FormFieldType, TextInputAppearance, OperationAction, FormSection, PanelContent, 
 	ContainerContent, HintValue, HintPosition, IconValue, IconSource, ContentPosition, 
-	ActionControl, ActionContent } from '@toco/tools/forms';
+	ActionControl, ActionContent, ContainerPanelComponent, 
+	InputTextComponent, InputSelectComponent, ContainerSimpleComponent, InputIdentifierComponent, 
+	InputUrlComponent, InputEmailComponent, ActionButtonComponent } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-edit',
@@ -81,6 +83,7 @@ export class OrgEditComponent implements OnInit
 			'name': 'panel',
 			'label': 'Edita la organización seleccionada',
 			'type': FormFieldType.container_panel,
+			'componentType': ContainerPanelComponent,
 			'title': 'Edita la organización seleccionada',
 			'description': '',
 			'iconName': undefined /*''*/,
@@ -89,6 +92,7 @@ export class OrgEditComponent implements OnInit
 					'name': 'name',
 					'label': 'Name typically used to refer to the institute',
 					'type': FormFieldType.text,
+					'componentType': InputTextComponent,
 					'required': true,
 					'value': this.org.name,
 					'width': '100%',
@@ -99,6 +103,7 @@ export class OrgEditComponent implements OnInit
 					'name': 'status',
 					'label': 'Institute status',
 					'type': FormFieldType.select,
+					'componentType': InputSelectComponent,
 					'required': true,
 					'value': this.org.status,
 					'width': '45%',
@@ -127,6 +132,7 @@ export class OrgEditComponent implements OnInit
 					'name': 'aliases',
 					'label': 'The list of other names the institute is known as',
 					'type': FormFieldType.select,
+					'componentType': InputSelectComponent,
 					'required': false,
 					'value': this.org.aliases,
 					'width': '100%',
@@ -139,6 +145,7 @@ export class OrgEditComponent implements OnInit
 					'name': 'acronyms',
 					'label': 'The of short acronyms the institute is known as (e.g. MRC for the Medical Research Council)',
 					'type': FormFieldType.select,
+					'componentType': InputSelectComponent,
 					'required': false,
 					'value': this.org.acronyms,
 					'width': '100%',
@@ -151,6 +158,7 @@ export class OrgEditComponent implements OnInit
 					'name': 'types',
 					'label': 'The list of types describing the institute',
 					'type': FormFieldType.select,
+					'componentType': InputSelectComponent,
 					'required': true,
 					'value': this.org.types,
 					'width': '100%',
@@ -196,6 +204,7 @@ export class OrgEditComponent implements OnInit
 					'name': 'wikipedia_url',
 					'label': 'URL of the wikipedia page for the institute',
 					'type': FormFieldType.url,
+					'componentType': InputUrlComponent,
 					'required': false,
 					'value': this.org.wikipedia_url,
 					'width': '45%',
@@ -206,6 +215,7 @@ export class OrgEditComponent implements OnInit
 					'name': 'email_address',
 					'label': 'Contact email address for the institute',
 					'type': FormFieldType.email,
+					'componentType': InputEmailComponent,
 					'required': true,
 					'value': this.org.email_address,
 					'width': '45%',
@@ -216,6 +226,7 @@ export class OrgEditComponent implements OnInit
 					'name': 'ip_addresses',
 					'label': 'The list of IP addresses known to belong to the institute',
 					'type': FormFieldType.select,
+					'componentType': InputSelectComponent,
 					'required': false,
 					'value': this.org.ip_addresses,
 					'width': '100%',
@@ -228,6 +239,7 @@ export class OrgEditComponent implements OnInit
 					'name': 'established',
 					'label': 'Year the institute opened, CE',
 					'type': FormFieldType.text,
+					'componentType': InputTextComponent,
 					'required': true,
 					'value': this.org.established,
 					'width': '45%',
@@ -238,6 +250,7 @@ export class OrgEditComponent implements OnInit
 					'name': 'links',
 					'label': 'The list of URLs linking to things like the homepage for the institute',
 					'type': FormFieldType.select,
+					'componentType': InputSelectComponent,
 					'required': false,
 					'value': this.org.links,
 					'width': '100%',
@@ -263,6 +276,7 @@ export class OrgEditComponent implements OnInit
 			'name': 'labelsSimple',
 			'label': 'Name of the institute in different languages',
 			'type': FormFieldType.container_simple,
+			'componentType': ContainerSimpleComponent,
 			'value': this.org.labels,
 			'width': '100%',
 			'formSectionContent': [
@@ -270,7 +284,8 @@ export class OrgEditComponent implements OnInit
 					'formSection': new FormGroup({ }, [ ]),
 					'name': '0',
 					'label': 'Label diff lang ',
-					'type': FormFieldType.container_label_diff_lang,
+					'type': FormFieldType.container_simple,
+					'componentType': ContainerSimpleComponent,
 					'required': true,
 					'width': '100%',
 		//            'appearance': TextInputAppearance.outline,
@@ -280,6 +295,7 @@ export class OrgEditComponent implements OnInit
 							'name': 'label',
 							'label': 'Institute name in a language variant',
 							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
 							'required': true,
 							/* 'value': undefined, this is the default behavior. */
 							'width': '70%',
@@ -290,6 +306,7 @@ export class OrgEditComponent implements OnInit
 							'name': 'iso639',
 							'label': 'ISO-639-1 language code',
 							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
 							'required': true,
 							/* 'value': undefined, this is the default behavior. */
 							'width': '30%',
@@ -315,6 +332,7 @@ export class OrgEditComponent implements OnInit
 			'name': 'relationshipsSimple',
 			'label': 'Any relationships the institute has to others',
 			'type': FormFieldType.container_simple,
+			'componentType': ContainerSimpleComponent,
 			'value': this.org.relationships,
 			'width': '100%',
 			'formSectionContent': [
@@ -322,7 +340,8 @@ export class OrgEditComponent implements OnInit
 					'formSection': new FormGroup({ }, [ ]),
 					'name': '0',
 					'label': 'Relationship',
-					'type': FormFieldType.container_label_diff_lang,
+					'type': FormFieldType.container_simple,
+					'componentType': ContainerSimpleComponent,
 					'required': true,
 					'width': '100%',
 		//            'appearance': TextInputAppearance.outline,
@@ -335,6 +354,7 @@ export class OrgEditComponent implements OnInit
 							'name': 'type',
 							'label': 'Relationship type',
 							'type': FormFieldType.select,
+							'componentType': InputSelectComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
@@ -359,6 +379,7 @@ export class OrgEditComponent implements OnInit
 							'name': 'label',
 							'label': 'Name of the related institute',
 							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
@@ -382,6 +403,7 @@ export class OrgEditComponent implements OnInit
 			'name': 'addressesSimple',
 			'label': 'An array of addresses associated with the institute',
 			'type': FormFieldType.container_simple,
+			'componentType': ContainerSimpleComponent,
 			'value': this.org.addresses,
 			'width': '100%',
 			'formSectionContent': [
@@ -389,7 +411,8 @@ export class OrgEditComponent implements OnInit
 					'formSection': new FormGroup({ }, [ ]),
 					'name': '0',
 					'label': 'Address',
-					'type': FormFieldType.container_label_diff_lang,
+					'type': FormFieldType.container_simple,
+					'componentType': ContainerSimpleComponent,
 					'required': true,
 					'width': '100%',
 		//            'appearance': TextInputAppearance.outline,
@@ -399,6 +422,7 @@ export class OrgEditComponent implements OnInit
 							'name': 'city',
 							'label': 'Name of the city',
 							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
@@ -408,6 +432,7 @@ export class OrgEditComponent implements OnInit
 							'name': 'country',
 							'label': 'Name of the country',
 							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
@@ -417,6 +442,7 @@ export class OrgEditComponent implements OnInit
 							'name': 'country_code',
 							'label': 'ISO 3166-1 alpha-2 code of the country',
 							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
@@ -426,6 +452,7 @@ export class OrgEditComponent implements OnInit
 							'name': 'lat',
 							'label': 'Latitute of the institute',
 							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
@@ -435,6 +462,7 @@ export class OrgEditComponent implements OnInit
 							'name': 'lng',
 							'label': 'Longitude of the institute',
 							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
@@ -444,6 +472,7 @@ export class OrgEditComponent implements OnInit
 							'name': 'line_1',
 							'label': 'First line of the address',
 							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
@@ -453,6 +482,7 @@ export class OrgEditComponent implements OnInit
 							'name': 'line_2',
 							'label': 'Second line of the address',
 							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
 							'required': false,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
@@ -462,6 +492,7 @@ export class OrgEditComponent implements OnInit
 							'name': 'line_3',
 							'label': 'Third line of the address',
 							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
 							'required': false,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
@@ -471,6 +502,7 @@ export class OrgEditComponent implements OnInit
 							'name': 'postcode',
 							'label': 'Postcode/zipcode',
 							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
@@ -484,6 +516,7 @@ export class OrgEditComponent implements OnInit
 							'name': 'state',
 							'label': 'Name of the state/region',
 							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
@@ -493,6 +526,7 @@ export class OrgEditComponent implements OnInit
 							'name': 'state_code',
 							'label': 'ISO 3166-2 region code',
 							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
@@ -517,7 +551,8 @@ export class OrgEditComponent implements OnInit
             'formSection': new FormGroup({ }, [ ]),
             'name': 'identifiers',
             'label': description,
-            'type': FormFieldType.container_simple,
+			'type': FormFieldType.container_simple,
+			'componentType': ContainerSimpleComponent,
             'required': true,
             'width': '100%',
 //            'appearance': TextInputAppearance.outline,
@@ -526,7 +561,8 @@ export class OrgEditComponent implements OnInit
                 {
                     'name': 'isni',   //idtype
                     'label': 'isni',  //idtype
-                    'type': FormFieldType.identifier,
+					'type': FormFieldType.identifier,
+					'componentType': InputIdentifierComponent,
                     'required': true,
                     'value': 'Un_id_isni',
                     'width': '50%',
@@ -537,7 +573,8 @@ export class OrgEditComponent implements OnInit
                 {
                     'name': 'grid',   //grid
                     'label': 'grid',  //grid
-                    'type': FormFieldType.identifier,
+					'type': FormFieldType.identifier,
+					'componentType': InputIdentifierComponent,
                     'required': true,
                     'value': 'Un_id_grid',
                     'width': '50%',
@@ -547,49 +584,6 @@ export class OrgEditComponent implements OnInit
                 },
             ]
 		};
-		
-		// {
-		// 	name: 'identifiers',
-		// 	label: 'Organization Identifiers, different from GRID mapping',
-		// 	type: FormFieldType.container_simple,
-		// 	required: true,
-		// 	value: undefined,
-		// 	width: '100%',
-		// 	appearance: TextInputAppearance.outline,
-		// 	ariaLabel: 'Organization Identifiers, different from GRID mapping',
-		// 	extraContent: [
-		// 		{
-		// 			name: 'name1',
-		// 			label: 'Name typically used to refer to the institute',
-		// 			type: FormFieldType.text,
-		// 			required: true,
-		// 			value: this.org.identifiers[0],
-		// 			width: '100%',
-		// 			appearance: TextInputAppearance.outline,
-		// 			ariaLabel: 'Name typically used to refer to the institute'
-		// 		},
-		// 		{
-		// 			name: 'name2',
-		// 			label: 'Name typically used to refer to the institute',
-		// 			type: FormFieldType.text,
-		// 			required: true,
-		// 			value: this.org.identifiers[1],
-		// 			width: '100%',
-		// 			appearance: TextInputAppearance.outline,
-		// 			ariaLabel: 'Name typically used to refer to the institute'
-		// 		},
-		// 		{
-		// 			name: 'name3',
-		// 			label: 'Name typically used to refer to the institute',
-		// 			type: FormFieldType.text,
-		// 			required: true,
-		// 			value: this.org.identifiers[2],
-		// 			width: '100%',
-		// 			appearance: TextInputAppearance.outline,
-		// 			ariaLabel: 'Name typically used to refer to the institute'
-		// 		}
-		// 	]
-		// };
 	}
 
 	/**
@@ -601,6 +595,7 @@ export class OrgEditComponent implements OnInit
 		return {
 			'label': 'Remove',
 			'type': FormFieldType.action_button,
+			'componentType': ActionButtonComponent,
 			'width': '30%',
 			// 'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'Remove',

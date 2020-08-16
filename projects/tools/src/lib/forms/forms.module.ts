@@ -8,11 +8,11 @@ import { SharedModule } from '@toco/tools/shared';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { IconService } from '@toco/tools/core';
+import { CoreModule, IconService } from '@toco/tools/core';
 
 import { ActionButtonComponent } from './action/button/button-action.component';
 
-import { ComponentFactory } from './component-factory/component-factory.component';
+import { ComponentsFactory } from './components-factory/components-factory.component';
 import { ComponentFactory_Depr } from './component-factory-depr/component-factory-depr.component';
 
 import { FormContainerComponent } from './container/form-container/form-container.component';
@@ -41,7 +41,7 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
 @NgModule({
   declarations: [
     ActionButtonComponent,
-    ComponentFactory,
+    ComponentsFactory,
     ComponentFactory_Depr,
     FormContainerComponent,
     ContainerPanelComponent,
@@ -67,12 +67,27 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
   imports: [
     SharedModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CoreModule
+  ],
+
+  /* In order to ensure that the compiler still generates a factory for all dynamically loaded components. */
+  entryComponents: [
+    ActionButtonComponent,
+    ContainerPanelComponent,
+    ContainerSimpleComponent,
+    InputTextComponent,
+    InputEmailComponent,
+    InputIdentifierComponent,
+    InputIssnComponent,
+    InputRnpsComponent,
+    InputSelectComponent,
+    InputUrlComponent    
   ],
 
   exports: [
     ActionButtonComponent,
-    ComponentFactory,
+    ComponentsFactory,
     ComponentFactory_Depr,
     FormContainerComponent,
     ContainerPanelComponent,

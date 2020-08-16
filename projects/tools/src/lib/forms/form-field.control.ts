@@ -4,13 +4,14 @@
  */
 
 
-import { Input } from '@angular/core';
+import { Input, Type } from '@angular/core';
 import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
 import { isObject } from 'util';
 
 import { Params, emptyString } from '@toco/tools/core';
 import { IconService } from '@toco/tools/core';
 
+import { InputTextComponent } from './input/text/text-input.component';
 import { ContainerControl } from './container/container.control';
 
 /**
@@ -365,9 +366,10 @@ export interface FormFieldContent
 
     /**
      * Returns the control's type. 
-     * By default, its value is `FormFieldType.text`. 
+     * By default, its value is `FormFieldType.text` or `InputTextComponent` respectively. 
      */
     type?: FormFieldType;
+    componentType?: Type<any>;
 
 	/**
 	 * Returns the name that is used to save the control's value as a name/value pair. 
@@ -555,6 +557,7 @@ export abstract class FormFieldControl
 
         /******************************* Other properties. ********************************/
         if (this.content.type == undefined) this.content.type = FormFieldType.text;
+//        if (this.content.componentType == undefined) this.content.componentType = InputTextComponent;
         if (this.content.name == undefined) this.content.name = label.toLowerCase().replace(/ /g, '_');  /* Sets the `name` in lowercase and replaces the spaces by underscores. */
     }
 

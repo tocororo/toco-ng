@@ -12,7 +12,7 @@ export * from './forms.module';
 export * from './action/button/button-action.component';
 export * from './action/action.control';
 
-export * from './component-factory/component-factory.component';
+export * from './components-factory/components-factory.component';
 export * from './component-factory-depr/component-factory-depr.component';
 
 export * from './container/form-container/form-container.component';

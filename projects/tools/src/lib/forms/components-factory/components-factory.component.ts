@@ -4,11 +4,11 @@
  */
 
 
-import { Component, OnInit, Input, ViewChild, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ComponentFactoryResolver,
+    ComponentFactory, ViewContainerRef, ComponentRef } from '@angular/core';
 
 import { GetViewContainerDirective } from '@toco/tools/core';
-
-import { FormFieldType } from '../form-field.control';
+import { FormFieldControl } from '../form-field.control';
 
 /**
  * This component represents a components' factory. 
@@ -19,37 +19,49 @@ import { FormFieldType } from '../form-field.control';
  * `formControl` sale de adentro del `content` para un campo `Input` dentro de la clase `InputControl`. 
  */
 @Component({
-    selector: 'component-factory',
-    templateUrl: './component-factory.component.html',
-    styleUrls: ['./component-factory.component.scss']
+    selector: 'components-factory',
+    templateUrl: './components-factory.component.html',
+    styleUrls: ['./components-factory.component.scss']
 })
-export class ComponentFactory implements OnInit
+export class ComponentsFactory implements OnInit
 {
     // TODO: for datepicker, !!!! use https://stackblitz.com/edit/angular-material2-year-picker-7z9k4t?file=app%2Fcustom-datepicker%2Fyear-picker-component%2Fyear-picker.component.html
 
     /**
-     * Represents the `FormFieldType` enum for internal use. 
-     */
-    public readonly formFieldType: typeof FormFieldType;
-
-    /**
      * Input field that represents an array of types which types inherit from `FormFieldContent` interface. 
+     * This array contains the content of the components that the factory is going to create. 
      */
     @Input()
-    public fieldsContent: any[];
+    public componentsContent: any[];
 
     @ViewChild(GetViewContainerDirective, { static: true })
     private _componentHost: GetViewContainerDirective;
 
     public constructor(private _componentFactoryResolver: ComponentFactoryResolver)
     {
-        this.formFieldType = FormFieldType;
-
-        this.fieldsContent = [];
+        this.componentsContent = [];
     }
 
     public ngOnInit(): void
     {
-        console.log('ComponentFactory fieldsContent: ', this.fieldsContent);
+        console.log('ComponentsFactory componentsContent: ', this.componentsContent);
+
+        this._createComponents();
+    }
+
+    private _createComponents(): void
+    {
+        /* The factory object that creates a component of the given type. */
+        let cf: ComponentFactory<any>;
+        let cr: ComponentRef<any>;
+
+        const viewContainerRef: ViewContainerRef = this._componentHost.viewContainerRef;
+
+        for (let componentContent of this.componentsContent)
+        {
+            cf = this._componentFactoryResolver.resolveComponentFactory(componentContent.componentType);
+            cr = viewContainerRef.createComponent(cf);
+            (cr.instance as FormFieldControl).content = componentContent;
+        }
     }
 }
