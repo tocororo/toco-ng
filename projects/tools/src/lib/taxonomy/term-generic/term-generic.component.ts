@@ -93,10 +93,10 @@ export class TermGenericComponent implements OnInit {
 				{
 					// get the result from formGroup
 					const result = new Term();
-					result.load_from_data(this.data.term);
-					result.load_from_data(this.formGroup.value);
+					result.deepcopy(this.data.term);
+					result.deepcopy(this.formGroup.value);
 					result.data = this._getTermDataObject();
-					result.data.load_from_data(this.formGroup.value);
+					result.data.deepcopy(this.formGroup.value);
 
 					// Set the parent term, if any
 					const parent = this.formGroup.value["parent_id"];

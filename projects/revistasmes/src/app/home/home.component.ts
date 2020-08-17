@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
             response => {
                 if (response && response.data && response.data.home_statics) {
                   console.log(response)
-                    
+
                     this.institutionsCount = response.data.home_statics.institutions_count;
 
                     this.records = response.data.home_statics.records;
@@ -59,13 +59,13 @@ export class HomeComponent implements OnInit {
 
                     response.data.home_statics.last_sources.forEach( (j: Journal) => {
                         let jl = new Journal();
-                        jl.load_from_data(j);
+                        jl.deepcopy(j);
                         this.lastSources.push( jl );
                     });
 
                 }
                 console.log(response);
-                
+
               },
               (error: any) => {},
               () => {}
@@ -78,14 +78,14 @@ export class HomeComponent implements OnInit {
             console.log(response);
             if (response.status == "success") {
               let journalVersion = new JournalVersion();
-              journalVersion.load_from_data(response.data.sources);
+              journalVersion.deepcopy(response.data.sources);
               const dialogRef = this.dialog.open(DialogCatalogJournalInfoDialog, {
                 data: {
                   journalVersion: journalVersion,
                   journalUUID: uuid
                 }
               });
-    
+
               dialogRef.afterClosed();
             } else {
               const m = new MessageHandler(this._snackBar);

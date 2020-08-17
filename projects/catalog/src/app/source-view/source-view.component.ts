@@ -42,15 +42,15 @@ export class SourceViewComponent implements OnInit {
           switch (src.source_type) {
             case this.sourceType.JOURNAL.value:
               this.source = new Journal();
-              this.source.load_from_data(src);
+              this.source.deepcopy(src);
 
               this.editingSource = new JournalVersion();
-              this.editingSource.load_from_data(this.source.data)
+              this.editingSource.deepcopy(this.source.data)
               break;
 
             default:
               this.source = new Source();
-              this.source.load_from_data(src);
+              this.source.deepcopy(src);
               this.editingSource = new SourceVersion();
           }
           this._load_source_version();
@@ -76,7 +76,7 @@ export class SourceViewComponent implements OnInit {
           default:
             this.editingSource = new SourceVersion();
         }
-        this.editingSource.load_from_data(version);
+        this.editingSource.deepcopy(version);
       }
     });
   }
@@ -104,7 +104,7 @@ export class SourceViewComponent implements OnInit {
                 this.saving = false;
                 const m = new MessageHandler(this._snackBar);
                 if (res.status == ResponseStatus.SUCCESS && res.data.source) {
-                  this.source.load_from_data(res.data.source);
+                  this.source.deepcopy(res.data.source);
                   // this.ngOnInit();
                   m.showMessage(StatusCode.OK, "Guardado con éxito");
                 } else {
@@ -165,7 +165,7 @@ export class SourceViewComponent implements OnInit {
   template: `
       <h1 mat-dialog-title>Guardar cambios</h1>
       <div mat-dialog-content>
-      
+
       <mat-form-field>
           <mat-label>Comentario extra</mat-label>
           <textarea matInput [(ngModel)]="data.comment"> </textarea>

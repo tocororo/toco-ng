@@ -4,7 +4,7 @@
  */
 
 
-import { Entity } from "./entity";
+import { Entity } from "./common";
 
 export class Repository extends Entity {
     source_id: string;

@@ -25,13 +25,14 @@ import {
   ISSN,
   JournalVersion,
   Hit,
-  Source
+  Source,
+  SourceData
 } from "@toco/tools/entities";
 import { FilterHttpMap, FiltersService } from "@toco/tools/filters";
 
 import { EnvService } from "@tocoenv/tools/env.service";
 
-import { CatalogService, SearchService } from "@toco/tools/backend";
+import { CatalogService, SearchService, SourceService } from "@toco/tools/backend";
 import {
   MatSnackBar,
   MatDialog,
@@ -123,6 +124,7 @@ export class CatalogComponent implements OnInit, OnChanges{
   constructor(
     private searchService: SearchService,
     private service: CatalogService,
+    private sourceService: SourceService,
     private metadata: MetadataService,
     private filterService: FiltersService,
     private env: EnvService,
@@ -187,7 +189,7 @@ export class CatalogComponent implements OnInit, OnChanges{
         if(this.organizationUUID != ''){
           query = '(relations.uuid:' + this.organizationUUID + ')';
         }
-        
+
         if (params.has(CatalogFilterKeys.institutions)) {
           query = this.queryAddAndOp(query);
           query = query.concat("(relations.uuid:");
@@ -266,11 +268,11 @@ export class CatalogComponent implements OnInit, OnChanges{
   }
   ngOnChanges(){
     console.log('change');
-    
+
   }
 
   filtersChange(values: Params) {
-    
+
     this.filtersParams = convertToParamMap(values);
 
     // console.log(this.filtersParams);
@@ -308,16 +310,16 @@ export class CatalogComponent implements OnInit, OnChanges{
     this.searchService.getSources(this.searchParams).subscribe(
       values => {
         this.length = values.hits.total;
-        
+
         const arr = new Array<Journal>();
         values.hits.hits.forEach(item => {
           console.log(item)
           const j = new Journal();
-          j.load_from_data(item.metadata)
+          j.deepcopy(item.metadata)
           j.uuid = item.metadata['source_uuid'];
-          j.data.load_from_data(item.metadata);
+          j.data.deepcopy(item.metadata);
           console.log(j);
-          
+
           arr.push(j);
         });
         this.dataSource.data = arr;
@@ -364,12 +366,12 @@ export class CatalogComponent implements OnInit, OnChanges{
   }
 
   viewJournal(uuid: string): void {
-    this.service.getSourceByUUID(uuid).subscribe(
-      response => {
-        console.log(response);
-        if (response.status == "success") {
-          let journalVersion = new JournalVersion();
-          journalVersion.load_from_data(response.data.sources);
+    this.sourceService.getSourceByUUID(uuid).subscribe(
+      (response: Hit<JournalData>) => {
+        if (response) {
+          let journalVersion = new JournalData();
+
+          journalVersion.deepcopy(response.metadata);
           const dialogRef = this.dialog.open(DialogCatalogJournalInfoDialog, {
             data: {
               journalVersion: journalVersion,

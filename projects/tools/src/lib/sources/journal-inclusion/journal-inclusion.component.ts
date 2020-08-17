@@ -181,13 +181,13 @@ export class JournalInclusionComponent implements OnInit {
                 .subscribe(
                   response => {
                     console.log(response);
-                    this.journal.load_from_data(response.data.source);
+                    this.journal.deepcopy(response.data.source);
                     this.journal.versions.forEach(version => {
                       if (version.is_current) {
                         title = "Tenemos información sobre la revista";
                         content =
                           "Compruebe y complete todos los datos solicitados para incluir la revista.";
-                        this.versionToEdit.data.load_from_data(version.data);
+                        this.versionToEdit.data.deepcopy(version.data);
                         this.isStartProcess = false;
                         this.loading = false;
                         m.showMessage(
@@ -206,10 +206,10 @@ export class JournalInclusionComponent implements OnInit {
               this.sourceService.getIssnInfo(data.idenfifier).subscribe(
                 response => {
                   if (response.data && response.data.issn_org) {
-                    this.journal.data.issn.issn_org.load_from_data(
+                    this.journal.data.issn.issn_org.deepcopy(
                       response.data.issn_org
                     );
-                    this.versionToEdit.data.issn.issn_org.load_from_data(
+                    this.versionToEdit.data.issn.issn_org.deepcopy(
                       response.data.issn_org
                     );
                   }

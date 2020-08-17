@@ -212,7 +212,7 @@ export class CatalogComponent implements OnInit {
         console.log(response);
         if (response.status == "success") {
           let journalVersion = new JournalVersion();
-          journalVersion.load_from_data(response.data.sources);
+          journalVersion.deepcopy(response.data.sources);
           const dialogRef = this.dialog.open(DialogCatalogJournalInfoDialog, {
             data: {
               journalVersion: journalVersion,

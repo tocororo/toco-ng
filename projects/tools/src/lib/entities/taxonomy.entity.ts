@@ -4,7 +4,7 @@
  */
 
 
-import { Entity, EntityBase } from './entity';
+import { Entity, EntityBase } from './common';
 
 // TODO: Esto esta bastante feo... hay que agregarle a vocabulario un nombre inmutable y referirse a este por aqui, no por los ids
 export enum VocabulariesInmutableNames {
@@ -34,7 +34,7 @@ export class Term extends Entity {
     clasified_ids: number[] = [];
     class_ids: number[] = [];
 
-    // load_from_data(data: any){
+    // deepcopy(data: any){
     //     switch (data['vocabulary_id']) {
     //         case VocabulariesInmutableNames.INTITUTION:
     //             this.data = new TermInstitutionData();
@@ -44,7 +44,7 @@ export class Term extends Entity {
     //         default:
     //             this.data = new EntityBase();
     //     }
-    //     super.load_from_data(data);
+    //     super.deepcopy(data);
     // }
 }
 

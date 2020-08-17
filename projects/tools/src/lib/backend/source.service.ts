@@ -107,9 +107,10 @@ export class SourceService {
     return this.http.get<Response<any>>(req);
   }
 
-  getSourceByUUID(uuid): Observable<Response<any>> {
-    const req = this.env.sceibaApi + this.prefix + "/" + uuid;
-    return this.http.get<Response<any>>(req);
+  getSourceByUUID(uuid): Observable<any> {
+    // const req = this.env.sceibaApi + this.prefix + "/" + uuid;
+    const req = this.env.sceibaApi + 'sources' + "/" + uuid;
+    return this.http.get<any>(req);
   }
 
   getSourcesByTermUUID(uuid): Observable<Response<any>> {

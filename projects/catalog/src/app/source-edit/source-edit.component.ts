@@ -4,7 +4,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { SourceTypes, Journal, Source, SourceVersion, JournalVersion, TermSource, VocabulariesInmutableNames, Term } from '@toco/tools/entities';
+import { SourceTypes, Journal, Source, SourceVersion, JournalVersion, VocabulariesInmutableNames, Term } from '@toco/tools/entities';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageHandler, StatusCode } from '@toco/tools/core';
 import { MatSnackBar } from '@angular/material';
@@ -48,17 +48,17 @@ export class SourceEditComponent implements OnInit {
           switch (src.source_type) {
             case this.sourceType.JOURNAL.value:
               this.source = new Journal();
-              this.source.load_from_data(src);
+              this.source.deepcopy(src);
               this.source.versions.length;
               this.version = new JournalVersion();
               this.version.source_id = this.source.id;
-              this.version.data.load_from_data(this.source.data);
+              this.version.data.deepcopy(this.source.data);
 
               break;
 
             default:
               this.source = new Source();
-              this.source.load_from_data(src);
+              this.source.deepcopy(src);
           }
           // initialize Journal
         }
@@ -104,7 +104,7 @@ export class SourceEditComponent implements OnInit {
     //     (response) => {
     //       console.log(response);
     //       let newTerm = new Term();
-    //       newTerm.load_from_data(response.data.term);
+    //       newTerm.deepcopy(response.data.term);
     //       this.version.data.term_sources[toReplace].term_id = newTerm.id;
     //       this.sourceService.editSource(this.version, this.source.uuid)
     //         .subscribe(
@@ -146,7 +146,7 @@ export class SourceEditComponent implements OnInit {
   //       (response) => {
   //         console.log(response);
   //         let newTerm = new Term();
-  //         newTerm.load_from_data(response.data.term);
+  //         newTerm.deepcopy(response.data.term);
   //         this.version.data.term_sources[index].term_id = newTerm.id;
   //         this.version.data.term_sources[index].term = newTerm;
   //         this.createNewTerms();

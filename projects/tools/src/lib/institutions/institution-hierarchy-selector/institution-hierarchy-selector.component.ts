@@ -2,8 +2,7 @@ import { Component, OnInit, Input, Output } from "@angular/core";
 import {
   Term,
   TermNode,
-  VocabulariesInmutableNames,
-  TermSource
+  VocabulariesInmutableNames
 } from "@toco/tools/entities";
 import { PanelContent_Depr, FormFieldType, SelectOption } from "@toco/tools/forms";
 import { FormGroup, FormBuilder } from "@angular/forms";
@@ -70,9 +69,9 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
                   const node: TermNode = response.data.term_node;
                   if (node.parent && !node.parent.parent) {
                     this.level1 = new Term();
-                    this.level1.load_from_data(node.parent.term);
+                    this.level1.deepcopy(node.parent.term);
                     this.level2 = new Term();
-                    this.level2.load_from_data(node.term);
+                    this.level2.deepcopy(node.term);
                     this.level3 = this.institution;
                   } else {
                     this.level1 = null;
@@ -105,11 +104,11 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
                 if (node.parent) {
                   if (node.parent.parent) {
                     this.level1 = new Term();
-                    this.level1.load_from_data(node.parent.parent.term);
+                    this.level1.deepcopy(node.parent.parent.term);
                     this.level2 = new Term();
-                    this.level2.load_from_data(node.parent.term);
+                    this.level2.deepcopy(node.parent.term);
                     this.level3 = new Term();
-                    this.level3.load_from_data(node.term);
+                    this.level3.deepcopy(node.term);
                     if (node.parent.parent.parent) {
                       this.level1 = null;
                       this.level2 = null;
@@ -117,13 +116,13 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
                     }
                   } else {
                     this.level1 = new Term();
-                    this.level1.load_from_data(node.parent.term);
+                    this.level1.deepcopy(node.parent.term);
                     this.level2 = new Term();
-                    this.level2.load_from_data(node.term);
+                    this.level2.deepcopy(node.term);
                   }
                 } else {
                   this.level1 = new Term();
-                  this.level1.load_from_data(node.term);
+                  this.level1.deepcopy(node.term);
                 }
                 this.initializated = this.initLevel1Panel();
               },
@@ -184,7 +183,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
                     }
 
                     this.level1 = new Term();
-                    this.level1.load_from_data(response.data.term_node.term);
+                    this.level1.deepcopy(response.data.term_node.term);
 
                     if (
                       this.level2 &&
@@ -284,7 +283,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
                       return;
                     }
                     this.level2 = new Term();
-                    this.level2.load_from_data(response.data.term_node.term);
+                    this.level2.deepcopy(response.data.term_node.term);
                     if (
                       this.level3 &&
                       this.level2.id != this.level3.parent_id
@@ -319,7 +318,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
           return;
         }
         this.level2 = new Term();
-        this.level2.load_from_data(response.data.term_node.term);
+        this.level2.deepcopy(response.data.term_node.term);
         if (this.level3 && this.level2.id != this.level3.parent_id) {
           this.level3 = null;
           this.level3Panel = null;
@@ -408,7 +407,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
                         return;
                       }
                       this.level3 = new Term();
-                      this.level3.load_from_data(response.data.term_node.term);
+                      this.level3.deepcopy(response.data.term_node.term);
                       this.resetLevel3PanelFields();
                     });
                 }

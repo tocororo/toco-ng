@@ -28,10 +28,10 @@ import {
   Journal,
   SourceTypes,
   Term,
-  TermSource,
+  SourceClasification,
   TermNode,
   VocabulariesInmutableNames,
-  JournalVersion,
+  JournalData,
   Source,
   SourceSystems
 } from "@toco/tools/entities";
@@ -72,7 +72,7 @@ export class JournalEditComponent implements OnInit {
   public source: Source;
 
   @Input()
-  public journalVersion: JournalVersion = null;
+  public journalVersion: JournalData = null;
 
   @Input()
   public showEditHeader: boolean = false;
@@ -99,7 +99,7 @@ export class JournalEditComponent implements OnInit {
   @ViewChild(JournalInstitutionsComponent, { static: true })
   institutionsComponent: JournalInstitutionsComponent;
 
-  // institutions: TermSource[] = [];
+  // institutions: SourceClasification[] = [];
   // entityFormGroup: FormGroup;
 
   // indexes (databases), variables for step 3
@@ -118,7 +118,7 @@ export class JournalEditComponent implements OnInit {
 
   // TODO: Esto se puede hacer mejor, con un emiter alcanza
   @Output()
-  journalEditDone = new EventEmitter<JournalVersion>();
+  journalEditDone = new EventEmitter<JournalData>();
 
   @Output()
   editCanceled = new EventEmitter<boolean>();
@@ -136,7 +136,7 @@ export class JournalEditComponent implements OnInit {
   ngOnInit() {
     this.pageTitle = this.journalVersion.isNew
       ? "Nueva Revista"
-      : "Editando : " + this.journalVersion.data.title;
+      : "Editando : " + this.journalVersion.title;
     this.metadata.setTitleDescription(this.pageTitle, "");
 
     console.log("journal edit INIT");
@@ -186,8 +186,8 @@ export class JournalEditComponent implements OnInit {
             required: false,
             startHint: new HintValue(HintPosition.start, "XXXX-XXXX"),
             width: "23%",
-            value: this.journalVersion ? this.journalVersion.data.issn.p : ""
-            // value: this.journalVersion ? IssnValue.createIssnValueFromString(this.journalVersion.data.issn.p) : null
+            value: this.journalVersion ? this.journalVersion.issn.p : ""
+            // value: this.journalVersion ? IssnValue.createIssnValueFromString(this.journalVersion.issn.p) : null
           },
           {
             name: "issn_e",
@@ -196,8 +196,8 @@ export class JournalEditComponent implements OnInit {
             required: false,
             startHint: new HintValue(HintPosition.start, "XXXX-XXXX"),
             width: "23%",
-            value: this.journalVersion ? this.journalVersion.data.issn.e : ""
-            // value: this.journalVersion ? IssnValue.createIssnValueFromString(this.journalVersion.data.issn.e) : null
+            value: this.journalVersion ? this.journalVersion.issn.e : ""
+            // value: this.journalVersion ? IssnValue.createIssnValueFromString(this.journalVersion.issn.e) : null
           },
           {
             name: "issn_l",
@@ -206,8 +206,8 @@ export class JournalEditComponent implements OnInit {
             required: false,
             startHint: new HintValue(HintPosition.start, "XXXX-XXXX"),
             width: "23%",
-            value: this.journalVersion ? this.journalVersion.data.issn.l : ""
-            // value: this.journalVersion ? IssnValue.createIssnValueFromString(this.journalVersion.data.issn.l) : null
+            value: this.journalVersion ? this.journalVersion.issn.l : ""
+            // value: this.journalVersion ? IssnValue.createIssnValueFromString(this.journalVersion.issn.l) : null
           },
           {
             name: "rnps_p",
@@ -216,7 +216,7 @@ export class JournalEditComponent implements OnInit {
             required: true,
             startHint: new HintValue(HintPosition.start, "XXXX."),
             width: "23%",
-            value: this.journalVersion ? this.journalVersion.data.rnps.p : ""
+            value: this.journalVersion ? this.journalVersion.rnps.p : ""
           },
           {
             name: "rnps_e",
@@ -225,7 +225,7 @@ export class JournalEditComponent implements OnInit {
             required: true,
             startHint: new HintValue(HintPosition.start, "XXXX."),
             width: "23%",
-            value: this.journalVersion ? this.journalVersion.data.rnps.e : ""
+            value: this.journalVersion ? this.journalVersion.rnps.e : ""
           }
         ]
       }
@@ -252,7 +252,7 @@ export class JournalEditComponent implements OnInit {
             type: FormFieldType.text,
             required: true,
             width: "100%",
-            value: this.journalVersion ? this.journalVersion.data.title : ""
+            value: this.journalVersion ? this.journalVersion.title : ""
           },
           {
             name: "subtitle",
@@ -261,7 +261,7 @@ export class JournalEditComponent implements OnInit {
             required: false,
             width: "30%",
             startHint: new HintValue(HintPosition.start, ""),
-            value: this.journalVersion ? this.journalVersion.data.subtitle : ""
+            value: this.journalVersion ? this.journalVersion.subtitle : ""
           },
           {
             name: "shortname",
@@ -270,7 +270,7 @@ export class JournalEditComponent implements OnInit {
             required: false,
             width: "30%",
             startHint: new HintValue(HintPosition.start, ""),
-            value: this.journalVersion ? this.journalVersion.data.shortname : ""
+            value: this.journalVersion ? this.journalVersion.shortname : ""
           },
           {
             name: "source_type",
@@ -306,7 +306,7 @@ export class JournalEditComponent implements OnInit {
             required: true,
             width: "100%",
             value: this.journalVersion
-              ? this.journalVersion.data.description
+              ? this.journalVersion.description
               : ""
           },
           // {
@@ -315,7 +315,7 @@ export class JournalEditComponent implements OnInit {
           //   type: FormFieldType.textarea,
           //   required: true,
           //   width: '100%',
-          //   value: this.journalVersion ? this.journalVersion.data.purpose : ''
+          //   value: this.journalVersion ? this.journalVersion.purpose : ''
           // },
           {
             name: "url",
@@ -327,7 +327,7 @@ export class JournalEditComponent implements OnInit {
               "Escriba una URL válida."
             ),
             width: "100%",
-            value: this.journalVersion ? this.journalVersion.data.url : ""
+            value: this.journalVersion ? this.journalVersion.url : ""
           },
           {
             name: "source_system",
@@ -336,7 +336,7 @@ export class JournalEditComponent implements OnInit {
             required: false,
             width: "35%",
             value: this.journalVersion
-              ? this.journalVersion.data.source_system
+              ? this.journalVersion.source_system
               : "",
             extraContent: {
               multiple: false,
@@ -368,7 +368,7 @@ export class JournalEditComponent implements OnInit {
               "Escriba una URL válida."
             ),
             width: "60%",
-            value: this.journalVersion ? this.journalVersion.data.oaiurl : ""
+            value: this.journalVersion ? this.journalVersion.oaiurl : ""
           },
           // {
           //   name: 'seriadas_cubanas',
@@ -377,7 +377,7 @@ export class JournalEditComponent implements OnInit {
           //   required: false,
           //   startHint: new HintValue(HintPosition.start, ''),
           //   width: '100%',
-          //   value: this.journalVersion ? this.journalVersion.data.seriadas_cubanas : ''
+          //   value: this.journalVersion ? this.journalVersion.seriadas_cubanas : ''
           // },
 
           {
@@ -390,7 +390,7 @@ export class JournalEditComponent implements OnInit {
               "Escriba un email válido."
             ),
             width: "45%",
-            value: this.journalVersion ? this.journalVersion.data.email : ""
+            value: this.journalVersion ? this.journalVersion.email : ""
           },
           {
             name: "licence",
@@ -401,11 +401,11 @@ export class JournalEditComponent implements OnInit {
             extraContent: {
               multiple: false,
               selectedTermsIds: this.journalVersion
-                ? this.journalVersion.data.term_sources.map(
-                    termSource => termSource.term_id
+                ? this.journalVersion.classifications.map(
+                    termSource => termSource.id
                   )
                 : null,
-              vocab: VocabulariesInmutableNames.LICENCES, 
+              vocab: VocabulariesInmutableNames.LICENCES,
               level: 0
             }
           },
@@ -416,7 +416,7 @@ export class JournalEditComponent implements OnInit {
             required: false,
             width: "30%",
             value: this.journalVersion
-              ? this.journalVersion.data.start_year
+              ? this.journalVersion.start_year
               : ""
           },
           {
@@ -425,7 +425,7 @@ export class JournalEditComponent implements OnInit {
             type: FormFieldType.datepicker,
             required: false,
             width: "30%",
-            value: this.journalVersion ? this.journalVersion.data.end_year : ""
+            value: this.journalVersion ? this.journalVersion.end_year : ""
           },
           {
             name: "frequency",
@@ -434,7 +434,7 @@ export class JournalEditComponent implements OnInit {
             required: false,
             startHint: new HintValue(HintPosition.start, ""),
             width: "30%",
-            value: this.journalVersion ? this.journalVersion.data.frequency : ""
+            value: this.journalVersion ? this.journalVersion.frequency : ""
           },
           {
             // TODO: el top level de unesco de materias....
@@ -446,11 +446,11 @@ export class JournalEditComponent implements OnInit {
             extraContent: {
               multiple: false,
               selectedTermsIds: this.journalVersion
-                ? this.journalVersion.data.term_sources.map(
-                    termSource => termSource.term_id
+                ? this.journalVersion.classifications.map(
+                    termSource => termSource.id
                   )
                 : null,
-              vocab: VocabulariesInmutableNames.CUBAN_PROVINCES, 
+              vocab: VocabulariesInmutableNames.CUBAN_PROVINCES,
               level: 0
             }
           },
@@ -463,11 +463,11 @@ export class JournalEditComponent implements OnInit {
             extraContent: {
               multiple: true,
               selectedTermsIds: this.journalVersion
-                ? this.journalVersion.data.term_sources.map(
-                    termSource => termSource.term_id
+                ? this.journalVersion.classifications.map(
+                    termSource => termSource.id
                   )
                 : null,
-              vocab: VocabulariesInmutableNames.SUBJECTS, 
+              vocab: VocabulariesInmutableNames.SUBJECTS,
               level: 0
             }
           }
@@ -486,7 +486,7 @@ export class JournalEditComponent implements OnInit {
             required: false,
             width: "33%",
             value: this.journalVersion
-              ? this.journalVersion.data.socialNetworks.facebook
+              ? this.journalVersion.socialNetworks.facebook
               : ""
           },
           {
@@ -496,7 +496,7 @@ export class JournalEditComponent implements OnInit {
             required: false,
             width: "33%",
             value: this.journalVersion
-              ? this.journalVersion.data.socialNetworks.twitter
+              ? this.journalVersion.socialNetworks.twitter
               : ""
           },
           {
@@ -506,7 +506,7 @@ export class JournalEditComponent implements OnInit {
             required: false,
             width: "33%",
             value: this.journalVersion
-              ? this.journalVersion.data.socialNetworks.linkedin
+              ? this.journalVersion.socialNetworks.linkedin
               : ""
           }
         ]
@@ -526,9 +526,9 @@ export class JournalEditComponent implements OnInit {
     const panel = [];
     this.indexesPanel = [];
 
-    console.log(this.journalVersion.data.term_sources)
-    this.journalVersion.data.term_sources.forEach(element => {
-      if (element.term.vocabulary_id == VocabulariesInmutableNames.INDEXES) {
+    console.log(this.journalVersion.classifications)
+    this.journalVersion.classifications.forEach(element => {
+      if (element.vocabulary == VocabulariesInmutableNames.INDEXES) {
         panel.push(this.getPanelIndex(element));
       }
     });
@@ -543,7 +543,7 @@ export class JournalEditComponent implements OnInit {
     //     this.dialog.open(JournalEditAddIndexComponent, {
     //       data: {
     //         termsIdsToExclude: termsIdsToExclude,
-    //         addIndexPanel: (termSource: TermSource) => {
+    //         addIndexPanel: (termSource: SourceClasification) => {
     //           this.dialog.closeAll();
     //           termSource.source_id = this.journalVersion.source_id;
     //           const panels = this.indexesPanel.slice(0);
@@ -566,9 +566,8 @@ export class JournalEditComponent implements OnInit {
     this.dialog.open(JournalEditAddIndexComponent, {
       data: {
         termsIdsToExclude: termsIdsToExclude,
-        addIndexPanel: (termSource: TermSource) => {
+        addIndexPanel: (termSource: SourceClasification) => {
           this.dialog.closeAll();
-          termSource.source_id = this.journalVersion.source_id;
           const panels = this.indexesPanel.slice(0);
           panels.push(this.getPanelIndex(termSource));
           this.indexesPanel = panels;
@@ -578,9 +577,9 @@ export class JournalEditComponent implements OnInit {
     });
   }
 
-  private getPanelIndex(termSource: TermSource) {
+  private getPanelIndex(termSource: SourceClasification) {
     return {
-      title: termSource.term.description,
+      title: termSource.description,
       description: "",
       iconName: "",
       formSection: this.indexesFormGroup,
@@ -600,10 +599,10 @@ export class JournalEditComponent implements OnInit {
           this.indexesPanel = panels;
         }
       },
-      value: termSource.term,
+      value: termSource,
       formSectionContent: [
         {
-          name: "url_" + termSource.term_id,
+          name: "url_" + termSource.id,
           label: "URL de la revista en el índice",
           type: FormFieldType.url,
           required: false,
@@ -612,7 +611,7 @@ export class JournalEditComponent implements OnInit {
           value: termSource.data ? termSource.data["url"] : ""
         },
         {
-          name: "initial_cover_" + termSource.term_id,
+          name: "initial_cover_" + termSource.id,
           label: "Cobertura inicio",
           type: FormFieldType.text,
           required: false,
@@ -621,7 +620,7 @@ export class JournalEditComponent implements OnInit {
           value: termSource.data ? termSource.data["initial_cover"] : ""
         },
         {
-          name: "end_cover_" + termSource.term_id,
+          name: "end_cover_" + termSource.id,
           label: "Cobertura hasta",
           type: FormFieldType.text,
           required: false,
@@ -651,7 +650,7 @@ export class JournalEditComponent implements OnInit {
             startHint: new HintValue(HintPosition.start, ""),
             width: "100%",
             minWidth: "100%",
-            value: this.journalVersion ? this.journalVersion.comment : ""
+            value: this.journalVersion ? this.journalVersion._save_info.comment : ""
           }
         ]
       }
@@ -661,86 +660,83 @@ export class JournalEditComponent implements OnInit {
   private fillJournalFields() {
     // this.journalVersion.source_type = this.informationFormGroup.value['source_type'];
 
-    this.journalVersion.data.issn.p = this.identifiersFormGroup.value['issn_p'];
-    this.journalVersion.data.issn.e = this.identifiersFormGroup.value['issn_e'];
-    this.journalVersion.data.issn.l = this.identifiersFormGroup.value['issn_l'];
-    this.journalVersion.data.rnps.p = this.identifiersFormGroup.value['rnps_p'];
-    this.journalVersion.data.rnps.e = this.identifiersFormGroup.value['rnps_e'];
+    this.journalVersion.issn.p = this.identifiersFormGroup.value['issn_p'];
+    this.journalVersion.issn.e = this.identifiersFormGroup.value['issn_e'];
+    this.journalVersion.issn.l = this.identifiersFormGroup.value['issn_l'];
+    this.journalVersion.rnps.p = this.identifiersFormGroup.value['rnps_p'];
+    this.journalVersion.rnps.e = this.identifiersFormGroup.value['rnps_e'];
 
-    // this.journalVersion.data.issn.load_from_data(
+    // this.journalVersion.issn.deepcopy(
     //   this.identifiersFormGroup.value
     // );
-    // this.journalVersion.data.rnps.load_from_data(
+    // this.journalVersion.rnps.deepcopy(
     //   this.identifiersFormGroup.value
     // );
 
-    this.journalVersion.data.load_from_data(this.informationFormGroup.value);
-    this.journalVersion.data.socialNetworks.load_from_data(
+    this.journalVersion.deepcopy(this.informationFormGroup.value);
+    this.journalVersion.socialNetworks.deepcopy(
       this.informationFormGroup.value
     );
 
     this.source.source_type = this.informationFormGroup.value["source_type"];
 
-    this.journalVersion.data.term_sources = [];
+    this.journalVersion.classifications = [];
 
-    this.informationFormGroup.value["licence"].forEach(term => {
-      const ts = new TermSource();
-      ts.term = term;
-      ts.term_id = ts.term.id;
-      ts.source_id = this.journalVersion.source_id;
-      this.journalVersion.data.term_sources.push(ts);
+    this.informationFormGroup.value["licence"].forEach((term: Term) => {
+      const ts = new SourceClasification();
+      ts.description = term.description;
+      ts.id = term.uuid;
+      this.journalVersion.classifications.push(ts);
     });
 
     this.informationFormGroup.value["cover"].forEach(term => {
-      const ts = new TermSource();
-      ts.term = term;
-      ts.term_id = ts.term.id;
-      ts.source_id = this.journalVersion.source_id;
-      this.journalVersion.data.term_sources.push(ts);
+      const ts = new SourceClasification();
+      ts.description = term.description;
+      ts.id = term.uuid;
+      this.journalVersion.classifications.push(ts);
     });
 
     this.informationFormGroup.value["subjects"].forEach(term => {
-      const ts = new TermSource();
-      ts.term = term;
-      ts.term_id = ts.term.id;
-      ts.source_id = this.journalVersion.source_id;
-      this.journalVersion.data.term_sources.push(ts);
+      const ts = new SourceClasification();
+      ts.description = term.description;
+      ts.id = term.uuid;
+      this.journalVersion.classifications.push(ts);
     });
 
-    this.journalVersion.data.organizations = this.source.data.organizations;
+    this.journalVersion.organizations = this.source.data.organizations;
 
     // this.organizationFormGroup.value[
     //   "institutions"
     // ].forEach((panel: JournalInstitutionsPanel) => {
-    //   const ts = new TermSource();
-    //   ts.load_from_data(panel.inst);
+    //   const ts = new SourceClasification();
+    //   ts.deepcopy(panel.inst);
     //   ts.term_id = panel.inst.term.id;
     //   ts.source_id = this.journalVersion.source_id;
-    //   this.journalVersion.data.term_sources.push(ts);
+    //   this.journalVersion.classifications.push(ts);
 
     // }
     // );
 
     // this.institutions.forEach(inst => {
-    //   this.journalVersion.data.term_sources.push(inst);
+    //   this.journalVersion.classifications.push(inst);
     // });
     console.log(this.indexesPanel)
     this.indexesPanel.forEach(panel => {
-      const ts = new TermSource();
-      ts.term = panel.value;
-      ts.term_id = ts.term.id;
-      ts.source_id = this.journalVersion.source_id;
-      ts.data["url"] = this.indexesFormGroup.value["url_" + ts.term.id];
+      const ts = new SourceClasification();
+      let term: Term = panel.value;
+      ts.description = term.description;
+      ts.id = term.uuid;
+      ts.data["url"] = this.indexesFormGroup.value["url_" + ts.id];
       ts.data["initial_cover"] = this.indexesFormGroup.value[
-        "initial_cover_" + ts.term.id
+        "initial_cover_" + ts.id
       ];
       ts.data["end_cover"] = this.indexesFormGroup.value[
-        "end_cover_" + ts.term.id
+        "end_cover_" + ts.id
       ];
-      this.journalVersion.data.term_sources.push(ts);
+      this.journalVersion.classifications.push(ts);
     });
 
-    this.journalVersion.comment = this.finalFormGroup.value["comment"];
+    this.journalVersion._save_info.comment = this.finalFormGroup.value["comment"];
 
     console.log(this.identifiersFormGroup);
     console.log(this.informationFormGroup);
@@ -849,10 +845,10 @@ export class JournalEditAddIndexComponent implements OnInit {
 
     this.addIndexAction = {
       doit: (data: any) => {
-        const result = new TermSource();
+        const result = new SourceClasification();
         if (this.indexFormGroup.controls["indexes"].value) {
-          result.term = this.indexFormGroup.controls["indexes"].value[0];
-          result.term_id = result.term.id;
+          let term: Term = this.indexFormGroup.controls["indexes"].value[0];
+          result.id = term.uuid;
           result.data = {
             url: this.indexFormGroup.controls["url"].value,
             initial_cover: this.indexFormGroup.controls["initial_cover"].value,

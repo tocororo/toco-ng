@@ -4,8 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormArray } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
-import { FormFieldType, TextInputAppearance, OperationAction, FormSection, PanelContent, 
-	ContainerContent, HintValue, HintPosition, IconValue, IconSource, ContentPosition, 
+import { FormFieldType, TextInputAppearance, OperationAction, FormSection, PanelContent,
+	ContainerContent, HintValue, HintPosition, IconValue, IconSource, ContentPosition,
 	ActionControl, ActionContent } from '@toco/tools/forms';
 
 @Component({
@@ -16,22 +16,22 @@ import { FormFieldType, TextInputAppearance, OperationAction, FormSection, Panel
 export class OrgEditComponent implements OnInit
 {
     /**
-     * Represents the `OperationAction` enum for internal use. 
+     * Represents the `OperationAction` enum for internal use.
      */
 	public readonly operationAction: typeof OperationAction;
 
 	/**
-	 * Represents the current organization. 
+	 * Represents the current organization.
 	 */
 	private org: Organization;
 
 	/**
-	 * Tracks the value and validity state of the internal child controls that contains this component. 
+	 * Tracks the value and validity state of the internal child controls that contains this component.
 	 */
     private panelFormSection: FormSection;
 
     /**
-     * Contains the panel's content. 
+     * Contains the panel's content.
      */
 	public panelContent: PanelContent;
 
@@ -62,7 +62,7 @@ export class OrgEditComponent implements OnInit
 		// 		{
 		// 			/* Gets the result from `panelFormSection`. */
 		// 			// const result: Organization = new Organization();
-		// 			// result.load_from_data(this.panelFormSection.value);
+		// 			// result.deepcopy(this.panelFormSection.value);
 		// 		}
 		// 	}
 		// };
@@ -71,7 +71,7 @@ export class OrgEditComponent implements OnInit
 	}
 
     /**
-     * Returns the panel's content. 
+     * Returns the panel's content.
      */
     private _initPanelContent(): PanelContent
     {
@@ -306,7 +306,7 @@ export class OrgEditComponent implements OnInit
 	}
 
     /**
-     * Returns the relationships' content. 
+     * Returns the relationships' content.
      */
     private _initRelationshipsSimpleContent(): ContainerContent
     {
@@ -373,7 +373,7 @@ export class OrgEditComponent implements OnInit
 	}
 
     /**
-     * Returns the addresses' content. 
+     * Returns the addresses' content.
      */
     private _initAddressesSimpleContent(): ContainerContent
     {
@@ -477,7 +477,7 @@ export class OrgEditComponent implements OnInit
 							'ariaLabel': 'Postcode/zipcode'
 						},
 
-						//TODO: Poner aquí el campo 'primary' de tipo 'boolean' (checkbox). 
+						//TODO: Poner aquí el campo 'primary' de tipo 'boolean' (checkbox).
 						//This address identifies the main location
 
 						{
@@ -499,7 +499,7 @@ export class OrgEditComponent implements OnInit
 							'ariaLabel': 'ISO 3166-2 region code'
 						},
 
-						//TODO: Poner el resto de los campos. 
+						//TODO: Poner el resto de los campos.
 
 						this._initRemoveButtonContent('Remove address')
 					]
@@ -509,7 +509,7 @@ export class OrgEditComponent implements OnInit
 	}
 
     /**
-     * Returns the identifiers' content. 
+     * Returns the identifiers' content.
      */
     private _initIdentifiersContent(description: string): ContainerContent
     {
@@ -547,7 +547,7 @@ export class OrgEditComponent implements OnInit
                 },
             ]
 		};
-		
+
 		// {
 		// 	name: 'identifiers',
 		// 	label: 'Organization Identifiers, different from GRID mapping',
@@ -593,8 +593,8 @@ export class OrgEditComponent implements OnInit
 	}
 
 	/**
-	 * Returns the remove button's content. 
-	 * @param tooltip The tooltip to show. 
+	 * Returns the remove button's content.
+	 * @param tooltip The tooltip to show.
 	 */
 	private _initRemoveButtonContent(tooltip: string): ActionContent
 	{
@@ -613,8 +613,8 @@ export class OrgEditComponent implements OnInit
 	}
 
 	/**
-	 * Does the tasks for the operation action. 
-	 * @param op The operation action. 
+	 * Does the tasks for the operation action.
+	 * @param op The operation action.
 	 */
 	public doOperationAction(op: OperationAction): void
 	{
@@ -625,7 +625,7 @@ export class OrgEditComponent implements OnInit
 
 		if(op == OperationAction.submit)
 		{
-			//TODO: Do the tasks for the submit action. 
+			//TODO: Do the tasks for the submit action.
 		}
 
 		/* Currently, it does not do any task for the cancel action. */
@@ -637,7 +637,7 @@ export class OrgEditComponent implements OnInit
 	}
 
 	/**
-	 * Returns true if the reset action is disabled; otherwise, false. 
+	 * Returns true if the reset action is disabled; otherwise, false.
 	 */
 	public get isResetActionDisabled(): boolean
 	{
@@ -646,7 +646,7 @@ export class OrgEditComponent implements OnInit
 	}
 
 	/**
-	 * Returns true if the submit action is disabled; otherwise, false. 
+	 * Returns true if the submit action is disabled; otherwise, false.
 	 */
 	public get isSubmitActionDisabled(): boolean
 	{

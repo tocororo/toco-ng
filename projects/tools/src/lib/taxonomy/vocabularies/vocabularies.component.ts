@@ -44,7 +44,7 @@ export class VocabularyDialogComponent implements OnInit {
             if (data.vocab === null) {
                 this.vocab.isNew = true;
             } else {
-                this.vocab.load_from_data(data.vocab);
+                this.vocab.deepcopy(data.vocab);
                 this.actionLabel = 'Actualizar';
             }
         }
@@ -132,7 +132,7 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
             this.dialog.closeAll();
             this.loadVocabularies();
             const voc = new Vocabulary();
-            voc.load_from_data(result.data.vocabulary);
+            voc.deepcopy(result.data.vocabulary);
             this.selectVocab(voc);
             const m = new MessageHandler(this._snackBar);
             m.showMessage(StatusCode.OK, result.message);

@@ -3,7 +3,7 @@
  *   All rights reserved.
  */
 
-import { Entity, EntityBase } from './entity';
+import { Entity, EntityBase } from './common';
 import { Term } from './taxonomy.entity';
 import { SourceData, Source, SourceVersion } from './source.entity';
 

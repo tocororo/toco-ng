@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TermSource } from '@toco/tools/entities';
+import { SourceClasification } from '@toco/tools/entities';
 
 /**
  * This component share the same scss that `JournalViewComponent`.
@@ -16,14 +16,14 @@ export class JournalViewTermComponent implements OnInit {
 
     @Input() public vocab_id: number;
 
-    @Input() public terms: Array<TermSource>;
+    @Input() public terms: Array<SourceClasification>;
 
     constructor() {
 
     }
 
     ngOnInit(): void {
-        if (this.terms == undefined) this.terms = new Array<TermSource>(0);
+        if (this.terms == undefined) this.terms = new Array<SourceClasification>(0);
 
         if (this.vocab_id == undefined) this.vocab_id = 0;
 

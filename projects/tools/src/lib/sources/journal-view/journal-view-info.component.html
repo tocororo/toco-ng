@@ -9,11 +9,11 @@
     <mat-card-title>
       <mat-label style="font-weight: bold;">Título:</mat-label>
 
-      <mat-label *ngIf="journalVersion.data.title">
-        {{ journalVersion.data.title }}
+      <mat-label *ngIf="journalVersion.title">
+        {{ journalVersion.title }}
       </mat-label>
       <mat-label
-        *ngIf="!journalVersion.data.title"
+        *ngIf="!journalVersion.title"
         class="text-muted text-through"
         >Vacío</mat-label
       >
@@ -29,11 +29,11 @@
   <mat-card-content>
     <p>
       <mat-label style="font-weight: bold;">Subtítulo:</mat-label>
-      <mat-label *ngIf="journalVersion.data.subtitle">
-        {{ journalVersion.data.subtitle }}
+      <mat-label *ngIf="journalVersion.subtitle">
+        {{ journalVersion.subtitle }}
       </mat-label>
       <mat-label
-        *ngIf="!journalVersion.data.subtitle"
+        *ngIf="!journalVersion.subtitle"
         class="text-muted text-through"
         >Vacío</mat-label
       >
@@ -41,11 +41,11 @@
 
     <p>
       <mat-label style="font-weight: bold;">Nombre Abreviado:</mat-label>
-      <mat-label *ngIf="journalVersion.data.shortname">
-        {{ journalVersion.data.shortname }}
+      <mat-label *ngIf="journalVersion.shortname">
+        {{ journalVersion.shortname }}
       </mat-label>
       <mat-label
-        *ngIf="!journalVersion.data.shortname"
+        *ngIf="!journalVersion.shortname"
         class="text-muted text-through"
         >Vacío</mat-label
       >
@@ -55,33 +55,33 @@
     <div style="margin-left: .8em;">
       <p>
         <mat-label style="font-weight: bold;">Impreso: </mat-label>
-        <mat-label *ngIf="journalVersion.data.issn.p">
-          {{ journalVersion.data.issn.p }}
+        <mat-label *ngIf="journalVersion.issn.p">
+          {{ journalVersion.issn.p }}
         </mat-label>
         <mat-label
-          *ngIf="!journalVersion.data.issn.p"
+          *ngIf="!journalVersion.issn.p"
           class="text-muted text-through"
           >Vacío</mat-label
         >
       </p>
       <p>
         <mat-label style="font-weight: bold;">Electrónico:</mat-label>
-        <mat-label *ngIf="journalVersion.data.issn.e">
-          {{ journalVersion.data.issn.e }}
+        <mat-label *ngIf="journalVersion.issn.e">
+          {{ journalVersion.issn.e }}
         </mat-label>
         <mat-label
-          *ngIf="!journalVersion.data.issn.e"
+          *ngIf="!journalVersion.issn.e"
           class="text-muted text-through"
           >Vacío</mat-label
         >
       </p>
       <p>
         <mat-label style="font-weight: bold;">De enlace:</mat-label>
-        <mat-label *ngIf="journalVersion.data.issn.l">
-          {{ journalVersion.data.issn.l }}
+        <mat-label *ngIf="journalVersion.issn.l">
+          {{ journalVersion.issn.l }}
         </mat-label>
         <mat-label
-          *ngIf="!journalVersion.data.issn.l"
+          *ngIf="!journalVersion.issn.l"
           class="text-muted text-through"
           >Vacío</mat-label
         >
@@ -91,22 +91,22 @@
     <div style="margin-left: .8em;">
       <p>
         <mat-label style="font-weight: bold;"> Impreso: </mat-label>
-        <mat-label *ngIf="journalVersion.data.rnps">
-          {{ journalVersion.data.rnps.p }}
+        <mat-label *ngIf="journalVersion.rnps">
+          {{ journalVersion.rnps.p }}
         </mat-label>
         <mat-label
-          *ngIf="!journalVersion.data.rnps"
+          *ngIf="!journalVersion.rnps"
           class="text-muted text-through"
           >Vacío</mat-label
         >
       </p>
       <p>
         <mat-label style="font-weight: bold;"> Electrónico: </mat-label>
-        <mat-label *ngIf="journalVersion.data.rnps">
-          {{ journalVersion.data.rnps.e }}
+        <mat-label *ngIf="journalVersion.rnps">
+          {{ journalVersion.rnps.e }}
         </mat-label>
         <mat-label
-          *ngIf="!journalVersion.data.rnps"
+          *ngIf="!journalVersion.rnps"
           class="text-muted text-through"
           >Vacío</mat-label
         >
@@ -115,11 +115,11 @@
 
     <p>
       <mat-label style="font-weight: bold;"> URL: </mat-label>
-      <mat-label *ngIf="journalVersion.data.url">
-        {{ journalVersion.data.url }}</mat-label
+      <mat-label *ngIf="journalVersion.url">
+        {{ journalVersion.url }}</mat-label
       >
       <mat-label
-        *ngIf="!journalVersion.data.url"
+        *ngIf="!journalVersion.url"
         class="text-muted text-through"
         >Vacío</mat-label
       >
@@ -127,11 +127,11 @@
 
     <p>
       <mat-label style="font-weight: bold;"> Email: </mat-label>
-      <mat-label *ngIf="journalVersion.data.email">
-        {{ journalVersion.data.email }}
+      <mat-label *ngIf="journalVersion.email">
+        {{ journalVersion.email }}
       </mat-label>
       <mat-label
-        *ngIf="!journalVersion.data.email"
+        *ngIf="!journalVersion.email"
         class="text-muted text-through"
         >Vacío</mat-label
       >
@@ -140,12 +140,12 @@
     <p>
       <mat-label style="font-weight: bold;"> Seriadas Cubanas: </mat-label>
       <a
-        *ngIf="journalVersion.data.seriadas_cubanas"
-        href="journalVersion.data.seriadas_cubanas"
-        >{{ journalVersion.data.seriadas_cubanas }}</a
+        *ngIf="journalVersion.seriadas_cubanas"
+        href="journalVersion.seriadas_cubanas"
+        >{{ journalVersion.seriadas_cubanas }}</a
       >
       <mat-label
-        *ngIf="!journalVersion.data.seriadas_cubanas"
+        *ngIf="!journalVersion.seriadas_cubanas"
         class="text-muted text-through"
         >Vacío</mat-label
       >
@@ -153,11 +153,11 @@
 
     <p>
       <mat-label style="font-weight: bold;"> Propósito: </mat-label>
-      <mat-label *ngIf="journalVersion.data.purpose">
-        {{ journalVersion.data.purpose }}
+      <mat-label *ngIf="journalVersion.purpose">
+        {{ journalVersion.purpose }}
       </mat-label>
       <mat-label
-        *ngIf="!journalVersion.data.purpose"
+        *ngIf="!journalVersion.purpose"
         class="text-muted text-through"
         >Vacío</mat-label
       >
@@ -165,11 +165,11 @@
 
     <p>
       <mat-label style="font-weight: bold;"> Año de Inicio: </mat-label>
-      <mat-label *ngIf="journalVersion.data.start_year">
-        {{ journalVersion.data.start_year | date }}
+      <mat-label *ngIf="journalVersion.start_year">
+        {{ journalVersion.start_year | date }}
       </mat-label>
       <mat-label
-        *ngIf="!journalVersion.data.start_year"
+        *ngIf="!journalVersion.start_year"
         class="text-muted text-through"
         >Vacío</mat-label
       >
@@ -177,11 +177,11 @@
 
     <p>
       <mat-label style="font-weight: bold;"> Año de Fin: </mat-label>
-      <mat-label *ngIf="journalVersion.data.end_year">
-        {{ journalVersion.data.end_year | date }}
+      <mat-label *ngIf="journalVersion.end_year">
+        {{ journalVersion.end_year | date }}
       </mat-label>
       <mat-label
-        *ngIf="!journalVersion.data.end_year"
+        *ngIf="!journalVersion.end_year"
         class="text-muted text-through"
         >Vacío</mat-label
       >
@@ -191,58 +191,58 @@
       <mat-label style="font-weight: bold;">
         Frecuencia de Publicación:
       </mat-label>
-      <mat-label *ngIf="journalVersion.data.frequency">
-        {{ journalVersion.data.frequency }}
+      <mat-label *ngIf="journalVersion.frequency">
+        {{ journalVersion.frequency }}
       </mat-label>
       <mat-label
-        *ngIf="!journalVersion.data.frequency"
+        *ngIf="!journalVersion.frequency"
         class="text-muted text-through"
         >Vacío</mat-label
       >
     </p>
     <mat-label style="font-weight: bold;"> Descripción:</mat-label>
     <mat-label
-      *ngIf="!journalVersion.data.description"
+      *ngIf="!journalVersion.description"
       class="text-muted text-through"
       >Vacío</mat-label
     >
     <div
-      *ngIf="journalVersion.data.description"
+      *ngIf="journalVersion.description"
       class="e2e-inner-html-bound  text-align-justify"
-      [innerHTML]="journalVersion.data.description"
+      [innerHTML]="journalVersion.description"
     ></div>
 
     <mat-label style="font-weight: bold;">Redes Sociales:</mat-label>
     <div style="margin-left: .8em;">
       <p>
         <mat-label style="font-weight: bold;"> Facebook: </mat-label>
-        <mat-label *ngIf="journalVersion.data.socialNetworks.facebook">
-          {{ journalVersion.data.socialNetworks.facebook }}
+        <mat-label *ngIf="journalVersion.socialNetworks.facebook">
+          {{ journalVersion.socialNetworks.facebook }}
         </mat-label>
         <mat-label
-          *ngIf="!journalVersion.data.socialNetworks.facebook"
+          *ngIf="!journalVersion.socialNetworks.facebook"
           class="text-muted text-through"
           >Vacío</mat-label
         >
       </p>
       <p>
         <mat-label style="font-weight: bold;"> Twitter: </mat-label>
-        <mat-label *ngIf="journalVersion.data.socialNetworks.twitter">
-          {{ journalVersion.data.socialNetworks.twitter }}
+        <mat-label *ngIf="journalVersion.socialNetworks.twitter">
+          {{ journalVersion.socialNetworks.twitter }}
         </mat-label>
         <mat-label
-          *ngIf="!journalVersion.data.socialNetworks.twitter"
+          *ngIf="!journalVersion.socialNetworks.twitter"
           class="text-muted text-through"
           >Vacío</mat-label
         >
       </p>
       <p>
         <mat-label style="font-weight: bold;"> Linkedin: </mat-label>
-        <mat-label *ngIf="journalVersion.data.socialNetworks.linkedin">
-          {{ journalVersion.data.socialNetworks.linkedin }}
+        <mat-label *ngIf="journalVersion.socialNetworks.linkedin">
+          {{ journalVersion.socialNetworks.linkedin }}
         </mat-label>
         <mat-label
-          *ngIf="!journalVersion.data.socialNetworks.linkedin"
+          *ngIf="!journalVersion.socialNetworks.linkedin"
           class="text-muted text-through"
           >Vacío</mat-label
         >
@@ -301,7 +301,7 @@
         <mat-accordion>
           <ng-container *ngFor="let termSource of dataBaseTerms">
             <mat-expansion-panel
-              *ngIf="termSource.term.vocabulary_id == vocabularies.INDEXES"
+              *ngIf="termSource.term.vocabulary == vocabularies.INDEXES"
               (opened)="panelOpenState = true"
               (closed)="panelOpenState = false"
             >

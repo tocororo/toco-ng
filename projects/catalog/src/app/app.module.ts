@@ -12,7 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
 
 import { AuthenticationModule } from '@toco/tools/authentication';
-import { CatalogService, SearchService } from '@toco/tools/backend';
+import { CatalogService, SearchService, SourceService } from '@toco/tools/backend';
 import { NotificationModule } from '@toco/tools/notification';
 import { CoreModule, CACHABLE_URL_PROVIDER, REQUEST_CACHE_DIFFERENT_TIME_WITH_MAP_PROVIDER, HTTP_INTERCEPTOR_PROVIDERS } from '@toco/tools/core';
 import { TocoFormsModule } from '@toco/tools/forms';
@@ -62,8 +62,9 @@ import { FiltersService } from '@toco/tools/filters';
         REQUEST_CACHE_DIFFERENT_TIME_WITH_MAP_PROVIDER,
         HTTP_INTERCEPTOR_PROVIDERS,
         CatalogService,
-        SearchService, 
-        FiltersService
+        SearchService,
+        FiltersService,
+        SourceService
     ],
 
     bootstrap: [AppComponent]

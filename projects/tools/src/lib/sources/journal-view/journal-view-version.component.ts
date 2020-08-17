@@ -7,9 +7,9 @@ import {
   EventEmitter
 } from "@angular/core";
 import {
-  JournalVersion,
+  JournalData,
   Journal,
-  TermSource,
+  SourceClasification,
   VocabulariesInmutableNames
 } from "@toco/tools/entities";
 import { MatSnackBar } from "@angular/material";
@@ -22,21 +22,21 @@ import { JournalDataType } from "./journal-view.component";
   styleUrls: ["./journal-view.component.scss"]
 })
 export class JournalViewVersionComponent implements OnInit, OnChanges {
-  @Input() public currentJournal: JournalVersion;
+  @Input() public currentJournal: JournalData;
 
   @Input() public type: number;
 
   @Input()
-  public editingJournal: JournalVersion;
+  public editingJournal: JournalData;
 
   public journalDataType = JournalDataType;
 
-  public currentInstitutionTerms: Array<TermSource>;
-  public currentDataBaseTerms: Array<TermSource>;
-  public currentGroupTerms: Array<TermSource>;
-  public currentProvinceTerms: Array<TermSource>;
-  public currentSubjectTerms: Array<TermSource>;
-  public currentLicenceTerms: Array<TermSource>;
+  public currentInstitutionTerms: Array<SourceClasification>;
+  public currentDataBaseTerms: Array<SourceClasification>;
+  public currentGroupTerms: Array<SourceClasification>;
+  public currentProvinceTerms: Array<SourceClasification>;
+  public currentSubjectTerms: Array<SourceClasification>;
+  public currentLicenceTerms: Array<SourceClasification>;
 
   vocabularies;
   public panelOpenState = false;
@@ -44,13 +44,13 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
   currentJournalChecked: boolean = false;
 
   @Output()
-  editingJournalChange = new EventEmitter<JournalVersion>();
+  editingJournalChange = new EventEmitter<JournalData>();
 
   constructor(private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     if (this.currentJournal == undefined)
-      this.currentJournal = new JournalVersion();
+      this.currentJournal = new JournalData();
     this.loadJournalData();
 
     if (this.type == undefined) this.type = JournalDataType.default;
@@ -62,19 +62,19 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
   }
 
   loadJournalData() {
-    this.currentDataBaseTerms = new Array<TermSource>();
-    this.currentGroupTerms = new Array<TermSource>();
-    this.currentInstitutionTerms = new Array<TermSource>();
-    this.currentLicenceTerms = new Array<TermSource>();
-    this.currentProvinceTerms = new Array<TermSource>();
-    this.currentSubjectTerms = new Array<TermSource>();
+    this.currentDataBaseTerms = new Array<SourceClasification>();
+    this.currentGroupTerms = new Array<SourceClasification>();
+    this.currentInstitutionTerms = new Array<SourceClasification>();
+    this.currentLicenceTerms = new Array<SourceClasification>();
+    this.currentProvinceTerms = new Array<SourceClasification>();
+    this.currentSubjectTerms = new Array<SourceClasification>();
 
     this.vocabularies = VocabulariesInmutableNames;
 
-    if (this.currentJournal.data.term_sources) {
-      this.currentJournal.data.term_sources.forEach(
-        (termSource: TermSource) => {
-          switch (termSource.term.vocabulary_id.toString()) {
+    if (this.currentJournal.classifications) {
+      this.currentJournal.classifications.forEach(
+        (termSource: SourceClasification) => {
+          switch (termSource.vocabulary.toString()) {
             case VocabulariesInmutableNames.CUBAN_INTITUTIONS:
               this.currentInstitutionTerms.push(termSource);
               break;
@@ -113,70 +113,70 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
   }
 
   public replace() {
-    this.editingJournal.data = this.currentJournal.data;
-    // this.editingJournal.data.term_sources = [];
-    // this.editingJournal.data.term_sources = this.currentJournal.data.term_sources;
+    this.editingJournal = this.currentJournal;
+    // this.editingJournal.classifications = [];
+    // this.editingJournal.classifications = this.currentJournal.classifications;
     this.editingJournalChange.emit(this.editingJournal);
-    // // this.currentJournal.data.term_sources.forEach((termSource: TermSource) => {
+    // // this.currentJournal.classifications.forEach((termSource: SourceClasification) => {
 
-    // //     this.editingJournal.data.term_sources.push(termSource);
+    // //     this.editingJournal.classifications.push(termSource);
 
     // // });
     console.log("editingJournal remplazado", this.editingJournal);
   }
 
   /**
-   * Concats a `Journal` property by a equal property in `JournalVersion`.
+   * Concats a `Journal` property by a equal property in `JournalData`.
    * @param type is a `JournalDataType` enum, that means, `type` has all properties of a `Journal` enumerated as identifyer.
    * @param termId is a `Term` identifyer, only needs if `type` is `JournalDataType.term`.
    * @NOTE this function call `replace(..., true)`
    */
-  public concat(type: JournalDataType, termSource: TermSource) {
+  public concat(type: JournalDataType, termSource: SourceClasification) {
     if (type == JournalDataType.term) {
       let notFound = true;
       for (
         let index = 0;
-        index < this.editingJournal.data.term_sources.length;
+        index < this.editingJournal.classifications.length;
         index++
       ) {
-        const element = this.editingJournal.data.term_sources[index];
-        if (element.term_id == termSource.term_id) {
-          this.editingJournal.data.term_sources[index].data = termSource.data;
+        const element = this.editingJournal.classifications[index];
+        if (element.id == termSource.id) {
+          this.editingJournal.classifications[index].data = termSource.data;
           notFound = false;
         }
       }
       if (notFound) {
-        this.editingJournal.data.term_sources.push(termSource);
+        this.editingJournal.classifications.push(termSource);
       }
       this.editingJournalChange.emit(this.editingJournal);
     }
   }
   public replaceInstitutions() {
     let found = false;
-    let newts: TermSource[] = [];
+    let newts: SourceClasification[] = [];
 
-    this.editingJournal.data.term_sources.forEach(ts => {
+    this.editingJournal.classifications.forEach(ts => {
       if (
         !(
-          ts.term.vocabulary_id ==
+          ts.vocabulary ==
             VocabulariesInmutableNames.EXTRA_INSTITUTIONS ||
-          ts.term.vocabulary_id == VocabulariesInmutableNames.CUBAN_INTITUTIONS
+          ts.vocabulary == VocabulariesInmutableNames.CUBAN_INTITUTIONS
         )
       ) {
         newts.push(ts);
       }
     });
 
-    this.currentJournal.data.term_sources.forEach(ts => {
+    this.currentJournal.classifications.forEach(ts => {
       if (
-        ts.term.vocabulary_id ==
+        ts.vocabulary ==
           VocabulariesInmutableNames.EXTRA_INSTITUTIONS ||
-        ts.term.vocabulary_id == VocabulariesInmutableNames.CUBAN_INTITUTIONS
+        ts.vocabulary == VocabulariesInmutableNames.CUBAN_INTITUTIONS
       ) {
         newts.push(ts);
       }
     });
-    this.editingJournal.data.term_sources = newts;
+    this.editingJournal.classifications = newts;
 
     this.editingJournalChange.emit(this.editingJournal);
   }

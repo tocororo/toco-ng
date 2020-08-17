@@ -1,6 +1,6 @@
 
 import { Component, OnInit, OnChanges, Input, ViewChild } from '@angular/core';
-import { TermSource, VocabulariesInmutableNames, JournalVersion } from '@toco/tools/entities';
+import { SourceClasification, VocabulariesInmutableNames, JournalVersion, JournalData } from '@toco/tools/entities';
 import { SourceService } from '@toco/tools/backend';
 import { MatSnackBar } from '@angular/material';
 import { JournalInstitutionsComponent } from '../journal-institutions/journal-institutions.component';
@@ -16,20 +16,20 @@ import { JournalInstitutionsComponent } from '../journal-institutions/journal-in
 })
 export class JournalViewInfoComponent implements OnInit, OnChanges{
 
-    @Input() public journalVersion: JournalVersion;
+    @Input() public journalVersion: JournalData;
     @Input() public journalUUID: string;
 
-    /** TODO: In the future databaseTerms and subjectTerms will be changes by 
+    /** TODO: In the future databaseTerms and subjectTerms will be changes by
      *  miarTerms and subjectsUnescoTerms
-     *  public miarTerms: Array<TermSource>;
-     *  public subjectsUnescoTerms: Array<TermSource>;
+     *  public miarTerms: Array<SourceClasification>;
+     *  public subjectsUnescoTerms: Array<SourceClasification>;
      */
-    public institutionTerms: Array<TermSource>;
-    public dataBaseTerms: Array<TermSource>;
-    public groupTerms: Array<TermSource>;
-    public provinceTerms: Array<TermSource>;
-    public subjectTerms: Array<TermSource>;
-    public licenceTerms: Array<TermSource>;
+    public institutionTerms: Array<SourceClasification>;
+    public dataBaseTerms: Array<SourceClasification>;
+    public groupTerms: Array<SourceClasification>;
+    public provinceTerms: Array<SourceClasification>;
+    public subjectTerms: Array<SourceClasification>;
+    public licenceTerms: Array<SourceClasification>;
 
     public vocabularies: typeof VocabulariesInmutableNames;
     public panelOpenState = false;
@@ -51,23 +51,23 @@ export class JournalViewInfoComponent implements OnInit, OnChanges{
         this.loadJournalData();
     }
     loadJournalData(){
-        if (this.journalVersion == undefined) this.journalVersion = new JournalVersion();
-        
+        if (this.journalVersion == undefined) this.journalVersion = new JournalData();
 
-        this.dataBaseTerms = new Array<TermSource>();
-        this.groupTerms = new Array<TermSource>();
-        this.institutionTerms = new Array<TermSource>();
-        this.licenceTerms = new Array<TermSource>();
-        this.provinceTerms = new Array<TermSource>();
-        this.subjectTerms = new Array<TermSource>();
+
+        this.dataBaseTerms = new Array<SourceClasification>();
+        this.groupTerms = new Array<SourceClasification>();
+        this.institutionTerms = new Array<SourceClasification>();
+        this.licenceTerms = new Array<SourceClasification>();
+        this.provinceTerms = new Array<SourceClasification>();
+        this.subjectTerms = new Array<SourceClasification>();
 
         this.vocabularies = VocabulariesInmutableNames;
 
-        if (this.journalVersion.data.term_sources) {
+        if (this.journalVersion.classifications) {
 
-            this.journalVersion.data.term_sources.forEach((term: TermSource) => {
+            this.journalVersion.classifications.forEach((term: SourceClasification) => {
 
-                switch (term.term.vocabulary_id.toString()) {
+                switch (term.vocabulary.toString()) {
                     case VocabulariesInmutableNames.CUBAN_INTITUTIONS:
                     case VocabulariesInmutableNames.EXTRA_INSTITUTIONS:
                         this.institutionTerms.push(term);
@@ -95,7 +95,7 @@ export class JournalViewInfoComponent implements OnInit, OnChanges{
 
     editingJournalChange(newVersion: JournalVersion): void {
         console.log("*****llego....", newVersion, this.journalVersion);
-        
+
         this.loadJournalData();
         this.inst.ngOnChanges();
     }

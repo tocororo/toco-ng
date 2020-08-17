@@ -26,7 +26,7 @@ export class SourceOrganizationsComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.sourceData.organizations);
-    this.sourceData.organizations  = this.sourceData.organizations.filter((element) => element.organization && element.role);
+    this.sourceData.organizations  = this.sourceData.organizations.filter((element) => element && element.role);
     console.log(this.sourceData.organizations );
   }
 
@@ -38,10 +38,10 @@ export class SourceOrganizationsComponent implements OnInit {
         filter: cuban ? { type: "country", value: "Cuba" } : null,
         selectOrg: (org: Organization) => {
           if (
-            !this.sourceData.organizations.find((o) => o.organization.id == org.id)
+            !this.sourceData.organizations.find((o) => o.id == org.id)
           ) {
             let selected = new SourceOrganization();
-            selected.organization = org;
+            selected.deepcopy(org);
             selected.role = cuban
               ? SourceOrganizationRole.MAIN.value
               : SourceOrganizationRole.COLABORATOR.value;
@@ -54,7 +54,7 @@ export class SourceOrganizationsComponent implements OnInit {
 
   setAsMain(organization: Organization){
     this.sourceData.organizations.forEach(element => {
-      if(organization.id == element.organization.id){
+      if(organization.id == element.id){
         element.role = SourceOrganizationRole.MAIN.value
       } else {
         element.role = SourceOrganizationRole.COLABORATOR.value;
@@ -63,7 +63,7 @@ export class SourceOrganizationsComponent implements OnInit {
   }
 
   removeInst(organization: Organization){
-    this.sourceData.organizations = this.sourceData.organizations.filter((o) => o.organization.id != organization.id);
+    this.sourceData.organizations = this.sourceData.organizations.filter((o) => o.id != organization.id);
   }
 
 }
@@ -71,7 +71,7 @@ export class SourceOrganizationsComponent implements OnInit {
 @Component({
   selector: "toco-source-organizations-select-dialog",
   template: `<mat-dialog-content class="height-auto">
-    <toco-org-search 
+    <toco-org-search
       [orgFilter]="data.filter"
       (selectedOrg)="selectedOrg($event)"
     >

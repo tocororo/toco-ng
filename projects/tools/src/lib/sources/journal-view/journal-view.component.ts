@@ -10,7 +10,7 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { EnvService } from '@tocoenv/tools/env.service';
 
 import { MetadataService, MessageHandler, StatusCode } from '@toco/tools/core';
-import { Journal, TermSource, JournalVersion, VocabulariesInmutableNames } from '@toco/tools/entities';
+import { Journal, SourceClasification, JournalVersion, VocabulariesInmutableNames } from '@toco/tools/entities';
 
 export enum JournalDataType {
     /** is used by default, `Journal` have not that type of data. */
@@ -49,7 +49,7 @@ export class JournalViewComponent implements OnInit {
 
     public panelOpenState = false;
 
-    
+
     public defaultLogo = this.env.sceibaHost + 'static/favicon.ico'
 
     /**
@@ -64,7 +64,7 @@ export class JournalViewComponent implements OnInit {
     /**************** journal variables *******************/
 
     /**
-     * Represents a Journal Object, it is a type of Source. 
+     * Represents a Journal Object, it is a type of Source.
      */
     @Input()
     public journal: Journal;
@@ -81,10 +81,10 @@ export class JournalViewComponent implements OnInit {
     public selectedJournal: JournalVersion;
 
 
-    /** TODO: In the future databaseTerms and subjectTerms will be changes by 
+    /** TODO: In the future databaseTerms and subjectTerms will be changes by
      *  miarTerms and subjectsUnescoTerms
-     *  public miarTerms: Array<TermSource>;
-     *  public subjectsUnescoTerms: Array<TermSource>;
+     *  public miarTerms: Array<SourceClasification>;
+     *  public subjectsUnescoTerms: Array<SourceClasification>;
     */
 
 
@@ -102,7 +102,7 @@ export class JournalViewComponent implements OnInit {
 
 
     /**
-     * version.is_current = true 
+     * version.is_current = true
      */
     public currentJournal: JournalVersion;
 
@@ -111,7 +111,7 @@ export class JournalViewComponent implements OnInit {
 
     public showVersions = false;
 
-    
+
 
     constructor(
         private metadata: MetadataService,
@@ -142,7 +142,7 @@ export class JournalViewComponent implements OnInit {
                 if (journalVersion.is_current) {
                     this.currentJournal = journalVersion;
                     this.editingJournal = new JournalVersion();
-                    this.editingJournal.load_from_data(journalVersion);
+                    this.editingJournal.deepcopy(journalVersion);
                 }
             });
         }
@@ -211,7 +211,7 @@ export class JournalViewComponent implements OnInit {
 
             // load the selected journal
             let version = new JournalVersion();
-            version.load_from_data(this.journal.versions[this.selectedVersion]);
+            version.deepcopy(this.journal.versions[this.selectedVersion]);
             this.selectedJournal = version;
 
             // load if was viewed

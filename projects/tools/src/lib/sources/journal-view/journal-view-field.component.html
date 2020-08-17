@@ -11,119 +11,119 @@
     <ng-container [ngSwitch]="type">
         <ng-container *ngSwitchCase="journalDataType.title">
             <mat-label style="font-weight: bold;">Título:</mat-label>
-            <mat-label *ngIf="currentJournal.data.title"> {{currentJournal.data.title}} </mat-label>
-            <mat-label *ngIf="!currentJournal.data.title" class="text-muted text-through">Vacío</mat-label>
+            <mat-label *ngIf="currentJournal.title"> {{currentJournal.title}} </mat-label>
+            <mat-label *ngIf="!currentJournal.title" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.subtitle">
             <mat-label style="font-weight: bold;">Subtítulo:</mat-label>
-            <mat-label *ngIf="currentJournal.data.subtitle"> {{currentJournal.data.subtitle}} </mat-label>
-            <mat-label *ngIf="!currentJournal.data.subtitle" class="text-muted text-through">Vacío</mat-label>
+            <mat-label *ngIf="currentJournal.subtitle"> {{currentJournal.subtitle}} </mat-label>
+            <mat-label *ngIf="!currentJournal.subtitle" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.shortname">
             <mat-label style="font-weight: bold;">Nombre Abreviado:</mat-label>
-            <mat-label *ngIf="currentJournal.data.shortname"> {{currentJournal.data.shortname}} </mat-label>
-            <mat-label *ngIf="!currentJournal.data.shortname" class="text-muted text-through">Vacío</mat-label>
+            <mat-label *ngIf="currentJournal.shortname"> {{currentJournal.shortname}} </mat-label>
+            <mat-label *ngIf="!currentJournal.shortname" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.issnP">
             <mat-label style="font-weight: bold;">Impreso:</mat-label>
-            <mat-label *ngIf="currentJournal.data.issn.p"> {{currentJournal.data.issn.p}} </mat-label>
-            <mat-label *ngIf="!currentJournal.data.issn.p" class="text-muted text-through">Vacío</mat-label>
+            <mat-label *ngIf="currentJournal.issn.p"> {{currentJournal.issn.p}} </mat-label>
+            <mat-label *ngIf="!currentJournal.issn.p" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.issnE">
             <mat-label style="font-weight: bold;">Electrónico:</mat-label>
-            <mat-label *ngIf="currentJournal.data.issn.e"> {{currentJournal.data.issn.e}} </mat-label>
-            <mat-label *ngIf="!currentJournal.data.issn.e" class="text-muted text-through">Vacío</mat-label>
+            <mat-label *ngIf="currentJournal.issn.e"> {{currentJournal.issn.e}} </mat-label>
+            <mat-label *ngIf="!currentJournal.issn.e" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.issnL">
             <mat-label style="font-weight: bold;">De enlace:</mat-label>
-            <mat-label *ngIf="currentJournal.data.issn.l"> {{currentJournal.data.issn.l}} </mat-label>
-            <mat-label *ngIf="!currentJournal.data.issn.l" class="text-muted text-through">Vacío</mat-label>
+            <mat-label *ngIf="currentJournal.issn.l"> {{currentJournal.issn.l}} </mat-label>
+            <mat-label *ngIf="!currentJournal.issn.l" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.rnpsP">
             <mat-label style="font-weight: bold;">Impreso:</mat-label>
-            <mat-label *ngIf="currentJournal.data.rnps.p"> {{currentJournal.data.rnps.p}} </mat-label>
-            <mat-label *ngIf="!currentJournal.data.rnps.p" class="text-muted text-through">Vacío</mat-label>
+            <mat-label *ngIf="currentJournal.rnps.p"> {{currentJournal.rnps.p}} </mat-label>
+            <mat-label *ngIf="!currentJournal.rnps.p" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.rnpsE">
             <mat-label style="font-weight: bold;">Electrónico:</mat-label>
-            <mat-label *ngIf="currentJournal.data.rnps.e"> {{currentJournal.data.rnps.e}} </mat-label>
-            <mat-label *ngIf="!currentJournal.data.rnps.e" class="text-muted text-through">Vacío</mat-label>
+            <mat-label *ngIf="currentJournal.rnps.e"> {{currentJournal.rnps.e}} </mat-label>
+            <mat-label *ngIf="!currentJournal.rnps.e" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.url">
             <mat-label style="font-weight: bold;">URL:</mat-label>
-            <a href="{{currentJournal.data.url}}" target="_blanck" *ngIf="currentJournal.data.url"> {{currentJournal.data.url}} </a>
-            <mat-label *ngIf="!currentJournal.data.url" class="text-muted text-through">Vacío</mat-label>
+            <a href="{{currentJournal.url}}" target="_blanck" *ngIf="currentJournal.url"> {{currentJournal.url}} </a>
+            <mat-label *ngIf="!currentJournal.url" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.email">
             <mat-label style="font-weight: bold;">Email:</mat-label>
-            <mat-label *ngIf="currentJournal.data.email"> {{currentJournal.data.email}} </mat-label>
-            <mat-label *ngIf="!currentJournal.data.email" class="text-muted text-through">Vacío</mat-label>
+            <mat-label *ngIf="currentJournal.email"> {{currentJournal.email}} </mat-label>
+            <mat-label *ngIf="!currentJournal.email" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.purpose">
             <mat-label style="font-weight: bold;">Propósito:</mat-label>
-            <mat-label *ngIf="currentJournal.data.purpose"> {{currentJournal.data.purpose}} </mat-label>
-            <mat-label *ngIf="!currentJournal.data.purpose" class="text-muted text-through">Vacío</mat-label>
+            <mat-label *ngIf="currentJournal.purpose"> {{currentJournal.purpose}} </mat-label>
+            <mat-label *ngIf="!currentJournal.purpose" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.start_year">
             <mat-label style="font-weight: bold;">Año de Inicio:</mat-label>
-            <mat-label *ngIf="currentJournal.data.start_year"> {{currentJournal.data.start_year | date }} </mat-label>
-            <mat-label *ngIf="!currentJournal.data.start_year" class="text-muted text-through">Vacío</mat-label>
+            <mat-label *ngIf="currentJournal.start_year"> {{currentJournal.start_year | date }} </mat-label>
+            <mat-label *ngIf="!currentJournal.start_year" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.end_year">
             <mat-label style="font-weight: bold;">Año de Fin:</mat-label>
-            <mat-label *ngIf="currentJournal.data.end_year"> {{currentJournal.data.end_year | date }} </mat-label>
-            <mat-label *ngIf="!currentJournal.data.end_year" class="text-muted text-through">Vacío</mat-label>
+            <mat-label *ngIf="currentJournal.end_year"> {{currentJournal.end_year | date }} </mat-label>
+            <mat-label *ngIf="!currentJournal.end_year" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.frequency">
             <mat-label style="font-weight: bold;">Frecuencia de Publicación:</mat-label>
-            <mat-label *ngIf="currentJournal.data.frequency"> {{currentJournal.data.frequency}} </mat-label>
-            <mat-label *ngIf="!currentJournal.data.frequency" class="text-muted text-through">Vacío</mat-label>
+            <mat-label *ngIf="currentJournal.frequency"> {{currentJournal.frequency}} </mat-label>
+            <mat-label *ngIf="!currentJournal.frequency" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.seriadas_cubanas">
             <mat-label style="font-weight: bold;">Seriadas Cubanas:</mat-label>
-            <a href="{{currentJournal.data.seriadas_cubanas}}" target="_blanck" *ngIf="currentJournal.data.seriadas_cubanas"> {{currentJournal.data.seriadas_cubanas}} </a>
-            <mat-label *ngIf="!currentJournal.data.seriadas_cubanas" class="text-muted text-through">Vacío</mat-label>
+            <a href="{{currentJournal.seriadas_cubanas}}" target="_blanck" *ngIf="currentJournal.seriadas_cubanas"> {{currentJournal.seriadas_cubanas}} </a>
+            <mat-label *ngIf="!currentJournal.seriadas_cubanas" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.facebook">
             <mat-label style="font-weight: bold;">Facebook:</mat-label>
-            <a href="{{ currentJournal.data.socialNetworks.facebook }}" target="_blanck" *ngIf="currentJournal.data.socialNetworks.facebook"> {{currentJournal.data.socialNetworks.facebook}} </a>
-            <mat-label *ngIf="!currentJournal.data.socialNetworks.facebook" class="text-muted text-through">Vacío</mat-label>
+            <a href="{{ currentJournal.socialNetworks.facebook }}" target="_blanck" *ngIf="currentJournal.socialNetworks.facebook"> {{currentJournal.socialNetworks.facebook}} </a>
+            <mat-label *ngIf="!currentJournal.socialNetworks.facebook" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.twitter">
             <mat-label style="font-weight: bold;">Twitter:</mat-label>
-            <a href="{{ currentJournal.data.socialNetworks.twitter }}" target="_blanck" *ngIf="currentJournal.data.socialNetworks.twitter"> {{currentJournal.data.socialNetworks.twitter}} </a>
-            <mat-label *ngIf="!currentJournal.data.socialNetworks.twitter" class="text-muted text-through">Vacío</mat-label>
+            <a href="{{ currentJournal.socialNetworks.twitter }}" target="_blanck" *ngIf="currentJournal.socialNetworks.twitter"> {{currentJournal.socialNetworks.twitter}} </a>
+            <mat-label *ngIf="!currentJournal.socialNetworks.twitter" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.linkedin">
             <mat-label style="font-weight: bold;">Linkedin:</mat-label>
-            <a href="{{ currentJournal.data.socialNetworks.linkedin }}" target="_blanck" *ngIf="currentJournal.data.socialNetworks.linkedin"> {{currentJournal.data.socialNetworks.linkedin}} </a>
-            <mat-label *ngIf="!currentJournal.data.socialNetworks.linkedin" class="text-muted text-through">Vacío</mat-label>
+            <a href="{{ currentJournal.socialNetworks.linkedin }}" target="_blanck" *ngIf="currentJournal.socialNetworks.linkedin"> {{currentJournal.socialNetworks.linkedin}} </a>
+            <mat-label *ngIf="!currentJournal.socialNetworks.linkedin" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.description">
             <mat-label style="font-weight: bold;">Descripción:</mat-label>
-            <mat-label *ngIf="!currentJournal.data.description" class="text-muted text-through">Vacío</mat-label>
+            <mat-label *ngIf="!currentJournal.description" class="text-muted text-through">Vacío</mat-label>
         </ng-container>
 
     </ng-container>
 
-    <!-- <mat-icon class="mat-18" color="accent" *ngIf="currentJournal.data && currentJournal.data.subtitle !== '' && currentJournal.data.subtitle !== currentcurrentJournal.data.subtitle" matTooltip="Tiene cambios">notifications</mat-icon> -->
+    <!-- <mat-icon class="mat-18" color="accent" *ngIf="currentJournal.data && currentJournal.subtitle !== '' && currentJournal.subtitle !== currentcurrentJournal.subtitle" matTooltip="Tiene cambios">notifications</mat-icon> -->
 
 </div>
