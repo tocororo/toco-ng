@@ -15,7 +15,8 @@ export class SourceResolver implements Resolve<Source>
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
         let uuid = route.paramMap.get('uuid');
-        return this.service.getSourceByUUIDWithVersions(uuid).pipe(
+        // return this.service.getSourceByUUIDWithVersions(uuid).pipe(
+        return this.service.getSourceByUUID(uuid).pipe(
             take(1),
             map(node => {
                 if (node) {

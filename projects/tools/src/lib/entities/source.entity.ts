@@ -6,7 +6,7 @@
 
 
 
-import { Entity, EntityBase, Identifier } from './common';
+import { Entity, EntityBase } from './common';
 import { TermNode, Term } from './taxonomy.entity';
 import { Organization } from './organization.entity';
 
@@ -67,7 +67,7 @@ export class  SavingInfoSchema extends EntityBase {
 }
 
 export class SourceData extends Entity {
-    identifiers: Array<Identifier> = new Array<Identifier>();
+    name = '';
     title = '';
     description ?= '';
     // term_sources ?: Array<TermSource> = new Array<TermSource>();
@@ -80,6 +80,8 @@ export class SourceData extends Entity {
     _save_info: SavingInfoSchema = new SavingInfoSchema();
 
     reviewed = false;
+
+    versions? : Array<SourceVersion>;
 }
 
 // export class TermSource extends EntityBase {
@@ -91,7 +93,7 @@ export class SourceData extends Entity {
 
 export class SourceVersion extends Entity {
     user_id = '';
-    source_id = '';
+    source_uuid = '';
     comment = '';
     created_at = new Date();
     is_current = false;

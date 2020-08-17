@@ -1,5 +1,5 @@
 <!-- Journal Information -->
-<mat-card *ngIf="journalUUID">
+<mat-card *ngIf="journalVersion">
   <mat-card-header style="margin-top: 1em;">
     <!-- <img mat-card-avatar *ngIf="journal.data.logo; else logotemplate" [style.background-size]="'cover'" src="journal.data.logo">
         <ng-template #logotemplate>
@@ -7,16 +7,7 @@
         </ng-template> -->
 
     <mat-card-title>
-      <mat-label style="font-weight: bold;">Título:</mat-label>
-
-      <mat-label *ngIf="journalVersion.title">
-        {{ journalVersion.title }}
-      </mat-label>
-      <mat-label
-        *ngIf="!journalVersion.title"
-        class="text-muted text-through"
-        >Vacío</mat-label
-      >
+      <toco-journal-view-info-field [label]="'Título'" [value]="journalVersion.title"></toco-journal-view-info-field>
     </mat-card-title>
 
     <mat-card-subtitle>
@@ -28,143 +19,54 @@
 
   <mat-card-content>
     <p>
-      <mat-label style="font-weight: bold;">Subtítulo:</mat-label>
-      <mat-label *ngIf="journalVersion.subtitle">
-        {{ journalVersion.subtitle }}
-      </mat-label>
-      <mat-label
-        *ngIf="!journalVersion.subtitle"
-        class="text-muted text-through"
-        >Vacío</mat-label
-      >
+      <toco-journal-view-info-field [label]="'Subtítulo'" [value]="journalVersion.subtitle"></toco-journal-view-info-field>
     </p>
 
     <p>
-      <mat-label style="font-weight: bold;">Nombre Abreviado:</mat-label>
-      <mat-label *ngIf="journalVersion.shortname">
-        {{ journalVersion.shortname }}
-      </mat-label>
-      <mat-label
-        *ngIf="!journalVersion.shortname"
-        class="text-muted text-through"
-        >Vacío</mat-label
-      >
+      <toco-journal-view-info-field [label]="'Nombre Abreviado'" [value]="journalVersion.shortname"></toco-journal-view-info-field>
     </p>
 
     <mat-label style="font-weight: bold;">ISSN: </mat-label>
     <div style="margin-left: .8em;">
       <p>
-        <mat-label style="font-weight: bold;">Impreso: </mat-label>
-        <mat-label *ngIf="journalVersion.issn.p">
-          {{ journalVersion.issn.p }}
-        </mat-label>
-        <mat-label
-          *ngIf="!journalVersion.issn.p"
-          class="text-muted text-through"
-          >Vacío</mat-label
-        >
+        <toco-journal-view-info-field [label]="'Impreso'" [value]="getIdentifier(IdentifierSchemas.pissn)"></toco-journal-view-info-field>
       </p>
       <p>
-        <mat-label style="font-weight: bold;">Electrónico:</mat-label>
-        <mat-label *ngIf="journalVersion.issn.e">
-          {{ journalVersion.issn.e }}
-        </mat-label>
-        <mat-label
-          *ngIf="!journalVersion.issn.e"
-          class="text-muted text-through"
-          >Vacío</mat-label
-        >
+        <toco-journal-view-info-field [label]="'Electrónico'" [value]="getIdentifier(IdentifierSchemas.eissn)"></toco-journal-view-info-field>
       </p>
       <p>
-        <mat-label style="font-weight: bold;">De enlace:</mat-label>
-        <mat-label *ngIf="journalVersion.issn.l">
-          {{ journalVersion.issn.l }}
-        </mat-label>
-        <mat-label
-          *ngIf="!journalVersion.issn.l"
-          class="text-muted text-through"
-          >Vacío</mat-label
-        >
+        <toco-journal-view-info-field [label]="'De enlace'" [value]="getIdentifier(IdentifierSchemas.lissn)"></toco-journal-view-info-field>
       </p>
     </div>
     <mat-label style="font-weight: bold;">RNPS: </mat-label>
     <div style="margin-left: .8em;">
       <p>
-        <mat-label style="font-weight: bold;"> Impreso: </mat-label>
-        <mat-label *ngIf="journalVersion.rnps">
-          {{ journalVersion.rnps.p }}
-        </mat-label>
-        <mat-label
-          *ngIf="!journalVersion.rnps"
-          class="text-muted text-through"
-          >Vacío</mat-label
-        >
+        <toco-journal-view-info-field [label]="'Impreso'" [value]="getIdentifier(IdentifierSchemas.prnps)"></toco-journal-view-info-field>
       </p>
       <p>
-        <mat-label style="font-weight: bold;"> Electrónico: </mat-label>
-        <mat-label *ngIf="journalVersion.rnps">
-          {{ journalVersion.rnps.e }}
-        </mat-label>
-        <mat-label
-          *ngIf="!journalVersion.rnps"
-          class="text-muted text-through"
-          >Vacío</mat-label
-        >
+        <toco-journal-view-info-field [label]="'Electrónico'" [value]="getIdentifier(IdentifierSchemas.ernps)"></toco-journal-view-info-field>
       </p>
     </div>
 
     <p>
-      <mat-label style="font-weight: bold;"> URL: </mat-label>
-      <mat-label *ngIf="journalVersion.url">
-        {{ journalVersion.url }}</mat-label
-      >
-      <mat-label
-        *ngIf="!journalVersion.url"
-        class="text-muted text-through"
-        >Vacío</mat-label
-      >
+      <toco-journal-view-info-field [label]="'URL'" [value]="journalVersion.url"></toco-journal-view-info-field>
     </p>
 
     <p>
-      <mat-label style="font-weight: bold;"> Email: </mat-label>
-      <mat-label *ngIf="journalVersion.email">
-        {{ journalVersion.email }}
-      </mat-label>
-      <mat-label
-        *ngIf="!journalVersion.email"
-        class="text-muted text-through"
-        >Vacío</mat-label
-      >
+      <toco-journal-view-info-field [label]="'Email'" [value]="journalVersion.email"></toco-journal-view-info-field>
     </p>
 
     <p>
-      <mat-label style="font-weight: bold;"> Seriadas Cubanas: </mat-label>
-      <a
-        *ngIf="journalVersion.seriadas_cubanas"
-        href="journalVersion.seriadas_cubanas"
-        >{{ journalVersion.seriadas_cubanas }}</a
-      >
-      <mat-label
-        *ngIf="!journalVersion.seriadas_cubanas"
-        class="text-muted text-through"
-        >Vacío</mat-label
-      >
+      <toco-journal-view-info-field [label]="'Seriadas Cubanas'" [value]="journalVersion.seriadas_cubanas"></toco-journal-view-info-field>
     </p>
 
     <p>
-      <mat-label style="font-weight: bold;"> Propósito: </mat-label>
-      <mat-label *ngIf="journalVersion.purpose">
-        {{ journalVersion.purpose }}
-      </mat-label>
-      <mat-label
-        *ngIf="!journalVersion.purpose"
-        class="text-muted text-through"
-        >Vacío</mat-label
-      >
+      <toco-journal-view-info-field [label]="'Propósito'" [value]="journalVersion.purpose"></toco-journal-view-info-field>
     </p>
 
     <p>
-      <mat-label style="font-weight: bold;"> Año de Inicio: </mat-label>
+      <toco-journal-view-info-field [label]="'Año de Inicio'" [value]="journalVersion.start_year | date"></toco-journal-view-info-field>
+            <!-- <mat-label style="font-weight: bold;"> Año de Inicio: </mat-label>
       <mat-label *ngIf="journalVersion.start_year">
         {{ journalVersion.start_year | date }}
       </mat-label>
@@ -172,33 +74,15 @@
         *ngIf="!journalVersion.start_year"
         class="text-muted text-through"
         >Vacío</mat-label
-      >
+      > -->
     </p>
 
     <p>
-      <mat-label style="font-weight: bold;"> Año de Fin: </mat-label>
-      <mat-label *ngIf="journalVersion.end_year">
-        {{ journalVersion.end_year | date }}
-      </mat-label>
-      <mat-label
-        *ngIf="!journalVersion.end_year"
-        class="text-muted text-through"
-        >Vacío</mat-label
-      >
+      <toco-journal-view-info-field [label]="'Año de Fin'" [value]="journalVersion.end_year | date"></toco-journal-view-info-field>
     </p>
 
     <p>
-      <mat-label style="font-weight: bold;">
-        Frecuencia de Publicación:
-      </mat-label>
-      <mat-label *ngIf="journalVersion.frequency">
-        {{ journalVersion.frequency }}
-      </mat-label>
-      <mat-label
-        *ngIf="!journalVersion.frequency"
-        class="text-muted text-through"
-        >Vacío</mat-label
-      >
+      <toco-journal-view-info-field [label]="'Frecuencia de Publicación'" [value]="journalVersion.frequency"></toco-journal-view-info-field>
     </p>
     <mat-label style="font-weight: bold;"> Descripción:</mat-label>
     <mat-label
@@ -215,37 +99,13 @@
     <mat-label style="font-weight: bold;">Redes Sociales:</mat-label>
     <div style="margin-left: .8em;">
       <p>
-        <mat-label style="font-weight: bold;"> Facebook: </mat-label>
-        <mat-label *ngIf="journalVersion.socialNetworks.facebook">
-          {{ journalVersion.socialNetworks.facebook }}
-        </mat-label>
-        <mat-label
-          *ngIf="!journalVersion.socialNetworks.facebook"
-          class="text-muted text-through"
-          >Vacío</mat-label
-        >
+        <toco-journal-view-info-field [label]="'Facebook'" [value]="journalVersion.socialNetworks.facebook"></toco-journal-view-info-field>
       </p>
       <p>
-        <mat-label style="font-weight: bold;"> Twitter: </mat-label>
-        <mat-label *ngIf="journalVersion.socialNetworks.twitter">
-          {{ journalVersion.socialNetworks.twitter }}
-        </mat-label>
-        <mat-label
-          *ngIf="!journalVersion.socialNetworks.twitter"
-          class="text-muted text-through"
-          >Vacío</mat-label
-        >
+        <toco-journal-view-info-field [label]="'Twitter'" [value]="journalVersion.socialNetworks.twitter"></toco-journal-view-info-field>
       </p>
       <p>
-        <mat-label style="font-weight: bold;"> Linkedin: </mat-label>
-        <mat-label *ngIf="journalVersion.socialNetworks.linkedin">
-          {{ journalVersion.socialNetworks.linkedin }}
-        </mat-label>
-        <mat-label
-          *ngIf="!journalVersion.socialNetworks.linkedin"
-          class="text-muted text-through"
-          >Vacío</mat-label
-        >
+        <toco-journal-view-info-field [label]="'Linkedin'" [value]="journalVersion.socialNetworks.linkedin"></toco-journal-view-info-field>
       </p>
     </div>
 

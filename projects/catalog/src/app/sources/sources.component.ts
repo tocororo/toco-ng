@@ -6,6 +6,8 @@ import { map } from 'rxjs/operators';
 import { SortDirection, PageRequest, Page, UserService, Response, ResponseStatus } from '@toco/tools/core';
 import { SourceService } from '@toco/tools/backend';
 import { TableContent, TableComponent, CellContentWrap, InputTextComponent, InputContent, TextAlign, TextInputAppearance, IconValue, IconSource, ContentPosition, HintValue, HintPosition } from '@toco/tools/forms';
+import { HttpParams } from '@angular/common/http';
+import { SearchResponse, SourceData } from '@toco/tools/entities';
 
 @Component({
     selector: 'toco-sources',
@@ -71,19 +73,19 @@ export class SourcesComponent implements OnInit
     private _initTableContent(): TableContent<any>
     {
         return {
-            'columnsObjectProperty': ['name', 'source_status', 'version_to_review'],
-            //'columnsObjectProperty': ['id', 'name', 'registrationDate'],
+            'columnsObjectProperty': ['title', 'source_status', 'version_to_review'],
+            // 'columnsObjectProperty': ['id', 'created', 'revision'],
             'columnsHeaderText': ['Nombre', 'Estatus', 'Acciones'],
             //'columnsHeaderText': ['id', 'name', 'registrationDate'],
-            'columnsWidth': ['60%', '22%', '18%'],
-            'columnContentWrap': [CellContentWrap.ellipsis, CellContentWrap.ellipsis, CellContentWrap.responsible],
+            'columnsWidth': ['60%', '20%', '20%'],
+            'columnContentWrap': [CellContentWrap.ellipsis, CellContentWrap.ellipsis, CellContentWrap.ellipsis, CellContentWrap.responsible],
             'createCssClassesForRow': (rowData: any) => {
                 return {
                     'new-release': rowData['version_to_review'],
                     'selected-row': (rowData[this.tableContent.propertyNameToIdentify]) == this._tableControl.selectedRow
                 };
             },
-            'propertyNameToIdentify': 'uuid',
+            'propertyNameToIdentify': 'id',
             //'propertyNameToIdentify': 'id',
 
             // 'filter': {
@@ -112,13 +114,22 @@ export class SourcesComponent implements OnInit
 
     private _getMySources(pageRequest: PageRequest): Observable<Page<any>>
     {
-        return this._souceService.getMySources(pageRequest.paginator.pageSize, (pageRequest.paginator.pageIndex + 1)).pipe(
-            map((response: Response<any>): Page<any> => {
+        let searchParams = new HttpParams();
+        searchParams = searchParams.set("size", pageRequest.paginator.pageSize.toString());
+        searchParams = searchParams.set("page", (pageRequest.paginator.pageIndex + 1).toString());
+
+        return this._souceService.searchSources(searchParams).pipe(
+            map((response: SearchResponse<SourceData>): Page<any> => {
                 console.log('Sources Response: ', response);
-                if (response && response.status != ResponseStatus.ERROR){
+                if (response){
+                    console.log(response.hits.hits);
+                    let data = new Array<SourceData>(response.hits.hits.length);
+                    for (let index = 0; index < response.hits.hits.length; index++) {
+                        data[index] = response.hits.hits[index].metadata;
+                    }
                     return {
-                        'data': response.data.sources.sources,
-                        'totalData': response.data.sources.count,
+                        'data': data,
+                        'totalData': response.hits.total,
                         'pageIndex': pageRequest.paginator.pageIndex,
                         'pageSize': pageRequest.paginator.pageSize
                     };

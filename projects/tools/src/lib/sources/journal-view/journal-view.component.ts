@@ -10,7 +10,7 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { EnvService } from '@tocoenv/tools/env.service';
 
 import { MetadataService, MessageHandler, StatusCode } from '@toco/tools/core';
-import { Journal, SourceClasification, JournalVersion, VocabulariesInmutableNames } from '@toco/tools/entities';
+import { Journal, SourceClasification, JournalVersion, VocabulariesInmutableNames, JournalData } from '@toco/tools/entities';
 
 export enum JournalDataType {
     /** is used by default, `Journal` have not that type of data. */
@@ -67,7 +67,7 @@ export class JournalViewComponent implements OnInit {
      * Represents a Journal Object, it is a type of Source.
      */
     @Input()
-    public journal: Journal;
+    public journal: JournalData;
 
 
 
@@ -134,7 +134,7 @@ export class JournalViewComponent implements OnInit {
 
         this.SelectJournalVersion();
 
-        this.metadata.setTitleDescription('Revista Científica ' + this.journal.data.title, this.journal.data.description);
+        this.metadata.setTitleDescription('Revista Científica ' + this.journal.title, this.journal.description);
 
         if (! this.editingJournal){
             this.journal.versions.forEach((journalVersion: JournalVersion, index: number) => {

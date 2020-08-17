@@ -307,7 +307,7 @@ export class CatalogComponent implements OnInit, OnChanges{
 
   public fetchJournalData() {
     this.loading = true;
-    this.searchService.getSources(this.searchParams).subscribe(
+    this.sourceService.searchSources(this.searchParams).subscribe(
       values => {
         this.length = values.hits.total;
 

@@ -4,14 +4,24 @@
  */
 
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams,
+  HttpBackend,
+} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { OAuthStorage } from "angular-oauth2-oidc";
 
 import { EnvService } from "@tocoenv/tools/env.service";
 
 import { Response } from "@toco/tools/core";
-import { SourceVersion } from "@toco/tools/entities";
+import {
+  SourceVersion,
+  SearchResponse,
+  SourceData,
+  Hit,
+} from "@toco/tools/entities";
 import { stringToKeyValue } from "@angular/flex-layout/extended/typings/style/style-transforms";
 
 @Injectable()
@@ -26,13 +36,23 @@ export class SourceService {
   };
 
   private token = "";
-
+  httpSearch: HttpClient;
   constructor(
     private env: EnvService,
     private http: HttpClient,
+    private handler: HttpBackend,
     private oauthStorage: OAuthStorage
   ) {
     this.token = this.oauthStorage.getItem("access_token");
+
+    // TODO: hay una mejor manera de hacer esto, creando diferentes y propios HttpClients que
+    // tengan un comportamiento especifico (eg: sin/con autenticacion)
+    // ver: https://github.com/angular/angular/issues/20203#issuecomment-369754776
+    // otra solucion seria pasar parametros especiales como {ignore_auth = true} y que el
+    // interceptor actue en consecuencia... .
+    // https://github.com/angular/angular/issues/18155#issuecomment-382438006
+
+    this.httpSearch = new HttpClient(handler);
   }
 
   getMySources(size: number = 10, page: number = 1): Observable<Response<any>> {
@@ -107,10 +127,10 @@ export class SourceService {
     return this.http.get<Response<any>>(req);
   }
 
-  getSourceByUUID(uuid): Observable<any> {
+  getSourceByUUID(uuid): Observable<Hit<SourceData>> {
     // const req = this.env.sceibaApi + this.prefix + "/" + uuid;
-    const req = this.env.sceibaApi + 'sources' + "/" + uuid;
-    return this.http.get<any>(req);
+    const req = this.env.sceibaApi + "sources" + "/" + uuid;
+    return this.http.get<Hit<SourceData>>(req);
   }
 
   getSourcesByTermUUID(uuid): Observable<Response<any>> {
@@ -118,7 +138,7 @@ export class SourceService {
     return this.http.get<Response<any>>(req);
   }
 
-  getSourceByUUIDWithVersions(uuid): Observable<Response<any>> {
+  getSourceVersions(uuid): Observable<Response<any>> {
     this.httpOptions.headers = this.httpOptions.headers.set(
       "Authorization",
       "Bearer " + this.token
@@ -140,5 +160,15 @@ export class SourceService {
     const req =
       this.env.sceibaApi + this.prefix + "/relations/" + uuid + "/count";
     return this.http.get<Response<any>>(req, options);
+  }
+
+  searchSources(params: HttpParams): Observable<SearchResponse<SourceData>> {
+    const options = {
+      params: params,
+      // headers: this.headers
+    };
+    console.log(params);
+    const req = this.env.sceibaApi + "sources";
+    return this.httpSearch.get<SearchResponse<SourceData>>(req, options);
   }
 }

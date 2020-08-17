@@ -177,7 +177,7 @@ export class JournalInclusionComponent implements OnInit {
             if (response.data && response.data.sources.count === 1) {
               console.log(response.data);
               this.sourceService
-                .getSourceByUUIDWithVersions(response.data.sources.data[0].uuid)
+                .getSourceVersions(response.data.sources.data[0].uuid)
                 .subscribe(
                   response => {
                     console.log(response);

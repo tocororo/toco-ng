@@ -15,7 +15,7 @@ import { JournalViewComponent } from './journal-view/journal-view.component';
 import { JournalEditComponent, JournalEditAddIndexComponent } from './journal-edit/journal-edit.component';
 import { JournalInclusionComponent, JournalInclusionAcceptComponent } from './journal-inclusion/journal-inclusion.component';
 import { JournalViewTermComponent } from './journal-view/journal-view-version-term.component';
-import { JournalViewInfoComponent } from './journal-view/journal-view-info.component';
+import { JournalViewInfoComponent, JournalViewInfoFieldComponent } from './journal-view/journal-view-info.component';
 import { JournalViewFieldComponent } from './journal-view/journal-view-version-field.component';
 import { JournalViewVersionComponent } from './journal-view/journal-view-version.component';
 import { CoreModule } from '../core';
@@ -35,6 +35,7 @@ import { OrganizationsModule } from '../organizations';
         JournalViewComponent,
         JournalViewTermComponent,
         JournalViewInfoComponent,
+        JournalViewInfoFieldComponent,
         JournalViewFieldComponent,
         JournalEditComponent,
         JournalInclusionComponent,
