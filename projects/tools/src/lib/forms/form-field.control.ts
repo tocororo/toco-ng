@@ -546,7 +546,6 @@ export abstract class FormFieldControl
         if (this.content.label == undefined) this.content.label = label;
 
         /************************** Internal control properties. **************************/
-        if (this.content.required == undefined) this.content.required = false;
         if (this.content.textAlign == undefined) this.content.textAlign = TextAlign.left;
         if (this.content.ariaLabel == undefined) this.content.ariaLabel = label;
         if (this.content.value != undefined)  /* It does not set the default value here (does not call `getDefaultValue` method here) because in this way it is more consistent. */
@@ -595,7 +594,7 @@ export abstract class FormFieldControl
 
         /* Adds the specified `internalControl` as a child to the `content.parentFormSection`. */
 
-        if(this.content.parentContainerControl.isDynamic)  /* `content.parentFormSection` is an instance of `FormArray`. */
+        if(this.content.parentContainerControl.isFormArray)  /* `content.parentFormSection` is an instance of `FormArray`. */
         {
             /* The `internalControl`'s name is already correct, that is, 
             `content.name` equals the `content.parentFormSection`'s last position 

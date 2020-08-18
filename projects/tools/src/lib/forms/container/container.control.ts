@@ -44,8 +44,18 @@ export interface ContainerContent extends FormFieldContent
      */
     formSectionContent?: any[];
 
+
+
     /**
-     * Returns true if the container must always show its first child control, 
+     * Returns true if the container control has a dynamic length, that is, the `content.formSection` field 
+     * represents a `FormArray` and its length is not fixed; otherwise, false. 
+     * This field has sense only when the `content.formSection` field represents a `FormArray`. 
+     * By default, its value is `true`. 
+     */
+    isDynamic?: boolean;
+
+    /**
+     * Returns true if the container control must always show its first child control, 
      * independently if there is or is not a value to show; otherwise, false. 
      * This field has sense only when the `content.formSection` field represents a `FormArray`. 
      * By default, its value is `false`. 
@@ -84,11 +94,11 @@ export abstract class ContainerControl extends FormFieldControl
     private _formArrayPatternValue: any;
 
     /**
-     * Returns true if the container control is dynamic, that is, the `content.formSection` field 
+     * Returns true if the container control is a `FormArray`, that is, the `content.formSection` field 
      * represents a `FormArray`; otherwise, false. 
      * By default, its value is `false`. 
      */
-    private _isDynamic: boolean;
+    private _isFormArray: boolean;
 
     /**
      * Constructs a new instance of this class. 
@@ -99,7 +109,7 @@ export abstract class ContainerControl extends FormFieldControl
 
         this._formArrayPatternContent = undefined;
         this._formArrayPatternValue = undefined;
-        this._isDynamic = false;
+        this._isFormArray = false;
     }
 
     /**
@@ -124,11 +134,16 @@ export abstract class ContainerControl extends FormFieldControl
             throw new Error(`For the '${ this.content.name }' control, the 'content.formSectionContent' array can not be undefined, and must have at least one element.`);
         }
 
-        this._isDynamic = this.content.formSection instanceof FormArray;
+        this._isFormArray = this.content.formSection instanceof FormArray;
+        if (this.content.isDynamic == undefined) this.content.isDynamic = this._isFormArray;  /* By default, its value is `true`. */
+        else if ((!this._isFormArray) && (this.content.isDynamic))
+        {
+            throw new Error(`For the '${ this.content.name }' control, the 'content.isDynamic' value must be false because the 'content.formSection' value is a 'FormGroup'.`);
+        }
 
         this._setParentToChildren();
 
-        if (this._isDynamic)
+        if (this._isFormArray)
         {
             if ((this.content.value == undefined) || (this.content.value.length == 0))
             {
@@ -309,13 +324,22 @@ export abstract class ContainerControl extends FormFieldControl
     }
 
     /**
-     * Returns true if the container control is dynamic, that is, the `content.formSection` field 
-     * represents a `FormArray`; otherwise, false. 
-     * By default, its value is `false`. 
+     * Returns true if the container control has a dynamic length, that is, the `content.formSection` field 
+     * represents a `FormArray` and its length is not fixed; otherwise, false. 
+     * This property has sense only when the `content.formSection` field represents a `FormArray`. 
      */
     public get isDynamic(): boolean
     {
-        return this._isDynamic;
+        return this.content.isDynamic;
+    }
+
+    /**
+     * Returns true if the container control is a `FormArray`, that is, the `content.formSection` field 
+     * represents a `FormArray`; otherwise, false. 
+     */
+    public get isFormArray(): boolean
+    {
+        return this._isFormArray;
     }
 
 	/**
@@ -335,7 +359,7 @@ export abstract class ContainerControl extends FormFieldControl
 	{
         console.log('addToFormArray');
 
-        if (this._isDynamic)
+        if (this._isFormArray)
         {
             this._initOneElemFormSectionContentToFormArray(this._formArrayPatternValue);
         }
@@ -355,7 +379,7 @@ export abstract class ContainerControl extends FormFieldControl
 	{
         console.log('removeFromFormArray', index);
 
-        if (this._isDynamic)
+        if (this._isFormArray)
         {
             this.content.containerControlChildren.splice(index, 1);
             this.content.formSectionContent.splice(index, 1);
@@ -378,7 +402,7 @@ export abstract class ContainerControl extends FormFieldControl
 	{
         console.log('clearFormArray');
 
-        if (this._isDynamic)
+        if (this._isFormArray)
         {
             this.content.containerControlChildren = [ ];
             this.content.formSectionContent = [ ];

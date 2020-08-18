@@ -187,6 +187,9 @@ export abstract class InputControl extends FormFieldControl
         let temp: string = (isAbbreviation) ? this.content.label : this.content.label.toLowerCase();
         this.validationError_required = `You must write a valid ${ temp }.`;
 
+        /************************** Internal control properties. **************************/
+        if (this.content.required == undefined) this.content.required = false;
+
         /************************** `mat-form-field` properties. **************************/
         if (this.content.appearance == undefined) this.content.appearance = TextInputAppearance.standard;
 
