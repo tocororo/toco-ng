@@ -25,6 +25,23 @@ export type Params<T> = {
 export const emptyString: string = '';
 
 /**
+ * Returns true if the specified `possDescendant` is descendant from the specified `ancestorName`; 
+ * otherwise, false. 
+ * @param possDescendant Possible descendant. 
+ * @param ancestorName Ancestor name. 
+ */
+export function isDescendant(possDescendant: any, ancestorName: string): boolean
+{
+    do
+    {
+        if (possDescendant.name == ancestorName) return true;
+    }
+    while((possDescendant = possDescendant.__proto__).name != '');
+
+    return false;
+}
+
+/**
  * Returns a new value that represents the clone of the specified `target` value, and 
  * sets all its properties/values of built-in type to `undefined`. 
  * Implementation notes: 
@@ -39,6 +56,7 @@ export function cloneValueToUndefined(target: any): any
     if (isArray(target))
     {
         return _cloneValueToUndefined(target, [ ]);
+//        return [ ];
     }
     else if (isObject(target))
     {
@@ -61,6 +79,7 @@ function _cloneValueToUndefined(target: any, container: any): any
         if (isArray(temp))
         {
             container[prop] = _cloneValueToUndefined(temp, [ ]);
+//            container[prop] = [ ];
         }
         else if (isObject(temp))
         {

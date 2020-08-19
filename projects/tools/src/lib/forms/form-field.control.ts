@@ -6,13 +6,14 @@
 
 import { Input, Type } from '@angular/core';
 import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
-import { isObject } from 'util';
 
-import { Params, emptyString } from '@toco/tools/core';
+import { Params, emptyString, isDescendant } from '@toco/tools/core';
 import { IconService } from '@toco/tools/core';
 
-import { InputTextComponent } from './input/text/text-input.component';
 import { ContainerControl } from './container/container.control';
+
+abstract class InputControl
+{ }
 
 /**
  * Defines a form section that represents the `FormGroup` or `FormArray` class. 
@@ -365,14 +366,14 @@ export interface FormFieldContent
 
 
     /**
-     * Returns the control's type. 
-     * By default, its value is `FormFieldType.text` or `InputTextComponent` respectively. 
+     * Returns the control's type that is used to create the control. 
+     * This field is obligatory, and each control sets its own type. 
      */
     type?: FormFieldType;
     componentType?: Type<any>;
 
 	/**
-	 * Returns the name that is used to save the control's value as a name/value pair. 
+	 * Returns the control's name that is used to save the control's value as a name/value pair. 
      * It can be used with a JSON string. 
 	 * By default, its value is `'name'`. Each control sets its own name. 
 	 */
@@ -463,10 +464,14 @@ export function cloneContent(target: Params<any>, value: any): any
             case 'formSectionContent':
             {
                 result[prop] = [ ];
-                for(let content of target.formSectionContent)
-                {
-                    result[prop].push(cloneContent(content, value[content.name]));
-                }
+
+//                if (target.formSection instanceof FormGroup)
+//                {
+                    for(let content of target.formSectionContent)
+                    {
+                        result[prop].push(cloneContent(content, value[content.name]));
+                    }
+//                }
                 break;
             }
 
@@ -480,7 +485,7 @@ export function cloneContent(target: Params<any>, value: any): any
     }
 
     /* If this content (`result`) represents a `FormControl`, then the `value` field is initialized. */
-    if (!isObject(value)) result['value'] = value;
+    if (isDescendant(target.componentType.__proto__, InputControl.name)) result['value'] = value;
 
     return result;
 }
@@ -515,7 +520,7 @@ export abstract class FormFieldControl
         this.iconSource = IconSource;
 
         /* It must be initialize. */
-        this.content = { };
+        this.content = undefined;
     }
 
     /**
@@ -528,6 +533,11 @@ export abstract class FormFieldControl
     {
         /* Sets the default values. */
 
+        if (this.content == undefined)
+        {
+            throw new Error(`For the '${ FormFieldControl.name }' control, the 'content' value can not be undefined.`);
+        }
+
         if (label == undefined)
         {
             if (this.content.label == undefined)
@@ -536,6 +546,11 @@ export abstract class FormFieldControl
             }
 
             label = this.content.label;
+        }
+
+        if (this.content.componentType == undefined)
+        {
+            throw new Error(`For the '${ this.content.name }' control, the 'content.componentType' value can not be undefined.`);
         }
 
         /************************** `mat-form-field` properties. **************************/
@@ -555,8 +570,6 @@ export abstract class FormFieldControl
         }
 
         /******************************* Other properties. ********************************/
-        if (this.content.type == undefined) this.content.type = FormFieldType.text;
-//        if (this.content.componentType == undefined) this.content.componentType = InputTextComponent;
         if (this.content.name == undefined) this.content.name = label.toLowerCase().replace(/ /g, '_');  /* Sets the `name` in lowercase and replaces the spaces by underscores. */
     }
 

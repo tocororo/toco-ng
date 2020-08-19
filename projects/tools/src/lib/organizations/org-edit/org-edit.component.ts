@@ -125,7 +125,7 @@ export class OrgEditComponent implements OnInit
 					'multiple': false
 				},
 
-//				this._initIdentifiersContent('Organization Identifiers, different from GRID mapping', this.org.identifiers),
+				this._initIdentifiersContent('Organization Identifiers, different from GRID mapping', this.org.identifiers, false),
 
 				{
 					'name': 'aliases',
@@ -259,9 +259,9 @@ export class OrgEditComponent implements OnInit
 					'multiple': true
 				},
 
-				this._initLabelsSimpleContent(),
+//				this._initLabelsSimpleContent(),
 
-//				this._initRelationshipsSimpleContent(),
+				this._initRelationshipsSimpleContent(),
 
 //				this._initAddressesSimpleContent()
 			]
@@ -271,20 +271,20 @@ export class OrgEditComponent implements OnInit
     /**
      * Returns the identifiers' content. 
      */
-    private _initIdentifiersContent(description: string, value: Identifier[]): ContainerContent
+    private _initIdentifiersContent(description: string, identifiers: Identifier[], isDynamic: boolean): ContainerContent
     {
-        return {
+        let result: ContainerContent = {
 			'formSection': new FormArray([ ], [ ]),
 			'name': 'identifiers',
 			'label': description,
 			'type': FormFieldType.container_simple,
 			'componentType': ContainerSimpleComponent,
-			//'value': value,
+			'value': identifiers,
 			'width': '100%',
 //            'appearance': TextInputAppearance.outline,
 			'required': true,
 			'ariaLabel': description,
-			'isDynamic': false,
+			'isDynamic': isDynamic,
             'formSectionContent': [
 				{
 					'formSection': new FormGroup({ }, [ ]),
@@ -321,6 +321,13 @@ export class OrgEditComponent implements OnInit
 				}
 			]
 		};
+
+		// if (!isDynamic)
+		// {
+		// 	result.value = identifiers;
+		// }
+
+		return result;
 	}
 
     /**
@@ -418,7 +425,7 @@ export class OrgEditComponent implements OnInit
 							'ariaLabel': 'Relationship',
 							'formSectionContent': [
 
-								this._initIdentifiersContent('Related Organization Identifiers', this.org.relationships[0].identifiers),
+								this._initIdentifiersContent('Related Organization Identifiers', undefined, true),
 
 								{
 									'name': 'type',
@@ -493,7 +500,7 @@ export class OrgEditComponent implements OnInit
 					'ariaLabel': 'Relationship',
 					'formSectionContent': [
 
-						this._initIdentifiersContent('Related Organization Identifiers', this.org.relationships[0].identifiers),
+						this._initIdentifiersContent('Related Organization Identifiers', undefined, true),
 
 						{
 							'name': 'type',

@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
-import { OperationAction, FormSection, PanelContent, FormFieldType } from '@toco/tools/forms';
+import { OperationAction, FormSection, PanelContent, FormFieldType, ContainerPanelComponent } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-add',
@@ -48,14 +48,15 @@ export class OrgAddComponent implements OnInit
     /**
      * Returns the panel's content. 
      */
-    private _initPanelContent(): PanelContent
+    private _initPanelContent(): any//PanelContent
     {
 		return {
 			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
-			'formSection' : this.panelFormSection,
+			'formSection': this.panelFormSection,
 			'name': 'panel',
 			'label': 'Adiciona una nueva organización',
 			'type': FormFieldType.container_panel,
+			'componentType': ContainerPanelComponent,
 			'title': 'Adiciona una nueva organización',
 			'description': '',
 			'iconName': undefined /*''*/,
