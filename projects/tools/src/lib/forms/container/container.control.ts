@@ -135,10 +135,13 @@ export abstract class ContainerControl extends FormFieldControl
         }
 
         this._isFormArray = this.content.formSection instanceof FormArray;
-        if (this.content.isDynamic == undefined) this.content.isDynamic = this._isFormArray;  /* By default, its value is `true`. */
-        else if ((!this._isFormArray) && (this.content.isDynamic))
+        if (this._isFormArray)
         {
-            throw new Error(`For the '${ this.content.name }' control, the 'content.isDynamic' value must be false because the 'content.formSection' value is a 'FormGroup'.`);
+            if (this.content.isDynamic == undefined) this.content.isDynamic = true;  /* By default, its value is `true`. */
+        }
+        else
+        {
+            if (this.content.isDynamic) throw new Error(`For the '${ this.content.name }' control, the 'content.isDynamic' value must be false because the 'content.formSection' value is a 'FormGroup'.`);
         }
 
         this._setParentToChildren();
@@ -220,7 +223,7 @@ export abstract class ContainerControl extends FormFieldControl
      */
     private _initOneElemFormSectionContentToFormArray(value: any): void
     {
-        let refContent: any = cloneContent(this._formArrayPatternContent, value);
+        let refContent: any = cloneContent(this._formArrayPatternContent, value, true);
 
         /* Overwrites some properties for the cloned content. */
         refContent.name = this.content.formSectionContent.length.toString(10);  /* The element is added in the array after the last position. */

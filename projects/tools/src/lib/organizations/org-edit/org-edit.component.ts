@@ -55,8 +55,8 @@ export class OrgEditComponent implements OnInit
 		)
 
 		/* Creates the panel's content. */
-		this.panelContent = this._initPanelContent();
-		//this.panelContent = this._initRelationshipsSimpleContent_Delete();
+		//this.panelContent = this._initPanelContent();
+		this.panelContent = this._initPanelContent_Test_TwoLevelsFormArray();
 
 		// this.action = {
 		// 	doit(data: any): void
@@ -259,11 +259,32 @@ export class OrgEditComponent implements OnInit
 					'multiple': true
 				},
 
-//				this._initLabelsSimpleContent(),
+				this._initLabelsSimpleContent(),
 
 				this._initRelationshipsSimpleContent(),
 
-//				this._initAddressesSimpleContent()
+				this._initAddressesSimpleContent()
+			]
+		};
+	}
+
+    /**
+     * Returns the panel's content for testing two levels of `FormArray`. 
+     */
+    private _initPanelContent_Test_TwoLevelsFormArray(): PanelContent
+    {
+		return {
+			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
+			'formSection': this.panelFormSection,
+			'name': 'panel',
+			'label': 'Edita la organización seleccionada',
+			'type': FormFieldType.container_panel,
+			'componentType': ContainerPanelComponent,
+			'title': 'Edita la organización seleccionada',
+			'description': '',
+			'iconName': undefined /*''*/,
+			'formSectionContent': [
+				this._initRelationshipsSimpleContent()
 			]
 		};
 	}
@@ -271,7 +292,7 @@ export class OrgEditComponent implements OnInit
     /**
      * Returns the identifiers' content. 
      */
-    private _initIdentifiersContent(description: string, identifiers: Identifier[], isDynamic: boolean): ContainerContent
+    private _initIdentifiersContent(description: string, value: Identifier[], isDynamic: boolean): ContainerContent
     {
         let result: ContainerContent = {
 			'formSection': new FormArray([ ], [ ]),
@@ -279,7 +300,7 @@ export class OrgEditComponent implements OnInit
 			'label': description,
 			'type': FormFieldType.container_simple,
 			'componentType': ContainerSimpleComponent,
-			'value': identifiers,
+			'value': value,
 			'width': '100%',
 //            'appearance': TextInputAppearance.outline,
 			'required': true,
@@ -316,16 +337,16 @@ export class OrgEditComponent implements OnInit
 							'appearance': TextInputAppearance.outline,
 							'ariaLabel': 'Identifier value',
 							'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
-						},
+						}
 					]
 				}
 			]
 		};
 
-		// if (!isDynamic)
-		// {
-		// 	result.value = identifiers;
-		// }
+		if (isDynamic)
+		{
+			result.formSectionContent[0].formSectionContent.push(this._initRemoveButtonContent('Remove identifier'));
+		}
 
 		return result;
 	}
@@ -390,91 +411,6 @@ export class OrgEditComponent implements OnInit
     /**
      * Returns the relationships' content. 
      */
-    private _initRelationshipsSimpleContent_Delete(): PanelContent
-    {
-		return {
-			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
-			'formSection': this.panelFormSection,
-			'name': 'panel',
-			'label': 'Edita la organización seleccionada',
-			'type': FormFieldType.container_panel,
-			'componentType': ContainerPanelComponent,
-			'title': 'Edita la organización seleccionada',
-			'description': '',
-			'iconName': undefined /*''*/,
-			'formSectionContent': [
-				{
-					'formSection': new FormArray([ ], [ ]),
-					'name': 'relationships',
-					'label': 'Any relationships the institute has to others',
-					'type': FormFieldType.container_simple,
-					'componentType': ContainerSimpleComponent,
-					'value': this.org.relationships,
-					'width': '100%',
-//					'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'Any relationships the institute has to others',
-					'formSectionContent': [
-						{
-							'formSection': new FormGroup({ }, [ ]),
-							'name': '0',
-							'label': 'Relationship',
-							'type': FormFieldType.container_simple,
-							'componentType': ContainerSimpleComponent,
-							'width': '100%',
-				//            'appearance': TextInputAppearance.outline,
-							'ariaLabel': 'Relationship',
-							'formSectionContent': [
-
-								this._initIdentifiersContent('Related Organization Identifiers', undefined, true),
-
-								{
-									'name': 'type',
-									'label': 'Relationship type',
-									'type': FormFieldType.select,
-									'componentType': InputSelectComponent,
-									'required': true,
-									'width': '45%',
-									'appearance': TextInputAppearance.outline,
-									'ariaLabel': 'Relationship type',
-									'selectOptions': [
-										{
-											'label': 'Parent',
-											'value': 'parent'
-										},
-										{
-											'label': 'Related',
-											'value': 'related'
-										},
-										{
-											'label': 'Child',
-											'value': 'child'
-										}
-									],
-									'multiple': false
-								},
-								{
-									'name': 'label',
-									'label': 'Name of the related institute',
-									'type': FormFieldType.text,
-									'componentType': InputTextComponent,
-									'required': true,
-									'width': '45%',
-									'appearance': TextInputAppearance.outline,
-									'ariaLabel': 'Name of the related institute'
-								},
-
-								this._initRemoveButtonContent('Remove relationship')
-							]
-						}
-					]
-				}
-			]
-		};
-	}
-
-    /**
-     * Returns the relationships' content. 
-     */
     private _initRelationshipsSimpleContent(): ContainerContent
     {
 		return {
@@ -500,6 +436,7 @@ export class OrgEditComponent implements OnInit
 					'ariaLabel': 'Relationship',
 					'formSectionContent': [
 
+						/* This `identifiers` value is `undefined` because it is inside a `FormArray`. */
 						this._initIdentifiersContent('Related Organization Identifiers', undefined, true),
 
 						{
@@ -723,10 +660,12 @@ export class OrgEditComponent implements OnInit
 	 */
 	public doOperationAction(op: OperationAction): void
 	{
-		// console.log('panelFormSection', this.panelFormSection);
+		console.log('panelContent: ', this.panelContent);
+		console.log('panelContent.parentFormSection: ', this.panelContent.parentFormSection);
+		console.log('panelContent.formSection', this.panelContent.formSection);
 		// console.log('addressesPanelFormSection', this.addressesPanelFormSection);
 		// console.log('labelsSimpleFormSection', this.labelsSimpleFormSection);
-		// return;
+		return;
 
 		if(op == OperationAction.submit)
 		{

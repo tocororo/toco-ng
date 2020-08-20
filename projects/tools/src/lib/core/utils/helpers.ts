@@ -56,7 +56,6 @@ export function cloneValueToUndefined(target: any): any
     if (isArray(target))
     {
         return _cloneValueToUndefined(target, [ ]);
-//        return [ ];
     }
     else if (isObject(target))
     {
@@ -79,7 +78,6 @@ function _cloneValueToUndefined(target: any, container: any): any
         if (isArray(temp))
         {
             container[prop] = _cloneValueToUndefined(temp, [ ]);
-//            container[prop] = [ ];
         }
         else if (isObject(temp))
         {

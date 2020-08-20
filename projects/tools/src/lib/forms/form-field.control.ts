@@ -437,8 +437,9 @@ export function cloneFormSection(target: FormSection): FormSection
  * It clones the object smartly depending on the type of property. 
  * @param target The content object to clone. 
  * @param value The initial `value` field of each content representing a `FormControl`. 
+ * @param canClone It is true if the function can clone the `formSectionContent` field; otherwise, false. 
  */
-export function cloneContent(target: Params<any>, value: any): any
+export function cloneContent(target: Params<any>, value: any, canClone: boolean): any
 {
     let result: any = { };
 
@@ -463,15 +464,28 @@ export function cloneContent(target: Params<any>, value: any): any
             /* The `formSectionContent` property special case. */
             case 'formSectionContent':
             {
-                result[prop] = [ ];
+                if (canClone)  /* Clones the `target.formSectionContent`. */
+                {
+                    result[prop] = [ ];
 
-//                if (target.formSection instanceof FormGroup)
-//                {
                     for(let content of target.formSectionContent)
                     {
-                        result[prop].push(cloneContent(content, value[content.name]));
+                        if (content.formSection instanceof FormArray)
+                        {
+                            content.value = value[content.name];
+                            result[prop].push(cloneContent(content, undefined/* It is not used in this case. */, false));
+                            content.value = undefined;
+                        }
+                        else
+                        {
+                            result[prop].push(cloneContent(content, value[content.name], canClone));
+                        }
                     }
-//                }
+                }
+                else  /* Takes the same `target.formSectionContent` reference because `target` is a `FormArray` and its `formSectionContent` will be taken like a pattern. */
+                {
+                    result[prop] = target.formSectionContent;
+                }
                 break;
             }
 
