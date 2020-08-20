@@ -22,7 +22,6 @@ import { FormFieldControl_Experimental } from "../form-field.control.experimenta
 interface VocabularyComponentExtraContent{
   multiple: boolean;
   selectedTermsIds: [];
-  selectedTermsUUIDs: [];
   excludeTermsIds: [];
   vocab: VocabulariesInmutableNames;
   level: number;
@@ -125,9 +124,6 @@ export class VocabularyComponent extends FormFieldControl_Experimental
       if (!this.extraContent.selectedTermsIds) {
         this.extraContent.selectedTermsIds = [];
       }
-      if (!this.extraContent.selectedTermsUUIDs) {
-        this.extraContent.selectedTermsUUIDs = [];
-      }
 
       // terms ids to exclude of the possible options.
       if (!this.extraContent.excludeTermsIds) {
@@ -194,10 +190,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
     // if is in selected terms ids list, then is part of the value
     if (
       (this.extraContent.selectedTermsIds as []).some(
-        id => id === node.term.id
-      ) ||
-      (this.extraContent.selectedTermsUUIDs as []).some(
-        uuid => uuid === node.term.uuid
+        id => id === node.term.uuid
       )
     ) {
       this.addTermToValue(node.term);
@@ -206,7 +199,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
       // if is not in any of the exclude term ids, then push
       if (
         !(this.extraContent.excludeTermsIds as []).some(
-          id => id === node.term.id
+          id => id === node.term.uuid
         )
       ) {
         result.push(node);

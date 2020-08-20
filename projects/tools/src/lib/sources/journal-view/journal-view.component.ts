@@ -65,6 +65,7 @@ export class JournalViewComponent implements OnInit {
 
     /**
      * Represents a Journal Object, it is a type of Source.
+     * Need the source.version array filled
      */
     @Input()
     public journal: JournalData;
@@ -106,7 +107,6 @@ export class JournalViewComponent implements OnInit {
      */
     public currentJournal: JournalVersion;
 
-    @Input()
     public editingJournal: JournalVersion;
 
     public showVersions = false;
@@ -135,19 +135,17 @@ export class JournalViewComponent implements OnInit {
         this.SelectJournalVersion();
 
         this.metadata.setTitleDescription('Revista Científica ' + this.journal.title, this.journal.description);
-
-        if (! this.editingJournal){
-            this.journal.versions.forEach((journalVersion: JournalVersion, index: number) => {
-                // check if has versions to view and return that position
-                if (journalVersion.is_current) {
-                    this.currentJournal = journalVersion;
-                    this.editingJournal = new JournalVersion();
-                    this.editingJournal.deepcopy(journalVersion);
-                }
-            });
+        if (this.journal.versions){
+          this.journal.versions.forEach((journalVersion: JournalVersion, index: number) => {
+            // check if has versions to view and return that position
+            if (journalVersion.is_current) {
+                this.currentJournal = new JournalVersion();
+                this.currentJournal.deepcopy(journalVersion);
+                this.editingJournal = new JournalVersion();
+                this.editingJournal.deepcopy(journalVersion);
+            }
+          });
         }
-
-
     }
 
 

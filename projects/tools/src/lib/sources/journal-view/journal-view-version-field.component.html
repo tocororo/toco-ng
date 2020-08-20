@@ -28,39 +28,27 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.issnP">
-            <mat-label style="font-weight: bold;">Impreso:</mat-label>
-            <mat-label *ngIf="currentJournal.issn.p"> {{currentJournal.issn.p}} </mat-label>
-            <mat-label *ngIf="!currentJournal.issn.p" class="text-muted text-through">Vacío</mat-label>
+          <toco-journal-view-info-field [label]="'Impreso'" [value]="currentJournal.getIdentifierValue(IdentifierSchemas.pissn)"></toco-journal-view-info-field>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.issnE">
-            <mat-label style="font-weight: bold;">Electrónico:</mat-label>
-            <mat-label *ngIf="currentJournal.issn.e"> {{currentJournal.issn.e}} </mat-label>
-            <mat-label *ngIf="!currentJournal.issn.e" class="text-muted text-through">Vacío</mat-label>
+          <toco-journal-view-info-field [label]="'Electrónico'" [value]="currentJournal.getIdentifierValue(IdentifierSchemas.eissn)"></toco-journal-view-info-field>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.issnL">
-            <mat-label style="font-weight: bold;">De enlace:</mat-label>
-            <mat-label *ngIf="currentJournal.issn.l"> {{currentJournal.issn.l}} </mat-label>
-            <mat-label *ngIf="!currentJournal.issn.l" class="text-muted text-through">Vacío</mat-label>
+          <toco-journal-view-info-field [label]="'De enlace:'" [value]="currentJournal.getIdentifierValue(IdentifierSchemas.lissn)"></toco-journal-view-info-field>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.rnpsP">
-            <mat-label style="font-weight: bold;">Impreso:</mat-label>
-            <mat-label *ngIf="currentJournal.rnps.p"> {{currentJournal.rnps.p}} </mat-label>
-            <mat-label *ngIf="!currentJournal.rnps.p" class="text-muted text-through">Vacío</mat-label>
+          <toco-journal-view-info-field [label]="'Impreso'" [value]="currentJournal.getIdentifierValue(IdentifierSchemas.prnps)"></toco-journal-view-info-field>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.rnpsE">
-            <mat-label style="font-weight: bold;">Electrónico:</mat-label>
-            <mat-label *ngIf="currentJournal.rnps.e"> {{currentJournal.rnps.e}} </mat-label>
-            <mat-label *ngIf="!currentJournal.rnps.e" class="text-muted text-through">Vacío</mat-label>
+          <toco-journal-view-info-field [label]="'Electrónico'" [value]="currentJournal.getIdentifierValue(IdentifierSchemas.ernps)"></toco-journal-view-info-field>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.url">
-            <mat-label style="font-weight: bold;">URL:</mat-label>
-            <a href="{{currentJournal.url}}" target="_blanck" *ngIf="currentJournal.url"> {{currentJournal.url}} </a>
-            <mat-label *ngIf="!currentJournal.url" class="text-muted text-through">Vacío</mat-label>
+          <toco-journal-view-info-field [label]="'URL'" [value]="currentJournal.getIdentifierValue(IdentifierSchemas.url)"></toco-journal-view-info-field>
         </ng-container>
 
         <ng-container *ngSwitchCase="journalDataType.email">

@@ -31,7 +31,6 @@
         [journalVersion]="versionToEdit"
         (journalEditDone)="finishInclusion()"
         [showEditHeader]="false"
-        [source]="journal"
         [description]="'Complete y compruebe todos los datos solicitados.'"
     >
     </toco-journal-edit>
@@ -53,7 +52,6 @@
         [journalVersion]="versionToEdit"
         (journalEditDone)="journalStep.completed = true; stepper.next()"
         [showEditHeader]="false"
-        [source]="journal"
         [description]="'Complete y compruebe todos los datos solicitados.'"
       >
       </toco-journal-edit>

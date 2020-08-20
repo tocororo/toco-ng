@@ -36,10 +36,10 @@
     style="background-color: whitesmoke;"
   ></div>
 
-  <toco-journal-view-info
+  <ng-container *ngIf="journal.versions != undefined">
+    <toco-journal-view-info
     #journalViewInfo
     [journalVersion]="editingJournal"
-    [journalUUID]="journal.uuid"
     fxFlex="1 2 calc(15em + 20px)"
     style="margin: .5em;"
   >
@@ -54,15 +54,17 @@
       style="margin: .5em;"
     ></toco-journal-view-version>
   </ng-container>
+  </ng-container>
+
+  <mat-card *ngIf="journal.versions == undefined" style="margin: 1em;">
+    <mat-card-content>
+      <h1>Este componente necesita las versiones de la revista.</h1>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 <mat-card *ngIf="journal == undefined" style="margin: 1em;">
   <mat-card-content>
     <h1>No se encontró la información solicitada</h1>
   </mat-card-content>
-
-  <!-- <mat-card-actions>
-        <a mat-stroked-button color="primary" [routerLink]="['/sources']">Volver a la lista</a>
-
-    </mat-card-actions> -->
 </mat-card>

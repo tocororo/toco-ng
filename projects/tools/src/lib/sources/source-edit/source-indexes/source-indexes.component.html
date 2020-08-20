@@ -1,0 +1,20 @@
+<mat-toolbar
+  fxLayout="row wrap"
+  fxLayoutAlign="end center"
+  fxLayoutGap="20px"
+>
+  <button mat-raised-button (click)="addIndexAction()">
+    Adicionar Indizacion
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="indexesFormGroup">
+  <toco-form-container
+    #indexPanelContainer
+    [panelsContent]="indexesPanel"
+    [useAccordion]="true"
+    fxLayout="row"
+    [formGroup]="indexesFormGroup"
+    [deleteValuesAfterAction]="false"
+  ></toco-form-container>
+</form>

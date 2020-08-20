@@ -118,8 +118,10 @@ export class FormContainerComponent extends ContainerControl
 
   public ngOnChanges(): void {
     console.log("on CHANGES call", this.panelsContent);
+    this.ngOnInit();
 
-    this.setFormGroupToPanels();
+    // this.init(this.content.label, false, false);
+    // this.setFormGroupToPanels();
   }
 
   /**

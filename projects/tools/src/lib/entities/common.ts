@@ -24,7 +24,7 @@ export class EntityBase extends Object {
  * Created by Edel on 02/04/2018.
  */
 export class Entity extends EntityBase {
-  id: string = "";
+  id: string = '';
 
   /** By default is FALSE. If TRUE, means that the entity does not have valid identifiers or has not been saved to the backend.  */
   isNew = false;
@@ -33,10 +33,25 @@ export class Entity extends EntityBase {
   // updated_at: String;
 
   identifiers:Array<Identifier> = new Array<Identifier>();
-  getIdentifierValue(idtype: string): string {
-    let id = this.identifiers.find((value) => value.idtype == idtype);
-    
-    return id != undefined ? id.value : "";
+  getIdentifierValue(idtype: IdentifierSchemas): string {
+    const id = this.identifiers.find((value) => value.idtype == idtype);
+    return id != undefined ? id.value : '';
+  }
+
+  setIdentifierValue(idtype: IdentifierSchemas, value: string) {
+    let added = false;
+    for (let index = 0; index < this.identifiers.length; index++) {
+      if(this.identifiers[index].idtype == idtype){
+        this.identifiers[index].value = value;
+        added = true;
+      }
+    }
+    if (!added) {
+      const id = new Identifier();
+      id.idtype = idtype;
+      id.value = value;
+      this.identifiers.push(id)
+    }
   }
 
   constructor() {

@@ -71,16 +71,7 @@
         <ng-template matStepLabel>Instituciones</ng-template>
         <h2>Instituciones</h2>
         <form [formGroup]="organizationFormGroup">
-          <!-- <toco-journal-institutions
-            [source]="source"
-            [journalVersion]="journalVersion"
-            [organizationFormGroup]="organizationFormGroup"
-            [defaultOrganizationUUID]="defaultOrganizationUUID"
-            [enableEdit]="true"
-            [ngStyle]="{ margin: '1em' }"
-          >
-          </toco-journal-institutions> -->
-          <toco-source-organizations [sourceData]="source.data">
+          <toco-source-organizations [sourceData]="journalData">
           </toco-source-organizations>
         </form>
         <div fxLayout="row wrap" fxLayoutAlign="space-between center">
@@ -93,31 +84,14 @@
         </div>
       </mat-step>
 
-      <mat-step *ngIf="indexesPanel" [stepControl]="indexesFormGroup">
+      <mat-step *ngIf="indexesFormGroup" [stepControl]="indexesFormGroup">
         <ng-template matStepLabel>Indizaciones</ng-template>
         <h2>
           Indizaciones
         </h2>
-        <mat-toolbar
-          fxLayout="row wrap"
-          fxLayoutAlign="end center"
-          fxLayoutGap="20px"
-        >
-          <button mat-raised-button (click)="addIndexAction()">
-            Adicionar Indizacion
-          </button>
-        </mat-toolbar>
+        <toco-source-indexes [sourceData]="journalData">
+        </toco-source-indexes>
 
-        <form [formGroup]="indexesFormGroup">
-          <toco-form-container
-            #indexPanelContainer
-            [panelsContent]="indexesPanel"
-            [useAccordion]="true"
-            fxLayout="row"
-            [formGroup]="indexesFormGroup"
-            [deleteValuesAfterAction]="false"
-          ></toco-form-container>
-        </form>
         <div
           *ngIf="showFinalStep"
           fxLayout="row wrap"

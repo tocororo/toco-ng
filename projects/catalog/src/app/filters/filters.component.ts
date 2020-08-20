@@ -196,7 +196,7 @@ export class FiltersComponent implements OnInit {
             width: "100%",
             value: "",
             extraContent: {
-              selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.institutions).split(","),
+              selectedTermsIds: this.filters.get(CatalogFilterKeys.institutions).split(","),
               observable:
                 this.organizationUUID != ""
                   ? this.sourceService.countSourcesByTerm(
@@ -244,7 +244,7 @@ export class FiltersComponent implements OnInit {
             value: this.filters.get(CatalogFilterKeys.subjects).split(","),
             extraContent: {
               multiple: true,
-              selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.subjects).split(","),
+              selectedTermsIds: this.filters.get(CatalogFilterKeys.subjects).split(","),
               vocab: VocabulariesInmutableNames.SUBJECTS,
               level: 0
             }
@@ -268,7 +268,7 @@ export class FiltersComponent implements OnInit {
             value: this.filters.get(CatalogFilterKeys.grupo_mes).split(","),
             extraContent: {
               multiple: true,
-              selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.grupo_mes).split(","),
+              selectedTermsIds: this.filters.get(CatalogFilterKeys.grupo_mes).split(","),
               vocab: VocabulariesInmutableNames.INDEXES_CLASIFICATION
             }
           },
@@ -282,7 +282,7 @@ export class FiltersComponent implements OnInit {
             value: this.filters.get(CatalogFilterKeys.miar_types).split(","),
             extraContent: {
               multiple: true,
-              selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.miar_types).split(","),
+              selectedTermsIds: this.filters.get(CatalogFilterKeys.miar_types).split(","),
               vocab: VocabulariesInmutableNames.INDEXES,
               level: 0
             }

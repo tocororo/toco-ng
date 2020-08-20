@@ -71,14 +71,14 @@ const routes: Routes = [
                 path: ':uuid/view',
                 component: SourceViewComponent,
                 resolve: {
-                    resolver: SourceResolver
+                    record: SourceResolver
                 }
             },
             {
                 path: ':uuid/edit',
                 component: SourceEditComponent,
                 resolve: {
-                    resolver: SourceResolver
+                  record: SourceResolver
                 }
             },
             {

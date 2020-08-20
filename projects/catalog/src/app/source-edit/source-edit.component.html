@@ -1,6 +1,6 @@
 <toco-progress [loading]="saving"> </toco-progress>
 
-<ng-container *ngIf="source" [ngSwitch]="source.source_type">
+<ng-container *ngIf="source && sourceVersion" [ngSwitch]="source.source_type">
   <mat-toolbar
     fxLayout="row wrap"
     fxLayoutAlign="space-between center"
@@ -12,7 +12,7 @@
     }"
   >
     <span [ngStyle]="{'white-space': 'normal'}">
-      <ng-container *ngIf="version.isNew; else elseTemplate">
+      <ng-container *ngIf="sourceVersion.isNew; else elseTemplate">
         Nueva Fuente
       </ng-container>
       <ng-template #elseTemplate> Editando: {{ source.name }} </ng-template>
@@ -24,10 +24,9 @@
 
   <toco-journal-edit
     *ngSwitchCase="sourceType.JOURNAL.value"
-    [journalVersion]="version"
-    [source]="source"
+    [journalVersion]="sourceVersion"
     [defaultOrganizationUUID]="organizationUUID"
-    (journalEditDone)="sourceEditDone()"
+    (journalEditDone)="sourceEditDone($event)"
     [showEditHeader]="false"
   >
   </toco-journal-edit>

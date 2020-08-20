@@ -12,7 +12,7 @@ import { TocoFormsModule } from '@toco/tools/forms';
 import { SourceService, TaxonomyService } from '@toco/tools/backend';
 
 import { JournalViewComponent } from './journal-view/journal-view.component';
-import { JournalEditComponent, JournalEditAddIndexComponent } from './journal-edit/journal-edit.component';
+import { JournalEditComponent } from './source-edit/journal-edit/journal-edit.component';
 import { JournalInclusionComponent, JournalInclusionAcceptComponent } from './journal-inclusion/journal-inclusion.component';
 import { JournalViewTermComponent } from './journal-view/journal-view-version-term.component';
 import { JournalViewInfoComponent, JournalViewInfoFieldComponent } from './journal-view/journal-view-info.component';
@@ -27,8 +27,9 @@ import { ExtraInstitutionSelectorComponent } from '../institutions/extra-institu
 import { CatalogFiltersComponent } from './catalog-filters/catalog-filters.component';
 import { CatalogComponent, DialogCatalogJournalInfoDialog } from './catalog/catalog.component';
 import { SourcesListComponent } from './sources-list/sources-list.component';
-import { SourceOrganizationsComponent, SourceOrganizationSelectDialog } from './source-organizations/source-organizations.component';
+import { SourceOrganizationsComponent, SourceOrganizationSelectDialog } from './source-edit/source-organizations/source-organizations.component';
 import { OrganizationsModule } from '../organizations';
+import { SourceIndexesComponent, SourceEditAddIndexComponent } from './source-edit/source-indexes/source-indexes.component';
 
 @NgModule({
     declarations: [
@@ -39,7 +40,7 @@ import { OrganizationsModule } from '../organizations';
         JournalViewFieldComponent,
         JournalEditComponent,
         JournalInclusionComponent,
-        JournalEditAddIndexComponent,
+        SourceEditAddIndexComponent,
         JournalViewVersionComponent,
         JournalInstitutionsComponent,
         JournalAddInstitutionComponent,
@@ -50,10 +51,11 @@ import { OrganizationsModule } from '../organizations';
         SourcesListComponent,
         DialogCatalogJournalInfoDialog,
         SourceOrganizationsComponent,
-        SourceOrganizationSelectDialog
+        SourceOrganizationSelectDialog,
+        SourceIndexesComponent
     ],
     entryComponents: [
-        JournalEditAddIndexComponent,
+        SourceEditAddIndexComponent,
         JournalAddInstitutionComponent,
         JournalAddExtraInstitutionComponent,
         JournalInclusionAcceptComponent,
@@ -64,8 +66,8 @@ import { OrganizationsModule } from '../organizations';
         SharedModule,
         CoreModule,
         ReactiveFormsModule,
-        TocoFormsModule, 
-        InstitutionsModule, 
+        TocoFormsModule,
+        InstitutionsModule,
         OrganizationsModule
     ],
 

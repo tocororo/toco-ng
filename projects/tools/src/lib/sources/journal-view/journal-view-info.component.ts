@@ -20,8 +20,8 @@ import { JournalInstitutionsComponent } from "../journal-institutions/journal-in
   styleUrls: ["./journal-view.component.scss"],
 })
 export class JournalViewInfoComponent implements OnInit, OnChanges {
-  @Input() public journalVersion: JournalData;
-  @Input() public journalUUID: string;
+  @Input() public journalVersion: JournalVersion;
+  public journalData: JournalData;
 
   /** TODO: In the future databaseTerms and subjectTerms will be changes by
    *  miarTerms and subjectsUnescoTerms
@@ -56,8 +56,10 @@ export class JournalViewInfoComponent implements OnInit, OnChanges {
     this.loadJournalData();
   }
   loadJournalData() {
-    if (this.journalVersion == undefined)
-      this.journalVersion = new JournalData();
+    if (this.journalData == undefined)
+      this.journalData = new JournalData();
+
+    this.journalData.deepcopy(this.journalVersion.data);
 
     this.dataBaseTerms = new Array<SourceClasification>();
     this.groupTerms = new Array<SourceClasification>();
@@ -68,8 +70,8 @@ export class JournalViewInfoComponent implements OnInit, OnChanges {
 
     this.vocabularies = VocabulariesInmutableNames;
 
-    if (this.journalVersion.classifications) {
-      this.journalVersion.classifications.forEach(
+    if (this.journalData.classifications) {
+      this.journalData.classifications.forEach(
         (term: SourceClasification) => {
           switch (term.vocabulary.toString()) {
             case VocabulariesInmutableNames.CUBAN_INTITUTIONS:
@@ -97,19 +99,17 @@ export class JournalViewInfoComponent implements OnInit, OnChanges {
     }
   }
 
-  getPISSN(){
-      return this.journalVersion.getIdentifierValue('pissn');
-  }
+
   getIdentifier(idtype: string) {
-      var r = this.journalVersion
-      ? this.journalVersion.getIdentifierValue(idtype)
+      var r = this.journalData
+      ? this.journalData.getIdentifierValue(idtype)
       : "";
-       
+
     return r;
   }
 
   editingJournalChange(newVersion: JournalVersion): void {
-    console.log("*****llego....", newVersion, this.journalVersion);
+    console.log("*****llego....", newVersion, this.journalData);
 
     this.loadJournalData();
     this.inst.ngOnChanges();

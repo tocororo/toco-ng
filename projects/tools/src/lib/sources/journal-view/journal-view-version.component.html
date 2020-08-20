@@ -1,5 +1,5 @@
 <mat-card
-  *ngIf="currentJournal"
+  *ngIf="currentJournal.data"
   fxFlex="1 2 calc(15em + 20px)"
   style="margin: .5em;"
 >
@@ -11,11 +11,11 @@
 
     <mat-card-title>
       <div fxLAyout="row" fxLayoutAlign="space-between start">
-        <toco-journal-view-field
-          [editingJournal]="editingJournal"
-          [currentJournal]="currentJournal"
+        <toco-journal-view-version-field
+          [editingJournal]="editingJournal.data"
+          [currentJournal]="currentJournal.data"
           [type]="journalDataType.title"
-        ></toco-journal-view-field>
+        ></toco-journal-view-version-field>
         <mat-icon
           class="mat-18 notification-position"
           color="accent"
@@ -45,98 +45,98 @@
 
   <mat-card-content>
     <!-- subtitle -->
-    <toco-journal-view-field
-      [editingJournal]="editingJournal"
-      [currentJournal]="currentJournal"
+    <toco-journal-view-version-field
+      [editingJournal]="editingJournal.data"
+      [currentJournal]="currentJournal.data"
       [type]="journalDataType.subtitle"
-    ></toco-journal-view-field>
+    ></toco-journal-view-version-field>
 
-    <toco-journal-view-field
-      [editingJournal]="editingJournal"
-      [currentJournal]="currentJournal"
+    <toco-journal-view-version-field
+      [editingJournal]="editingJournal.data"
+      [currentJournal]="currentJournal.data"
       [type]="journalDataType.shortname"
-    ></toco-journal-view-field>
+    ></toco-journal-view-version-field>
 
     <mat-label style="font-weight: bold;">ISSN: </mat-label>
     <div style="margin-left: .8em;">
-      <toco-journal-view-field
-        [editingJournal]="editingJournal"
-        [currentJournal]="currentJournal"
+      <toco-journal-view-version-field
+        [editingJournal]="editingJournal.data"
+        [currentJournal]="currentJournal.data"
         [type]="journalDataType.issnP"
-      ></toco-journal-view-field>
+      ></toco-journal-view-version-field>
 
-      <toco-journal-view-field
-        [editingJournal]="editingJournal"
-        [currentJournal]="currentJournal"
+      <toco-journal-view-version-field
+        [editingJournal]="editingJournal.data"
+        [currentJournal]="currentJournal.data"
         [type]="journalDataType.issnE"
-      ></toco-journal-view-field>
+      ></toco-journal-view-version-field>
 
-      <toco-journal-view-field
-        [editingJournal]="editingJournal"
-        [currentJournal]="currentJournal"
+      <toco-journal-view-version-field
+        [editingJournal]="editingJournal.data"
+        [currentJournal]="currentJournal.data"
         [type]="journalDataType.issnL"
-      ></toco-journal-view-field>
+      ></toco-journal-view-version-field>
     </div>
     <mat-label style="font-weight: bold;">RNPS: </mat-label>
     <div style="margin-left: .8em;">
-      <toco-journal-view-field
-        [editingJournal]="editingJournal"
-        [currentJournal]="currentJournal"
+      <toco-journal-view-version-field
+        [editingJournal]="editingJournal.data"
+        [currentJournal]="currentJournal.data"
         [type]="journalDataType.rnpsP"
-      ></toco-journal-view-field>
-      <toco-journal-view-field
-        [editingJournal]="editingJournal"
-        [currentJournal]="currentJournal"
+      ></toco-journal-view-version-field>
+      <toco-journal-view-version-field
+        [editingJournal]="editingJournal.data"
+        [currentJournal]="currentJournal.data"
         [type]="journalDataType.rnpsE"
-      ></toco-journal-view-field>
+      ></toco-journal-view-version-field>
     </div>
-    <toco-journal-view-field
-      [editingJournal]="editingJournal"
-      [currentJournal]="currentJournal"
+    <toco-journal-view-version-field
+      [editingJournal]="editingJournal.data"
+      [currentJournal]="currentJournal.data"
       [type]="journalDataType.url"
-    ></toco-journal-view-field>
+    ></toco-journal-view-version-field>
 
-    <toco-journal-view-field
-      [editingJournal]="editingJournal"
-      [currentJournal]="currentJournal"
+    <toco-journal-view-version-field
+      [editingJournal]="editingJournal.data"
+      [currentJournal]="currentJournal.data"
       [type]="journalDataType.email"
-    ></toco-journal-view-field>
+    ></toco-journal-view-version-field>
 
-    <toco-journal-view-field
-      [editingJournal]="editingJournal"
-      [currentJournal]="currentJournal"
+    <toco-journal-view-version-field
+      [editingJournal]="editingJournal.data"
+      [currentJournal]="currentJournal.data"
       [type]="journalDataType.seriadas_cubanas"
-    ></toco-journal-view-field>
+    ></toco-journal-view-version-field>
 
-    <toco-journal-view-field
-      [editingJournal]="editingJournal"
-      [currentJournal]="currentJournal"
+    <toco-journal-view-version-field
+      [editingJournal]="editingJournal.data"
+      [currentJournal]="currentJournal.data"
       [type]="journalDataType.purpose"
-    ></toco-journal-view-field>
+    ></toco-journal-view-version-field>
 
-    <toco-journal-view-field
-      [editingJournal]="editingJournal"
-      [currentJournal]="currentJournal"
+    <toco-journal-view-version-field
+      [editingJournal]="editingJournal.data"
+      [currentJournal]="currentJournal.data"
       [type]="journalDataType.start_year"
-    ></toco-journal-view-field>
+    ></toco-journal-view-version-field>
 
-    <toco-journal-view-field
-      [editingJournal]="editingJournal"
-      [currentJournal]="currentJournal"
+    <toco-journal-view-version-field
+      [editingJournal]="editingJournal.data"
+      [currentJournal]="currentJournal.data"
       [type]="journalDataType.end_year"
-    ></toco-journal-view-field>
+    ></toco-journal-view-version-field>
 
-    <toco-journal-view-field
-      [editingJournal]="editingJournal"
-      [currentJournal]="currentJournal"
+    <toco-journal-view-version-field
+      [editingJournal]="editingJournal.data"
+      [currentJournal]="currentJournal.data"
       [type]="journalDataType.frequency"
-    ></toco-journal-view-field>
+    ></toco-journal-view-version-field>
 
-    <toco-journal-view-field
-      [editingJournal]="editingJournal"
-      [currentJournal]="currentJournal"
+    <toco-journal-view-version-field
+      [editingJournal]="editingJournal.data"
+      [currentJournal]="currentJournal.data"
       [type]="journalDataType.description"
-    ></toco-journal-view-field>
+    ></toco-journal-view-version-field>
 
     <div
       *ngIf="currentJournal.data.description"
@@ -146,23 +146,23 @@
 
     <mat-label style="font-weight: bold;">Redes Sociales:</mat-label>
     <div style="margin-left: .8em;">
-      <toco-journal-view-field
-        [editingJournal]="editingJournal"
-        [currentJournal]="currentJournal"
+      <toco-journal-view-version-field
+        [editingJournal]="editingJournal.data"
+        [currentJournal]="currentJournal.data"
         [type]="journalDataType.facebook"
-      ></toco-journal-view-field>
+      ></toco-journal-view-version-field>
 
-      <toco-journal-view-field
-        [editingJournal]="editingJournal"
-        [currentJournal]="currentJournal"
+      <toco-journal-view-version-field
+        [editingJournal]="editingJournal.data"
+        [currentJournal]="currentJournal.data"
         [type]="journalDataType.twitter"
-      ></toco-journal-view-field>
+      ></toco-journal-view-version-field>
 
-      <toco-journal-view-field
-        [editingJournal]="editingJournal"
-        [currentJournal]="currentJournal"
+      <toco-journal-view-version-field
+        [editingJournal]="editingJournal.data"
+        [currentJournal]="currentJournal.data"
         [type]="journalDataType.linkedin"
-      ></toco-journal-view-field>
+      ></toco-journal-view-version-field>
     </div>
 
     <!-- show terms -->
@@ -188,7 +188,7 @@
       </mat-card-header>
       <mat-card-content>
         <toco-journal-institutions
-          [journalVersion]="currentJournal"
+          [journalVersion]="currentJournal.data"
           [enableEdit]="false"
           [ngStyle]="{ margin: '1em' }"
         >
@@ -204,7 +204,7 @@
       >
       <ng-container *ngFor="let termSource of currentInstitutionTerms">
         <mat-label style="padding-left: 1em;">
-          {{ termSource.term.description }}
+          {{ termSource.description }}
         </mat-label>
       </ng-container>
     </p> -->
@@ -229,7 +229,7 @@
               >
                 <mat-icon class="mat-18">merge_type</mat-icon>
               </button>
-              {{ termSource.term.description }}
+              {{ termSource.description }}
             </mat-chip>
           </ng-container>
         </mat-chip-list>
@@ -257,7 +257,7 @@
               >
                 <mat-icon class="mat-18">merge_type</mat-icon>
               </button>
-              {{ termSource.term.description }}
+              {{ termSource.description }}
             </mat-chip>
           </ng-container>
         </mat-chip-list>
@@ -285,7 +285,7 @@
               >
                 <mat-icon class="mat-18">merge_type</mat-icon>
               </button>
-              {{ termSource.term.description }}
+              {{ termSource.description }}
             </mat-chip>
           </ng-container>
         </mat-chip-list>
@@ -313,7 +313,7 @@
               >
                 <mat-icon class="mat-18">merge_type</mat-icon>
               </button>
-              {{ termSource.term.description }}
+              {{ termSource.description }}
             </mat-chip>
           </ng-container>
         </mat-chip-list>
@@ -346,7 +346,7 @@
                   >
                     <mat-icon class="mat-18">merge_type</mat-icon>
                   </button>
-                  {{ termSource.term.description }}
+                  {{ termSource.description }}
                 </mat-panel-title>
                 <mat-panel-description> </mat-panel-description>
               </mat-expansion-panel-header>

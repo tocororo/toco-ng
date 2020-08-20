@@ -4,7 +4,7 @@
  */
 
 import { Component, OnInit, Input } from '@angular/core';
-import { Journal, JournalData } from '@toco/tools/entities';
+import { Journal, JournalData, IdentifierSchemas } from '@toco/tools/entities';
 import { JournalDataType } from './journal-view.component';
 
 
@@ -13,8 +13,8 @@ import { JournalDataType } from './journal-view.component';
 * His goal, handle the actions and how show a specific data of a `JournalData`
 */
 @Component({
-    selector: 'toco-journal-view-field',
-    templateUrl: './journal-view-field.component.html',
+    selector: 'toco-journal-view-version-field',
+    templateUrl: './journal-view-version-field.component.html',
     styleUrls: ['./journal-view.component.scss']
 })
 export class JournalViewFieldComponent implements OnInit {
@@ -26,6 +26,7 @@ export class JournalViewFieldComponent implements OnInit {
     @Input() public type: number;
 
     public journalDataType = JournalDataType;
+    public IdentifierSchemas = IdentifierSchemas;
 
     constructor() {
 
@@ -72,25 +73,65 @@ export class JournalViewFieldComponent implements OnInit {
                     this.editingJournal.frequency += ' ' + this.currentJournal.frequency :
                     this.editingJournal.frequency = this.currentJournal.frequency;
                 break;
-            case JournalDataType.issnE:
+                case JournalDataType.issnP:
+                  concat ?
+                  this.editingJournal.setIdentifierValue(
+                    IdentifierSchemas.pissn,
+                      this.editingJournal.getIdentifierValue(IdentifierSchemas.pissn) +
+                      ' ' +
+                      this.currentJournal.getIdentifierValue(IdentifierSchemas.pissn)) :
+                  this.editingJournal.setIdentifierValue(
+                    IdentifierSchemas.pissn,
+                    this.currentJournal.getIdentifierValue(IdentifierSchemas.pissn));
+                  break;
+                case JournalDataType.issnE:
                 concat ?
-                    this.editingJournal.issn.e += ' ' + this.currentJournal.issn.e :
-                    this.editingJournal.issn.e = this.currentJournal.issn.e;
+                    this.editingJournal.setIdentifierValue(
+                      IdentifierSchemas.eissn,
+                        this.editingJournal.getIdentifierValue(IdentifierSchemas.eissn) +
+                        ' ' +
+                        this.currentJournal.getIdentifierValue(IdentifierSchemas.eissn)) :
+                    this.editingJournal.setIdentifierValue(
+                      IdentifierSchemas.eissn,
+                      this.currentJournal.getIdentifierValue(IdentifierSchemas.eissn));
                 break;
             case JournalDataType.issnL:
                 concat ?
-                    this.editingJournal.issn.l += ' ' + this.currentJournal.issn.l :
-                    this.editingJournal.issn.l = this.currentJournal.issn.l;
+                this.editingJournal.setIdentifierValue(
+                  IdentifierSchemas.lissn,
+                    this.editingJournal.getIdentifierValue(IdentifierSchemas.lissn) +
+                    ' ' +
+                    this.currentJournal.getIdentifierValue(IdentifierSchemas.lissn)) :
+                this.editingJournal.setIdentifierValue(
+                  IdentifierSchemas.lissn,
+                  this.currentJournal.getIdentifierValue(IdentifierSchemas.lissn));
                 break;
+                case JournalDataType.rnpsP:
+                  concat ?
+                  this.editingJournal.setIdentifierValue(
+                    IdentifierSchemas.prnps,
+                      this.editingJournal.getIdentifierValue(IdentifierSchemas.prnps) +
+                      ' ' +
+                      this.currentJournal.getIdentifierValue(IdentifierSchemas.prnps)) :
+                  this.editingJournal.setIdentifierValue(
+                    IdentifierSchemas.prnps,
+                    this.currentJournal.getIdentifierValue(IdentifierSchemas.prnps));
+                  break;
+              case JournalDataType.rnpsE:
+                  concat ?
+                  this.editingJournal.setIdentifierValue(
+                    IdentifierSchemas.ernps,
+                      this.editingJournal.getIdentifierValue(IdentifierSchemas.ernps) +
+                      ' ' +
+                      this.currentJournal.getIdentifierValue(IdentifierSchemas.ernps)) :
+                  this.editingJournal.setIdentifierValue(
+                    IdentifierSchemas.ernps,
+                    this.currentJournal.getIdentifierValue(IdentifierSchemas.ernps));
+                  break;
             case JournalDataType.end_year:
                 concat ?
                     this.editingJournal.end_year += ' ' + this.currentJournal.end_year :
                     this.editingJournal.end_year = this.currentJournal.end_year;
-                break;
-            case JournalDataType.issnP:
-                concat ?
-                    this.editingJournal.issn.p += ' ' + this.currentJournal.issn.p :
-                    this.editingJournal.issn.p = this.currentJournal.issn.p;
                 break;
             case JournalDataType.linkedin:
                 concat ?
@@ -106,16 +147,6 @@ export class JournalViewFieldComponent implements OnInit {
                 concat ?
                     this.editingJournal.purpose += ' ' + this.currentJournal.purpose :
                     this.editingJournal.purpose = this.currentJournal.purpose;
-                break;
-            case JournalDataType.rnpsP:
-                concat ?
-                    this.editingJournal.rnps.p += ' ' + this.currentJournal.rnps.p :
-                    this.editingJournal.rnps.p = this.currentJournal.rnps.p;
-                break;
-            case JournalDataType.rnpsE:
-                concat ?
-                    this.editingJournal.rnps.e += ' ' + this.currentJournal.rnps.e :
-                    this.editingJournal.rnps.e = this.currentJournal.rnps.e;
                 break;
             case JournalDataType.seriadas_cubanas:
                 concat ?
@@ -149,8 +180,14 @@ export class JournalViewFieldComponent implements OnInit {
                 break;
             case JournalDataType.url:
                 concat ?
-                    this.editingJournal.url += ' ' + this.currentJournal.url :
-                    this.editingJournal.url = this.currentJournal.url;
+                this.editingJournal.setIdentifierValue(
+                  IdentifierSchemas.url,
+                    this.editingJournal.getIdentifierValue(IdentifierSchemas.url) +
+                    ' ' +
+                    this.currentJournal.getIdentifierValue(IdentifierSchemas.url)) :
+                this.editingJournal.setIdentifierValue(
+                  IdentifierSchemas.url,
+                  this.currentJournal.getIdentifierValue(IdentifierSchemas.url));
                 break;
         }
     }

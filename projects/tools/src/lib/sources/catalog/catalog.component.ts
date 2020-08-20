@@ -241,7 +241,6 @@ export class CatalogComponent implements OnInit {
   template: `<mat-dialog-content class="height-auto">
                     <toco-journal-view-info
                         [journalVersion]="data.journalVersion"
-                        [journalUUID]="data.journalUUID"
                     >
                     </toco-journal-view-info>
                 </mat-dialog-content>`,

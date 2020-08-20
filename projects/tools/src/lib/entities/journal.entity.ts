@@ -48,9 +48,6 @@ export class JournalData extends SourceData {
 
     socialNetworks: SocialNetworks = new SocialNetworks();
 
-    getISSN() {
-        return this.issn.p;
-    }
 }
 
 export class Journal extends Source {

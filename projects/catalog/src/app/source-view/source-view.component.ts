@@ -48,10 +48,9 @@ export class SourceViewComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(
-      (response: Hit<SourceData>) => {
-        console.log(response);
-        if (response.metadata) {
-          let src = response.metadata;
+      (response) => {
+        if (response.record && response.record.metadata) {
+          let src = response.record.metadata;
           switch (src.source_type) {
             case this.sourceType.JOURNAL.value:
               this.source = new JournalData();
@@ -78,25 +77,26 @@ export class SourceViewComponent implements OnInit {
     );
   }
   private _load_source_version() {
+    console.log("LOAD SOURCE VERSION...");
+
     this._sourceService.getSourceVersions(this.source.id).subscribe(
       (response) => {
         console.log(response);
-        
-        let versions: Array<SourceVersion> = new Array();
-        this.source.versions = response.data;
-        this.source.versions.forEach((element) => {
-          if (element.is_current) {
-            switch (this.source.source_type) {
-              case this.sourceType.JOURNAL.value:
-                this.editingSource = new JournalVersion();
-                break;
-
-              default:
-                this.editingSource = new SourceVersion();
+        if (response.status == ResponseStatus.SUCCESS){
+          this.source.versions = response.data.versions;
+          this.source.versions.forEach((element) => {
+            if (element.is_current) {
+              switch (this.source.source_type) {
+                case this.sourceType.JOURNAL.value:
+                  this.editingSource = new JournalVersion();
+                  break;
+                default:
+                  this.editingSource = new SourceVersion();
+              }
+              this.editingSource.deepcopy(element);
             }
-            this.editingSource.deepcopy(element);
-          }
-        });
+          });
+        }
       },
       (error) => {
         console.log("error");

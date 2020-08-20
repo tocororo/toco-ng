@@ -10,7 +10,8 @@ import {
   JournalData,
   Journal,
   SourceClasification,
-  VocabulariesInmutableNames
+  VocabulariesInmutableNames,
+  JournalVersion
 } from "@toco/tools/entities";
 import { MatSnackBar } from "@angular/material";
 import { MessageHandler, StatusCode } from "@toco/tools/core";
@@ -22,12 +23,12 @@ import { JournalDataType } from "./journal-view.component";
   styleUrls: ["./journal-view.component.scss"]
 })
 export class JournalViewVersionComponent implements OnInit, OnChanges {
-  @Input() public currentJournal: JournalData;
+  @Input() public currentJournal: JournalVersion;
 
   @Input() public type: number;
 
   @Input()
-  public editingJournal: JournalData;
+  public editingJournal: JournalVersion;
 
   public journalDataType = JournalDataType;
 
@@ -44,13 +45,13 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
   currentJournalChecked: boolean = false;
 
   @Output()
-  editingJournalChange = new EventEmitter<JournalData>();
+  editingJournalChange = new EventEmitter<JournalVersion>();
 
   constructor(private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     if (this.currentJournal == undefined)
-      this.currentJournal = new JournalData();
+      this.currentJournal = new JournalVersion();
     this.loadJournalData();
 
     if (this.type == undefined) this.type = JournalDataType.default;
@@ -71,8 +72,8 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
 
     this.vocabularies = VocabulariesInmutableNames;
 
-    if (this.currentJournal.classifications) {
-      this.currentJournal.classifications.forEach(
+    if (this.currentJournal.data.classifications) {
+      this.currentJournal.data.classifications.forEach(
         (termSource: SourceClasification) => {
           switch (termSource.vocabulary.toString()) {
             case VocabulariesInmutableNames.CUBAN_INTITUTIONS:
@@ -105,7 +106,7 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
    */
   markAsViewed() {
     if (this.currentJournalChecked) {
-      this.currentJournal.reviewed = true;
+      this.currentJournal.data.reviewed = true;
       // TODO: hacer el request al backend de marcar la version como vista o
       const m = new MessageHandler(this._snackBar);
       m.showMessage(StatusCode.OK, "Versión marcada como vista!!!");
@@ -114,12 +115,12 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
 
   public replace() {
     this.editingJournal = this.currentJournal;
-    // this.editingJournal.classifications = [];
-    // this.editingJournal.classifications = this.currentJournal.classifications;
+    // this.editingJournal.data.classifications = [];
+    // this.editingJournal.data.classifications = this.currentJournal.data.classifications;
     this.editingJournalChange.emit(this.editingJournal);
-    // // this.currentJournal.classifications.forEach((termSource: SourceClasification) => {
+    // // this.currentJournal.data.classifications.forEach((termSource: SourceClasification) => {
 
-    // //     this.editingJournal.classifications.push(termSource);
+    // //     this.editingJournal.data.classifications.push(termSource);
 
     // // });
     console.log("editingJournal remplazado", this.editingJournal);
@@ -136,17 +137,17 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
       let notFound = true;
       for (
         let index = 0;
-        index < this.editingJournal.classifications.length;
+        index < this.editingJournal.data.classifications.length;
         index++
       ) {
-        const element = this.editingJournal.classifications[index];
+        const element = this.editingJournal.data.classifications[index];
         if (element.id == termSource.id) {
-          this.editingJournal.classifications[index].data = termSource.data;
+          this.editingJournal.data.classifications[index].data = termSource.data;
           notFound = false;
         }
       }
       if (notFound) {
-        this.editingJournal.classifications.push(termSource);
+        this.editingJournal.data.classifications.push(termSource);
       }
       this.editingJournalChange.emit(this.editingJournal);
     }
@@ -155,7 +156,7 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
     let found = false;
     let newts: SourceClasification[] = [];
 
-    this.editingJournal.classifications.forEach(ts => {
+    this.editingJournal.data.classifications.forEach(ts => {
       if (
         !(
           ts.vocabulary ==
@@ -167,7 +168,7 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
       }
     });
 
-    this.currentJournal.classifications.forEach(ts => {
+    this.currentJournal.data.classifications.forEach(ts => {
       if (
         ts.vocabulary ==
           VocabulariesInmutableNames.EXTRA_INSTITUTIONS ||
@@ -176,7 +177,7 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
         newts.push(ts);
       }
     });
-    this.editingJournal.classifications = newts;
+    this.editingJournal.data.classifications = newts;
 
     this.editingJournalChange.emit(this.editingJournal);
   }

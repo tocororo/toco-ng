@@ -1,5 +1,5 @@
 <!-- Journal Information -->
-<mat-card *ngIf="journalVersion">
+<mat-card *ngIf="journalVersion && journalData">
   <mat-card-header style="margin-top: 1em;">
     <!-- <img mat-card-avatar *ngIf="journal.data.logo; else logotemplate" [style.background-size]="'cover'" src="journal.data.logo">
         <ng-template #logotemplate>
@@ -7,7 +7,7 @@
         </ng-template> -->
 
     <mat-card-title>
-      <toco-journal-view-info-field [label]="'Título'" [value]="journalVersion.title"></toco-journal-view-info-field>
+      <toco-journal-view-info-field [label]="'Título'" [value]="journalData.title"></toco-journal-view-info-field>
     </mat-card-title>
 
     <mat-card-subtitle>
@@ -19,11 +19,11 @@
 
   <mat-card-content>
     <p>
-      <toco-journal-view-info-field [label]="'Subtítulo'" [value]="journalVersion.subtitle"></toco-journal-view-info-field>
+      <toco-journal-view-info-field [label]="'Subtítulo'" [value]="journalData.subtitle"></toco-journal-view-info-field>
     </p>
 
     <p>
-      <toco-journal-view-info-field [label]="'Nombre Abreviado'" [value]="journalVersion.shortname"></toco-journal-view-info-field>
+      <toco-journal-view-info-field [label]="'Nombre Abreviado'" [value]="journalData.shortname"></toco-journal-view-info-field>
     </p>
 
     <mat-label style="font-weight: bold;">ISSN: </mat-label>
@@ -49,63 +49,63 @@
     </div>
 
     <p>
-      <toco-journal-view-info-field [label]="'URL'" [value]="journalVersion.url"></toco-journal-view-info-field>
+      <toco-journal-view-info-field [label]="'URL'" [value]="getIdentifier(IdentifierSchemas.url)"></toco-journal-view-info-field>
     </p>
 
     <p>
-      <toco-journal-view-info-field [label]="'Email'" [value]="journalVersion.email"></toco-journal-view-info-field>
+      <toco-journal-view-info-field [label]="'Email'" [value]="journalData.email"></toco-journal-view-info-field>
     </p>
 
     <p>
-      <toco-journal-view-info-field [label]="'Seriadas Cubanas'" [value]="journalVersion.seriadas_cubanas"></toco-journal-view-info-field>
+      <toco-journal-view-info-field [label]="'Seriadas Cubanas'" [value]="journalData.seriadas_cubanas"></toco-journal-view-info-field>
     </p>
 
     <p>
-      <toco-journal-view-info-field [label]="'Propósito'" [value]="journalVersion.purpose"></toco-journal-view-info-field>
+      <toco-journal-view-info-field [label]="'Propósito'" [value]="journalData.purpose"></toco-journal-view-info-field>
     </p>
 
     <p>
-      <toco-journal-view-info-field [label]="'Año de Inicio'" [value]="journalVersion.start_year | date"></toco-journal-view-info-field>
+      <toco-journal-view-info-field [label]="'Año de Inicio'" [value]="journalData.start_year | date"></toco-journal-view-info-field>
             <!-- <mat-label style="font-weight: bold;"> Año de Inicio: </mat-label>
-      <mat-label *ngIf="journalVersion.start_year">
-        {{ journalVersion.start_year | date }}
+      <mat-label *ngIf="journalData.start_year">
+        {{ journalData.start_year | date }}
       </mat-label>
       <mat-label
-        *ngIf="!journalVersion.start_year"
+        *ngIf="!journalData.start_year"
         class="text-muted text-through"
         >Vacío</mat-label
       > -->
     </p>
 
     <p>
-      <toco-journal-view-info-field [label]="'Año de Fin'" [value]="journalVersion.end_year | date"></toco-journal-view-info-field>
+      <toco-journal-view-info-field [label]="'Año de Fin'" [value]="journalData.end_year | date"></toco-journal-view-info-field>
     </p>
 
     <p>
-      <toco-journal-view-info-field [label]="'Frecuencia de Publicación'" [value]="journalVersion.frequency"></toco-journal-view-info-field>
+      <toco-journal-view-info-field [label]="'Frecuencia de Publicación'" [value]="journalData.frequency"></toco-journal-view-info-field>
     </p>
     <mat-label style="font-weight: bold;"> Descripción:</mat-label>
     <mat-label
-      *ngIf="!journalVersion.description"
+      *ngIf="!journalData.description"
       class="text-muted text-through"
       >Vacío</mat-label
     >
     <div
-      *ngIf="journalVersion.description"
+      *ngIf="journalData.description"
       class="e2e-inner-html-bound  text-align-justify"
-      [innerHTML]="journalVersion.description"
+      [innerHTML]="journalData.description"
     ></div>
 
     <mat-label style="font-weight: bold;">Redes Sociales:</mat-label>
     <div style="margin-left: .8em;">
       <p>
-        <toco-journal-view-info-field [label]="'Facebook'" [value]="journalVersion.socialNetworks.facebook"></toco-journal-view-info-field>
+        <toco-journal-view-info-field [label]="'Facebook'" [value]="journalData.socialNetworks.facebook"></toco-journal-view-info-field>
       </p>
       <p>
-        <toco-journal-view-info-field [label]="'Twitter'" [value]="journalVersion.socialNetworks.twitter"></toco-journal-view-info-field>
+        <toco-journal-view-info-field [label]="'Twitter'" [value]="journalData.socialNetworks.twitter"></toco-journal-view-info-field>
       </p>
       <p>
-        <toco-journal-view-info-field [label]="'Linkedin'" [value]="journalVersion.socialNetworks.linkedin"></toco-journal-view-info-field>
+        <toco-journal-view-info-field [label]="'Linkedin'" [value]="journalData.socialNetworks.linkedin"></toco-journal-view-info-field>
       </p>
     </div>
 
@@ -121,7 +121,7 @@
       </mat-card-header>
       <mat-card-content>
         <toco-journal-institutions
-          [journalVersion]="journalVersion"
+          [journalVersion]="journalData"
           [enableEdit]="false"
           [ngStyle]="{ margin: '1em' }"
         >
