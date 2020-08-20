@@ -46,6 +46,53 @@ const orgExample: any = {
 		// 	"iso639": "ipsum irure 3"
 		// }
 	],
+	// "relationships": [
+	// 	{
+	// 		"identifiers": [
+	// 			{
+	// 				"idtype": "isni",
+	// 				"value": "An id isni"
+	// 			}
+	// 		],
+	// 		"type": "parent"
+	// 	},
+	// 	{
+	// 		"identifiers": [
+	// 			{
+	// 				"idtype": "grid",
+	// 				"value": "An id grid"
+	// 			},
+	// 			{
+	// 				"idtype": "wkdata",
+	// 				"value": "An id wkdata"
+	// 			}
+	// 		],
+	// 		"type": "child",
+	// 		"label": "ulh"
+	// 	},
+	// 	{
+	// 		"identifiers": [
+	// 			{
+	// 				"idtype": "wkdata",
+	// 				"value": "An id wkdata"
+	// 			},
+	// 			{
+	// 				"idtype": "fundref",
+	// 				"value": "An id fundref"
+	// 			},
+	// 			{
+	// 				"idtype": "ror",
+	// 				"value": "An id ror"
+	// 			},
+	// 			{
+	// 				"idtype": "isni",
+	// 				"value": "An id isni"
+	// 			}
+	// 		],
+	// 		"type": "related",
+	// 		"label": "uclv"
+	// 	}
+	// ],
 	"relationships": [
 		{
 			"identifiers": [
@@ -69,28 +116,6 @@ const orgExample: any = {
 			],
 			"type": "child",
 			"label": "ulh"
-		},
-		{
-			"identifiers": [
-				{
-					"idtype": "wkdata",
-					"value": "An id wkdata"
-				},
-				{
-					"idtype": "fundref",
-					"value": "An id fundref"
-				},
-				{
-					"idtype": "ror",
-					"value": "An id ror"
-				},
-				{
-					"idtype": "isni",
-					"value": "An id isni"
-				}
-			],
-			"type": "related",
-			"label": "uclv"
 		}
 	],
 	"addresses": [

@@ -33,15 +33,10 @@ export interface PanelContent extends ContainerContent
 /**
  * Represents a container control that is showed as a panel. 
  * Usage notes: 
- *  - If the `ContainerPanelComponent` is not within a `ContainerControl`, it can be used as: 
- * <container-panel [content]="panelContent"></container-panel>
+ *  - It can be used as: 
+ * <container-panel [content]="panelContent"></container-panel> 
  * Where `content.formSection` is created, for example, as this: 
- * this.content.formSection = new FormGroup({ }, [ ]);
- *  - If the `ContainerPanelComponent` is within a `ContainerControl`, it must be used as: 
- * <container-panel [content]="panelContent"></container-panel>
- * Where `content.parentFormSection` is the `ContainerPanelComponent`'s parent `FormSection`, 
- * and `content.formSection` is created, for example, as this: 
- * this.content.formSection = new FormGroup({ }, [ ]);
+ * this.content.formSection = new FormGroup({ }, [ ]); 
  */
 @Component({
 	selector: 'container-panel',

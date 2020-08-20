@@ -307,6 +307,7 @@ export interface FormFieldContent
 
     /**
      * Returns the parent `FormSection` that represents the parent `FormGroup` or `FormArray` of this control. 
+     * It is always set internally. 
      * By default, its value is `undefined`. 
      */
     parentFormSection?: FormSection;
@@ -435,12 +436,18 @@ export function cloneFormSection(target: FormSection): FormSection
  * Returns a new object that represents the clone of the specified content target. 
  * It also sets the initial `value` field of each content representing a `FormControl`. 
  * It clones the object smartly depending on the type of property. 
+ * It clones in deep until the next `FormArray`, then the next `FormArray` clones in deep until the next `FormArray`, and so on. 
  * @param target The content object to clone. 
  * @param value The initial `value` field of each content representing a `FormControl`. 
  * @param canClone It is true if the function can clone the `formSectionContent` field; otherwise, false. 
  */
+
+ var countCall: number = 0;
 export function cloneContent(target: Params<any>, value: any, canClone: boolean): any
 {
+    console.log(`Call 'cloneContent' number: ${ ++countCall } with content: `, target);
+    
+
     let result: any = { };
 
     for(let prop in target)
@@ -473,6 +480,7 @@ export function cloneContent(target: Params<any>, value: any, canClone: boolean)
                         if (content.formSection instanceof FormArray)
                         {
                             content.value = value[content.name];
+                            /* This `content.formSectionContent` will not be cloned becuase it belongs to a `FormArray` and it will be cloned when the `FormArray` is analyzed in the `ContainerControl` class. */
                             result[prop].push(cloneContent(content, undefined/* It is not used in this case. */, false));
                             content.value = undefined;
                         }

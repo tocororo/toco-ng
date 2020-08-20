@@ -5,6 +5,11 @@ import { ContainerControl } from '../container.control';
 
 /**
  * Represents a container control that is showed very simple. 
+ * Usage notes: 
+ *  - It can be used as: 
+ * <container-simple [content]="simpleContent"></container-simple> 
+ * Where `content.formSection` is created, for example, as this: 
+ * this.content.formSection = new FormGroup({ }, [ ]); 
  */
 @Component({
 	selector: 'container-simple',

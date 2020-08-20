@@ -223,6 +223,7 @@ export abstract class ContainerControl extends FormFieldControl
      */
     private _initOneElemFormSectionContentToFormArray(value: any): void
     {
+        /* Clones in deep until the next `FormArray`, then the next `FormArray` clones in deep until the next `FormArray`, and so on. */
         let refContent: any = cloneContent(this._formArrayPatternContent, value, true);
 
         /* Overwrites some properties for the cloned content. */
@@ -247,7 +248,7 @@ export abstract class ContainerControl extends FormFieldControl
                 ffc.parentContainerControl = this;
 
                 /* Sets the parent `FormSection` to its children if they have got nothing. */
-                if (ffc.parentFormSection == undefined) ffc.parentFormSection = this.content.formSection;
+                ffc.parentFormSection = this.content.formSection;
             }
         );
     }

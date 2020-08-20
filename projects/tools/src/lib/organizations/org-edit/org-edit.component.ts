@@ -290,6 +290,28 @@ export class OrgEditComponent implements OnInit
 	}
 
     /**
+     * Returns the panel's content for testing three levels of `FormArray`. 
+     */
+    private _initPanelContent_Test_ThreeLevelsFormArray(): PanelContent
+    {
+		return {
+			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
+			'formSection': this.panelFormSection,
+			'name': 'panel',
+			'label': 'Edita la organización seleccionada',
+			'type': FormFieldType.container_panel,
+			'componentType': ContainerPanelComponent,
+			'title': 'Edita la organización seleccionada',
+			'description': '',
+			'iconName': undefined /*''*/,
+			'formSectionContent': [
+				//TODO: poner aquí otro nivel de `FormArray`. 
+				this._initRelationshipsSimpleContent()
+			]
+		};
+	}
+
+    /**
      * Returns the identifiers' content. 
      */
     private _initIdentifiersContent(description: string, value: Identifier[], isDynamic: boolean): ContainerContent
