@@ -55,8 +55,7 @@ export class OrgEditComponent implements OnInit
 		)
 
 		/* Creates the panel's content. */
-		//this.panelContent = this._initPanelContent();
-		this.panelContent = this._initPanelContent_Test_TwoLevelsFormArray();
+		this.panelContent = this._initPanelContent();
 
 		// this.action = {
 		// 	doit(data: any): void
@@ -264,49 +263,6 @@ export class OrgEditComponent implements OnInit
 				this._initRelationshipsSimpleContent(),
 
 				this._initAddressesSimpleContent()
-			]
-		};
-	}
-
-    /**
-     * Returns the panel's content for testing two levels of `FormArray`. 
-     */
-    private _initPanelContent_Test_TwoLevelsFormArray(): PanelContent
-    {
-		return {
-			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
-			'formSection': this.panelFormSection,
-			'name': 'panel',
-			'label': 'Edita la organización seleccionada',
-			'type': FormFieldType.container_panel,
-			'componentType': ContainerPanelComponent,
-			'title': 'Edita la organización seleccionada',
-			'description': '',
-			'iconName': undefined /*''*/,
-			'formSectionContent': [
-				this._initRelationshipsSimpleContent()
-			]
-		};
-	}
-
-    /**
-     * Returns the panel's content for testing three levels of `FormArray`. 
-     */
-    private _initPanelContent_Test_ThreeLevelsFormArray(): PanelContent
-    {
-		return {
-			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
-			'formSection': this.panelFormSection,
-			'name': 'panel',
-			'label': 'Edita la organización seleccionada',
-			'type': FormFieldType.container_panel,
-			'componentType': ContainerPanelComponent,
-			'title': 'Edita la organización seleccionada',
-			'description': '',
-			'iconName': undefined /*''*/,
-			'formSectionContent': [
-				//TODO: poner aquí otro nivel de `FormArray`. 
-				this._initRelationshipsSimpleContent()
 			]
 		};
 	}

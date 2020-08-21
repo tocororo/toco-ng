@@ -38,6 +38,9 @@ import { InputIdentifierComponent } from './input/identifier/identifier-input.co
 import { SelectFilterComponent } from './experimental/select-filter/select-filter.component';
 import { SelectTreeComponent } from './experimental/select-tree/select-tree.component';
 
+/* Esta aquí temporalmente, quizás se hace un módulo para los test nada más. */
+import { TestContainerControlComponent } from './test/container/test-container-control/test-container-control.component';
+
 @NgModule({
   declarations: [
     ActionButtonComponent,
@@ -61,7 +64,9 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
     SelectComponent,
     SelectFilterComponent,
     TextareaComponent,
-    SelectTreeComponent
+    SelectTreeComponent,
+
+    TestContainerControlComponent
   ],
 
   imports: [
@@ -105,7 +110,9 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
     TermParentComponent,
     SelectComponent,
     SelectFilterComponent, 
-    TextareaComponent
+    TextareaComponent,
+
+    TestContainerControlComponent
   ],
 
   providers: []

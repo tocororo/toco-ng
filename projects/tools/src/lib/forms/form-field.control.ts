@@ -564,7 +564,7 @@ export abstract class FormFieldControl
         {
             if (this.content.label == undefined)
             {
-                throw new Error(`For the '${ this.content.name }' control, the 'content.label' value can not be undefined.`);
+                throw new Error(`For the '${ FormFieldControl.name }' control, the 'content.label' value can not be undefined.`);
             }
 
             label = this.content.label;
@@ -572,7 +572,7 @@ export abstract class FormFieldControl
 
         if (this.content.componentType == undefined)
         {
-            throw new Error(`For the '${ this.content.name }' control, the 'content.componentType' value can not be undefined.`);
+            throw new Error(`For the '${ FormFieldControl.name }' control, the 'content.componentType' value can not be undefined.`);
         }
 
         /************************** `mat-form-field` properties. **************************/

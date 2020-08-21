@@ -45,4 +45,6 @@ export * from './input/url/url-value';
 export * from './input/url/url-input.component';
 export * from './input/input.control';
 
+export * from './test/container/test-container-control/test-container-control.component';
+
 export * from './form-field.control';
