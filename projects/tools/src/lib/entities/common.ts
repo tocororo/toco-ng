@@ -79,7 +79,7 @@ export class Identifier extends EntityBase {
   /**
    * Identifier type.
    */
-  idtype: string = "";
+  idtype: IdentifierSchemas;
 
   /**
    * Identifier value.

@@ -23,8 +23,10 @@ interface VocabularyComponentExtraContent{
   multiple: boolean;
   selectedTermsIds: [];
   excludeTermsIds: [];
-  vocab: VocabulariesInmutableNames;
+
   level: number;
+
+  vocab: VocabulariesInmutableNames;
 }
 
 /**
@@ -139,7 +141,11 @@ export class VocabularyComponent extends FormFieldControl_Experimental
         this.service
           .getTermsTreeByVocab(this.extraContent.vocab, this.extraContent.level)
           .subscribe(this.termsTreeObserver);
-      }
+      } 
+    //   else if(this.extraContent.termID){
+    //     this.service.getTermByUUID(this.extraContent.termID, this.extraContent.level)
+    //     .subscribe(this.termsTreeObserver);
+    // }
       this._updateFilteredOptions();
     }
   }

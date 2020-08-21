@@ -92,6 +92,8 @@ fxLayoutGap="1em" class="form-field-component">
 
         <toco-vocabulary *ngSwitchCase="formFieldType.vocabulary" [content]="fieldContent"></toco-vocabulary>
 
+        <toco-vocabulary-tree *ngSwitchCase="formFieldType.vocabulary_tree" [content]="fieldContent"></toco-vocabulary-tree>
+        
         <toco-term-parent *ngSwitchCase="formFieldType.term_parent" [content]="fieldContent"></toco-term-parent>
 
         <toco-textarea *ngSwitchCase="formFieldType.textarea" [content]="fieldContent"></toco-textarea>

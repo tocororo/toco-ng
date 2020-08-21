@@ -276,6 +276,8 @@ export enum FormFieldType
     /** A vocabulary control. */
     vocabulary = 'vocabulary',
 
+    vocabulary_tree = 'toco-vocabulary-tree',
+
     /** A term parent control. */
     term_parent = 'term_parent',
 

@@ -100,7 +100,7 @@ export class JournalViewInfoComponent implements OnInit, OnChanges {
   }
 
 
-  getIdentifier(idtype: string) {
+  getIdentifier(idtype: IdentifierSchemas) {
       var r = this.journalData
       ? this.journalData.getIdentifierValue(idtype)
       : "";

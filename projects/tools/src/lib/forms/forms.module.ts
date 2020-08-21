@@ -29,6 +29,7 @@ import { InputSelectComponent } from './input/select/select-input.component';
 import { InputUrlComponent } from './input/url/url-input.component';
 
 import { VocabularyComponent } from './experimental/vocabulary/vocabulary.component';
+import { VocabularyTreeComponent } from './experimental/vocabulary-tree/vocabulary-tree.component';
 import { TermParentComponent } from './experimental/term-parent/term-parent.component';
 import { SelectComponent } from './experimental/select/select.component';
 import { TextareaComponent } from './experimental/textarea/textarea.component';
@@ -56,6 +57,7 @@ import { CheckboxComponent } from './experimental/checkbox/checkbox.component';
     InputSelectComponent,
     InputUrlComponent,
     VocabularyComponent,
+    VocabularyTreeComponent,
     TermParentComponent,
     SelectComponent,
     SelectFilterComponent,
@@ -87,6 +89,7 @@ import { CheckboxComponent } from './experimental/checkbox/checkbox.component';
     InputSelectComponent,
     InputUrlComponent,
     VocabularyComponent,
+    VocabularyTreeComponent,
     TermParentComponent,
     SelectComponent,
     SelectFilterComponent, 
