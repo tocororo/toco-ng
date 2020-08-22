@@ -77,6 +77,7 @@ export abstract class ContainerControl extends FormFieldControl
     /**
      * If the `content.formSection` represents a `FormArray`, then this field returns 
      * a pattern content that is `content.formSectionContent[0]` value; otherwise, returns `undefined`. 
+     * It is shared among controls. 
      * It is used for adding a new element in the `content.formSectionContent`, that is, 
      * for adding a new control in the `FormArray`. 
      * By default, its value is `undefined`. 
@@ -193,7 +194,8 @@ export abstract class ContainerControl extends FormFieldControl
         /* At this point, `content.formSectionContent` has one element, 
         and `content.value` has at least one element. */
 
-        /* Saves the pattern content, that is, `content.formSectionContent[0]`. */
+        /* Saves the pattern content, that is, `content.formSectionContent[0]`. 
+        It is shared among controls. */
         this._formArrayPatternContent = this.content.formSectionContent[0];
         /* The `FormArray` is empty initially. */
         this.content.formSectionContent = [ ];
@@ -306,6 +308,7 @@ export abstract class ContainerControl extends FormFieldControl
     /**
      * If the `content.formSection` represents a `FormArray`, then this field returns 
      * a pattern content that is `content.formSectionContent[0]` value; otherwise, returns `undefined`. 
+     * It is shared among controls. 
      * It is used for adding a new element in the `content.formSectionContent`, that is, 
      * for adding a new control in the `FormArray`. 
      * By default, its value is `undefined`. 
@@ -365,6 +368,10 @@ export abstract class ContainerControl extends FormFieldControl
 
         if (this._isFormArray)
         {
+            /* Prepares the `_formArrayPatternContent` because it is shared among controls. */
+            this._formArrayPatternContent.parentContainerControl = this;
+            this._formArrayPatternContent.parentFormSection = this.content.formSection;
+
             this._initOneElemFormSectionContentToFormArray(this._formArrayPatternValue);
         }
         else

@@ -7,7 +7,7 @@ import { Organization, Identifier } from '@toco/tools/entities';
 import { FormFieldType, TextInputAppearance, OperationAction, FormSection, PanelContent, 
 	ContainerContent, HintValue, HintPosition, IconValue, IconSource, ContentPosition, 
 	ActionControl, ActionContent, ContainerPanelComponent, 
-	InputTextComponent, InputSelectComponent, ContainerSimpleComponent, InputIdentifierComponent, 
+	InputTextComponent, InputSelectComponent, ContainerSimpleComponent, 
 	InputUrlComponent, InputEmailComponent, ActionButtonComponent } from '@toco/tools/forms';
 
 @Component({

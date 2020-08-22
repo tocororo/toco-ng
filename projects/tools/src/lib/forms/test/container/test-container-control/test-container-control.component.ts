@@ -14,30 +14,78 @@ import { ActionButtonComponent } from '../../../action/button/button-action.comp
 
 import { Relationship, Identifier } from '@toco/tools/entities';
 
-const relationshipsExample: any[] = [
+const relationshipsExample_TwoLevelsFormArray: any[] = [
 	{
-		"identifiers": [
+		'identifiers': [
 			{
-				"idtype": "isni",
-				"value": "An id isni"
+				'idtype': 'isni',
+				'value': 'An id isni'
 			}
 		],
-		"type": "parent"
+		'type': 'parent'
 	},
 	{
-		"identifiers": [
+		'identifiers': [
 			{
-				"idtype": "grid",
-				"value": "An id grid"
+				'idtype': 'grid',
+				'value': 'An id grid'
 			},
 			{
-				"idtype": "wkdata",
-				"value": "An id wkdata"
+				'idtype': 'wkdata',
+				'value': 'An id wkdata'
 			}
 		],
-		"type": "child",
-		"label": "ulh"
+		'type': 'child',
+		'label': 'ulh'
 	}
+];
+
+const relationshipsExample_ThreeLevelsFormArray: any[] = [
+	{
+		'firstIdentifiers': [
+			{
+				'secondIdentifiers': [
+					{
+						'nd_idtype': '1',
+						'nd_value': '2'
+					}
+				],
+				'st_idtype': 'isni',
+				'st_value': 'An id isni'
+			}
+		],
+		'type': 'parent'
+	},
+	// {
+	// 	'firstIdentifiers': [
+	// 		{
+	// 			'secondIdentifiers': [
+	// 				{
+	// 					'nd_idtype': '3',
+	// 					'nd_value': '4'
+	// 				},
+	// 				{
+	// 					'nd_idtype': '5',
+	// 					'nd_value': '6'
+	// 				}
+	// 			],
+	// 			'st_idtype': 'grid',
+	// 			'st_value': 'An id grid'
+	// 		},
+	// 		{
+	// 			'secondIdentifiers': [
+	// 				{
+	// 					'nd_idtype': '7',
+	// 					'nd_value': '8'
+	// 				},
+	// 			],
+	// 			'st_idtype': 'wkdata',
+	// 			'st_value': 'An id wkdata'
+	// 		}
+	// 	],
+	// 	'type': 'child',
+	// 	'label': 'ulh'
+	// }
 ];
 
 @Component({
@@ -50,7 +98,7 @@ export class TestContainerControlComponent implements OnInit
 	/**
 	 * Represents the current relationships. 
 	 */
-	private relationships: Relationship[];
+	private relationships: any[];
 
 	/**
 	 * Tracks the value and validity state of the internal child controls that contains this component. 
@@ -69,11 +117,13 @@ export class TestContainerControlComponent implements OnInit
 
 	public ngOnInit(): void
 	{
-		this.relationships = relationshipsExample;
+		//this.relationships = relationshipsExample_TwoLevelsFormArray;
+		this.relationships = relationshipsExample_ThreeLevelsFormArray;
 		console.log('Data got for editing: ', this.relationships);
 
 		/* Creates the panel's content. */
-		this.panelContent = this._initPanelContent_Test_TwoLevelsFormArray();
+		//this.panelContent = this._initPanelContent_Test_TwoLevelsFormArray();
+		this.panelContent = this._initPanelContent_Test_ThreeLevelsFormArray();
 	}
 
     /**
@@ -92,7 +142,10 @@ export class TestContainerControlComponent implements OnInit
 			'description': '',
 			'iconName': undefined /*''*/,
 			'formSectionContent': [
-				this._initRelationshipsSimpleContent()
+				this._initRelationshipsSimpleContent(
+					/* This `identifiers` value is `undefined` because it is inside a `FormArray`. */
+					this._initIdentifiersContent('Related Organization Identifiers', undefined, true)
+				)
 			]
 		};
 	}
@@ -113,8 +166,10 @@ export class TestContainerControlComponent implements OnInit
 			'description': '',
 			'iconName': undefined /*''*/,
 			'formSectionContent': [
-				//TODO: poner aquí otro nivel de `FormArray`. 
-				this._initRelationshipsSimpleContent()
+				this._initRelationshipsSimpleContent(
+					/* The `firstIdentifiers` and `secondIdentifiers` fields are `undefined` because they are inside a `FormArray`. */
+					this._initFirstIdentifiersContent()
+				)
 			]
 		};
 	}
@@ -122,7 +177,7 @@ export class TestContainerControlComponent implements OnInit
     /**
      * Returns the relationships' content. 
      */
-    private _initRelationshipsSimpleContent(): ContainerContent
+    private _initRelationshipsSimpleContent(identifiersContent: ContainerContent): ContainerContent
     {
 		return {
 			'formSection': new FormArray([ ], [ ]),
@@ -148,7 +203,7 @@ export class TestContainerControlComponent implements OnInit
 					'formSectionContent': [
 
 						/* This `identifiers` value is `undefined` because it is inside a `FormArray`. */
-						this._initIdentifiersContent('Related Organization Identifiers', undefined, true),
+						identifiersContent,
 
 						{
 							'name': 'type',
@@ -253,6 +308,119 @@ export class TestContainerControlComponent implements OnInit
 		}
 
 		return result;
+	}
+
+    /**
+     * Returns the first identifiers' content. 
+     */
+    private _initFirstIdentifiersContent(): ContainerContent
+    {
+        return {
+			'formSection': new FormArray([ ], [ ]),
+			'name': 'firstIdentifiers',
+			'label': 'First Identifiers',
+			'type': FormFieldType.container_simple,
+			'componentType': ContainerSimpleComponent,
+			'value': undefined,  /* It is `undefined` because it does not belong to a topmost `FormArray`. */
+			'width': '100%',
+//            'appearance': TextInputAppearance.outline,
+			'required': true,
+			'ariaLabel': 'First Identifiers',
+            'formSectionContent': [
+				{
+					'formSection': new FormGroup({ }, [ ]),
+					'name': '0',
+					'label': 'Organization First Identifier',
+					'type': FormFieldType.container_simple,
+					'componentType': ContainerSimpleComponent,
+					'width': '100%',
+		//            'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'Organization First Identifier',
+					'formSectionContent': [
+
+						this._initSecondIdentifiersContent(),
+
+						{
+							'name': 'st_idtype',
+							'label': 'First Identifier type',
+							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
+							'required': true,
+							'width': '50%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'First Identifier type',
+						},
+						{
+							'name': 'st_value',
+							'label': 'First Identifier value',
+							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
+							'required': true,
+							'width': '50%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'First Identifier value',
+						},
+
+						this._initRemoveButtonContent('Remove First Identifiers')
+					]
+				}
+			]
+		};
+	}
+
+    /**
+     * Returns the second identifiers' content. 
+     */
+    private _initSecondIdentifiersContent(): ContainerContent
+    {
+        return {
+			'formSection': new FormArray([ ], [ ]),
+			'name': 'secondIdentifiers',
+			'label': 'Second Identifiers',
+			'type': FormFieldType.container_simple,
+			'componentType': ContainerSimpleComponent,
+			'value': undefined,  /* It is `undefined` because it does not belong to a topmost `FormArray`. */
+			'width': '100%',
+//            'appearance': TextInputAppearance.outline,
+			'required': true,
+			'ariaLabel': 'Second Identifiers',
+            'formSectionContent': [
+				{
+					'formSection': new FormGroup({ }, [ ]),
+					'name': '0',
+					'label': 'Organization Second Identifier',
+					'type': FormFieldType.container_simple,
+					'componentType': ContainerSimpleComponent,
+					'width': '100%',
+		//            'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'Organization Second Identifier',
+					'formSectionContent': [
+						{
+							'name': 'nd_idtype',
+							'label': 'Second Identifier type',
+							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
+							'required': true,
+							'width': '50%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'Second Identifier type',
+						},
+						{
+							'name': 'nd_value',
+							'label': 'Second Identifier value',
+							'type': FormFieldType.text,
+							'componentType': InputTextComponent,
+							'required': true,
+							'width': '50%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'Second Identifier value',
+						},
+
+						this._initRemoveButtonContent('Remove Second Identifiers')
+					]
+				}
+			]
+		};
 	}
 
 	/**
