@@ -11,10 +11,6 @@ import { FormFieldType } from '../form-field.control';
 /**
  * This component represents a components' factory. 
  * //TODO: Pensar en cómo hacer esto de forma dinámica con facilidades que brinda Angular. 
- * Entonces cuando esta clase sea modificada o desaparezca, el campo 
- * `parentFormSection` sale de adentro del `content` para un campo `Input` dentro de la clase `FormFieldControl`, 
- * `formSection` sale de adentro del `content` para un campo `Input` dentro de la clase `ContainerControl`, 
- * `formControl` sale de adentro del `content` para un campo `Input` dentro de la clase `InputControl`. 
  */
 @Component({
     selector: 'component-factory-depr',

@@ -12,7 +12,7 @@ import { InputTextComponent } from '../../../input/text/text-input.component';
 import { InputSelectComponent } from '../../../input/select/select-input.component';
 import { ActionButtonComponent } from '../../../action/button/button-action.component';
 
-import { Relationship, Identifier } from '@toco/tools/entities';
+import { Identifier } from '@toco/tools/entities';
 
 const relationshipsExample_TwoLevelsFormArray: any[] = [
 	{
@@ -56,36 +56,36 @@ const relationshipsExample_ThreeLevelsFormArray: any[] = [
 		],
 		'type': 'parent'
 	},
-	// {
-	// 	'firstIdentifiers': [
-	// 		{
-	// 			'secondIdentifiers': [
-	// 				{
-	// 					'nd_idtype': '3',
-	// 					'nd_value': '4'
-	// 				},
-	// 				{
-	// 					'nd_idtype': '5',
-	// 					'nd_value': '6'
-	// 				}
-	// 			],
-	// 			'st_idtype': 'grid',
-	// 			'st_value': 'An id grid'
-	// 		},
-	// 		{
-	// 			'secondIdentifiers': [
-	// 				{
-	// 					'nd_idtype': '7',
-	// 					'nd_value': '8'
-	// 				},
-	// 			],
-	// 			'st_idtype': 'wkdata',
-	// 			'st_value': 'An id wkdata'
-	// 		}
-	// 	],
-	// 	'type': 'child',
-	// 	'label': 'ulh'
-	// }
+	{
+		'firstIdentifiers': [
+			{
+				'secondIdentifiers': [
+					{
+						'nd_idtype': '3',
+						'nd_value': '4'
+					},
+					{
+						'nd_idtype': '5',
+						'nd_value': '6'
+					}
+				],
+				'st_idtype': 'grid',
+				'st_value': 'An id grid'
+			},
+			{
+				'secondIdentifiers': [
+					{
+						'nd_idtype': '7',
+						'nd_value': '8'
+					},
+				],
+				'st_idtype': 'wkdata',
+				'st_value': 'An id wkdata'
+			}
+		],
+		'type': 'child',
+		'label': 'ulh'
+	}
 ];
 
 @Component({
@@ -117,12 +117,26 @@ export class TestContainerControlComponent implements OnInit
 
 	public ngOnInit(): void
 	{
-		//this.relationships = relationshipsExample_TwoLevelsFormArray;
-		this.relationships = relationshipsExample_ThreeLevelsFormArray;
-		console.log('Data got for editing: ', this.relationships);
+		this._Test_00();
+
+//		this._Test_01();
+	}
+
+	private _Test_00(): void
+	{
+		this.relationships = relationshipsExample_TwoLevelsFormArray;
+		console.log("Data got for editing (two levels of 'FormArray'): ", this.relationships);
 
 		/* Creates the panel's content. */
-		//this.panelContent = this._initPanelContent_Test_TwoLevelsFormArray();
+		this.panelContent = this._initPanelContent_Test_TwoLevelsFormArray();
+	}
+
+	private _Test_01(): void
+	{
+		this.relationships = relationshipsExample_ThreeLevelsFormArray;
+		console.log("Data got for editing (three levels of 'FormArray'): ", this.relationships);
+
+		/* Creates the panel's content. */
 		this.panelContent = this._initPanelContent_Test_ThreeLevelsFormArray();
 	}
 

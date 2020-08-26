@@ -4,26 +4,21 @@
  */
 
 
-import { Component, OnInit, Input, ViewChild, ComponentFactoryResolver,
-    ComponentFactory, ViewContainerRef, ComponentRef } from '@angular/core';
+import { Component, DoCheck, Input, ViewChild, ComponentFactoryResolver,
+    ComponentFactory, ViewContainerRef, ComponentRef, OnChanges, SimpleChanges } from '@angular/core';
 
 import { GetViewContainerDirective } from '@toco/tools/core';
 import { FormFieldControl } from '../form-field.control';
 
 /**
  * This component represents a components' factory. 
- * //TODO: Pensar en cómo hacer esto de forma dinámica con facilidades que brinda Angular. 
- * Entonces cuando esta clase sea modificada o desaparezca, el campo 
- * `parentFormSection` sale de adentro del `content` para un campo `Input` dentro de la clase `FormFieldControl`, 
- * `formSection` sale de adentro del `content` para un campo `Input` dentro de la clase `ContainerControl`, 
- * `formControl` sale de adentro del `content` para un campo `Input` dentro de la clase `InputControl`. 
  */
 @Component({
     selector: 'components-factory',
     templateUrl: './components-factory.component.html',
     styleUrls: ['./components-factory.component.scss']
 })
-export class ComponentsFactory implements OnInit
+export class ComponentsFactory implements OnChanges, DoCheck
 {
     // TODO: for datepicker, !!!! use https://stackblitz.com/edit/angular-material2-year-picker-7z9k4t?file=app%2Fcustom-datepicker%2Fyear-picker-component%2Fyear-picker.component.html
 
@@ -34,19 +29,47 @@ export class ComponentsFactory implements OnInit
     @Input()
     public componentsContent: any[];
 
+    private _componentsContentLength: number;
+
     @ViewChild(GetViewContainerDirective, { static: true })
     private _componentHost: GetViewContainerDirective;
 
     public constructor(private _componentFactoryResolver: ComponentFactoryResolver)
     {
         this.componentsContent = [];
+        this._componentsContentLength = 0;
     }
 
-    public ngOnInit(): void
+    /**
+     * A callback method that is invoked immediately after the
+     * default change detector has checked data-bound properties
+     * if at least one has changed, and before the view and content
+     * children are checked.
+     * @param changes The changed properties.
+     */
+    public ngOnChanges(changes: SimpleChanges): void
     {
-        console.log('ComponentsFactory componentsContent: ', this.componentsContent);
+        // // if (this._componentsContentLength != this.componentsContent.length)
+        // // {
+        //     // this._componentsContentLength = this.componentsContent.length;
+        //     console.log('ComponentsFactory componentsContent: ', this.componentsContent);
+ 
+        //     this._createComponents();
+        // // }
+    }
 
-        this._createComponents();
+    /**
+     * A callback method that performs change-detection, invoked after the default change-detector runs. 
+     */
+    public ngDoCheck(): void
+    {
+        if (this._componentsContentLength != this.componentsContent.length)
+        {
+            this._componentsContentLength = this.componentsContent.length;
+            console.log('ComponentsFactory componentsContent: ', this.componentsContent);
+ 
+            this._createComponents();
+        }
     }
 
     private _createComponents(): void
@@ -56,6 +79,7 @@ export class ComponentsFactory implements OnInit
         let cr: ComponentRef<any>;
 
         const viewContainerRef: ViewContainerRef = this._componentHost.viewContainerRef;
+        viewContainerRef.clear();
 
         for (let componentContent of this.componentsContent)
         {

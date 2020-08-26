@@ -441,13 +441,8 @@ export function cloneFormSection(target: FormSection): FormSection
  * @param value The initial `value` field of each content representing a `FormControl`. 
  * @param canClone It is true if the function can clone the `formSectionContent` field; otherwise, false. 
  */
-
- var countCall: number = 0;
 export function cloneContent(target: Params<any>, value: any, canClone: boolean): any
 {
-    console.log(`Call 'cloneContent' number: ${ ++countCall } with content: `, target);
-    
-
     let result: any = { };
 
     for(let prop in target)

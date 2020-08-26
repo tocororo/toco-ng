@@ -4,8 +4,8 @@
 <fieldset class="container-simple-form-field" [formGroup]="content.formSection" [attr.aria-label]="content.ariaLabel">
     <legend class="container-simple-form-field-legend">{{ content.label }}</legend>
 
-    <!-- <components-factory [componentsContent]="content.formSectionContent"></components-factory> -->
-    <component-factory-depr [componentsContent]="content.formSectionContent"></component-factory-depr>
+    <components-factory [componentsContent]="content.formSectionContent"></components-factory>
+    <!-- <component-factory-depr [componentsContent]="content.formSectionContent"></component-factory-depr> -->
 
     <ng-container *ngIf="content.isDynamic">
         <button mat-raised-button color="primary" (click)="addToFormArray()">
