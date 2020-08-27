@@ -136,6 +136,12 @@ export interface IInternalComponent
 export abstract class InputControl extends FormFieldControl
 {
     /**
+     * Input field that contains the content of this class. 
+     */
+    @Input()
+    public content: InputContent;
+
+    /**
 	 * Tracks the value and validity state of the internal component that contains the text input. 
      * Implementation notes: There are two cases: 
      *  - You only have the `content.formControl` field as the `InputEmailComponent` class. 
@@ -148,12 +154,6 @@ export abstract class InputControl extends FormFieldControl
      * Represents the validation error of required. 
      */
     protected validationError_required: string;
-
-    /**
-     * Input field that contains the content of this class. 
-     */
-    @Input()
-    public content: InputContent;
 
     /**
      * Constructs a new instance of this class. 
@@ -208,7 +208,8 @@ export abstract class InputControl extends FormFieldControl
             if (this.content.endHint != undefined) this.content.endHint.setDefaultValueIfUndefined_setPosition(HintPosition.end);
         }
 
-        /* Adds this control as a child to the `content.parentFormSection`. It must be called at the end. */
+        /* Adds this control as a child to the `content.parentFormSection`. 
+        It must be called at the end. */
         if (this.content.parentFormSection != undefined)
         {
             console.log('addAsChildControl(this.content.formControl)');

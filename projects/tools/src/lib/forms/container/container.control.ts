@@ -4,10 +4,10 @@
  */
 
 
-import { Input } from '@angular/core';
+import { Input, ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { FormArray } from '@angular/forms';
 
-import { cloneValueToUndefined } from '@toco/tools/core';
+import { cloneValueToUndefined, GetViewContainerDirective } from '@toco/tools/core';
 
 import { FormSection, FormFieldContent, FormFieldControl, cloneContent } from '../form-field.control';
 
@@ -74,6 +74,41 @@ export abstract class ContainerControl extends FormFieldControl
     @Input()
     public content: ContainerContent;
 
+
+
+    /**
+     * Returns the helper directive to mark valid insertion point in the `ContainerControl`'s template. 
+     */
+    @ViewChild(GetViewContainerDirective, { static: true })
+    protected _componentHost: GetViewContainerDirective;
+
+    /**
+     * Returns the view container of the element that will host the child components in the `ContainerControl`'s template. 
+     * This field can only be assigned in the `ContainerControl` class. 
+     */
+    protected _viewContainerRef: ViewContainerRef;
+
+    /**
+     * Returns the factory for a given component type. 
+     * This field can only be assigned in the `ContainerControl` class. 
+     */
+    protected _componentFactoryResolver: ComponentFactoryResolver;
+
+    /**
+     * Returns the component created by a `ComponentFactory`. 
+     * For only internal use by the `createChildComponent` method. 
+     */
+    protected _cr: ComponentRef<any>;
+
+
+
+    /**
+     * Returns true if the container control is a `FormArray`, that is, the `content.formSection` field 
+     * represents a `FormArray`; otherwise, false. 
+     * By default, its value is `false`. 
+     */
+    private _isFormArray: boolean;
+
     /**
      * If the `content.formSection` represents a `FormArray`, then this field returns 
      * a pattern content that is `content.formSectionContent[0]` value; otherwise, returns `undefined`. 
@@ -95,22 +130,15 @@ export abstract class ContainerControl extends FormFieldControl
     private _formArrayPatternValue: any;
 
     /**
-     * Returns true if the container control is a `FormArray`, that is, the `content.formSection` field 
-     * represents a `FormArray`; otherwise, false. 
-     * By default, its value is `false`. 
-     */
-    private _isFormArray: boolean;
-
-    /**
      * Constructs a new instance of this class. 
      */
     public constructor()
     {
         super();
 
+        this._isFormArray = false;
         this._formArrayPatternContent = undefined;
         this._formArrayPatternValue = undefined;
-        this._isFormArray = false;
     }
 
     /**
@@ -145,6 +173,9 @@ export abstract class ContainerControl extends FormFieldControl
             if (this.content.isDynamic) throw new Error(`For the '${ this.content.name }' control, the 'content.isDynamic' value must be false because the 'content.formSection' value is a 'FormGroup'.`);
         }
 
+        this._viewContainerRef = this._componentHost.viewContainerRef;
+        this._componentFactoryResolver = this._componentHost.componentFactoryResolver;
+
         this._setParentToChildren();
 
         if (this._isFormArray)
@@ -176,11 +207,15 @@ export abstract class ContainerControl extends FormFieldControl
         //     if (this.content.endHint != undefined) this.content.endHint.setDefaultValueIfUndefined_setPosition(HintPosition.end);
         // }
 
-        /* Adds this control as a child to the `content.parentFormSection`. It must be called at the end. */
+        /* Adds this control as a child to the `content.parentFormSection`. 
+        It must be called at the end before calling `createChildComponents` method. */
         if (this.content.parentFormSection != undefined)
         {
             this.addAsChildControl(this, this.content.formSection);
         }
+
+        /* Creates the child components. */
+        this.createChildComponents();
     }
 
     /**
@@ -220,10 +255,11 @@ export abstract class ContainerControl extends FormFieldControl
     }
 
     /**
-     * Initializes one element in the `content.formSectionContent` correctly depending on the specified `value`. 
+     * Initializes and returns one element in the `content.formSectionContent` correctly 
+     * depending on the specified `value`. 
      * @param value The initial `value` field of each content representing a `FormControl`. 
      */
-    private _initOneElemFormSectionContentToFormArray(value: any): void
+    private _initOneElemFormSectionContentToFormArray(value: any): any
     {
         /* Clones in deep until the next `FormArray`, then the next `FormArray` clones in deep until the next `FormArray`, and so on. */
         let refContent: any = cloneContent(this._formArrayPatternContent, value, true);
@@ -234,6 +270,8 @@ export abstract class ContainerControl extends FormFieldControl
         // refContent.ariaLabel = refContent.label;
 
         this.content.formSectionContent.push(refContent);
+
+        return refContent;
     }
 
     /**
@@ -253,6 +291,30 @@ export abstract class ContainerControl extends FormFieldControl
                 ffc.parentFormSection = this.content.formSection;
             }
         );
+    }
+
+    /**
+     * Creates the child components. 
+     */
+    protected createChildComponents(): void
+    {
+        for (let componentContent of this.content.formSectionContent)
+        {
+            /* Creates a child component. */
+            this.createChildComponent(componentContent);
+        }
+    }
+
+    /**
+     * Creates a child component. 
+     * @param componentContent Component content for creating the component. 
+     */
+    protected createChildComponent(componentContent: any): void
+    {
+        this._cr = this._viewContainerRef.createComponent(
+            this._componentFactoryResolver.resolveComponentFactory(componentContent.componentType)
+        );
+        (this._cr.instance as FormFieldControl).content = componentContent;
     }
 
     /**
@@ -372,7 +434,9 @@ export abstract class ContainerControl extends FormFieldControl
             this._formArrayPatternContent.parentContainerControl = this;
             this._formArrayPatternContent.parentFormSection = this.content.formSection;
 
-            this._initOneElemFormSectionContentToFormArray(this._formArrayPatternValue);
+            this.createChildComponent(
+                this._initOneElemFormSectionContentToFormArray(this._formArrayPatternValue)
+            );
         }
         else
         {
@@ -395,6 +459,7 @@ export abstract class ContainerControl extends FormFieldControl
             this.content.containerControlChildren.splice(index, 1);
             this.content.formSectionContent.splice(index, 1);
             (this.content.formSection as FormArray).removeAt(index);
+            this._viewContainerRef.remove(index);
 
             this._updateIndex(index);
         }
@@ -418,6 +483,7 @@ export abstract class ContainerControl extends FormFieldControl
             this.content.containerControlChildren = [ ];
             this.content.formSectionContent = [ ];
             (this.content.formSection as FormArray).clear();
+            this._viewContainerRef.clear();
         }
         else
         {

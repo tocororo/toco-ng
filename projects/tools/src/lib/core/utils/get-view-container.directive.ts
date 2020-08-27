@@ -1,5 +1,5 @@
 
-import { Directive, ViewContainerRef } from '@angular/core';
+import { Directive, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 
 /**
  * A helper directive to mark valid insertion points in the template. 
@@ -13,7 +13,7 @@ import { Directive, ViewContainerRef } from '@angular/core';
 })
 export class GetViewContainerDirective
 {
-    public constructor(private _viewContainerRef: ViewContainerRef)
+    public constructor(private _viewContainerRef: ViewContainerRef, private _componentFactoryResolver: ComponentFactoryResolver)
     { }
 
     /**
@@ -23,5 +23,13 @@ export class GetViewContainerDirective
     public get viewContainerRef(): ViewContainerRef
     {
         return this._viewContainerRef;
+    }
+
+    /**
+     * Returns the injected `ComponentFactoryResolver` to gain access to the factory for a given component type. 
+     */
+    public get componentFactoryResolver(): ComponentFactoryResolver
+    {
+        return this._componentFactoryResolver;
     }
 }
