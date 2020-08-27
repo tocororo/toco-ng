@@ -12,7 +12,6 @@ import { CoreModule, IconService } from '@toco/tools/core';
 
 import { ActionButtonComponent } from './action/button/button-action.component';
 
-import { ComponentsFactory } from './components-factory/components-factory.component';
 import { ComponentFactory_Depr } from './component-factory-depr/component-factory-depr.component';
 
 import { FormContainerComponent } from './container/form-container/form-container.component';
@@ -44,7 +43,6 @@ import { TestContainerControlComponent } from './test/container/test-container-c
 @NgModule({
   declarations: [
     ActionButtonComponent,
-    ComponentsFactory,
     ComponentFactory_Depr,
     FormContainerComponent,
     ContainerPanelComponent,
@@ -92,7 +90,6 @@ import { TestContainerControlComponent } from './test/container/test-container-c
 
   exports: [
     ActionButtonComponent,
-    ComponentsFactory,
     ComponentFactory_Depr,
     FormContainerComponent,
     ContainerPanelComponent,
