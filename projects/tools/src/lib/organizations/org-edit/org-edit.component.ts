@@ -628,6 +628,9 @@ export class OrgEditComponent implements OnInit
 			'tooltip': new HintValue(HintPosition.start, tooltip),
 			'click': (sender: ActionControl): void => {
 				sender.parentContainerControl.parentContainerControl.removeFromFormArray(+(sender.parentContainerControl.content.name));
+			},
+			'isDisabled': (sender: ActionControl): boolean => {
+				return !(sender.parentContainerControl.parentContainerControl.canRemoveFromFormArray);
 			}
 		};
 	}

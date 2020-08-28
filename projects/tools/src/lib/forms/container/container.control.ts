@@ -171,6 +171,7 @@ export abstract class ContainerControl extends FormFieldControl
         else
         {
             if (this.content.isDynamic) throw new Error(`For the '${ this.content.name }' control, the 'content.isDynamic' value must be false because the 'content.formSection' value is a 'FormGroup'.`);
+            if (this.content.required != undefined) throw new Error(`For the '${ this.content.name }' control, the 'content.required' value must not exist because the 'content.formSection' value is a 'FormGroup'.`);
         }
 
         this._viewContainerRef = this._componentHost.viewContainerRef;
@@ -417,7 +418,24 @@ export abstract class ContainerControl extends FormFieldControl
 	public get isEmpty(): boolean
 	{
 		return (this.content.formSectionContent.length == 0);
-	}
+    }
+
+	/**
+	 * Returns true if an element can be removed in the `content.formSectionContent`; otherwise, false. 
+     * Use along with `removeFromFormArray` and `clearFormArray` methods. 
+     * The `content.formSection` must be an instance of `FormArray`. 
+	 */
+	public get canRemoveFromFormArray(): boolean
+	{
+        if (this.content.required)
+        {
+            return (this.content.formSectionContent.length > 1)
+        }
+        else
+        {
+            return (this.content.formSectionContent.length != 0);
+        }
+    }
 
     /**
      * Adds an empty element at the end of the `content.formSectionContent`; therefore one element 
@@ -484,6 +502,12 @@ export abstract class ContainerControl extends FormFieldControl
             this.content.formSectionContent = [ ];
             (this.content.formSection as FormArray).clear();
             this._viewContainerRef.clear();
+
+            if (this.content.required)
+            {
+                /* The `FormArray` always has one element at least. */
+                this.addToFormArray();
+            }
         }
         else
         {

@@ -12,7 +12,7 @@
             <mat-icon>add_circle</mat-icon>
             Add new item
         </button>
-        <button mat-raised-button color="primary" [disabled]="isEmpty" (click)="clearFormArray()">
+        <button mat-raised-button color="primary" [disabled]="!canRemoveFromFormArray" (click)="clearFormArray()">
             <!-- <mat-icon>remove box</mat-icon> -->
             <mat-icon>remove_circle</mat-icon>
             Clear all

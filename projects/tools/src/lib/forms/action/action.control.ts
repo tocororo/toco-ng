@@ -15,8 +15,25 @@ export enum OperationAction
     submit = 'submit'
 }
 
+/**
+ * Returns true if the control is disabled; otherwise, false. 
+ * This function returns false by definition, that is, the control is enabled. 
+ * @param sender Control that wants to know its disabled state. 
+ */
+export function isDisabledDefault(sender: any): boolean
+{
+    /* This function returns false by definition, that is, the control is enabled. */
+    return false;
+}
+
+/**
+ * This function does nothing by definition. 
+ * @param sender Control that was clicked. 
+ */
 export function clickDefault(sender: any): void
-{ /* This function does nothing by default. */ }
+{
+    /* This function does nothing by definition. */
+}
 
 /**
  * A base interface that represents the content of an `ActionControl`. 
@@ -34,6 +51,12 @@ export interface ActionContent extends FormFieldContent
 	 * By default, its value is `undefined`. 
 	 */
     tooltip?: HintValue;
+
+    /**
+     * Returns the function that is executed for knowing if the control is or is not disabled. 
+     * By default, its value is `isDisabledDefault`. 
+     */
+    isDisabled?: (sender: any) => boolean;
 
     /**
      * Returns the function that is executed when the user clicks the control. 
@@ -84,6 +107,7 @@ export abstract class ActionControl extends FormFieldControl
             this.content.tooltip = new HintValue(HintPosition.start, this.content.label);
         }
 
+        if (this.content.isDisabled == undefined) this.content.isDisabled = isDisabledDefault;
         if (this.content.click == undefined) this.content.click = clickDefault;
     }
 
