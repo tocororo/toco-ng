@@ -4,7 +4,7 @@
     <mat-progress-bar *ngIf="!levelsOptions" mode="indeterminate"></mat-progress-bar>
 
     <mat-card-subtitle *ngIf="levelsOptions" >
-      
+
       <mat-form-field
       *ngFor="let level of levelsOptions; let i = index"
       class="select-mat-form-field"

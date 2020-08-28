@@ -102,7 +102,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
     if (this.content.required) {
       this.internalControl.setValidators(
         (control: AbstractControl): ValidationErrors | null => {
-          return this.content.value.length == 0
+          return !this.content.value || this.content.value.length == 0
             ? { requiredTerms: "No Terms Selected" }
             : null;
         }
@@ -141,7 +141,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
         this.service
           .getTermsTreeByVocab(this.extraContent.vocab, this.extraContent.level)
           .subscribe(this.termsTreeObserver);
-      } 
+      }
     //   else if(this.extraContent.termID){
     //     this.service.getTermByUUID(this.extraContent.termID, this.extraContent.level)
     //     .subscribe(this.termsTreeObserver);

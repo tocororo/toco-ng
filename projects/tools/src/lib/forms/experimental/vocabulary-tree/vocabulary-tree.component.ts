@@ -81,11 +81,10 @@ export class VocabularyTreeComponent extends FormFieldControl_Experimental
       this.content.name,
       this.internalControl
     );
-
     if (this.content.required) {
       this.internalControl.setValidators(
         (control: AbstractControl): ValidationErrors | null => {
-          return this.content.value.length == 0
+          return !this.content.value || this.content.value.length == 0
             ? { requiredTerms: "No Terms Selected" }
             : null;
         }
@@ -106,6 +105,7 @@ export class VocabularyTreeComponent extends FormFieldControl_Experimental
         this.extraContent.excludeTermsIds = [];
       }
       this.content.value = [];
+      this.internalControl.setValue(this.content.value);
 
       if (this.extraContent.level == undefined) {
         this.extraContent.level = 10;
@@ -173,18 +173,18 @@ export class VocabularyTreeComponent extends FormFieldControl_Experimental
     this.chipsList = [];
     this.loading = true;
     this.lastLevelTerm = item;
-    this.levelsOptions = this.levelsOptions.slice(0, level + 1);
+    this.levelsOptions = this.levelsOptions.slice(0, level+1);
 
     // this.removeTermFromValue(this.levelsSelection[level]);
     // this.levelsSelection[level] = item;
     // this.addTermToValue(this.levelsSelection[level]);
 
     this.content.value = [];
-    
-    this.levelsSelection = this.levelsSelection.slice(0, level+1);
+
+    this.levelsSelection = this.levelsSelection.slice(0, level);
     this.levelsSelection.push(item);
     this.levelsSelection.forEach(element => {
-      this.addTermToValue(element);
+      this.addTermToValue(element, false);
     });
 
     this.service.getTermByUUID(item.uuid, 1).subscribe(
@@ -218,7 +218,7 @@ export class VocabularyTreeComponent extends FormFieldControl_Experimental
       this.formControl.setErrors({ requiered: true });
     }
   }
-  private addTermToValue(term: Term) {
+  private addTermToValue(term: Term, isLeaf=true) {
     if (this.extraContent.multiple) {
       this.content.value.unshift(term);
     } else {
@@ -228,10 +228,11 @@ export class VocabularyTreeComponent extends FormFieldControl_Experimental
       });
       this.content.value.unshift(term);
     }
+    console.log(this.content.value)
     this.internalControl.setValue(this.content.value);
     this.setValidation();
     console.log(this.internalControl);
-    
+
   }
 
   private removeTermFromValue(term: Term) {

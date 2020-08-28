@@ -5,7 +5,7 @@ fxLayoutGap="1em" class="form-field-component">
 
     <ng-container *ngFor="let fieldContent of fieldsContent" [ngSwitch]="fieldContent.type">
 
-        <!-- <ng-container 
+        <!-- <ng-container
             *ngSwitchCase="formFieldType.checkbox"
             [formGroup]="fieldContent.formGroup"
         >
@@ -21,14 +21,14 @@ fxLayoutGap="1em" class="form-field-component">
                 {{ fieldContent.label }}
             </mat-checkbox>
         </ng-container> -->
-<!-- 
-        <mat-form-field 
+<!--
+        <mat-form-field
             *ngSwitchCase="formFieldType.textarea"
             [style.width]="fieldContent.width"
             [style.minWidth]="fieldContent.minWidth"
             [formGroup]="fieldContent.formGroup"
         >
-            <textarea 
+            <textarea
                 matInput [value]="fieldContent.value"
                 (input)="$event.target.value"
                 name="{{ fieldContent.name }}"
@@ -40,12 +40,12 @@ fxLayoutGap="1em" class="form-field-component">
         </mat-form-field> -->
 
 
-        <!-- <mat-form-field 
+        <!-- <mat-form-field
             *ngSwitchCase="formFieldType.datepicker"
             [style.width]="fieldContent.width"
             [formGroup]="fieldContent.formGroup"
         >
-            <input 
+            <input
                 matInput
                 [value]="fieldContent.value"
                 (input)="$event.target.value"
@@ -58,12 +58,12 @@ fxLayoutGap="1em" class="form-field-component">
             <mat-datepicker-toggle
                 matSuffix [for]="picker"
             ></mat-datepicker-toggle>
-            <mat-datepicker 
+            <mat-datepicker
                 #picker
                 startView="multi-year"
             ></mat-datepicker>
         </mat-form-field> -->
-        <toco-checkbox *ngSwitchCase="formFieldType.datepicker" [content]="fieldContent"></toco-checkbox>
+        <toco-checkbox *ngSwitchCase="formFieldType.checkbox" [content]="fieldContent"></toco-checkbox>
         <toco-datepicker *ngSwitchCase="formFieldType.datepicker" [content]="fieldContent"></toco-datepicker>
 
 
@@ -79,7 +79,7 @@ fxLayoutGap="1em" class="form-field-component">
 
 
         <input-url *ngSwitchCase="formFieldType.url" [content]="fieldContent"></input-url>
-        
+
         <input-email *ngSwitchCase="formFieldType.email" [content]="fieldContent"></input-email>
 
         <input-identifier *ngSwitchCase="formFieldType.identifier" [content]="fieldContent"></input-identifier>
@@ -93,7 +93,7 @@ fxLayoutGap="1em" class="form-field-component">
         <toco-vocabulary *ngSwitchCase="formFieldType.vocabulary" [content]="fieldContent"></toco-vocabulary>
 
         <toco-vocabulary-tree *ngSwitchCase="formFieldType.vocabulary_tree" [content]="fieldContent"></toco-vocabulary-tree>
-        
+
         <toco-term-parent *ngSwitchCase="formFieldType.term_parent" [content]="fieldContent"></toco-term-parent>
 
         <toco-textarea *ngSwitchCase="formFieldType.textarea" [content]="fieldContent"></toco-textarea>

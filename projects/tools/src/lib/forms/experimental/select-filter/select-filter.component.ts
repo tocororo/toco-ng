@@ -4,7 +4,7 @@
  */
 
 import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, AbstractControl, ValidationErrors } from "@angular/forms";
 import { Observable } from "rxjs";
 import { startWith, map } from "rxjs/operators";
 import { isArray } from "util";
@@ -50,6 +50,15 @@ export class SelectFilterComponent extends FormFieldControl_Experimental
       this.internalControl
     );
 
+    if (this.content.required) {
+      this.internalControl.setValidators(
+        (control: AbstractControl): ValidationErrors | null => {
+          return !this.content.value ||  this.content.value.length == 0
+            ? { requiredTerms: "No Terms Selected" }
+            : null;
+        }
+      );
+    }
     this.multiple = this.content.extraContent["multiple"]
       ? this.content.extraContent["multiple"]
       : false;
@@ -59,32 +68,7 @@ export class SelectFilterComponent extends FormFieldControl_Experimental
         // next
         (response: any) => {
           this.selectOptions = this.content.extraContent.getOptions(response);
-
-          this.selectOptions.forEach((option) => {
-            if (this.multiple) {
-              try {
-                const index = this.content.value.indexOf(option.value);
-                if (index >= 0) {
-                  this.addChips(option);
-                }
-              } catch (error) {}
-            } else {
-              if (option.value == this.content.value) {
-                this.addChips(option);
-              }
-            }
-          });
-          if (
-            this.multiple &&
-            (this.content.value == null ||
-              this.content.value == undefined ||
-              !isArray(this.content.value))
-          ) {
-            this.content.value = [];
-          }
-
-          this._updateFilteredOptions();
-          this.loading = false;
+          this.selectOptionsLoaded();
         },
 
         // error
@@ -96,9 +80,37 @@ export class SelectFilterComponent extends FormFieldControl_Experimental
       );
     } else {
       this.selectOptions = this.content.extraContent.getOptions();
+      this.selectOptionsLoaded();
     }
   }
 
+  private selectOptionsLoaded() {
+    this.selectOptions.forEach((option) => {
+      if (this.multiple) {
+        try {
+          const index = this.content.value.indexOf(option.value);
+          if (index >= 0) {
+            this.addChips(option);
+          }
+        } catch (error) {}
+      } else {
+        if (option.value == this.content.value) {
+          this.addChips(option);
+        }
+      }
+    });
+    if (
+      this.multiple &&
+      (this.content.value == null ||
+        this.content.value == undefined ||
+        !isArray(this.content.value))
+    ) {
+      this.content.value = [];
+    }
+
+    this._updateFilteredOptions();
+    this.loading = false;
+  }
   onSelectionChange() {
     if (this.content.extraContent.selectionChange) {
       this.content.extraContent.selectionChange(this.content.value);
@@ -115,7 +127,7 @@ export class SelectFilterComponent extends FormFieldControl_Experimental
         this.selectOptions.push(this.chipsList[0]);
       }
       this.chipsList = [item];
-      this.content.value = item.value;
+      this.content.value = [item.value];
     }
 
     this.internalControl.setValue(this.content.value);

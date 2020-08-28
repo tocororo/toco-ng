@@ -23,40 +23,6 @@
 
     <mat-horizontal-stepper labelPosition="end" [linear]="true" #stepper>
 
-      <mat-step *ngIf="indexesFormGroup" [stepControl]="indexesFormGroup">
-        <ng-template matStepLabel>Indizaciones</ng-template>
-        <h2>
-          Indizaciones
-        </h2>
-        <toco-source-indexes [sourceData]="journalData">
-        </toco-source-indexes>
-
-        <div
-          *ngIf="showFinalStep"
-          fxLayout="row wrap"
-          fxLayoutAlign="space-between center"
-        >
-          <button mat-stroked-button color="accent" matStepperPrevious>
-            Atrás
-          </button>
-          <button mat-stroked-button color="primary" matStepperNext (click)="indexerStepper()">
-            Siguiente
-          </button>
-        </div>
-        <div
-          *ngIf="!showFinalStep"
-          fxLayout="row wrap"
-          fxLayoutAlign="space-between center"
-        >
-          <button mat-stroked-button color="accent" matStepperPrevious>
-            Atrás
-          </button>
-
-          <button mat-stroked-button color="primary" (click)="finishStepper()">
-            Aceptar
-          </button>
-        </div>
-      </mat-step>
       <mat-step *ngIf="informationPanel" [stepControl]="informationFormGroup">
         <ng-template matStepLabel>Datos</ng-template>
         <form [formGroup]="informationFormGroup">
@@ -121,7 +87,40 @@
         </div>
       </mat-step>
 
+      <mat-step *ngIf="indexesFormGroup" [stepControl]="indexesFormGroup">
+        <ng-template matStepLabel>Indizaciones</ng-template>
+        <h2>
+          Indizaciones
+        </h2>
+        <toco-source-indexes [sourceData]="journalData">
+        </toco-source-indexes>
 
+        <div
+          *ngIf="showFinalStep"
+          fxLayout="row wrap"
+          fxLayoutAlign="space-between center"
+        >
+          <button mat-stroked-button color="accent" matStepperPrevious>
+            Atrás
+          </button>
+          <button mat-stroked-button color="primary" matStepperNext (click)="indexerStepper()">
+            Siguiente
+          </button>
+        </div>
+        <div
+          *ngIf="!showFinalStep"
+          fxLayout="row wrap"
+          fxLayoutAlign="space-between center"
+        >
+          <button mat-stroked-button color="accent" matStepperPrevious>
+            Atrás
+          </button>
+
+          <button mat-stroked-button color="primary" (click)="finishStepper()">
+            Aceptar
+          </button>
+        </div>
+      </mat-step>
 
       <mat-step *ngIf="showFinalStep">
         <ng-template matStepLabel>Fin</ng-template>

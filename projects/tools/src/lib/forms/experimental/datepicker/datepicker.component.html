@@ -1,8 +1,8 @@
-<mat-form-field 
-[style.width]="content.width"
+<mat-form-field
 [formGroup]="content.parentFormSection"
+style="width: 100%;"
 >
-<input 
+<input
     matInput
     [value]="content.value"
     (input)="$event.target.value"
@@ -15,7 +15,7 @@
 <mat-datepicker-toggle
     matSuffix [for]="picker"
 ></mat-datepicker-toggle>
-<mat-datepicker 
+<mat-datepicker
     #picker
     startView="multi-year"
 ></mat-datepicker>
