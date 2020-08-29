@@ -387,6 +387,11 @@ export interface FormFieldContent
     extraContent?: any;
 }
 
+export function createValueToUndefined(content: any): any
+{
+    // ...
+}
+
 /**
  * Returns a new object that represents the clone of the specified `FormControl` target. 
  * @param target The `FormControl` object to clone. 
@@ -475,7 +480,7 @@ export function cloneContent(target: Params<any>, value: any, canClone: boolean)
                         if (content.formSection instanceof FormArray)
                         {
                             content.value = value[content.name];
-                            /* This `content.formSectionContent` will not be cloned becuase it belongs to a `FormArray` and it will be cloned when the `FormArray` is analyzed in the `ContainerControl` class. */
+                            /* This `content.formSectionContent` will not be cloned because it belongs to a `FormArray` and it will be cloned when the `FormArray` is analyzed in the `ContainerControl` class. */
                             result[prop].push(cloneContent(content, undefined/* It is not used in this case. */, false));
                             content.value = undefined;
                         }

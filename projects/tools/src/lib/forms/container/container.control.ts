@@ -9,7 +9,7 @@ import { FormArray } from '@angular/forms';
 
 import { cloneValueToUndefined, GetViewContainerDirective } from '@toco/tools/core';
 
-import { FormSection, FormFieldContent, FormFieldControl, cloneContent } from '../form-field.control';
+import { FormSection, FormFieldContent, FormFieldControl, createValueToUndefined, cloneContent } from '../form-field.control';
 
 /**
  * A base interface that represents the content of a `ContainerControl`. 
@@ -55,12 +55,11 @@ export interface ContainerContent extends FormFieldContent
     isDynamic?: boolean;
 
     /**
-     * Returns true if the container control must always show its first child control, 
-     * independently if there is or is not a value to show; otherwise, false. 
+     * In this case, the `required?: boolean` field inherited from `FormFieldContent` is interpreted as: 
+     * Returns true if the container control must have one child control at least; otherwise, false. 
      * This field has sense only when the `content.formSection` field represents a `FormArray`. 
      * By default, its value is `false`. 
      */
-    alwaysShowFirstElement?: boolean;
 }
 
 /**
@@ -167,11 +166,13 @@ export abstract class ContainerControl extends FormFieldControl
         if (this._isFormArray)
         {
             if (this.content.isDynamic == undefined) this.content.isDynamic = true;  /* By default, its value is `true`. */
+            if (this.content.required == undefined) this.content.required = false;   /* By default, its value is `false`. */
         }
         else
         {
-            if (this.content.isDynamic) throw new Error(`For the '${ this.content.name }' control, the 'content.isDynamic' value must be false because the 'content.formSection' value is a 'FormGroup'.`);
+            if (this.content.isDynamic != undefined) throw new Error(`For the '${ this.content.name }' control, the 'content.isDynamic' value must not exist because the 'content.formSection' value is a 'FormGroup'.`);
             if (this.content.required != undefined) throw new Error(`For the '${ this.content.name }' control, the 'content.required' value must not exist because the 'content.formSection' value is a 'FormGroup'.`);
+            if (this.content.value != undefined) throw new Error(`For the '${ this.content.name }' control, the 'content.value' value must not exist because the 'content.formSection' value is a 'FormGroup'.`);
         }
 
         this._viewContainerRef = this._componentHost.viewContainerRef;
@@ -181,12 +182,10 @@ export abstract class ContainerControl extends FormFieldControl
 
         if (this._isFormArray)
         {
-            if ((this.content.value == undefined) || (this.content.value.length == 0))
+            if (this.content.value == undefined)
             {
-                throw new Error(`The '${ this.content.name }' control is constructed dynamically using 'FormArray'. Its 'content.value' array can not be undefined, and must have at least one element.`);
+                throw new Error(`The '${ this.content.name }' control is constructed dynamically using 'FormArray'. Its 'content.value' array can not be undefined.`);
             }
-
-            if (this.content.alwaysShowFirstElement == undefined) this.content.alwaysShowFirstElement = false;
 
             this.initFormSectionContentToFormArray();
         }
@@ -236,17 +235,28 @@ export abstract class ContainerControl extends FormFieldControl
         /* The `FormArray` is empty initially. */
         this.content.formSectionContent = [ ];
 
-        /* Saves the pattern value, that is, `content.value[0]`. 
-        Creates a new value that represents the clone of the specified `content.value[0]` value, and 
-        sets all its properties/values of built-in type to `undefined`. */
-        this._formArrayPatternValue = cloneValueToUndefined(this.content.value[0]);
+        /* Saves the pattern value. */
+        if (this.content.value.length == 0)  /* The container control is empty initially, that is, the `content.value` value is `[]`. */
+        {
+            /* Creates the pattern value following the `_formArrayPatternContent` structure, and 
+            sets all its properties/values of built-in type to `undefined`. */
+            this._formArrayPatternValue = createValueToUndefined(this._formArrayPatternContent);
 
-        /* Sets the logic of the `content.alwaysShowFirstElement` field. */
-        //TODO: ...
-        // if ((this.content.alwaysShowFirstElement) 
-        //     && ()
-        // )
-        // {}
+            /* If the `content.required` field is true, then the container control must have one child control at least. */
+            if (this.content.required)
+            {
+                /* It can push the `_formArrayPatternValue` and does not push its clone because 
+                both values have the same properties and there is not problem. */
+                this.content.value[0] = this._formArrayPatternValue;
+            }
+        }
+        else
+        {
+            /* Saves the pattern value, that is, `content.value[0]`. 
+            Creates a new value that represents the clone of the specified `content.value[0]` value, and 
+            sets all its properties/values of built-in type to `undefined`. */
+            this._formArrayPatternValue = cloneValueToUndefined(this.content.value[0]);
+        }
 
         /* The `FormArray` will contain one element for each element in the `content.value`. */
         for(let val of this.content.value)

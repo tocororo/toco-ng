@@ -88,6 +88,65 @@ const relationshipsExample_ThreeLevelsFormArray: any[] = [
 	}
 ];
 
+const relationshipsExample_TwoLevelsFormArray_EmptyInitially_1: any[] = [
+	{
+		'identifiers': [
+		],
+		'type': 'parent'
+	},
+	{
+		'identifiers': [
+			{
+				'idtype': 'grid',
+				'value': 'An id grid'
+			},
+			{
+				'idtype': 'wkdata',
+				'value': 'An id wkdata'
+			}
+		],
+		'type': 'child',
+		'label': 'ulh'
+	}
+];
+
+const relationshipsExample_TwoLevelsFormArray_EmptyInitially_2: any[] = [
+	{
+		'identifiers': [
+		],
+		'type': 'parent'
+	},
+	{
+		'identifiers': [
+		],
+		'type': 'child',
+		'label': 'ulh'
+	}
+];
+
+const relationshipsExample_TwoLevelsFormArray_EmptyInitially_3: any[] = [
+	/* Empty completely. */
+];
+
+const relationshipsExample_TwoLevelsFormArray_Consecutive: any[] = [
+	[
+		{
+			'idtype': 'isni',
+			'value': 'An id isni'
+		}
+	],
+	[
+		{
+			'idtype': 'grid',
+			'value': 'An id grid'
+		},
+		{
+			'idtype': 'wkdata',
+			'value': 'An id wkdata'
+		}
+	]
+];
+
 @Component({
 	selector: 'test-container-control',
 	templateUrl: './test-container-control.component.html',
@@ -117,9 +176,20 @@ export class TestContainerControlComponent implements OnInit
 
 	public ngOnInit(): void
 	{
-		this._Test_00();
+		/*********************************************************************************/
 
+		this._Test_00();
 //		this._Test_01();
+
+		/*********************************************************************************/
+
+//		this._Test_02();
+//		this._Test_03();
+//		this._Test_04();
+
+		/*********************************************************************************/
+
+//		this._Test_05();
 	}
 
 	private _Test_00(): void
@@ -138,6 +208,42 @@ export class TestContainerControlComponent implements OnInit
 
 		/* Creates the panel's content. */
 		this.panelContent = this._initPanelContent_Test_ThreeLevelsFormArray();
+	}
+
+	private _Test_02(): void
+	{
+		this.relationships = relationshipsExample_TwoLevelsFormArray_EmptyInitially_1;
+		console.log("Data got for editing (two levels of 'FormArray' and the container control is empty initially, 1st case): ", this.relationships);
+
+		/* Creates the panel's content. */
+		this.panelContent = this._initPanelContent_Test_TwoLevelsFormArray();
+	}
+
+	private _Test_03(): void
+	{
+		this.relationships = relationshipsExample_TwoLevelsFormArray_EmptyInitially_2;
+		console.log("Data got for editing (two levels of 'FormArray' and the container control is empty initially, 2nd case): ", this.relationships);
+
+		/* Creates the panel's content. */
+		this.panelContent = this._initPanelContent_Test_TwoLevelsFormArray();
+	}
+
+	private _Test_04(): void
+	{
+		this.relationships = relationshipsExample_TwoLevelsFormArray_EmptyInitially_3;
+		console.log("Data got for editing (two levels of 'FormArray' and the container control is empty initially, 3rd case): ", this.relationships);
+
+		/* Creates the panel's content. */
+		this.panelContent = this._initPanelContent_Test_TwoLevelsFormArray();
+	}
+
+	private _Test_05(): void
+	{
+		this.relationships = relationshipsExample_TwoLevelsFormArray_Consecutive;
+		console.log("Data got for editing (two levels of 'FormArray' that are consecutive): ", this.relationships);
+
+		/* Creates the panel's content. */
+		this.panelContent = this._initPanelContent_Test_TwoLevelsFormArray_Consecutive();
 	}
 
     /**
@@ -455,6 +561,102 @@ export class TestContainerControlComponent implements OnInit
 			'click': (sender: ActionControl): void => {
 				sender.parentContainerControl.parentContainerControl.removeFromFormArray(+(sender.parentContainerControl.content.name));
 			}
+		};
+	}
+
+    /**
+     * Returns the panel's content for testing two levels of `FormArray` that are consecutive. 
+     */
+	private _initPanelContent_Test_TwoLevelsFormArray_Consecutive(): PanelContent
+    {
+		return {
+			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
+			'formSection': this.panelFormSection,
+			'name': 'panel',
+			'label': 'Edita la organización seleccionada',
+			'type': FormFieldType.container_panel,
+			'componentType': ContainerPanelComponent,
+			'title': 'Edita la organización seleccionada',
+			'description': '',
+			'iconName': undefined /*''*/,
+			'formSectionContent': [
+				this._initRelationshipsSimpleContent_Consecutive(
+					/* This `identifiers` value is `undefined` because it is inside a `FormArray`. */
+					// this._initIdentifiersContent('Related Organization Identifiers', undefined, true)
+					undefined
+				)
+			]
+		};
+	}
+
+    /**
+     * Returns the relationships' content that are consecutive. 
+     */
+    private _initRelationshipsSimpleContent_Consecutive(identifiersContent: ContainerContent): ContainerContent
+    {
+		return {
+			'formSection': new FormArray([ ], [ ]),
+			'name': 'relationships',
+			'label': 'Any relationships the institute has to others',
+			'type': FormFieldType.container_simple,
+			'componentType': ContainerSimpleComponent,
+			'value': this.relationships,
+			'required': false,  /* The `relationships` can be empty by definition. */
+			'width': '100%',
+//            'appearance': TextInputAppearance.outline,
+			'ariaLabel': 'Any relationships the institute has to others',
+			'formSectionContent': [
+				{
+					'formSection': new FormArray([ ], [ ]),
+					'name': '0',
+					'label': 'Relationship',
+					'type': FormFieldType.container_simple,
+					'componentType': ContainerSimpleComponent,
+					'width': '100%',
+		//            'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'Relationship',
+					'formSectionContent': [
+						{
+							'formSection': new FormGroup({ }, [ ]),
+							'name': '0',
+							'label': 'Organization Identifier',
+							'type': FormFieldType.container_simple,
+							'componentType': ContainerSimpleComponent,
+							'width': '100%',
+				//            'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'Organization Identifier',
+							'formSectionContent': [
+								{
+									'name': 'idtype',
+									'label': 'Identifier type',
+									'type': FormFieldType.text,
+									'componentType': InputTextComponent,
+									'required': true,
+									'width': '50%',
+									'appearance': TextInputAppearance.outline,
+									'ariaLabel': 'Identifier type',
+								},
+								{
+									'name': 'value',
+									'label': 'Identifier value',
+									'type': FormFieldType.text,
+									'componentType': InputTextComponent,
+									'required': true,
+									'width': '50%',
+									'appearance': TextInputAppearance.outline,
+									'ariaLabel': 'Identifier value',
+									'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
+								},
+
+								this._initRemoveButtonContent('Remove identifier')
+							]
+						}
+					]
+				},
+
+				//TODO: Pensar en cómo especifico el botón Remove porque el `formSectionContent` de un `FormArray` posee un único elemento. 
+//				this._initRemoveButtonContent('Remove relationship')
+			]
 		};
 	}
 
