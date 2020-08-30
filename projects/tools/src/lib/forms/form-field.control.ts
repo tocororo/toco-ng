@@ -7,8 +7,7 @@
 import { Input, Type } from '@angular/core';
 import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
 
-import { Params, emptyString, isDescendant } from '@toco/tools/core';
-import { IconService } from '@toco/tools/core';
+import { Params, emptyString, isDescendant, IconService } from '@toco/tools/core';
 
 import { ContainerControl } from './container/container.control';
 
@@ -368,15 +367,17 @@ export interface FormFieldContent
 
     /**
      * Returns the control's type that is used to create the control. 
-     * This field is obligatory, and each control sets its own type. 
+     * Implementation notes: 
+     *  - It must be specified; otherwise, an exception is thrown. 
      */
     type?: FormFieldType;
     componentType?: Type<any>;
 
 	/**
 	 * Returns the control's name that is used to save the control's value as a name/value pair. 
-     * It can be used with a JSON string. 
-	 * By default, its value is `'name'`. Each control sets its own name. 
+     * Implementation notes: 
+     *  - It can be used with a JSON string. 
+     *  - It must be specified; otherwise, an exception is thrown. 
 	 */
     name?: string;
 
@@ -387,9 +388,42 @@ export interface FormFieldContent
     extraContent?: any;
 }
 
-export function createValueToUndefined(content: any): any
+/**
+ * Returns a new value that is created following the specified content target structure. 
+ * It also sets all its properties/values of built-in type to `undefined`. 
+ * It creates the value smartly depending on the type of content. 
+ * It creates in deep until the next `FormArray`, then the next `FormArray` creates in deep until the next `FormArray`, and so on. 
+ * @param target The content object to take its structure for creating the value. 
+ */
+export function createValueToUndefined(target: Params<any>): any
 {
-    // ...
+    if (target.formSection)
+    {
+        return _createValueToUndefined(target);
+    }
+
+    throw new Error(`There is an error because the execution can not go here in the 'createValueToUndefined' method!`);
+}
+
+function _createValueToUndefined(target: Params<any>): any
+{
+    if (target.formSection instanceof FormArray)
+    {
+        return [ ];
+    }
+    else
+    {
+        let result: any = { };
+
+        for(let content of target.formSectionContent)
+        {
+            if (content.formSection) result[content.name] = _createValueToUndefined(content);
+            else if (isDescendant(content.componentType.__proto__, InputControl.name)) result[content.name] = undefined;
+            /* The rest of `content`s do not contain a `value` field of interest. */
+        }
+
+        return result;
+    }
 }
 
 /**
@@ -560,11 +594,16 @@ export abstract class FormFieldControl
             throw new Error(`For the '${ FormFieldControl.name }' control, the 'content' value can not be undefined.`);
         }
 
+        if (this.content.name == undefined)
+        {
+            throw new Error(`For the '${ FormFieldControl.name }' control, the 'content.name' value can not be undefined.`);
+        }
+
         if (label == undefined)
         {
             if (this.content.label == undefined)
             {
-                throw new Error(`For the '${ FormFieldControl.name }' control, the 'content.label' value can not be undefined.`);
+                throw new Error(`For the '${ this.content.name }' control, the 'content.label' value can not be undefined.`);
             }
 
             label = this.content.label;
@@ -572,7 +611,7 @@ export abstract class FormFieldControl
 
         if (this.content.componentType == undefined)
         {
-            throw new Error(`For the '${ FormFieldControl.name }' control, the 'content.componentType' value can not be undefined.`);
+            throw new Error(`For the '${ this.content.name }' control, the 'content.componentType' value can not be undefined.`);
         }
 
         /************************** `mat-form-field` properties. **************************/
@@ -592,7 +631,6 @@ export abstract class FormFieldControl
         }
 
         /******************************* Other properties. ********************************/
-        if (this.content.name == undefined) this.content.name = label.toLowerCase().replace(/ /g, '_');  /* Sets the `name` in lowercase and replaces the spaces by underscores. */
     }
 
 	/**

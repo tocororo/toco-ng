@@ -10,7 +10,7 @@ import { HitList, Organization } from '@toco/tools/entities';
 import { OrganizationService, ENDPOINT_APIS } from '@toco/tools/backend';
 import { TableContent, TableComponent, CellContentWrap, InputContent, TextAlign, 
     TextInputAppearance, IconValue, IconSource, HintPosition, HintValue, ContentPosition, 
-    ContainerContent, FormFieldType, ContainerSimpleComponent, InputTextComponent } from '@toco/tools/forms';
+    ContainerContent, ContainerSimpleComponent, InputTextComponent } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-list',
@@ -64,7 +64,6 @@ export class OrgListComponent implements OnInit
             'width': '65%',
 
             'label': 'Write a text to search',
-            'type': FormFieldType.text,
             'componentType': InputTextComponent,
     
             'textAlign': TextAlign.left,

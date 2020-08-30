@@ -7,7 +7,7 @@
 import { Input, ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { FormArray } from '@angular/forms';
 
-import { cloneValueToUndefined, GetViewContainerDirective } from '@toco/tools/core';
+import { GetViewContainerDirective } from '@toco/tools/core';
 
 import { FormSection, FormFieldContent, FormFieldControl, createValueToUndefined, cloneContent } from '../form-field.control';
 
@@ -120,7 +120,7 @@ export abstract class ContainerControl extends FormFieldControl
 
     /**
      * If the `content.formSection` represents a `FormArray`, then this field returns 
-     * a pattern value that is a clone of the `content.value[0]` value, and sets all 
+     * a pattern value that is a copy of one value that can contain the `content.value` array, and sets all 
      * its properties/values of built-in type to `undefined`; otherwise, returns `undefined`. 
      * It is used for adding a new element in the `content.formSectionContent`, that is, 
      * for adding a new control in the `FormArray`. 
@@ -235,27 +235,18 @@ export abstract class ContainerControl extends FormFieldControl
         /* The `FormArray` is empty initially. */
         this.content.formSectionContent = [ ];
 
-        /* Saves the pattern value. */
-        if (this.content.value.length == 0)  /* The container control is empty initially, that is, the `content.value` value is `[]`. */
-        {
-            /* Creates the pattern value following the `_formArrayPatternContent` structure, and 
-            sets all its properties/values of built-in type to `undefined`. */
-            this._formArrayPatternValue = createValueToUndefined(this._formArrayPatternContent);
+        /* Saves the pattern value, that is, creates the pattern value following the `_formArrayPatternContent` structure. 
+        The result value represents a copy of one value that can contain the `content.value` array, and 
+        sets all its properties/values of built-in type to `undefined`. 
+        It does not clone a value from the `content.value` array because the array can be empty. */
+        this._formArrayPatternValue = createValueToUndefined(this._formArrayPatternContent);
 
-            /* If the `content.required` field is true, then the container control must have one child control at least. */
-            if (this.content.required)
-            {
-                /* It can push the `_formArrayPatternValue` and does not push its clone because 
-                both values have the same properties and there is not problem. */
-                this.content.value[0] = this._formArrayPatternValue;
-            }
-        }
-        else
+        /* If the `content.required` field is true, then the container control must have one child control at least. */
+        if ((this.content.required) && (this.content.value.length == 0))
         {
-            /* Saves the pattern value, that is, `content.value[0]`. 
-            Creates a new value that represents the clone of the specified `content.value[0]` value, and 
-            sets all its properties/values of built-in type to `undefined`. */
-            this._formArrayPatternValue = cloneValueToUndefined(this.content.value[0]);
+            /* It can push the `_formArrayPatternValue` and does not push its clone because 
+            both values have the same properties and there is not problem. */
+            this.content.value[0] = this._formArrayPatternValue;
         }
 
         /* The `FormArray` will contain one element for each element in the `content.value`. */

@@ -29,6 +29,8 @@ export const emptyString: string = '';
  * otherwise, false. 
  * @param possDescendant Possible descendant. 
  * @param ancestorName Ancestor name. 
+ * Example in usage: 
+ *  if (isDescendant(target.componentType.__proto__, InputControl.name)) { ... }
  */
 export function isDescendant(possDescendant: any, ancestorName: string): boolean
 {
@@ -48,7 +50,6 @@ export function isDescendant(possDescendant: any, ancestorName: string): boolean
  *  - If `target` is `undefined`, then returns `undefined`. 
  *  - If `target` is an object, then returns an object with all its properties of built-in type to `undefined`. 
  *  - If `target` is an array, then returns an array with all its values of built-in type to `undefined`. 
- * if this value is an array or object sets all its properties to `undefined`. 
  * @param target The target value to clone. 
  */
 export function cloneValueToUndefined(target: any): any

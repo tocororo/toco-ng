@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
 
-import { FormFieldType, FormSection, HintValue, HintPosition, IconValue, IconSource, ContentPosition } from '../../../form-field.control';
+import { FormSection, HintValue, HintPosition, IconValue, IconSource, ContentPosition } from '../../../form-field.control';
 import { TextInputAppearance } from '../../../input/input.control';
 import { ContainerContent } from '../../../container/container.control';
 import { ActionControl, ActionContent } from '../../../action/action.control';
@@ -256,7 +256,6 @@ export class TestContainerControlComponent implements OnInit
 			'formSection': this.panelFormSection,
 			'name': 'panel',
 			'label': 'Edita la organización seleccionada',
-			'type': FormFieldType.container_panel,
 			'componentType': ContainerPanelComponent,
 			'title': 'Edita la organización seleccionada',
 			'description': '',
@@ -280,7 +279,6 @@ export class TestContainerControlComponent implements OnInit
 			'formSection': this.panelFormSection,
 			'name': 'panel',
 			'label': 'Edita la organización seleccionada',
-			'type': FormFieldType.container_panel,
 			'componentType': ContainerPanelComponent,
 			'title': 'Edita la organización seleccionada',
 			'description': '',
@@ -303,7 +301,6 @@ export class TestContainerControlComponent implements OnInit
 			'formSection': new FormArray([ ], [ ]),
 			'name': 'relationships',
 			'label': 'Any relationships the institute has to others',
-			'type': FormFieldType.container_simple,
 			'componentType': ContainerSimpleComponent,
 			'value': this.relationships,
 			'required': false,  /* The `relationships` can be empty by definition. */
@@ -315,7 +312,6 @@ export class TestContainerControlComponent implements OnInit
 					'formSection': new FormGroup({ }, [ ]),
 					'name': '0',
 					'label': 'Relationship',
-					'type': FormFieldType.container_simple,
 					'componentType': ContainerSimpleComponent,
 					'width': '100%',
 		//            'appearance': TextInputAppearance.outline,
@@ -328,7 +324,6 @@ export class TestContainerControlComponent implements OnInit
 						{
 							'name': 'type',
 							'label': 'Relationship type',
-							'type': FormFieldType.select,
 							'componentType': InputSelectComponent,
 							'required': true,
 							'width': '45%',
@@ -353,7 +348,6 @@ export class TestContainerControlComponent implements OnInit
 						{
 							'name': 'label',
 							'label': 'Name of the related institute',
-							'type': FormFieldType.text,
 							'componentType': InputTextComponent,
 							'required': true,
 							'width': '45%',
@@ -377,7 +371,6 @@ export class TestContainerControlComponent implements OnInit
 			'formSection': new FormArray([ ], [ ]),
 			'name': 'identifiers',
 			'label': description,
-			'type': FormFieldType.container_simple,
 			'componentType': ContainerSimpleComponent,
 			'value': value,
 			'width': '100%',
@@ -390,7 +383,6 @@ export class TestContainerControlComponent implements OnInit
 					'formSection': new FormGroup({ }, [ ]),
 					'name': '0',
 					'label': 'Organization Identifier',
-					'type': FormFieldType.container_simple,
 					'componentType': ContainerSimpleComponent,
 					'width': '100%',
 		//            'appearance': TextInputAppearance.outline,
@@ -399,7 +391,6 @@ export class TestContainerControlComponent implements OnInit
 						{
 							'name': 'idtype',
 							'label': 'Identifier type',
-							'type': FormFieldType.text,
 							'componentType': InputTextComponent,
 							'required': true,
 							'width': '50%',
@@ -409,7 +400,6 @@ export class TestContainerControlComponent implements OnInit
 						{
 							'name': 'value',
 							'label': 'Identifier value',
-							'type': FormFieldType.text,
 							'componentType': InputTextComponent,
 							'required': true,
 							'width': '50%',
@@ -439,7 +429,6 @@ export class TestContainerControlComponent implements OnInit
 			'formSection': new FormArray([ ], [ ]),
 			'name': 'firstIdentifiers',
 			'label': 'First Identifiers',
-			'type': FormFieldType.container_simple,
 			'componentType': ContainerSimpleComponent,
 			'value': undefined,  /* It is `undefined` because it does not belong to a topmost `FormArray`. */
 			'width': '100%',
@@ -451,7 +440,6 @@ export class TestContainerControlComponent implements OnInit
 					'formSection': new FormGroup({ }, [ ]),
 					'name': '0',
 					'label': 'Organization First Identifier',
-					'type': FormFieldType.container_simple,
 					'componentType': ContainerSimpleComponent,
 					'width': '100%',
 		//            'appearance': TextInputAppearance.outline,
@@ -463,7 +451,6 @@ export class TestContainerControlComponent implements OnInit
 						{
 							'name': 'st_idtype',
 							'label': 'First Identifier type',
-							'type': FormFieldType.text,
 							'componentType': InputTextComponent,
 							'required': true,
 							'width': '50%',
@@ -473,7 +460,6 @@ export class TestContainerControlComponent implements OnInit
 						{
 							'name': 'st_value',
 							'label': 'First Identifier value',
-							'type': FormFieldType.text,
 							'componentType': InputTextComponent,
 							'required': true,
 							'width': '50%',
@@ -497,7 +483,6 @@ export class TestContainerControlComponent implements OnInit
 			'formSection': new FormArray([ ], [ ]),
 			'name': 'secondIdentifiers',
 			'label': 'Second Identifiers',
-			'type': FormFieldType.container_simple,
 			'componentType': ContainerSimpleComponent,
 			'value': undefined,  /* It is `undefined` because it does not belong to a topmost `FormArray`. */
 			'width': '100%',
@@ -509,7 +494,6 @@ export class TestContainerControlComponent implements OnInit
 					'formSection': new FormGroup({ }, [ ]),
 					'name': '0',
 					'label': 'Organization Second Identifier',
-					'type': FormFieldType.container_simple,
 					'componentType': ContainerSimpleComponent,
 					'width': '100%',
 		//            'appearance': TextInputAppearance.outline,
@@ -518,7 +502,6 @@ export class TestContainerControlComponent implements OnInit
 						{
 							'name': 'nd_idtype',
 							'label': 'Second Identifier type',
-							'type': FormFieldType.text,
 							'componentType': InputTextComponent,
 							'required': true,
 							'width': '50%',
@@ -528,7 +511,6 @@ export class TestContainerControlComponent implements OnInit
 						{
 							'name': 'nd_value',
 							'label': 'Second Identifier value',
-							'type': FormFieldType.text,
 							'componentType': InputTextComponent,
 							'required': true,
 							'width': '50%',
@@ -550,8 +532,8 @@ export class TestContainerControlComponent implements OnInit
 	private _initRemoveButtonContent(tooltip: string): ActionContent
 	{
 		return {
+			'name': 'remove',
 			'label': 'Remove',
-			'type': FormFieldType.action_button,
 			'componentType': ActionButtonComponent,
 			'width': '30%',
 			// 'appearance': TextInputAppearance.outline,
@@ -574,7 +556,6 @@ export class TestContainerControlComponent implements OnInit
 			'formSection': this.panelFormSection,
 			'name': 'panel',
 			'label': 'Edita la organización seleccionada',
-			'type': FormFieldType.container_panel,
 			'componentType': ContainerPanelComponent,
 			'title': 'Edita la organización seleccionada',
 			'description': '',
@@ -598,7 +579,6 @@ export class TestContainerControlComponent implements OnInit
 			'formSection': new FormArray([ ], [ ]),
 			'name': 'relationships',
 			'label': 'Any relationships the institute has to others',
-			'type': FormFieldType.container_simple,
 			'componentType': ContainerSimpleComponent,
 			'value': this.relationships,
 			'required': false,  /* The `relationships` can be empty by definition. */
@@ -610,7 +590,6 @@ export class TestContainerControlComponent implements OnInit
 					'formSection': new FormArray([ ], [ ]),
 					'name': '0',
 					'label': 'Relationship',
-					'type': FormFieldType.container_simple,
 					'componentType': ContainerSimpleComponent,
 					'width': '100%',
 		//            'appearance': TextInputAppearance.outline,
@@ -620,7 +599,6 @@ export class TestContainerControlComponent implements OnInit
 							'formSection': new FormGroup({ }, [ ]),
 							'name': '0',
 							'label': 'Organization Identifier',
-							'type': FormFieldType.container_simple,
 							'componentType': ContainerSimpleComponent,
 							'width': '100%',
 				//            'appearance': TextInputAppearance.outline,
@@ -629,7 +607,6 @@ export class TestContainerControlComponent implements OnInit
 								{
 									'name': 'idtype',
 									'label': 'Identifier type',
-									'type': FormFieldType.text,
 									'componentType': InputTextComponent,
 									'required': true,
 									'width': '50%',
@@ -639,7 +616,6 @@ export class TestContainerControlComponent implements OnInit
 								{
 									'name': 'value',
 									'label': 'Identifier value',
-									'type': FormFieldType.text,
 									'componentType': InputTextComponent,
 									'required': true,
 									'width': '50%',

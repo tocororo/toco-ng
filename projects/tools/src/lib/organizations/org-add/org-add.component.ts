@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
 import { Organization } from '@toco/tools/entities';
-import { OperationAction, FormSection, PanelContent, FormFieldType, ContainerPanelComponent } from '@toco/tools/forms';
+import { OperationAction, FormSection, PanelContent, ContainerPanelComponent } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-add',
@@ -55,7 +55,6 @@ export class OrgAddComponent implements OnInit
 			'formSection': this.panelFormSection,
 			'name': 'panel',
 			'label': 'Adiciona una nueva organización',
-			'type': FormFieldType.container_panel,
 			'componentType': ContainerPanelComponent,
 			'title': 'Adiciona una nueva organización',
 			'description': '',
