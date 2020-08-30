@@ -30,7 +30,7 @@ export const emptyString: string = '';
  * @param possDescendant Possible descendant. 
  * @param ancestorName Ancestor name. 
  * Example in usage: 
- *  if (isDescendant(target.componentType.__proto__, InputControl.name)) { ... }
+ *  if (isDescendant(target.controlType.__proto__, InputControl.name)) { ... }
  */
 export function isDescendant(possDescendant: any, ancestorName: string): boolean
 {

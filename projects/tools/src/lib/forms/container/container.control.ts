@@ -314,7 +314,7 @@ export abstract class ContainerControl extends FormFieldControl
     protected createChildComponent(componentContent: any): void
     {
         this._cr = this._viewContainerRef.createComponent(
-            this._componentFactoryResolver.resolveComponentFactory(componentContent.componentType)
+            this._componentFactoryResolver.resolveComponentFactory(componentContent.controlType)
         );
         (this._cr.instance as FormFieldControl).content = componentContent;
     }

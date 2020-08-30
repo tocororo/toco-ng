@@ -64,7 +64,7 @@ export class OrgListComponent implements OnInit
             'width': '65%',
 
             'label': 'Write a text to search',
-            'componentType': InputTextComponent,
+            'controlType': InputTextComponent,
     
             'textAlign': TextAlign.left,
             'ariaLabel': 'Search',

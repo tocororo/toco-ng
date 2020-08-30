@@ -371,7 +371,7 @@ export interface FormFieldContent
      *  - It must be specified; otherwise, an exception is thrown. 
      */
     type?: FormFieldType;
-    componentType?: Type<any>;
+    controlType?: Type<any>;
 
 	/**
 	 * Returns the control's name that is used to save the control's value as a name/value pair. 
@@ -418,7 +418,7 @@ function _createValueToUndefined(target: Params<any>): any
         for(let content of target.formSectionContent)
         {
             if (content.formSection) result[content.name] = _createValueToUndefined(content);
-            else if (isDescendant(content.componentType.__proto__, InputControl.name)) result[content.name] = undefined;
+            else if (isDescendant(content.controlType.__proto__, InputControl.name)) result[content.name] = undefined;
             /* The rest of `content`s do not contain a `value` field of interest. */
         }
 
@@ -541,7 +541,7 @@ export function cloneContent(target: Params<any>, value: any, canClone: boolean)
     }
 
     /* If this content (`result`) represents a `FormControl`, then the `value` field is initialized. */
-    if (isDescendant(target.componentType.__proto__, InputControl.name)) result['value'] = value;
+    if (isDescendant(target.controlType.__proto__, InputControl.name)) result['value'] = value;
 
     return result;
 }
@@ -609,9 +609,9 @@ export abstract class FormFieldControl
             label = this.content.label;
         }
 
-        if (this.content.componentType == undefined)
+        if (this.content.controlType == undefined)
         {
-            throw new Error(`For the '${ this.content.name }' control, the 'content.componentType' value can not be undefined.`);
+            throw new Error(`For the '${ this.content.name }' control, the 'content.controlType' value can not be undefined.`);
         }
 
         /************************** `mat-form-field` properties. **************************/
