@@ -7,7 +7,7 @@
 import { Input, Type } from '@angular/core';
 import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
 
-import { Params, emptyString, isDescendant, IconService } from '@toco/tools/core';
+import { Params, IconService } from '@toco/tools/core';
 
 import { ContainerControl } from './container/container.control';
 
@@ -196,7 +196,7 @@ export class HintValue
      */
     public constructor(
         p: HintPosition = HintPosition.none,
-        l: string = emptyString)
+        l: string = '')
 	{
         this.position = p;
         this.label = l;
@@ -210,7 +210,7 @@ export class HintValue
     public setDefaultValueIfUndefined(): void
     {
         if (this.position == undefined) this.position = HintPosition.none;
-        if (this.label == undefined) this.label = emptyString;
+        if (this.label == undefined) this.label = '';
     }
 
     /**
@@ -220,7 +220,7 @@ export class HintValue
     public setDefaultValueIfUndefined_setPosition(hintPosition: HintPosition): void
     {
         this.position = hintPosition;
-        if (this.label == undefined) this.label = emptyString;
+        if (this.label == undefined) this.label = '';
     }
 }
 
@@ -418,7 +418,7 @@ function _createValueToUndefined(target: Params<any>): any
         for(let content of target.formSectionContent)
         {
             if (content.formSection) result[content.name] = _createValueToUndefined(content);
-            else if (isDescendant(content.controlType.__proto__, InputControl.name)) result[content.name] = undefined;
+            else if (content.formControl) result[content.name] = undefined;
             /* The rest of `content`s do not contain a `value` field of interest. */
         }
 
@@ -541,7 +541,7 @@ export function cloneContent(target: Params<any>, value: any, canClone: boolean)
     }
 
     /* If this content (`result`) represents a `FormControl`, then the `value` field is initialized. */
-    if (isDescendant(target.controlType.__proto__, InputControl.name)) result['value'] = value;
+    if (target.formControl) result['value'] = value;
 
     return result;
 }

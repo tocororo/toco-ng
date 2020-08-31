@@ -1,8 +1,5 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-
-import { emptyString } from '@toco/tools/core';
 
 import { InputControl } from '../input.control';
 
@@ -27,9 +24,6 @@ export class InputTextComponent extends InputControl implements OnInit
 
     public ngOnInit(): void
     {
-        /* Sets this `content.formControl` by default. */
-        if (this.content.formControl == undefined) this.content.formControl = new FormControl(emptyString);
-
         /* Sets the default values. */
         this.init(undefined, false, true);
     }

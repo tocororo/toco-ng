@@ -86,6 +86,7 @@ export class OrgEditComponent implements OnInit
 			'iconName': undefined /*''*/,
 			'formSectionContent': [
 				{
+					'formControl': InputTextComponent.getFormControlByDefault(),
 					'name': 'name',
 					'label': 'Name typically used to refer to the institute',
 					'controlType': InputTextComponent,
@@ -96,6 +97,7 @@ export class OrgEditComponent implements OnInit
 					'ariaLabel': 'Name typically used to refer to the institute'
 				},
 				{
+					'formControl': InputSelectComponent.getFormControlByDefault(),
 					'name': 'status',
 					'label': 'Institute status',
 					'controlType': InputSelectComponent,
@@ -124,6 +126,7 @@ export class OrgEditComponent implements OnInit
 				this._initIdentifiersContent('Organization Identifiers, different from GRID mapping', this.org.identifiers, false),
 
 				{
+					'formControl': InputSelectComponent.getFormControlByDefault(),
 					'name': 'aliases',
 					'label': 'The list of other names the institute is known as',
 					'controlType': InputSelectComponent,
@@ -136,6 +139,7 @@ export class OrgEditComponent implements OnInit
 					'multiple': true
 				},
 				{
+					'formControl': InputSelectComponent.getFormControlByDefault(),
 					'name': 'acronyms',
 					'label': 'The of short acronyms the institute is known as (e.g. MRC for the Medical Research Council)',
 					'controlType': InputSelectComponent,
@@ -148,6 +152,7 @@ export class OrgEditComponent implements OnInit
 					'multiple': true
 				},
 				{
+					'formControl': InputSelectComponent.getFormControlByDefault(),
 					'name': 'types',
 					'label': 'The list of types describing the institute',
 					'controlType': InputSelectComponent,
@@ -193,6 +198,7 @@ export class OrgEditComponent implements OnInit
 					'multiple': true
 				},
 				{
+					'formControl': InputUrlComponent.getFormControlByDefault(),
 					'name': 'wikipedia_url',
 					'label': 'URL of the wikipedia page for the institute',
 					'controlType': InputUrlComponent,
@@ -203,6 +209,7 @@ export class OrgEditComponent implements OnInit
 					'ariaLabel': 'URL of the wikipedia page for the institute'
 				},
 				{
+					'formControl': InputEmailComponent.getFormControlByDefault(),
 					'name': 'email_address',
 					'label': 'Contact email address for the institute',
 					'controlType': InputEmailComponent,
@@ -213,6 +220,7 @@ export class OrgEditComponent implements OnInit
 					'ariaLabel': 'Contact email address for the institute'
 				},
 				{
+					'formControl': InputSelectComponent.getFormControlByDefault(),
 					'name': 'ip_addresses',
 					'label': 'The list of IP addresses known to belong to the institute',
 					'controlType': InputSelectComponent,
@@ -225,6 +233,7 @@ export class OrgEditComponent implements OnInit
 					'multiple': true
 				},
 				{
+					'formControl': InputTextComponent.getFormControlByDefault(),
 					'name': 'established',
 					'label': 'Year the institute opened, CE',
 					'controlType': InputTextComponent,
@@ -235,6 +244,7 @@ export class OrgEditComponent implements OnInit
 					'ariaLabel': 'Year the institute opened, CE'
 				},
 				{
+					'formControl': InputSelectComponent.getFormControlByDefault(),
 					'name': 'links',
 					'label': 'The list of URLs linking to things like the homepage for the institute',
 					'controlType': InputSelectComponent,
@@ -262,7 +272,7 @@ export class OrgEditComponent implements OnInit
     private _initIdentifiersContent(description: string, value: Identifier[], isDynamic: boolean): ContainerContent
     {
         let result: ContainerContent = {
-			'formSection': new FormArray([ ], [ ]),
+			'formSection': ContainerSimpleComponent.getFormArrayByDefault(),
 			'name': 'identifiers',
 			'label': description,
 			'controlType': ContainerSimpleComponent,
@@ -274,7 +284,7 @@ export class OrgEditComponent implements OnInit
 			'isDynamic': isDynamic,
             'formSectionContent': [
 				{
-					'formSection': new FormGroup({ }, [ ]),
+					'formSection': ContainerSimpleComponent.getFormGroupByDefault(),
 					'name': '0',
 					'label': 'Organization Identifier',
 					'controlType': ContainerSimpleComponent,
@@ -283,6 +293,7 @@ export class OrgEditComponent implements OnInit
 					'ariaLabel': 'Organization Identifier',
 					'formSectionContent': [
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'idtype',
 							'label': 'Identifier type',
 							'controlType': InputTextComponent,
@@ -292,6 +303,7 @@ export class OrgEditComponent implements OnInit
 							'ariaLabel': 'Identifier type',
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'value',
 							'label': 'Identifier value',
 							'controlType': InputTextComponent,
@@ -320,7 +332,7 @@ export class OrgEditComponent implements OnInit
     private _initLabelsSimpleContent(): ContainerContent
     {
 		return {
-			'formSection': new FormArray([ ], [ ]),
+			'formSection': ContainerSimpleComponent.getFormArrayByDefault(),
 			'name': 'labels',
 			'label': 'Name of the institute in different languages',
 			'controlType': ContainerSimpleComponent,
@@ -330,7 +342,7 @@ export class OrgEditComponent implements OnInit
 			'ariaLabel': 'Name of the institute in different languages',
 			'formSectionContent': [
 				{
-					'formSection': new FormGroup({ }, [ ]),
+					'formSection': ContainerSimpleComponent.getFormGroupByDefault(),
 					'name': '0',
 					'label': 'Label diff lang',
 					'controlType': ContainerSimpleComponent,
@@ -339,6 +351,7 @@ export class OrgEditComponent implements OnInit
 					'ariaLabel': 'Label diff lang',
 					'formSectionContent': [
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'label',
 							'label': 'Institute name in a language variant',
 							'controlType': InputTextComponent,
@@ -349,6 +362,7 @@ export class OrgEditComponent implements OnInit
 							'ariaLabel': 'Institute name in a language variant'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'iso639',
 							'label': 'ISO-639-1 language code',
 							'controlType': InputTextComponent,
@@ -373,7 +387,7 @@ export class OrgEditComponent implements OnInit
     private _initRelationshipsSimpleContent(): ContainerContent
     {
 		return {
-			'formSection': new FormArray([ ], [ ]),
+			'formSection': ContainerSimpleComponent.getFormArrayByDefault(),
 			'name': 'relationships',
 			'label': 'Any relationships the institute has to others',
 			'controlType': ContainerSimpleComponent,
@@ -384,7 +398,7 @@ export class OrgEditComponent implements OnInit
 			'ariaLabel': 'Any relationships the institute has to others',
 			'formSectionContent': [
 				{
-					'formSection': new FormGroup({ }, [ ]),
+					'formSection': ContainerSimpleComponent.getFormGroupByDefault(),
 					'name': '0',
 					'label': 'Relationship',
 					'controlType': ContainerSimpleComponent,
@@ -397,6 +411,7 @@ export class OrgEditComponent implements OnInit
 						this._initIdentifiersContent('Related Organization Identifiers', undefined, true),
 
 						{
+							'formControl': InputSelectComponent.getFormControlByDefault(),
 							'name': 'type',
 							'label': 'Relationship type',
 							'controlType': InputSelectComponent,
@@ -421,6 +436,7 @@ export class OrgEditComponent implements OnInit
 							'multiple': false
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'label',
 							'label': 'Name of the related institute',
 							'controlType': InputTextComponent,
@@ -443,7 +459,7 @@ export class OrgEditComponent implements OnInit
     private _initAddressesSimpleContent(): ContainerContent
     {
 		return {
-			'formSection': new FormArray([ ], [ ]),
+			'formSection': ContainerSimpleComponent.getFormArrayByDefault(),
 			'name': 'addresses',
 			'label': 'An array of addresses associated with the institute',
 			'controlType': ContainerSimpleComponent,
@@ -454,7 +470,7 @@ export class OrgEditComponent implements OnInit
 			'ariaLabel': 'An array of addresses associated with the institute',
 			'formSectionContent': [
 				{
-					'formSection': new FormGroup({ }, [ ]),
+					'formSection': ContainerSimpleComponent.getFormGroupByDefault(),
 					'name': '0',
 					'label': 'Address',
 					'controlType': ContainerSimpleComponent,
@@ -463,6 +479,7 @@ export class OrgEditComponent implements OnInit
 					'ariaLabel': 'Address',
 					'formSectionContent': [
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'city',
 							'label': 'Name of the city',
 							'controlType': InputTextComponent,
@@ -472,6 +489,7 @@ export class OrgEditComponent implements OnInit
 							'ariaLabel': 'Name of the city'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'country',
 							'label': 'Name of the country',
 							'controlType': InputTextComponent,
@@ -481,6 +499,7 @@ export class OrgEditComponent implements OnInit
 							'ariaLabel': 'Name of the country'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'country_code',
 							'label': 'ISO 3166-1 alpha-2 code of the country',
 							'controlType': InputTextComponent,
@@ -490,6 +509,7 @@ export class OrgEditComponent implements OnInit
 							'ariaLabel': 'ISO 3166-1 alpha-2 code of the country'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'lat',
 							'label': 'Latitute of the institute',
 							'controlType': InputTextComponent,
@@ -499,6 +519,7 @@ export class OrgEditComponent implements OnInit
 							'ariaLabel': 'Latitute of the institute'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'lng',
 							'label': 'Longitude of the institute',
 							'controlType': InputTextComponent,
@@ -508,6 +529,7 @@ export class OrgEditComponent implements OnInit
 							'ariaLabel': 'Longitude of the institute'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'line_1',
 							'label': 'First line of the address',
 							'controlType': InputTextComponent,
@@ -517,6 +539,7 @@ export class OrgEditComponent implements OnInit
 							'ariaLabel': 'First line of the address'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'line_2',
 							'label': 'Second line of the address',
 							'controlType': InputTextComponent,
@@ -526,6 +549,7 @@ export class OrgEditComponent implements OnInit
 							'ariaLabel': 'Second line of the address'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'line_3',
 							'label': 'Third line of the address',
 							'controlType': InputTextComponent,
@@ -535,6 +559,7 @@ export class OrgEditComponent implements OnInit
 							'ariaLabel': 'Third line of the address'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'postcode',
 							'label': 'Postcode/zipcode',
 							'controlType': InputTextComponent,
@@ -548,6 +573,7 @@ export class OrgEditComponent implements OnInit
 						//This address identifies the main location
 
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'state',
 							'label': 'Name of the state/region',
 							'controlType': InputTextComponent,
@@ -557,6 +583,7 @@ export class OrgEditComponent implements OnInit
 							'ariaLabel': 'Name of the state/region'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'state_code',
 							'label': 'ISO 3166-2 region code',
 							'controlType': InputTextComponent,

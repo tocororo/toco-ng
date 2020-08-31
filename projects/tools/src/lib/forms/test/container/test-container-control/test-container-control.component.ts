@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormArray } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 import { FormSection, HintValue, HintPosition, IconValue, IconSource, ContentPosition } from '../../../form-field.control';
 import { TextInputAppearance } from '../../../input/input.control';
@@ -298,7 +298,7 @@ export class TestContainerControlComponent implements OnInit
     private _initRelationshipsSimpleContent(identifiersContent: ContainerContent): ContainerContent
     {
 		return {
-			'formSection': new FormArray([ ], [ ]),
+			'formSection': ContainerSimpleComponent.getFormArrayByDefault(),
 			'name': 'relationships',
 			'label': 'Any relationships the institute has to others',
 			'controlType': ContainerSimpleComponent,
@@ -309,7 +309,7 @@ export class TestContainerControlComponent implements OnInit
 			'ariaLabel': 'Any relationships the institute has to others',
 			'formSectionContent': [
 				{
-					'formSection': new FormGroup({ }, [ ]),
+					'formSection': ContainerSimpleComponent.getFormGroupByDefault(),
 					'name': '0',
 					'label': 'Relationship',
 					'controlType': ContainerSimpleComponent,
@@ -322,6 +322,7 @@ export class TestContainerControlComponent implements OnInit
 						identifiersContent,
 
 						{
+							'formControl': InputSelectComponent.getFormControlByDefault(),
 							'name': 'type',
 							'label': 'Relationship type',
 							'controlType': InputSelectComponent,
@@ -346,6 +347,7 @@ export class TestContainerControlComponent implements OnInit
 							'multiple': false
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'label',
 							'label': 'Name of the related institute',
 							'controlType': InputTextComponent,
@@ -368,7 +370,7 @@ export class TestContainerControlComponent implements OnInit
     private _initIdentifiersContent(description: string, value: Identifier[], isDynamic: boolean): ContainerContent
     {
         let result: ContainerContent = {
-			'formSection': new FormArray([ ], [ ]),
+			'formSection': ContainerSimpleComponent.getFormArrayByDefault(),
 			'name': 'identifiers',
 			'label': description,
 			'controlType': ContainerSimpleComponent,
@@ -380,7 +382,7 @@ export class TestContainerControlComponent implements OnInit
 			'isDynamic': isDynamic,
             'formSectionContent': [
 				{
-					'formSection': new FormGroup({ }, [ ]),
+					'formSection': ContainerSimpleComponent.getFormGroupByDefault(),
 					'name': '0',
 					'label': 'Organization Identifier',
 					'controlType': ContainerSimpleComponent,
@@ -389,6 +391,7 @@ export class TestContainerControlComponent implements OnInit
 					'ariaLabel': 'Organization Identifier',
 					'formSectionContent': [
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'idtype',
 							'label': 'Identifier type',
 							'controlType': InputTextComponent,
@@ -398,6 +401,7 @@ export class TestContainerControlComponent implements OnInit
 							'ariaLabel': 'Identifier type',
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'value',
 							'label': 'Identifier value',
 							'controlType': InputTextComponent,
@@ -426,7 +430,7 @@ export class TestContainerControlComponent implements OnInit
     private _initFirstIdentifiersContent(): ContainerContent
     {
         return {
-			'formSection': new FormArray([ ], [ ]),
+			'formSection': ContainerSimpleComponent.getFormArrayByDefault(),
 			'name': 'firstIdentifiers',
 			'label': 'First Identifiers',
 			'controlType': ContainerSimpleComponent,
@@ -437,7 +441,7 @@ export class TestContainerControlComponent implements OnInit
 			'ariaLabel': 'First Identifiers',
             'formSectionContent': [
 				{
-					'formSection': new FormGroup({ }, [ ]),
+					'formSection': ContainerSimpleComponent.getFormGroupByDefault(),
 					'name': '0',
 					'label': 'Organization First Identifier',
 					'controlType': ContainerSimpleComponent,
@@ -449,6 +453,7 @@ export class TestContainerControlComponent implements OnInit
 						this._initSecondIdentifiersContent(),
 
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'st_idtype',
 							'label': 'First Identifier type',
 							'controlType': InputTextComponent,
@@ -458,6 +463,7 @@ export class TestContainerControlComponent implements OnInit
 							'ariaLabel': 'First Identifier type',
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'st_value',
 							'label': 'First Identifier value',
 							'controlType': InputTextComponent,
@@ -480,7 +486,7 @@ export class TestContainerControlComponent implements OnInit
     private _initSecondIdentifiersContent(): ContainerContent
     {
         return {
-			'formSection': new FormArray([ ], [ ]),
+			'formSection': ContainerSimpleComponent.getFormArrayByDefault(),
 			'name': 'secondIdentifiers',
 			'label': 'Second Identifiers',
 			'controlType': ContainerSimpleComponent,
@@ -491,7 +497,7 @@ export class TestContainerControlComponent implements OnInit
 			'ariaLabel': 'Second Identifiers',
             'formSectionContent': [
 				{
-					'formSection': new FormGroup({ }, [ ]),
+					'formSection': ContainerSimpleComponent.getFormGroupByDefault(),
 					'name': '0',
 					'label': 'Organization Second Identifier',
 					'controlType': ContainerSimpleComponent,
@@ -500,6 +506,7 @@ export class TestContainerControlComponent implements OnInit
 					'ariaLabel': 'Organization Second Identifier',
 					'formSectionContent': [
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'nd_idtype',
 							'label': 'Second Identifier type',
 							'controlType': InputTextComponent,
@@ -509,6 +516,7 @@ export class TestContainerControlComponent implements OnInit
 							'ariaLabel': 'Second Identifier type',
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'nd_value',
 							'label': 'Second Identifier value',
 							'controlType': InputTextComponent,
@@ -576,7 +584,7 @@ export class TestContainerControlComponent implements OnInit
     private _initRelationshipsSimpleContent_Consecutive(identifiersContent: ContainerContent): ContainerContent
     {
 		return {
-			'formSection': new FormArray([ ], [ ]),
+			'formSection': ContainerSimpleComponent.getFormArrayByDefault(),
 			'name': 'relationships',
 			'label': 'Any relationships the institute has to others',
 			'controlType': ContainerSimpleComponent,
@@ -587,7 +595,7 @@ export class TestContainerControlComponent implements OnInit
 			'ariaLabel': 'Any relationships the institute has to others',
 			'formSectionContent': [
 				{
-					'formSection': new FormArray([ ], [ ]),
+					'formSection': ContainerSimpleComponent.getFormArrayByDefault(),
 					'name': '0',
 					'label': 'Relationship',
 					'controlType': ContainerSimpleComponent,
@@ -596,7 +604,7 @@ export class TestContainerControlComponent implements OnInit
 					'ariaLabel': 'Relationship',
 					'formSectionContent': [
 						{
-							'formSection': new FormGroup({ }, [ ]),
+							'formSection': ContainerSimpleComponent.getFormGroupByDefault(),
 							'name': '0',
 							'label': 'Organization Identifier',
 							'controlType': ContainerSimpleComponent,
@@ -605,6 +613,7 @@ export class TestContainerControlComponent implements OnInit
 							'ariaLabel': 'Organization Identifier',
 							'formSectionContent': [
 								{
+									'formControl': InputTextComponent.getFormControlByDefault(),
 									'name': 'idtype',
 									'label': 'Identifier type',
 									'controlType': InputTextComponent,
@@ -614,6 +623,7 @@ export class TestContainerControlComponent implements OnInit
 									'ariaLabel': 'Identifier type',
 								},
 								{
+									'formControl': InputTextComponent.getFormControlByDefault(),
 									'name': 'value',
 									'label': 'Identifier value',
 									'controlType': InputTextComponent,
@@ -630,8 +640,7 @@ export class TestContainerControlComponent implements OnInit
 					]
 				},
 
-				//TODO: Pensar en cómo especifico el botón Remove porque el `formSectionContent` de un `FormArray` posee un único elemento. 
-//				this._initRemoveButtonContent('Remove relationship')
+				this._initRemoveButtonContent('Remove relationship')
 			]
 		};
 	}

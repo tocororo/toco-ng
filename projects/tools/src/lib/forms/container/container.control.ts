@@ -5,7 +5,7 @@
 
 
 import { Input, ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef } from '@angular/core';
-import { FormArray } from '@angular/forms';
+import { FormArray, FormGroup } from '@angular/forms';
 
 import { GetViewContainerDirective } from '@toco/tools/core';
 
@@ -67,6 +67,24 @@ export interface ContainerContent extends FormFieldContent
  */
 export abstract class ContainerControl extends FormFieldControl
 {
+    /**
+     * Returns a `FormGroup` by default. 
+     * Its value is empty object, and does not have validators. 
+     */
+    public static getFormGroupByDefault(): FormGroup
+    {
+        return new FormGroup({ }, [ ]);
+    }
+
+    /**
+     * Returns a `FormArray` by default. 
+     * Its value is empty array, and does not have validators. 
+     */
+    public static getFormArrayByDefault(): FormArray
+    {
+        return new FormArray([ ], [ ]);
+    }
+
     /**
      * Input field that contains the content of this class. 
      */
@@ -238,7 +256,8 @@ export abstract class ContainerControl extends FormFieldControl
         /* Saves the pattern value, that is, creates the pattern value following the `_formArrayPatternContent` structure. 
         The result value represents a copy of one value that can contain the `content.value` array, and 
         sets all its properties/values of built-in type to `undefined`. 
-        It does not clone a value from the `content.value` array because the array can be empty. */
+        It does not clone a value from the `content.value` array because the array can be empty. 
+        It creates in deep until the next `FormArray`, then the next `FormArray` creates in deep until the next `FormArray`, and so on. */
         this._formArrayPatternValue = createValueToUndefined(this._formArrayPatternContent);
 
         /* If the `content.required` field is true, then the container control must have one child control at least. */

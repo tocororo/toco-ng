@@ -20,11 +20,6 @@ export type Params<T> = {
 };
 
 /**
- * Returns the empty string. 
- */
-export const emptyString: string = '';
-
-/**
  * Returns true if the specified `possDescendant` is descendant from the specified `ancestorName`; 
  * otherwise, false. 
  * @param possDescendant Possible descendant. 

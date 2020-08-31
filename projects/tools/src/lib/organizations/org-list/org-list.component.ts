@@ -61,6 +61,7 @@ export class OrgListComponent implements OnInit
     private _initSearchContent(): InputContent
     {
         return {
+            'formControl': InputTextComponent.getFormControlByDefault(),
             'width': '65%',
 
             'label': 'Write a text to search',
