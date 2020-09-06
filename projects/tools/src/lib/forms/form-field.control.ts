@@ -11,9 +11,6 @@ import { Params, IconService } from '@toco/tools/core';
 
 import { ContainerControl } from './container/container.control';
 
-abstract class InputControl
-{ }
-
 /**
  * Defines a form section that represents the `FormGroup` or `FormArray` class. 
  */
@@ -389,44 +386,6 @@ export interface FormFieldContent
 }
 
 /**
- * Returns a new value that is created following the specified content target structure. 
- * It also sets all its properties/values of built-in type to `undefined`. 
- * It creates the value smartly depending on the type of content. 
- * It creates in deep until the next `FormArray`, then the next `FormArray` creates in deep until the next `FormArray`, and so on. 
- * @param target The content object to take its structure for creating the value. 
- */
-export function createValueToUndefined(target: Params<any>): any
-{
-    if (target.formSection)
-    {
-        return _createValueToUndefined(target);
-    }
-
-    throw new Error(`There is an error because the execution can not go here in the 'createValueToUndefined' method!`);
-}
-
-function _createValueToUndefined(target: Params<any>): any
-{
-    if (target.formSection instanceof FormArray)
-    {
-        return [ ];
-    }
-    else
-    {
-        let result: any = { };
-
-        for(let content of target.formSectionContent)
-        {
-            if (content.formSection) result[content.name] = _createValueToUndefined(content);
-            else if (content.formControl) result[content.name] = undefined;
-            /* The rest of `content`s do not contain a `value` field of interest. */
-        }
-
-        return result;
-    }
-}
-
-/**
  * Returns a new object that represents the clone of the specified `FormControl` target. 
  * @param target The `FormControl` object to clone. 
  */
@@ -469,81 +428,6 @@ export function cloneFormSection(target: FormSection): FormSection
 
         return result;
     }
-}
-
-/**
- * Returns a new object that represents the clone of the specified content target. 
- * It also sets the initial `value` field of each content representing a `FormControl`. 
- * It clones the object smartly depending on the type of property. 
- * It clones in deep until the next `FormArray`, then the next `FormArray` clones in deep until the next `FormArray`, and so on. 
- * @param target The content object to clone. 
- * @param value The initial `value` field of each content representing a `FormControl`. 
- * @param canClone It is true if the function can clone the `formSectionContent` field; otherwise, false. 
- */
-export function cloneContent(target: Params<any>, value: any, canClone: boolean): any
-{
-    let result: any = { };
-
-    for(let prop in target)
-    {
-        switch(prop)
-        {
-            /* The `formControl` property special case. */
-            case 'formControl':
-            {
-                result[prop] = cloneFormControl(target.formControl);
-                break;
-            }
-
-            /* The `formSection` property special case. */
-            case 'formSection':
-            {
-                result[prop] = cloneFormSection(target.formSection);
-                break;
-            }
-
-            /* The `formSectionContent` property special case. */
-            case 'formSectionContent':
-            {
-                if (canClone)  /* Clones the `target.formSectionContent`. */
-                {
-                    result[prop] = [ ];
-
-                    for(let content of target.formSectionContent)
-                    {
-                        if (content.formSection instanceof FormArray)
-                        {
-                            content.value = value[content.name];
-                            /* This `content.formSectionContent` will not be cloned because it belongs to a `FormArray` and it will be cloned when the `FormArray` is analyzed in the `ContainerControl` class. */
-                            result[prop].push(cloneContent(content, undefined/* It is not used in this case. */, false));
-                            content.value = undefined;
-                        }
-                        else
-                        {
-                            result[prop].push(cloneContent(content, value[content.name], canClone));
-                        }
-                    }
-                }
-                else  /* Takes the same `target.formSectionContent` reference because `target` is a `FormArray` and its `formSectionContent` will be taken like a pattern. */
-                {
-                    result[prop] = target.formSectionContent;
-                }
-                break;
-            }
-
-            /* Copies the property without problem. */
-            default:
-            {
-                result[prop] = target[prop];
-                break;
-            }
-        }
-    }
-
-    /* If this content (`result`) represents a `FormControl`, then the `value` field is initialized. */
-    if (target.formControl) result['value'] = value;
-
-    return result;
 }
 
 /**

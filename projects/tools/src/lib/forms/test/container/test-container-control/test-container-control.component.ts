@@ -13,6 +13,19 @@ import { InputSelectComponent } from '../../../input/select/select-input.compone
 import { ActionButtonComponent } from '../../../action/button/button-action.component';
 
 import { Identifier } from '@toco/tools/entities';
+import { Params } from '@toco/tools/core';
+
+const relationshipsExample_SimpleFormGroup: Params<any> = {	
+	'idtype': 'isni'
+};
+
+const relationshipsExample_SimpleFormArray: string[] = [	
+	'isni'
+];
+
+const relationshipsExample_SimpleFormArray_Empty: string[] = [	
+	/* Empty completely. */
+];
 
 const relationshipsExample_TwoLevelsFormArray: any[] = [
 	{
@@ -157,7 +170,7 @@ export class TestContainerControlComponent implements OnInit
 	/**
 	 * Represents the current relationships. 
 	 */
-	private relationships: any[];
+	private relationships: any;
 
 	/**
 	 * Tracks the value and validity state of the internal child controls that contains this component. 
@@ -178,21 +191,116 @@ export class TestContainerControlComponent implements OnInit
 	{
 		/*********************************************************************************/
 
-		this._Test_00();
-//		this._Test_01();
+//		this._Test_00();  //ok
+
+//		this._Test_01();  //ok
+//		this._Test_02();  //ok
+//		this._Test_03();  //ok
+//		this._Test_04();  //ok
+
+//		this._Test_05();  //ok
+//		this._Test_06();  //ok
+//		this._Test_07();  //ok
+//		this._Test_08();  //ok
 
 		/*********************************************************************************/
 
-//		this._Test_02();
-//		this._Test_03();
-//		this._Test_04();
+//		this._Test_09();  //ok
+		this._Test_10();  //ok
 
 		/*********************************************************************************/
 
-//		this._Test_05();
+//		this._Test_11();
+//		this._Test_12();
+//		this._Test_13();
+
+		/*********************************************************************************/
+
+//		this._Test_14();  //ok
 	}
 
 	private _Test_00(): void
+	{
+		this.relationships = relationshipsExample_SimpleFormGroup;
+		console.log("Data got for editing (simple 'FormGroup'): ", this.relationships);
+
+		/* Creates the panel's content. */
+		this.panelContent = this._initPanelContent_Test_SimpleFormGroup();
+	}
+
+	private _Test_01(): void
+	{
+		this.relationships = relationshipsExample_SimpleFormArray;
+		console.log("Data got for editing (simple 'FormArray' - required = true, isDynamic = true): ", this.relationships);
+
+		/* Creates the panel's content. */
+		this.panelContent = this._initPanelContent_Test_SimpleFormArray(true, true);
+	}
+
+	private _Test_02(): void
+	{
+		this.relationships = relationshipsExample_SimpleFormArray;
+		console.log("Data got for editing (simple 'FormArray' - required = true, isDynamic = false): ", this.relationships);
+
+		/* Creates the panel's content. */
+		this.panelContent = this._initPanelContent_Test_SimpleFormArray(true, false);
+	}
+
+	private _Test_03(): void
+	{
+		this.relationships = relationshipsExample_SimpleFormArray;
+		console.log("Data got for editing (simple 'FormArray' - required = false, isDynamic = true): ", this.relationships);
+
+		/* Creates the panel's content. */
+		this.panelContent = this._initPanelContent_Test_SimpleFormArray(false, true);
+	}
+
+	private _Test_04(): void
+	{
+		this.relationships = relationshipsExample_SimpleFormArray;
+		console.log("Data got for editing (simple 'FormArray' - required = false, isDynamic = false): ", this.relationships);
+
+		/* Creates the panel's content. */
+		this.panelContent = this._initPanelContent_Test_SimpleFormArray(false, false);
+	}
+
+	private _Test_05(): void
+	{
+		this.relationships = relationshipsExample_SimpleFormArray_Empty;
+		console.log("Data got for editing (simple empty 'FormArray' - required = true, isDynamic = true): ", this.relationships);
+
+		/* Creates the panel's content. */
+		this.panelContent = this._initPanelContent_Test_SimpleFormArray(true, true);
+	}
+
+	private _Test_06(): void
+	{
+		this.relationships = relationshipsExample_SimpleFormArray_Empty;
+		console.log("Data got for editing (simple empty 'FormArray' - required = true, isDynamic = false): ", this.relationships);
+
+		/* Creates the panel's content. */
+		this.panelContent = this._initPanelContent_Test_SimpleFormArray(true, false);
+	}
+
+	private _Test_07(): void
+	{
+		this.relationships = relationshipsExample_SimpleFormArray_Empty;
+		console.log("Data got for editing (simple empty 'FormArray' - required = false, isDynamic = true): ", this.relationships);
+
+		/* Creates the panel's content. */
+		this.panelContent = this._initPanelContent_Test_SimpleFormArray(false, true);
+	}
+
+	private _Test_08(): void
+	{
+		this.relationships = relationshipsExample_SimpleFormArray_Empty;
+		console.log("Data got for editing (simple empty 'FormArray' - required = false, isDynamic = false): ", this.relationships);
+
+		/* Creates the panel's content. */
+		this.panelContent = this._initPanelContent_Test_SimpleFormArray(false, false);
+	}
+
+	private _Test_09(): void
 	{
 		this.relationships = relationshipsExample_TwoLevelsFormArray;
 		console.log("Data got for editing (two levels of 'FormArray'): ", this.relationships);
@@ -201,7 +309,7 @@ export class TestContainerControlComponent implements OnInit
 		this.panelContent = this._initPanelContent_Test_TwoLevelsFormArray();
 	}
 
-	private _Test_01(): void
+	private _Test_10(): void
 	{
 		this.relationships = relationshipsExample_ThreeLevelsFormArray;
 		console.log("Data got for editing (three levels of 'FormArray'): ", this.relationships);
@@ -210,7 +318,7 @@ export class TestContainerControlComponent implements OnInit
 		this.panelContent = this._initPanelContent_Test_ThreeLevelsFormArray();
 	}
 
-	private _Test_02(): void
+	private _Test_11(): void
 	{
 		this.relationships = relationshipsExample_TwoLevelsFormArray_EmptyInitially_1;
 		console.log("Data got for editing (two levels of 'FormArray' and the container control is empty initially, 1st case): ", this.relationships);
@@ -219,7 +327,7 @@ export class TestContainerControlComponent implements OnInit
 		this.panelContent = this._initPanelContent_Test_TwoLevelsFormArray();
 	}
 
-	private _Test_03(): void
+	private _Test_12(): void
 	{
 		this.relationships = relationshipsExample_TwoLevelsFormArray_EmptyInitially_2;
 		console.log("Data got for editing (two levels of 'FormArray' and the container control is empty initially, 2nd case): ", this.relationships);
@@ -228,7 +336,7 @@ export class TestContainerControlComponent implements OnInit
 		this.panelContent = this._initPanelContent_Test_TwoLevelsFormArray();
 	}
 
-	private _Test_04(): void
+	private _Test_13(): void
 	{
 		this.relationships = relationshipsExample_TwoLevelsFormArray_EmptyInitially_3;
 		console.log("Data got for editing (two levels of 'FormArray' and the container control is empty initially, 3rd case): ", this.relationships);
@@ -237,13 +345,77 @@ export class TestContainerControlComponent implements OnInit
 		this.panelContent = this._initPanelContent_Test_TwoLevelsFormArray();
 	}
 
-	private _Test_05(): void
+	private _Test_14(): void
 	{
 		this.relationships = relationshipsExample_TwoLevelsFormArray_Consecutive;
 		console.log("Data got for editing (two levels of 'FormArray' that are consecutive): ", this.relationships);
 
 		/* Creates the panel's content. */
 		this.panelContent = this._initPanelContent_Test_TwoLevelsFormArray_Consecutive();
+	}
+
+    /**
+     * Returns the panel's content for testing simple `FormGroup`. 
+     */
+    private _initPanelContent_Test_SimpleFormGroup(): PanelContent
+    {
+		return {
+			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
+			'formSection': this.panelFormSection,
+			'name': 'panel',
+			'label': 'Edita la organización seleccionada',
+			'controlType': ContainerPanelComponent,
+			'title': 'Edita la organización seleccionada',
+			'description': '',
+			'iconName': undefined /*''*/,
+			'formSectionContent': [
+				{
+					'formControl': InputTextComponent.getFormControlByDefault(),
+					'name': 'idtype',
+					'label': 'Identifier type',
+					'controlType': InputTextComponent,
+					'required': true,
+					'value': this.relationships.idtype,
+					'width': '50%',
+					'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'Identifier type',
+				}
+			]
+		};
+	}
+
+    /**
+     * Returns the panel's content for testing simple `FormArray`. 
+     */
+    private _initPanelContent_Test_SimpleFormArray(required: boolean, isDynamic: boolean): PanelContent
+    {
+		return {
+			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
+			'formSection': ContainerPanelComponent.getFormArrayByDefault(),
+			'name': 'panel',
+			'label': 'Edita la organización seleccionada',
+			'controlType': ContainerPanelComponent,
+			'value': this.relationships,
+			'title': 'Edita la organización seleccionada',
+			'description': '',
+			'iconName': undefined /*''*/,
+			'required': required,
+			'isDynamic': isDynamic,
+			'formSectionContent': [
+				{
+					'formControl': InputTextComponent.getFormControlByDefault(),
+					'name': '0',
+					'label': 'Identifier type',
+					'controlType': InputTextComponent,
+					'required': true,
+					'width': '50%',
+					'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'Identifier type',
+				},
+
+				this._initRemoveButtonContent_Directly('Remove identifier')
+			]
+		};
 	}
 
     /**
@@ -550,6 +722,33 @@ export class TestContainerControlComponent implements OnInit
 			'tooltip': new HintValue(HintPosition.start, tooltip),
 			'click': (sender: ActionControl): void => {
 				sender.parentContainerControl.parentContainerControl.removeFromFormArray(+(sender.parentContainerControl.content.name));
+			},
+			'isDisabled': (sender: ActionControl): boolean => {
+				return !(sender.parentContainerControl.parentContainerControl.canRemoveFromFormArray);
+			}
+		};
+	}
+
+	/**
+	 * Returns the remove button's content of an element stored directly in the `FormArray`. 
+	 * @param tooltip The tooltip to show. 
+	 */
+	private _initRemoveButtonContent_Directly(tooltip: string): ActionContent
+	{
+		return {
+			'name': 'remove',
+			'label': 'Remove',
+			'controlType': ActionButtonComponent,
+			'width': '30%',
+			// 'appearance': TextInputAppearance.outline,
+			'ariaLabel': 'Remove',
+			'icon': new IconValue(IconSource.external, ContentPosition.prefix, 'remove_circle'),
+			'tooltip': new HintValue(HintPosition.start, tooltip),
+			'click': (sender: ActionControl): void => {
+				sender.parentContainerControl.removeFromFormArray(+(sender.content.name));
+			},
+			'isDisabled': (sender: ActionControl): boolean => {
+				return !(sender.parentContainerControl.canRemoveFromFormArray);
 			}
 		};
 	}
@@ -640,7 +839,7 @@ export class TestContainerControlComponent implements OnInit
 					]
 				},
 
-				this._initRemoveButtonContent('Remove relationship')
+				this._initRemoveButtonContent_Directly('Remove relationship')
 			]
 		};
 	}
