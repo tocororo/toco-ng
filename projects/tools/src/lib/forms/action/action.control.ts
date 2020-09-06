@@ -89,11 +89,11 @@ export abstract class ActionControl extends FormFieldControl
      * @param label The label to set. If the value is `undefined`, sets the label to `content.label`. 
      * @param alwaysHint If it is true then there is always a hint start-aligned. 
      */
-    protected init(label: string | undefined, alwaysHint: boolean): void
+    protected init(label: string | undefined, alwaysHint?: boolean): void
     {
         /* Sets the default values. */
 
-        super.init(label, false, alwaysHint);
+        super.init(label);
 
         /***************************** `mat-icon` properties. *****************************/
         if (this.content.icon != undefined) this.content.icon.setDefaultValueIfUndefined_setPosition(ContentPosition.prefix);

@@ -113,7 +113,7 @@ export class FormContainerComponent extends ContainerControl implements OnInit, 
 //            'width': '100%',
             'ariaLabel': 'FormContainerComponent'
         };
-        this.init(undefined, false, false);
+        this.init(undefined);
 
         // if actionLabel is undefined, means that there is no actionLabel, the user must decide!!!
         // if (this.actionLabel == undefined) this.actionLabel = 'Adicionar';

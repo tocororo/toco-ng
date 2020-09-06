@@ -178,11 +178,11 @@ export abstract class InputControl extends FormFieldControl
      * @param isAbbreviation If it is true then the `label` argument represents an abbreviation; otherwise, false. 
      * @param alwaysHint If it is true then there is always at leat one hint start-aligned. 
      */
-    protected init(label: string | undefined, isAbbreviation: boolean, alwaysHint: boolean): void
+    protected init(label: string | undefined, isAbbreviation?: boolean, alwaysHint?: boolean): void
     {
         /* Sets the default values. */
 
-        super.init(label, isAbbreviation, alwaysHint);
+        super.init(label);
 
         if (this.content.formControl == undefined)
         {
