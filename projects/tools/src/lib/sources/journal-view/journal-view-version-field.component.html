@@ -1,0 +1,117 @@
+<div>
+
+    <button mat-icon-button aria-label="Next version" matTooltip="Remplazar" (click)="replace(type)">
+        <mat-icon color="warn">layers</mat-icon>
+    </button>
+
+    <!-- <button mat-icon-button aria-label="Next version" matTooltip="Mezclar" (click)="concat(type)">
+        <mat-icon color="warn">merge_type</mat-icon>
+    </button> -->
+
+    <ng-container [ngSwitch]="type">
+        <ng-container *ngSwitchCase="journalDataType.title">
+            <mat-label style="font-weight: bold;">Título:</mat-label>
+            <mat-label *ngIf="currentJournal.title"> {{currentJournal.title}} </mat-label>
+            <mat-label *ngIf="!currentJournal.title" class="text-muted text-through">Vacío</mat-label>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.subtitle">
+            <mat-label style="font-weight: bold;">Subtítulo:</mat-label>
+            <mat-label *ngIf="currentJournal.subtitle"> {{currentJournal.subtitle}} </mat-label>
+            <mat-label *ngIf="!currentJournal.subtitle" class="text-muted text-through">Vacío</mat-label>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.shortname">
+            <mat-label style="font-weight: bold;">Nombre Abreviado:</mat-label>
+            <mat-label *ngIf="currentJournal.shortname"> {{currentJournal.shortname}} </mat-label>
+            <mat-label *ngIf="!currentJournal.shortname" class="text-muted text-through">Vacío</mat-label>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.issnP">
+          <toco-journal-view-info-field [label]="'Impreso'" [value]="currentJournal.getIdentifierValue(IdentifierSchemas.pissn)"></toco-journal-view-info-field>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.issnE">
+          <toco-journal-view-info-field [label]="'Electrónico'" [value]="currentJournal.getIdentifierValue(IdentifierSchemas.eissn)"></toco-journal-view-info-field>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.issnL">
+          <toco-journal-view-info-field [label]="'De enlace:'" [value]="currentJournal.getIdentifierValue(IdentifierSchemas.lissn)"></toco-journal-view-info-field>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.rnpsP">
+          <toco-journal-view-info-field [label]="'Impreso'" [value]="currentJournal.getIdentifierValue(IdentifierSchemas.prnps)"></toco-journal-view-info-field>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.rnpsE">
+          <toco-journal-view-info-field [label]="'Electrónico'" [value]="currentJournal.getIdentifierValue(IdentifierSchemas.ernps)"></toco-journal-view-info-field>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.url">
+          <toco-journal-view-info-field [label]="'URL'" [value]="currentJournal.getIdentifierValue(IdentifierSchemas.url)"></toco-journal-view-info-field>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.email">
+            <mat-label style="font-weight: bold;">Email:</mat-label>
+            <mat-label *ngIf="currentJournal.email"> {{currentJournal.email}} </mat-label>
+            <mat-label *ngIf="!currentJournal.email" class="text-muted text-through">Vacío</mat-label>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.purpose">
+            <mat-label style="font-weight: bold;">Propósito:</mat-label>
+            <mat-label *ngIf="currentJournal.purpose"> {{currentJournal.purpose}} </mat-label>
+            <mat-label *ngIf="!currentJournal.purpose" class="text-muted text-through">Vacío</mat-label>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.start_year">
+            <mat-label style="font-weight: bold;">Año de Inicio:</mat-label>
+            <mat-label *ngIf="currentJournal.start_year"> {{currentJournal.start_year | date }} </mat-label>
+            <mat-label *ngIf="!currentJournal.start_year" class="text-muted text-through">Vacío</mat-label>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.end_year">
+            <mat-label style="font-weight: bold;">Año de Fin:</mat-label>
+            <mat-label *ngIf="currentJournal.end_year"> {{currentJournal.end_year | date }} </mat-label>
+            <mat-label *ngIf="!currentJournal.end_year" class="text-muted text-through">Vacío</mat-label>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.frequency">
+            <mat-label style="font-weight: bold;">Frecuencia de Publicación:</mat-label>
+            <mat-label *ngIf="currentJournal.frequency"> {{currentJournal.frequency}} </mat-label>
+            <mat-label *ngIf="!currentJournal.frequency" class="text-muted text-through">Vacío</mat-label>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.seriadas_cubanas">
+            <mat-label style="font-weight: bold;">Seriadas Cubanas:</mat-label>
+            <a href="{{currentJournal.seriadas_cubanas}}" target="_blanck" *ngIf="currentJournal.seriadas_cubanas"> {{currentJournal.seriadas_cubanas}} </a>
+            <mat-label *ngIf="!currentJournal.seriadas_cubanas" class="text-muted text-through">Vacío</mat-label>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.facebook">
+            <mat-label style="font-weight: bold;">Facebook:</mat-label>
+            <a href="{{ currentJournal.socialNetworks.facebook }}" target="_blanck" *ngIf="currentJournal.socialNetworks.facebook"> {{currentJournal.socialNetworks.facebook}} </a>
+            <mat-label *ngIf="!currentJournal.socialNetworks.facebook" class="text-muted text-through">Vacío</mat-label>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.twitter">
+            <mat-label style="font-weight: bold;">Twitter:</mat-label>
+            <a href="{{ currentJournal.socialNetworks.twitter }}" target="_blanck" *ngIf="currentJournal.socialNetworks.twitter"> {{currentJournal.socialNetworks.twitter}} </a>
+            <mat-label *ngIf="!currentJournal.socialNetworks.twitter" class="text-muted text-through">Vacío</mat-label>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.linkedin">
+            <mat-label style="font-weight: bold;">Linkedin:</mat-label>
+            <a href="{{ currentJournal.socialNetworks.linkedin }}" target="_blanck" *ngIf="currentJournal.socialNetworks.linkedin"> {{currentJournal.socialNetworks.linkedin}} </a>
+            <mat-label *ngIf="!currentJournal.socialNetworks.linkedin" class="text-muted text-through">Vacío</mat-label>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="journalDataType.description">
+            <mat-label style="font-weight: bold;">Descripción:</mat-label>
+            <mat-label *ngIf="!currentJournal.description" class="text-muted text-through">Vacío</mat-label>
+        </ng-container>
+
+    </ng-container>
+
+    <!-- <mat-icon class="mat-18" color="accent" *ngIf="currentJournal.data && currentJournal.subtitle !== '' && currentJournal.subtitle !== currentcurrentJournal.subtitle" matTooltip="Tiene cambios">notifications</mat-icon> -->
+
+</div>

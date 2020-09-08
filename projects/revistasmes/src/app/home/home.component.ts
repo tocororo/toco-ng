@@ -9,8 +9,8 @@ import { Term, Journal, JournalVersion } from '@toco/tools/entities';
 import { EnvService } from '@tocoenv/tools/env.service';
 import { HomeService } from './home.service';
 import { CatalogService } from '@toco/tools/backend';
-import { DialogCatalogJournalInfoDialog } from '@toco/tools/catalog';
 import { MessageHandler, StatusCode } from '@toco/tools/core';
+import { DialogCatalogJournalInfoDialog } from 'projects/catalog/src/app/catalog/catalog.component';
 
 @Component({
     selector: 'app-home',
@@ -49,22 +49,23 @@ export class HomeComponent implements OnInit {
         this.service.getOrganizationInfo(this.organizationUUID).subscribe(
             response => {
                 if (response && response.data && response.data.home_statics) {
-                    
+                  console.log(response)
+
                     this.institutionsCount = response.data.home_statics.institutions_count;
 
                     this.records = response.data.home_statics.records;
 
                     this.sourcesCount = response.data.home_statics.soources_count;
 
-                    response.data.home_statics.ultimas.forEach( (j: Journal) => {
+                    response.data.home_statics.last_sources.forEach( (j: Journal) => {
                         let jl = new Journal();
-                        jl.load_from_data(j);
+                        jl.deepcopy(j);
                         this.lastSources.push( jl );
                     });
 
                 }
                 console.log(response);
-                
+
               },
               (error: any) => {},
               () => {}
@@ -77,14 +78,14 @@ export class HomeComponent implements OnInit {
             console.log(response);
             if (response.status == "success") {
               let journalVersion = new JournalVersion();
-              journalVersion.load_from_data(response.data.sources);
+              journalVersion.deepcopy(response.data.sources);
               const dialogRef = this.dialog.open(DialogCatalogJournalInfoDialog, {
                 data: {
                   journalVersion: journalVersion,
                   journalUUID: uuid
                 }
               });
-    
+
               dialogRef.afterClosed();
             } else {
               const m = new MessageHandler(this._snackBar);

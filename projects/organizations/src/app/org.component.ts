@@ -13,85 +13,27 @@ import { SearchService } from '@toco/tools/backend';
 })
 export class OrgRootComponent
 {
-	// begin Layout stuff
-	layoutPosition = [
-		{
-			name: 'Derecha',
-			layout: 'row-reverse',
-			aling: 'center baseline',
-			width: '22'
-		},
-		{
-			name: 'Izquierda',
-			layout: 'row',
-			aling: 'center baseline',
-			width: '22'
-		},
-		{
-			name: 'Arriba',
-			layout: 'column',
-			aling: 'center center',
-			width: '90'
-		},
-		{
-			name: 'Abajo',
-			layout: 'column-reverse',
-			aling: 'center center',
-			width: '90'
-		}
-	];
-	currentlayout = this.layoutPosition[0];
-	public changeLayoutPosition(index: number) {
-		this.currentlayout = this.layoutPosition[index];
-	}
-	// end Layout stuff
+	public footerSites: Array< { name: string, url: string, useRouterLink: boolean } >;
 
-	// begin paginator stuff
-	length = 100;
-	pageSize = 5;
-	pageIndex = 0;
-	pageSizeOptions: number[] = [5, 10, 25, 100];
-	// end paginator stuff
+    public footerInformation: Array< { name: string, url: string, useRouterLink: boolean } >;
 
-	params: HttpParams;
-	sr: SearchResponse<Organization>;
-
-	public constructor(private _searchService: SearchService)
+	public constructor()
 	{ }
 
-	public ngOnInit(): void
-	{
-		this.params = new HttpParams();
-		this.getRecords();
-	}
+	ngOnInit(): void {
 
-	public pageChange(event?: PageEvent): void
-	{
-		this.pageSize = event.pageSize;
-		this.pageIndex = event.pageIndex;
-		this.getRecords();
-	}
+        this.footerInformation =  Array();
+        this.footerSites =  Array();
 
-	public getRecords(): void
-	{
-		this.params = this.params.set('size', this.pageSize.toString(10));
-		this.params = this.params.set('page', (this.pageIndex + 1).toString(10));
+        this.footerSites.push({ name: "MES", url: "https://www.mes.gob.cu", useRouterLink: false});
+        this.footerSites.push({ name: "Sceiba", url: "https://sceiba-lab.upr.edu.cu", useRouterLink: false});
+        this.footerSites.push({ name: "Dirección Nacional de Publicaciones Seriadas", url: "http://www.seriadascubanas.cult.cu/http://www.seriadascubanas.cult.cu/", useRouterLink:false});
+        this.footerSites.push({ name: "Red Ciencia", url: "http://www.redciencia.cu/", useRouterLink: false});
 
-		this._searchService.getOrganizations(this.params).subscribe(
-			(response: SearchResponse<Organization>) => {
-				console.log(response);
-				console.log("RESPONSE", response);
-				
-				// this.pageEvent.length = response.hits.total;
-				this.sr = response;
-			},
-			(error: any) => {
-				console.log("ERROPR");
-				
-			},
-			() => {
-				console.log("END...");
-			}
-		);
-	}
+        this.footerInformation.push({ name: "Términos de uso", url: "https://sceiba-lab.upr.edu.cu/page/politicas", useRouterLink: false});
+        this.footerInformation.push({ name: "Privacidad", url: "https://sceiba-lab.upr.edu.cu/page/politicas", useRouterLink: false});
+        this.footerInformation.push({ name: "Contacto", url: "/contact", useRouterLink: true});
+        this.footerInformation.push({ name: "FAQs", url: "/faq", useRouterLink: true});
+    }
+
 }

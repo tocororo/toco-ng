@@ -3,7 +3,7 @@
   <toco-form-container
   *ngIf="level1Panel"
   #level1PanelContainer
-  [panels]="level1Panel"
+  [panelsContent]="level1Panel"
   [useContainer]="false"
   fxLayout="row"
   [deleteValuesAfterAction]="false"
@@ -12,7 +12,7 @@
 <toco-form-container
   *ngIf="level2Panel"
   #level2PanelContainer
-  [panels]="level2Panel"
+  [panelsContent]="level2Panel"
   [useContainer]="false"
   fxLayout="row"
   [deleteValuesAfterAction]="false"
@@ -31,7 +31,7 @@
   <toco-form-container
     *ngIf="isManagedBy.checked && level3Panel"
     #level3PanelContainer
-    [panels]="level3Panel"
+    [panelsContent]="level3Panel"
     [useAccordion]="false"
     fxLayout="row"
     [deleteValuesAfterAction]="false"

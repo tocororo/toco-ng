@@ -12,10 +12,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
 
 import { AuthenticationModule } from '@toco/tools/authentication';
-import { CatalogService, SearchService } from '@toco/tools/backend';
+import { CatalogService, SearchService, SourceService } from '@toco/tools/backend';
 import { NotificationModule } from '@toco/tools/notification';
 import { CoreModule, CACHABLE_URL_PROVIDER, REQUEST_CACHE_DIFFERENT_TIME_WITH_MAP_PROVIDER, HTTP_INTERCEPTOR_PROVIDERS } from '@toco/tools/core';
-import { JournalModule } from '@toco/tools/journal';
 import { TocoFormsModule } from '@toco/tools/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +24,8 @@ import { SourcesComponent } from './sources/sources.component';
 import { SourceEditComponent } from './source-edit/source-edit.component';
 import { FiltersComponent } from './filters/filters.component';
 import { CatalogComponent, DialogCatalogJournalInfoDialog } from './catalog/catalog.component';
+import { SourcesModule } from '@toco/tools/sources';
+import { FiltersService } from '@toco/tools/filters';
 
 @NgModule({
     declarations: [
@@ -46,7 +47,7 @@ import { CatalogComponent, DialogCatalogJournalInfoDialog } from './catalog/cata
         AuthenticationModule,
         NotificationModule,
         AppRoutingModule,
-        JournalModule,
+        SourcesModule,
         TocoFormsModule
     ],
 
@@ -61,7 +62,9 @@ import { CatalogComponent, DialogCatalogJournalInfoDialog } from './catalog/cata
         REQUEST_CACHE_DIFFERENT_TIME_WITH_MAP_PROVIDER,
         HTTP_INTERCEPTOR_PROVIDERS,
         CatalogService,
-        SearchService
+        SearchService,
+        FiltersService,
+        SourceService
     ],
 
     bootstrap: [AppComponent]

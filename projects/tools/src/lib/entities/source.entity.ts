@@ -6,8 +6,9 @@
 
 
 
-import { Entity, EntityBase } from './entity';
+import { Entity, EntityBase } from './common';
 import { TermNode, Term } from './taxonomy.entity';
+import { Organization } from './organization.entity';
 
 export const SourceSystems = {
   OJS: { label: 'Open Journal System', value: 'OJS' },
@@ -25,7 +26,7 @@ export const SourceTypes = {
     OTHER: { label: 'Otro', value: 'OTHER' },
 };
 
-export const SourceInstitutionRole = {
+export const SourceOrganizationRole = {
   MAIN: {label: 'Principal', value: 'MAIN'},
   COLABORATOR: {label: 'Colaborador', value: 'COLABORATOR'}
 };
@@ -50,26 +51,49 @@ export const SourceStatus = {
     UNOFFICIAL: { label: 'Incluido Extraoficialmente', value: 'UNOFFICIAL'}
 };
 
+export class SourceOrganization extends Organization {
+  role: string = '';
+}
+export class SourceClasification extends EntityBase {
+  id: string = '';
+  description: string = '';
+  vocabulary: string = '';
+  data =  new Object();
+}
 
-export class SourceData extends EntityBase {
+export class  SavingInfoSchema extends EntityBase {
+  user_id: string = '';
+  comment: string = '';
+}
+
+export class SourceData extends Entity {
+    name = '';
     title = '';
     description ?= '';
-    term_sources ?: Array<TermSource> = new Array<TermSource>();
+    // term_sources ?: Array<TermSource> = new Array<TermSource>();
     oaiurl ? = '';
     source_system ? = '';
+    source_type = '';
+    source_status = '';
+    organizations?: Array<SourceOrganization> = new Array<SourceOrganization>();
+    classifications?: Array<SourceClasification> = new Array<SourceClasification>();
+    _save_info: SavingInfoSchema = new SavingInfoSchema();
 
+    reviewed = false;
+
+    versions? : Array<SourceVersion>;
 }
 
-export class TermSource extends EntityBase {
-    term_id = '';
-    source_id = '';
-    data =  new Object();
-    term ?: Term  = null;
-}
+// export class TermSource extends EntityBase {
+//     term_id = '';
+//     source_id = '';
+//     data =  new Object();
+//     term ?: Term  = null;
+// }
 
 export class SourceVersion extends Entity {
     user_id = '';
-    source_id = '';
+    source_uuid = '';
     comment = '';
     created_at = new Date();
     is_current = false;
@@ -78,11 +102,13 @@ export class SourceVersion extends Entity {
     data: SourceData = new SourceData();
 }
 
+
+
 export class Source extends Entity {
     uuid = '';
     name = '';
 
-    term_sources?: Array<TermSource> = new Array<TermSource>(0);
+    clasifications?: Array<SourceClasification> = new Array<SourceClasification>(0);
 
     source_type = '';
     source_status = '';

@@ -1,0 +1,22 @@
+<mat-form-field 
+[style.width]="content.width"
+[formGroup]="content.parentFormSection"
+>
+<input 
+    matInput
+    [value]="content.value"
+    (input)="$event.target.value"
+    [matDatepicker]="picker"
+    name="{{ content.name }}"
+    placeholder="{{ content.label }}"
+    required="{{ content.required }}"
+    [formControlName]="content.name"
+>
+<mat-datepicker-toggle
+    matSuffix [for]="picker"
+></mat-datepicker-toggle>
+<mat-datepicker 
+    #picker
+    startView="multi-year"
+></mat-datepicker>
+</mat-form-field>

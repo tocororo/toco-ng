@@ -4,7 +4,7 @@
  */
 
 
-import { Entity } from "./entity";
+import { Entity } from "./common";
 
 export class JournalReference extends Entity
 {

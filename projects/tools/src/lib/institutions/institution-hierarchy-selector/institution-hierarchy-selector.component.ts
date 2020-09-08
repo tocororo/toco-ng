@@ -2,10 +2,9 @@ import { Component, OnInit, Input, Output } from "@angular/core";
 import {
   Term,
   TermNode,
-  VocabulariesInmutableNames,
-  TermSource
+  VocabulariesInmutableNames
 } from "@toco/tools/entities";
-import { PanelContent, FormFieldType, SelectOption } from "@toco/tools/forms";
+import { PanelContent_Depr, FormFieldType, SelectOption } from "@toco/tools/forms";
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { TaxonomyService } from "@toco/tools/backend";
 
@@ -31,15 +30,15 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
 
   public level1: Term = null;
 
-  level1Panel: PanelContent[] = null;
+  level1Panel: PanelContent_Depr[] = null;
 
   // institution
   public level2: Term = null;
-  level2Panel: PanelContent[] = null;
+  level2Panel: PanelContent_Depr[] = null;
 
   // entity
   public level3: Term = null;
-  level3Panel: PanelContent[] = null;
+  level3Panel: PanelContent_Depr[] = null;
 
   public isManageByEntity = true;
 
@@ -70,9 +69,9 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
                   const node: TermNode = response.data.term_node;
                   if (node.parent && !node.parent.parent) {
                     this.level1 = new Term();
-                    this.level1.load_from_data(node.parent.term);
+                    this.level1.deepcopy(node.parent.term);
                     this.level2 = new Term();
-                    this.level2.load_from_data(node.term);
+                    this.level2.deepcopy(node.term);
                     this.level3 = this.institution;
                   } else {
                     this.level1 = null;
@@ -105,11 +104,11 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
                 if (node.parent) {
                   if (node.parent.parent) {
                     this.level1 = new Term();
-                    this.level1.load_from_data(node.parent.parent.term);
+                    this.level1.deepcopy(node.parent.parent.term);
                     this.level2 = new Term();
-                    this.level2.load_from_data(node.parent.term);
+                    this.level2.deepcopy(node.parent.term);
                     this.level3 = new Term();
-                    this.level3.load_from_data(node.term);
+                    this.level3.deepcopy(node.term);
                     if (node.parent.parent.parent) {
                       this.level1 = null;
                       this.level2 = null;
@@ -117,13 +116,13 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
                     }
                   } else {
                     this.level1 = new Term();
-                    this.level1.load_from_data(node.parent.term);
+                    this.level1.deepcopy(node.parent.term);
                     this.level2 = new Term();
-                    this.level2.load_from_data(node.term);
+                    this.level2.deepcopy(node.term);
                   }
                 } else {
                   this.level1 = new Term();
-                  this.level1.load_from_data(node.term);
+                  this.level1.deepcopy(node.term);
                 }
                 this.initializated = this.initLevel1Panel();
               },
@@ -144,18 +143,18 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
         title: "Organismo",
         description: "",
         iconName: "",
-        formGroup: this.externalFormGroup,
-        content: [
+        formSection: this.externalFormGroup,
+        formSectionContent: [
           {
             name: "organization",
             label: "Organismo",
-            type: FormFieldType.select,
+            type: FormFieldType.select_expr,
             required: true,
             width: "100%",
             value: this.level1 ? this.level1.uuid : "",
             extraContent: {
               observable: this.taxonomyService.getTermsTreeByVocab(
-                VocabulariesInmutableNames.INTITUTION,
+                VocabulariesInmutableNames.CUBAN_INTITUTIONS,
                 0
               ),
               getOptions: (response: any) => {
@@ -184,7 +183,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
                     }
 
                     this.level1 = new Term();
-                    this.level1.load_from_data(response.data.term_node.term);
+                    this.level1.deepcopy(response.data.term_node.term);
 
                     if (
                       this.level2 &&
@@ -224,12 +223,12 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
         title: "Institución",
         description: "Institución a la que pertenece la revista",
         iconName: "",
-        formGroup: this.externalFormGroup,
-        content: [
+        formSection: this.externalFormGroup,
+        formSectionContent: [
           {
             name: "institution",
             label: "Institución",
-            type: FormFieldType.select,
+            type: FormFieldType.select_expr,
             required: true,
             width: "100%",
             value: this.level2 ? this.level2.uuid : null,
@@ -284,7 +283,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
                       return;
                     }
                     this.level2 = new Term();
-                    this.level2.load_from_data(response.data.term_node.term);
+                    this.level2.deepcopy(response.data.term_node.term);
                     if (
                       this.level3 &&
                       this.level2.id != this.level3.parent_id
@@ -319,7 +318,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
           return;
         }
         this.level2 = new Term();
-        this.level2.load_from_data(response.data.term_node.term);
+        this.level2.deepcopy(response.data.term_node.term);
         if (this.level3 && this.level2.id != this.level3.parent_id) {
           this.level3 = null;
           this.level3Panel = null;
@@ -339,12 +338,12 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
         title: "Unidad",
         description: "Complete la información sobre la Unidad.",
         iconName: "",
-        formGroup: this.externalFormGroup,
-        content: [
+        formSection: this.externalFormGroup,
+        formSectionContent: [
           {
             name: "entity",
             label: "Unidad",
-            type: FormFieldType.select,
+            type: FormFieldType.select_expr,
             required: true,
             width: "100%",
             value: this.level3 ? this.level3.uuid : "new",
@@ -408,7 +407,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
                         return;
                       }
                       this.level3 = new Term();
-                      this.level3.load_from_data(response.data.term_node.term);
+                      this.level3.deepcopy(response.data.term_node.term);
                       this.resetLevel3PanelFields();
                     });
                 }
@@ -469,7 +468,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
     this.level3.data["email"] = this.externalFormGroup.value["email"];
     this.level3.data["website"] = this.externalFormGroup.value["website"];
     this.level3.data["address"] = this.externalFormGroup.value["address"];
-    this.level3.vocabulary_id = VocabulariesInmutableNames.INTITUTION;
+    this.level3.vocabulary_id = VocabulariesInmutableNames.CUBAN_INTITUTIONS;
   }
 
   private deleteLevel3PanelFields() {

@@ -9,7 +9,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthenticationService } from '@toco/tools/authentication/authentication.service';
 import { NotificationListComponent } from '@toco/tools/notification';
 
-import { JournalInclusionComponent } from '@toco/tools/journal/journal-inclusion/journal-inclusion.component';
+import { JournalInclusionComponent } from '@toco/tools/sources/journal-inclusion/journal-inclusion.component';
 import { SourceViewComponent } from 'projects/catalog/src/app/source-view/source-view.component';
 import { SourceResolver } from 'projects/catalog/src/app/source-resolver';
 import { SourceEditComponent } from 'projects/catalog/src/app/source-edit/source-edit.component';
@@ -71,14 +71,14 @@ const routes: Routes = [
                 path: ':uuid/view',
                 component: SourceViewComponent,
                 resolve: {
-                    resolver: SourceResolver
+                    record: SourceResolver
                 }
             },
             {
                 path: ':uuid/edit',
                 component: SourceEditComponent,
                 resolve: {
-                    resolver: SourceResolver
+                  record: SourceResolver
                 }
             },
             {

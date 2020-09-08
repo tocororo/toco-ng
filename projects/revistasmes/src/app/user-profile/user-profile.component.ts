@@ -32,7 +32,7 @@ export class UserProfileComponent implements OnInit {
             next: response => {
                 console.log(response);
                 if (response && response.data && response.data.userprofile) {
-                    this.user.load_from_data(response.data.userprofile);
+                    this.user.deepcopy(response.data.userprofile);
                 }
             },
             error: err => { console.log(err) },

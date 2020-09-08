@@ -39,11 +39,11 @@
     </div>
   </mat-toolbar>
 
+  <ng-container *ngIf="source && source.versions">
   <toco-journal-view
     #view
     *ngSwitchCase="sourceType.JOURNAL.value"
     [journal]="source"
-    [editingJournal]="editingSource"
   >
   </toco-journal-view>
 
@@ -51,4 +51,7 @@
     {{ sourceType.JOURNAL.value }}
     {{ source.source_type }}
   </p>
+  </ng-container>
+
+
 </ng-container>

@@ -7,16 +7,27 @@ import { Component, OnInit } from "@angular/core";
 import {
   FormControl,
   AbstractControl,
-  ValidationErrors
+  ValidationErrors,
+  FormGroup
 } from "@angular/forms";
 import { Observable, PartialObserver } from "rxjs";
 import { startWith, map } from "rxjs/operators";
 
 import { Response } from "@toco/tools/core";
-import { Term, TermNode } from "@toco/tools/entities";
+import { Term, TermNode, VocabulariesInmutableNames } from "@toco/tools/entities";
 import { TaxonomyService } from "@toco/tools/backend";
 
 import { FormFieldControl_Experimental } from "../form-field.control.experimental";
+
+interface VocabularyComponentExtraContent{
+  multiple: boolean;
+  selectedTermsIds: [];
+  excludeTermsIds: [];
+
+  level: number;
+
+  vocab: VocabulariesInmutableNames;
+}
 
 /**
  * A control to select a term or terms in a vocabulary.
@@ -32,7 +43,8 @@ import { FormFieldControl_Experimental } from "../form-field.control.experimenta
 })
 export class VocabularyComponent extends FormFieldControl_Experimental
   implements OnInit {
-  internalControl = new FormControl();
+
+  // internalControl = new FormControl();
 
   //this control is used by the chips,not necessary to expose it
   formControl = new FormControl();
@@ -40,11 +52,12 @@ export class VocabularyComponent extends FormFieldControl_Experimental
   filteredOptions: Observable<TermNode[]>;
   chipsList: TermNode[] = [];
   selectOptions: TermNode[] = [];
-  multiple = true;
 
   terms: TermNode[] = [];
-  vocab;
+
   loading = true;
+
+  extraContent: VocabularyComponentExtraContent;
 
   // selectedTermsIds = [];
 
@@ -52,7 +65,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
 
   private termsTreeObserver: PartialObserver<Response<any>> = {
     next: (response: Response<any>) => {
-      // console.log(this.vocab)
+      console.log("VOCABULARY COMPONENT RESPONSE ",response)
 
       this.terms = response.data.tree.term_node;
 
@@ -62,7 +75,6 @@ export class VocabularyComponent extends FormFieldControl_Experimental
         );
       });
 
-      this.loading = !this.loading;
     },
 
     error: (err: any) => {
@@ -71,6 +83,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
 
     complete: () => {
       console.log("The observable got a complete notification.");
+      this.loading = !this.loading;
     }
   };
 
@@ -81,7 +94,10 @@ export class VocabularyComponent extends FormFieldControl_Experimental
 
   ngOnInit()
   {
-//    this.content.parentFormSection.addControl(this.content.name, this.internalControl);
+    (this.content.parentFormSection as FormGroup).addControl(
+      this.content.name,
+      this.internalControl
+    );
 
     if (this.content.required) {
       this.internalControl.setValidators(
@@ -95,35 +111,41 @@ export class VocabularyComponent extends FormFieldControl_Experimental
 
     this.inputId = this.content.label.trim().toLowerCase();
     if (this.content.extraContent) {
-      if (this.content.extraContent.multiple !== null) {
-        this.multiple = this.content.extraContent.multiple;
-      }
-      // if (this.content.extraContent.selectedTermsIds) {
-      //   this.content.value = this.content.extraContent.selectedTermsIds;
+      this.extraContent = this.content.extraContent;
+
+      // if (this.extraContent.multiple !== null) {
+      //   this.multiple = this.extraContent.multiple;
+      // }
+      // if (this.extraContent.selectedTermsIds) {
+      //   this.content.value = this.extraContent.selectedTermsIds;
       // } else {
       //   this.content.value = [];
       // }
 
       // already selected terms
-      if (!this.content.extraContent.selectedTermsIds) {
-        this.content.extraContent.selectedTermsIds = [];
-      }
-      if (!this.content.extraContent.selectedTermsUUIDs) {
-        this.content.extraContent.selectedTermsUUIDs = [];
+      if (!this.extraContent.selectedTermsIds) {
+        this.extraContent.selectedTermsIds = [];
       }
 
       // terms ids to exclude of the possible options.
-      if (!this.content.extraContent.excludeTermsIds) {
-        this.content.extraContent.excludeTermsIds = [];
+      if (!this.extraContent.excludeTermsIds) {
+        this.extraContent.excludeTermsIds = [];
       }
       this.content.value = [];
 
-      if (this.content.extraContent.vocab) {
-        this.vocab = this.content.extraContent.vocab;
-        this.service
-          .getTermsTreeByVocab(this.vocab)
-          .subscribe(this.termsTreeObserver);
+      if (this.extraContent.level == undefined) {
+        this.extraContent.level = 10;
       }
+      if (this.extraContent.vocab) {
+        // this.vocab = this.extraContent.vocab;
+        this.service
+          .getTermsTreeByVocab(this.extraContent.vocab, this.extraContent.level)
+          .subscribe(this.termsTreeObserver);
+      } 
+    //   else if(this.extraContent.termID){
+    //     this.service.getTermByUUID(this.extraContent.termID, this.extraContent.level)
+    //     .subscribe(this.termsTreeObserver);
+    // }
       this._updateFilteredOptions();
     }
   }
@@ -136,7 +158,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
     }
   }
   private addTermToValue(term: Term) {
-    if (this.multiple) {
+    if (this.extraContent.multiple) {
       this.content.value.unshift(term);
     } else {
       this.content.value = [term];
@@ -144,6 +166,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
     this.internalControl.setValue(this.content.value);
     this.setValidation();
   }
+
   private removeTermFromValue(term: Term) {
     this.content.value = (this.content.value as []).filter(
       (e: Term) => e.id !== term.id
@@ -172,11 +195,8 @@ export class VocabularyComponent extends FormFieldControl_Experimental
     node.parent = parent;
     // if is in selected terms ids list, then is part of the value
     if (
-      (this.content.extraContent.selectedTermsIds as []).some(
-        id => id === node.term.id
-      ) ||
-      (this.content.extraContent.selectedTermsUUIDs as []).some(
-        uuid => uuid === node.term.uuid
+      (this.extraContent.selectedTermsIds as []).some(
+        id => id === node.term.uuid
       )
     ) {
       this.addTermToValue(node.term);
@@ -184,22 +204,25 @@ export class VocabularyComponent extends FormFieldControl_Experimental
     } else {
       // if is not in any of the exclude term ids, then push
       if (
-        !(this.content.extraContent.excludeTermsIds as []).some(
-          id => id === node.term.id
+        !(this.extraContent.excludeTermsIds as []).some(
+          id => id === node.term.uuid
         )
       ) {
         result.push(node);
       }
     }
-    node.children.forEach(child => {
-      result = result.concat(this._get_terms(child, node));
-    });
+    if(node.children){
+      node.children.forEach(child => {
+        result = result.concat(this._get_terms(child, node));
+      });
+    }
+
 
     return result;
   }
 
   addChips(value: TermNode) {
-    if (this.multiple) {
+    if (this.extraContent.multiple) {
       this.chipsList.unshift(value);
     } else {
       // if not is multiple, then the element in the chipsList goes back to the options
@@ -227,9 +250,9 @@ export class VocabularyComponent extends FormFieldControl_Experimental
 
   getTermNameInATree(node: TermNode) {
     if (node.parent != null) {
-      return this.getTermNameInATree(node.parent) + " / " + node.term.name;
+      return this.getTermNameInATree(node.parent) + " / " + node.term.description;
     } else {
-      return node.term.name;
+      return node.term.description;
     }
   }
 }

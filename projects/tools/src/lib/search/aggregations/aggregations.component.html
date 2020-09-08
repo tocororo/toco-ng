@@ -1,0 +1,17 @@
+<ng-container *ngFor="let key of keys">
+  <mat-card *ngIf="aggregations[key].buckets.length != 0" class="m-1">
+    <mat-card-header>
+      <mat-card-title class="text-capitalize">{{ key }} </mat-card-title>
+    </mat-card-header>
+    <mat-card-content fxLayout="column">
+      <mat-checkbox
+        *ngFor="let bucket of aggregations[key].buckets"
+        [checked]="isSelected(key, bucket)"
+        (change)="selectionChange(key, bucket)"
+        class="text-capitalize"
+      >
+        {{ bucket.key }} ({{ bucket.doc_count }})
+      </mat-checkbox>
+    </mat-card-content>
+  </mat-card>
+</ng-container>

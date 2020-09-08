@@ -1,0 +1,193 @@
+<!-- Journal Information -->
+<mat-card *ngIf="journalVersion && journalData">
+  <mat-card-header style="margin-top: 1em;">
+    <!-- <img mat-card-avatar *ngIf="journal.data.logo; else logotemplate" [style.background-size]="'cover'" src="journal.data.logo">
+        <ng-template #logotemplate>
+            <img mat-card-avatar [src]="defaultLogo" alt="">
+        </ng-template> -->
+
+    <mat-card-title>
+      <toco-journal-view-info-field [label]="'Título'" [value]="journalData.title"></toco-journal-view-info-field>
+    </mat-card-title>
+
+    <mat-card-subtitle>
+      Versión actual
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-divider [inset]="true" style="margin-bottom: 1em;"></mat-divider>
+
+  <mat-card-content>
+    <p>
+      <toco-journal-view-info-field [label]="'Subtítulo'" [value]="journalData.subtitle"></toco-journal-view-info-field>
+    </p>
+
+    <p>
+      <toco-journal-view-info-field [label]="'Nombre Abreviado'" [value]="journalData.shortname"></toco-journal-view-info-field>
+    </p>
+
+    <mat-label style="font-weight: bold;">ISSN: </mat-label>
+    <div style="margin-left: .8em;">
+      <p>
+        <toco-journal-view-info-field [label]="'Impreso'" [value]="getIdentifier(IdentifierSchemas.pissn)"></toco-journal-view-info-field>
+      </p>
+      <p>
+        <toco-journal-view-info-field [label]="'Electrónico'" [value]="getIdentifier(IdentifierSchemas.eissn)"></toco-journal-view-info-field>
+      </p>
+      <p>
+        <toco-journal-view-info-field [label]="'De enlace'" [value]="getIdentifier(IdentifierSchemas.lissn)"></toco-journal-view-info-field>
+      </p>
+    </div>
+    <mat-label style="font-weight: bold;">RNPS: </mat-label>
+    <div style="margin-left: .8em;">
+      <p>
+        <toco-journal-view-info-field [label]="'Impreso'" [value]="getIdentifier(IdentifierSchemas.prnps)"></toco-journal-view-info-field>
+      </p>
+      <p>
+        <toco-journal-view-info-field [label]="'Electrónico'" [value]="getIdentifier(IdentifierSchemas.ernps)"></toco-journal-view-info-field>
+      </p>
+    </div>
+
+    <p>
+      <toco-journal-view-info-field [label]="'URL'" [value]="getIdentifier(IdentifierSchemas.url)"></toco-journal-view-info-field>
+    </p>
+
+    <p>
+      <toco-journal-view-info-field [label]="'Email'" [value]="journalData.email"></toco-journal-view-info-field>
+    </p>
+
+    <p>
+      <toco-journal-view-info-field [label]="'Seriadas Cubanas'" [value]="journalData.seriadas_cubanas"></toco-journal-view-info-field>
+    </p>
+
+    <p>
+      <toco-journal-view-info-field [label]="'Propósito'" [value]="journalData.purpose"></toco-journal-view-info-field>
+    </p>
+
+    <p>
+      <toco-journal-view-info-field [label]="'Año de Inicio'" [value]="journalData.start_year | date"></toco-journal-view-info-field>
+            <!-- <mat-label style="font-weight: bold;"> Año de Inicio: </mat-label>
+      <mat-label *ngIf="journalData.start_year">
+        {{ journalData.start_year | date }}
+      </mat-label>
+      <mat-label
+        *ngIf="!journalData.start_year"
+        class="text-muted text-through"
+        >Vacío</mat-label
+      > -->
+    </p>
+
+    <p>
+      <toco-journal-view-info-field [label]="'Año de Fin'" [value]="journalData.end_year | date"></toco-journal-view-info-field>
+    </p>
+
+    <p>
+      <toco-journal-view-info-field [label]="'Frecuencia de Publicación'" [value]="journalData.frequency"></toco-journal-view-info-field>
+    </p>
+    <mat-label style="font-weight: bold;"> Descripción:</mat-label>
+    <mat-label
+      *ngIf="!journalData.description"
+      class="text-muted text-through"
+      >Vacío</mat-label
+    >
+    <div
+      *ngIf="journalData.description"
+      class="e2e-inner-html-bound  text-align-justify"
+      [innerHTML]="journalData.description"
+    ></div>
+
+    <mat-label style="font-weight: bold;">Redes Sociales:</mat-label>
+    <div style="margin-left: .8em;">
+      <p>
+        <toco-journal-view-info-field [label]="'Facebook'" [value]="journalData.socialNetworks.facebook"></toco-journal-view-info-field>
+      </p>
+      <p>
+        <toco-journal-view-info-field [label]="'Twitter'" [value]="journalData.socialNetworks.twitter"></toco-journal-view-info-field>
+      </p>
+      <p>
+        <toco-journal-view-info-field [label]="'Linkedin'" [value]="journalData.socialNetworks.linkedin"></toco-journal-view-info-field>
+      </p>
+    </div>
+
+    <!-- show terms -->
+
+    <mat-divider
+      [inset]="true"
+      style="margin-bottom: 1em; margin-top: 1em;"
+    ></mat-divider>
+    <mat-card style="margin: 1em; background-color: whitesmoke;">
+      <mat-card-header>
+        <mat-card-title>Instituciones:</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <toco-journal-institutions
+          [journalVersion]="journalData"
+          [enableEdit]="false"
+          [ngStyle]="{ margin: '1em' }"
+        >
+        </toco-journal-institutions>
+      </mat-card-content>
+    </mat-card>
+
+    <toco-journal-view-term
+      title="Grupo:"
+      [terms]="groupTerms"
+      [vocab_id]="vocabularies.INDEXES_CLASIFICATION"
+    ></toco-journal-view-term>
+
+    <toco-journal-view-term
+      title="Provincia:"
+      [terms]="provinceTerms"
+      [vocab_id]="vocabularies.CUBAN_PROVINCES"
+    ></toco-journal-view-term>
+
+    <toco-journal-view-term
+      title="Licencia:"
+      [terms]="licenceTerms"
+      [vocab_id]="vocabularies.LICENCES"
+    ></toco-journal-view-term>
+
+    <toco-journal-view-term
+      title="Materias:"
+      [terms]="subjectTerms"
+      [vocab_id]="vocabularies.SUBJECTS"
+    ></toco-journal-view-term>
+
+    <mat-card style="margin: 1em; background-color: whitesmoke;">
+      <mat-card-header>
+        <mat-card-title> Indizaciones:</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-accordion>
+          <ng-container *ngFor="let termSource of dataBaseTerms">
+            <mat-expansion-panel
+              *ngIf="termSource.term.vocabulary == vocabularies.INDEXES"
+              (opened)="panelOpenState = true"
+              (closed)="panelOpenState = false"
+            >
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ termSource.term.description }}
+                </mat-panel-title>
+                <mat-panel-description> </mat-panel-description>
+              </mat-expansion-panel-header>
+              <p *ngIf="termSource.data">
+                <strong>URL: </strong> {{ termSource.data.url }}
+              </p>
+              <p *ngIf="termSource.data && termSource.data['initial_cover']">
+                <strong>Cobertura inicio: </strong>
+                {{ termSource.data["initial_cover"] }}
+              </p>
+              <p *ngIf="termSource.data && termSource.data['end_cover']">
+                <strong>Cobertura hasta: </strong>
+                {{ termSource.data["end_cover"] }}
+              </p>
+            </mat-expansion-panel>
+          </ng-container>
+        </mat-accordion>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+
+  <mat-divider [inset]="true"></mat-divider>
+</mat-card>

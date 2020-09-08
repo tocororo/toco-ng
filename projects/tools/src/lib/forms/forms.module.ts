@@ -30,12 +30,15 @@ import { InputSelectComponent } from './input/select/select-input.component';
 import { InputUrlComponent } from './input/url/url-input.component';
 
 import { VocabularyComponent } from './experimental/vocabulary/vocabulary.component';
+import { VocabularyTreeComponent } from './experimental/vocabulary-tree/vocabulary-tree.component';
 import { TermParentComponent } from './experimental/term-parent/term-parent.component';
 import { SelectComponent } from './experimental/select/select.component';
 import { TextareaComponent } from './experimental/textarea/textarea.component';
 import { InputIdentifierComponent } from './input/identifier/identifier-input.component';
 import { SelectFilterComponent } from './experimental/select-filter/select-filter.component';
 import { SelectTreeComponent } from './experimental/select-tree/select-tree.component';
+import { DatepickerComponent } from './experimental/datepicker/datepicker.component';
+import { CheckboxComponent } from './experimental/checkbox/checkbox.component';
 
 /* Esta aquí temporalmente, quizás se hace un módulo para los test nada más. */
 import { TestContainerControlComponent } from './test/container/test-container-control/test-container-control.component';
@@ -58,13 +61,15 @@ import { TestContainerControlComponent } from './test/container/test-container-c
     InputSelectComponent,
     InputUrlComponent,
     VocabularyComponent,
+    VocabularyTreeComponent,
     TermParentComponent,
     SelectComponent,
     SelectFilterComponent,
     TextareaComponent,
     SelectTreeComponent,
-
-    TestContainerControlComponent
+    TestContainerControlComponent,
+    DatepickerComponent,
+    CheckboxComponent
   ],
 
   imports: [
@@ -104,6 +109,7 @@ import { TestContainerControlComponent } from './test/container/test-container-c
     InputSelectComponent,
     InputUrlComponent,
     VocabularyComponent,
+    VocabularyTreeComponent,
     TermParentComponent,
     SelectComponent,
     SelectFilterComponent, 

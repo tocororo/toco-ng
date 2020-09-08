@@ -21,9 +21,9 @@
       <mat-hint *ngIf="!content.startHint" [align]="'start'">{{ searchText }}</mat-hint>
 
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.term.name" (click)="addChips(option)"
-          [title]="option.term.name">
-          {{ option.term.name }}
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.term.description" (click)="addChips(option)"
+          [title]="option.term.description">
+          {{ option.term.description }}
         </mat-option>
       </mat-autocomplete>
 
@@ -34,7 +34,7 @@
   </mat-card-subtitle>
   <mat-card-content *ngIf="!loading">
     <mat-chip-list class="mat-chip-list-stacked" fxLayout="row" fxLayoutAlign="start center" style="margin-bottom: .5em"
-      id="chiplist-{{vocab.name}}">
+      id="chiplist-{{extraContent.vocab}}">
       <mat-chip *ngFor="let item of chipsList; let i=index" (removed)="removeChip(i)" [removable]="true">
         {{ getTermNameInATree(item) }}
         <mat-icon matChipRemove>cancel</mat-icon>

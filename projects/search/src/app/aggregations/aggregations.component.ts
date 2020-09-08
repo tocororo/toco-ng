@@ -9,7 +9,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { EnvService } from '@tocoenv/tools/env.service';
 
 import { TermNode, VocabulariesInmutableNames, Source } from '@toco/tools/entities';
-import { PanelContent, FormFieldType, SelectOption } from '@toco/tools/forms';
+import { PanelContent_Depr, FormFieldType, SelectOption } from '@toco/tools/forms';
 import { TaxonomyService, SourceService } from '@toco/tools/backend';
 
 @Component({
@@ -19,7 +19,7 @@ import { TaxonomyService, SourceService } from '@toco/tools/backend';
 })
 export class AggregationsComponent implements OnInit {
 
-	panels: PanelContent[] = null;
+	panels: PanelContent_Depr[] = null;
 	formGroup: FormGroup;
 
 	organismoUUID = '';
@@ -58,9 +58,9 @@ export class AggregationsComponent implements OnInit {
 				title: 'Colección:',
 				description: '',
 				iconName: '',
-				formGroup: this.formGroup,
-				open: false,
-				content: [
+				formSection: this.formGroup,
+				// open: false,
+				formSectionContent: [
 					{
 						type: FormFieldType.checkbox,
 						name: 'approved',
@@ -72,12 +72,12 @@ export class AggregationsComponent implements OnInit {
 					{
 						name: 'organismo',
 						label: 'Organismo',
-						type: FormFieldType.select,
+						type: FormFieldType.select_expr,
 						required: true,
 						width: '100%',
 						value: this.organismoUUID,
 						extraContent: {
-							observable: this.taxonomyService.getTermsTreeByVocab(VocabulariesInmutableNames.INTITUTION, 0),
+							observable: this.taxonomyService.getTermsTreeByVocab(VocabulariesInmutableNames.CUBAN_INTITUTIONS, 0),
 							getOptions: (response: any) => {
 								const opts: SelectOption[] = []
 								response.data.tree.term_node.forEach((node: TermNode) => {
@@ -101,11 +101,11 @@ export class AggregationsComponent implements OnInit {
 				title: 'Ordenar por:',
 				description: '',
 				iconName: '',
-				formGroup: this.formGroup,
-				open: false,
-				content: [
+				formSection: this.formGroup,
+				// open: false,
+				formSectionContent: [
 					{
-						type: FormFieldType.select,
+						type: FormFieldType.select_expr,
 						name: 'sort',
 						label: '',
 						width: '100%',
@@ -137,12 +137,12 @@ export class AggregationsComponent implements OnInit {
 				]
 			},
 			{
-				formGroup: this.formGroup,
+				formSection: this.formGroup,
 				title: 'Tipos de Indizaciones:',
 				iconName: '',
 				description: '',
-				open: false,
-				content: [
+				// open: false,
+				formSectionContent: [
 					{
 						name: 'grupo_mes',
 						label: 'Grupo MES',
@@ -153,7 +153,7 @@ export class AggregationsComponent implements OnInit {
 						extraContent: {
 							multiple: true,
 							selectedTermsIds: null,
-							vocab: VocabulariesInmutableNames.MES_GROUPS
+							vocab: VocabulariesInmutableNames.INDEXES_CLASIFICATION
 						},
 					},
 					{
@@ -166,7 +166,7 @@ export class AggregationsComponent implements OnInit {
 						extraContent: {
 							multiple: true,
 							selectedTermsIds: null,
-							vocab: VocabulariesInmutableNames.MIAR_DATABASES
+							vocab: VocabulariesInmutableNames.INDEXES
 						},
 					},
 				]
@@ -176,11 +176,11 @@ export class AggregationsComponent implements OnInit {
 
 	initSourcesPanel() {
 		this.formGroup.removeControl('source');
-		this.panels[0].content[2] = {
+		this.panels[0].formSectionContent[2] = {
 			name: 'source',
 			label: 'Fuentes',
 			type: FormFieldType.select_filter,
-			formGroup: this.formGroup,
+			formSection: this.formGroup,
 			width: '100%',
 			extraContent: {
 				multiple: true,

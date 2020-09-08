@@ -1,8 +1,13 @@
-<form [formGroup]="formGroup">
-  <toco-form-container
-    [panels]="panels"
-    [useAccordion]="true"
-    fxLayout="row"
-    [deleteValuesAfterAction]="false"
-  ></toco-form-container>
-</form>
+<ng-container *ngIf="formGroup">
+  <form [formGroup]="formGroup">
+    <toco-form-container
+      [panelsContent]="panels"
+      [useAccordion]="true"
+      fxLayout="row"
+      [deleteValuesAfterAction]="false"
+      [formGroup]="formGroup"
+    ></toco-form-container>
+  </form>
+  
+</ng-container>
+

@@ -2,9 +2,10 @@
 import { Injectable } from '@angular/core';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of, EMPTY } from 'rxjs';
-import { mergeMap, take } from 'rxjs/operators';
+import { mergeMap, take, map } from 'rxjs/operators';
 
-import { Organization } from '@toco/tools/entities';
+import { Organization, SearchResponse } from '@toco/tools/entities';
+import { SearchService } from '@toco/tools/backend';
 
 const orgExample: any = {
 	"id": "eb237d50-b64e-11ea-b3de-0242ac130004",  // Generado por Backend. Sólo se muestra.
@@ -194,15 +195,24 @@ const orgExample: any = {
 @Injectable({
 	providedIn: 'root',
 })
-export class OrganizationDetailResolverService implements Resolve<Organization>
+export class OrganizationDetailResolverService implements Resolve<SearchResponse<Organization>>
 {
-	public constructor(private router: Router)
+	public constructor(private router: Router, private service: SearchService)
 	{ }
 
-	public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
-		: Observable<Organization> | Promise<Organization> | Organization
+	public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<SearchResponse<Organization>>
 	{
-		//TODO: Pedir datos reales. 
-		return of(orgExample);
+		let uuid = route.paramMap.get('uuid');
+		return this.service.getOrganizationById(uuid).pipe(
+            take(1),
+            map(node => {
+                if (node) {
+                    return node;
+                } else {
+                    this.router.navigate(['/']);
+                }
+            })
+        );
+		// return of(orgExample);
 	}
 }

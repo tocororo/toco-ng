@@ -4,7 +4,7 @@
  */
 
 import { Component, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormGroup } from "@angular/forms";
 import { FlatTreeControl } from "@angular/cdk/tree";
 import { MatTreeFlattener, MatTreeFlatDataSource } from "@angular/material";
 import { SelectionModel } from "@angular/cdk/collections";
@@ -45,7 +45,7 @@ export class SelectTreeComponent extends FormFieldControl_Experimental
   implements OnInit {
   data: SelectOptionNode[];
 
-  internalControl = new FormControl();
+  // internalControl = new FormControl();
 
   treeControl: FlatTreeControl<FlatTreeNode>;
   treeFlattener: MatTreeFlattener<SelectOptionNode, FlatTreeNode>;
@@ -70,7 +70,10 @@ export class SelectTreeComponent extends FormFieldControl_Experimental
 
   ngOnInit() {
 
-//    this.content.parentFormSection.addControl(this.content.name, this.internalControl);
+    (this.content.parentFormSection as FormGroup).addControl(
+      this.content.name,
+      this.internalControl
+    );
 
     if (this.content.extraContent){
       if (this.content.extraContent.observable) {
@@ -78,20 +81,20 @@ export class SelectTreeComponent extends FormFieldControl_Experimental
           // next
           (response: any) => {
             console.log(response);
-  
+
             this.data = this.content.extraContent.getOptions(response);
             console.log(this.data);
             this.dataSource.data = this.data;
             console.log(this.dataSource);
-            this.content.extraContent.selectedTermsUUIDs.forEach((uuid:string) => {
+            this.content.extraContent.selectedTermsIds.forEach((uuid:string) => {
               console.log(uuid);
-              
+
               this.treeControl.dataNodes.forEach(node => {
-                
-                
+
+
                 if (node.element.value == uuid){
                   console.log(node);
-                  
+
                   if(node.expandable){
                     this.itemSelectionToggle(node);
                   } else {
@@ -101,7 +104,7 @@ export class SelectTreeComponent extends FormFieldControl_Experimental
               })
             });
           },
-  
+
           // error
           (error: any) => {
             console.log(error);
@@ -113,11 +116,11 @@ export class SelectTreeComponent extends FormFieldControl_Experimental
         this.data = this.content.extraContent.getOptions();
         this.dataSource.data = this.data;
       }
-      if (!this.content.extraContent.selectedTermsUUIDs) {
-        this.content.extraContent.selectedTermsUUIDs = [];
+      if (!this.content.extraContent.selectedTermsIds) {
+        this.content.extraContent.selectedTermsIds = [];
       }
     }
-    
+
 
     this.content.value = "";
   }

@@ -1,0 +1,61 @@
+
+<mat-progress-bar *ngIf="!databases" mode="indeterminate"></mat-progress-bar>
+
+<ng-container *ngIf="databases">
+ <ng-container *ngFor="let clasifications of databases; let i=index">
+
+  <mat-toolbar
+    fxLayout="row wrap"
+    fxLayoutAlign="end center"
+    fxLayoutGap="20px"
+  >
+  <mat-label>
+    {{clasifications.term.description}}
+  </mat-label>
+    <button mat-raised-button (click)="addIndexAction(clasifications.term)">
+      Adicionar
+    </button>
+  </mat-toolbar>
+
+
+
+  <mat-accordion>
+    <mat-expansion-panel
+      *ngFor="let classification of indexes; let i = index"
+      [expanded]="false"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ classification.description }}
+        </mat-panel-title>
+        <mat-panel-description>
+          
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-action-row>
+        <button mat-raised-button (click)="addIndexAction(item.id, classification)">
+          Editar
+        </button>
+        <button mat-raised-button (click)="deleteIndexAction(classification)">
+          Eliminar
+        </button>
+      </mat-action-row>
+      <mat-list-item>
+        <mat-label style="font-weight: bold;">URL: </mat-label>
+        {{ classification.data["url"] }}</mat-list-item
+      >
+      <mat-list-item>
+        <mat-label style="font-weight: bold;">Cobertura: </mat-label>
+        <mat-label>
+          Desde {{ classification.data["initial_cover"] }} hasta
+          {{ classification.data["end_cover"] }}
+        </mat-label>
+      </mat-list-item>
+    </mat-expansion-panel>
+    
+  </mat-accordion>
+
+ </ng-container>
+ 
+
+</ng-container>

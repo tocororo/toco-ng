@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { MessageHandler, StatusCode, Response } from '@toco/tools/core';
 import { Vocabulary } from '@toco/tools/entities';
-import { FormContainerComponent, PanelContent, FormFieldType, FormContainerAction, HintValue, HintPosition } from '@toco/tools/forms';
+import { FormContainerComponent, PanelContent_Depr, FormFieldType, FormContainerAction, HintValue, HintPosition } from '@toco/tools/forms';
 
 import { TaxonomyService } from '@toco/tools/backend';
 import { OAuthStorage } from 'angular-oauth2-oidc';
@@ -22,7 +22,7 @@ import { OAuthStorage } from 'angular-oauth2-oidc';
 })
 export class VocabularyDialogComponent implements OnInit {
 
-    public panels: PanelContent[];
+    public panels: PanelContent_Depr[];
     public formGroup: FormGroup;
     public action: FormContainerAction;
     public actionLabel = 'Aceptar';
@@ -44,7 +44,7 @@ export class VocabularyDialogComponent implements OnInit {
             if (data.vocab === null) {
                 this.vocab.isNew = true;
             } else {
-                this.vocab.load_from_data(data.vocab);
+                this.vocab.deepcopy(data.vocab);
                 this.actionLabel = 'Actualizar';
             }
         }
@@ -60,8 +60,8 @@ export class VocabularyDialogComponent implements OnInit {
                     title: this.vocab.isNew ? 'Nuevo Vocabulario' : 'Editar Vocabulario',
                     description: '',
                     iconName: '',
-                    formGroup: this.formGroup,
-                    content: [
+                    formSection: this.formGroup,
+                    formSectionContent: [
                         {
                             name: 'name',
                             label: 'Identificador',
@@ -115,7 +115,7 @@ export class VocabularyDialogComponent implements OnInit {
     }
 
     acceptAction() {
-        
+
 
     }
 }
@@ -132,7 +132,7 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
             this.dialog.closeAll();
             this.loadVocabularies();
             const voc = new Vocabulary();
-            voc.load_from_data(result.data.vocabulary);
+            voc.deepcopy(result.data.vocabulary);
             this.selectVocab(voc);
             const m = new MessageHandler(this._snackBar);
             m.showMessage(StatusCode.OK, result.message);
@@ -257,8 +257,8 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
             });
     }
 
-    hasPermission(permission: string, id?: number): boolean {
-        
+    hasPermission(permission: string, id?: string): boolean {
+
         const userPermission = JSON.parse(this.oautheStorage.getItem('user_permissions'));
         if (!userPermission) {
             return false;
@@ -277,7 +277,7 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
                 if (userPermission.vocabulary_editor_actions) {
                     const arr: Array<string> = userPermission.vocabulary_editor_actions;
 
-                    if (arr.includes(id.toString(10))) {
+                    if (arr.includes(id)) {
                         return true
                     }
 

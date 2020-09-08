@@ -11,10 +11,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '@toco/tools/shared';
 import { CoreModule, HTTP_INTERCEPTOR_PROVIDERS, CACHABLE_URL_PROVIDER, REQUEST_CACHE_DIFFERENT_TIME_WITH_MAP_PROVIDER } from '@toco/tools/core';
-import { CatalogModule } from '@toco/tools/catalog';
+import { SourcesModule } from '@toco/tools/sources';
 import { AuthenticationModule } from '@toco/tools/authentication';
 import { NotificationModule } from '@toco/tools/notification';
-import { JournalModule } from '@toco/tools/journal';
+
 import { TocoFormsModule } from '@toco/tools/forms';
 import { SourceViewSaveDialog } from 'projects/catalog/src/app/source-view/source-view.component';
 import { AppCatalogModule } from 'projects/catalog/src/app/app.module';
@@ -37,10 +37,9 @@ import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
     BrowserAnimationsModule,
     SharedModule,
     CoreModule,
-    CatalogModule,
+    SourcesModule,
     AuthenticationModule,
     NotificationModule,
-    JournalModule,
     TocoFormsModule,
     AppRoutingModule,
     AppCatalogModule,

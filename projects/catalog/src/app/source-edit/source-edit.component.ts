@@ -4,7 +4,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { SourceTypes, Journal, Source, SourceVersion, JournalVersion, TermSource, VocabulariesInmutableNames, Term } from '@toco/tools/entities';
+import { SourceTypes, Journal, Source, SourceVersion, JournalVersion, VocabulariesInmutableNames, Term, SourceData, JournalData } from '@toco/tools/entities';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageHandler, StatusCode } from '@toco/tools/core';
 import { MatSnackBar } from '@angular/material';
@@ -19,8 +19,8 @@ import { EnvService } from '@tocoenv/tools/env.service';
 export class SourceEditComponent implements OnInit {
 
   public sourceType = SourceTypes;
-  public source: Source;
-  public version: SourceVersion;
+  public source: SourceData;
+  public sourceVersion: SourceVersion;
   public saving = false;
   public organizationUUID = null;
   constructor(
@@ -43,22 +43,21 @@ export class SourceEditComponent implements OnInit {
         // this.loading = false;
         console.log(response);
 
-        if (response && response.resolver.status == 'success' && response.resolver.data.source) {
-          let src = response.resolver.data.source;
+        if (response.record && response.record.metadata) {
+          let src = response.record.metadata;
           switch (src.source_type) {
             case this.sourceType.JOURNAL.value:
-              this.source = new Journal();
-              this.source.load_from_data(src);
-              this.source.versions.length;
-              this.version = new JournalVersion();
-              this.version.source_id = this.source.id;
-              this.version.data.load_from_data(this.source.data);
+              this.source = new JournalData();
+              this.source.deepcopy(src);
+              this.sourceVersion = new JournalVersion();
+              this.sourceVersion.source_uuid = this.source.id;
+              this.sourceVersion.data.deepcopy(this.source);
 
               break;
 
             default:
-              this.source = new Source();
-              this.source.load_from_data(src);
+              this.source = new SourceData();
+              this.source.deepcopy(src);
           }
           // initialize Journal
         }
@@ -71,24 +70,30 @@ export class SourceEditComponent implements OnInit {
       );
   }
 
-  sourceEditDone() {
+  sourceEditDone(edited: SourceVersion) {
     this.saving = true;
-    console.log(this.version);
+    console.log('AAaAAAAAAAAAAAAAAAAAA');
 
-    this.sourceService.editSource(this.version, this.source.uuid)
-      .subscribe(
-        (values) => {
-          console.log(values);
-          this._router.navigate(['sources', this.source.uuid, 'view']);
-          this.saving = false;
-        },
-        (err: any) => {
-          console.log('error: ' + err + '.');
-        },
-        () => {
-          console.log('complete');
-        }
-      );
+    console.log(edited);
+
+    console.log(this.sourceVersion);
+
+    console.log('AAaAAAAAAAAAAAAAAAAAA');
+    this.saving = false;
+    // this.sourceService.editSource(this.sourceVersion, this.source.id)
+    //   .subscribe(
+    //     (values) => {
+    //       console.log(values);
+    //       this._router.navigate(['sources', this.source.id, 'view']);
+    //       this.saving = false;
+    //     },
+    //     (err: any) => {
+    //       console.log('error: ' + err + '.');
+    //     },
+    //     () => {
+    //       console.log('complete');
+    //     }
+    //   );
 
     // this.saving = true;
     // let toReplace = -1;
@@ -104,7 +109,7 @@ export class SourceEditComponent implements OnInit {
     //     (response) => {
     //       console.log(response);
     //       let newTerm = new Term();
-    //       newTerm.load_from_data(response.data.term);
+    //       newTerm.deepcopy(response.data.term);
     //       this.version.data.term_sources[toReplace].term_id = newTerm.id;
     //       this.sourceService.editSource(this.version, this.source.uuid)
     //         .subscribe(
@@ -146,7 +151,7 @@ export class SourceEditComponent implements OnInit {
   //       (response) => {
   //         console.log(response);
   //         let newTerm = new Term();
-  //         newTerm.load_from_data(response.data.term);
+  //         newTerm.deepcopy(response.data.term);
   //         this.version.data.term_sources[index].term_id = newTerm.id;
   //         this.version.data.term_sources[index].term = newTerm;
   //         this.createNewTerms();
@@ -161,7 +166,7 @@ export class SourceEditComponent implements OnInit {
   // }
 
   editCanceled() {
-    this._router.navigate(['sources', this.source.uuid, 'view']);
+    this._router.navigate(['sources', this.source.id, 'view']);
   }
 }
 
@@ -169,7 +174,7 @@ export class SourceEditComponent implements OnInit {
           // {
           //   name: 'source_type',
           //   label: 'Tipo de Revista',
-          //   type: FormFieldType.select,
+          //   type: FormFieldType.select_expr,
           //   required: true,
           //   width: '45%',
           //   value: this.journalVersion ? this.journalVersion.source_type : '',

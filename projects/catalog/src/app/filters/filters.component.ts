@@ -12,7 +12,7 @@ import {
   EventEmitter
 } from "@angular/core";
 import {
-  PanelContent,
+  PanelContent_Depr,
   FormFieldType,
   SelectOption,
   FormContainerAction
@@ -59,7 +59,7 @@ export class FiltersComponent implements OnInit {
   @Output()
   paramsChange: EventEmitter<Params> = new EventEmitter();
 
-  panels: PanelContent[] = null;
+  panels: PanelContent_Depr[] = null;
   formGroup: FormGroup;
 
   institutionTree: SelectOptionNode[] = [];
@@ -110,7 +110,7 @@ export class FiltersComponent implements OnInit {
 
         // this.params = convertToParamMap(this.filters);
         console.log(values);
-        
+
         console.log(this.filters);
         let res: Params = {};
         this.filters.forEach((value:string, key:string) => {
@@ -120,7 +120,7 @@ export class FiltersComponent implements OnInit {
           }
         });
         // console.log(this.filters.keys());
-        
+
         // for (const key in this.filters.keys()) {
         //   console.log(key)
         //   console.log(this.filters[key]);
@@ -129,7 +129,7 @@ export class FiltersComponent implements OnInit {
         //   }
         // }
         console.log(res);
-        
+
         this.paramsChange.emit(res);
       },
       (err: any) => {
@@ -145,13 +145,13 @@ export class FiltersComponent implements OnInit {
         title: "Revistas por Tipo:",
         description: "",
         iconName: "",
-        formGroup: this.formGroup,
+        formSection: this.formGroup,
         open: this.filters.get(CatalogFilterKeys.source_type) != '',
-        content: [
+        formSectionContent: [
           {
             name: CatalogFilterKeys.source_type,
             label: "Tipo de Revista",
-            type: FormFieldType.select,
+            type: FormFieldType.select_expr,
             required: true,
             width: "100%",
             value: this.filters.get(CatalogFilterKeys.source_type),
@@ -184,10 +184,11 @@ export class FiltersComponent implements OnInit {
         title: "Revistas por Institución:",
         description: "",
         iconName: "",
-        formGroup: this.formGroup,
+        formSection: this.formGroup,
         open: this.filters.get(CatalogFilterKeys.institutions) != '',
-        content: [
+        formSectionContent: [
           {
+            parentFormSection: this.formGroup,
             name: CatalogFilterKeys.institutions,
             label: "Instituciones",
             type: FormFieldType.select_tree,
@@ -195,7 +196,7 @@ export class FiltersComponent implements OnInit {
             width: "100%",
             value: "",
             extraContent: {
-              selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.institutions).split(","),
+              selectedTermsIds: this.filters.get(CatalogFilterKeys.institutions).split(","),
               observable:
                 this.organizationUUID != ""
                   ? this.sourceService.countSourcesByTerm(
@@ -203,7 +204,7 @@ export class FiltersComponent implements OnInit {
                       2
                     )
                   : this.taxonomyService.getTermsTreeByVocab(
-                      VocabulariesInmutableNames.INTITUTION
+                      VocabulariesInmutableNames.CUBAN_INTITUTIONS
                     ),
               getOptions: (response: any) => {
                 if (this.organizationUUID != "") {
@@ -227,13 +228,14 @@ export class FiltersComponent implements OnInit {
         ]
       },
       {
-        formGroup: this.formGroup,
+        formSection: this.formGroup,
         title: "Cobertura Temática:",
         iconName: "",
         description: "",
         open: this.filters.get(CatalogFilterKeys.subjects) != '',
-        content: [
+        formSectionContent: [
           {
+            parentFormSection: this.formGroup,
             name: CatalogFilterKeys.subjects,
             label: "Materias",
             type: FormFieldType.vocabulary,
@@ -242,20 +244,22 @@ export class FiltersComponent implements OnInit {
             value: this.filters.get(CatalogFilterKeys.subjects).split(","),
             extraContent: {
               multiple: true,
-              selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.subjects).split(","),
-              vocab: VocabulariesInmutableNames.SUBJECTS
+              selectedTermsIds: this.filters.get(CatalogFilterKeys.subjects).split(","),
+              vocab: VocabulariesInmutableNames.SUBJECTS,
+              level: 0
             }
           }
         ]
       },
       {
-        formGroup: this.formGroup,
+        formSection: this.formGroup,
         title: "Indizaciones:",
         iconName: "",
         description: "",
         open: this.filters.get(CatalogFilterKeys.grupo_mes) != '' || this.filters.get(CatalogFilterKeys.miar_types) != '',
-        content: [
+        formSectionContent: [
           {
+            parentFormSection: this.formGroup,
             name: CatalogFilterKeys.grupo_mes,
             label: "Grupo MES",
             type: FormFieldType.vocabulary,
@@ -264,11 +268,12 @@ export class FiltersComponent implements OnInit {
             value: this.filters.get(CatalogFilterKeys.grupo_mes).split(","),
             extraContent: {
               multiple: true,
-              selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.grupo_mes).split(","),
-              vocab: VocabulariesInmutableNames.MES_GROUPS
+              selectedTermsIds: this.filters.get(CatalogFilterKeys.grupo_mes).split(","),
+              vocab: VocabulariesInmutableNames.INDEXES_CLASIFICATION
             }
           },
           {
+            parentFormSection: this.formGroup,
             name: CatalogFilterKeys.miar_types,
             label: "Tipos de MIAR",
             type: FormFieldType.vocabulary,
@@ -277,8 +282,9 @@ export class FiltersComponent implements OnInit {
             value: this.filters.get(CatalogFilterKeys.miar_types).split(","),
             extraContent: {
               multiple: true,
-              selectedTermsUUIDs: this.filters.get(CatalogFilterKeys.miar_types).split(","),
-              vocab: VocabulariesInmutableNames.MIAR_DATABASES
+              selectedTermsIds: this.filters.get(CatalogFilterKeys.miar_types).split(","),
+              vocab: VocabulariesInmutableNames.INDEXES,
+              level: 0
             }
           }
         ]
@@ -287,13 +293,13 @@ export class FiltersComponent implements OnInit {
         title: "Estado:",
         description: "",
         iconName: "",
-        formGroup: this.formGroup,
-        open: this.filters.get(CatalogFilterKeys.source_status) != '' && this.filters.get(CatalogFilterKeys.source_status) != 'ALL',
-        content: [
+        formSection: this.formGroup,
+        open:this.filters.get(CatalogFilterKeys.source_status) != '' && this.filters.get(CatalogFilterKeys.source_status) != 'ALL',
+        formSectionContent: [
           {
             name: CatalogFilterKeys.source_status,
             label: "Estado",
-            type: FormFieldType.select,
+            type: FormFieldType.select_expr,
             required: true,
             width: "100%",
             value: this.filters.get(CatalogFilterKeys.source_status),

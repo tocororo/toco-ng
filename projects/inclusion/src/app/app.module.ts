@@ -9,13 +9,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SharedModule } from '@toco/tools/shared';
 import { TocoFormsModule } from '@toco/tools/forms';
-import { CatalogModule } from '@toco/tools/catalog';
-import { JournalModule } from '@toco/tools/journal';
+
 
 import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SourcesModule } from '@toco/tools/sources';
+
 
 @NgModule({
     declarations: [
@@ -26,8 +27,7 @@ import { AppComponent } from './app.component';
         BrowserAnimationsModule,
         SharedModule,
         TocoFormsModule,
-        CatalogModule,
-        JournalModule,
+        SourcesModule,
         AppRoutingModule
     ],
 

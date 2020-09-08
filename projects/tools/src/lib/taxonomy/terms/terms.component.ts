@@ -202,7 +202,7 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
             });
     }
 
-    hasPermission(permission: string, id?: number): boolean {
+    hasPermission(permission: string, id?: string): boolean {
 
         const userPermission = JSON.parse(this.oautheStorage.getItem('user_permissions'));
         if (!userPermission) {
@@ -222,7 +222,7 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
                 if (userPermission.vocabulary_editor_actions) {
                     const arr: Array<string> = userPermission.vocabulary_editor_actions;
 
-                    if (arr.includes(id.toString(10))) {
+                    if (arr.includes(id)) {
                         return true
                     }
 
