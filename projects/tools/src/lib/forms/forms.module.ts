@@ -23,6 +23,7 @@ import { ContainerLabelDiffLangComponent } from './container-specific/label-diff
 
 import { InputTextComponent } from './input/text/text-input.component';
 import { InputEmailComponent } from './input/email/email-input.component';
+import { InputIdentifierComponent } from './input/identifier/identifier-input.component';
 import { InputIssnInternalComponent } from './input/issn/issn-internal/issn-input-internal.component';
 import { InputIssnComponent } from './input/issn/issn-input.component';
 import { InputRnpsComponent } from './input/rnps/rnps-input.component';
@@ -34,7 +35,6 @@ import { VocabularyTreeComponent } from './experimental/vocabulary-tree/vocabula
 import { TermParentComponent } from './experimental/term-parent/term-parent.component';
 import { SelectComponent } from './experimental/select/select.component';
 import { TextareaComponent } from './experimental/textarea/textarea.component';
-import { InputIdentifierComponent } from './input/identifier/identifier-input.component';
 import { SelectFilterComponent } from './experimental/select-filter/select-filter.component';
 import { SelectTreeComponent } from './experimental/select-tree/select-tree.component';
 import { DatepickerComponent } from './experimental/datepicker/datepicker.component';
@@ -114,8 +114,9 @@ import { TestContainerControlComponent } from './test/container/test-container-c
     SelectComponent,
     SelectFilterComponent, 
     TextareaComponent,
-
-    TestContainerControlComponent
+    TestContainerControlComponent,
+    DatepickerComponent,
+    CheckboxComponent
   ],
 
   providers: []

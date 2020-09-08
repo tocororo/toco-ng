@@ -1,12 +1,12 @@
 
 <div fxLayout="row wrap" fxLayout.xs="column"
-    fxLayoutAlign="space-between end" fxLayoutAlign.xs="space-between center"
-    fxLayoutGap="1em" class="form-field-component"
+fxLayoutAlign="space-between end" fxLayoutAlign.xs="space-between center"
+fxLayoutGap="1em" class="form-field-component"
 >
 
     <ng-container *ngFor="let componentContent of componentsContent" [ngSwitch]="componentContent.type">
 
-        <ng-container 
+        <!-- <ng-container 
             *ngSwitchCase="formFieldType.checkbox"
             [formGroup]="componentContent.formGroup"
         >
@@ -21,7 +21,7 @@
             >
                 {{ componentContent.label }}
             </mat-checkbox>
-        </ng-container>
+        </ng-container> -->
 <!-- 
         <mat-form-field 
             *ngSwitchCase="formFieldType.textarea"
@@ -41,7 +41,7 @@
         </mat-form-field> -->
 
 
-        <mat-form-field 
+        <!-- <mat-form-field 
             *ngSwitchCase="formFieldType.datepicker"
             [style.width]="componentContent.width"
             [formGroup]="componentContent.formGroup"
@@ -63,7 +63,10 @@
                 #picker
                 startView="multi-year"
             ></mat-datepicker>
-        </mat-form-field>
+        </mat-form-field> -->
+        <toco-checkbox *ngSwitchCase="formFieldType.datepicker" [content]="componentContent"></toco-checkbox>
+        <toco-datepicker *ngSwitchCase="formFieldType.datepicker" [content]="componentContent"></toco-datepicker>
+
 
         <action-button *ngSwitchCase="formFieldType.action_button" [content]="componentContent"></action-button>
 
@@ -90,11 +93,13 @@
 
         <toco-vocabulary *ngSwitchCase="formFieldType.vocabulary" [content]="componentContent"></toco-vocabulary>
 
+        <toco-vocabulary-tree *ngSwitchCase="formFieldType.vocabulary_tree" [content]="componentContent"></toco-vocabulary-tree>
+        
         <toco-term-parent *ngSwitchCase="formFieldType.term_parent" [content]="componentContent"></toco-term-parent>
 
         <toco-textarea *ngSwitchCase="formFieldType.textarea" [content]="componentContent"></toco-textarea>
 
-        <!-- <toco-select *ngSwitchCase="formFieldType.select" [content]="componentContent"></toco-select> -->
+        <toco-select *ngSwitchCase="formFieldType.select_expr" [content]="componentContent"></toco-select>
 
         <toco-select-filter *ngSwitchCase="formFieldType.select_filter" [content]="componentContent"></toco-select-filter>
 

@@ -10,7 +10,7 @@ import { FormFieldType } from '../form-field.control';
 
 /**
  * This component represents a components' factory. 
- * //TODO: Pensar en cómo hacer esto de forma dinámica con facilidades que brinda Angular. 
+ * This component is deprecated. 
  */
 @Component({
     selector: 'component-factory-depr',

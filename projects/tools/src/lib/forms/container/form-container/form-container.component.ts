@@ -1,12 +1,17 @@
+
 import { Component, OnInit, Input, OnChanges } from "@angular/core";
 
 import { ContainerContent, ContainerControl } from "../container.control";
 
+/**
+ * This interface is deprecated. 
+ */
 export interface FormContainerAction {
   doit(data: any): void;
 }
 
 /**
+ * This interface is deprecated. 
  * An interface that represents the content of an expansion control.
  */
 export interface PanelContent_Depr extends ContainerContent {
@@ -38,6 +43,7 @@ export interface PanelContent_Depr extends ContainerContent {
 }
 
 /**
+ * This component is deprecated. 
  * Represents a control that contains a list of panels and sends that information to the server.
  */
 @Component({

@@ -222,6 +222,7 @@ export class HintValue
 }
 
 /**
+ * This enum is deprecated. 
  * Represents a form field type. 
  */
 export enum FormFieldType
@@ -368,11 +369,18 @@ export interface FormFieldContent
 
 
     /**
+     * This `type` field is deprecated, you must use the `controlType` field. 
      * Returns the control's type that is used to create the control. 
      * Implementation notes: 
      *  - It must be specified; otherwise, an exception is thrown. 
      */
     type?: FormFieldType;
+
+    /**
+     * Returns the control's type that is used to create the control. 
+     * Implementation notes: 
+     *  - It must be specified; otherwise, an exception is thrown. 
+     */
     controlType?: Type<any>;
 
 	/**

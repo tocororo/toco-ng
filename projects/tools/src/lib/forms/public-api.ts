@@ -29,6 +29,8 @@ export * from './experimental/select-tree/select-tree.component';
 export * from './experimental/term-parent/term-parent.component';
 export * from './experimental/textarea/textarea.component';
 export * from './experimental/vocabulary/vocabulary.component';
+export * from './experimental/datepicker/datepicker.component';
+export * from './experimental/checkbox/checkbox.component';
 
 export * from './input/email/email-value';
 export * from './input/email/email-input.component';

@@ -4,11 +4,11 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 
 import { InputControl } from '../../input/input.control';
 
 /**
+ * This interface is deprecated. 
  * An interface that represents a selectable option. 
  */
 interface SelectOption
@@ -29,7 +29,8 @@ interface SelectOption
 	// selected?: boolean;
 }
 
-/***
+/**
+ * This component is deprecated. 
  * The `extraContent` recibe una funcion llamada getOptions() que se encarga de contruir un SelectOption[]. 
  * Si es multiple, entonces el `value` es un array de valores. 
  */
