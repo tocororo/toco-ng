@@ -210,9 +210,9 @@ export class TestContainerControlComponent implements OnInit
 
 		/*********************************************************************************/
 
-//		this._Test_11();
-//		this._Test_12();
-//		this._Test_13();
+//		this._Test_11();  //ok
+//		this._Test_12();  //ok
+//		this._Test_13();  //ok
 
 		/*********************************************************************************/
 
