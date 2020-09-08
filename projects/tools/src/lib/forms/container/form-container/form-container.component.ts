@@ -109,7 +109,7 @@ export class FormContainerComponent extends ContainerControl
       };
     }
 
-    this.init(undefined, false, false);
+    this.init(undefined);
 
     // if actionLabel is undefined, means that there is no actionLabel, the user must decide!!!
     // if (this.actionLabel == undefined) this.actionLabel = 'Adicionar';
