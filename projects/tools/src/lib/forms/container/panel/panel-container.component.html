@@ -1,8 +1,8 @@
 
 <mat-card class="container-panel-mat-card" [formGroup]="content.formSection" [attr.aria-label]="content.ariaLabel">
     <mat-card-header>
-        <mat-card-title *ngIf="content.title">
-            {{ content.title }}
+        <mat-card-title *ngIf="content.label">
+            {{ content.label }}
         </mat-card-title>
         <mat-card-subtitle *ngIf="content.description">
             {{ content.description }}

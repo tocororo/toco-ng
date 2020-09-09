@@ -360,12 +360,10 @@ export class TestContainerControlComponent implements OnInit
     private _initPanelContent_Test_SimpleFormGroup(): PanelContent
     {
 		return {
-			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
 			'formSection': this.panelFormSection,
 			'name': 'panel',
 			'label': 'Edita la organización seleccionada',
 			'controlType': ContainerPanelComponent,
-			'title': 'Edita la organización seleccionada',
 			'description': '',
 			'iconName': undefined /*''*/,
 			'formSectionContent': [
@@ -390,13 +388,11 @@ export class TestContainerControlComponent implements OnInit
     private _initPanelContent_Test_SimpleFormArray(required: boolean, isDynamic: boolean): PanelContent
     {
 		return {
-			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
 			'formSection': ContainerPanelComponent.getFormArrayByDefault(),
 			'name': 'panel',
 			'label': 'Edita la organización seleccionada',
 			'controlType': ContainerPanelComponent,
 			'value': this.relationships,
-			'title': 'Edita la organización seleccionada',
 			'description': '',
 			'iconName': undefined /*''*/,
 			'required': required,
@@ -424,12 +420,10 @@ export class TestContainerControlComponent implements OnInit
     private _initPanelContent_Test_TwoLevelsFormArray(): PanelContent
     {
 		return {
-			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
 			'formSection': this.panelFormSection,
 			'name': 'panel',
 			'label': 'Edita la organización seleccionada',
 			'controlType': ContainerPanelComponent,
-			'title': 'Edita la organización seleccionada',
 			'description': '',
 			'iconName': undefined /*''*/,
 			'formSectionContent': [
@@ -447,12 +441,10 @@ export class TestContainerControlComponent implements OnInit
     private _initPanelContent_Test_ThreeLevelsFormArray(): PanelContent
     {
 		return {
-			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
 			'formSection': this.panelFormSection,
 			'name': 'panel',
 			'label': 'Edita la organización seleccionada',
 			'controlType': ContainerPanelComponent,
-			'title': 'Edita la organización seleccionada',
 			'description': '',
 			'iconName': undefined /*''*/,
 			'formSectionContent': [
@@ -759,12 +751,10 @@ export class TestContainerControlComponent implements OnInit
 	private _initPanelContent_Test_TwoLevelsFormArray_Consecutive(): PanelContent
     {
 		return {
-			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
 			'formSection': this.panelFormSection,
 			'name': 'panel',
 			'label': 'Edita la organización seleccionada',
 			'controlType': ContainerPanelComponent,
-			'title': 'Edita la organización seleccionada',
 			'description': '',
 			'iconName': undefined /*''*/,
 			'formSectionContent': [

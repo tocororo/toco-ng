@@ -5,17 +5,14 @@ import { ContainerContent, ContainerControl } from '../container.control';
 
 /**
  * An interface that represents the content of a panel control. 
- * Implementation notes: 
- *  - Maybe the 'label' and 'title' fields have the same values, but they are different fields 
- * with different functionalities; you need both in the implementation code. 
  */
 export interface PanelContent extends ContainerContent
 {
     /**
-     * Returns the panel's title. 
-     * By default, its value is `undefined`. 
+     * In this case, the `label?: string` field inherited from `FormFieldContent` is interpreted as: 
+     * Returns the control's title. 
+     * By default, its value is `''`. Each control sets its own label (title). 
      */
-    title?: string;
 
     /**
      * Returns the panel's description. 
@@ -63,20 +60,20 @@ export class ContainerPanelComponent extends ContainerControl implements OnInit
 	public ngOnInit(): void
 	{
 		/* Sets the default values. */
-        this.init(undefined);
+        this.init('');
     }
 
     /**
      * Initializes the `content` input property. 
-     * @param label The label to set. If the value is `undefined`, sets the label to `content.label`. 
+     * @param label The default label to use. It is used if the `content.label` is not specified. 
      */
-    protected init(label: string | undefined): void
+    protected init(label: string): void
     {
         /* Sets the default values. */
 
         super.init(label);
 
-        /* The `content.title`, `content.description`, and `content.iconName` fields 
+        /* The `content.description`, and `content.iconName` fields 
         have the `undefined` value by default. */
     }
 }

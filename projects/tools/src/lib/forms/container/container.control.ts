@@ -60,6 +60,12 @@ export interface ContainerContent extends FormFieldContent
     isDynamic?: boolean;
 
     /**
+     * In this case, the `label?: string` field inherited from `FormFieldContent` is interpreted as: 
+     * Returns the control's title. 
+     * By default, its value is `''`. Each control sets its own label (title). 
+     */
+
+    /**
      * In this case, the `required?: boolean` field inherited from `FormFieldContent` is interpreted as: 
      * Returns true if the container control must have one child control at least; otherwise, false. 
      * This field has sense only when the `content.formSection` field represents a `FormArray`. 
@@ -174,9 +180,9 @@ export abstract class ContainerControl extends FormFieldControl
 
     /**
      * Initializes the `content` input property. 
-     * @param label The label to set. If the value is `undefined`, sets the label to `content.label`. 
+     * @param label The default label to use. It is used if the `content.label` is not specified. 
      */
-    protected init(label: string | undefined): void
+    protected init(label: string): void
     {
         /* Sets the default values. */
 

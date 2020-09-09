@@ -158,7 +158,7 @@ export abstract class InputControl extends FormFieldControl
     protected readonly internalComponent: IInternalComponent;
 
     /**
-     * Represents the validation error of required. 
+     * Represents the validation error of required. Its default value can be overwritten. 
      */
     protected validationError_required: string;
 
@@ -174,11 +174,11 @@ export abstract class InputControl extends FormFieldControl
 
     /**
      * Initializes the `content` input property. 
-     * @param label The label to set. If the value is `undefined`, sets the label to `content.label`. 
+     * @param label The default label to use. It is used if the `content.label` is not specified. 
      * @param isAbbreviation If it is true then the `label` argument represents an abbreviation; otherwise, false. 
      * @param alwaysHint If it is true then there is always at leat one hint start-aligned. 
      */
-    protected init(label: string | undefined, isAbbreviation?: boolean, alwaysHint?: boolean): void
+    protected init(label: string, isAbbreviation: boolean = false, alwaysHint: boolean = true): void
     {
         /* Sets the default values. */
 

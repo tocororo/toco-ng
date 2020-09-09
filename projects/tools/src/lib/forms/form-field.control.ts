@@ -335,6 +335,8 @@ export interface FormFieldContent
 
     /**
      * Returns the control's label. 
+     * See the `ContainerContent` for the particular interpretation of this field. 
+     * See the `ActionContent` for the particular interpretation of this field. 
      * By default, its value is `''`. Each control sets its own label. 
      */
     label?: string;
@@ -343,6 +345,7 @@ export interface FormFieldContent
 
     /**
      * Returns true if the control is required; otherwise, false. 
+     * See the `ContainerContent` for the particular interpretation of this field. 
      * By default, its value is `false`. 
      */
     required?: boolean;
@@ -478,9 +481,9 @@ export abstract class FormFieldControl
 
     /**
      * Initializes the `content` input property. 
-     * @param label The label to set. If the value is `undefined`, sets the label to `content.label`. 
+     * @param label The default label to use. It is used if the `content.label` is not specified. 
      */
-    protected init(label: string | undefined): void
+    protected init(label: string): void
     {
         /* Sets the default values. */
 
@@ -494,19 +497,29 @@ export abstract class FormFieldControl
             throw new Error(`For the '${ FormFieldControl.name }' control, the 'content.name' value can not be undefined.`);
         }
 
+        if (this.content.controlType == undefined)
+        {
+            throw new Error(`For the '${ this.content.name }' control, the 'content.controlType' value can not be undefined.`);
+        }
+
         if (label == undefined)
         {
             if (this.content.label == undefined)
             {
-                throw new Error(`For the '${ this.content.name }' control, the 'content.label' value can not be undefined.`);
+                throw new Error(`For the '${ this.content.name }' control, the 'content.label' value can not be undefined. \n
+                    You can specify: \n
+                    - A default label value when overwriting the 'init' method in the component that represents the control. \n
+                    - A label value when defining the content object for the control.`);
             }
 
             label = this.content.label;
         }
-
-        if (this.content.controlType == undefined)
+        else
         {
-            throw new Error(`For the '${ this.content.name }' control, the 'content.controlType' value can not be undefined.`);
+            if (this.content.label)
+            {
+                label = this.content.label;
+            }
         }
 
         /************************** `mat-form-field` properties. **************************/

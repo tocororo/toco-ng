@@ -76,12 +76,10 @@ export class OrgEditComponent implements OnInit
     private _initPanelContent(): PanelContent
     {
 		return {
-			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
 			'formSection': this.panelFormSection,
 			'name': 'panel',
 			'label': 'Edita la organización seleccionada',
 			'controlType': ContainerPanelComponent,
-			'title': 'Edita la organización seleccionada',
 			'description': '',
 			'iconName': undefined /*''*/,
 			'formSectionContent': [

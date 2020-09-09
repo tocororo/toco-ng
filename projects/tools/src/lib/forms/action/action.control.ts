@@ -86,10 +86,10 @@ export abstract class ActionControl extends FormFieldControl
 
     /**
      * Initializes the `content` input property. 
-     * @param label The label to set. If the value is `undefined`, sets the label to `content.label`. 
+     * @param label The default label to use. It is used if the `content.label` is not specified. 
      * @param alwaysHint If it is true then there is always a hint start-aligned. 
      */
-    protected init(label: string | undefined, alwaysHint?: boolean): void
+    protected init(label: string, alwaysHint: boolean = true): void
     {
         /* Sets the default values. */
 

@@ -81,7 +81,7 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
 	public ngOnInit(): void
 	{
         /* Sets the default values. */
-		this.init(undefined, false, false);
+		this.init('', false, false);
 
 		this.onSelectionChange();
 	}
@@ -94,11 +94,11 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
 
     /**
      * Initializes the `content` input property. 
-     * @param label The label to set. If the value is `undefined`, sets the label to `content.label`. 
+     * @param label The default label to use. It is used if the `content.label` is not specified. 
      * @param isAbbreviation If it is true then the `label` argument represents an abbreviation; otherwise, false. 
      * @param alwaysHint If it is true then there is always at leat one hint start-aligned. 
      */
-    protected init(label: string | undefined, isAbbreviation: boolean, alwaysHint: boolean): void
+    protected init(label: string, isAbbreviation: boolean, alwaysHint: boolean): void
     {
         /* Sets the default values. */
 

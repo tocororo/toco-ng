@@ -30,14 +30,14 @@ export class ContainerSimpleComponent extends ContainerControl implements OnInit
 	public ngOnInit(): void
 	{
 		/* Sets the default values. */
-        this.init(undefined);
+        this.init('');
 	}
 
     /**
      * Initializes the `content` input property. 
-     * @param label The label to set. If the value is `undefined`, sets the label to `content.label`. 
+     * @param label The default label to use. It is used if the `content.label` is not specified. 
      */
-    protected init(label: string | undefined): void
+    protected init(label: string): void
     {
         /* Sets the default values. */
 
