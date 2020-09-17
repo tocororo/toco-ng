@@ -10,4 +10,3 @@ export * from './organization.service';
 export * from './search.service';
 export * from './source.service';
 export * from './taxonomy.service';
-export * from './vocbench.service';
