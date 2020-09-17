@@ -1,8 +1,8 @@
 
 import { Injectable } from '@angular/core';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable, of, EMPTY } from 'rxjs';
-import { mergeMap, take, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { take, map } from 'rxjs/operators';
 
 import { Organization, SearchResponse } from '@toco/tools/entities';
 import { SearchService } from '@toco/tools/backend';
@@ -210,7 +210,8 @@ export class OrganizationDetailResolverService implements Resolve<SearchResponse
             map(node => {
                 if (node) {
                     return node;
-                } else {
+				}
+				else {
                     this.router.navigate(['/']);
                 }
             })
