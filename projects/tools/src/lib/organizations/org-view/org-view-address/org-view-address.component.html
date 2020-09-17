@@ -11,4 +11,4 @@
 <static-text [desc]="'This address identifies the main location'" [value]="value.primary.toString()"></static-text>
 <static-text [desc]="'Name of the state/region'" [value]="value.state"></static-text>
 <static-text [desc]="'ISO 3166-2 region code'" [value]="value.state_code"></static-text>
-<!-- //TODO: Add here `geonames_city` -->
+<toco-org-view-geo-names-city [desc]="'Linked GeoNames data'" [value]="value.geonames_city"></toco-org-view-geo-names-city>

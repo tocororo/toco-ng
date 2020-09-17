@@ -7,8 +7,6 @@
 import { Input, ViewChild } from '@angular/core';
 import { Validators, ValidationErrors, FormControl } from '@angular/forms';
 
-import { emptyString } from '@toco/tools/core';
-
 import { ContentPosition, IconValue, HintPosition, HintValue,
     FormFieldContent, FormFieldControl } from '../form-field.control';
 
@@ -136,6 +134,21 @@ export interface IInternalComponent
 export abstract class InputControl extends FormFieldControl
 {
     /**
+     * Returns a `FormControl` by default. 
+     * Its value is empty, and does not have validators. 
+     */
+    public static getFormControlByDefault(): FormControl
+    {
+        return new FormControl('', [ ]);
+    }
+
+    /**
+     * Input field that contains the content of this class. 
+     */
+    @Input()
+    public content: InputContent;
+
+    /**
 	 * Tracks the value and validity state of the internal component that contains the text input. 
      * Implementation notes: There are two cases: 
      *  - You only have the `content.formControl` field as the `InputEmailComponent` class. 
@@ -145,15 +158,9 @@ export abstract class InputControl extends FormFieldControl
     protected readonly internalComponent: IInternalComponent;
 
     /**
-     * Represents the validation error of required. 
+     * Represents the validation error of required. Its default value can be overwritten. 
      */
     protected validationError_required: string;
-
-    /**
-     * Input field that contains the content of this class. 
-     */
-    @Input()
-    public content: InputContent;
 
     /**
      * Constructs a new instance of this class. 
@@ -167,15 +174,15 @@ export abstract class InputControl extends FormFieldControl
 
     /**
      * Initializes the `content` input property. 
-     * @param label The label to set. If the value is `undefined`, sets the label to `content.label`. 
+     * @param label The default label to use. It is used if the `content.label` is not specified. 
      * @param isAbbreviation If it is true then the `label` argument represents an abbreviation; otherwise, false. 
      * @param alwaysHint If it is true then there is always at leat one hint start-aligned. 
      */
-    protected init(label: string | undefined, isAbbreviation: boolean, alwaysHint: boolean): void
+    protected init(label: string, isAbbreviation: boolean = false, alwaysHint: boolean = true): void
     {
         /* Sets the default values. */
 
-        super.init(label, isAbbreviation, alwaysHint);
+        super.init(label);
 
         if (this.content.formControl == undefined)
         {
@@ -186,6 +193,9 @@ export abstract class InputControl extends FormFieldControl
 
         let temp: string = (isAbbreviation) ? this.content.label : this.content.label.toLowerCase();
         this.validationError_required = `You must write a valid ${ temp }.`;
+
+        /************************** Internal control properties. **************************/
+        if (this.content.required == undefined) this.content.required = false;
 
         /************************** `mat-form-field` properties. **************************/
         if (this.content.appearance == undefined) this.content.appearance = TextInputAppearance.standard;
@@ -205,7 +215,8 @@ export abstract class InputControl extends FormFieldControl
             if (this.content.endHint != undefined) this.content.endHint.setDefaultValueIfUndefined_setPosition(HintPosition.end);
         }
 
-        /* Adds this control as a child to the `content.parentFormSection`. It must be called at the end. */
+        /* Adds this control as a child to the `content.parentFormSection`. 
+        It must be called at the end. */
         if (this.content.parentFormSection != undefined)
         {
             console.log('addAsChildControl(this.content.formControl)');
@@ -308,7 +319,7 @@ export abstract class InputControl extends FormFieldControl
     {
         /* By default, its implementation is returning the empty string. */
 
-        return emptyString;
+        return '';
     }
 
     /**
@@ -333,7 +344,7 @@ export abstract class InputControl extends FormFieldControl
             }
         }
 
-        return emptyString;
+        return '';
 	}
     
 	/**

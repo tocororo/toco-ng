@@ -31,19 +31,16 @@
       [columnsHeaderText]="['Institute name in a language variant', 'ISO-639-1 language code']"
     >
     </static-table>
-    <toco-org-view-accordion [desc]="'Instituciones relacionados'" *ngIf="org.hasOwnProperty('relationships')" [value]="org.relationships"
+    <toco-org-view-accordion [desc]="'Relaciones con otras instituciones'" *ngIf="org.hasOwnProperty('relationships')" [value]="getValue_Relationships"
       [orgViewAccordionType]="orgViewAccordionType.Relationships"
+      [panelsTitle] = "getPanelsTitle_Relationships"
     >
     </toco-org-view-accordion>
     <toco-org-view-accordion [desc]="'Direcciones conocidas de la Institución'" *ngIf="org.hasOwnProperty('addresses')" [value]="org.addresses"
       [orgViewAccordionType]="orgViewAccordionType.Addresses"
+      [panelsTitle] = "getPanelsTitle_Addresses"
     >
     </toco-org-view-accordion>
 
   </mat-card-content>
 </mat-card>
-
-<!-- The actions are going to be placed outside the `mat-card` tag. -->
-<!-- <div [ngStyle]="{'margin': '1em 0 1em 0'}">
-  <button mat-raised-button color="primary" (click)="doOperationAction(operationAction.back)">Go Back</button>
-</div> -->

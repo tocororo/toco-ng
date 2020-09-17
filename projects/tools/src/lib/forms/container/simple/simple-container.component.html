@@ -4,15 +4,15 @@
 <fieldset class="container-simple-form-field" [formGroup]="content.formSection" [attr.aria-label]="content.ariaLabel">
     <legend class="container-simple-form-field-legend">{{ content.label }}</legend>
 
-    <component-factory [fieldsContent]="content.formSectionContent"></component-factory>
+    <ng-template get-view-container></ng-template>
 
-    <ng-container *ngIf="isDynamic">
+    <ng-container *ngIf="content.isDynamic">
         <button mat-raised-button color="primary" (click)="addToFormArray()">
             <!-- <mat-icon>add box</mat-icon> -->
             <mat-icon>add_circle</mat-icon>
             Add new item
         </button>
-        <button mat-raised-button color="primary" [disabled]="isEmpty" (click)="clearFormArray()">
+        <button mat-raised-button color="primary" [disabled]="!canRemoveFromFormArray" (click)="clearFormArray()">
             <!-- <mat-icon>remove box</mat-icon> -->
             <mat-icon>remove_circle</mat-icon>
             Clear all

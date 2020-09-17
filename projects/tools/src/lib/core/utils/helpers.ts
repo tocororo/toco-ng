@@ -20,9 +20,23 @@ export type Params<T> = {
 };
 
 /**
- * Returns the empty string. 
+ * Returns true if the specified `possDescendant` is descendant from the specified `ancestorName`; 
+ * otherwise, false. 
+ * @param possDescendant Possible descendant. 
+ * @param ancestorName Ancestor name. 
+ * Example in usage: 
+ *  if (isDescendant(target.controlType.__proto__, InputControl.name)) { ... }
  */
-export const emptyString: string = '';
+export function isDescendant(possDescendant: any, ancestorName: string): boolean
+{
+    do
+    {
+        if (possDescendant.name == ancestorName) return true;
+    }
+    while((possDescendant = possDescendant.__proto__).name != '');
+
+    return false;
+}
 
 /**
  * Returns a new value that represents the clone of the specified `target` value, and 
@@ -31,7 +45,6 @@ export const emptyString: string = '';
  *  - If `target` is `undefined`, then returns `undefined`. 
  *  - If `target` is an object, then returns an object with all its properties of built-in type to `undefined`. 
  *  - If `target` is an array, then returns an array with all its values of built-in type to `undefined`. 
- * if this value is an array or object sets all its properties to `undefined`. 
  * @param target The target value to clone. 
  */
 export function cloneValueToUndefined(target: any): any

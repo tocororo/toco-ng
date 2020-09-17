@@ -1,0 +1,21 @@
+
+.static-geo-names-city-fieldset
+{
+    width: auto/* 50%*/;
+    //margin: -4px 0 0;
+    margin: -4px 0 24px;
+    //padding: 12px 10px 12px 10px;
+    padding: 14px 10px 14px 10px;
+    cursor: default;
+    background-color: rgba(255, 255, 255, 1);
+    border: solid 1px rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+}
+
+.static-geo-names-city-fieldset-legend
+{
+    padding: 0 4px 0 4px;
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 10px;
+}

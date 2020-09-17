@@ -7,6 +7,9 @@ import { EnvService } from '@tocoenv/tools/env.service';
 
 import { Response } from '@toco/tools/core';
 
+/**
+ * This service is deprecated. 
+ */
 @Injectable({
 	providedIn: 'root'
 })

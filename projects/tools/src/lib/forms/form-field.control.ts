@@ -4,12 +4,10 @@
  */
 
 
-import { Input } from '@angular/core';
+import { Input, Type } from '@angular/core';
 import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
-import { isObject } from 'util';
 
-import { Params, emptyString } from '@toco/tools/core';
-import { IconService } from '@toco/tools/core';
+import { Params, IconService } from '@toco/tools/core';
 
 import { ContainerControl } from './container/container.control';
 
@@ -195,7 +193,7 @@ export class HintValue
      */
     public constructor(
         p: HintPosition = HintPosition.none,
-        l: string = emptyString)
+        l: string = '')
 	{
         this.position = p;
         this.label = l;
@@ -209,7 +207,7 @@ export class HintValue
     public setDefaultValueIfUndefined(): void
     {
         if (this.position == undefined) this.position = HintPosition.none;
-        if (this.label == undefined) this.label = emptyString;
+        if (this.label == undefined) this.label = '';
     }
 
     /**
@@ -219,11 +217,12 @@ export class HintValue
     public setDefaultValueIfUndefined_setPosition(hintPosition: HintPosition): void
     {
         this.position = hintPosition;
-        if (this.label == undefined) this.label = emptyString;
+        if (this.label == undefined) this.label = '';
     }
 }
 
 /**
+ * This enum is deprecated. 
  * Represents a form field type. 
  */
 export enum FormFieldType
@@ -310,6 +309,7 @@ export interface FormFieldContent
 
     /**
      * Returns the parent `FormSection` that represents the parent `FormGroup` or `FormArray` of this control. 
+     * It is always set internally. 
      * By default, its value is `undefined`. 
      */
     parentFormSection?: FormSection;
@@ -335,6 +335,8 @@ export interface FormFieldContent
 
     /**
      * Returns the control's label. 
+     * See the `ContainerContent` for the particular interpretation of this field. 
+     * See the `ActionContent` for the particular interpretation of this field. 
      * By default, its value is `''`. Each control sets its own label. 
      */
     label?: string;
@@ -343,6 +345,7 @@ export interface FormFieldContent
 
     /**
      * Returns true if the control is required; otherwise, false. 
+     * See the `ContainerContent` for the particular interpretation of this field. 
      * By default, its value is `false`. 
      */
     required?: boolean;
@@ -369,15 +372,25 @@ export interface FormFieldContent
 
 
     /**
-     * Returns the control's type. 
-     * By default, its value is `FormFieldType.text`. 
+     * This `type` field is deprecated, you must use the `controlType` field. 
+     * Returns the control's type that is used to create the control. 
+     * Implementation notes: 
+     *  - It must be specified; otherwise, an exception is thrown. 
      */
     type?: FormFieldType;
 
+    /**
+     * Returns the control's type that is used to create the control. 
+     * Implementation notes: 
+     *  - It must be specified; otherwise, an exception is thrown. 
+     */
+    controlType?: Type<any>;
+
 	/**
-	 * Returns the name that is used to save the control's value as a name/value pair. 
-     * It can be used with a JSON string. 
-	 * By default, its value is `'name'`. Each control sets its own name. 
+	 * Returns the control's name that is used to save the control's value as a name/value pair. 
+     * Implementation notes: 
+     *  - It can be used with a JSON string. 
+     *  - It must be specified; otherwise, an exception is thrown. 
 	 */
     name?: string;
 
@@ -434,61 +447,6 @@ export function cloneFormSection(target: FormSection): FormSection
 }
 
 /**
- * Returns a new object that represents the clone of the specified content target. 
- * It also sets the initial `value` field of each content representing a `FormControl`. 
- * It clones the object smartly depending on the type of property. 
- * @param target The content object to clone. 
- * @param value The initial `value` field of each content representing a `FormControl`. 
- */
-export function cloneContent(target: Params<any>, value: any): any
-{
-    let result: any = { };
-
-    for(let prop in target)
-    {
-        switch(prop)
-        {
-            /* The `formControl` property special case. */
-            case 'formControl':
-            {
-                result[prop] = cloneFormControl(target.formControl);
-                break;
-            }
-
-            /* The `formSection` property special case. */
-            case 'formSection':
-            {
-                result[prop] = cloneFormSection(target.formSection);
-                break;
-            }
-
-            /* The `formSectionContent` property special case. */
-            case 'formSectionContent':
-            {
-                result[prop] = [ ];
-                for(let content of target.formSectionContent)
-                {
-                    result[prop].push(cloneContent(content, value[content.name]));
-                }
-                break;
-            }
-
-            /* Copies the property without problem. */
-            default:
-            {
-                result[prop] = target[prop];
-                break;
-            }
-        }
-    }
-
-    /* If this content (`result`) represents a `FormControl`, then the `value` field is initialized. */
-    if (!isObject(value)) result['value'] = value;
-
-    return result;
-}
-
-/**
  * Represents the base abstract class for a control that is treated as a form field. 
  */
 export abstract class FormFieldControl
@@ -518,27 +476,50 @@ export abstract class FormFieldControl
         this.iconSource = IconSource;
 
         /* It must be initialize. */
-        this.content = { };
+        this.content = undefined;
     }
 
     /**
      * Initializes the `content` input property. 
-     * @param label The label to set. If the value is `undefined`, sets the label to `content.label`. 
-     * @param isAbbreviation If it is true then the `label` argument represents an abbreviation; otherwise, false. 
-     * @param alwaysHint If it is true then there is always at leat one hint start-aligned. 
+     * @param label The default label to use. It is used if the `content.label` is not specified. 
      */
-    protected init(label: string | undefined, isAbbreviation: boolean, alwaysHint: boolean): void
+    protected init(label: string): void
     {
         /* Sets the default values. */
+
+        if (this.content == undefined)
+        {
+            throw new Error(`For the '${ FormFieldControl.name }' control, the 'content' value can not be undefined.`);
+        }
+
+        if (this.content.name == undefined)
+        {
+            throw new Error(`For the '${ FormFieldControl.name }' control, the 'content.name' value can not be undefined.`);
+        }
+
+        if (this.content.controlType == undefined)
+        {
+            throw new Error(`For the '${ this.content.name }' control, the 'content.controlType' value can not be undefined.`);
+        }
 
         if (label == undefined)
         {
             if (this.content.label == undefined)
             {
-                throw new Error(`For the '${ this.content.name }' control, the 'content.label' value can not be undefined.`);
+                throw new Error(`For the '${ this.content.name }' control, the 'content.label' value can not be undefined. \n
+                    You can specify: \n
+                    - A default label value when overwriting the 'init' method in the component that represents the control. \n
+                    - A label value when defining the content object for the control.`);
             }
 
             label = this.content.label;
+        }
+        else
+        {
+            if (this.content.label)
+            {
+                label = this.content.label;
+            }
         }
 
         /************************** `mat-form-field` properties. **************************/
@@ -549,7 +530,6 @@ export abstract class FormFieldControl
         if (this.content.label == undefined) this.content.label = label;
 
         /************************** Internal control properties. **************************/
-        if (this.content.required == undefined) this.content.required = false;
         if (this.content.textAlign == undefined) this.content.textAlign = TextAlign.left;
         if (this.content.ariaLabel == undefined) this.content.ariaLabel = label;
         if (this.content.value != undefined)  /* It does not set the default value here (does not call `getDefaultValue` method here) because in this way it is more consistent. */
@@ -559,8 +539,6 @@ export abstract class FormFieldControl
         }
 
         /******************************* Other properties. ********************************/
-        if (this.content.type == undefined) this.content.type = FormFieldType.text;
-        if (this.content.name == undefined) this.content.name = label.toLowerCase().replace(/ /g, '_');  /* Sets the `name` in lowercase and replaces the spaces by underscores. */
     }
 
 	/**
@@ -597,7 +575,7 @@ export abstract class FormFieldControl
 
         /* Adds the specified `internalControl` as a child to the `content.parentFormSection`. */
 
-        if(this.content.parentContainerControl.isDynamic)  /* `content.parentFormSection` is an instance of `FormArray`. */
+        if(this.content.parentContainerControl.isFormArray)  /* `content.parentFormSection` is an instance of `FormArray`. */
         {
             /* The `internalControl`'s name is already correct, that is, 
             `content.name` equals the `content.parentFormSection`'s last position 

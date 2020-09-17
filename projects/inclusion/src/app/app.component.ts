@@ -3,6 +3,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { BrowserSessionStorageService, UserService, SortDirection } from '@toco/tools/core';
 import { TableContent, TableComponent, CellContentWrap, InputContent, TextAlign, TextInputAppearance, IconValue, IconSource, HintPosition, HintValue, ContentPosition, InputTextComponent } from '@toco/tools/forms';
+import { VocbenchService } from '@toco/tools/backend/vocbench.service';
+import { HttpResponse } from '@angular/common/http';
+import { User } from '@toco/tools/entities/vocbench/User';
+import { CustomFormValue } from '@toco/tools/entities/vocbench/ARTResources';
 
 @Component({
     selector: 'app-root',
@@ -34,7 +38,7 @@ export class AppComponent implements OnInit
     @ViewChild(TableComponent, { static: true })
     private _tableControl: TableComponent;
 
-    public constructor(private _userService: UserService, private _browserSessionStorageService: BrowserSessionStorageService)
+    public constructor(private vocbenchService: VocbenchService,private _userService: UserService, private _browserSessionStorageService: BrowserSessionStorageService)
     {
         // Delete this ...
         _browserSessionStorageService.set('green123', 'green0123456789');
@@ -46,6 +50,18 @@ export class AppComponent implements OnInit
     public ngOnInit(): void
     {
 
+
+
+        this.vocbenchService.login("reynil92@gmail.com","Mayka.2018", false).subscribe({
+            next: (response:any) => {
+                console.log(response);
+                this.vocbenchService.getTopConcepts("<http://vocabularies.unesco.org/thesaurus>","or","", "",true,"UNESCO").subscribe({
+                    next: (response:any) => {
+                        console.log(response);
+                    }
+                })
+            }
+        })
         /* Sets an initial search value. */
         //this._inputSearch.formControl.setValue('cl');
 

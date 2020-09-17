@@ -16,6 +16,7 @@ import { PageHeaderComponent } from './page-header/page-header.component';
 
 import { CoreRoutingModule } from './core-routing.module';
 import { MetadataService } from './metadata.service';
+import { GetViewContainerDirective } from './utils/get-view-container.directive';
 import { EqualLengthDirective } from './utils/validator';
 import { DialogContentComponent } from './utils/message-handler';
 import { ProgressComponent } from './utils/progress';
@@ -30,6 +31,7 @@ import { ProgressComponent } from './utils/progress';
         JournalCardComponent,
         NavComponent,
         PageHeaderComponent,
+        GetViewContainerDirective,
         EqualLengthDirective,
         DialogContentComponent,
         ProgressComponent
@@ -50,6 +52,7 @@ import { ProgressComponent } from './utils/progress';
         JournalCardComponent,
         NavComponent,
         PageHeaderComponent,
+        GetViewContainerDirective,
         EqualLengthDirective,
         DialogContentComponent,
         ProgressComponent

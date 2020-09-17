@@ -5,6 +5,7 @@
 	color="primary"
 	[attr.aria-label]="content.ariaLabel"
 	[matTooltip]="content.tooltip.label"
+	[disabled]="content.isDisabled(getInstance)"
 	(click)="content.click(getInstance)"
 >
 	<!-- Only renders one of these two `mat-icon` or nothing. -->

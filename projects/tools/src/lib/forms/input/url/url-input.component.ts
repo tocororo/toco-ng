@@ -2,8 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
-import { emptyString } from '@toco/tools/core';
-
 import { InputControl } from '../input.control';
 import { UrlValue } from './url-value';
 
@@ -21,6 +19,18 @@ import { UrlValue } from './url-value';
 })
 export class InputUrlComponent extends InputControl implements OnInit
 {
+    /**
+     * Returns a `FormControl` by default. 
+     * It is used to initialized the `InputUrlComponent`'s `content.formControl` value by default. 
+     */
+    public static getFormControlByDefault(): FormControl
+    {
+        return new FormControl('', [
+            Validators.pattern(/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/i)
+            //Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/i)
+        ]);
+    }
+
     public constructor()
     {
         super();
@@ -28,12 +38,6 @@ export class InputUrlComponent extends InputControl implements OnInit
 
     public ngOnInit(): void
     {
-        /* Sets this `content.formControl` by default. */
-        if (this.content.formControl == undefined) this.content.formControl = new FormControl(emptyString, [
-            Validators.pattern(/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/i)
-            //Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/i)
-        ]);
-
         /* Sets the default values. */
         this.init(UrlValue.url_Label, false, true);
     }
@@ -59,6 +63,6 @@ export class InputUrlComponent extends InputControl implements OnInit
             }
         }
 
-        return emptyString;
+        return '';
     }
 }
