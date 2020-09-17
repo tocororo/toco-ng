@@ -72,23 +72,29 @@ export class SearchComponent implements OnInit {
   public ngOnInit(): void {
     
     this.query = "";
+
     this.activatedRoute.queryParamMap.subscribe({
       next: (initQueryParams) => {
         this.aggrsSelection = {};
         console.log(initQueryParams);
+
         for (let index = 0; index < initQueryParams.keys.length; index++) {
           const key = initQueryParams.keys[index];
           console.log(initQueryParams.get(key));
+
           switch (key) {
             case "size":
               this.pageSize = Number.parseInt(initQueryParams.get(key));
               break;
+
             case "page":
               this.pageIndex = Number.parseInt(initQueryParams.get(key));
               break;
+
             case "q":
               this.query = initQueryParams.get(key);
               break;
+
             default:
               if (!this.aggrsSelection.hasOwnProperty(key)) {
                 this.aggrsSelection[key] = [];
@@ -97,12 +103,15 @@ export class SearchComponent implements OnInit {
               break;
           }
         }
+        
         console.log(this.aggrsSelection);
         
         this.updateFetchParams();
         this.fetchSearchRequest();
       },
+
       error: (e) => {},
+      
       complete: () => {},
     });
   }
