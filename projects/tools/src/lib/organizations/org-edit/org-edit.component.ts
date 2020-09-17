@@ -1,7 +1,7 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormArray } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 import { Organization, Identifier } from '@toco/tools/entities';
 import { TextInputAppearance, OperationAction, FormSection, PanelContent, 
@@ -25,6 +25,7 @@ export class OrgEditComponent implements OnInit
 	/**
 	 * Represents the current organization.
 	 */
+	//@Input()
 	private org: Organization;
 
 	/**
@@ -56,18 +57,6 @@ export class OrgEditComponent implements OnInit
 
 		/* Creates the panel's content. */
 		this.panelContent = this._initPanelContent();
-
-		// this.action = {
-		// 	doit(data: any): void
-		// 	{
-		// 		if (this.panelFormSection.valid)
-		// 		{
-		// 			/* Gets the result from `panelFormSection`. */
-		// 			// const result: Organization = new Organization();
-		// 			// result.deepcopy(this.panelFormSection.value);
-		// 		}
-		// 	}
-		// };
 	}
 
     /**
@@ -120,6 +109,7 @@ export class OrgEditComponent implements OnInit
 					],
 					'multiple': false
 				},
+
 
 				this._initIdentifiersContent('Organization Identifiers, different from GRID mapping', this.org.identifiers, false),
 

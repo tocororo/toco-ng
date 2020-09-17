@@ -1,10 +1,5 @@
 
 import { Component } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
-import { PageEvent } from '@angular/material';
-
-import { Organization, SearchResponse } from '@toco/tools/entities';
-import { SearchService } from '@toco/tools/backend';
 
 @Component({
 	selector: 'toco-org-root',
@@ -20,10 +15,10 @@ export class OrgRootComponent
 	public constructor()
 	{ }
 
-	ngOnInit(): void {
-
-        this.footerInformation =  Array();
+    public ngOnInit(): void
+    {
         this.footerSites =  Array();
+        this.footerInformation =  Array();
 
         this.footerSites.push({ name: "MES", url: "https://www.mes.gob.cu", useRouterLink: false});
         this.footerSites.push({ name: "Sceiba", url: "https://sceiba-lab.upr.edu.cu", useRouterLink: false});

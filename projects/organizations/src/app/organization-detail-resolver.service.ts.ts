@@ -55,7 +55,8 @@ const orgExample: any = {
 	// 				"value": "An id isni"
 	// 			}
 	// 		],
-	// 		"type": "parent"
+	// 		"type": "parent",
+	// 		"label": "Universidad de la Habana"
 	// 	},
 	// 	{
 	// 		"identifiers": [
@@ -69,7 +70,7 @@ const orgExample: any = {
 	// 			}
 	// 		],
 	// 		"type": "child",
-	// 		"label": "ulh"
+	// 		"label": "Universidad de las Villas"
 	// 	},
 	// 	{
 	// 		"identifiers": [
@@ -102,7 +103,8 @@ const orgExample: any = {
 					"value": "An id isni"
 				}
 			],
-			"type": "parent"
+			"type": "parent",
+			"label": "Universidad de la Habana"
 		},
 		{
 			"identifiers": [
@@ -116,7 +118,7 @@ const orgExample: any = {
 				}
 			],
 			"type": "child",
-			"label": "ulh"
+			"label": "Universidad de las Villas"
 		}
 	],
 	"addresses": [

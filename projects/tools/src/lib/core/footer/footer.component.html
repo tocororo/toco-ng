@@ -1,6 +1,4 @@
 <div class="alternate-theme-footer">
-    
-
 
     <mat-toolbar class="footer-height" fxLayout='row wrap' fxLayout.mx="column" fxLayoutAlign="center center" color="primary">
         <ng-container *ngIf="image">
@@ -32,8 +30,8 @@
                     <a mat-button
                         class="aling-left"
                         color="warn"
-                        [routerLink]="[item.url]"
                         *ngIf="item.useRouterLink"
+                        [routerLink]="[item.url]"
                         [ngStyle]="{'line-height': 'initial', 'padding': '10px 16px'}"
                     >
                         {{ item.name }}
@@ -96,6 +94,5 @@
         <a href="https://sceiba-lab.upr.edu.cu" target="_blank" style="color: rgb(0, 0, 0, 0.87); text-decoration: none;">
             Portal de publicaciones cientificas cubanas
         </a>
-
     </mat-toolbar>
 </div>

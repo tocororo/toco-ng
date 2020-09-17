@@ -18,6 +18,8 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this._searchService.getOrganizations(null).subscribe({
       next: (searchResponse: SearchResponse<Organization>) => {
+        console.log(searchResponse);
+        
         this.organizationsTotal = searchResponse.hits.total;
 
         searchResponse.aggregations['country'].buckets.forEach(element => {

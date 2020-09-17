@@ -46,6 +46,7 @@ export class OrgViewAccordionComponent implements OnInit
 
 	/**
 	 * The array of data that should be rendered by the accordion, where each object represents one row. 
+	 * This array has the same length than the `panelsTitle` field. 
      * By default, its value is `[]`. 
 	 */
 	@Input()
@@ -58,10 +59,16 @@ export class OrgViewAccordionComponent implements OnInit
 	@Input()
 	public orgViewAccordionType: OrgViewAccordionType;
 
+	/**
+	 * The panels title. 
+	 * This array has the same length than the `value` field. 
+     * By default, its value is `[]`. 
+	 */
+	@Input()
+	public panelsTitle: string[];
+
 	@ViewChild(MatAccordion, { static: true })
 	private _accordion: MatAccordion;
-
-	private _panelsTitle: string[];
 
 	public constructor()
 	{
@@ -71,19 +78,11 @@ export class OrgViewAccordionComponent implements OnInit
 		this.desc = undefined;
 		this.value = [];
 		this.orgViewAccordionType = OrgViewAccordionType.Relationships;
-
-		this._panelsTitle = [];
+		this.panelsTitle = [];  /* This array has the same length than the `value` field. */
 	}
 
 	public ngOnInit(): void
 	{
-		const panelsTitleCount = this.value.length;
-
-		/* Initializae the `_panelsTitle` array. */
-		for (let i: number = 0; i < panelsTitleCount; )
-		{
-			this._panelsTitle.push(`${ this.orgViewAccordionType } (${ ++i }) of (${ panelsTitleCount })`);
-		}
 	}
 
 	/**
@@ -92,14 +91,5 @@ export class OrgViewAccordionComponent implements OnInit
 	public get getAccordion(): MatAccordion
 	{
 		return this._accordion;
-	}
-
-	/**
-	 * Returns the panel title for the specified panel position. 
-	 * @param pos The position of the panel. 
-	 */
-	public getPanelTitle(pos: number): string
-	{
-		return this._panelsTitle[pos];
 	}
 }

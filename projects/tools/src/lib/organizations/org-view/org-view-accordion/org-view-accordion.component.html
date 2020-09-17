@@ -10,16 +10,16 @@
 	</div>
 
 	<mat-accordion class="static-mat-accordion" multi [attr.aria-label]="desc">
-		<mat-expansion-panel *ngFor="let val of value; let pos = index">
+		<mat-expansion-panel *ngFor="let panelTitle of panelsTitle; let pos = index">
 			<mat-expansion-panel-header>
 				<mat-panel-title>
-					{{ getPanelTitle(pos) }}
+					{{ panelTitle }}
 				</mat-panel-title>
 			</mat-expansion-panel-header>
 
 			<ng-container [ngSwitch]="orgViewAccordionType">
-				<toco-org-view-relationship *ngSwitchCase="orgViewAccordion_Type.Relationships" [value]="val"></toco-org-view-relationship>
-				<toco-org-view-address *ngSwitchCase="orgViewAccordion_Type.Addresses" [value]="val"></toco-org-view-address>
+				<toco-org-view-relationship *ngSwitchCase="orgViewAccordion_Type.Relationships" [value]="value[pos]"></toco-org-view-relationship>
+				<toco-org-view-address *ngSwitchCase="orgViewAccordion_Type.Addresses" [value]="value[pos]"></toco-org-view-address>
 			</ng-container>
 		</mat-expansion-panel>
 	</mat-accordion>
