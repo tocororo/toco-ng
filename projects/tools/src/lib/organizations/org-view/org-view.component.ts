@@ -52,7 +52,7 @@ export class OrgViewComponent implements OnInit
 		this._panelsTitle_Relationships = ['Instituciones Padres', 'Instituciones Hijas', 'Instituciones Relacionadas'];
 		this._relationshipsValue = this._createRelationshipsValue();
 
-		this._panelsTitle_Addresses = this._createPanelsTitle_Generic(this.orgViewAccordionType.Addresses, this.org.addresses.length);
+		this._panelsTitle_Addresses = (this.org.addresses) ? this._createPanelsTitle_Generic(this.orgViewAccordionType.Addresses, this.org.addresses.length) : [ ];
 	}
 
 	private _createPanelsTitle_Generic(orgViewAccordionType: OrgViewAccordionType, panelsTitleCount: number): string[]
@@ -85,33 +85,36 @@ export class OrgViewComponent implements OnInit
 			});
 		}
 
-		for(item of this.org.relationships)
+		if (this.org.relationships)
 		{
-			switch(item.type)
+			for(item of this.org.relationships)
 			{
-				case 'parent':
+				switch(item.type)
 				{
-					pos = 0;
-					break;
+					case 'parent':
+					{
+						pos = 0;
+						break;
+					}
+
+					case 'child':
+					{
+						pos = 1;
+						break;
+					}
+
+					default:  /* 'related' */
+					{
+						pos = 2;
+						break;
+					}
 				}
 
-				case 'child':
-				{
-					pos = 1;
-					break;
-				}
-
-				default:  /* 'related' */
-				{
-					pos = 2;
-					break;
-				}
+				result[pos].links.push({
+					'url': item.label,
+					'name': item.label
+				});
 			}
-
-			result[pos].links.push({
-				'url': item.label,
-				'name': item.label
-			});
 		}
 
 		return result;
