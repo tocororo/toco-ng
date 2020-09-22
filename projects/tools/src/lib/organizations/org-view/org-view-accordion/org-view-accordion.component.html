@@ -10,17 +10,19 @@
 	</div>
 
 	<mat-accordion class="static-mat-accordion" multi [attr.aria-label]="desc">
-		<mat-expansion-panel *ngFor="let panelTitle of panelsTitle; let pos = index">
-			<mat-expansion-panel-header>
-				<mat-panel-title>
-					{{ panelTitle }}
-				</mat-panel-title>
-			</mat-expansion-panel-header>
+		<ng-container *ngFor="let panelTitle of panelsTitle; let pos = index">
+			<mat-expansion-panel *ngIf="panelHasElement(pos)">
+				<mat-expansion-panel-header>
+					<mat-panel-title>
+						{{ panelTitle }}
+					</mat-panel-title>
+				</mat-expansion-panel-header>
 
-			<ng-container [ngSwitch]="orgViewAccordionType">
-				<toco-org-view-relationship *ngSwitchCase="orgViewAccordion_Type.Relationships" [value]="value[pos]"></toco-org-view-relationship>
-				<toco-org-view-address *ngSwitchCase="orgViewAccordion_Type.Addresses" [value]="value[pos]"></toco-org-view-address>
-			</ng-container>
-		</mat-expansion-panel>
+				<ng-container [ngSwitch]="orgViewAccordionType">
+					<toco-org-view-relationship *ngSwitchCase="orgViewAccordion_Type.Relationships" [value]="value[pos]"></toco-org-view-relationship>
+					<toco-org-view-address *ngSwitchCase="orgViewAccordion_Type.Addresses" [value]="value[pos]"></toco-org-view-address>
+				</ng-container>
+			</mat-expansion-panel>
+		</ng-container>
 	</mat-accordion>
 </fieldset>

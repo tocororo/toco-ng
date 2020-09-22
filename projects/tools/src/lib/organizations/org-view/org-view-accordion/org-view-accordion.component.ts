@@ -92,4 +92,26 @@ export class OrgViewAccordionComponent implements OnInit
 	{
 		return this._accordion;
 	}
+
+	/**
+	 * Returns true if the panel has element; otherwise, false. 
+	 * The panel always has element by default. 
+	 * @param pos The panel position. 
+	 */
+	public panelHasElement(pos: number): boolean
+	{
+		switch(this.orgViewAccordionType)
+		{
+			case this.orgViewAccordion_Type.Relationships:
+			{
+				return this.value[pos].links.length;
+			}
+
+			default:
+			{
+				/* The panel always has element by default. */
+				return true;
+			}
+		}
+	}
 }

@@ -31,7 +31,7 @@ export class AggregationsComponent implements OnInit {
   @Output()
   keySelect = new EventEmitter<AggregationsSelection>();
 
-  keys: string[] = [];
+  keys = [];
 
   constructor() {}
 
@@ -40,10 +40,35 @@ export class AggregationsComponent implements OnInit {
       if (this.aggregations.hasOwnProperty(key)) {
         const element = this.aggregations[key];
         this.keys.push(key);
+        //this.keys.push({"key":key, "sp":this._translate(key)});
       }
     }
+    console.log("cola");
+    console.log(this.keys);
 
   }
+
+  private _translate(key){
+    switch (key) 
+    {
+      case "status": {
+        return "Estado";        
+      }
+      case "country": {
+        return "País";        
+      }
+      case "state": {
+        return "Provincia (Estado)";        
+      }
+      case "types": {
+        return "Tipos";        
+      }
+      
+    }
+     
+    return key;   
+  }
+    
 
   isSelected(aggrKey, bucket: AggrBucket) {
 

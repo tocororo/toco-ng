@@ -55,9 +55,9 @@ export class OrgViewGeoNamesCityComponent
 	{
 		if (this.value)
 		{
-			this._createValueAsArray(this.value.geonames_admin1, this._geonames_admin1);
+			if (this.value.geonames_admin1) this._createValueAsArray(this.value.geonames_admin1, this._geonames_admin1);
 			if (this.value.geonames_admin2) this._createValueAsArray(this.value.geonames_admin2, this._geonames_admin2);
-			this._createValueAsArray(this.value.nuts_level1, this._nuts_level1);
+			if (this.value.nuts_level1) this._createValueAsArray(this.value.nuts_level1, this._nuts_level1);
 			if (this.value.nuts_level2) this._createValueAsArray(this.value.nuts_level2, this._nuts_level2);
 			if (this.value.nuts_level3) this._createValueAsArray(this.value.nuts_level3, this._nuts_level3);
 		}

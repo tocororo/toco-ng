@@ -4,9 +4,9 @@
 <fieldset class="static-geo-names-city-fieldset">
     <legend class="static-geo-names-city-fieldset-legend">{{ desc }}</legend>
 
-    <static-text [desc]="'GeoNames ID'" [value]="value.id"></static-text>
-    <static-text [desc]="'Name of the city'" [value]="value.city"></static-text>
-    <static-table [desc]="'geonames_admin1'" [value]="getGeoNamesAdmin1"
+    <static-text *ngIf="value.id" [desc]="'GeoNames ID'" [value]="value.id"></static-text>
+    <static-text *ngIf="value.city" [desc]="'Name of the city'" [value]="value.city"></static-text>
+    <static-table *ngIf="value.geonames_admin1" [desc]="'geonames_admin1'" [value]="getGeoNamesAdmin1"
         [columnsObjectProperty]="['property', 'value']"
         [columnsHeaderText]="['Property', 'Value']"
     >
@@ -16,7 +16,7 @@
         [columnsHeaderText]="['Property', 'Value']"
     >
     </static-table>
-    <static-table [desc]="'nuts_level1'" [value]="getNutsLevel1"
+    <static-table *ngIf="value.nuts_level1" [desc]="'nuts_level1'" [value]="getNutsLevel1"
         [columnsObjectProperty]="['property', 'value']"
         [columnsHeaderText]="['Property', 'Value']"
     >

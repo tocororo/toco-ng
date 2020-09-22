@@ -17,6 +17,8 @@ import { OrgAddComponent } from './org-add/org-add.component';
 import { OrgSearchComponent } from './org-search/org-search.component';
 import { MatAutocompleteModule, MatChipsModule } from '@angular/material';
 import { OrgTableEditComponent } from './org-table-edit/org-table-edit.component';
+import { OrgFooterComponent } from './org-footer/org-footer.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
 	declarations: [
@@ -28,23 +30,26 @@ import { OrgTableEditComponent } from './org-table-edit/org-table-edit.component
 		OrgEditComponent,
 		OrgAddComponent,
 		OrgSearchComponent,
-		OrgTableEditComponent
+		OrgTableEditComponent,
+		OrgFooterComponent
 	],
 
 	imports: [
 		SharedModule,
 		ReactiveFormsModule,
+		RouterModule,
 		TocoFormsModule,
 		MatAutocompleteModule,
 		MatChipsModule,
-		StaticsModule
+		StaticsModule		
 	],
 
 	exports: [
 		OrgViewComponent,
 		OrgEditComponent,
 		OrgAddComponent,
-		OrgSearchComponent
+		OrgSearchComponent,
+		OrgFooterComponent
 	]
 })
 export class OrganizationsModule
