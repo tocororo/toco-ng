@@ -20,8 +20,8 @@ export class OrgViewerComponent implements OnInit
 		/* Gets the `Organization` data. */
 		this._activatedRoute.data.subscribe(
 			(data) => {
-				// this.org = data.org.metadata;
-				this.org = data.org;
+				this.org = data.org.metadata;
+				// this.org = data.org;
 
 				console.log('Data got for viewing: ', this.org);
 			}
