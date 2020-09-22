@@ -1,7 +1,8 @@
 
 import { Component, Input } from '@angular/core';
+import { RelationshipsValue } from '../org-view.component';
 
-import { Relationship } from '@toco/tools/entities';
+
 
 @Component({
 	selector: 'toco-org-view-relationship',
@@ -15,7 +16,7 @@ export class OrgViewRelationshipComponent
      * By default, its value is `undefined`. 
 	 */
 	@Input()
-	public value: Relationship;
+	public value: RelationshipsValue;
 
 	public constructor()
 	{
