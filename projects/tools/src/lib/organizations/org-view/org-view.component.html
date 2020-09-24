@@ -4,9 +4,9 @@
 
     <!-- <div mat-card-avatar class="example-header-image"></div> -->
     <mat-card-title class="title-padding">{{ org.name }}</mat-card-title>
-    <mat-card-subtitle class="title-padding">UUID Organización en Iroko: {{ org.id }}</mat-card-subtitle>
+    <mat-card-subtitle class="title-padding">UUID de la organización en Iroko: {{ org.id }}</mat-card-subtitle>
     <mat-card-subtitle *ngIf="org.status" class="cursor-default title-padding">
-      Estatus de la Organización: {{ org.status }}
+      Estatus de la organización: {{ org.status }}
     </mat-card-subtitle>
 
   </mat-card-header>
@@ -15,30 +15,30 @@
 
   <mat-card-content>
 
-    <static-table *ngIf="org.identifiers && org.identifiers.length" [desc]="'Lista de los identificadores de la Organización'" [value]="org.identifiers"
+    <static-table *ngIf="org.identifiers && org.identifiers.length" [desc]="'Lista de los identificadores de la organización'" [value]="org.identifiers"
       [columnsObjectProperty]="['idtype', 'value']"
       [columnsHeaderText]="['Identifier type', 'Identifier value']"
     >
     </static-table>
-    <static-chips *ngIf="org.aliases && org.aliases.length" [desc]="'Lista de otros nombres con los que se conoce la Institución'" [value]="org.aliases"></static-chips>
-    <static-chips *ngIf="org.acronyms && org.acronyms.length" [desc]="'Lista de los acrónimos con que se conoce la Institución'" [value]="org.acronyms"></static-chips>
-    <static-chips *ngIf="org.types && org.types.length" [desc]="'Lista de los tipos que describen la Institución'" [value]="org.types"></static-chips>
-    <static-text *ngIf="org.wikipedia_url" [desc]="'URL de la página de Wikipedia de la Institución'" [value]="org.wikipedia_url"></static-text>
-    <static-text *ngIf="org.email_address" [desc]="'Correo electrónico de contacto de la Institución'" [value]="org.email_address"></static-text>
-    <!-- <static-chips *ngIf="org.ip_addresses && org.ip_addresses.length" [desc]="'The list of IP addresses known to belong to the institute'" [value]="org.ip_addresses"></static-chips> -->
-    <static-text *ngIf="org.established" [desc]="'Año de fundada la Institución'" [value]="org.established"></static-text>
-    <static-chips *ngIf="org.links && org.links.length" [desc]="'Lista de los enlaces conocidos de la Institución'" [value]="org.links"></static-chips>
-    <static-table *ngIf="org.labels && org.labels.length" [desc]="'Nombre de la Institución en diferentes lenguajes'" [value]="org.labels"
+    <static-chips *ngIf="org.aliases && org.aliases.length" [desc]="'Lista de otros nombres con los que se conoce la organización'" [value]="org.aliases"></static-chips>
+    <static-chips *ngIf="org.acronyms && org.acronyms.length" [desc]="'Lista de los acrónimos con que se conoce la organización'" [value]="org.acronyms"></static-chips>
+    <static-chips *ngIf="org.types && org.types.length" [desc]="'Lista de los tipos que describen la organización'" [value]="org.types"></static-chips>
+    <static-text *ngIf="org.wikipedia_url" [desc]="'URL de la página de Wikipedia de la organización'" [value]="org.wikipedia_url"></static-text>
+    <static-text *ngIf="org.email_address" [desc]="'Correo electrónico de contacto de la organización'" [value]="org.email_address"></static-text>
+    <!-- <static-chips *ngIf="org.ip_addresses && org.ip_addresses.length" [desc]="'Lista de direcciones IP conocidas que pertenecen a la organización'" [value]="org.ip_addresses"></static-chips> -->
+    <static-text *ngIf="org.established" [desc]="'Año de fundada la organización'" [value]="org.established"></static-text>
+    <static-chips *ngIf="org.links && org.links.length" [desc]="'Lista de los enlaces conocidos de la organización'" [value]="org.links"></static-chips>
+    <static-table *ngIf="org.labels && org.labels.length" [desc]="'Nombre de la organización en diferentes lenguajes'" [value]="org.labels"
       [columnsObjectProperty]="['label', 'iso639']"
       [columnsHeaderText]="['Institute name in a language variant', 'ISO-639-1 language code']"
     >
     </static-table>
-    <toco-org-view-accordion *ngIf="org.relationships && org.relationships.length" [desc]="'Relaciones con otras instituciones'" [value]="getValue_Relationships"
+    <toco-org-view-accordion *ngIf="org.relationships && org.relationships.length" [desc]="'Relaciones con otras organizaciones'" [value]="getValue_Relationships"
       [orgViewAccordionType]="orgViewAccordionType.Relationships"
       [panelsTitle] = "getPanelsTitle_Relationships"
     >
     </toco-org-view-accordion>
-    <toco-org-view-accordion *ngIf="org.addresses && org.addresses.length" [desc]="'Direcciones conocidas de la Institución'" [value]="org.addresses"
+    <toco-org-view-accordion *ngIf="org.addresses && org.addresses.length" [desc]="'Direcciones conocidas de la organización'" [value]="org.addresses"
       [orgViewAccordionType]="orgViewAccordionType.Addresses"
       [panelsTitle] = "getPanelsTitle_Addresses"
     >

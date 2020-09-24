@@ -49,7 +49,7 @@ export class OrgViewComponent implements OnInit
 
 	public ngOnInit(): void
 	{
-		this._panelsTitle_Relationships = ['Instituciones Padres', 'Instituciones Hijas', 'Instituciones Relacionadas'];
+		this._panelsTitle_Relationships = ['Organizaciones Padres', 'Organizaciones Hijas', 'Organizaciones Relacionadas'];
 		this._relationshipsValue = this._createRelationshipsValue();
 
 		this._panelsTitle_Addresses = (this.org.addresses) ? this._createPanelsTitle_Generic(this.orgViewAccordionType.Addresses, this.org.addresses.length) : [ ];
@@ -71,9 +71,9 @@ export class OrgViewComponent implements OnInit
 	private _createRelationshipsValue(): RelationshipsValue[]
 	{
 		/* The positions represent: 
-		 * pos = 0 --> Instituciones Padres 
-		 * pos = 1 --> Instituciones Hijas 
-		 * pos = 2 --> Instituciones Relacionadas */
+		 * pos = 0 --> Organizaciones Padres 
+		 * pos = 1 --> Organizaciones Hijas 
+		 * pos = 2 --> Organizaciones Relacionadas */
 		let result: RelationshipsValue[] = [ ];
 		let pos: number = -1;
 		let item: any;
