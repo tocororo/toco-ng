@@ -47,8 +47,11 @@ export class SourceViewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+
     this.route.data.subscribe(
       (response) => {
+        console.log("VIEW SOURCE")
+        console.log(response);
         if (response.record && response.record.metadata) {
           let src = response.record.metadata;
           switch (src.source_type) {

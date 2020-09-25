@@ -77,4 +77,8 @@ export class CatalogService extends HttpService {
         const req = this.env.sceibaApi + 'source/' + uuid;
         return this.http.get<Response<any>>(req);
     }
+    getSourcesOrgAggregation(uuid): Observable<Response<any>> {
+      const req = this.env.sceibaApi + 'source/aggs/org/' + uuid;
+      return this.http.get<Response<any>>(req);
+    }
 }

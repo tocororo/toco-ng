@@ -30,26 +30,26 @@
           {{ roles[org.role].label }}
         </mat-panel-title>
         <mat-panel-description>
-          {{ org.organization.name }}
+          {{ org.name }}
         </mat-panel-description>
       </mat-expansion-panel-header>
       <mat-action-row *ngIf="editable">
         <button
           mat-stroked-button
           [disabled]="org.length === 1"
-          (click)="setAsMain(org.organization)"
+          (click)="setAsMain(org)"
         >
           Establecer como Principal
         </button>
         <button
           mat-stroked-button
           [disabled]="org.length === 1"
-          (click)="removeInst(org.organization)"
+          (click)="removeInst(org)"
         >
           Eliminar
         </button>
       </mat-action-row>
-      <toco-org-view [org]="org.organization"></toco-org-view>
+      <toco-org-view [org]="org"></toco-org-view>
     </mat-expansion-panel>
   </mat-accordion>
 </ng-container>

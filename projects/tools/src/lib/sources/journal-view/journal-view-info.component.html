@@ -115,19 +115,6 @@
       [inset]="true"
       style="margin-bottom: 1em; margin-top: 1em;"
     ></mat-divider>
-    <mat-card style="margin: 1em; background-color: whitesmoke;">
-      <mat-card-header>
-        <mat-card-title>Instituciones:</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <toco-journal-institutions
-          [journalVersion]="journalData"
-          [enableEdit]="false"
-          [ngStyle]="{ margin: '1em' }"
-        >
-        </toco-journal-institutions>
-      </mat-card-content>
-    </mat-card>
 
     <toco-journal-view-term
       title="Grupo:"
@@ -155,10 +142,30 @@
 
     <mat-card style="margin: 1em; background-color: whitesmoke;">
       <mat-card-header>
+        <mat-card-title>Organizaciones:</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <toco-source-organizations
+          [sourceData]="journalData"
+          [editable]="false"
+          [ngStyle]="{ margin: '1em' }"
+        >
+        </toco-source-organizations>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card style="margin: 1em; background-color: whitesmoke;">
+      <mat-card-header>
         <mat-card-title> Indizaciones:</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <mat-accordion>
+        <toco-source-indexes
+        [sourceData]="journalData"
+        [editable]="false"
+        [ngStyle]="{ margin: '1em' }"
+      >
+      </toco-source-indexes>
+        <!-- <mat-accordion>
           <ng-container *ngFor="let termSource of dataBaseTerms">
             <mat-expansion-panel
               *ngIf="termSource.term.vocabulary == vocabularies.INDEXES"
@@ -184,7 +191,7 @@
               </p>
             </mat-expansion-panel>
           </ng-container>
-        </mat-accordion>
+        </mat-accordion> -->
       </mat-card-content>
     </mat-card>
   </mat-card-content>

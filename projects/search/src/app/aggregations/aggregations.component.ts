@@ -83,7 +83,7 @@ export class AggregationsComponent implements OnInit {
 								response.data.tree.term_node.forEach((node: TermNode) => {
 									opts.push({
 										value: node.term.uuid,
-										label: node.term.name,
+										label: node.term.identifier,
 									});
 								});
 								return opts;

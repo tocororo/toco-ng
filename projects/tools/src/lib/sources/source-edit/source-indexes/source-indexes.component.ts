@@ -26,6 +26,8 @@ import { TaxonomyService } from '@toco/tools/backend';
 export class SourceIndexesComponent implements OnInit {
   @Input()
   public sourceData: SourceData;
+  @Input()
+  public editable: boolean = true;
 
   /*
     el arbol entero de los indexes
@@ -67,6 +69,8 @@ export class SourceIndexesComponent implements OnInit {
           this.selectedDatabases = new Array(this.databases.length);
           this._setSelectedDatabses();
           this._setIndexesToSource();
+          console.log('******* complete process');
+
         }
       },
       (err: any) => {
@@ -96,6 +100,25 @@ export class SourceIndexesComponent implements OnInit {
             this.databases[i].children.find(db => db.term.uuid == value.id) != undefined
         )
       };
+    }
+    for (let i = 0; i < this.databases.length; i++) {
+      for (let k = 0; k < this.selectedDatabases[i].dblist.length; k++) {
+        const element = this.selectedDatabases[i].dblist[k];
+        if (!this.selectedDatabases[i].dblist[k].data){
+          this.selectedDatabases[i].dblist[k].data = {};
+        }
+        if (!this.selectedDatabases[i].dblist[k].data['url']){
+          this.selectedDatabases[i].dblist[k].data['url']='';
+        }
+        if (!this.selectedDatabases[i].dblist[k].data['initial_cover']){
+          this.selectedDatabases[i].dblist[k].data['initial_cover']='';
+        }
+        if (!this.selectedDatabases[i].dblist[k].data['end_cover']){
+          this.selectedDatabases[i].dblist[k].data['end_cover']='';
+        }
+
+      }
+
     }
   }
 

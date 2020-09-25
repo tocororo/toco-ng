@@ -1,4 +1,4 @@
-<toco-progress [loading]= "loading"> </toco-progress>
+<toco-progress [loading]="loading"> </toco-progress>
 
 <mat-toolbar>
   <mat-toolbar-row fxLayout="row wrap" fxLayoutAlign="space-between center">
@@ -28,13 +28,12 @@
 
 <toco-journal-edit
   *ngIf="!isStartProcess"
-        [journalVersion]="versionToEdit"
-        (journalEditDone)="finishInclusion()"
-        [showEditHeader]="false"
-        [description]="'Complete y compruebe todos los datos solicitados.'"
-    >
-    </toco-journal-edit>
-
+  [journalVersion]="versionToEdit"
+  (journalEditDone)="finishInclusion()"
+  [showEditHeader]="false"
+  [description]="'Complete y compruebe todos los datos solicitados.'"
+>
+</toco-journal-edit>
 
 <!-- <div *ngIf="!isStartProcess">
   <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>

@@ -18,6 +18,8 @@ import { HomeComponent } from './home/home.component';
 import { StaticPagesComponent } from './static-pages/static-pages.component';
 import { CatalogComponent } from 'projects/catalog/src/app/catalog/catalog.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { SourceViewReadComponent } from 'projects/catalog/src/app/catalog/source-view-read/source-view-read.component';
+import { MysourcesComponent } from 'projects/catalog/src/app/mysources/mysources.component';
 
 
 const routes: Routes = [
@@ -27,7 +29,19 @@ const routes: Routes = [
     },
     {
         path: 'directory',
-        component: CatalogComponent,
+        children: [
+          {
+              path: ':uuid',
+              component: SourceViewReadComponent,
+              resolve: {
+                  record: SourceResolver
+              }
+          },
+          {
+              path: '',
+              component: CatalogComponent,
+          }
+      ],
     },
     {
         path: 'faq',
@@ -83,7 +97,7 @@ const routes: Routes = [
             },
             {
                 path: '',
-                component: SourcesComponent,
+                component: MysourcesComponent,
             }
         ],
         canActivate: [AuthenticationService]

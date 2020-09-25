@@ -37,7 +37,7 @@ export class ExtraInstitutionSelectorComponent implements OnInit {
               label: "Nombre",
               type: FormFieldType.text,
               required: true,
-              value: this.institution.name ? this.institution.name : null,
+              value: this.institution.identifier ? this.institution.identifier : null,
               width: "100%"
             },
             {

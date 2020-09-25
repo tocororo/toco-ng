@@ -81,7 +81,7 @@ export class TermParentComponent extends FormFieldControl_Experimental implement
             startWith(''),
             map(value => {
                 const filterValue = value.toLowerCase();
-                return this.selectOptions.filter(option => option.name.toLowerCase().includes(filterValue));
+                return this.selectOptions.filter(option => option.identifier.toLowerCase().includes(filterValue));
             }));
     }
 

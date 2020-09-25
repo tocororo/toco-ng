@@ -20,7 +20,7 @@ import {
   SourceVersion,
   SearchResponse,
   SourceData,
-  Hit,
+  Hit, Source
 } from "@toco/tools/entities";
 import { stringToKeyValue } from "@angular/flex-layout/extended/typings/style/style-transforms";
 
@@ -55,7 +55,7 @@ export class SourceService {
     this.httpSearch = new HttpClient(handler);
   }
 
-  getMySources(size: number = 10, page: number = 1): Observable<Response<any>> {
+  getMySources(size: number = 10, page: number = 1, role='manager'): Observable<Response<any>> {
     let params = new HttpParams();
     params = params.set("size", size.toString(10));
     params = params.set("page", page.toString(10));
@@ -66,11 +66,16 @@ export class SourceService {
     };
     // this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
 
-    const req = this.env.sceibaApi + this.prefix + "/me/sources/all";
+    const req = this.env.sceibaApi + this.prefix + "/me/"+ role + "/ALL";
     return this.http.get<Response<any>>(req, options);
   }
 
-  newSource(source: any): void {}
+  getMySourcesAllRoles(): Observable<Response<any>> {
+    const req = this.env.sceibaApi + this.prefix + "/me/ALL";
+    return this.http.get<Response<any>>(req);
+  }
+
+  newSource(source: any): void { }
 
   private adhocstringgify(source: SourceVersion) {
     let orgs: string = JSON.stringify(source.data.organizations);
@@ -127,12 +132,6 @@ export class SourceService {
     return this.http.get<Response<any>>(req);
   }
 
-  getSourceByUUID(uuid): Observable<Hit<SourceData>> {
-    // const req = this.env.sceibaApi + this.prefix + "/" + uuid;
-    const req = this.env.sceibaApi + "sources" + "/" + uuid;
-    return this.http.get<Hit<SourceData>>(req);
-  }
-
   getSourcesByTermUUID(uuid): Observable<Response<any>> {
     const req = this.env.sceibaApi + this.prefix + "/relations/" + uuid;
     return this.http.get<Response<any>>(req);
@@ -162,13 +161,66 @@ export class SourceService {
     return this.http.get<Response<any>>(req, options);
   }
 
-  searchSources(params: HttpParams): Observable<SearchResponse<SourceData>> {
+  getSourceByISSN(issn): Observable<Hit<SourceData>> {
+    // const req = this.env.sceibaApi + this.prefix + "/" + uuid;
+    const req = this.env.sceibaApi + "source/byissn/" + issn;
+    return this.http.get<Hit<SourceData>>(req);
+  }
+
+}
+
+
+@Injectable()
+export class SourceServiceNoAuth {
+
+  http: HttpClient;
+  constructor(private env: EnvService, private handler: HttpBackend) {
+
+    // TODO: hay una mejor manera de hacer esto, creando diferentes y propios HttpClients que
+    // tengan un comportamiento especifico (eg: sin/con autenticacion)
+    // ver: https://github.com/angular/angular/issues/20203#issuecomment-369754776
+    // otra solucion seria pasar parametros especiales como {ignore_auth = true} y que el
+    // interceptor actue en consecuencia... .
+    // https://github.com/angular/angular/issues/18155#issuecomment-382438006
+
+    this.http = new HttpClient(handler);
+  }
+
+  getSourceByUUID(uuid): Observable<Hit<SourceData>> {
+    // const req = this.env.sceibaApi + this.prefix + "/" + uuid;
+    const req = this.env.sceibaApi + "sources" + "/" + uuid;
+    return this.http.get<Hit<SourceData>>(req);
+  }
+
+
+  getSourceByPID(pid): Observable<Hit<SourceData>> {
+    // const req = this.env.sceibaApi + this.prefix + "/" + uuid;
+    let params = new HttpParams();
+    params = params.set('value', pid);
+
+    const options = {
+      params: params,
+      // headers: this.headers
+    };
+
+    const req = this.env.sceibaApi + 'source/pid';
+    return this.http.get<Hit<SourceData>>(req, options);
+  }
+
+
+  getSources(params: HttpParams): Observable<SearchResponse<Source>> {
     const options = {
       params: params,
       // headers: this.headers
     };
     console.log(params);
-    const req = this.env.sceibaApi + "sources";
-    return this.httpSearch.get<SearchResponse<SourceData>>(req, options);
+    const req = this.env.sceibaApi + 'sources';
+    return this.http.get<SearchResponse<Source>>(req, options);
   }
+
+  getSourcesOrgAggregation(uuid): Observable<Response<any>> {
+    const req = this.env.sceibaApi + 'source/aggs/org/' + uuid;
+    return this.http.get<Response<any>>(req);
+  }
+
 }

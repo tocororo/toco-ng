@@ -124,7 +124,7 @@ export class TermsComponent implements OnInit, OnChanges, OnDestroy {
     /** Transform the data to something the tree can read. */
     transformer(node: TermNode, level: number) {
         return {
-            name: node.term.name,
+            name: node.term.identifier,
             term: node.term,
             level: level,
             expandable: (node.children.length > 0)

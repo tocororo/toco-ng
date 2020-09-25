@@ -37,6 +37,7 @@ export class SourceEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("EDIT SOURCE")
     this.route.data
       .subscribe((response) => {
 
@@ -80,20 +81,20 @@ export class SourceEditComponent implements OnInit {
 
     console.log('AAaAAAAAAAAAAAAAAAAAA');
     this.saving = false;
-    // this.sourceService.editSource(this.sourceVersion, this.source.id)
-    //   .subscribe(
-    //     (values) => {
-    //       console.log(values);
-    //       this._router.navigate(['sources', this.source.id, 'view']);
-    //       this.saving = false;
-    //     },
-    //     (err: any) => {
-    //       console.log('error: ' + err + '.');
-    //     },
-    //     () => {
-    //       console.log('complete');
-    //     }
-    //   );
+    this.sourceService.editSource(this.sourceVersion, this.source.id)
+      .subscribe(
+        (values) => {
+          console.log(values);
+          this._router.navigate(['sources', this.source.id, 'view']);
+          this.saving = false;
+        },
+        (err: any) => {
+          console.log('error: ' + err + '.');
+        },
+        () => {
+          console.log('complete');
+        }
+      );
 
     // this.saving = true;
     // let toReplace = -1;

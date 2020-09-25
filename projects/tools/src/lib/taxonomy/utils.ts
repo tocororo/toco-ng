@@ -15,7 +15,7 @@ export class TermHelper {
               label: "Nombre",
               type: FormFieldType.text,
               required: true,
-              value: term.name ? term.name : null,
+              value: term.identifier ? term.identifier : null,
               width: "100%"
             },
             {
@@ -79,7 +79,7 @@ export class TermHelper {
               label: "Nombre",
               type: FormFieldType.text,
               required: true,
-              value: term.name ? term.name : null,
+              value: term.identifier ? term.identifier : null,
               width: "100%"
             },
             {
@@ -160,7 +160,7 @@ export class TermHelper {
               type: FormFieldType.text,
               required: true,
               width: "100%",
-              value: term.name ? term.name : null
+              value: term.identifier ? term.identifier : null
             },
             {
               name: "description",

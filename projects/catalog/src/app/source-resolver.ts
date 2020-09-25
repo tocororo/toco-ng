@@ -4,16 +4,17 @@ import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@a
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
-import { SourceService } from '@toco/tools/backend';
+import { SourceServiceNoAuth } from '@toco/tools/backend';
 import { Source } from '@toco/tools/entities';
 
 @Injectable()
 export class SourceResolver implements Resolve<Source>
 {
-    constructor(private service: SourceService, private router: Router)
+    constructor(private service: SourceServiceNoAuth, private router: Router)
     { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
+      console.log("RESOLVE SOURCE")
         let uuid = route.paramMap.get('uuid');
         // return this.service.getSourceByUUIDWithVersions(uuid).pipe(
         return this.service.getSourceByUUID(uuid).pipe(

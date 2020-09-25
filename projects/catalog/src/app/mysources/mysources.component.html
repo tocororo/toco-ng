@@ -1,0 +1,89 @@
+<div class="mat-elevation-z8 width-90 margin1em">
+  <toco-progress [loading]="loading" [position]="'absolute'"></toco-progress>
+
+<mat-tab-group>
+  <mat-tab label="Editor" >
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="editorDataSource" [ngStyle]="{'width.%': '100'}">
+        <!-- Position Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Nombre</th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="source_status">
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <td mat-cell *matCellDef="let element">{{ element.source_status }}</td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button [routerLink]="['directory', element.id]" aria-label="Ver detalles de la Revista">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button [routerLink]="[element.id, 'edit']" aria-label="Editar detalles de la Revista">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+        #editorPaginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        [length]="editorLength"
+      ></mat-paginator>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Gestor">
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="managerDataSource" [ngStyle]="{'width.%': '100'}">
+        <!-- Position Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Nombre</th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="source_status">
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <td mat-cell *matCellDef="let element">{{ element.source_status }}</td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button [routerLink]="[element.id, 'view']" aria-label="Ver detalles de la Revista">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button [routerLink]="[element.id, 'edit']" aria-label="Editar detalles de la Revista">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+        #managerPaginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        [length]="managerLength"
+      ></mat-paginator>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+</div>

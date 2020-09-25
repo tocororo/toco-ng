@@ -10,7 +10,7 @@
     <mat-expansion-panel-header>
       {{ clasification.dbclass.description }} ({{clasification.dblist.length}})
     </mat-expansion-panel-header>
-    <mat-action-row>
+    <mat-action-row *ngIf="editable">
       <button
           mat-icon-button
           aria-label="Adicionar"
@@ -22,7 +22,7 @@
     </mat-action-row>
     <mat-card *ngFor="let db of clasification.dblist; let dbIndex = index">
       <mat-card-header>
-        <mat-card-title>{{ db.description }}</mat-card-title>
+        <mat-card-title><mat-label>{{ db.description }}</mat-label></mat-card-title>
         <mat-card-subtitle>
           <mat-label style="font-weight: bold;">URL: </mat-label>
           {{ db.data["url"] }}
@@ -34,7 +34,7 @@
             {{ db.data["initial_cover"] }} - {{ db.data["end_cover"] }}
           </mat-label>
       </mat-card-content>
-      <mat-card-actions>
+      <mat-card-actions *ngIf="editable">
         <button
           mat-icon-button
           aria-label="Editar"
