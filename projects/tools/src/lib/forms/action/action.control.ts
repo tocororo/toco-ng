@@ -15,8 +15,25 @@ export enum OperationAction
     submit = 'submit'
 }
 
+/**
+ * Returns true if the control is disabled; otherwise, false. 
+ * This function returns false by definition, that is, the control is enabled. 
+ * @param sender Control that wants to know its disabled state. 
+ */
+export function isDisabledDefault(sender: any): boolean
+{
+    /* This function returns false by definition, that is, the control is enabled. */
+    return false;
+}
+
+/**
+ * This function does nothing by definition. 
+ * @param sender Control that was clicked. 
+ */
 export function clickDefault(sender: any): void
-{ /* This function does nothing by default. */ }
+{
+    /* This function does nothing by definition. */
+}
 
 /**
  * A base interface that represents the content of an `ActionControl`. 
@@ -34,6 +51,12 @@ export interface ActionContent extends FormFieldContent
 	 * By default, its value is `undefined`. 
 	 */
     tooltip?: HintValue;
+
+    /**
+     * Returns the function that is executed for knowing if the control is or is not disabled. 
+     * By default, its value is `isDisabledDefault`. 
+     */
+    isDisabled?: (sender: any) => boolean;
 
     /**
      * Returns the function that is executed when the user clicks the control. 
@@ -63,14 +86,14 @@ export abstract class ActionControl extends FormFieldControl
 
     /**
      * Initializes the `content` input property. 
-     * @param label The label to set. If the value is `undefined`, sets the label to `content.label`. 
+     * @param label The default label to use. It is used if the `content.label` is not specified. 
      * @param alwaysHint If it is true then there is always a hint start-aligned. 
      */
-    protected init(label: string | undefined, alwaysHint: boolean): void
+    protected init(label: string, alwaysHint: boolean = true): void
     {
         /* Sets the default values. */
 
-        super.init(label, false, alwaysHint);
+        super.init(label);
 
         /***************************** `mat-icon` properties. *****************************/
         if (this.content.icon != undefined) this.content.icon.setDefaultValueIfUndefined_setPosition(ContentPosition.prefix);
@@ -84,6 +107,7 @@ export abstract class ActionControl extends FormFieldControl
             this.content.tooltip = new HintValue(HintPosition.start, this.content.label);
         }
 
+        if (this.content.isDisabled == undefined) this.content.isDisabled = isDisabledDefault;
         if (this.content.click == undefined) this.content.click = clickDefault;
     }
 

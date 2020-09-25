@@ -1,6 +1,8 @@
 
 import { Component, Input } from '@angular/core';
 
+import { Params } from '@toco/tools/core';
+
 /* For testing. */
 export interface PeriodicElement
 {
@@ -54,7 +56,7 @@ export class StaticTableComponent
      * By default, its value is `[]`. 
 	 */
 	@Input()
-	public value: any[];
+	public value: Params<any>[];
 
     /**
      * The array of strings that indicates the object property name of the columns. 

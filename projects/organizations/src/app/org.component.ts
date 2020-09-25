@@ -1,10 +1,5 @@
 
 import { Component } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
-import { PageEvent } from '@angular/material';
-
-import { Organization, SearchResponse } from '@toco/tools/entities';
-import { SearchService } from '@toco/tools/backend';
 
 @Component({
 	selector: 'toco-org-root',
@@ -20,15 +15,16 @@ export class OrgRootComponent
 	public constructor()
 	{ }
 
-	ngOnInit(): void {
-
-        this.footerInformation =  Array();
+    public ngOnInit(): void
+    {
         this.footerSites =  Array();
+        this.footerInformation =  Array();
 
         this.footerSites.push({ name: "MES", url: "https://www.mes.gob.cu", useRouterLink: false});
-        this.footerSites.push({ name: "Sceiba", url: "https://sceiba-lab.upr.edu.cu", useRouterLink: false});
-        this.footerSites.push({ name: "Dirección Nacional de Publicaciones Seriadas", url: "http://www.seriadascubanas.cult.cu/http://www.seriadascubanas.cult.cu/", useRouterLink:false});
-        this.footerSites.push({ name: "Red Ciencia", url: "http://www.redciencia.cu/", useRouterLink: false});
+        this.footerSites.push({ name: "ONEI", url: "http://www.onei.gob.cu/", useRouterLink:false});
+        this.footerSites.push({ name: "GRID", url: "https://www.grid.ac", useRouterLink: false});
+        this.footerSites.push({ name: "ROR", url: "https://ror.org/", useRouterLink: false});
+        this.footerSites.push({ name: "Wikidata", url: "https://www.wikidata.org/wiki/Wikidata:Main_Page", useRouterLink: false});
 
         this.footerInformation.push({ name: "Términos de uso", url: "https://sceiba-lab.upr.edu.cu/page/politicas", useRouterLink: false});
         this.footerInformation.push({ name: "Privacidad", url: "https://sceiba-lab.upr.edu.cu/page/politicas", useRouterLink: false});

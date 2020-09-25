@@ -1,0 +1,112 @@
+
+<div fxLayout="row wrap" fxLayout.xs="column"
+fxLayoutAlign="space-between end" fxLayoutAlign.xs="space-between center"
+fxLayoutGap="1em" class="form-field-component"
+>
+
+    <ng-container *ngFor="let componentContent of componentsContent" [ngSwitch]="componentContent.type">
+
+        <!-- <ng-container 
+            *ngSwitchCase="formFieldType.checkbox"
+            [formGroup]="componentContent.formGroup"
+        >
+            <mat-checkbox
+                [style.width]="componentContent.width"
+                [style.minWidth]="componentContent.minWidth"
+                [value]="componentContent.value"
+                (input)="$event.target.value"
+                name="{{ componentContent.name }}"
+                required="{{ componentContent.required }}"
+                [formControlName]="componentContent.name"
+            >
+                {{ componentContent.label }}
+            </mat-checkbox>
+        </ng-container> -->
+<!-- 
+        <mat-form-field 
+            *ngSwitchCase="formFieldType.textarea"
+            [style.width]="componentContent.width"
+            [style.minWidth]="componentContent.minWidth"
+            [formGroup]="componentContent.formGroup"
+        >
+            <textarea 
+                matInput [value]="componentContent.value"
+                (input)="$event.target.value"
+                name="{{ componentContent.name }}"
+                placeholder="{{ componentContent.label }}"
+                required="{{ componentContent.required }}"
+                [formControlName]="componentContent.name"
+                minRows="20"
+            ></textarea>
+        </mat-form-field> -->
+
+
+        <!-- <mat-form-field 
+            *ngSwitchCase="formFieldType.datepicker"
+            [style.width]="componentContent.width"
+            [formGroup]="componentContent.formGroup"
+        >
+            <input 
+                matInput
+                [value]="componentContent.value"
+                (input)="$event.target.value"
+                [matDatepicker]="picker"
+                name="{{ componentContent.name }}"
+                placeholder="{{ componentContent.label }}"
+                required="{{ componentContent.required }}"
+                [formControlName]="componentContent.name"
+            >
+            <mat-datepicker-toggle
+                matSuffix [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker 
+                #picker
+                startView="multi-year"
+            ></mat-datepicker>
+        </mat-form-field> -->
+        <toco-checkbox *ngSwitchCase="formFieldType.datepicker" [content]="componentContent"></toco-checkbox>
+        <toco-datepicker *ngSwitchCase="formFieldType.datepicker" [content]="componentContent"></toco-datepicker>
+
+
+        <action-button *ngSwitchCase="formFieldType.action_button" [content]="componentContent"></action-button>
+
+
+        <container-panel *ngSwitchCase="formFieldType.container_panel" [content]="componentContent"></container-panel>
+
+        <container-simple *ngSwitchCase="formFieldType.container_simple" [content]="componentContent"></container-simple>
+
+
+        <container-label-diff-lang *ngSwitchCase="formFieldType.container_label_diff_lang" [content]="componentContent"></container-label-diff-lang>
+
+
+        <input-url *ngSwitchCase="formFieldType.url" [content]="componentContent"></input-url>
+        
+        <input-email *ngSwitchCase="formFieldType.email" [content]="componentContent"></input-email>
+
+        <input-identifier *ngSwitchCase="formFieldType.identifier" [content]="componentContent"></input-identifier>
+
+        <input-issn *ngSwitchCase="formFieldType.issn" [content]="componentContent"></input-issn>
+
+        <input-rnps *ngSwitchCase="formFieldType.rnps" [content]="componentContent"></input-rnps>
+
+        <input-select *ngSwitchCase="formFieldType.select" [content]="componentContent"></input-select>
+
+        <toco-vocabulary *ngSwitchCase="formFieldType.vocabulary" [content]="componentContent"></toco-vocabulary>
+
+        <toco-vocabulary-tree *ngSwitchCase="formFieldType.vocabulary_tree" [content]="componentContent"></toco-vocabulary-tree>
+        
+        <toco-term-parent *ngSwitchCase="formFieldType.term_parent" [content]="componentContent"></toco-term-parent>
+
+        <toco-textarea *ngSwitchCase="formFieldType.textarea" [content]="componentContent"></toco-textarea>
+
+        <toco-select *ngSwitchCase="formFieldType.select_expr" [content]="componentContent"></toco-select>
+
+        <toco-select-filter *ngSwitchCase="formFieldType.select_filter" [content]="componentContent"></toco-select-filter>
+
+        <toco-select-tree *ngSwitchCase="formFieldType.select_tree" [content]="componentContent"></toco-select-tree>
+
+        <input-text *ngSwitchDefault [content]="componentContent"></input-text>
+
+    </ng-container>
+
+</div>

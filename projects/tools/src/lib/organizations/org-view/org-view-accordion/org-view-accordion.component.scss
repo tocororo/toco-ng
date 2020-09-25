@@ -17,6 +17,7 @@
     padding: 0 4px 0 4px;
     background-color: rgba(255, 255, 255, 1);
     color: rgba(0, 0, 0, 0.6);
+    font-size: 10px;
 }
 
 .static-accordion-buttons
@@ -29,10 +30,27 @@ button
     margin-right: 10px;
 }
 
-// .static-mat-accordion
+//.mat-expansion-panel:not([class*=mat-elevation-z])
+.mat-expansion-panel
+{
+    box-shadow: none;
+    border: solid 1px rgb(234, 234, 234);
+}
+
+.mat-expansion-panel:not(.mat-expansion-panel-spacing):not(:first-of-type)
+{
+    margin: -1px 0 0 0;
+}
+
+::ng-deep div.mat-expansion-panel-body
+{
+    padding: 0 0 0 0;
+}
+
+//.static-mat-accordion
 // //.example-headers-align
-// {
+//{
 //     width: 100%;
 //     box-shadow: none;
 //     //margin-top: -18px;
-// }
+//}

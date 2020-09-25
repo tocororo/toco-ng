@@ -5,6 +5,11 @@ import { ContainerControl } from '../container.control';
 
 /**
  * Represents a container control that is showed very simple. 
+ * Usage notes: 
+ *  - It can be used as: 
+ * <container-simple [content]="simpleContent"></container-simple> 
+ * Where `content.formSection` is created, for example, as this: 
+ * this.content.formSection = new FormGroup({ }, [ ]); 
  */
 @Component({
 	selector: 'container-simple',
@@ -25,19 +30,17 @@ export class ContainerSimpleComponent extends ContainerControl implements OnInit
 	public ngOnInit(): void
 	{
 		/* Sets the default values. */
-        this.init(undefined, false, false);
+        this.init('');
 	}
 
     /**
      * Initializes the `content` input property. 
-     * @param label The label to set. If the value is `undefined`, sets the label to `content.label`. 
-     * @param isAbbreviation If it is true then the `label` argument represents an abbreviation; otherwise, false. 
-     * @param alwaysHint If it is true then there is always at leat one hint start-aligned. 
+     * @param label The default label to use. It is used if the `content.label` is not specified. 
      */
-    protected init(label: string | undefined, isAbbreviation: boolean, alwaysHint: boolean): void
+    protected init(label: string): void
     {
         /* Sets the default values. */
 
-        super.init(label, isAbbreviation, alwaysHint);
+        super.init(label);
     }
 }

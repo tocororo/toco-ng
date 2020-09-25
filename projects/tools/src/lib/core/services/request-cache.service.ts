@@ -18,7 +18,7 @@ export abstract class Cachable
 	 * Return zero if the specified request is NOT cachable. 
      * @param req The outgoing request object to handle. 
      */
-    abstract isCachable(req: HttpRequest<any>): number
+    public abstract isCachable(req: HttpRequest<any>): number
 }
 
 /**
@@ -27,7 +27,7 @@ export abstract class Cachable
  */
 export abstract class RequestCache
 {
-	abstract get(req: HttpRequest<any>): HttpResponse<any> | undefined;
+	public abstract get(req: HttpRequest<any>): HttpResponse<any> | undefined;
 
-	abstract set(req: HttpRequest<any>, maxAgeInCache: number, response: HttpResponse<any>): void;
+	public abstract set(req: HttpRequest<any>, maxAgeInCache: number, response: HttpResponse<any>): void;
 }

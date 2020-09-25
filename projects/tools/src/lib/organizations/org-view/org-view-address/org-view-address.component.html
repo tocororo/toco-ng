@@ -1,14 +1,14 @@
 
-<static-text [desc]="'Name of the city'" [value]="value.city"></static-text>
-<static-text [desc]="'Name of the country'" [value]="value.country"></static-text>
-<static-text [desc]="'ISO 3166-1 alpha-2 code of the country'" [value]="value.country_code"></static-text>
-<static-text [desc]="'Latitute of the institute'" [value]="value.lat"></static-text>
-<static-text [desc]="'Longitude of the institute'" [value]="value.lng"></static-text>
-<static-text [desc]="'First line of the address'" [value]="value.line_1"></static-text>
+<static-text *ngIf="value.city" [desc]="'Name of the city'" [value]="value.city"></static-text>
+<static-text *ngIf="value.country" [desc]="'Name of the country'" [value]="value.country"></static-text>
+<static-text *ngIf="value.country_code" [desc]="'ISO 3166-1 alpha-2 code of the country'" [value]="value.country_code"></static-text>
+<static-text *ngIf="value.lat" [desc]="'Latitute of the institute'" [value]="value.lat"></static-text>
+<static-text *ngIf="value.lng" [desc]="'Longitude of the institute'" [value]="value.lng"></static-text>
+<static-text *ngIf="value.line_1" [desc]="'First line of the address'" [value]="value.line_1"></static-text>
 <static-text *ngIf="value.line_2" [desc]="'Second line of the address'" [value]="value.line_2"></static-text>
 <static-text *ngIf="value.line_3" [desc]="'Third line of the address'" [value]="value.line_3"></static-text>
-<static-text [desc]="'Postcode/zipcode'" [value]="value.postcode"></static-text>
-<static-text [desc]="'This address identifies the main location'" [value]="value.primary.toString()"></static-text>
-<static-text [desc]="'Name of the state/region'" [value]="value.state"></static-text>
-<static-text [desc]="'ISO 3166-2 region code'" [value]="value.state_code"></static-text>
-<!-- //TODO: Add here `geonames_city` -->
+<static-text *ngIf="value.postcode" [desc]="'Postcode/zipcode'" [value]="value.postcode"></static-text>
+<static-text *ngIf="value.primary != undefined" [desc]="'This address identifies the main location'" [value]="value.primary.toString()"></static-text>
+<static-text *ngIf="value.state" [desc]="'Name of the state/region'" [value]="value.state"></static-text>
+<static-text *ngIf="value.state_code" [desc]="'ISO 3166-2 region code'" [value]="value.state_code"></static-text>
+<toco-org-view-geo-names-city *ngIf="value.geonames_city" [desc]="'Linked GeoNames data'" [value]="value.geonames_city"></toco-org-view-geo-names-city>
