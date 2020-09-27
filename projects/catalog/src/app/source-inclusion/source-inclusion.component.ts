@@ -6,7 +6,7 @@ import {
   HintValue,
   HintPosition,
   SelectOption,
-  PanelContent_Depr
+  PanelContent_Depr, InputTextComponent
 } from "@toco/tools/forms";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { CatalogService, SourceService, SourceServiceNoAuth } from "@toco/tools/backend";
@@ -21,11 +21,11 @@ import { MatDialog, MatStep, MatStepper, MAT_DIALOG_DATA } from "@angular/materi
 import { Router } from '@angular/router';
 
 @Component({
-  selector: "toco-journal-inclusion",
-  templateUrl: "./journal-inclusion.component.html",
-  styleUrls: ["./journal-inclusion.component.scss"]
+  selector: "toco-source-inclusion",
+  templateUrl: "./source-inclusion.component.html",
+  styleUrls: ["./source-inclusion.component.scss"]
 })
-export class JournalInclusionComponent implements OnInit {
+export class SourceInclusionComponent implements OnInit {
   public journal: Journal = null;
   public versionToEdit: JournalVersion = null;
 
@@ -62,8 +62,10 @@ export class JournalInclusionComponent implements OnInit {
         formSectionContent: [
           {
             name: "idenfifier",
+            formControl: InputTextComponent.getFormControlByDefault(),
             label: "Identificador",
             type: FormFieldType.text,
+            'controlType': InputTextComponent,
             required: true,
             startHint: new HintValue(
               HintPosition.start,
@@ -74,89 +76,6 @@ export class JournalInclusionComponent implements OnInit {
         ]
       }
     ];
-
-    // this.personFormGroup = this._formBuilder.group({});
-    // this.personPanel = [
-    //   {
-    //     title: "Seleccione su rol en la revista",
-    //     description: "",
-    //     iconName: "",
-    //     formSection: this.personFormGroup,
-    //     formSectionContent: [
-    //       {
-    //         name: "role",
-    //         label: "Rol",
-    //         type: FormFieldType.select_expr,
-    //         required: true,
-    //         width: "45%",
-    //         value: this.journal ? this.journal.source_type : "",
-    //         extraContent: {
-    //           getOptions: () => {
-    //             const opts: SelectOption[] = [];
-    //             Object.keys(SourcePersonRole).forEach(key => {
-    //               opts.push({
-    //                 value: SourcePersonRole[key].value,
-    //                 label: SourcePersonRole[key].label
-    //               });
-    //             });
-    //             return opts;
-    //           }
-    //         }
-    //       }
-    //     ]
-    //   }
-    // ];
-
-    // this.agreementFormGroup = this._formBuilder.group({
-    //   agree: new FormControl(false)
-    // });
-    // this.agreementPanel = [
-    //   {
-    //     title: "Acuerdo Legal",
-    //     description: "",
-    //     iconName: "",
-    //     formSection: this.agreementFormGroup,
-    //     formSectionContent: [
-    //       {
-    //         name: "role",
-    //         label: "Rol",
-    //         type: FormFieldType.select_expr,
-    //         required: true,
-    //         width: "45%",
-    //         value: this.journal ? this.journal.source_type : "",
-    //         extraContent: {
-    //           getOptions: () => {
-    //             const opts: SelectOption[] = [];
-    //             Object.keys(SourcePersonRole).forEach(key => {
-    //               opts.push({
-    //                 value: SourcePersonRole[key].value,
-    //                 label: SourcePersonRole[key].label
-    //               });
-    //             });
-    //             return opts;
-    //           }
-    //         }
-    //       },
-    //       {
-    //         name: "agree",
-    //         label: "Acepto",
-    //         type: FormFieldType.checkbox,
-    //         required: true,
-    //         width: "50%",
-    //         value: false
-    //       },
-    //       {
-    //         name: "comment",
-    //         label:
-    //           "Puede escribir aquí un comentario para los gestores del sistema.",
-    //         type: FormFieldType.textarea,
-    //         required: true,
-    //         width: "100%",
-    //         value: ""
-    //       }
-    //     ]
-    //   }
-    // ];
 
     this.searchJournalAction = {
       doit: (data: any) => {
@@ -193,32 +112,6 @@ export class JournalInclusionComponent implements OnInit {
                 HandlerComponent.dialog,
                 title
               );
-              // this.sourceService
-              //   .getSourceVersions(response.data.sources.data[0].uuid)
-              //   .subscribe(
-              //     response => {
-              //       console.log(response);
-
-              //       this.journal.versions.forEach(version => {
-              //         if (version.is_current) {
-              //           title = "Tenemos información sobre la revista";
-              //           content =
-              //             "Compruebe y complete todos los datos solicitados para incluir la revista.";
-              //           this.versionToEdit.data.deepcopy(version.data);
-              //           this.isStartProcess = false;
-              //           this.loading = false;
-              //           m.showMessage(
-              //             StatusCode.OK,
-              //             content,
-              //             HandlerComponent.dialog,
-              //             title
-              //           );
-              //         }
-              //       });
-              //     },
-              //     (error: any) => {},
-              //     () => {}
-              //   );
             } else {
               this.sourceService.getIssnInfo(data.idenfifier).subscribe(
                 response => {
@@ -268,7 +161,7 @@ export class JournalInclusionComponent implements OnInit {
   finishInclusion() {
 
     let dialogRef;
-    this.dialog.open(JournalInclusionAcceptComponent, {
+    this.dialog.open(SourceInclusionAcceptComponent, {
       data: {
         accept: (role) => {
           this.dialog.closeAll();
@@ -322,7 +215,7 @@ export class JournalInclusionComponent implements OnInit {
 </toco-form-container>
   `
 })
-export class JournalInclusionAcceptComponent implements OnInit {
+export class SourceInclusionAcceptComponent implements OnInit {
 
   agreementPanel: PanelContent_Depr[] = [];
   agreementFormGroup: FormGroup;
