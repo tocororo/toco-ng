@@ -25,6 +25,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MarkdownModule } from 'ngx-markdown';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
+import { SourceInclusionAcceptComponent } from 'projects/catalog/src/app/source-inclusion/source-inclusion.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
     })
   ],
   entryComponents: [
-    SourceViewSaveDialog
+    SourceViewSaveDialog,
+    SourceInclusionAcceptComponent
   ],
   providers: [
     EnvServiceProvider,
@@ -60,4 +62,4 @@ import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppRevistasMesModule { }

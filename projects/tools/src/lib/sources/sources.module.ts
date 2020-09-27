@@ -13,7 +13,7 @@ import { SourceService, TaxonomyService } from '@toco/tools/backend';
 
 import { JournalViewComponent } from './journal-view/journal-view.component';
 import { JournalEditComponent } from './source-edit/journal-edit/journal-edit.component';
-import { JournalInclusionComponent, JournalInclusionAcceptComponent } from './journal-inclusion/journal-inclusion.component';
+
 import { JournalViewTermComponent } from './journal-view/journal-view-version-term.component';
 import { JournalViewInfoComponent, JournalViewInfoFieldComponent } from './journal-view/journal-view-info.component';
 import { JournalViewFieldComponent } from './journal-view/journal-view-version-field.component';
@@ -39,13 +39,11 @@ import { SourceIndexesComponent, SourceEditAddIndexComponent } from './source-ed
         JournalViewInfoFieldComponent,
         JournalViewFieldComponent,
         JournalEditComponent,
-        JournalInclusionComponent,
         SourceEditAddIndexComponent,
         JournalViewVersionComponent,
         JournalInstitutionsComponent,
         JournalAddInstitutionComponent,
         JournalAddExtraInstitutionComponent,
-        JournalInclusionAcceptComponent,
         CatalogComponent,
         CatalogFiltersComponent,
         SourcesListComponent,
@@ -58,7 +56,6 @@ import { SourceIndexesComponent, SourceEditAddIndexComponent } from './source-ed
         SourceEditAddIndexComponent,
         JournalAddInstitutionComponent,
         JournalAddExtraInstitutionComponent,
-        JournalInclusionAcceptComponent,
         DialogCatalogJournalInfoDialog,
         SourceOrganizationSelectDialog
     ],

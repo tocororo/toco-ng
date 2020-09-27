@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JournalInclusionComponent } from './journal-inclusion.component';
+import { SourceInclusionComponent } from './source-inclusion.component';
 
-describe('JournalInclusionComponent', () => {
-  let component: JournalInclusionComponent;
-  let fixture: ComponentFixture<JournalInclusionComponent>;
+describe('SourceInclusionComponent', () => {
+  let component: SourceInclusionComponent;
+  let fixture: ComponentFixture<SourceInclusionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ JournalInclusionComponent ]
+      declarations: [ SourceInclusionComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(JournalInclusionComponent);
+    fixture = TestBed.createComponent(SourceInclusionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

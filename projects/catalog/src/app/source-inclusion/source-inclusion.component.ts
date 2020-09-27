@@ -21,11 +21,11 @@ import { MatDialog, MatStep, MatStepper, MAT_DIALOG_DATA } from "@angular/materi
 import { Router } from '@angular/router';
 
 @Component({
-  selector: "toco-journal-inclusion",
-  templateUrl: "./journal-inclusion.component.html",
-  styleUrls: ["./journal-inclusion.component.scss"]
+  selector: "toco-source-inclusion",
+  templateUrl: "./source-inclusion.component.html",
+  styleUrls: ["./source-inclusion.component.scss"]
 })
-export class JournalInclusionComponent implements OnInit {
+export class SourceInclusionComponent implements OnInit {
   public journal: Journal = null;
   public versionToEdit: JournalVersion = null;
 
@@ -268,7 +268,7 @@ export class JournalInclusionComponent implements OnInit {
   finishInclusion() {
 
     let dialogRef;
-    this.dialog.open(JournalInclusionAcceptComponent, {
+    this.dialog.open(SourceInclusionAcceptComponent, {
       data: {
         accept: (role) => {
           this.dialog.closeAll();
@@ -322,7 +322,7 @@ export class JournalInclusionComponent implements OnInit {
 </toco-form-container>
   `
 })
-export class JournalInclusionAcceptComponent implements OnInit {
+export class SourceInclusionAcceptComponent implements OnInit {
 
   agreementPanel: PanelContent_Depr[] = [];
   agreementFormGroup: FormGroup;
