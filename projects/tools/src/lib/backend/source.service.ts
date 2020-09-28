@@ -75,7 +75,6 @@ export class SourceService {
     return this.http.get<Response<any>>(req);
   }
 
-  newSource(source: any): void { }
 
   private adhocstringgify(source: SourceVersion) {
     let orgs: string = JSON.stringify(source.data.organizations);
@@ -126,6 +125,23 @@ export class SourceService {
       this.httpOptions
     );
   }
+  newSource(source: SourceVersion, uuid, role): Observable<Response<any>> {
+    let params = new HttpParams();
+    params = params.set("pid", uuid.toString());
+    params = params.set("role", role.toString());
+
+    const options = {
+      params: params,
+      // headers: this.headers
+    };
+
+    const req = this.env.sceibaApi + this.prefix + "/new";
+    return this.http.post<Response<any>>(
+      req,
+      this.adhocstringgify(source),
+      options
+    );
+  }
 
   getIssnInfo(issn): Observable<Response<any>> {
     const req = this.env.sceibaApi + this.prefix + "/journal/issn/" + issn;
@@ -161,11 +177,7 @@ export class SourceService {
     return this.http.get<Response<any>>(req, options);
   }
 
-  getSourceByISSN(issn): Observable<Hit<SourceData>> {
-    // const req = this.env.sceibaApi + this.prefix + "/" + uuid;
-    const req = this.env.sceibaApi + "source/byissn/" + issn;
-    return this.http.get<Hit<SourceData>>(req);
-  }
+
 
 }
 
@@ -192,6 +204,11 @@ export class SourceServiceNoAuth {
     return this.http.get<Hit<SourceData>>(req);
   }
 
+  getSourceByISSN(issn): Observable<Hit<SourceData>> {
+    // const req = this.env.sceibaApi + this.prefix + "/" + uuid;
+    const req = this.env.sceibaApi + "source/byissn/" + issn;
+    return this.http.get<Hit<SourceData>>(req);
+  }
 
   getSourceByPID(pid): Observable<Hit<SourceData>> {
     // const req = this.env.sceibaApi + this.prefix + "/" + uuid;

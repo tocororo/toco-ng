@@ -19,7 +19,8 @@ import { CatalogComponent } from 'projects/catalog/src/app/catalog/catalog.compo
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SourceViewReadComponent } from 'projects/catalog/src/app/catalog/source-view-read/source-view-read.component';
 import { MysourcesComponent } from 'projects/catalog/src/app/mysources/mysources.component';
-import { SourceInclusionAcceptComponent } from 'projects/catalog/src/app/source-inclusion/source-inclusion.component';
+import { SourceInclusionComponent } from 'projects/catalog/src/app/source-inclusion/source-inclusion.component';
+// import { SourceInclusionAcceptComponent } from 'projects/catalog/src/app/source-inclusion/source-inclusion.component';
 
 
 const routes: Routes = [
@@ -77,7 +78,7 @@ const routes: Routes = [
                 children:[
                     {
                         path: 'journal',
-                        component: SourceInclusionAcceptComponent,
+                        component: SourceInclusionComponent,
                     }
                 ]
             },

@@ -13,7 +13,7 @@ import { CatalogService, SourceService, SourceServiceNoAuth } from "@toco/tools/
 import {
   Journal,
   SourcePersonRole,
-  JournalVersion
+  JournalVersion, Source, SourceVersion, SourceTypes
 } from "@toco/tools/entities";
 import { FilterHttpMap } from "@toco/tools/filters";
 import { StatusCode, HandlerComponent, MessageHandler } from "@toco/tools/core";
@@ -26,8 +26,10 @@ import { Router } from '@angular/router';
   styleUrls: ["./source-inclusion.component.scss"]
 })
 export class SourceInclusionComponent implements OnInit {
-  public journal: Journal = null;
-  public versionToEdit: JournalVersion = null;
+  public source: Source = null;
+  public versionToEdit: SourceVersion = null;
+
+  public sourceType = SourceTypes;
 
   public loading = false;
   public isStartProcess = true;
@@ -75,89 +77,6 @@ export class SourceInclusionComponent implements OnInit {
       }
     ];
 
-    // this.personFormGroup = this._formBuilder.group({});
-    // this.personPanel = [
-    //   {
-    //     title: "Seleccione su rol en la revista",
-    //     description: "",
-    //     iconName: "",
-    //     formSection: this.personFormGroup,
-    //     formSectionContent: [
-    //       {
-    //         name: "role",
-    //         label: "Rol",
-    //         type: FormFieldType.select_expr,
-    //         required: true,
-    //         width: "45%",
-    //         value: this.journal ? this.journal.source_type : "",
-    //         extraContent: {
-    //           getOptions: () => {
-    //             const opts: SelectOption[] = [];
-    //             Object.keys(SourcePersonRole).forEach(key => {
-    //               opts.push({
-    //                 value: SourcePersonRole[key].value,
-    //                 label: SourcePersonRole[key].label
-    //               });
-    //             });
-    //             return opts;
-    //           }
-    //         }
-    //       }
-    //     ]
-    //   }
-    // ];
-
-    // this.agreementFormGroup = this._formBuilder.group({
-    //   agree: new FormControl(false)
-    // });
-    // this.agreementPanel = [
-    //   {
-    //     title: "Acuerdo Legal",
-    //     description: "",
-    //     iconName: "",
-    //     formSection: this.agreementFormGroup,
-    //     formSectionContent: [
-    //       {
-    //         name: "role",
-    //         label: "Rol",
-    //         type: FormFieldType.select_expr,
-    //         required: true,
-    //         width: "45%",
-    //         value: this.journal ? this.journal.source_type : "",
-    //         extraContent: {
-    //           getOptions: () => {
-    //             const opts: SelectOption[] = [];
-    //             Object.keys(SourcePersonRole).forEach(key => {
-    //               opts.push({
-    //                 value: SourcePersonRole[key].value,
-    //                 label: SourcePersonRole[key].label
-    //               });
-    //             });
-    //             return opts;
-    //           }
-    //         }
-    //       },
-    //       {
-    //         name: "agree",
-    //         label: "Acepto",
-    //         type: FormFieldType.checkbox,
-    //         required: true,
-    //         width: "50%",
-    //         value: false
-    //       },
-    //       {
-    //         name: "comment",
-    //         label:
-    //           "Puede escribir aquí un comentario para los gestores del sistema.",
-    //         type: FormFieldType.textarea,
-    //         required: true,
-    //         width: "100%",
-    //         value: ""
-    //       }
-    //     ]
-    //   }
-    // ];
-
     this.searchJournalAction = {
       doit: (data: any) => {
         this.loading = true;
@@ -168,23 +87,26 @@ export class SourceInclusionComponent implements OnInit {
           new FilterHttpMap("title", data.idenfifier)
         ];
 
-        this.journal = new Journal();
-        this.versionToEdit = new JournalVersion();
+
         const m = new MessageHandler(null, this.dialog);
         let title = "No hemos encontrado información";
         let content =
           "Debe completar todos los datos solicitados para incluir la revista.";
 
-        this.sourceService.getSourceByISSN(data.idenfifier).subscribe(
+        this.sourceServiceNoAuth.getSourceByISSN(data.idenfifier).subscribe(
           response => {
             if (response && response.metadata) {
+              this.source = new Journal();
+              this.versionToEdit = new JournalVersion();
               console.log(response.metadata);
-              this.journal.data.deepcopy(response.metadata);
+              this.source.deepcopy(response.metadata);
+              this.versionToEdit.source_uuid = response.metadata.id;
+              this.versionToEdit.data.deepcopy(response.metadata);
+
               title = "Tenemos información sobre la revista";
               content =
                 "Compruebe y complete todos los datos solicitados para incluir la revista.";
-              this.versionToEdit.source_uuid = response.metadata.id;
-              this.versionToEdit.data.deepcopy(response.metadata);
+
               this.isStartProcess = false;
               this.loading = false;
               m.showMessage(
@@ -193,52 +115,52 @@ export class SourceInclusionComponent implements OnInit {
                 HandlerComponent.dialog,
                 title
               );
-              // this.sourceService
-              //   .getSourceVersions(response.data.sources.data[0].uuid)
-              //   .subscribe(
-              //     response => {
-              //       console.log(response);
-
-              //       this.journal.versions.forEach(version => {
-              //         if (version.is_current) {
-              //           title = "Tenemos información sobre la revista";
-              //           content =
-              //             "Compruebe y complete todos los datos solicitados para incluir la revista.";
-              //           this.versionToEdit.data.deepcopy(version.data);
-              //           this.isStartProcess = false;
-              //           this.loading = false;
-              //           m.showMessage(
-              //             StatusCode.OK,
-              //             content,
-              //             HandlerComponent.dialog,
-              //             title
-              //           );
-              //         }
-              //       });
-              //     },
-              //     (error: any) => {},
-              //     () => {}
-              //   );
             } else {
-              this.sourceService.getIssnInfo(data.idenfifier).subscribe(
+              this.sourceServiceNoAuth.getSourceByPID(data.idenfifier).subscribe(
                 response => {
-                  if (response.data && response.data.issn_org) {
-                    this.journal.data.issn.issn_org.deepcopy(
-                      response.data.issn_org
+                  if (response && response.metadata) {
+                    let src = response.metadata;
+                    switch (src.source_type) {
+                      case this.sourceType.JOURNAL.value:
+                        this.source = new Journal();
+                        this.versionToEdit = new JournalVersion();
+                        console.log(response.metadata);
+                        this.source.deepcopy(response.metadata);
+                        this.versionToEdit.source_uuid = response.metadata.id;
+                        this.versionToEdit.data.deepcopy(response.metadata);
+                        title = 'Tenemos información sobre la revista';
+                        content = "Compruebe y complete todos los datos solicitados para incluir la revista.";
+                        break;
+                      default:
+                        title = 'No soportado';
+                        content = 'El identificador: ' +
+                                  data.idenfifier +
+                                  'no pertenece a una revista. Este sistema no soporta esta funcionalidad.';
+                        this.source = new Source();
+                        this.source.data.deepcopy(src);
+                    }
+                    this.loading = false;
+                    m.showMessage(
+                      StatusCode.OK,
+                      content,
+                      HandlerComponent.dialog,
+                      title
                     );
-                    this.versionToEdit.data.issn.issn_org.deepcopy(
-                      response.data.issn_org
+
+                  } else {
+                    this.source = new Journal();
+                    this.versionToEdit = new JournalVersion();
+                    this.source.isNew = true;
+                    this.versionToEdit.isNew = true;
+                    this.loading = false;
+                    this.isStartProcess = false;
+                    m.showMessage(
+                      StatusCode.OK,
+                      content,
+                      HandlerComponent.dialog,
+                      title
                     );
                   }
-                  this.journal.isNew = true;
-                  this.loading = false;
-                  this.isStartProcess = false;
-                  m.showMessage(
-                    StatusCode.OK,
-                    content,
-                    HandlerComponent.dialog,
-                    title
-                  );
                 },
                 (error: any) => { },
                 () => { }
@@ -261,7 +183,7 @@ export class SourceInclusionComponent implements OnInit {
     // this.stepper.next();
   }
   resetEdit() {
-    this.journal = null;
+    this.source = null;
     this.isStartProcess = true;
   }
 
@@ -272,8 +194,8 @@ export class SourceInclusionComponent implements OnInit {
       data: {
         accept: (role) => {
           this.dialog.closeAll();
-          console.log(" KONIEC", role);
-          this.sourceService.editSource(this.versionToEdit, this.versionToEdit.source_uuid)
+          console.log(" KONIEC", role, this.versionToEdit);
+          this.sourceService.newSource(this.versionToEdit, this.versionToEdit.source_uuid, role)
           .subscribe(
             (values) => {
               console.log(values);

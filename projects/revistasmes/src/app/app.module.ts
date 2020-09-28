@@ -26,6 +26,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
 import { SourceInclusionAcceptComponent } from 'projects/catalog/src/app/source-inclusion/source-inclusion.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { SourceInclusionAcceptComponent } from 'projects/catalog/src/app/source-
   ],
   imports: [
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     SharedModule,
     CoreModule,
     SourcesModule,

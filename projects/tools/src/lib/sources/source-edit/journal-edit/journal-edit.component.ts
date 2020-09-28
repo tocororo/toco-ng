@@ -474,7 +474,7 @@ export class JournalEditComponent implements OnInit {
             name: "subjects",
             label: "Materias",
             type: FormFieldType.vocabulary_tree,
-            required: true,
+            required: false,
             width: "80%",
             extraContent: {
               multiple: true,

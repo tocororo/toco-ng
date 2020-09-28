@@ -64,7 +64,8 @@ export class Entity extends EntityBase {
    */
   entitystringify(): string {
     return JSON.stringify(this, (k, v) => {
-      if (k !== "id" && k !== "uuid" && k !== "isNew") {
+      // if (k !== "id" && k !== "uuid" && k !== "isNew") {
+      if (k !== "isNew") {
         return v;
       }
     });

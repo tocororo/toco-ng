@@ -25,15 +25,23 @@
   [actionLabel]="'Buscar'"
   [deleteValuesAfterAction]="true"
 ></toco-form-container>
-
-<toco-journal-edit
-  *ngIf="!isStartProcess"
+<ng-container *ngIf="source && versionToEdit" [ngSwitch]="source.source_type">
+  <toco-journal-edit
+  *ngSwitchCase="sourceType.JOURNAL.value"
   [journalVersion]="versionToEdit"
   (journalEditDone)="finishInclusion()"
   [showEditHeader]="false"
   [description]="'Complete y compruebe todos los datos solicitados.'"
 >
 </toco-journal-edit>
+
+<p *ngSwitchDefault>
+  {{ sourceType.JOURNAL.value }}
+  {{ source.source_type }}
+</p>
+
+</ng-container>
+
 
 <!-- <div *ngIf="!isStartProcess">
   <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
