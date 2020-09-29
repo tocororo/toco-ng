@@ -27,8 +27,11 @@
       {{ source.name }}
     </span>
     <div fxLayout="row wrap" fxLayoutGap="20px">
-      <button mat-stroked-button color="primary" (click)="approve()">
-        Aprobar
+      <button mat-stroked-button color="primary" (click)="approve()" *ngIf="!is_approved()">
+        Publicar
+      </button>
+      <button mat-stroked-button color="primary" (click)="desaprove()" *ngIf="is_approved()">
+        Despublicar
       </button>
       <button mat-stroked-button color="warn" (click)="editVersion()">
         Editar

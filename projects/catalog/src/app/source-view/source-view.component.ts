@@ -23,7 +23,7 @@ import {
   JournalVersion,
   Hit,
   SourceData,
-  JournalData,
+  JournalData, SourceStatus
 } from "@toco/tools/entities";
 import { SourceService } from "@toco/tools/backend";
 
@@ -179,6 +179,15 @@ export class SourceViewComponent implements OnInit {
         const m = new MessageHandler(this._snackBar);
         m.showMessage(StatusCode.OK, res.message);
       });
+  }
+
+  public desapprove(){
+
+  }
+
+
+  public is_approved(){
+    return this.source.source_type == SourceStatus.APPROVED.value;
   }
 }
 
