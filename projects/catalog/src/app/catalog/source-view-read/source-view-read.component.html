@@ -18,18 +18,14 @@
 </div> -->
 
 <ng-container *ngIf="source" [ngSwitch]="source.data.source_type">
-  <mat-toolbar
-    fxLayout="row wrap"
-    fxLayoutAlign="space-between center"
-    [ngStyle]="{ width: '100%', 'height': 'auto', 'padding': '16px', 'min-height': '56px'}"
-  >
-    <span [ngStyle]="{'white-space': 'normal'}">
-      {{ source.name }}
-    </span>
-    <div fxLayout="row wrap" fxLayoutGap="20px">
 
-    </div>
+  <mat-toolbar>
+    <mat-toolbar-row fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <h1>{{ source.data.name }}</h1>
+
+    </mat-toolbar-row>
   </mat-toolbar>
+
 
   <ng-container *ngIf="source">
   <toco-journal-view-info

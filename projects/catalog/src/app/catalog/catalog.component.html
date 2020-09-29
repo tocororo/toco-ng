@@ -3,29 +3,40 @@
 
 <!-- <toco-page-header [info]="['Catálogo de Revistas Científicas Cubanas']">
     </toco-page-header> -->
-<div fxLayoutAlign="end center" fxLayout="row">
-  <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>view_quilt</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="changeLayoutPosition(0)">
-      <mat-icon>arrow_forward</mat-icon>
-      <span>{{ layoutPosition[0].name }}</span>
-    </button>
-    <button mat-menu-item (click)="changeLayoutPosition(1)">
-      <mat-icon>arrow_back</mat-icon>
-      <span>{{ layoutPosition[1].name }}</span>
-    </button>
-    <button mat-menu-item (click)="changeLayoutPosition(2)">
-      <mat-icon>arrow_upward</mat-icon>
-      <span>{{ layoutPosition[2].name }}</span>
-    </button>
-    <button mat-menu-item (click)="changeLayoutPosition(3)">
-      <mat-icon>arrow_downward</mat-icon>
-      <span>{{ layoutPosition[3].name }}</span>
-    </button>
-  </mat-menu>
-</div>
+
+
+<mat-toolbar>
+  <mat-toolbar-row fxLayout="row wrap" fxLayoutAlign="space-between center">
+    <h1>Directorio</h1>
+
+    <div fxLayoutAlign="end center" fxLayout="row">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>view_quilt</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="changeLayoutPosition(0)">
+          <mat-icon>arrow_forward</mat-icon>
+          <span>{{ layoutPosition[0].name }}</span>
+        </button>
+        <button mat-menu-item (click)="changeLayoutPosition(1)">
+          <mat-icon>arrow_back</mat-icon>
+          <span>{{ layoutPosition[1].name }}</span>
+        </button>
+        <button mat-menu-item (click)="changeLayoutPosition(2)">
+          <mat-icon>arrow_upward</mat-icon>
+          <span>{{ layoutPosition[2].name }}</span>
+        </button>
+        <button mat-menu-item (click)="changeLayoutPosition(3)">
+          <mat-icon>arrow_downward</mat-icon>
+          <span>{{ layoutPosition[3].name }}</span>
+        </button>
+      </mat-menu>
+    </div>
+
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
 
 <div
   fxLayout="{{ currentlayout.layout }}"

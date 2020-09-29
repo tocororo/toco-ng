@@ -1,4 +1,4 @@
-<div *ngIf="journal != undefined" fxLayout="row wrap" style="margin: 1em;">
+<div *ngIf="journal != undefined" fxLayout="row wrap" style="margin: 1em">
   <!-- navigate buttons -->
   <mat-toolbar>
     <mat-toolbar-row fxLayoutGap="1em" fxLayoutAlign="end center">
@@ -29,41 +29,37 @@
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
-  <div
-    fxLAyout="row"
-    fxLayoutAlign="space-between start"
-    fxFlexFill
-    style="background-color: whitesmoke;"
-  ></div>
 
   <ng-container *ngIf="journal.versions != undefined">
     <toco-journal-view-info
-    #journalViewInfo
-    [journalVersion]="editingJournal"
-    fxFlex="1 2 calc(15em + 20px)"
-    style="margin: .5em;"
-  >
-  </toco-journal-view-info>
+      #journalViewInfo
+      [journalVersion]="editingJournal"
+      fxFlex="1 2 calc(15em + 20px)"
+      style="margin: 0.5em"
+    >
+    </toco-journal-view-info>
 
-  <ng-container #versionsPanel *ngIf="showVersions">
     <toco-journal-view-version
+      #versionsPanel
+      *ngIf="showVersions"
       [editingJournal]="editingJournal"
       [currentJournal]="selectedJournal"
-      (editingJournalChange)="journalViewInfo.editingJournalChange(editingJournal)"
+      (editingJournalChange)="
+        journalViewInfo.editingJournalChange(editingJournal)
+      "
       fxFlex="1 2 calc(15em + 20px)"
-      style="margin: .5em;"
+      style="margin: 0.5em"
     ></toco-journal-view-version>
   </ng-container>
-  </ng-container>
 
-  <mat-card *ngIf="journal.versions == undefined" style="margin: 1em;">
+  <mat-card *ngIf="journal.versions == undefined" style="margin: 1em">
     <mat-card-content>
       <h1>Este componente necesita las versiones de la revista.</h1>
     </mat-card-content>
   </mat-card>
 </div>
 
-<mat-card *ngIf="journal == undefined" style="margin: 1em;">
+<mat-card *ngIf="journal == undefined" style="margin: 1em">
   <mat-card-content>
     <h1>No se encontró la información solicitada</h1>
   </mat-card-content>

@@ -1,7 +1,6 @@
 <mat-card
   *ngIf="currentJournal.data"
-  fxFlex="1 2 calc(15em + 20px)"
-  style="margin: .5em;"
+
 >
   <mat-card-header>
     <!-- <img mat-card-avatar *ngIf="currentJournal.data.logo; else logotemplate" [style.background-size]="'cover'" src="currentJournal.data.logo">
@@ -11,11 +10,6 @@
 
     <mat-card-title>
       <div fxLAyout="row" fxLayoutAlign="space-between start">
-        <toco-journal-view-version-field
-          [editingJournal]="editingJournal.data"
-          [currentJournal]="currentJournal.data"
-          [type]="journalDataType.title"
-        ></toco-journal-view-version-field>
         <mat-icon
           class="mat-18 notification-position"
           color="accent"
@@ -44,6 +38,13 @@
   <mat-divider [inset]="true" style="margin-bottom: 1em;"></mat-divider>
 
   <mat-card-content>
+
+    <toco-journal-view-version-field
+      [editingJournal]="editingJournal.data"
+      [currentJournal]="currentJournal.data"
+      [type]="journalDataType.title"
+    ></toco-journal-view-version-field>
+
     <!-- subtitle -->
     <toco-journal-view-version-field
       [editingJournal]="editingJournal.data"

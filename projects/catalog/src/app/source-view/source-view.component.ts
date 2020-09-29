@@ -81,11 +81,13 @@ export class SourceViewComponent implements OnInit {
   }
   private _load_source_version() {
     console.log("LOAD SOURCE VERSION...");
-
+    this.saving = true;
     this._sourceService.getSourceVersions(this.source.id).subscribe(
       (response) => {
         console.log(response);
         if (response.status == ResponseStatus.SUCCESS){
+          console.log(response);
+
           this.source.versions = response.data.versions;
           this.source.versions.forEach((element) => {
             if (element.is_current) {
@@ -99,6 +101,7 @@ export class SourceViewComponent implements OnInit {
               this.editingSource.deepcopy(element);
             }
           });
+          this.saving = false;
         }
       },
       (error) => {

@@ -120,14 +120,16 @@ export class JournalViewInfoComponent implements OnInit, OnChanges {
 @Component({
     selector: "toco-journal-view-info-field",
     styleUrls: ["./journal-view.component.scss"],
-    template: `<mat-label style="font-weight: bold;">{{label}}: </mat-label>
+    template: `
+    <mat-label style="font-weight: bold;">{{label}}: </mat-label>
     <mat-label *ngIf="value">
       {{ value }}
     </mat-label>
     <mat-label
       *ngIf="!value"
       class="text-muted text-through"
-      >{{emptyLabel}}</mat-label
+      >{{emptyLabel}}
+    </mat-label
     >`
   })
   export class JournalViewInfoFieldComponent {

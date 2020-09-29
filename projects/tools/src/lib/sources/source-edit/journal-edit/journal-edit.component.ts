@@ -605,6 +605,8 @@ export class JournalEditComponent implements OnInit {
     // );
 
     this.journalData.deepcopy(this.informationFormGroup.value);
+    this.journalData.socialNetworks.deepcopy(this.informationFormGroup);
+
     this.journalData.setIdentifierValue(
       IdentifierSchemas.url,
       this.informationFormGroup.value.url

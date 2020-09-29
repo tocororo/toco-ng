@@ -37,7 +37,7 @@
 
     </mat-toolbar-row
     >
-    
+
     <mat-toolbar-row
         fxLayout="row wrap"
         fxLayoutAlign="center"
@@ -48,10 +48,10 @@
 
         <a mat-button [routerLink]="['/']" value="Inicio">Inicio</a>
         <!-- <a mat-button [routerLink]="['/about']" value="Acerca de">Acerca de</a> -->
-        <a mat-button [routerLink]="['/sources/new/journal']" value="Incluye tu revista">Incluye tu revista</a>
-        <a *ngIf="islogged" mat-button [routerLink]="['/sources']"> Mis Registros </a>
         <a mat-button [routerLink]="['/directory']" value="Catálogo">Directorio</a>
         <a mat-button [routerLink]="['/']" value="Reportes y estadísticas">Reportes y estadísticas</a>
+        <a mat-button [routerLink]="['/sources/new/journal']" value="Incluye tu revista">Incluye tu revista</a>
+        <a *ngIf="islogged" mat-button [routerLink]="['/sources']"> Mis Registros </a>
 
     </mat-toolbar-row
     >
@@ -67,6 +67,7 @@
         <mat-icon>lock</mat-icon>
         Salir
     </button>
+
 </mat-menu>
 
 <mat-menu #menuNetwork="matMenu">
