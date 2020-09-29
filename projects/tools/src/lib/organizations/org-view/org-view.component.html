@@ -38,7 +38,7 @@
       [panelsTitle] = "getPanelsTitle_Relationships"
     >
     </toco-org-view-accordion>
-    <toco-org-view-accordion *ngIf="org.addresses && org.addresses.length" [desc]="'Direcciones conocidas de la organización'" [value]="org.addresses"
+    <toco-org-view-accordion *ngIf="org.addresses && org.addresses.length" [desc]="'Direcciones conocidas de la organización'" [value]="getValue_Addresses"
       [orgViewAccordionType]="orgViewAccordionType.Addresses"
       [panelsTitle] = "getPanelsTitle_Addresses"
     >

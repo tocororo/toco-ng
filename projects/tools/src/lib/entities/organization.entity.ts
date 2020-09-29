@@ -254,6 +254,4 @@ export class Organization extends Entity
 	 * An array of addresses associated with the institute.
 	 */
 	addresses: Array<Address> = new Array<Address>();
-
-
 }
