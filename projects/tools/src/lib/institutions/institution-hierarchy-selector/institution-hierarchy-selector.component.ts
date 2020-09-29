@@ -162,7 +162,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
                 response.data.tree.term_node.forEach((node: TermNode) => {
                   opts.push({
                     value: node.term.uuid,
-                    label: node.term.name
+                    label: node.term.identifier
                   });
                 });
                 return opts;
@@ -239,7 +239,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
                   children.forEach((node: TermNode) => {
                     opts.push({
                       value: node.term.uuid,
-                      label: node.term.name
+                      label: node.term.identifier
                     });
                   });
                 } else if (this.level1) {
@@ -258,7 +258,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
                         (node: TermNode) => {
                           opts.push({
                             value: node.term.uuid,
-                            label: node.term.name
+                            label: node.term.identifier
                           });
                         }
                       );
@@ -359,7 +359,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
                   children.forEach((node: TermNode) => {
                     opts.push({
                       value: node.term.uuid,
-                      label: node.term.name
+                      label: node.term.identifier
                     });
                   });
                 } else if (this.level2) {
@@ -379,7 +379,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
                         (node: TermNode) => {
                           opts.push({
                             value: node.term.uuid,
-                            label: node.term.name
+                            label: node.term.identifier
                           });
                         }
                       );
@@ -419,7 +419,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
             label: "Nombre",
             type: FormFieldType.text,
             required: true,
-            value: this.level3 ? this.level3.name : null,
+            value: this.level3 ? this.level3.identifier : null,
             width: "100%"
           },
           {
@@ -461,7 +461,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
 
   private fillInstitutionData() {
     this.level3.uuid = this.externalFormGroup.value["entity"];
-    this.level3.name = this.externalFormGroup.value["name"];
+    this.level3.identifier = this.externalFormGroup.value["name"];
     this.level3.data["description"] = this.externalFormGroup.value[
       "description"
     ];
@@ -484,7 +484,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
     this.resetControl(
       this.externalFormGroup.controls,
       "name",
-      this.level3.name
+      this.level3.identifier
     );
     this.resetControl(
       this.externalFormGroup.controls,

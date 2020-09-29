@@ -17,7 +17,7 @@ import { SearchResponse, SourceData } from '@toco/tools/entities';
 export class SourcesComponent implements OnInit
 {
     /**
-     * The search filter. 
+     * The search filter.
      */
 	// public searchContent: InputContent;
 
@@ -58,14 +58,14 @@ export class SourcesComponent implements OnInit
             'width': '65%',
 
             'label': 'Write a text to search',
-    
+
             'textAlign': TextAlign.left,
             'ariaLabel': 'Search',
-    
+
             'appearance': TextInputAppearance.outline,
-    
+
             'prefixIcon': new IconValue(IconSource.external, ContentPosition.prefix, 'search'),
-    
+
             'startHint': new HintValue(HintPosition.start, 'Searches when typing stops.')
         };
     }
@@ -73,7 +73,7 @@ export class SourcesComponent implements OnInit
     private _initTableContent(): TableContent<any>
     {
         return {
-            'columnsObjectProperty': ['title', 'source_status', 'version_to_review'],
+            'columnsObjectProperty': ['name', 'source_status', 'version_to_review'],
             // 'columnsObjectProperty': ['id', 'created', 'revision'],
             'columnsHeaderText': ['Nombre', 'Estatus', 'Acciones'],
             //'columnsHeaderText': ['id', 'name', 'registrationDate'],
@@ -118,24 +118,44 @@ export class SourcesComponent implements OnInit
         searchParams = searchParams.set("size", pageRequest.paginator.pageSize.toString());
         searchParams = searchParams.set("page", (pageRequest.paginator.pageIndex + 1).toString());
 
-        return this._souceService.searchSources(searchParams).pipe(
-            map((response: SearchResponse<SourceData>): Page<any> => {
-                console.log('Sources Response: ', response);
-                if (response){
-                    console.log(response.hits.hits);
-                    let data = new Array<SourceData>(response.hits.hits.length);
-                    for (let index = 0; index < response.hits.hits.length; index++) {
-                        data[index] = response.hits.hits[index].metadata;
-                    }
-                    return {
-                        'data': data,
-                        'totalData': response.hits.total,
-                        'pageIndex': pageRequest.paginator.pageIndex,
-                        'pageSize': pageRequest.paginator.pageSize
-                    };
-                }
-                
-            })
-        );
+
+        return this._souceService.getMySources(pageRequest.paginator.pageSize, pageRequest.paginator.pageIndex + 1).pipe(
+          map((response: Response<any>): Page<any> => {
+              console.log('Sources Response: ', response);
+              if (response){
+                  // let data = new Array<SourceData>(response.data.count);
+                  // for (let index = 0; index < response.hits.hits.length; index++) {
+                  //     data[index] = response.data.souces[index];
+                  // }
+                  return {
+                      'data': response.data.sources.hits,
+                      'totalData': response.data.sources.total,
+                      'pageIndex': pageRequest.paginator.pageIndex,
+                      'pageSize': pageRequest.paginator.pageSize
+                  };
+              }
+
+          })
+      );
+
+        // return this._souceService.searchSources(searchParams).pipe(
+        //     map((response: SearchResponse<SourceData>): Page<any> => {
+        //         console.log('Sources Response: ', response);
+        //         if (response){
+        //             console.log(response.hits.hits);
+        //             let data = new Array<SourceData>(response.hits.hits.length);
+        //             for (let index = 0; index < response.hits.hits.length; index++) {
+        //                 data[index] = response.hits.hits[index].metadata;
+        //             }
+        //             return {
+        //                 'data': data,
+        //                 'totalData': response.hits.total,
+        //                 'pageIndex': pageRequest.paginator.pageIndex,
+        //                 'pageSize': pageRequest.paginator.pageSize
+        //             };
+        //         }
+
+        //     })
+        // );
     }
 }

@@ -66,6 +66,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
   private termsTreeObserver: PartialObserver<Response<any>> = {
     next: (response: Response<any>) => {
       console.log("VOCABULARY COMPONENT RESPONSE ",response)
+      console.log(response.data.tree);
 
       this.terms = response.data.tree.term_node;
 
@@ -102,7 +103,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
     if (this.content.required) {
       this.internalControl.setValidators(
         (control: AbstractControl): ValidationErrors | null => {
-          return this.content.value.length == 0
+          return !this.content.value || this.content.value.length == 0
             ? { requiredTerms: "No Terms Selected" }
             : null;
         }
@@ -141,7 +142,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
         this.service
           .getTermsTreeByVocab(this.extraContent.vocab, this.extraContent.level)
           .subscribe(this.termsTreeObserver);
-      } 
+      }
     //   else if(this.extraContent.termID){
     //     this.service.getTermByUUID(this.extraContent.termID, this.extraContent.level)
     //     .subscribe(this.termsTreeObserver);
@@ -183,8 +184,12 @@ export class VocabularyComponent extends FormFieldControl_Experimental
       startWith(""),
       map(value => {
         const filterValue = value ? value.toLowerCase() : "";
+        console.log('************************************')
+        console.log(this.selectOptions);
+        console.log('************************************')
+
         return this.selectOptions.filter(option =>
-          option.term.name.toLowerCase().includes(filterValue)
+          option.term.identifier.toLowerCase().includes(filterValue)
         );
       })
     );

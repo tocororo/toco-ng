@@ -64,7 +64,7 @@ export class NotificationButtonComponent implements OnInit {
 
     ngOnInit() {
         // Emits, one every second (90000ms), starting after 0 seconds
-        this.timerSuscription = timer(0, 90000).subscribe(this.timerObserver);
+        this.timerSuscription = timer(0, 900000).subscribe(this.timerObserver);
 
         if (this.color == undefined) this.color = "primary";
 

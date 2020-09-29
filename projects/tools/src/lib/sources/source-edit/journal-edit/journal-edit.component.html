@@ -23,6 +23,7 @@
 
     <mat-horizontal-stepper labelPosition="end" [linear]="true" #stepper>
 
+
       <mat-step *ngIf="indexesFormGroup" [stepControl]="indexesFormGroup">
         <ng-template matStepLabel>Indizaciones</ng-template>
         <h2>
@@ -57,6 +58,28 @@
           </button>
         </div>
       </mat-step>
+      <mat-step
+        *ngIf="organizationFormGroup"
+        [stepControl]="organizationFormGroup"
+      >
+        <ng-template matStepLabel>Instituciones</ng-template>
+        <h2>Instituciones</h2>
+        <form [formGroup]="organizationFormGroup">
+          <toco-source-organizations [sourceData]="journalData">
+          </toco-source-organizations>
+        </form>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+          <button mat-stroked-button color="accent" matStepperPrevious>
+            Atrás
+          </button>
+          <button mat-stroked-button color="primary" matStepperNext>
+            Siguiente
+          </button>
+        </div>
+      </mat-step>
+
+
+
       <mat-step *ngIf="informationPanel" [stepControl]="informationFormGroup">
         <ng-template matStepLabel>Datos</ng-template>
         <form [formGroup]="informationFormGroup">
@@ -94,27 +117,6 @@
           </toco-form-container>
         </form>
         <div fxLayout="row wrap" fxLayoutAlign="end center">
-          <button mat-stroked-button color="primary" matStepperNext>
-            Siguiente
-          </button>
-        </div>
-      </mat-step>
-
-
-      <mat-step
-        *ngIf="organizationFormGroup"
-        [stepControl]="organizationFormGroup"
-      >
-        <ng-template matStepLabel>Instituciones</ng-template>
-        <h2>Instituciones</h2>
-        <form [formGroup]="organizationFormGroup">
-          <toco-source-organizations [sourceData]="journalData">
-          </toco-source-organizations>
-        </form>
-        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
-          <button mat-stroked-button color="accent" matStepperPrevious>
-            Atrás
-          </button>
           <button mat-stroked-button color="primary" matStepperNext>
             Siguiente
           </button>

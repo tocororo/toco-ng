@@ -32,7 +32,7 @@ import { FilterHttpMap, FiltersService } from "@toco/tools/filters";
 
 import { EnvService } from "@tocoenv/tools/env.service";
 
-import { CatalogService, SearchService, SourceService } from "@toco/tools/backend";
+import { CatalogService, SearchService, SourceService, SourceServiceNoAuth } from "@toco/tools/backend";
 import {
   MatSnackBar,
   MatDialog,
@@ -122,9 +122,8 @@ export class CatalogComponent implements OnInit, OnChanges{
   organizationUUID = '';
 
   constructor(
-    private searchService: SearchService,
-    private service: CatalogService,
     private sourceService: SourceService,
+    private sourceServiceNoAuth: SourceServiceNoAuth,
     private metadata: MetadataService,
     private filterService: FiltersService,
     private env: EnvService,
@@ -187,12 +186,12 @@ export class CatalogComponent implements OnInit, OnChanges{
         // TODO: this is not nice, but..
         let query = '';
         if(this.organizationUUID != ''){
-          query = '(relations.uuid:' + this.organizationUUID + ')';
+          query = '(organizations.id:' + this.organizationUUID + ')';
         }
 
         if (params.has(CatalogFilterKeys.institutions)) {
           query = this.queryAddAndOp(query);
-          query = query.concat("(relations.uuid:");
+          query = query.concat("(organizations.id:");
           params
             .get(CatalogFilterKeys.institutions)
             .split(",")
@@ -206,7 +205,7 @@ export class CatalogComponent implements OnInit, OnChanges{
         }
         if (params.has(CatalogFilterKeys.subjects)) {
           query = this.queryAddAndOp(query);
-          query = query.concat("(relations.uuid:");
+          query = query.concat("(classifications.id:");
           params
             .get(CatalogFilterKeys.subjects)
             .split(",")
@@ -220,7 +219,7 @@ export class CatalogComponent implements OnInit, OnChanges{
         }
         if (params.has(CatalogFilterKeys.grupo_mes)) {
           query = this.queryAddAndOp(query);
-          query = query.concat("(relations.uuid:");
+          query = query.concat("(classifications.id:");
           params
             .get(CatalogFilterKeys.grupo_mes)
             .split(",")
@@ -234,7 +233,7 @@ export class CatalogComponent implements OnInit, OnChanges{
         }
         if (params.has(CatalogFilterKeys.miar_types)) {
           query = this.queryAddAndOp(query);
-          query = query.concat("(relations.uuid:");
+          query = query.concat("(classifications.id:");
           params
             .get(CatalogFilterKeys.miar_types)
             .split(",")
@@ -307,7 +306,7 @@ export class CatalogComponent implements OnInit, OnChanges{
 
   public fetchJournalData() {
     this.loading = true;
-    this.sourceService.searchSources(this.searchParams).subscribe(
+    this.sourceServiceNoAuth.getSources(this.searchParams).subscribe(
       values => {
         this.length = values.hits.total;
 
@@ -366,7 +365,7 @@ export class CatalogComponent implements OnInit, OnChanges{
   }
 
   viewJournal(uuid: string): void {
-    this.sourceService.getSourceByUUID(uuid).subscribe(
+    this.sourceServiceNoAuth.getSourceByUUID(uuid).subscribe(
       (response: Hit<JournalData>) => {
         if (response) {
           let journalVersion = new JournalData();

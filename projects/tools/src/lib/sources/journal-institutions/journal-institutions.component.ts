@@ -287,7 +287,7 @@ export class JournalAddExtraInstitutionComponent implements OnInit {
             label: "Nombre",
             type: FormFieldType.text,
             required: true,
-            value: this.term.name ? this.term.name : null,
+            value: this.term.identifier ? this.term.identifier : null,
             width: "100%"
           },
           {
@@ -351,7 +351,7 @@ export class JournalAddExtraInstitutionComponent implements OnInit {
     this.addAction = {
       doit: (data: any) => {
         console.log(this.formGroup);
-        this.term.name = this.formGroup.value["name"];
+        this.term.identifier = this.formGroup.value["name"];
         this.term.description = this.formGroup.value["description"];
         this.term.data = this.formGroup.value;
 

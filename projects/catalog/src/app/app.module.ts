@@ -12,7 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
 
 import { AuthenticationModule } from '@toco/tools/authentication';
-import { CatalogService, SearchService, SourceService } from '@toco/tools/backend';
+import { CatalogService, SearchService, SourceService, SourceServiceNoAuth } from '@toco/tools/backend';
 import { NotificationModule } from '@toco/tools/notification';
 import { CoreModule, CACHABLE_URL_PROVIDER, REQUEST_CACHE_DIFFERENT_TIME_WITH_MAP_PROVIDER, HTTP_INTERCEPTOR_PROVIDERS } from '@toco/tools/core';
 import { TocoFormsModule } from '@toco/tools/forms';
@@ -26,6 +26,9 @@ import { FiltersComponent } from './filters/filters.component';
 import { CatalogComponent, DialogCatalogJournalInfoDialog } from './catalog/catalog.component';
 import { SourcesModule } from '@toco/tools/sources';
 import { FiltersService } from '@toco/tools/filters';
+import { SourceViewReadComponent } from './catalog/source-view-read/source-view-read.component';
+import { MysourcesComponent } from './mysources/mysources.component';
+import { RoleComponent } from './mysources/role/role.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +39,10 @@ import { FiltersService } from '@toco/tools/filters';
         SourceViewSaveDialog,
         FiltersComponent,
         CatalogComponent,
-        DialogCatalogJournalInfoDialog
+        DialogCatalogJournalInfoDialog,
+        SourceViewReadComponent,
+        MysourcesComponent,
+        RoleComponent
     ],
 
     imports: [
@@ -64,7 +70,8 @@ import { FiltersService } from '@toco/tools/filters';
         CatalogService,
         SearchService,
         FiltersService,
-        SourceService
+        SourceService,
+        SourceServiceNoAuth
     ],
 
     bootstrap: [AppComponent]

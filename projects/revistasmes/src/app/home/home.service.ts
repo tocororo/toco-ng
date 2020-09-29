@@ -16,5 +16,9 @@ export class HomeService {
 
   getOrganizationInfo(organization: string): Observable<Response<any>> {
     return this.http.get<Response<any>>(this.env.sceibaApi + 'source/info/' + organization);
-}
+  }
+  getSourcesOrgAggregation(uuid): Observable<Response<any>> {
+    const req = this.env.sceibaApi + 'source/aggs/org/' + uuid;
+    return this.http.get<Response<any>>(req);
+  }
 }

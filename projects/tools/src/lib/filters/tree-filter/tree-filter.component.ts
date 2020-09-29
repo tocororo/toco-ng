@@ -91,7 +91,7 @@ export class TreeFilterComponent implements OnInit, FilterComponent {
   }
   /** return true if any children is include, false otherwise */
   private _include_node(filter: string, node: TermNode): boolean {
-    if (node.term.name.toLowerCase().includes(filter)) {
+    if (node.term.identifier.toLowerCase().includes(filter)) {
       return true;
     } else if (node.children) {
       for (const child of node.children) {
@@ -142,7 +142,7 @@ export class TreeFilterComponent implements OnInit, FilterComponent {
   /** Transform the data to something the tree can read. */
   transformer(node: TermNode, level: number) {
     const result = {
-      name: node.term.name,
+      name: node.term.identifier,
       level: level,
       expandable: (node.children.length > 0),
       term: node.term,

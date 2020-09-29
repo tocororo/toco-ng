@@ -94,7 +94,7 @@ export class JournalEditComponent implements OnInit {
 
   organizationFormGroup: FormGroup;
 
-  indexes: SourceClasification[] = [];
+  // indexes: SourceClasification[] = [];
   indexesFormGroup: FormGroup;
 
   // institutions: SourceClasification[] = [];
@@ -438,44 +438,44 @@ export class JournalEditComponent implements OnInit {
             width: "30%",
             value: this.journalData ? this.journalData.frequency : "",
           },
-          {
-            // TODO: el top level de unesco de materias....
-            name: "cover",
-            label: "Cobertura Temática",
-            type: FormFieldType.select_expr,
-            required: true,
-            width: "45%",
-            extraContent: {
-              multiple: false,
-              observable: this.taxonomyService.getTermsTreeByVocab(
-                VocabulariesInmutableNames.SUBJECTS,
-                0
-              ),
-              getOptions: (response: any) => {
-                const opts: SelectOption[] = [];
-                response.data.tree.term_node.forEach((node: TermNode) => {
-                  opts.push({
-                    value: node.term,
-                    label: node.term.description,
-                  });
-                });
-                return opts;
-              },
-              selectionChange: (term) => {
-                this.journalCover = new SourceClasification();
-                this.journalCover.description = term.description;
-                this.journalCover.id = term.uuid;
-                this.journalCover.vocabulary = term.vocabulary_id;
-                
-              },
-            },
-          },
+          // {
+          //   // TODO: el top level de unesco de materias....
+          //   name: "cover",
+          //   label: "Cobertura Temática",
+          //   type: FormFieldType.select_expr,
+          //   required: true,
+          //   width: "45%",
+          //   extraContent: {
+          //     multiple: false,
+          //     observable: this.taxonomyService.getTermsTreeByVocab(
+          //       VocabulariesInmutableNames.SUBJECTS,
+          //       0
+          //     ),
+          //     getOptions: (response: any) => {
+          //       const opts: SelectOption[] = [];
+          //       response.data.tree.term_node.forEach((node: TermNode) => {
+          //         opts.push({
+          //           value: node.term,
+          //           label: node.term.description,
+          //         });
+          //       });
+          //       return opts;
+          //     },
+          //     selectionChange: (term) => {
+          //       this.journalCover = new SourceClasification();
+          //       this.journalCover.description = term.description;
+          //       this.journalCover.id = term.uuid;
+          //       this.journalCover.vocabulary = term.vocabulary_id;
+
+          //     },
+          //   },
+          // },
           {
             name: "subjects",
             label: "Materias",
             type: FormFieldType.vocabulary_tree,
             required: true,
-            width: "45%",
+            width: "80%",
             extraContent: {
               multiple: true,
               selectedTermsIds: this.journalData
@@ -540,12 +540,12 @@ export class JournalEditComponent implements OnInit {
     this.indexesFormGroup = this.formBuilder.group({});
   }
   indexerStepper() {
-    console.log(this.journalData);
+    // console.log(this.journalData);
 
-    this.indexes = this.journalData.classifications.filter(
-      (value) => value.vocabulary == VocabulariesInmutableNames.INDEXES
-    );
-    console.log(this.indexes);
+    // this.indexes = this.journalData.classifications.filter(
+    //   (value) => value.vocabulary == VocabulariesInmutableNames.INDEXES
+    // );
+    // console.log(this.indexes);
   }
 
   initStepFinal() {
@@ -619,35 +619,42 @@ export class JournalEditComponent implements OnInit {
       "source_type"
     ];
 
+    const indexes = this.journalData.classifications.filter(
+      (value) => value.vocabulary == VocabulariesInmutableNames.INDEXES
+    );
     this.journalData.classifications = [];
 
-    this.informationFormGroup.value["licence"].forEach((term: Term) => {
-      const ts = new SourceClasification();
-      ts.description = term.description;
-      ts.id = term.uuid;
-      ts.vocabulary = term.vocabulary_id;
-      this.journalData.classifications.push(ts);
-    });
+    if (this.informationFormGroup.value["licence"]){
+        this.informationFormGroup.value["licence"].forEach((term: Term) => {
+        const ts = new SourceClasification();
+        ts.description = term.description;
+        ts.id = term.uuid;
+        ts.vocabulary = term.vocabulary_id;
+        this.journalData.classifications.push(ts);
+      });
+    }
+    // this.informationFormGroup.value["cover"].forEach((term) => {
+    //   const ts = new SourceClasification();
+    //   ts.description = term.description;
+    //   ts.id = term.uuid;
+    //   ts.vocabulary = term.vocabulary_id;
+    //   this.journalData.classifications.push(ts);
+    // });
 
-    this.informationFormGroup.value["cover"].forEach((term) => {
-      const ts = new SourceClasification();
-      ts.description = term.description;
-      ts.id = term.uuid;
-      ts.vocabulary = term.vocabulary_id;
-      this.journalData.classifications.push(ts);
-    });
+    if (this.informationFormGroup.value["subjects"]){
+      this.informationFormGroup.value["subjects"].forEach((term) => {
+        const ts = new SourceClasification();
+        ts.description = term.description;
+        ts.id = term.uuid;
+        ts.vocabulary = term.vocabulary_id;
+        this.journalData.classifications.push(ts);
+      });
 
-    this.informationFormGroup.value["subjects"].forEach((term) => {
-      const ts = new SourceClasification();
-      ts.description = term.description;
-      ts.id = term.uuid;
-      ts.vocabulary = term.vocabulary_id;
-      this.journalData.classifications.push(ts);
-    });
-    console.log(this.indexes);
+    }
 
+    console.log(indexes);
     this.journalData.classifications = this.journalData.classifications.concat(
-      this.indexes
+      indexes
     );
     // this.journalData.organizations = this.source.data.organizations;
 

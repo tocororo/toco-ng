@@ -20,7 +20,7 @@ import { Vocabulary, Term } from '@toco/tools/entities';
 @Injectable()
 export class TaxonomyService {
 
-  private prefix = 'taxonomy';
+  private prefix = 'vocabularies';
 
   private httpOptions = {
     headers: new HttpHeaders(

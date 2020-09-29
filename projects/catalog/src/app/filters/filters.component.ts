@@ -72,6 +72,7 @@ export class FiltersComponent implements OnInit {
   constructor(
     private taxonomyService: TaxonomyService,
     private sourceService: SourceService,
+    private searchService: SearchService,
     private envService: EnvService,
     private _formBuilder: FormBuilder,
     private route: ActivatedRoute
@@ -142,7 +143,49 @@ export class FiltersComponent implements OnInit {
 
     this.panels = [
       {
-        title: "Revistas por Tipo:",
+        title: "Revistas por Institución:",
+        description: "",
+        iconName: "",
+        formSection: this.formGroup,
+        open: this.filters.get(CatalogFilterKeys.institutions) != '',
+        formSectionContent: [
+          {
+            parentFormSection: this.formGroup,
+            name: CatalogFilterKeys.institutions,
+            label: "Instituciones",
+            type: FormFieldType.select_filter,
+            required: false,
+            width: "100%",
+            value: "",
+            extraContent: {
+              multiple: true,
+              selectedTermsIds: this.filters.get(CatalogFilterKeys.institutions).split(","),
+              observable: this.searchService.getOrganizationById(this.organizationUUID),
+              getOptions: (response: any) => {
+
+                console.log(
+                  'AAAAAAAAAAAAAAAAAAAAAAAAAA',
+                  response
+                );
+
+                const opts: SelectOption[] = [];
+                  // this.response.forEach((node: TermNode) => {
+                  //   opts.push({
+                  //     value: node.term.uuid,
+                  //     label: node.term.description,
+                  //   });
+                  // });
+                  // return opts;
+              },
+              selectionChange: selection => {
+                console.log(selection);
+              }
+            }
+          }
+        ]
+      },
+      {
+        title: "Tipo:",
         description: "",
         iconName: "",
         formSection: this.formGroup,
@@ -181,53 +224,6 @@ export class FiltersComponent implements OnInit {
         ]
       },
       {
-        title: "Revistas por Institución:",
-        description: "",
-        iconName: "",
-        formSection: this.formGroup,
-        open: this.filters.get(CatalogFilterKeys.institutions) != '',
-        formSectionContent: [
-          {
-            parentFormSection: this.formGroup,
-            name: CatalogFilterKeys.institutions,
-            label: "Instituciones",
-            type: FormFieldType.select_tree,
-            required: true,
-            width: "100%",
-            value: "",
-            extraContent: {
-              selectedTermsIds: this.filters.get(CatalogFilterKeys.institutions).split(","),
-              observable:
-                this.organizationUUID != ""
-                  ? this.sourceService.countSourcesByTerm(
-                      this.organizationUUID,
-                      2
-                    )
-                  : this.taxonomyService.getTermsTreeByVocab(
-                      VocabulariesInmutableNames.CUBAN_INTITUTIONS
-                    ),
-              getOptions: (response: any) => {
-                if (this.organizationUUID != "") {
-                  console.log(response);
-                  this.institutionTree = this.initInstitutionTree(
-                    response.data.relations
-                  );
-                  return this.institutionTree;
-                } else {
-                  this.institutionTree = this.initInstitutionTreeVocab(
-                    response.data.tree.term_node
-                  );
-                  return this.institutionTree;
-                }
-              },
-              selectionChange: selection => {
-                console.log(selection);
-              }
-            }
-          }
-        ]
-      },
-      {
         formSection: this.formGroup,
         title: "Cobertura Temática:",
         iconName: "",
@@ -258,24 +254,24 @@ export class FiltersComponent implements OnInit {
         description: "",
         open: this.filters.get(CatalogFilterKeys.grupo_mes) != '' || this.filters.get(CatalogFilterKeys.miar_types) != '',
         formSectionContent: [
-          {
-            parentFormSection: this.formGroup,
-            name: CatalogFilterKeys.grupo_mes,
-            label: "Grupo MES",
-            type: FormFieldType.vocabulary,
-            required: true,
-            width: "100%",
-            value: this.filters.get(CatalogFilterKeys.grupo_mes).split(","),
-            extraContent: {
-              multiple: true,
-              selectedTermsIds: this.filters.get(CatalogFilterKeys.grupo_mes).split(","),
-              vocab: VocabulariesInmutableNames.INDEXES_CLASIFICATION
-            }
-          },
+          // {
+          //   parentFormSection: this.formGroup,
+          //   name: CatalogFilterKeys.grupo_mes,
+          //   label: "Grupo MES",
+          //   type: FormFieldType.vocabulary,
+          //   required: true,
+          //   width: "100%",
+          //   value: this.filters.get(CatalogFilterKeys.grupo_mes).split(","),
+          //   extraContent: {
+          //     multiple: true,
+          //     selectedTermsIds: this.filters.get(CatalogFilterKeys.grupo_mes).split(","),
+          //     vocab: VocabulariesInmutableNames.INDEXES_CLASIFICATION
+          //   }
+          // },
           {
             parentFormSection: this.formGroup,
             name: CatalogFilterKeys.miar_types,
-            label: "Tipos de MIAR",
+            label: "Bases de Datos",
             type: FormFieldType.vocabulary,
             required: true,
             width: "100%",
@@ -370,7 +366,7 @@ export class FiltersComponent implements OnInit {
       opts.push({
         element: {
           value: node.term.uuid,
-          label: node.term.name
+          label: node.term.identifier
         },
         children: this.initInstitutionTreeVocab(node.children)
       });

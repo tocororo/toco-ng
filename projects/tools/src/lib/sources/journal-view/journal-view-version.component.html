@@ -170,31 +170,7 @@
       [inset]="true"
       style="margin-bottom: 1em; margin-top: 1em;"
     ></mat-divider>
-    <mat-card style="margin: 1em; background-color: whitesmoke;">
-      <mat-card-header>
-        <mat-card-title>
-          <button
-                mat-icon-button
-                color="accent"
-                matTooltip="Reemplazar"
-                (click)="replaceInstitutions()"
-              >
-                <mat-icon class="mat-18">merge_type</mat-icon>
-              </button>
-              Instituciones:
 
-        </mat-card-title>
-
-      </mat-card-header>
-      <mat-card-content>
-        <toco-journal-institutions
-          [journalVersion]="currentJournal.data"
-          [enableEdit]="false"
-          [ngStyle]="{ margin: '1em' }"
-        >
-        </toco-journal-institutions>
-      </mat-card-content>
-    </mat-card>
     <!-- <p>
       <mat-label style="font-weight: bold;"> Institución: </mat-label>
       <mat-label
@@ -319,18 +295,48 @@
         </mat-chip-list>
       </mat-card-content>
     </mat-card>
+    <mat-card style="margin: 1em; background-color: whitesmoke;">
+      <mat-card-header>
+        <mat-card-title>
+          <!-- <button
+                mat-icon-button
+                color="accent"
+                matTooltip="Reemplazar"
+                (click)="replaceInstitutions()"
+              >
+                <mat-icon class="mat-18">merge_type</mat-icon>
+              </button> -->
+              Organizaciones:
 
+        </mat-card-title>
+
+      </mat-card-header>
+      <mat-card-content>
+        <toco-source-organizations
+          [sourceData]="currentJournal.data"
+          [editable]="false"
+          [ngStyle]="{ margin: '1em' }"
+        >
+        </toco-source-organizations>
+      </mat-card-content>
+    </mat-card>
     <mat-card style="margin: 1em; background-color: whitesmoke;">
       <mat-card-header>
         <mat-card-title> Indizaciones:</mat-card-title>
-        <mat-label
+        <!-- <mat-label
           *ngIf="currentDataBaseTerms.length == 0"
           class="text-muted text-through"
           >Vacío</mat-label
-        >
+        > -->
       </mat-card-header>
       <mat-card-content>
-        <mat-accordion>
+        <toco-source-indexes
+        [sourceData]="currentJournal.data"
+        [editable]="false"
+        [ngStyle]="{ margin: '1em' }"
+        >
+        </toco-source-indexes>
+        <!-- <mat-accordion>
           <ng-container *ngFor="let termSource of currentDataBaseTerms">
             <mat-expansion-panel
               (opened)="panelOpenState = true"
@@ -363,7 +369,7 @@
               </p>
             </mat-expansion-panel>
           </ng-container>
-        </mat-accordion>
+        </mat-accordion> -->
       </mat-card-content>
     </mat-card>
   </mat-card-content>

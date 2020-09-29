@@ -26,7 +26,7 @@ export enum VocabulariesInmutableNames {
 
 export class Term extends Entity {
     uuid = '';
-    name = '';
+    identifier = '';
     description = '';
     data = new EntityBase();
     vocabulary_id = '';
@@ -68,6 +68,7 @@ export class Vocabulary extends Entity {
     name = '';
     description = '';
     human_name = '';
+    identifier = '';
 }
 
 /** File node data with possible child nodes. */
