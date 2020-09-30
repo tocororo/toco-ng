@@ -4,14 +4,15 @@ import {
   OnChanges,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
 } from "@angular/core";
 import {
   JournalData,
   Journal,
   SourceClasification,
   VocabulariesInmutableNames,
-  JournalVersion
+  JournalVersion,
+  SourceOrganization,
 } from "@toco/tools/entities";
 import { MatSnackBar } from "@angular/material";
 import { MessageHandler, StatusCode } from "@toco/tools/core";
@@ -20,7 +21,7 @@ import { JournalDataType } from "./journal-view.component";
 @Component({
   selector: "toco-journal-view-version",
   templateUrl: "./journal-view-version.component.html",
-  styleUrls: ["./journal-view.component.scss"]
+  styleUrls: ["./journal-view.component.scss"],
 })
 export class JournalViewVersionComponent implements OnInit, OnChanges {
   @Input() public currentJournal: JournalVersion;
@@ -113,6 +114,10 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
     }
   }
 
+  public fieldEditingJournalChange() {
+    this.editingJournalChange.emit(this.editingJournal);
+  }
+
   public replace() {
     this.editingJournal = this.currentJournal;
     // this.editingJournal.data.classifications = [];
@@ -142,7 +147,8 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
       ) {
         const element = this.editingJournal.data.classifications[index];
         if (element.id == termSource.id) {
-          this.editingJournal.data.classifications[index].data = termSource.data;
+          this.editingJournal.data.classifications[index].data =
+            termSource.data;
           notFound = false;
         }
       }
@@ -152,32 +158,44 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
       this.editingJournalChange.emit(this.editingJournal);
     }
   }
-  public replaceInstitutions() {
+
+  public replaceSubjects() {
+    this.replaceClassifications(VocabulariesInmutableNames.SUBJECTS);
+  }
+
+  public replaceIndexes() {
+    this.replaceClassifications(VocabulariesInmutableNames.INDEXES);
+  }
+
+  public replaceClassifications(vocab: string) {
     let found = false;
     let newts: SourceClasification[] = [];
 
-    this.editingJournal.data.classifications.forEach(ts => {
-      if (
-        !(
-          ts.vocabulary ==
-            VocabulariesInmutableNames.EXTRA_INSTITUTIONS ||
-          ts.vocabulary == VocabulariesInmutableNames.CUBAN_INTITUTIONS
-        )
-      ) {
+    this.editingJournal.data.classifications.forEach((ts) => {
+      if (ts.vocabulary != vocab) {
         newts.push(ts);
       }
     });
 
-    this.currentJournal.data.classifications.forEach(ts => {
-      if (
-        ts.vocabulary ==
-          VocabulariesInmutableNames.EXTRA_INSTITUTIONS ||
-        ts.vocabulary == VocabulariesInmutableNames.CUBAN_INTITUTIONS
-      ) {
+    this.currentJournal.data.classifications.forEach((ts) => {
+      if (ts.vocabulary == vocab) {
         newts.push(ts);
       }
     });
     this.editingJournal.data.classifications = newts;
+
+    this.editingJournalChange.emit(this.editingJournal);
+  }
+
+  public replaceOrganizations() {
+    let found = false;
+    let newts: SourceOrganization[] = [];
+
+    this.editingJournal.data.organizations.forEach((ts) => {
+      newts.push(ts);
+    });
+
+    this.editingJournal.data.organizations = newts;
 
     this.editingJournalChange.emit(this.editingJournal);
   }

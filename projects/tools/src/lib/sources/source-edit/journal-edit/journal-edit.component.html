@@ -23,6 +23,68 @@
 
     <mat-horizontal-stepper labelPosition="end" [linear]="true" #stepper>
 
+      <mat-step *ngIf="identifiersPanel" [stepControl]="identifiersFormGroup">
+        <ng-template matStepLabel>Identificadores</ng-template>
+        <form [formGroup]="identifiersFormGroup">
+          <toco-form-container
+            #informationPanelContainer
+            [panelsContent]="identifiersPanel"
+            [useAccordion]="false"
+            fxLayout="row"
+            [formGroup]="identifiersFormGroup"
+            [deleteValuesAfterAction]="false"
+          >
+          </toco-form-container>
+        </form>
+        <div fxLayout="row wrap" fxLayoutAlign="end center">
+          <button mat-stroked-button color="primary" matStepperNext>
+            Siguiente
+          </button>
+        </div>
+      </mat-step>
+
+      <mat-step
+        *ngIf="organizationFormGroup"
+        [stepControl]="organizationFormGroup"
+      >
+        <ng-template matStepLabel>Instituciones</ng-template>
+        <h2>Instituciones</h2>
+        <form [formGroup]="organizationFormGroup">
+          <toco-source-organizations [sourceData]="journalVersion.data">
+          </toco-source-organizations>
+        </form>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+          <button mat-stroked-button color="accent" matStepperPrevious>
+            Atrás
+          </button>
+          <button mat-stroked-button color="primary" matStepperNext>
+            Siguiente
+          </button>
+        </div>
+      </mat-step>
+
+      <mat-step *ngIf="informationPanel" [stepControl]="informationFormGroup">
+        <ng-template matStepLabel>Datos</ng-template>
+        <form [formGroup]="informationFormGroup">
+          <toco-form-container
+            #informationPanelContainer
+            [panelsContent]="informationPanel"
+            [useAccordion]="false"
+            fxLayout="row"
+            [formGroup]="informationFormGroup"
+            [deleteValuesAfterAction]="false"
+          >
+          </toco-form-container>
+        </form>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+          <button mat-stroked-button color="accent" matStepperPrevious>
+            Atrás
+          </button>
+          <button mat-stroked-button color="primary" matStepperNext>
+            Siguiente
+          </button>
+        </div>
+      </mat-step>
 
       <mat-step *ngIf="indexesFormGroup" [stepControl]="indexesFormGroup">
         <ng-template matStepLabel>Indizaciones</ng-template>
@@ -58,72 +120,6 @@
           </button>
         </div>
       </mat-step>
-      <mat-step
-        *ngIf="organizationFormGroup"
-        [stepControl]="organizationFormGroup"
-      >
-        <ng-template matStepLabel>Instituciones</ng-template>
-        <h2>Instituciones</h2>
-        <form [formGroup]="organizationFormGroup">
-          <toco-source-organizations [sourceData]="journalData">
-          </toco-source-organizations>
-        </form>
-        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
-          <button mat-stroked-button color="accent" matStepperPrevious>
-            Atrás
-          </button>
-          <button mat-stroked-button color="primary" matStepperNext>
-            Siguiente
-          </button>
-        </div>
-      </mat-step>
-
-
-
-      <mat-step *ngIf="informationPanel" [stepControl]="informationFormGroup">
-        <ng-template matStepLabel>Datos</ng-template>
-        <form [formGroup]="informationFormGroup">
-          <toco-form-container
-            #informationPanelContainer
-            [panelsContent]="informationPanel"
-            [useAccordion]="false"
-            fxLayout="row"
-            [formGroup]="informationFormGroup"
-            [deleteValuesAfterAction]="false"
-          >
-          </toco-form-container>
-        </form>
-        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
-          <button mat-stroked-button color="accent" matStepperPrevious>
-            Atrás
-          </button>
-          <button mat-stroked-button color="primary" matStepperNext>
-            Siguiente
-          </button>
-        </div>
-      </mat-step>
-
-      <mat-step *ngIf="identifiersPanel" [stepControl]="identifiersFormGroup">
-        <ng-template matStepLabel>Identificadores</ng-template>
-        <form [formGroup]="identifiersFormGroup">
-          <toco-form-container
-            #informationPanelContainer
-            [panelsContent]="identifiersPanel"
-            [useAccordion]="false"
-            fxLayout="row"
-            [formGroup]="identifiersFormGroup"
-            [deleteValuesAfterAction]="false"
-          >
-          </toco-form-container>
-        </form>
-        <div fxLayout="row wrap" fxLayoutAlign="end center">
-          <button mat-stroked-button color="primary" matStepperNext>
-            Siguiente
-          </button>
-        </div>
-      </mat-step>
-
-
 
       <mat-step *ngIf="showFinalStep">
         <ng-template matStepLabel>Fin</ng-template>
@@ -157,6 +153,7 @@
           </button>
         </div>
       </mat-step>
+
     </mat-horizontal-stepper>
   </mat-card-content>
 </mat-card>

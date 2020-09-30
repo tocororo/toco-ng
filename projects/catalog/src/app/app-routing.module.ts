@@ -13,7 +13,7 @@ import { NotificationListComponent } from '@toco/tools/notification';
 
 
 import { SourceViewComponent } from './source-view/source-view.component';
-import { SourceResolver } from './source-resolver'
+import { SourceResolver, SourceResolverAuth } from './source-resolver'
 import { SourcesComponent } from './sources/sources.component';
 import { SourceEditComponent } from './source-edit/source-edit.component';
 import { SourceInclusionComponent } from './source-inclusion/source-inclusion.component';
@@ -41,14 +41,14 @@ const routes: Routes = [
                 path: ':uuid/view',
                 component: SourceViewComponent,
                 resolve: {
-                    resolver: SourceResolver
+                    source: SourceResolverAuth
                 }
             },
             {
                 path: ':uuid/edit',
                 component: SourceEditComponent,
                 resolve: {
-                    resolver: SourceResolver
+                    source: SourceResolverAuth
                 }
             },
             // {
@@ -73,7 +73,8 @@ const routes: Routes = [
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
     providers: [
-        SourceResolver
+        SourceResolver,
+        SourceResolverAuth
     ]
 })
 export class AppRoutingModule { }

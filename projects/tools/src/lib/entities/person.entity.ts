@@ -26,7 +26,10 @@ export class Person extends Entity
     country: String;
 }
 
-
+export class UserSourcesRoles{
+    source_uuid: string = '';
+    role: string = '';
+}
 export class UserProfile extends Entity {
     biography: string = '';
     email: string = '';
@@ -37,5 +40,6 @@ export class UserProfile extends Entity {
     institution_rol: string = '';
     username: string = '';
     avatar: string = '';
+    sources: Array<UserSourcesRoles> = new Array<UserSourcesRoles>();
 }
 

@@ -1,7 +1,4 @@
-<mat-card
-  *ngIf="currentJournal.data"
-
->
+<mat-card *ngIf="currentJournal.data">
   <mat-card-header>
     <!-- <img mat-card-avatar *ngIf="currentJournal.data.logo; else logotemplate" [style.background-size]="'cover'" src="currentJournal.data.logo">
             <ng-template #logotemplate>
@@ -35,133 +32,151 @@
     </mat-card-subtitle>
   </mat-card-header>
 
-  <mat-divider [inset]="true" style="margin-bottom: 1em;"></mat-divider>
+  <mat-divider [inset]="true" style="margin-bottom: 1em"></mat-divider>
 
   <mat-card-content>
-
     <toco-journal-view-version-field
-      [editingJournal]="editingJournal.data"
-      [currentJournal]="currentJournal.data"
+      (editingJournalChange)="fieldEditingJournalChange()"
+      [editingJournal]="editingJournal"
+      [currentJournal]="currentJournal"
       [type]="journalDataType.title"
     ></toco-journal-view-version-field>
 
     <!-- subtitle -->
     <toco-journal-view-version-field
-      [editingJournal]="editingJournal.data"
-      [currentJournal]="currentJournal.data"
+      (editingJournalChange)="fieldEditingJournalChange()"
+      [editingJournal]="editingJournal"
+      [currentJournal]="currentJournal"
       [type]="journalDataType.subtitle"
     ></toco-journal-view-version-field>
 
     <toco-journal-view-version-field
-      [editingJournal]="editingJournal.data"
-      [currentJournal]="currentJournal.data"
+    (editingJournalChange)="fieldEditingJournalChange()"
+      [editingJournal]="editingJournal"
+      [currentJournal]="currentJournal"
       [type]="journalDataType.shortname"
     ></toco-journal-view-version-field>
 
-    <mat-label style="font-weight: bold;">ISSN: </mat-label>
-    <div style="margin-left: .8em;">
+    <mat-label style="font-weight: bold">ISSN: </mat-label>
+    <div style="margin-left: 0.8em">
       <toco-journal-view-version-field
-        [editingJournal]="editingJournal.data"
-        [currentJournal]="currentJournal.data"
+      (editingJournalChange)="fieldEditingJournalChange()"
+        [editingJournal]="editingJournal"
+        [currentJournal]="currentJournal"
         [type]="journalDataType.issnP"
       ></toco-journal-view-version-field>
 
       <toco-journal-view-version-field
-        [editingJournal]="editingJournal.data"
-        [currentJournal]="currentJournal.data"
+      (editingJournalChange)="fieldEditingJournalChange()"
+        [editingJournal]="editingJournal"
+        [currentJournal]="currentJournal"
         [type]="journalDataType.issnE"
       ></toco-journal-view-version-field>
 
       <toco-journal-view-version-field
-        [editingJournal]="editingJournal.data"
-        [currentJournal]="currentJournal.data"
+      (editingJournalChange)="fieldEditingJournalChange()"
+        [editingJournal]="editingJournal"
+        [currentJournal]="currentJournal"
         [type]="journalDataType.issnL"
       ></toco-journal-view-version-field>
     </div>
-    <mat-label style="font-weight: bold;">RNPS: </mat-label>
-    <div style="margin-left: .8em;">
+    <mat-label style="font-weight: bold">RNPS: </mat-label>
+    <div style="margin-left: 0.8em">
       <toco-journal-view-version-field
-        [editingJournal]="editingJournal.data"
-        [currentJournal]="currentJournal.data"
+      (editingJournalChange)="fieldEditingJournalChange()"
+        [editingJournal]="editingJournal"
+        [currentJournal]="currentJournal"
         [type]="journalDataType.rnpsP"
       ></toco-journal-view-version-field>
       <toco-journal-view-version-field
-        [editingJournal]="editingJournal.data"
-        [currentJournal]="currentJournal.data"
+      (editingJournalChange)="fieldEditingJournalChange()"
+        [editingJournal]="editingJournal"
+        [currentJournal]="currentJournal"
         [type]="journalDataType.rnpsE"
       ></toco-journal-view-version-field>
     </div>
     <toco-journal-view-version-field
-      [editingJournal]="editingJournal.data"
-      [currentJournal]="currentJournal.data"
+    (editingJournalChange)="fieldEditingJournalChange()"
+      [editingJournal]="editingJournal"
+      [currentJournal]="currentJournal"
       [type]="journalDataType.url"
     ></toco-journal-view-version-field>
 
     <toco-journal-view-version-field
-      [editingJournal]="editingJournal.data"
-      [currentJournal]="currentJournal.data"
+    (editingJournalChange)="fieldEditingJournalChange()"
+      [editingJournal]="editingJournal"
+      [currentJournal]="currentJournal"
       [type]="journalDataType.email"
     ></toco-journal-view-version-field>
 
     <toco-journal-view-version-field
-      [editingJournal]="editingJournal.data"
-      [currentJournal]="currentJournal.data"
+    (editingJournalChange)="fieldEditingJournalChange()"
+      [editingJournal]="editingJournal"
+      [currentJournal]="currentJournal"
       [type]="journalDataType.seriadas_cubanas"
     ></toco-journal-view-version-field>
 
     <toco-journal-view-version-field
-      [editingJournal]="editingJournal.data"
-      [currentJournal]="currentJournal.data"
+    (editingJournalChange)="fieldEditingJournalChange()"
+      [editingJournal]="editingJournal"
+      [currentJournal]="currentJournal"
       [type]="journalDataType.purpose"
     ></toco-journal-view-version-field>
 
     <toco-journal-view-version-field
-      [editingJournal]="editingJournal.data"
-      [currentJournal]="currentJournal.data"
+    (editingJournalChange)="fieldEditingJournalChange()"
+      [editingJournal]="editingJournal"
+      [currentJournal]="currentJournal"
       [type]="journalDataType.start_year"
     ></toco-journal-view-version-field>
 
     <toco-journal-view-version-field
-      [editingJournal]="editingJournal.data"
-      [currentJournal]="currentJournal.data"
+    (editingJournalChange)="fieldEditingJournalChange()"
+      [editingJournal]="editingJournal"
+      [currentJournal]="currentJournal"
       [type]="journalDataType.end_year"
     ></toco-journal-view-version-field>
 
     <toco-journal-view-version-field
-      [editingJournal]="editingJournal.data"
-      [currentJournal]="currentJournal.data"
+    (editingJournalChange)="fieldEditingJournalChange()"
+      [editingJournal]="editingJournal"
+      [currentJournal]="currentJournal"
       [type]="journalDataType.frequency"
     ></toco-journal-view-version-field>
 
     <toco-journal-view-version-field
-      [editingJournal]="editingJournal.data"
-      [currentJournal]="currentJournal.data"
+    (editingJournalChange)="fieldEditingJournalChange()"
+      [editingJournal]="editingJournal"
+      [currentJournal]="currentJournal"
       [type]="journalDataType.description"
     ></toco-journal-view-version-field>
 
     <div
       *ngIf="currentJournal.data.description"
-      class="e2e-inner-html-bound  text-align-justify"
+      class="e2e-inner-html-bound text-align-justify"
       [innerHTML]="currentJournal.data.description"
     ></div>
 
-    <mat-label style="font-weight: bold;">Redes Sociales:</mat-label>
-    <div style="margin-left: .8em;">
+    <mat-label style="font-weight: bold">Redes Sociales:</mat-label>
+    <div style="margin-left: 0.8em">
       <toco-journal-view-version-field
-        [editingJournal]="editingJournal.data"
-        [currentJournal]="currentJournal.data"
+      (editingJournalChange)="fieldEditingJournalChange()"
+        [editingJournal]="editingJournal"
+        [currentJournal]="currentJournal"
         [type]="journalDataType.facebook"
       ></toco-journal-view-version-field>
 
       <toco-journal-view-version-field
-        [editingJournal]="editingJournal.data"
-        [currentJournal]="currentJournal.data"
+      (editingJournalChange)="fieldEditingJournalChange()"
+        [editingJournal]="editingJournal"
+        [currentJournal]="currentJournal"
         [type]="journalDataType.twitter"
       ></toco-journal-view-version-field>
 
       <toco-journal-view-version-field
-        [editingJournal]="editingJournal.data"
-        [currentJournal]="currentJournal.data"
+      (editingJournalChange)="fieldEditingJournalChange()"
+        [editingJournal]="editingJournal"
+        [currentJournal]="currentJournal"
         [type]="journalDataType.linkedin"
       ></toco-journal-view-version-field>
     </div>
@@ -169,7 +184,7 @@
     <!-- show terms -->
     <mat-divider
       [inset]="true"
-      style="margin-bottom: 1em; margin-top: 1em;"
+      style="margin-bottom: 1em; margin-top: 1em"
     ></mat-divider>
 
     <!-- <p>
@@ -185,7 +200,7 @@
         </mat-label>
       </ng-container>
     </p> -->
-    <mat-card style="margin: 1em; background-color: whitesmoke;">
+    <!-- <mat-card style="margin: 1em; background-color: whitesmoke;">
       <mat-card-header>
         <mat-card-title> Grupo: </mat-card-title>
         <mat-label
@@ -239,9 +254,9 @@
           </ng-container>
         </mat-chip-list>
       </mat-card-content>
-    </mat-card>
+    </mat-card> -->
 
-    <mat-card style="margin: 1em; background-color: whitesmoke;">
+    <mat-card style="margin: 1em; background-color: whitesmoke">
       <mat-card-header>
         <mat-card-title> Licencia: </mat-card-title>
         <mat-label
@@ -269,9 +284,20 @@
       </mat-card-content>
     </mat-card>
 
-    <mat-card style="margin: 1em; background-color: whitesmoke;">
+    <mat-card style="margin: 1em; background-color: whitesmoke">
       <mat-card-header>
-        <mat-card-title> Materias: </mat-card-title>
+        <mat-card-title>
+          <button
+            mat-icon-button
+            color="accent"
+            matTooltip="Reemplazar"
+            (click)="replaceSubjects()"
+          >
+            <mat-icon class="mat-18">merge_type</mat-icon>
+          </button>
+
+          Materias:
+        </mat-card-title>
         <mat-label
           *ngIf="currentSubjectTerms.length == 0"
           class="text-muted text-through"
@@ -282,35 +308,34 @@
         <mat-chip-list>
           <ng-container *ngFor="let termSource of currentSubjectTerms">
             <mat-chip>
-              <button
+              <!-- <button
                 mat-icon-button
                 color="accent"
                 matTooltip="Agregar"
                 (click)="concat(journalDataType.term, termSource)"
               >
                 <mat-icon class="mat-18">merge_type</mat-icon>
-              </button>
+              </button> -->
               {{ termSource.description }}
             </mat-chip>
           </ng-container>
         </mat-chip-list>
       </mat-card-content>
     </mat-card>
-    <mat-card style="margin: 1em; background-color: whitesmoke;">
+
+    <mat-card style="margin: 1em; background-color: whitesmoke">
       <mat-card-header>
         <mat-card-title>
-          <!-- <button
-                mat-icon-button
-                color="accent"
-                matTooltip="Reemplazar"
-                (click)="replaceInstitutions()"
-              >
-                <mat-icon class="mat-18">merge_type</mat-icon>
-              </button> -->
-              Organizaciones:
-
+          <button
+            mat-icon-button
+            color="accent"
+            matTooltip="Reemplazar"
+            (click)="replaceOrganizations()"
+          >
+            <mat-icon class="mat-18">merge_type</mat-icon>
+          </button>
+          Organizaciones:
         </mat-card-title>
-
       </mat-card-header>
       <mat-card-content>
         <toco-source-organizations
@@ -321,9 +346,21 @@
         </toco-source-organizations>
       </mat-card-content>
     </mat-card>
-    <mat-card style="margin: 1em; background-color: whitesmoke;">
+
+    <mat-card style="margin: 1em; background-color: whitesmoke">
       <mat-card-header>
-        <mat-card-title> Indizaciones:</mat-card-title>
+        <mat-card-title>
+          <button
+            mat-icon-button
+            color="accent"
+            matTooltip="Reemplazar"
+            (click)="replaceIndexes()"
+          >
+            <mat-icon class="mat-18">merge_type</mat-icon>
+          </button>
+
+          Indizaciones:
+        </mat-card-title>
         <!-- <mat-label
           *ngIf="currentDataBaseTerms.length == 0"
           class="text-muted text-through"
@@ -332,9 +369,9 @@
       </mat-card-header>
       <mat-card-content>
         <toco-source-indexes
-        [sourceData]="currentJournal.data"
-        [editable]="false"
-        [ngStyle]="{ margin: '1em' }"
+          [sourceData]="currentJournal.data"
+          [editable]="false"
+          [ngStyle]="{ margin: '1em' }"
         >
         </toco-source-indexes>
         <!-- <mat-accordion>
@@ -377,24 +414,24 @@
 
   <mat-divider [inset]="true"></mat-divider>
 
-  <mat-card-actions
+  <!-- <mat-card-actions
     fxLayout="row wrap"
     fxLayoutAlign="space-between center"
     fxLayoutGap="10px"
-    style="padding: 1em;"
+    style="padding: 1em"
   >
-    <!-- <mat-checkbox
+    <mat-checkbox
                 [(ngModel)]="currentJournalChecked"
                 (change)="markAsViewed()"
             >
                 Marcar como Visto
-            </mat-checkbox> -->
+            </mat-checkbox>
 
     <div fxLayoutGap="10px">
       <button mat-stroked-button color="primary" (click)="replace()">
         Sustituir todos los campos
       </button>
-      <!-- <button mat-raised-button color="accent">Descartar</button> -->
+      <!-- <button mat-raised-button color="accent">Descartar</button> 
     </div>
-  </mat-card-actions>
+  </mat-card-actions> -->
 </mat-card>

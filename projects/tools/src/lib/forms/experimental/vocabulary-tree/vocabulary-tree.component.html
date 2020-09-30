@@ -16,8 +16,8 @@
         name="item"
         [required]="content.required"
         [multiple]="false"
-        [(value)]="selected"
-        (selectionChange)="onSelectionChange(i, selected)"
+        [(value)]="levelsSelection[i]"
+        (selectionChange)="onSelectionChange(i, levelsSelection[i])"
       >
         <mat-option *ngFor="let item of level" [value]="item.term">
           {{ item.term.description }}

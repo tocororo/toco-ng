@@ -23,6 +23,7 @@ export class SourceEditComponent implements OnInit {
   public sourceVersion: SourceVersion;
   public saving = false;
   public organizationUUID = null;
+  public allows = '';
   constructor(
     private route: ActivatedRoute,
     private _router: Router,
@@ -44,8 +45,9 @@ export class SourceEditComponent implements OnInit {
         // this.loading = false;
         console.log(response);
 
-        if (response.record && response.record.metadata) {
-          let src = response.record.metadata;
+        try {
+          let src = response.source.data.source.record.metadata;
+          this.allows = response.source.data.source.allows;
           switch (src.source_type) {
             case this.sourceType.JOURNAL.value:
               this.source = new JournalData();
@@ -60,13 +62,10 @@ export class SourceEditComponent implements OnInit {
               this.source = new SourceData();
               this.source.deepcopy(src);
           }
-          // initialize Journal
-        }
-        else {
+        } catch (error) {
           const m = new MessageHandler(this._snackBar);
           m.showMessage(StatusCode.serverError, response.message);
         }
-
       }
       );
   }

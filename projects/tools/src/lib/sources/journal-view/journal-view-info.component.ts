@@ -9,6 +9,8 @@ import {
 import { SourceService } from "@toco/tools/backend";
 import { MatSnackBar } from "@angular/material";
 import { JournalInstitutionsComponent } from "../journal-institutions/journal-institutions.component";
+import { SourceOrganizationsComponent } from '../source-edit/source-organizations/source-organizations.component';
+import { SourceIndexesComponent } from '../source-edit/source-indexes/source-indexes.component';
 
 /**
  * This component share the same scss that `JournalViewComponent`.
@@ -40,8 +42,12 @@ export class JournalViewInfoComponent implements OnInit, OnChanges {
 
   public IdentifierSchemas = IdentifierSchemas;
 
-  @ViewChild(JournalInstitutionsComponent, { static: false })
-  inst: JournalInstitutionsComponent;
+  @ViewChild(SourceOrganizationsComponent, { static: false })
+  orgs: SourceOrganizationsComponent;
+
+  @ViewChild(SourceIndexesComponent, { static: false })
+  indexes: SourceIndexesComponent;
+  
 
   constructor(
     private _sourveService: SourceService,
@@ -112,7 +118,8 @@ export class JournalViewInfoComponent implements OnInit, OnChanges {
     console.log("*****llego....", newVersion, this.journalData);
 
     this.loadJournalData();
-    this.inst.ngOnChanges();
+    this.orgs.ngOnInit();
+    this.indexes.initIndexes();
   }
 }
 

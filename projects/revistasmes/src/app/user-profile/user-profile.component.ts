@@ -4,10 +4,10 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { UserProfileService } from './user-profile.service';
 import { UserProfile } from '@toco/tools/entities';
 import { EnvService } from '@tocoenv/tools/env.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { UserProfileService } from '@toco/tools/backend/user-profile.service';
 
 @Component({
     selector: 'app-user-profile',

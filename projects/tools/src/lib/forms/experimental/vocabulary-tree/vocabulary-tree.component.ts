@@ -145,25 +145,30 @@ export class VocabularyTreeComponent extends FormFieldControl_Experimental
     }
   }
   private _setLevelsOptions(nextLevel: TermNode[], level: number) {
+    console.log('VOCABULARY TREE *****')
+    console.log(this.extraContent.selectedTermsIds, nextLevel)
     let result: TermNode[] = [];
     nextLevel.forEach((node) => {
       if (
-        (this.extraContent.selectedTermsIds as []).some(
+        !(this.extraContent.excludeTermsIds as []).some(
           (id) => id === node.term.uuid
         )
       ) {
-        this.addTermToValue(node.term);
-        this.levelsSelection[level] = node.term;
-      } else {
-        // if is not in any of the exclude term ids, then push
-        if (
-          !(this.extraContent.excludeTermsIds as []).some(
-            (id) => id === node.term.uuid
-          )
-        ) {
-          result.push(node);
-        }
+        result.push(node);
       }
+
+      if (
+        (this.extraContent.selectedTermsIds as []).some(
+          (id) => id === node.term.uuid
+
+        )
+      ) {
+        this.onSelectionChange(level, node.term)
+        // this.addTermToValue(node.term);
+        // this.levelsSelection[level] = node.term;
+      } 
+      
+      
     });
     this.levelsOptions.push(result);
   }
@@ -218,6 +223,8 @@ export class VocabularyTreeComponent extends FormFieldControl_Experimental
       this.formControl.setErrors({ requiered: true });
     }
   }
+
+
   private addTermToValue(term: Term, isLeaf=true) {
     if (this.extraContent.multiple) {
       this.content.value.unshift(term);

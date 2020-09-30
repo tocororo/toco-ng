@@ -10,7 +10,7 @@ import { AuthenticationService } from '@toco/tools/authentication/authentication
 import { NotificationListComponent } from '@toco/tools/notification';
 
 import { SourceViewComponent } from 'projects/catalog/src/app/source-view/source-view.component';
-import { SourceResolver } from 'projects/catalog/src/app/source-resolver';
+import { SourceResolver, SourceResolverAuth } from 'projects/catalog/src/app/source-resolver';
 import { SourceEditComponent } from 'projects/catalog/src/app/source-edit/source-edit.component';
 import { SourcesComponent } from 'projects/catalog/src/app/sources/sources.component';
 import { HomeComponent } from './home/home.component';
@@ -86,14 +86,14 @@ const routes: Routes = [
                 path: ':uuid/view',
                 component: SourceViewComponent,
                 resolve: {
-                    record: SourceResolver
+                    source: SourceResolverAuth
                 }
             },
             {
                 path: ':uuid/edit',
                 component: SourceEditComponent,
                 resolve: {
-                  record: SourceResolver
+                  source: SourceResolverAuth
                 }
             },
             {
@@ -118,7 +118,8 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
   exports: [RouterModule],
   providers: [
-      SourceResolver
+      SourceResolver,
+      SourceResolverAuth
   ]
 })
 export class AppRoutingModule { }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, Input, OnChanges } from '@angular/core';
 import {
   PanelContent_Depr,
   FormContainerAction,
@@ -24,6 +24,7 @@ import { TaxonomyService } from '@toco/tools/backend';
   styleUrls: ['./source-indexes.component.scss'],
 })
 export class SourceIndexesComponent implements OnInit {
+  
   @Input()
   public sourceData: SourceData;
   @Input()
@@ -66,11 +67,7 @@ export class SourceIndexesComponent implements OnInit {
       (response) => {
         if (response.data.tree.term_node) {
           this.databases = response.data.tree.term_node;
-          this.selectedDatabases = new Array(this.databases.length);
-          this._setSelectedDatabses();
-          this._setIndexesToSource();
-          console.log('******* complete process');
-
+          this.initIndexes();
         }
       },
       (err: any) => {
@@ -82,6 +79,14 @@ export class SourceIndexesComponent implements OnInit {
       () => {
       }
     );
+  }
+
+  public initIndexes(){
+    
+    this.selectedDatabases = new Array(this.databases.length);
+    this._setSelectedDatabses();
+    this._setIndexesToSource();
+    console.log('******* complete process');
   }
 
   /**

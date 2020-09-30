@@ -89,6 +89,7 @@ export class JournalEditComponent implements OnInit {
   // journal information variables for step 1
   informationPanel: PanelContent_Depr[] = null;
   informationFormGroup: FormGroup;
+  informationSocialFormGroup: FormGroup;
 
   journalCover: SourceClasification;
 
@@ -152,6 +153,7 @@ export class JournalEditComponent implements OnInit {
 
     this.informationPanel = null;
     this.informationFormGroup = null;
+    this.informationSocialFormGroup = null;
 
     // this.organization = null;
     // this.organizationPanel = null;
@@ -242,6 +244,8 @@ export class JournalEditComponent implements OnInit {
       start_year: new FormControl(""),
       end_year: new FormControl(""),
     });
+    
+    this.informationSocialFormGroup = this.formBuilder.group({});
 
     this.informationPanel = [
       {
@@ -487,14 +491,6 @@ export class JournalEditComponent implements OnInit {
               level: 1,
             },
           },
-        ],
-      },
-      {
-        title: "Redes Sociales",
-        description: "",
-        iconName: "",
-        formSection: this.informationFormGroup,
-        formSectionContent: [
           {
             name: "facebook",
             label: "Facebook",
@@ -524,9 +520,47 @@ export class JournalEditComponent implements OnInit {
             value: this.journalData
               ? this.journalData.socialNetworks.linkedin
               : "",
-          },
+          }
         ],
       },
+      // {
+      //   title: "Redes Sociales",
+      //   description: "",
+      //   iconName: "",
+      //   formSection: this.informationFormGroup,
+      //   formSectionContent: [
+      //     {
+      //       name: "facebook",
+      //       label: "Facebook",
+      //       type: FormFieldType.url,
+      //       required: false,
+      //       width: "33%",
+      //       value: this.journalData
+      //         ? this.journalData.socialNetworks.facebook
+      //         : "",
+      //     },
+      //     {
+      //       name: "twitter",
+      //       label: "Twitter",
+      //       type: FormFieldType.url,
+      //       required: false,
+      //       width: "33%",
+      //       value: this.journalData
+      //         ? this.journalData.socialNetworks.twitter
+      //         : "",
+      //     },
+      //     {
+      //       name: "linkedin",
+      //       label: "LinkedIN",
+      //       type: FormFieldType.url,
+      //       required: false,
+      //       width: "33%",
+      //       value: this.journalData
+      //         ? this.journalData.socialNetworks.linkedin
+      //         : "",
+      //     },
+      //   ],
+      // },
     ];
   }
 
@@ -604,8 +638,9 @@ export class JournalEditComponent implements OnInit {
     //   this.identifiersFormGroup.value
     // );
 
+    console.log(this.informationFormGroup)
     this.journalData.deepcopy(this.informationFormGroup.value);
-    this.journalData.socialNetworks.deepcopy(this.informationFormGroup);
+    this.journalData.socialNetworks.deepcopy(this.informationFormGroup.value);
 
     this.journalData.setIdentifierValue(
       IdentifierSchemas.url,
@@ -615,8 +650,7 @@ export class JournalEditComponent implements OnInit {
       IdentifierSchemas.oaiurl,
       this.informationFormGroup.value.oaiurl
     );
-    this.journalData.socialNetworks.deepcopy(this.informationFormGroup.value);
-
+    
     this.journalData.source_type = this.informationFormGroup.value[
       "source_type"
     ];

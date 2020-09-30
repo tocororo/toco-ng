@@ -110,6 +110,7 @@ export class JournalViewComponent implements OnInit {
     public editingJournal: JournalVersion;
 
     public showVersions = false;
+    public editVersion = false;
 
 
 
@@ -234,6 +235,18 @@ export class JournalViewComponent implements OnInit {
         });
         return count;
     }
+
+    sourceEditDone() {
+        this.editVersion = false;
+        console.log('AAaAAAAAAAAAAAAAAAAAA');
+    
+    }
+
+    toogleShowVersions(){
+        this.showVersions = !this.showVersions
+        this.editVersion = false;
+    } 
+
 
 
 }

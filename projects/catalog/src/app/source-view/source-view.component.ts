@@ -38,6 +38,7 @@ export class SourceViewComponent implements OnInit {
   public editingSource: SourceVersion;
   public dialogCommentText = "";
   public saving = false;
+  public allows = '';
   constructor(
     private route: ActivatedRoute,
     private _router: Router,
@@ -52,8 +53,9 @@ export class SourceViewComponent implements OnInit {
       (response) => {
         console.log("VIEW SOURCE")
         console.log(response);
-        if (response.record && response.record.metadata) {
-          let src = response.record.metadata;
+        try {
+          let src = response.source.data.source.record.metadata;
+          this.allows = response.source.data.source.allows;
           switch (src.source_type) {
             case this.sourceType.JOURNAL.value:
               this.source = new JournalData();
@@ -66,7 +68,7 @@ export class SourceViewComponent implements OnInit {
           }
           this._load_source_version();
           // initialize Journal
-        } else {
+        } catch (error) {
           const m = new MessageHandler(this._snackBar);
           m.showMessage(StatusCode.serverError, response.toString());
         }
@@ -185,10 +187,14 @@ export class SourceViewComponent implements OnInit {
 
   }
 
-
   public is_approved(){
     return this.source.source_type == SourceStatus.APPROVED.value;
   }
+
+  public can_publish(){
+    return this.allows == 'publish';
+  }
+
 }
 
 @Component({
@@ -197,7 +203,7 @@ export class SourceViewComponent implements OnInit {
     <h1 mat-dialog-title>Guardar cambios</h1>
     <div mat-dialog-content>
       <mat-form-field>
-        <mat-label>Comentario extra</mat-label>
+        <mat-label>Comentario sobre esta versión</mat-label>
         <textarea matInput [(ngModel)]="data.comment"> </textarea>
       </mat-form-field>
     </div>

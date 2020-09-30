@@ -7,7 +7,7 @@
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { AuthenticationService } from '@toco/tools/authentication';
+// import { AuthenticationService } from '@toco/tools/authentication';
 
 import { CachingInterceptor } from './http.interceptor';
 
@@ -15,6 +15,6 @@ import { CachingInterceptor } from './http.interceptor';
  * Http interceptor providers in order.
  */
 export const HTTP_INTERCEPTOR_PROVIDERS = [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationService, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: AuthenticationService, multi: true },
     //{ provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true }
 ];

@@ -2,12 +2,62 @@
   <!-- navigate buttons -->
   <mat-toolbar>
     <mat-toolbar-row fxLayoutGap="1em" fxLayoutAlign="end center">
-      <mat-slide-toggle (change)="showVersions = !showVersions" color="primary">
-        <!-- <span *ngIf="showVersions">Ocultar</span>
-                        <span *ngIf="!showVersions">Mostrar</span> -->
-        Versiones
-      </mat-slide-toggle>
-      <div *ngIf="showVersions">
+      <!-- <mat-slide-toggle
+        (change)="editVersion = !editVersion"
+        color="primary"
+        matTooltip="Vista Edicion"
+    >
+    </mat-slide-toggle>
+
+      <mat-slide-toggle
+        *ngIf="!editVersion"
+        (change)="showVersions = !showVersions"
+        color="accent"
+        matTooltip="Ver Versiones"
+      >
+      </mat-slide-toggle> -->
+
+      <button
+        *ngIf="!editVersion"
+        mat-icon-button
+        aria-label="Editar la Versión actual"
+        matTooltip="Editar la Versión actual"
+        (click)="editVersion = !editVersion"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button
+        *ngIf="editVersion"
+        mat-icon-button
+        aria-label="Vista Versiones"
+        matTooltip="Vista Versiones"
+        (click)="editVersion = !editVersion"
+      >
+        <mat-icon>visibility</mat-icon>
+      </button>
+
+      <button
+        *ngIf="!editVersion && !showVersions"
+        mat-icon-button
+        aria-label="Ver Versiones"
+        matTooltip="Ver Versiones"
+        (click)="showVersions = !showVersions"
+      >
+        <mat-icon>history</mat-icon>
+      </button>
+
+      <button
+        *ngIf="!editVersion && showVersions"
+        mat-icon-button
+        aria-label="Ocultar Versiones"
+        matTooltip="Ocultar Versiones"
+        (click)="showVersions = !showVersions"
+      >
+        <mat-icon>history</mat-icon>
+      </button>
+
+      <div *ngIf="!editVersion && showVersions">
         <button
           mat-icon-button
           aria-label="Previous version"
@@ -31,25 +81,41 @@
   </mat-toolbar>
 
   <ng-container *ngIf="journal.versions != undefined">
+    <toco-journal-edit
+      *ngIf="editVersion"
+      [journalVersion]="editingJournal"
+      (journalEditDone)="sourceEditDone($event)"
+      [showEditHeader]="false"
+      [showFinalStep]="false"
+    >
+    </toco-journal-edit>
     <toco-journal-view-info
-      #journalViewInfo
+      *ngIf="!editVersion && !showVersions"
       [journalVersion]="editingJournal"
       fxFlex="1 2 calc(15em + 20px)"
       style="margin: 0.5em"
     >
     </toco-journal-view-info>
+    <ng-container *ngIf="!editVersion && showVersions">
+      <toco-journal-view-info
+        #journalViewInfo
+        [journalVersion]="editingJournal"
+        fxFlex="1 2 calc(15em + 20px)"
+        style="margin: 0.5em"
+      >
+      </toco-journal-view-info>
 
-    <toco-journal-view-version
-      #versionsPanel
-      *ngIf="showVersions"
-      [editingJournal]="editingJournal"
-      [currentJournal]="selectedJournal"
-      (editingJournalChange)="
-        journalViewInfo.editingJournalChange(editingJournal)
-      "
-      fxFlex="1 2 calc(15em + 20px)"
-      style="margin: 0.5em"
-    ></toco-journal-view-version>
+      <toco-journal-view-version
+        #versionsPanel
+        [editingJournal]="editingJournal"
+        [currentJournal]="selectedJournal"
+        (editingJournalChange)="
+          journalViewInfo.editingJournalChange(editingJournal)
+        "
+        fxFlex="1 2 calc(15em + 20px)"
+        style="margin: 0.5em"
+      ></toco-journal-view-version>
+    </ng-container>
   </ng-container>
 
   <mat-card *ngIf="journal.versions == undefined" style="margin: 1em">

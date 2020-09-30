@@ -12,7 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '@toco/tools/shared';
 import { CoreModule, HTTP_INTERCEPTOR_PROVIDERS, CACHABLE_URL_PROVIDER, REQUEST_CACHE_DIFFERENT_TIME_WITH_MAP_PROVIDER } from '@toco/tools/core';
 import { SourcesModule } from '@toco/tools/sources';
-import { AuthenticationModule } from '@toco/tools/authentication';
+import { AuthenticationModule, AuthenticationService } from '@toco/tools/authentication';
 import { NotificationModule } from '@toco/tools/notification';
 
 import { TocoFormsModule } from '@toco/tools/forms';
@@ -21,7 +21,7 @@ import { AppCatalogModule } from 'projects/catalog/src/app/app.module';
 import { HomeComponent } from './home/home.component';
 import { InstitutionsModule } from '@toco/tools/institutions/institutions.module';
 import { StaticPagesComponent } from './static-pages/static-pages.component';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MarkdownModule } from 'ngx-markdown';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EnvServiceProvider } from '@tocoenv/tools/env.service.provider';
@@ -60,7 +60,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     EnvServiceProvider,
     CACHABLE_URL_PROVIDER,
     REQUEST_CACHE_DIFFERENT_TIME_WITH_MAP_PROVIDER,
-    HTTP_INTERCEPTOR_PROVIDERS
+    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationService, multi: true },
   ],
   bootstrap: [AppComponent]
 })

@@ -1,24 +1,31 @@
+import { Component, OnInit, AfterViewInit, Input } from "@angular/core";
+import { Subscription, PartialObserver, timer } from "rxjs";
 
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
-import { Subscription, PartialObserver, timer } from 'rxjs';
+import {
+  OAuthService,
+  JwksValidationHandler,
+  OAuthStorage,
+  AuthConfig,
+} from "angular-oauth2-oidc";
 
-import { OAuthService, JwksValidationHandler, OAuthStorage, AuthConfig } from 'angular-oauth2-oidc';
-
-import { AuthenticationService } from './authentication.service';
-import { EnvService } from '@tocoenv/tools/env.service';
-import { Router } from '@angular/router';
+import { AuthenticationService } from "./authentication.service";
+import { EnvService } from "@tocoenv/tools/env.service";
+import { Router } from "@angular/router";
+import { UserProfileService } from "../backend";
+import { UserProfile } from "../entities";
 
 // import { authConfig } from './auth-config';
 
 @Component({
-  selector: 'toco-authentication',
-  templateUrl: './authentication.component.html',
-  styleUrls: ['./authentication.component.scss']
+  selector: "toco-authentication",
+  templateUrl: "./authentication.component.html",
+  styleUrls: ["./authentication.component.scss"],
 })
 export class AuthenticationComponent implements OnInit, AfterViewInit {
-
   @Input()
   public isButtonLogin: boolean;
+
+  public user: UserProfile;
 
   public userName: string;
   private timerAuthenticateSuscription: Subscription = null;
@@ -26,34 +33,32 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     next: (_) => {
       // console.log('next');
       // this.oauthService.setupAutomaticSilentRefresh();
-      if (this.oauthStorage.getItem('access_token')) {
+      if (this.oauthStorage.getItem("access_token")) {
         this.authenticationService.logguedChange(true);
       }
-
     },
 
     error: (err: any) => {
-      console.log('The observable got an error notification: ' + err + '.');
+      console.log("The observable got an error notification: " + err + ".");
     },
 
     complete: () => {
-      console.log('The observable got a complete notification.');
-    }
+      console.log("The observable got a complete notification.");
+    },
   };
 
   constructor(
+    private userProfileService: UserProfileService,
     private env: EnvService,
     private oauthService: OAuthService,
     private oauthStorage: OAuthStorage,
     private authenticationService: AuthenticationService,
-    private router: Router) {
-
-  }
+    private router: Router
+  ) {}
 
   ngOnInit() {
     if (this.isButtonLogin == undefined) this.isButtonLogin = false;
     this.configure();
-
   }
 
   ngOnDestroy(): void {
@@ -65,7 +70,9 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // this observable is to wait a while for the component to finish loading,
     // because otherwise it fails to notify that the user is authenticated
-    this.timerAuthenticateSuscription = timer(0).subscribe(this.timerAuthenticateObserver);
+    this.timerAuthenticateSuscription = timer(0).subscribe(
+      this.timerAuthenticateObserver
+    );
   }
 
   /**
@@ -73,13 +80,12 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
    */
   private configure() {
     const authConfig: AuthConfig = {
-
       // Url of the Identity Provider
       //issuer: 'https://sceiba-lab.upr.edu.cu',
 
-      loginUrl: this.env.sceibaHost + 'oauth/authorize',
+      loginUrl: this.env.sceibaHost + "oauth/authorize",
 
-      tokenEndpoint: this.env.sceibaHost + 'oauth/token',
+      tokenEndpoint: this.env.sceibaHost + "oauth/token",
 
       // URL of the SPA to redirect the user to after login
       redirectUri: this.env.oauthRedirectUri,
@@ -109,45 +115,45 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     this.oauthService.tryLogin({
       onTokenReceived: (_) => {
         // gives information about user loggued
-        this.authenticationService.getUserInfo().subscribe(response => {
+        this.authenticationService.getUserInfo().subscribe((response) => {
           // save email in storage
-          this.oauthStorage.setItem('email', response.data.userprofile.email);
+          console.log(response)
+          this.oauthStorage.setItem("email", response.data.userprofile.user.email);
           // this.oauthStorage.setItem('userID', response.data.userprofile.id);
 
           // notifies user is logged
           this.authenticationService.logguedChange(true);
 
-          this.userName = this.oauthStorage.getItem('email');
+          this.userName = this.oauthStorage.getItem("email");
 
-          console.debug(this.oauthStorage.getItem('access_token'));
+          console.debug(this.oauthStorage.getItem("access_token"));
         });
       },
-      onLoginError: err => {
-        console.log('errorr in login', err);
-
-      }
+      onLoginError: (err) => {
+        console.log("errorr in login", err);
+      },
     });
 
-    this.oauthService.events.subscribe(e => {
+    this.oauthService.events.subscribe((e) => {
       console.log(e);
 
       switch (e.type) {
-        case 'token_received':
-          console.log('token received');
+        case "token_received":
+          console.log("token received");
           break;
-        case 'token_expires':
-          console.log('token expires');
+        case "token_expires":
+          console.log("token expires");
           this.oauthService.initImplicitFlow();
           break;
-        case 'invalid_nonce_in_state':
-          console.log('invalid_nonce_in_state', e);
+        case "invalid_nonce_in_state":
+          console.log("invalid_nonce_in_state", e);
           break;
-        case 'session_terminated':
-          console.log('session_terminated', e);
+        case "session_terminated":
+          console.log("session_terminated", e);
           break;
-        case 'logout':
-          console.log('logout');
-          this.router.navigate(['/']);
+        case "logout":
+          console.log("logout");
+          this.router.navigate(["/"]);
           break;
         default:
           break;
@@ -160,6 +166,21 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
    */
   public login() {
     this.oauthService.initImplicitFlow();
+    this.user = new UserProfile();
+    this.userProfileService.getUserInfo().subscribe({
+      next: (response) => {
+        console.log(response);
+        if (response && response.data && response.data.userprofile) {
+          this.user.deepcopy(response.data.userprofile);
+          console.log(this.user);
+          this.oauthStorage.setItem("profile", this.user.entitystringify());
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {},
+    });
   }
 
   /**
@@ -174,11 +195,10 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
    * Gives the user's email if the user is authenticated
    */
   public get name() {
-    if (this.oauthStorage.getItem('access_token')) {
-      return this.oauthStorage.getItem('email');
+    if (this.oauthStorage.getItem("access_token")) {
+      return this.oauthStorage.getItem("email");
     } else {
       return null;
     }
-
   }
 }
