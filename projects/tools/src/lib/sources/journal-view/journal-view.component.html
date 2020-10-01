@@ -1,4 +1,4 @@
-<div *ngIf="journal != undefined" fxLayout="row wrap" style="margin: 1em">
+<div *ngIf="editingJournal != undefined" fxLayout="row wrap" style="margin: 1em">
   <!-- navigate buttons -->
   <mat-toolbar>
     <mat-toolbar-row fxLayoutGap="1em" fxLayoutAlign="end center">
@@ -13,15 +13,15 @@
         *ngIf="!editVersion"
         (change)="showVersions = !showVersions"
         color="accent"
-        matTooltip="Ver Versiones"
+        matTooltip="Ver Revisiones"
       >
       </mat-slide-toggle> -->
 
       <button
         *ngIf="!editVersion"
         mat-icon-button
-        aria-label="Editar la Versión actual"
-        matTooltip="Editar la Versión actual"
+        aria-label="Editar la Revisión actual"
+        matTooltip="Editar la Revisión actual"
         (click)="editVersion = !editVersion"
       >
         <mat-icon>edit</mat-icon>
@@ -30,8 +30,8 @@
       <button
         *ngIf="editVersion"
         mat-icon-button
-        aria-label="Vista Versiones"
-        matTooltip="Vista Versiones"
+        aria-label="Vista Revisiones"
+        matTooltip="Vista Revisiones"
         (click)="editVersion = !editVersion"
       >
         <mat-icon>visibility</mat-icon>
@@ -40,8 +40,8 @@
       <button
         *ngIf="!editVersion && !showVersions"
         mat-icon-button
-        aria-label="Ver Versiones"
-        matTooltip="Ver Versiones"
+        aria-label="Ver Revisiones"
+        matTooltip="Ver Revisiones"
         (click)="showVersions = !showVersions"
       >
         <mat-icon>history</mat-icon>
@@ -50,8 +50,8 @@
       <button
         *ngIf="!editVersion && showVersions"
         mat-icon-button
-        aria-label="Ocultar Versiones"
-        matTooltip="Ocultar Versiones"
+        aria-label="Ocultar Revisiones"
+        matTooltip="Ocultar Revisiones"
         (click)="showVersions = !showVersions"
       >
         <mat-icon>history</mat-icon>
@@ -62,7 +62,7 @@
           mat-icon-button
           aria-label="Previous version"
           [disabled]="isDisabledNavigatePrevious"
-          matTooltip="Versión Anterior"
+          matTooltip="Revisión Anterior"
           (click)="previousVersion()"
         >
           <mat-icon>navigate_before</mat-icon>
@@ -71,7 +71,7 @@
           mat-icon-button
           aria-label="Next version"
           [disabled]="isDisabledNavigateNext"
-          matTooltip="Versión Siguiente"
+          matTooltip="Revisión Siguiente"
           (click)="nextVersion()"
         >
           <mat-icon>navigate_next</mat-icon>
@@ -80,7 +80,7 @@
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <ng-container *ngIf="journal.versions != undefined">
+  <ng-container *ngIf="versions != undefined">
     <toco-journal-edit
       *ngIf="editVersion"
       [journalVersion]="editingJournal"
@@ -118,14 +118,14 @@
     </ng-container>
   </ng-container>
 
-  <mat-card *ngIf="journal.versions == undefined" style="margin: 1em">
+  <mat-card *ngIf="versions == undefined" style="margin: 1em">
     <mat-card-content>
-      <h1>Este componente necesita las versiones de la revista.</h1>
+      <h1>Este componente necesita las revisiones de la revista.</h1>
     </mat-card-content>
   </mat-card>
 </div>
 
-<mat-card *ngIf="journal == undefined" style="margin: 1em">
+<mat-card *ngIf="editingJournal == undefined" style="margin: 1em">
   <mat-card-content>
     <h1>No se encontró la información solicitada</h1>
   </mat-card-content>

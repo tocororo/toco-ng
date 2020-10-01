@@ -110,7 +110,7 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
       this.currentJournal.data.reviewed = true;
       // TODO: hacer el request al backend de marcar la version como vista o
       const m = new MessageHandler(this._snackBar);
-      m.showMessage(StatusCode.OK, "Versión marcada como vista!!!");
+      m.showMessage(StatusCode.OK, "Revisión marcada como vista!!!");
     }
   }
 

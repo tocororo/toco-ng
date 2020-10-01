@@ -67,9 +67,14 @@ export class JournalViewComponent implements OnInit {
      * Represents a Journal Object, it is a type of Source.
      * Need the source.version array filled
      */
-    @Input()
-    public journal: JournalData;
+    // @Input()
+    // public journal: JournalData;
 
+    @Input()
+    public editingJournal: JournalVersion;
+
+    @Input()
+    public versions: Array<JournalVersion>;
 
 
     /**************** select journal version variables *******************/
@@ -105,9 +110,9 @@ export class JournalViewComponent implements OnInit {
     /**
      * version.is_current = true
      */
-    public currentJournal: JournalVersion;
+    // public currentJournal: JournalVersion;
 
-    public editingJournal: JournalVersion;
+
 
     public showVersions = false;
     public editVersion = false;
@@ -129,24 +134,23 @@ export class JournalViewComponent implements OnInit {
         this.vocabularies = VocabulariesInmutableNames;
 
         // guardar la cantidad total de versiones
-        this.lengthVersion = this.journal.versions.length;
+        this.lengthVersion = this.versions.length;
         // guardar la posicion de la version donde este la actual
         this.selectedVersion = this.getSelectedJournalPosition();
 
         this.SelectJournalVersion();
 
-        this.metadata.setTitleDescription('Revista Científica ' + this.journal.title, this.journal.description);
-        if (this.journal.versions){
-          this.journal.versions.forEach((journalVersion: JournalVersion, index: number) => {
-            // check if has versions to view and return that position
-            if (journalVersion.is_current) {
-                this.currentJournal = new JournalVersion();
-                this.currentJournal.deepcopy(journalVersion);
-                this.editingJournal = new JournalVersion();
-                this.editingJournal.deepcopy(journalVersion);
-            }
-          });
-        }
+        this.metadata.setTitleDescription('Revista Científica ' + this.editingJournal.data.title, this.editingJournal.data.description);
+
+        // if (this.versions){
+        //   this.versions.forEach((journalVersion: JournalVersion, index: number) => {
+        //     // check if has versions to view and return that position
+        //     if (journalVersion.is_current) {
+        //         this.currentJournal = new JournalVersion();
+        //         this.currentJournal.deepcopy(journalVersion);
+        //     }
+        //   });
+        // }
     }
 
 
@@ -204,13 +208,13 @@ export class JournalViewComponent implements OnInit {
      * Selects the selected journal as a JournalVersion
      */
     public SelectJournalVersion(): void {
-        if (this.journal.versions.length >= 0 &&
+        if (this.versions.length >= 0 &&
             this.selectedVersion >= 0 &&
-            this.selectedVersion < this.journal.versions.length) {
+            this.selectedVersion < this.versions.length) {
 
             // load the selected journal
             let version = new JournalVersion();
-            version.deepcopy(this.journal.versions[this.selectedVersion]);
+            version.deepcopy(this.versions[this.selectedVersion]);
             this.selectedJournal = version;
 
             // load if was viewed
@@ -225,7 +229,7 @@ export class JournalViewComponent implements OnInit {
      */
     private getSelectedJournalPosition(): number {
         let count = 0;
-        this.journal.versions.forEach((journalVersion: JournalVersion, index: number) => {
+        this.versions.forEach((journalVersion: JournalVersion, index: number) => {
 
             // check if has versions to view and return that position
             if (journalVersion.reviewed != null && journalVersion.reviewed) {
@@ -239,13 +243,13 @@ export class JournalViewComponent implements OnInit {
     sourceEditDone() {
         this.editVersion = false;
         console.log('AAaAAAAAAAAAAAAAAAAAA');
-    
+
     }
 
     toogleShowVersions(){
         this.showVersions = !this.showVersions
         this.editVersion = false;
-    } 
+    }
 
 
 

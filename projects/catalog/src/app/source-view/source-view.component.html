@@ -17,14 +17,14 @@
     </button>
 </div> -->
 
-<ng-container *ngIf="source" [ngSwitch]="source.source_type">
+<ng-container *ngIf="editingVersion" [ngSwitch]="editingVersion.data.source_type">
   <mat-toolbar
     fxLayout="row wrap"
     fxLayoutAlign="space-between center"
     [ngStyle]="{ width: '100%', 'height': 'auto', 'padding': '16px', 'min-height': '56px'}"
   >
     <span [ngStyle]="{'white-space': 'normal'}">
-      {{ source.name }}
+      {{ editingVersion.data.name }}
     </span>
     <div fxLayout="row wrap" fxLayoutGap="20px">
       <button mat-stroked-button color="primary" (click)="approve()" *ngIf="can_publish() && !is_approved()">
@@ -37,22 +37,23 @@
         Editar
       </button>
       <button mat-stroked-button color="warn" (click)="saveEditingVersion()">
-        Guardar cambios de la version actual
+        Guardar cambios de la revisión actual
       </button>
     </div>
   </mat-toolbar>
 
-  <ng-container *ngIf="source && source.versions">
+  <ng-container *ngIf="editingVersion && versions">
   <toco-journal-view
     #view
     *ngSwitchCase="sourceType.JOURNAL.value"
-    [journal]="source"
+    [editingJournal]="editingVersion"
+    [versions]="versions"
   >
   </toco-journal-view>
 
   <p #view *ngSwitchDefault>
     {{ sourceType.JOURNAL.value }}
-    {{ source.source_type }}
+    {{ editingVersion.data.source_type }}
   </p>
   </ng-container>
 

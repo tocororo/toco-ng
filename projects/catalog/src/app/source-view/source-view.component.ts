@@ -13,7 +13,7 @@ import {
   MessageHandler,
   StatusCode,
   Response,
-  ResponseStatus,
+  ResponseStatus, HandlerComponent
 } from "@toco/tools/core";
 import {
   SourceTypes,
@@ -34,11 +34,15 @@ import { SourceService } from "@toco/tools/backend";
 })
 export class SourceViewComponent implements OnInit {
   public sourceType = SourceTypes;
-  public source: SourceData;
-  public editingSource: SourceVersion;
+
+
+  public editingVersion: SourceVersion;
+  public versions: Array<SourceVersion>;
+
   public dialogCommentText = "";
   public saving = false;
   public allows = '';
+
   constructor(
     private route: ActivatedRoute,
     private _router: Router,
@@ -58,13 +62,15 @@ export class SourceViewComponent implements OnInit {
           this.allows = response.source.data.source.allows;
           switch (src.source_type) {
             case this.sourceType.JOURNAL.value:
-              this.source = new JournalData();
-              this.source.deepcopy(src);
+              this.editingVersion = new JournalVersion();
+              this.editingVersion.source_uuid = src.id;
+              this.editingVersion.data.deepcopy(src);
               break;
 
             default:
-              this.source = new SourceData();
-              this.source.deepcopy(src);
+              this.editingVersion = new SourceVersion();
+              this.editingVersion.source_uuid = src.id;
+              this.editingVersion.data.deepcopy(src);
           }
           this._load_source_version();
           // initialize Journal
@@ -84,25 +90,25 @@ export class SourceViewComponent implements OnInit {
   private _load_source_version() {
     console.log("LOAD SOURCE VERSION...");
     this.saving = true;
-    this._sourceService.getSourceVersions(this.source.id).subscribe(
+    this._sourceService.getSourceVersions(this.editingVersion.source_uuid).subscribe(
       (response) => {
         console.log(response);
         if (response.status == ResponseStatus.SUCCESS){
           console.log(response);
 
-          this.source.versions = response.data.versions;
-          this.source.versions.forEach((element) => {
-            if (element.is_current) {
-              switch (this.source.source_type) {
-                case this.sourceType.JOURNAL.value:
-                  this.editingSource = new JournalVersion();
-                  break;
-                default:
-                  this.editingSource = new SourceVersion();
-              }
-              this.editingSource.deepcopy(element);
-            }
-          });
+          this.versions = response.data.versions;
+          // this.versions.forEach((element) => {
+          //   if (element.is_current) {
+          //     switch (this.source.source_type) {
+          //       case this.sourceType.JOURNAL.value:
+          //         this.editingVersion = new JournalVersion();
+          //         break;
+          //       default:
+          //         this.editingVersion = new SourceVersion();
+          //     }
+          //     this.editingVersion.deepcopy(element);
+          //   }
+          // });
           this.saving = false;
         }
       },
@@ -114,10 +120,9 @@ export class SourceViewComponent implements OnInit {
   }
   public saveEditingVersion() {
     const dialogRef = this.dialog.open(SourceViewSaveDialog, {
-      width: "250px",
       data: { comment: this.dialogCommentText, accept: false },
     });
-    console.log(this.editingSource);
+    console.log(this.editingVersion);
 
     dialogRef.afterClosed().subscribe(
       (result) => {
@@ -127,21 +132,40 @@ export class SourceViewComponent implements OnInit {
 
         if (result && result.accept) {
           this.dialogCommentText = result.comment;
-          this.editingSource.comment = this.dialogCommentText;
+          this.editingVersion.comment = this.dialogCommentText;
           this.saving = true;
           this._sourceService
-            .editSource(this.editingSource, this.source.id)
+            .editSource(this.editingVersion, this.editingVersion.source_uuid)
             .subscribe(
               (res: Response<any>) => {
                 console.log(res);
                 this.saving = false;
                 const m = new MessageHandler(this._snackBar);
                 if (res.status == ResponseStatus.SUCCESS && res.data.source) {
-                  this.source.deepcopy(res.data.source);
-                  // this.ngOnInit();
-                  m.showMessage(StatusCode.OK, "Guardado con éxito");
+                  m.showMessage(
+                    StatusCode.OK,
+                    'Guardada con éxito',
+                    HandlerComponent.dialog,
+                    'Revisión Actual'
+                  );
+                  this._router.navigate(['sources', this.editingVersion.source_uuid, 'view']);
+                  // this.editingVersion.data.deepcopy(res.data.source);
+                  // this._load_source_version();
+                  // m.showMessage(
+                  //   StatusCode.OK,
+                  //   'Guardada con éxito',
+                  //   HandlerComponent.dialog,
+                  //   'Revisión Actual'
+                  // );
+                  // m.dialog().showMessage(StatusCode.OK, "Guardado con éxito");
                 } else {
-                  m.showMessage(StatusCode.serverError, res.message);
+                  m.showMessage(
+                    StatusCode.serverError,
+                    res.message,
+                    HandlerComponent.dialog,
+                    'Revisión Actual'
+                  );
+                  // m.showMessage(StatusCode.serverError, res.message);
                 }
               },
               (error: any) => {
@@ -161,7 +185,7 @@ export class SourceViewComponent implements OnInit {
   }
 
   public editVersion(): void {
-    this._router.navigate(["sources", this.source.id, "edit"]);
+    this._router.navigate(["sources", this.editingVersion.source_uuid, "edit"]);
   }
 
   /**
@@ -169,7 +193,7 @@ export class SourceViewComponent implements OnInit {
    */
   public approve() {
     this._sourceService
-      .makeSourceAsApproved(this.source.id)
+      .makeSourceAsApproved(this.editingVersion.source_uuid)
       .pipe(
         catchError((err) => {
           console.log(err);
@@ -188,7 +212,7 @@ export class SourceViewComponent implements OnInit {
   }
 
   public is_approved(){
-    return this.source.source_type == SourceStatus.APPROVED.value;
+    return this.editingVersion.data.source_status == SourceStatus.APPROVED.value;
   }
 
   public can_publish(){
@@ -203,7 +227,7 @@ export class SourceViewComponent implements OnInit {
     <h1 mat-dialog-title>Guardar cambios</h1>
     <div mat-dialog-content>
       <mat-form-field>
-        <mat-label>Comentario sobre esta versión</mat-label>
+        <mat-label>Comentario sobre esta revisión</mat-label>
         <textarea matInput [(ngModel)]="data.comment"> </textarea>
       </mat-form-field>
     </div>
