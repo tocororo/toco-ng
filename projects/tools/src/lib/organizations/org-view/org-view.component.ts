@@ -134,7 +134,7 @@ export class OrgViewComponent implements OnInit
 				}
 
 				result[pos].links.push({
-					'url': item.label,
+					'url': `${ item.id }/view`,
 					'name': item.label
 				});
 			}
