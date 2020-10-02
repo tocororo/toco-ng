@@ -25,6 +25,10 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
   @Input()
   public isButtonLogin: boolean;
 
+  @Input()
+  public isButtonLoginText: string = 'Login';
+
+
   public user: UserProfile;
 
   public userName: string;

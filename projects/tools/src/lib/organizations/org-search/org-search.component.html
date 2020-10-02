@@ -1,6 +1,6 @@
 
 <mat-form-field [ngStyle]="{'width': '100%'}" >
-    <input matInput placeholder="Escriba al menos 3 letras" aria-label="Buscar" [matAutocomplete]="auto" [formControl]="orgCtrl">
+    <input matInput placeholder="{{placeholder}}" aria-label="Buscar" [matAutocomplete]="auto" [formControl]="orgCtrl">
 
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
 

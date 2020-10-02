@@ -1,0 +1,65 @@
+
+<div class="m-1" fxLayout="row" fxLayoutAlign="center">
+    <mat-card class="w-60" fxLayout="row wrap" fxLayoutAlign="center">
+
+        <img fxFlex="2 1 calc(80% - 100px)" height="250" matCardImage style="margin-bottom: -16px;  object-fit: cover;"
+                src="assets/images/photo-of-people-having-meeting.jpg">
+        
+        <mat-card-content fxLayout="column" style="padding: 2em;">
+
+            <h2> {{ sourcesCount }} Revistas </h2>
+            <h2> {{ records }} Artículos </h2>
+            <h2> {{ institutionsCount }} Instituciones </h2>
+        
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<section fxLayout="row" fxLayoutAlign="center" style="padding: 1em;">
+    <input type="search" name="search" id="search" placeholder="Introduzca una búsqueda..." style="height: 36px; width: 40%; padding-left: 8px; margin-left: 1em; margin-right: 1em; border: solid 1px #052453;">
+    <button mat-raised-button (click)="onClick" color="primary">Buscar</button>
+    <!-- mat-stroked-button -->
+</section>
+
+<section
+    fxLayout="row wrap"
+    fxLayout.xs="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="2em"
+    style="padding: 1em;"
+>
+
+    <mat-card class="w-card">
+        <mat-card-title-group>
+            <mat-card-title>Tipo de Revistas</mat-card-title>
+            <!-- <mat-card-subtitle>Subtitle</mat-card-subtitle> -->
+            <!-- <img matCardImage src="Side image"> -->
+        </mat-card-title-group>
+        <!-- <img matCardImage src="Card wide image source"> -->
+        <mat-card-content>
+            <mat-nav-list dense>
+                <a mat-list-item [routerLink]="['/directory']" [queryParams]="{source_type: 'STUDENT'}">Revistas Científicas Estudiantiles</a>
+                <a mat-list-item [routerLink]="['/directory']" [queryParams]="{source_type: 'POPULARIZATION'}">Revistas Dibulgación Científicas</a>
+                <a mat-list-item [routerLink]="['/directory']" [queryParams]="{source_type: 'JOURNAL'}">Revistas Científicas</a>
+            </mat-nav-list>
+        </mat-card-content>
+
+    </mat-card>
+
+    <mat-card class="w-card" [ngStyle]="{'min-height': '160px'}">
+        <mat-card-title-group>
+            <mat-card-title>Últimos Ingresos</mat-card-title>
+        </mat-card-title-group>
+        <mat-card-content>
+            <mat-nav-list dense>
+                <a mat-list-item *ngFor="let source of lastSources" (click)="viewJournal(source.uuid)"> {{ source.name }} </a>
+                <!-- <a mat-list-item href="">Revista Cubana de Ciencia de la Información</a>
+                <a mat-list-item href="">Revista 16 de Abril</a> -->
+            </mat-nav-list>
+        </mat-card-content>
+
+    </mat-card>
+</section>
+
+<toco-list-count-sources-by-term [uuid]="topOrganizationPID"></toco-list-count-sources-by-term>
+

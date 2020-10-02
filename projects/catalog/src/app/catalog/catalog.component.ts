@@ -1,12 +1,10 @@
-
-
 import { Component, OnInit, ViewChild, Inject, OnChanges } from "@angular/core";
 import {
   animate,
   state,
   style,
   transition,
-  trigger
+  trigger,
 } from "@angular/animations";
 import { merge, of as observableOf } from "rxjs";
 import { startWith, switchMap, map, catchError } from "rxjs/operators";
@@ -17,7 +15,7 @@ import {
   MetadataService,
   MessageHandler,
   StatusCode,
-  ExtraValidators
+  ExtraValidators,
 } from "@toco/tools/core";
 import {
   Journal,
@@ -26,24 +24,31 @@ import {
   JournalVersion,
   Hit,
   Source,
-  SourceData
+  SourceData,
+  Organization,
 } from "@toco/tools/entities";
 import { FilterHttpMap, FiltersService } from "@toco/tools/filters";
 
 import { EnvService } from "@tocoenv/tools/env.service";
 
-import { CatalogService, SearchService, SourceService, SourceServiceNoAuth } from "@toco/tools/backend";
+import {
+  CatalogService,
+  SearchService,
+  SourceService,
+  SourceServiceNoAuth,
+  OrganizationServiceNoAuth,
+} from "@toco/tools/backend";
 import {
   MatSnackBar,
   MatDialog,
   MatDialogRef,
-  MAT_DIALOG_DATA
+  MAT_DIALOG_DATA,
 } from "@angular/material";
 import { JournalViewInfoComponent } from "@toco/tools/sources/journal-view/journal-view-info.component";
 import { ScrollStrategyOptions } from "@angular/cdk/overlay";
 import {
   FiltersComponent,
-  CatalogFilterKeys
+  CatalogFilterKeys,
 } from "../filters/filters.component";
 import {
   ActivatedRoute,
@@ -52,7 +57,7 @@ import {
   Router,
   NavigationExtras,
   convertToParamMap,
-  Params
+  Params,
 } from "@angular/router";
 import { ThrowStmt } from "@angular/compiler";
 import { HttpParams } from "@angular/common/http";
@@ -71,11 +76,11 @@ import { HttpParams } from "@angular/common/http";
       transition(
         "expanded <=> collapsed",
         animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")
-      )
-    ])
-  ]
+      ),
+    ]),
+  ],
 })
-export class CatalogComponent implements OnInit, OnChanges{
+export class CatalogComponent implements OnInit, OnChanges {
   // journalList: Journal[] = [];
   loading = true;
   private hasErrors = false;
@@ -95,31 +100,33 @@ export class CatalogComponent implements OnInit, OnChanges{
       name: "Derecha",
       layout: "row-reverse",
       aling: "center baseline",
-      width: "22"
+      width: "22",
     },
     {
       name: "Izquierda",
       layout: "row",
       aling: "center baseline",
-      width: "22"
+      width: "22",
     },
     {
       name: "Arriba",
       layout: "column",
       aling: "center center",
-      width: "90"
+      width: "90",
     },
     {
       name: "Abajo",
       layout: "column-reverse",
       aling: "center center",
-      width: "90"
-    }
+      width: "90",
+    },
   ];
   currentlayout = this.layoutPosition[1];
 
   searchParams: HttpParams;
-  topOrganizationPID = '';
+
+  public topOrganizationPID = null;
+  public topMainOrganization: Organization = null;
 
   constructor(
     private sourceService: SourceService,
@@ -130,24 +137,40 @@ export class CatalogComponent implements OnInit, OnChanges{
     private _snackBar: MatSnackBar,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
+    private orgService: OrganizationServiceNoAuth,
     private router: Router
   ) {
-    if (env.extraArgs && env.extraArgs["topOrganizationPID"]) {
-      this.topOrganizationPID = env.extraArgs["topOrganizationPID"];
-    }
+    
   }
-
   // @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   // @ViewChild(FiltersComponent, { static: true }) filters: FiltersComponent;
 
   ngOnInit() {
+    if (this.env.extraArgs && this.env.extraArgs["topOrganizationPID"]) {
+      this.topOrganizationPID = this.env.extraArgs["topOrganizationPID"];
+      this.orgService.getOrganizationByPID(this.topOrganizationPID).subscribe(
+        (response) => {
+          // console.log(response)
+          this.topMainOrganization = new Organization();
+          this.topMainOrganization.deepcopy(response.metadata);
+          this.init()
+        },
+        (error) => {
+          console.log("error");
+        },
+        () => {}
+      );
+    }
+    // TODO: si no hay un top level organization entonces hay que usar otro tipo de control para las organizaciones...
+  }
+  init() {
     this.metadata.setTitleDescription("Catálogo de Revistas Científicas", "");
     // this.paginator.firstPage();
     // this.paginator.pageSize = 5;
     this.searchParams = new HttpParams();
     this.activatedRoute.queryParamMap.subscribe({
-      next: params => {
+      next: (params) => {
         this.filtersParams = params;
         // this.searchParams = this.searchParams.set('size', this.pageSize.toString(10));
         // this.searchParams = this.searchParams.set('page', this.pageIndex.toString(10));
@@ -171,12 +194,12 @@ export class CatalogComponent implements OnInit, OnChanges{
           );
         }
 
-        if (params.has(CatalogFilterKeys.source_status)) {
-          this.searchParams = this.searchParams.set(
-            CatalogFilterKeys.source_status,
-            params.get(CatalogFilterKeys.source_status)
-          );
-        }
+        // if (params.has(CatalogFilterKeys.source_status)) {
+        //   this.searchParams = this.searchParams.set(
+        //     CatalogFilterKeys.source_status,
+        //     params.get(CatalogFilterKeys.source_status)
+        //   );
+        // }
         if (params.has(CatalogFilterKeys.source_type)) {
           this.searchParams = this.searchParams.set(
             CatalogFilterKeys.source_type,
@@ -184,9 +207,9 @@ export class CatalogComponent implements OnInit, OnChanges{
           );
         }
         // TODO: this is not nice, but..
-        let query = '';
-        if(this.topOrganizationPID != ''){
-          query = '(organizations.id:' + this.topOrganizationPID + ')';
+        let query = "";
+        if (this.topMainOrganization) {
+          query = "(organizations.id:" + this.topMainOrganization.id + ")";
         }
 
         if (params.has(CatalogFilterKeys.institutions)) {
@@ -197,8 +220,8 @@ export class CatalogComponent implements OnInit, OnChanges{
             .split(",")
             .forEach((uuid, index, array) => {
               query = query.concat(uuid);
-              if (index < array.length - 1){
-                query = query.concat(' OR ');
+              if (index < array.length - 1) {
+                query = query.concat(" OR ");
               }
             });
           query = query.concat(")");
@@ -211,8 +234,8 @@ export class CatalogComponent implements OnInit, OnChanges{
             .split(",")
             .forEach((uuid, index, array) => {
               query = query.concat(uuid);
-              if (index < array.length - 1){
-                query = query.concat(' OR ');
+              if (index < array.length - 1) {
+                query = query.concat(" OR ");
               }
             });
           query = query.concat(")");
@@ -225,22 +248,22 @@ export class CatalogComponent implements OnInit, OnChanges{
             .split(",")
             .forEach((uuid, index, array) => {
               query = query.concat(uuid);
-              if (index < array.length - 1){
-                query = query.concat(' OR ');
+              if (index < array.length - 1) {
+                query = query.concat(" OR ");
               }
             });
           query = query.concat(")");
         }
-        if (params.has(CatalogFilterKeys.miar_types)) {
+        if (params.has(CatalogFilterKeys.indexes)) {
           query = this.queryAddAndOp(query);
           query = query.concat("(classifications.id:");
           params
-            .get(CatalogFilterKeys.miar_types)
+            .get(CatalogFilterKeys.indexes)
             .split(",")
             .forEach((uuid, index, array) => {
               query = query.concat(uuid);
-              if (index < array.length - 1){
-                query = query.concat(' OR ');
+              if (index < array.length - 1) {
+                query = query.concat(" OR ");
               }
             });
           query = query.concat(")");
@@ -253,40 +276,37 @@ export class CatalogComponent implements OnInit, OnChanges{
 
         console.log(params);
       },
-      error: e => {},
-      complete: () => {}
+      error: (e) => {},
+      complete: () => {},
     });
-
   }
 
-  private queryAddAndOp(query){
-    if (query != ''){
-      return query + ' AND ';
+  private queryAddAndOp(query) {
+    if (query != "") {
+      return query + " AND ";
     }
     return query;
   }
-  ngOnChanges(){
-    console.log('change');
-
+  ngOnChanges() {
+    console.log("change");
   }
 
   filtersChange(values: Params) {
-
     this.filtersParams = convertToParamMap(values);
 
     // console.log(this.filtersParams);
     console.log(values);
     console.log(this.router.url);
-    values['page'] = this.pageIndex + 1;
-    values['size'] = this.pageSize;
+    values["page"] = this.pageIndex + 1;
+    values["size"] = this.pageSize;
 
     let navigationExtras: NavigationExtras = {
       relativeTo: this.activatedRoute,
       queryParams: values,
       queryParamsHandling: "",
-      replaceUrl: true
+      replaceUrl: true,
     };
-    this.router.navigate(['.'], navigationExtras);
+    this.router.navigate(["."], navigationExtras);
     // this.paginator.firstPage();
   }
 
@@ -296,26 +316,24 @@ export class CatalogComponent implements OnInit, OnChanges{
     const navigationExtras: NavigationExtras = {
       relativeTo: this.activatedRoute,
       queryParams: { page: event.pageIndex + 1, size: event.pageSize },
-      queryParamsHandling: "merge"
+      queryParamsHandling: "merge",
     };
 
-    this.router.navigate(['.'], navigationExtras);
+    this.router.navigate(["."], navigationExtras);
   }
-
-
 
   public fetchJournalData() {
     this.loading = true;
     this.sourceServiceNoAuth.getSources(this.searchParams).subscribe(
-      values => {
+      (values) => {
         this.length = values.hits.total;
 
         const arr = new Array<Journal>();
-        values.hits.hits.forEach(item => {
-          console.log(item)
+        values.hits.hits.forEach((item) => {
+          console.log(item);
           const j = new Journal();
-          j.deepcopy(item.metadata)
-          j.uuid = item.metadata['source_uuid'];
+          j.deepcopy(item.metadata);
+          j.uuid = item.metadata["source_uuid"];
           j.data.deepcopy(item.metadata);
           console.log(j);
 
@@ -332,7 +350,6 @@ export class CatalogComponent implements OnInit, OnChanges{
         this.loading = false;
       }
     );
-
   }
 
   public onScrollUp() {
@@ -374,8 +391,8 @@ export class CatalogComponent implements OnInit, OnChanges{
           const dialogRef = this.dialog.open(DialogCatalogJournalInfoDialog, {
             data: {
               journalVersion: journalVersion,
-              journalUUID: uuid
-            }
+              journalUUID: uuid,
+            },
           });
 
           dialogRef.afterClosed();
@@ -387,7 +404,7 @@ export class CatalogComponent implements OnInit, OnChanges{
           );
         }
       },
-      error => {
+      (error) => {
         console.log("error");
       },
       () => {}
@@ -399,12 +416,10 @@ export class CatalogComponent implements OnInit, OnChanges{
   selector: "dialog-catalog-journal-info",
   template: `
     <mat-dialog-content class="height-auto">
-      <toco-journal-view-info
-        [journalVersion]="data.journalVersion"
-      >
+      <toco-journal-view-info [journalVersion]="data.journalVersion">
       </toco-journal-view-info>
     </mat-dialog-content>
-  `
+  `,
 })
 export class DialogCatalogJournalInfoDialog implements OnInit {
   constructor(

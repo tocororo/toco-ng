@@ -1,4 +1,4 @@
-<toco-progress [loading]="saving"> </toco-progress>
+<toco-progress [loading]="loading"> </toco-progress>
 
 <!-- <div *ngIf="source" fxLayout="row" fxLayoutGap="1em">
 </div> -->
@@ -17,7 +17,7 @@
     </button>
 </div> -->
 
-<ng-container *ngIf="editingVersion" [ngSwitch]="editingVersion.data.source_type">
+<ng-container *ngIf="!loading && editingVersion" [ngSwitch]="editingVersion.data.source_type">
   <mat-toolbar
     fxLayout="row wrap"
     fxLayoutAlign="space-between center"
@@ -49,6 +49,7 @@
     *ngSwitchCase="sourceType.JOURNAL.value"
     [editingJournal]="editingVersion"
     [versions]="versions"
+    [topMainOrganization]="topMainOrganization"
   >
   </toco-journal-view>
 

@@ -13,7 +13,8 @@ import {
   MessageHandler,
   StatusCode,
   Response,
-  ResponseStatus, HandlerComponent
+  ResponseStatus,
+  HandlerComponent,
 } from "@toco/tools/core";
 import {
   SourceTypes,
@@ -23,9 +24,12 @@ import {
   JournalVersion,
   Hit,
   SourceData,
-  JournalData, SourceStatus
+  JournalData,
+  SourceStatus,
+  Organization,
 } from "@toco/tools/entities";
-import { SourceService } from "@toco/tools/backend";
+import { SourceService, OrganizationServiceNoAuth } from "@toco/tools/backend";
+import { EnvService } from "@tocoenv/tools/env.service";
 
 @Component({
   selector: "toco-source-view",
@@ -35,27 +39,30 @@ import { SourceService } from "@toco/tools/backend";
 export class SourceViewComponent implements OnInit {
   public sourceType = SourceTypes;
 
+  public topOrganizationPID = null;
+  public topMainOrganization: Organization = null;
 
   public editingVersion: SourceVersion;
   public versions: Array<SourceVersion>;
 
   public dialogCommentText = "";
-  public saving = false;
-  public allows = '';
+  public loading = true;
+  public allows = "";
 
   constructor(
     private route: ActivatedRoute,
     private _router: Router,
     private _snackBar: MatSnackBar,
     public dialog: MatDialog,
-    private _sourceService: SourceService
+    private _sourceService: SourceService,
+    private orgService: OrganizationServiceNoAuth,
+    private env: EnvService
   ) {}
 
   ngOnInit() {
-
     this.route.data.subscribe(
       (response) => {
-        console.log("VIEW SOURCE")
+        console.log("VIEW SOURCE");
         console.log(response);
         try {
           let src = response.source.data.source.record.metadata;
@@ -73,6 +80,22 @@ export class SourceViewComponent implements OnInit {
               this.editingVersion.data.deepcopy(src);
           }
           this._load_source_version();
+          if (this.env.extraArgs["topOrganizationPID"]) {
+            this.topOrganizationPID = this.env.extraArgs["topOrganizationPID"];
+            this.orgService
+              .getOrganizationByPID(this.topOrganizationPID)
+              .subscribe(
+                (response) => {
+                  this.topMainOrganization = new Organization();
+                  this.topMainOrganization.deepcopy(response.metadata);
+                  this.loading = false;
+                },
+                (error) => {
+                  console.log("error");
+                },
+                () => {}
+              );
+          }
           // initialize Journal
         } catch (error) {
           const m = new MessageHandler(this._snackBar);
@@ -89,34 +112,21 @@ export class SourceViewComponent implements OnInit {
   }
   private _load_source_version() {
     console.log("LOAD SOURCE VERSION...");
-    this.saving = true;
-    this._sourceService.getSourceVersions(this.editingVersion.source_uuid).subscribe(
-      (response) => {
-        console.log(response);
-        if (response.status == ResponseStatus.SUCCESS){
-          console.log(response);
 
-          this.versions = response.data.versions;
-          // this.versions.forEach((element) => {
-          //   if (element.is_current) {
-          //     switch (this.source.source_type) {
-          //       case this.sourceType.JOURNAL.value:
-          //         this.editingVersion = new JournalVersion();
-          //         break;
-          //       default:
-          //         this.editingVersion = new SourceVersion();
-          //     }
-          //     this.editingVersion.deepcopy(element);
-          //   }
-          // });
-          this.saving = false;
-        }
-      },
-      (error) => {
-        console.log("error");
-      },
-      () => {}
-    );
+    this._sourceService
+      .getSourceVersions(this.editingVersion.source_uuid)
+      .subscribe(
+        (response) => {
+          console.log(response);
+          if (response.status == ResponseStatus.SUCCESS) {
+            this.versions = response.data.versions;
+          }
+        },
+        (error) => {
+          console.log("error");
+        },
+        () => {}
+      );
   }
   public saveEditingVersion() {
     const dialogRef = this.dialog.open(SourceViewSaveDialog, {
@@ -133,20 +143,20 @@ export class SourceViewComponent implements OnInit {
         if (result && result.accept) {
           this.dialogCommentText = result.comment;
           this.editingVersion.comment = this.dialogCommentText;
-          this.saving = true;
+          this.loading = true;
           this._sourceService
             .editSource(this.editingVersion, this.editingVersion.source_uuid)
             .subscribe(
               (res: Response<any>) => {
                 console.log(res);
-                this.saving = false;
+                this.loading = false;
                 const m = new MessageHandler(this._snackBar);
                 if (res.status == ResponseStatus.SUCCESS && res.data.source) {
                   m.showMessage(
                     StatusCode.OK,
-                    'Guardada con éxito',
+                    "Guardada con éxito",
                     HandlerComponent.dialog,
-                    'Revisión Actual'
+                    "Revisión Actual"
                   );
                   this.ngOnInit();
                   // this._router.navigate(['sources', this.editingVersion.source_uuid, 'view']);
@@ -164,7 +174,7 @@ export class SourceViewComponent implements OnInit {
                     StatusCode.serverError,
                     res.message,
                     HandlerComponent.dialog,
-                    'Revisión Actual'
+                    "Revisión Actual"
                   );
                   // m.showMessage(StatusCode.serverError, res.message);
                 }
@@ -189,7 +199,6 @@ export class SourceViewComponent implements OnInit {
     this._router.navigate(["sources", this.editingVersion.source_uuid, "edit"]);
   }
 
-
   public publishEditingVersion() {
     const dialogRef = this.dialog.open(SourceViewSaveDialog, {
       data: { comment: this.dialogCommentText, accept: false },
@@ -205,20 +214,23 @@ export class SourceViewComponent implements OnInit {
         if (result && result.accept) {
           this.dialogCommentText = result.comment;
           this.editingVersion.comment = this.dialogCommentText;
-          this.saving = true;
+          this.loading = true;
           this._sourceService
-            .makeSourceAsApproved(this.editingVersion, this.editingVersion.source_uuid)
+            .makeSourceAsApproved(
+              this.editingVersion,
+              this.editingVersion.source_uuid
+            )
             .subscribe(
               (res: Response<any>) => {
                 console.log(res);
-                this.saving = false;
+                this.loading = false;
                 const m = new MessageHandler(null, this.dialog);
                 if (res.status == ResponseStatus.SUCCESS && res.data.source) {
                   m.showMessage(
                     StatusCode.OK,
-                    'Guardada con éxito',
+                    "Guardada con éxito",
                     HandlerComponent.dialog,
-                    'Revisión Actual'
+                    "Revisión Actual"
                   );
                   this.ngOnInit();
                   // this._router.navigate(['sources', this.editingVersion.source_uuid, 'view']);
@@ -236,7 +248,7 @@ export class SourceViewComponent implements OnInit {
                     StatusCode.serverError,
                     res.message,
                     HandlerComponent.dialog,
-                    'Revisión Actual'
+                    "Revisión Actual"
                   );
                   // m.showMessage(StatusCode.serverError, res.message);
                 }
@@ -257,37 +269,17 @@ export class SourceViewComponent implements OnInit {
     );
   }
 
-  // /**
-  //  * approve
-  //  */
-  // public approve() {
-  //   this._sourceService
-  //     .makeSourceAsApproved(this.editingVersion, this.editingVersion.source_uuid)
-  //     .pipe(
-  //       catchError((err) => {
-  //         console.log(err);
-  //         return of(null);
-  //       })
-  //     )
-  //     .subscribe((res: Response<any>) => {
-  //       console.log(res);
-  //       const m = new MessageHandler(this._snackBar);
-  //       m.showMessage(StatusCode.OK, res.message);
-  //     });
-  // }
+  public desapprove() {}
 
-  public desapprove(){
-
+  public is_approved() {
+    return (
+      this.editingVersion.data.source_status == SourceStatus.APPROVED.value
+    );
   }
 
-  public is_approved(){
-    return this.editingVersion.data.source_status == SourceStatus.APPROVED.value;
+  public can_publish() {
+    return this.allows == "publish";
   }
-
-  public can_publish(){
-    return this.allows == 'publish';
-  }
-
 }
 
 @Component({

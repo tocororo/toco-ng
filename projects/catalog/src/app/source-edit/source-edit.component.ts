@@ -4,7 +4,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { SourceTypes, Journal, Source, SourceVersion, JournalVersion, VocabulariesInmutableNames, Term, SourceData, JournalData } from '@toco/tools/entities';
+import { SourceTypes, Journal, Source, SourceVersion, JournalVersion, VocabulariesInmutableNames, Term, SourceData, JournalData, Organization } from '@toco/tools/entities';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageHandler, StatusCode } from '@toco/tools/core';
 import { MatSnackBar } from '@angular/material';
@@ -18,11 +18,14 @@ import { EnvService } from '@tocoenv/tools/env.service';
 })
 export class SourceEditComponent implements OnInit {
 
+  public topOrganizationPID = null;
+  public topMainOrganization: Organization = null;
+
   public sourceType = SourceTypes;
   public source: SourceData;
   public sourceVersion: SourceVersion;
   public saving = false;
-  public topOrganizationPID = null;
+  
   public allows = '';
   constructor(
     private route: ActivatedRoute,

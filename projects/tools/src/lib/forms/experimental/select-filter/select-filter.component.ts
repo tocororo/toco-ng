@@ -5,12 +5,22 @@
 
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, AbstractControl, ValidationErrors } from "@angular/forms";
-import { Observable } from "rxjs";
+import { Observable, PartialObserver } from "rxjs";
 import { startWith, map } from "rxjs/operators";
 import { isArray } from "util";
 
 import { FormFieldControl_Experimental } from "../form-field.control.experimental";
 import { SelectOption } from "../../input/select/select-input.component";
+
+
+interface SelectFilterComponentExtraContent{
+  multiple: boolean;
+  selectedTermsIds: [];
+  excludeTermsIds: [];
+
+}
+
+
 
 @Component({
   selector: "toco-select-filter",
@@ -25,26 +35,33 @@ export class SelectFilterComponent extends FormFieldControl_Experimental
   implements OnInit {
   //   internalControl = new FormControl();
 
+  // internalControl = new FormControl();
+
+  //this control is used by the chips,not necessary to expose it
   formControl = new FormControl();
+  inputId: string;
+  filteredOptions: Observable<SelectOption[]>;
+  chipsList: SelectOption[] = [];
+  selectOptions: SelectOption[] = [];
 
-  public selectOptions: SelectOption[] = null;
-
-  public chipsList: SelectOption[] = [];
-
-  public filteredOptions: Observable<SelectOption[]>;
-
-  searchText = "Seleccione las opciones";
-  selectedValue: any;
-
-  public constructor() {
-    super();
-  }
-
-  public multiple: boolean = false;
+  terms: SelectOption[] = [];
 
   loading = true;
 
-  public ngOnInit(): void {
+  extraContent: SelectFilterComponentExtraContent;
+
+  // selectedTermsIds = [];
+
+  searchText = "Seleccione las opciones";
+
+
+  constructor()
+  {
+    super();
+  }
+
+  ngOnInit()
+  {
     (this.content.parentFormSection as FormGroup).addControl(
       this.content.name,
       this.internalControl
@@ -53,40 +70,68 @@ export class SelectFilterComponent extends FormFieldControl_Experimental
     if (this.content.required) {
       this.internalControl.setValidators(
         (control: AbstractControl): ValidationErrors | null => {
-          return !this.content.value ||  this.content.value.length == 0
+          return !this.content.value || this.content.value.length == 0
             ? { requiredTerms: "No Terms Selected" }
             : null;
         }
       );
     }
-    this.multiple = this.content.extraContent["multiple"]
-      ? this.content.extraContent["multiple"]
-      : false;
 
-    if (this.content.extraContent.observable) {
-      this.content.extraContent.observable.subscribe(
-        // next
-        (response: any) => {
-          this.selectOptions = this.content.extraContent.getOptions(response);
-          this.selectOptionsLoaded();
-        },
+    this.inputId = this.content.label.trim().toLowerCase();
+    if (this.content.extraContent) {
+      this.extraContent = this.content.extraContent;
 
-        // error
-        (error: any) => {
-          console.log(error);
-        },
-        // complete
-        () => {}
-      );
-    } else {
-      this.selectOptions = this.content.extraContent.getOptions();
-      this.selectOptionsLoaded();
+      // if (this.extraContent.multiple !== null) {
+      //   this.multiple = this.extraContent.multiple;
+      // }
+      // if (this.extraContent.selectedTermsIds) {
+      //   this.content.value = this.extraContent.selectedTermsIds;
+      // } else {
+      //   this.content.value = [];
+      // }
+
+      // already selected terms
+      if (!this.extraContent.selectedTermsIds) {
+        this.extraContent.selectedTermsIds = [];
+      }
+
+      // terms ids to exclude of the possible options.
+      if (!this.extraContent.excludeTermsIds) {
+        this.extraContent.excludeTermsIds = [];
+      }
+      this.content.value = [];
+
+      if (this.content.extraContent.observable) {
+        this.content.extraContent.observable.subscribe(
+          // next
+          (response: any) => {
+            this.selectOptions = this.content.extraContent.getOptions(response);
+            this.selectOptionsLoaded();
+          },
+      
+          // error
+          (error: any) => {
+            console.log(error);
+          },
+          // complete
+          () => {}
+        );
+      } else {
+        this.selectOptions = this.content.extraContent.getOptions();
+        this.selectOptionsLoaded();
+      }
+    //   else if(this.extraContent.termID){
+    //     this.service.getTermByUUID(this.extraContent.termID, this.extraContent.level)
+    //     .subscribe(this.termsTreeObserver);
+    // }
+      // this._updateFilteredOptions();
     }
   }
 
+
   private selectOptionsLoaded() {
     this.selectOptions.forEach((option) => {
-      if (this.multiple) {
+      if (this.extraContent.multiple) {
         try {
           const index = this.content.value.indexOf(option.value);
           if (index >= 0) {
@@ -100,7 +145,7 @@ export class SelectFilterComponent extends FormFieldControl_Experimental
       }
     });
     if (
-      this.multiple &&
+      this.extraContent.multiple &&
       (this.content.value == null ||
         this.content.value == undefined ||
         !isArray(this.content.value))
@@ -111,50 +156,30 @@ export class SelectFilterComponent extends FormFieldControl_Experimental
     this._updateFilteredOptions();
     this.loading = false;
   }
-  onSelectionChange() {
-    if (this.content.extraContent.selectionChange) {
-      this.content.extraContent.selectionChange(this.content.value);
+
+  private setValidation() {
+    if (this.internalControl.valid) {
+      this.formControl.setErrors(null);
+    } else {
+      this.formControl.setErrors({ requiered: true });
     }
   }
-
-  addChips(item: SelectOption) {
-    if (this.multiple) {
-      this.chipsList.unshift(item);
-      this.content.value.unshift(item.value);
+  private addTermToValue(term: SelectOption) {
+    if (this.extraContent.multiple) {
+      this.content.value.unshift(term);
     } else {
-      // if not is multiple, then the element in the chipsList goes back to the options
-      if (this.chipsList.length > 0) {
-        this.selectOptions.push(this.chipsList[0]);
-      }
-      this.chipsList = [item];
-      this.content.value = [item.value];
+      this.content.value = [term];
     }
-
     this.internalControl.setValue(this.content.value);
+    this.setValidation();
+  }
 
-    this.selectOptions = this.selectOptions.filter(
-      (option) => option.value !== item.value
+  private removeTermFromValue(term: SelectOption) {
+    this.content.value = (this.content.value as []).filter(
+      (e: SelectOption) => e.value !== term.value
     );
-
-    this.formControl.setValue("");
-    this._updateFilteredOptions();
-  }
-
-  removeChip(index: number) {
-    this.selectOptions.push(this.chipsList[index]);
-
-    if (this.multiple) {
-      this.content.value = (this.content.value as []).filter(
-        (e: SelectOption) => e.value !== this.chipsList[index].value
-      );
-    } else {
-      this.content.value = "";
-    }
-
     this.internalControl.setValue(this.content.value);
-
-    this.chipsList.splice(index, 1);
-    this._updateFilteredOptions();
+    this.setValidation();
   }
 
   private _updateFilteredOptions() {
@@ -163,12 +188,51 @@ export class SelectFilterComponent extends FormFieldControl_Experimental
       SelectOption[]
     >(
       startWith(""),
-      map((value) => {
+      map(value => {
         const filterValue = value ? value.toLowerCase() : "";
-        return this.selectOptions.filter((option) =>
+        console.log('************************************')
+        console.log(this.selectOptions);
+        console.log('************************************')
+
+        return this.selectOptions.filter(option =>
           option.label.toLowerCase().includes(filterValue)
         );
       })
     );
   }
+
+ 
+
+  addChips(value: SelectOption) {
+    if (this.extraContent.multiple) {
+      this.chipsList.unshift(value);
+    } else {
+      // if not is multiple, then the element in the chipsList goes back to the options
+      if (this.chipsList.length > 0) {
+        this.selectOptions.push(this.chipsList[0]);
+      }
+      this.chipsList = [value];
+    }
+    this.addTermToValue(value);
+    // console.log(this.selectOptions);
+    this.selectOptions = this.selectOptions.filter(
+      option => option.value !== value.value
+    );
+    // console.log(this.selectOptions);
+
+    this.formControl.setValue("");
+    // document.getElementById(this.inputId).blur();
+    this._updateFilteredOptions();
+  }
+
+  removeChip(index: number) {
+    // console.log(this.selectOptions);
+    
+    this.selectOptions.push(this.chipsList[index]);
+    // console.log(this.selectOptions);
+    this.removeTermFromValue(this.chipsList[index]);
+    this.chipsList.splice(index, 1);
+    this._updateFilteredOptions();
+  }
+
 }

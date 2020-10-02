@@ -36,12 +36,14 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
+<toco-progress *ngIf="!topMainOrganization" [position]="'absolute'"></toco-progress>
 
 
 <div
   fxLayout="{{ currentlayout.layout }}"
   fxLayout.xs="column nowrap"
   fxLayoutAlign="{{ currentlayout.aling }}"
+  *ngIf="topMainOrganization"
 >
   <app-catalog-filters
     fxLayout="row wrap"
@@ -52,6 +54,7 @@
     fxLayoutGap="1em"
     [params]="filtersParams"
     (paramsChange)=filtersChange($event)
+    [topMainOrganization]="topMainOrganization"
   >
   </app-catalog-filters>
   <!-- fxFlex="{{ currentlayout.width }}" -->

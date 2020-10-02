@@ -20,10 +20,7 @@
   </mat-card-header>
 
   <mat-card-content>
-
-    
     <mat-horizontal-stepper labelPosition="end" [linear]="true" #stepper>
-
       <mat-step *ngIf="identifiersPanel" [stepControl]="identifiersFormGroup">
         <ng-template matStepLabel>Identificadores</ng-template>
         <form [formGroup]="identifiersFormGroup">
@@ -51,7 +48,10 @@
         <ng-template matStepLabel>Organizaciones</ng-template>
         <h2>Organizaciones</h2>
         <form [formGroup]="organizationFormGroup">
-          <toco-source-organizations [sourceData]="journalData">
+          <toco-source-organizations
+            [topMainOrganization]="topMainOrganization"
+            [sourceData]="journalData"
+          >
           </toco-source-organizations>
         </form>
         <div fxLayout="row wrap" fxLayoutAlign="space-between center">
@@ -89,11 +89,8 @@
 
       <mat-step *ngIf="indexesFormGroup" [stepControl]="indexesFormGroup">
         <ng-template matStepLabel>Indizaciones</ng-template>
-        <h2>
-          Indizaciones
-        </h2>
-        <toco-source-indexes [sourceData]="journalData">
-        </toco-source-indexes>
+        <h2>Indizaciones</h2>
+        <toco-source-indexes [sourceData]="journalData"> </toco-source-indexes>
 
         <div
           *ngIf="showFinalStep"
@@ -103,7 +100,12 @@
           <button mat-stroked-button color="accent" matStepperPrevious>
             Atrás
           </button>
-          <button mat-stroked-button color="primary" matStepperNext (click)="indexerStepper()">
+          <button
+            mat-stroked-button
+            color="primary"
+            matStepperNext
+            (click)="indexerStepper()"
+          >
             Siguiente
           </button>
         </div>
@@ -154,7 +156,6 @@
           </button>
         </div>
       </mat-step>
-
     </mat-horizontal-stepper>
   </mat-card-content>
 </mat-card>

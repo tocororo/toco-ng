@@ -36,6 +36,7 @@ import {
   SourceSystems,
   JournalVersion,
   IdentifierSchemas,
+  Organization,
 } from "@toco/tools/entities";
 import { FilterHttpMap } from "@toco/tools/filters";
 import {
@@ -77,7 +78,7 @@ export class JournalEditComponent implements OnInit {
   public description = "";
 
   @Input()
-  public defaulttopOrganizationPID: string = null;
+  public topMainOrganization: Organization = null;
 
   @Input()
   public showFinalStep = true;

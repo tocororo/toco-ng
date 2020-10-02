@@ -10,7 +10,7 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { EnvService } from '@tocoenv/tools/env.service';
 
 import { MetadataService, MessageHandler, StatusCode } from '@toco/tools/core';
-import { Journal, SourceClasification, JournalVersion, VocabulariesInmutableNames, JournalData } from '@toco/tools/entities';
+import { Journal, SourceClasification, JournalVersion, VocabulariesInmutableNames, JournalData, Organization } from '@toco/tools/entities';
 
 export enum JournalDataType {
     /** is used by default, `Journal` have not that type of data. */
@@ -45,6 +45,11 @@ export enum JournalDataType {
     styleUrls: ['./journal-view.component.scss']
 })
 export class JournalViewComponent implements OnInit {
+
+
+    @Input()
+    public topMainOrganization: Organization = null;
+  
 
     /**************** auxiliary variables *******************/
 

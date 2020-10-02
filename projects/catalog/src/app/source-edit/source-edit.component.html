@@ -25,7 +25,7 @@
   <toco-journal-edit
     *ngSwitchCase="sourceType.JOURNAL.value"
     [journalVersion]="sourceVersion"
-    [defaulttopOrganizationPID]="topOrganizationPID"
+    [topMainOrganization]="topMainOrganization"
     (journalEditDone)="sourceEditDone($event)"
     [showEditHeader]="false"
   >

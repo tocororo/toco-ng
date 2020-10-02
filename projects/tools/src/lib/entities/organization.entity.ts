@@ -4,7 +4,7 @@ import { EntityBase, Entity, Identifier } from './common';
 
 export const OrganizationRelationships = {
 	PARENT: { label: 'Padre', value: 'parent' },
-	CHILD: { label: 'Hija', value: 'parent' },
+	CHILD: { label: 'Hija', value: 'child' },
 	RELATED: { label: 'Relacionada', value: 'related' },
   };
 
@@ -26,11 +26,12 @@ export class LabelDiffLang extends EntityBase
 	iso639: string = '';
 }
 
+
 /**
  * Entity for `Relationship` based on schema `organization-v1.0.0.json`.
  * A relationship the institute has to other.
  */
-export class Relationship extends EntityBase
+export class Relationship extends Entity
 {
 	/**
 	 * Organization Identifiers, different from GRID mapping.

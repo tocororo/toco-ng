@@ -27,7 +27,7 @@ import { ExtraInstitutionSelectorComponent } from '../institutions/extra-institu
 import { CatalogFiltersComponent } from './catalog-filters/catalog-filters.component';
 import { CatalogComponent, DialogCatalogJournalInfoDialog } from './catalog/catalog.component';
 import { SourcesListComponent } from './sources-list/sources-list.component';
-import { SourceOrganizationsComponent, SourceOrganizationSelectDialog } from './source-edit/source-organizations/source-organizations.component';
+import { SourceOrganizationsComponent, SourceOrganizationSelectDialog, SourceOrganizationSelectTopDialog } from './source-edit/source-organizations/source-organizations.component';
 import { OrganizationsModule } from '../organizations';
 import { SourceIndexesComponent, SourceEditAddIndexComponent } from './source-edit/source-indexes/source-indexes.component';
 
@@ -50,6 +50,7 @@ import { SourceIndexesComponent, SourceEditAddIndexComponent } from './source-ed
         DialogCatalogJournalInfoDialog,
         SourceOrganizationsComponent,
         SourceOrganizationSelectDialog,
+        SourceOrganizationSelectTopDialog, 
         SourceIndexesComponent
     ],
     entryComponents: [
@@ -57,7 +58,8 @@ import { SourceIndexesComponent, SourceEditAddIndexComponent } from './source-ed
         JournalAddInstitutionComponent,
         JournalAddExtraInstitutionComponent,
         DialogCatalogJournalInfoDialog,
-        SourceOrganizationSelectDialog
+        SourceOrganizationSelectDialog,
+        SourceOrganizationSelectTopDialog
     ],
     imports: [
         SharedModule,

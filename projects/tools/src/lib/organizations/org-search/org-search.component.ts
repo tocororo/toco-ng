@@ -20,6 +20,9 @@ export class OrgSearchComponent implements OnInit {
   @Input()
   orgFilter: { type: string, value: string};
 
+  @Input()
+  placeholder="Escriba al menos 3 letras" 
+
   @Output()
   selectedOrg: EventEmitter<Organization> = new EventEmitter<Organization>();
 

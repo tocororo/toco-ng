@@ -50,7 +50,9 @@
         <!-- <a mat-button [routerLink]="['/about']" value="Acerca de">Acerca de</a> -->
         <a mat-button [routerLink]="['/directory']" value="Catálogo">Directorio</a>
         <a mat-button [routerLink]="['/']" value="Reportes y estadísticas">Reportes y estadísticas</a>
-        <a mat-button [routerLink]="['/sources/new/journal']" value="Incluye tu revista">Incluye tu revista</a>
+        <a mat-button  *ngIf="islogged" [routerLink]="['/sources/new/journal']" value="Incluye tu revista">Incluye tu revista</a>
+        <toco-authentication *ngIf="!islogged" [isButtonLogin]="'true'" [isButtonLoginText]="'Incluye tu revista'"></toco-authentication>
+
         <a *ngIf="islogged" mat-button [routerLink]="['/sources']"> Mis Registros </a>
 
     </mat-toolbar-row
