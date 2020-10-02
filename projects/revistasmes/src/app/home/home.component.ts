@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
 
     public mesORGAID = 'orgaid.223';
 
-    public organizationUUID: string;
+    public topOrganizationPID: string;
 
     public institutionsCount: number;
 
@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
 
-        this.organizationUUID = this.env.extraArgs['organizationUUID'];
+        this.topOrganizationPID = this.env.extraArgs['topOrganizationPID'];
 
         this.institutionsCount = 0;
         this.records = 0;
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
 
         this.lastSources = new Array();
 
-        this.sourceServiceNoAuth.getSourcesOrgAggregation(this.organizationUUID).subscribe(
+        this.sourceServiceNoAuth.getSourcesOrgAggregation(this.topOrganizationPID).subscribe(
         values => {
           console.log(values);
         },
@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
           console.log("complete");
         }
       );
-        // this.catalogService.getSourcesOrgAggregation(this.organizationUUID).subscribe(
+        // this.catalogService.getSourcesOrgAggregation(this.topOrganizationPID).subscribe(
         //     response => {
         //         if (response && response.data && response.data.home_statics) {
         //           console.log(response)

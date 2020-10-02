@@ -2,6 +2,12 @@
 import { EntityBase, Entity, Identifier } from './common';
 
 
+export const OrganizationRelationships = {
+	PARENT: { label: 'Padre', value: 'parent' },
+	CHILD: { label: 'Hija', value: 'parent' },
+	RELATED: { label: 'Relacionada', value: 'related' },
+  };
+
 
 /**
  * Entity for `LabelDiffLang` based on schema `organization-v1.0.0.json`.

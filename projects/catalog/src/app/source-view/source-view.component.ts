@@ -148,7 +148,8 @@ export class SourceViewComponent implements OnInit {
                     HandlerComponent.dialog,
                     'Revisión Actual'
                   );
-                  this._router.navigate(['sources', this.editingVersion.source_uuid, 'view']);
+                  this.ngOnInit();
+                  // this._router.navigate(['sources', this.editingVersion.source_uuid, 'view']);
                   // this.editingVersion.data.deepcopy(res.data.source);
                   // this._load_source_version();
                   // m.showMessage(
@@ -188,24 +189,92 @@ export class SourceViewComponent implements OnInit {
     this._router.navigate(["sources", this.editingVersion.source_uuid, "edit"]);
   }
 
-  /**
-   * approve
-   */
-  public approve() {
-    this._sourceService
-      .makeSourceAsApproved(this.editingVersion.source_uuid)
-      .pipe(
-        catchError((err) => {
-          console.log(err);
-          return of(null);
-        })
-      )
-      .subscribe((res: Response<any>) => {
-        console.log(res);
-        const m = new MessageHandler(this._snackBar);
-        m.showMessage(StatusCode.OK, res.message);
-      });
+
+  public publishEditingVersion() {
+    const dialogRef = this.dialog.open(SourceViewSaveDialog, {
+      data: { comment: this.dialogCommentText, accept: false },
+    });
+    console.log(this.editingVersion);
+
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        console.log("The dialog was closed");
+        console.log(dialogRef.getState());
+        console.log(result);
+
+        if (result && result.accept) {
+          this.dialogCommentText = result.comment;
+          this.editingVersion.comment = this.dialogCommentText;
+          this.saving = true;
+          this._sourceService
+            .makeSourceAsApproved(this.editingVersion, this.editingVersion.source_uuid)
+            .subscribe(
+              (res: Response<any>) => {
+                console.log(res);
+                this.saving = false;
+                const m = new MessageHandler(null, this.dialog);
+                if (res.status == ResponseStatus.SUCCESS && res.data.source) {
+                  m.showMessage(
+                    StatusCode.OK,
+                    'Guardada con éxito',
+                    HandlerComponent.dialog,
+                    'Revisión Actual'
+                  );
+                  this.ngOnInit();
+                  // this._router.navigate(['sources', this.editingVersion.source_uuid, 'view']);
+                  // this.editingVersion.data.deepcopy(res.data.source);
+                  // this._load_source_version();
+                  // m.showMessage(
+                  //   StatusCode.OK,
+                  //   'Guardada con éxito',
+                  //   HandlerComponent.dialog,
+                  //   'Revisión Actual'
+                  // );
+                  // m.dialog().showMessage(StatusCode.OK, "Guardado con éxito");
+                } else {
+                  m.showMessage(
+                    StatusCode.serverError,
+                    res.message,
+                    HandlerComponent.dialog,
+                    'Revisión Actual'
+                  );
+                  // m.showMessage(StatusCode.serverError, res.message);
+                }
+              },
+              (error: any) => {
+                console.log(error);
+                return of(null);
+              },
+              () => {}
+            );
+        }
+      },
+      (error: any) => {
+        console.log(error);
+        return of(null);
+      },
+      () => {}
+    );
   }
+
+  // /**
+  //  * approve
+  //  */
+  // public approve() {
+  //   this._sourceService
+  //     .makeSourceAsApproved(this.editingVersion, this.editingVersion.source_uuid)
+  //     .pipe(
+  //       catchError((err) => {
+  //         console.log(err);
+  //         return of(null);
+  //       })
+  //     )
+  //     .subscribe((res: Response<any>) => {
+  //       console.log(res);
+  //       const m = new MessageHandler(this._snackBar);
+  //       m.showMessage(StatusCode.OK, res.message);
+  //     });
+  // }
 
   public desapprove(){
 

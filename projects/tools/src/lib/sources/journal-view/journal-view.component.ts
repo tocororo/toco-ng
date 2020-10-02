@@ -35,7 +35,8 @@ export enum JournalDataType {
     twitter = 17,
     linkedin = 18,
     description = 19,
-    term = 20
+    term = 20,
+    oaiurl = 22,
 }
 
 @Component({

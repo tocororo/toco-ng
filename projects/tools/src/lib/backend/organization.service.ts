@@ -1,10 +1,12 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpBackend, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { MessageService } from '@toco/tools/core';
+import { EnvService } from '@tocoenv/tools/env.service';
+import { Organization, Hit, SearchResponse } from '../entities';
 
 /**
  * The URL to the root api. 
@@ -124,4 +126,49 @@ export class OrganizationService
     {
         this._messageService.add(`${ OrganizationService.name }: ${ message }.`);
     }
+}
+
+
+@Injectable()
+export class OrganizationServiceNoAuth {
+
+  http: HttpClient;
+  path = 'organizations'
+  constructor(private env: EnvService, private handler: HttpBackend) {
+
+    this.http = new HttpClient(handler);
+  }
+
+  getOrganizationByUUID(uuid): Observable<Hit<Organization>> {
+    // const req = this.env.sceibaApi + this.prefix + "/" + uuid;
+    const req = this.env.cuorApi + this.path + "/" + uuid;
+    return this.http.get<Hit<Organization>>(req);
+  }
+
+  getOrganizationByPID(pid): Observable<Hit<Organization>> {
+    // const req = this.env.sceibaApi + this.prefix + "/" + uuid;
+    let params = new HttpParams();
+    params = params.set('value', pid);
+
+    const options = {
+      params: params,
+      // headers: this.headers
+    };
+
+    const req = this.env.cuorApi + this.path + '/pid';
+    return this.http.get<Hit<Organization>>(req, options);
+  }
+
+  getOrganizations(params: HttpParams): Observable<SearchResponse<Organization>> {
+    const options = {
+      params: params,
+      // headers: this.headers
+    };
+    console.log(params);
+    const req = this.env.cuorApi + this.path;
+    console.log(req);
+
+    return this.http.get<SearchResponse<Organization>>(req, options);
+  }
+
 }

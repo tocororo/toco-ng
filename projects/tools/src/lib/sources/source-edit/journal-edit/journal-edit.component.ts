@@ -77,7 +77,7 @@ export class JournalEditComponent implements OnInit {
   public description = "";
 
   @Input()
-  public defaultOrganizationUUID: string = null;
+  public defaulttopOrganizationPID: string = null;
 
   @Input()
   public showFinalStep = true;

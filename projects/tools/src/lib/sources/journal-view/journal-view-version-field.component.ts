@@ -193,6 +193,17 @@ export class JournalViewFieldComponent implements OnInit {
                   IdentifierSchemas.url,
                   this.currentJournal.data.getIdentifierValue(IdentifierSchemas.url));
                 break;
+            case JournalDataType.oaiurl:
+                concat ?
+                this.editingJournal.data.setIdentifierValue(
+                    IdentifierSchemas.oaiurl,
+                    this.editingJournal.data.getIdentifierValue(IdentifierSchemas.oaiurl) +
+                    ' ' +
+                    this.currentJournal.data.getIdentifierValue(IdentifierSchemas.oaiurl)) :
+                this.editingJournal.data.setIdentifierValue(
+                    IdentifierSchemas.oaiurl,
+                    this.currentJournal.data.getIdentifierValue(IdentifierSchemas.oaiurl));
+                break;
         }
         this.editingJournalChange.emit(this.editingJournal);
     }

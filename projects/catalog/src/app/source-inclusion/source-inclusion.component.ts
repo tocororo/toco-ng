@@ -139,6 +139,7 @@ export class SourceInclusionComponent implements OnInit {
                         this.source = new Source();
                         this.source.data.deepcopy(src);
                     }
+                    this.isStartProcess = false;
                     this.loading = false;
                     m.showMessage(
                       StatusCode.OK,

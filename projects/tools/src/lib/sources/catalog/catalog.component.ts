@@ -86,7 +86,7 @@ export class CatalogComponent implements OnInit {
     private _snackBar: MatSnackBar,
     public dialog: MatDialog) {
     this.sceibaHost = env.sceibaHost + '/catalog';
-    env.organizationUUID
+    env.topOrganizationPID
   }
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

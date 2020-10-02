@@ -36,7 +36,7 @@ export class JournalInstitutionsComponent implements OnInit,  OnChanges {
   public journalVersion: JournalVersion = null;
 
   @Input()
-  public defaultOrganizationUUID: string = null;
+  public defaulttopOrganizationPID: string = null;
 
   @Input()
   organizationFormGroup: FormGroup;

@@ -125,6 +125,16 @@ export class SourceService {
       this.httpOptions
     );
   }
+
+  makeSourceAsApproved(source: SourceVersion,uuid): Observable<Response<any>> {
+    const req = this.env.sceibaApi + this.prefix + "/" + uuid + "/publish";
+    return this.http.post<Response<any>>(
+      req,
+      this.adhocstringgify(source),
+      this.httpOptions
+    );
+  }
+
   newSource(source: SourceVersion, uuid, role): Observable<Response<any>> {
     let params = new HttpParams();
     params = params.set("pid", uuid.toString());
@@ -162,10 +172,7 @@ export class SourceService {
     return this.http.get<Response<any>>(req, this.httpOptions);
   }
 
-  makeSourceAsApproved(uuid): Observable<Response<any>> {
-    const req = this.env.sceibaApi + this.prefix + "/" + uuid + "/approved";
-    return this.http.get<Response<any>>(req, this.httpOptions);
-  }
+
 
   countSourcesByTerm(uuid, level = 0): Observable<Response<any>> {
     let params = new HttpParams();

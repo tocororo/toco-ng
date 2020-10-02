@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Organization, SearchResponse, HitList, Aggr } from '@toco/tools/entities';
 import { FormControl } from '@angular/forms';
-import { SearchService } from '@toco/tools/backend';
+import { SearchService, OrganizationServiceNoAuth } from '@toco/tools/backend';
 import { HttpParams } from '@angular/common/http';
 
 @Component({
@@ -23,7 +23,8 @@ export class OrgSearchComponent implements OnInit {
   @Output()
   selectedOrg: EventEmitter<Organization> = new EventEmitter<Organization>();
 
-  constructor( private _orgService: SearchService) {
+  toSearch=0;
+  constructor( private _orgService: OrganizationServiceNoAuth) {
 
     console.log(this.orgCtrl);
 
@@ -38,8 +39,10 @@ export class OrgSearchComponent implements OnInit {
     this.orgCtrl.valueChanges
     .subscribe({
       next: (orgValueChanges) => {
+        this.toSearch++;
         // this condition check if the param is a `string` an if at least write 3 letters
-        if (typeof orgValueChanges === 'string' && orgValueChanges.length >= 3) {
+        if (this.toSearch > 3 && typeof orgValueChanges === 'string') {
+          this.toSearch = 0;
           this.params = this.params.set('q', orgValueChanges)
           this._orgService.getOrganizations(this.params).subscribe({
               next: (response) => {
@@ -48,6 +51,7 @@ export class OrgSearchComponent implements OnInit {
               }
           });
         } else if (typeof orgValueChanges === 'object') {
+          this.toSearch = 0;
           console.log(orgValueChanges);
           this.selectedOrg.emit(orgValueChanges);
         }

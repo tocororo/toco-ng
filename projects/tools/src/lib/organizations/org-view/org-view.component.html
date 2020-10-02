@@ -11,7 +11,7 @@
 
   </mat-card-header>
 
-  <mat-card-content>
+  <mat-card-content *ngIf="showContent">
 
     <static-table [desc]="'Lista de los identificadores de la Organización'" *ngIf="org.hasOwnProperty('identifiers')"  [value]="org.identifiers"
       [columnsObjectProperty]="['idtype', 'value']"

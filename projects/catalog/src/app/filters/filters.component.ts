@@ -65,7 +65,7 @@ export class FiltersComponent implements OnInit {
   institutionTree: SelectOptionNode[] = [];
   institutionSelection: FlatTreeNode[];
 
-  organizationUUID = "";
+  topOrganizationPID = "";
 
   filters: Map<string, string> = new Map<string, string>();
 
@@ -77,8 +77,8 @@ export class FiltersComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private route: ActivatedRoute
   ) {
-    if (envService.extraArgs && envService.extraArgs["organizationUUID"]) {
-      this.organizationUUID = envService.extraArgs["organizationUUID"];
+    if (envService.extraArgs && envService.extraArgs["topOrganizationPID"]) {
+      this.topOrganizationPID = envService.extraArgs["topOrganizationPID"];
     }
   }
 
@@ -160,7 +160,7 @@ export class FiltersComponent implements OnInit {
             extraContent: {
               multiple: true,
               selectedTermsIds: this.filters.get(CatalogFilterKeys.institutions).split(","),
-              observable: this.searchService.getOrganizationById(this.organizationUUID),
+              observable: this.searchService.getOrganizationById(this.topOrganizationPID),
               getOptions: (response: any) => {
 
                 console.log(
@@ -397,14 +397,14 @@ export class FiltersComponent implements OnInit {
       selection.forEach(element => {
         val = val.concat(element.element.value, ",");
       });
-      // val = val.concat(this.organizationUUID)
+      // val = val.concat(this.topOrganizationPID)
       val = val.slice(0, val.length - 1);
       // if (val != ''){
       // this.filters[CatalogFilterKeys.institutions] = val;
       this.filters.set(CatalogFilterKeys.institutions, val);
       // }
-      // else if (this.organizationUUID != ''){
-      //   this.filters[CatalogFilterKeys.institutions] = this.organizationUUID;
+      // else if (this.topOrganizationPID != ''){
+      //   this.filters[CatalogFilterKeys.institutions] = this.topOrganizationPID;
       // }
     }
   }

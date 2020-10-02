@@ -18,7 +18,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
   // institution: Term;
 
   // @Input()
-  // public defaultOrganizationUUID: string = null;
+  // public defaulttopOrganizationPID: string = null;
 
   @Input()
   public institution: Term = null;
@@ -135,7 +135,7 @@ export class InstitutionHierarchySelectorComponent implements OnInit {
   }
 
   initLevel1Panel() {
-    // if (this.defaultOrganizationUUID != null && this.level1 && this.defaultOrganizationUUID != this.level1.uuid) {
+    // if (this.defaulttopOrganizationPID != null && this.level1 && this.defaulttopOrganizationPID != this.level1.uuid) {
     //   return false;
     // }
     this.level1Panel = [

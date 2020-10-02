@@ -27,17 +27,18 @@
       {{ editingVersion.data.name }}
     </span>
     <div fxLayout="row wrap" fxLayoutGap="20px">
-      <button mat-stroked-button color="primary" (click)="approve()" *ngIf="can_publish() && !is_approved()">
-        Publicar
-      </button>
       <button mat-stroked-button color="primary" (click)="desaprove()" *ngIf="can_publish() && is_approved()">
         Despublicar
       </button>
-      <button mat-stroked-button color="warn" (click)="editVersion()">
-        Editar
+      <button mat-stroked-button color="primary" (click)="publishEditingVersion()" *ngIf="can_publish()">
+        Publicar la revisión actual
       </button>
+      <!-- <button mat-stroked-button color="warn" (click)="editVersion()">
+        Editar
+      </button> -->
+      
       <button mat-stroked-button color="warn" (click)="saveEditingVersion()">
-        Guardar cambios de la revisión actual
+        Guardar la revisión actual
       </button>
     </div>
   </mat-toolbar>

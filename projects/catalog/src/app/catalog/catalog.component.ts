@@ -119,7 +119,7 @@ export class CatalogComponent implements OnInit, OnChanges{
   currentlayout = this.layoutPosition[1];
 
   searchParams: HttpParams;
-  organizationUUID = '';
+  topOrganizationPID = '';
 
   constructor(
     private sourceService: SourceService,
@@ -132,8 +132,8 @@ export class CatalogComponent implements OnInit, OnChanges{
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
-    if (env.extraArgs && env.extraArgs["organizationUUID"]) {
-      this.organizationUUID = env.extraArgs["organizationUUID"];
+    if (env.extraArgs && env.extraArgs["topOrganizationPID"]) {
+      this.topOrganizationPID = env.extraArgs["topOrganizationPID"];
     }
   }
 
@@ -185,8 +185,8 @@ export class CatalogComponent implements OnInit, OnChanges{
         }
         // TODO: this is not nice, but..
         let query = '';
-        if(this.organizationUUID != ''){
-          query = '(organizations.id:' + this.organizationUUID + ')';
+        if(this.topOrganizationPID != ''){
+          query = '(organizations.id:' + this.topOrganizationPID + ')';
         }
 
         if (params.has(CatalogFilterKeys.institutions)) {

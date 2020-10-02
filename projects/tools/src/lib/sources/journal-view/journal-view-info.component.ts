@@ -5,6 +5,8 @@ import {
   JournalVersion,
   JournalData,
   IdentifierSchemas,
+  SourceTypes,
+  SourceSystems,
 } from "@toco/tools/entities";
 import { SourceService } from "@toco/tools/backend";
 import { MatSnackBar } from "@angular/material";
@@ -24,6 +26,9 @@ import { SourceIndexesComponent } from '../source-edit/source-indexes/source-ind
 export class JournalViewInfoComponent implements OnInit, OnChanges {
   @Input() public journalVersion: JournalVersion;
   public journalData: JournalData;
+
+  public tipos = SourceTypes;
+  public sistemas = SourceSystems;
 
   /** TODO: In the future databaseTerms and subjectTerms will be changes by
    *  miarTerms and subjectsUnescoTerms

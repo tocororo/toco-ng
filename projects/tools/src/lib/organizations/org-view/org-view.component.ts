@@ -30,6 +30,9 @@ export class OrgViewComponent implements OnInit
 	@Input()
 	public org: Organization;
 
+	@Input()
+	public showContent: boolean = true;
+
 	public constructor(private _router: Router, private _activatedRoute: ActivatedRoute)
 	{
 		this.operationAction = OperationAction;

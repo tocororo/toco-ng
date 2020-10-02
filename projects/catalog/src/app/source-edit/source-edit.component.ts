@@ -22,7 +22,7 @@ export class SourceEditComponent implements OnInit {
   public source: SourceData;
   public sourceVersion: SourceVersion;
   public saving = false;
-  public organizationUUID = null;
+  public topOrganizationPID = null;
   public allows = '';
   constructor(
     private route: ActivatedRoute,
@@ -32,8 +32,8 @@ export class SourceEditComponent implements OnInit {
     private taxonomyService: TaxonomyService,
     private env: EnvService,
   ) {
-    if (env.extraArgs && env.extraArgs["organizationUUID"]) {
-      this.organizationUUID = env.extraArgs["organizationUUID"];
+    if (env.extraArgs && env.extraArgs["topOrganizationPID"]) {
+      this.topOrganizationPID = env.extraArgs["topOrganizationPID"];
     }
   }
 

@@ -21,7 +21,7 @@ export class EnvService {
     public oauthRedirectUri = '';
     public oauthClientId = '';
     public oauthScope = '';
-    public organizationUUID = '';
+    public topOrganizationPID = '';
     public extraArgs: any = null;
 
     /**

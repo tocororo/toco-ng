@@ -33,6 +33,12 @@
         [value]="journalData.shortname"
       ></toco-journal-view-info-field>
     </p>
+    <p>
+      <toco-journal-view-info-field
+        [label]="'Tipo'"
+        [value]="tipos[journalData.source_type].label"
+      ></toco-journal-view-info-field>
+    </p>
 
     <mat-label style="font-weight: bold">ISSN: </mat-label>
     <div style="margin-left: 0.8em">
@@ -78,6 +84,20 @@
       ></toco-journal-view-info-field>
     </p>
 
+    <p>
+      <toco-journal-view-info-field
+        [label]="'OAIURL'"
+        [value]="getIdentifier(IdentifierSchemas.oaiurl)"
+      ></toco-journal-view-info-field>
+    </p>
+
+    <p>
+      <toco-journal-view-info-field
+        [label]="'Sistema'"
+        [value]="sistemas[journalData.source_system].label"
+      ></toco-journal-view-info-field>
+    </p>
+    
     <p>
       <toco-journal-view-info-field
         [label]="'Email'"
