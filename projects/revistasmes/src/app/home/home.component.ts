@@ -5,12 +5,13 @@
 
 import { Component, OnInit } from '@angular/core';
 import { MatPaginatorIntl, MatDialog, MatSnackBar } from '@angular/material';
-import { Term, Journal, JournalVersion, Organization } from '@toco/tools/entities';
+import { Term, Journal, JournalVersion, Organization, SourceTypes } from '@toco/tools/entities';
 import { EnvService } from '@tocoenv/tools/env.service';
 import { HomeService } from './home.service';
 import { CatalogService, OrganizationServiceNoAuth, SourceService, SourceServiceNoAuth} from '@toco/tools/backend';
 import { MessageHandler, ResponseStatus, StatusCode } from '@toco/tools/core';
 import { DialogCatalogJournalInfoDialog } from 'projects/catalog/src/app/catalog/catalog.component';
+import { JournalDataType } from '@toco/tools/sources';
 
 @Component({
     selector: 'app-home',
@@ -97,8 +98,25 @@ export class HomeComponent implements OnInit {
         response => {
           if(response && response.status == ResponseStatus.SUCCESS){
               this.stats = response.data.aggr;
+              let types = [];
+              this.stats.source_types.forEach(element => {
+                if (element.source_type == SourceTypes.JOURNAL.value) {
+                  element['label'] = SourceTypes.JOURNAL.label;
+                  types.push(element);
+                }
+                if (element.source_type == SourceTypes.STUDENT.value) {
+                  element['label'] = SourceTypes.JOURNAL.label;
+                  types.push(element);
+                }
+                if (element.source_type == SourceTypes.POPULARIZATION.value) {
+                  element['label'] = SourceTypes.JOURNAL.label;
+                  types.push(element);
+                }
+              });
+              this.stats.source_types = types;
+              console.log(this.stats);
           }
-          console.log(response);
+
         },
         (err: any) => {
           console.log("error: " + err + ".");
@@ -112,24 +130,25 @@ export class HomeComponent implements OnInit {
         this.sourceServiceNoAuth.getSourceByUUID(uuid).subscribe(
           response => {
             console.log(response);
-            // if (response.status == "success") {
-            //   let journalVersion = new JournalVersion();
-            //   journalVersion.deepcopy(response.data.sources);
-            //   const dialogRef = this.dialog.open(DialogCatalogJournalInfoDialog, {
-            //     data: {
-            //       journalVersion: journalVersion,
-            //       journalUUID: uuid
-            //     }
-            //   });
+            if (response.metadata) {
+              let journalVersion = new JournalVersion();
+              journalVersion.data.deepcopy(response.metadata);
+              journalVersion.source_uuid = response.id;
+              const dialogRef = this.dialog.open(DialogCatalogJournalInfoDialog, {
+                data: {
+                  journalVersion: journalVersion,
+                  journalUUID: uuid
+                }
+              });
 
-            //   dialogRef.afterClosed();
-            // } else {
-            //   const m = new MessageHandler(this._snackBar);
-            //   m.showMessage(
-            //     StatusCode.serverError,
-            //     "No fue posible encontrar la Revista"
-            //   );
-            // }
+              dialogRef.afterClosed();
+            } else {
+              const m = new MessageHandler(this._snackBar);
+              m.showMessage(
+                StatusCode.serverError,
+                "No fue posible encontrar la Revista"
+              );
+            }
           },
           error => {
             console.log("error");

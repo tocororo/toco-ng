@@ -36,7 +36,12 @@
         <!-- Name Column -->
         <ng-container matColumnDef="source_status">
           <th mat-header-cell *matHeaderCellDef>Estado</th>
-          <td mat-cell *matCellDef="let element">{{ element.source_status }}</td>
+          <ng-container></ng-container>
+
+          <td mat-cell *matCellDef="let element">
+            <mat-label *ngIf="element.source_status=='APPROVED'">Público</mat-label>
+            <mat-label *ngIf="element.source_status!='APPROVED'">En Revisión</mat-label>
+          </td>
         </ng-container>
 
         <!-- Weight Column -->
@@ -81,7 +86,10 @@
         <!-- Name Column -->
         <ng-container matColumnDef="source_status">
           <th mat-header-cell *matHeaderCellDef>Estado</th>
-          <td mat-cell *matCellDef="let element">{{ element.source_status }}</td>
+          <td mat-cell *matCellDef="let element">
+            <mat-label *ngIf="element.source_status=='APPROVED'">Público</mat-label>
+            <mat-label *ngIf="element.source_status!='APPROVED'">En Revisión</mat-label>
+          </td>
         </ng-container>
 
         <!-- Weight Column -->
