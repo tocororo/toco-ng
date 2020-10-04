@@ -17,7 +17,14 @@
     </button>
 </div> -->
 
-<ng-container *ngIf="!loading && editingVersion" [ngSwitch]="editingVersion.data.source_type">
+<mat-card *ngIf="error">
+  <mat-card-header>
+    <mat-card-title>ERROR</mat-card-title>
+  </mat-card-header>
+</mat-card>
+
+
+<ng-container *ngIf="!error && editingVersion" [ngSwitch]="editingVersion.data.source_type">
   <mat-toolbar
     fxLayout="row wrap"
     fxLayoutAlign="space-between center"
@@ -27,7 +34,7 @@
       {{ editingVersion.data.name }}
     </span>
     <div fxLayout="row wrap" fxLayoutGap="20px">
-      <button mat-stroked-button color="primary" (click)="desaprove()" *ngIf="can_publish() && is_approved()">
+      <button mat-stroked-button color="primary" (click)="desapprove()" *ngIf="can_publish() && is_approved()">
         Despublicar
       </button>
       <button mat-stroked-button color="primary" (click)="publishEditingVersion()" *ngIf="can_publish()">
@@ -36,14 +43,14 @@
       <!-- <button mat-stroked-button color="warn" (click)="editVersion()">
         Editar
       </button> -->
-      
+
       <button mat-stroked-button color="warn" (click)="saveEditingVersion()">
         Guardar la revisión actual
       </button>
     </div>
   </mat-toolbar>
 
-  <ng-container *ngIf="editingVersion && versions">
+  <ng-container *ngIf="editingVersion && versions && topMainOrganization">
   <toco-journal-view
     #view
     *ngSwitchCase="sourceType.JOURNAL.value"

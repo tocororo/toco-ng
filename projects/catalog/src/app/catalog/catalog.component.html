@@ -36,7 +36,7 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<toco-progress *ngIf="!topMainOrganization" [position]="'absolute'"></toco-progress>
+<toco-progress [loading]="!topMainOrganization" [position]="'absolute'"></toco-progress>
 
 
 <div
@@ -79,10 +79,10 @@
         <th mat-header-cell *matHeaderCellDef>P-ISSN</th>
         <td mat-cell *matCellDef="let element">{{ element.data.issn.p }}</td>
       </ng-container>
-      <ng-container matColumnDef="url">
+      <!-- <ng-container matColumnDef="url">
         <th mat-header-cell *matHeaderCellDef>URL</th>
         <td mat-cell *matCellDef="let element">{{ element.data.url }}</td>
-      </ng-container>
+      </ng-container> -->
 
       <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
       <ng-container matColumnDef="expandedDetail">
@@ -101,6 +101,8 @@
               class="example-element-description e2e-inner-html-bound"
               [innerHTML]="element.data.description"
             ></div>
+            <!-- <div><mat-label>{{ element.data.url }}</mat-label></div> -->
+
             <div
               class="example-element-description"
               fxLayout="row"
@@ -113,7 +115,7 @@
               >
                 Ver
               </button>
-              <a class="color-white" [routerLink]="['/directory', element.id]" style="white-space: normal;">Ir</a>
+              <!-- <a class="color-white" [routerLink]="['/directory', element.id]" style="white-space: normal;">Ir</a> -->
             </div>
           </div>
         </td>

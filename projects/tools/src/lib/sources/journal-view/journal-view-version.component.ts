@@ -191,7 +191,7 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
     let found = false;
     let newts: SourceOrganization[] = [];
 
-    this.editingJournal.data.organizations.forEach((ts) => {
+    this.currentJournal.data.organizations.forEach((ts) => {
       newts.push(ts);
     });
 

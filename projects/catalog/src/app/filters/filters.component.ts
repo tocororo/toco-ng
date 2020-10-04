@@ -82,7 +82,7 @@ export class FiltersComponent implements OnInit {
     private route: ActivatedRoute,
     private orgService: OrganizationServiceNoAuth,
   ) {
-    
+
   }
 
   ngOnInit(){
@@ -296,7 +296,7 @@ export class FiltersComponent implements OnInit {
             name: CatalogFilterKeys.indexes,
             label: "Bases de Datos",
             type: FormFieldType.vocabulary,
-            required: true,
+            required: false,
             width: "100%",
             value: this.filters.get(CatalogFilterKeys.indexes).split(","),
             extraContent: {
@@ -451,7 +451,7 @@ export class FiltersComponent implements OnInit {
       let val = "";
       values[key].forEach(element => {
         console.log(element);
-        
+
         val = val.concat(element[valuekey], ",");
       });
       val = val.slice(0, val.length - 1);

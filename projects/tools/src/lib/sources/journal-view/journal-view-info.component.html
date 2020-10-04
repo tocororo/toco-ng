@@ -1,6 +1,6 @@
 <!-- Journal Information -->
 <mat-card *ngIf="journalVersion && journalData">
-  <mat-card-header>
+  <mat-card-header *ngIf="showVersionLabel">
     <!-- <img mat-card-avatar *ngIf="journal.data.logo; else logotemplate" [style.background-size]="'cover'" src="journal.data.logo">
         <ng-template #logotemplate>
             <img mat-card-avatar [src]="defaultLogo" alt="">
@@ -11,7 +11,7 @@
     <mat-card-subtitle> Revisión actual </mat-card-subtitle>
   </mat-card-header>
 
-  <mat-divider [inset]="true" style="margin-bottom: 1em"></mat-divider>
+  <mat-divider  *ngIf="showVersionLabel" [inset]="true" style="margin-bottom: 1em"></mat-divider>
 
   <mat-card-content>
     <p>
@@ -34,7 +34,7 @@
       ></toco-journal-view-info-field>
     </p>
     <p>
-      <toco-journal-view-info-field
+      <toco-journal-view-info-field *ngIf="journalData.source_type"
         [label]="'Tipo'"
         [value]="tipos[journalData.source_type].label"
       ></toco-journal-view-info-field>
@@ -92,12 +92,12 @@
     </p>
 
     <p>
-      <toco-journal-view-info-field
+      <toco-journal-view-info-field *ngIf="journalData.source_system"
         [label]="'Sistema'"
         [value]="sistemas[journalData.source_system].label"
       ></toco-journal-view-info-field>
     </p>
-    
+
     <p>
       <toco-journal-view-info-field
         [label]="'Email'"

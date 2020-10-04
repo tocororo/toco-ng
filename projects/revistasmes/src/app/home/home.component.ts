@@ -5,11 +5,11 @@
 
 import { Component, OnInit } from '@angular/core';
 import { MatPaginatorIntl, MatDialog, MatSnackBar } from '@angular/material';
-import { Term, Journal, JournalVersion } from '@toco/tools/entities';
+import { Term, Journal, JournalVersion, Organization } from '@toco/tools/entities';
 import { EnvService } from '@tocoenv/tools/env.service';
 import { HomeService } from './home.service';
-import { CatalogService, SourceService, SourceServiceNoAuth} from '@toco/tools/backend';
-import { MessageHandler, StatusCode } from '@toco/tools/core';
+import { CatalogService, OrganizationServiceNoAuth, SourceService, SourceServiceNoAuth} from '@toco/tools/backend';
+import { MessageHandler, ResponseStatus, StatusCode } from '@toco/tools/core';
 import { DialogCatalogJournalInfoDialog } from 'projects/catalog/src/app/catalog/catalog.component';
 
 @Component({
@@ -19,9 +19,8 @@ import { DialogCatalogJournalInfoDialog } from 'projects/catalog/src/app/catalog
 })
 export class HomeComponent implements OnInit {
 
-    public mesORGAID = 'orgaid.223';
-
     public topOrganizationPID: string;
+    public topMainOrganization: Organization = null;
 
     public institutionsCount: number;
 
@@ -31,36 +30,42 @@ export class HomeComponent implements OnInit {
 
     public lastSources: Array<Journal>;
 
+    public stats = null;
+
     constructor(
         private env: EnvService,
         private sourceService: SourceService,
         private sourceServiceNoAuth: SourceServiceNoAuth,
-
+        private orgService: OrganizationServiceNoAuth,
         private _snackBar: MatSnackBar,
         public dialog: MatDialog) {
     }
 
     ngOnInit() {
 
-        this.topOrganizationPID = this.env.extraArgs['topOrganizationPID'];
-
+        if (this.env.extraArgs && this.env.extraArgs["topOrganizationPID"]) {
+          this.topOrganizationPID = this.env.extraArgs["topOrganizationPID"];
+          this.orgService.getOrganizationByPID(this.topOrganizationPID).subscribe(
+            (response) => {
+              // console.log(response)
+              this.topMainOrganization = new Organization();
+              this.topMainOrganization.deepcopy(response.metadata);
+              console.log(this.topMainOrganization)
+              this.init();
+            },
+            (error) => {
+              console.log("error");
+            },
+            () => {}
+          );
+        }
         this.institutionsCount = 0;
         this.records = 0;
         this.sourcesCount = 0;
 
         this.lastSources = new Array();
 
-        this.sourceServiceNoAuth.getSourcesOrgAggregation(this.topOrganizationPID).subscribe(
-        values => {
-          console.log(values);
-        },
-        (err: any) => {
-          console.log("error: " + err + ".");
-        },
-        () => {
-          console.log("complete");
-        }
-      );
+        ;
         // this.catalogService.getSourcesOrgAggregation(this.topOrganizationPID).subscribe(
         //     response => {
         //         if (response && response.data && response.data.home_statics) {
@@ -87,6 +92,22 @@ export class HomeComponent implements OnInit {
         // );
     }
 
+    init(){
+      this.sourceServiceNoAuth.getSourcesStats(this.topMainOrganization.id).subscribe(
+        response => {
+          if(response && response.status == ResponseStatus.SUCCESS){
+              this.stats = response.data.aggr;
+          }
+          console.log(response);
+        },
+        (err: any) => {
+          console.log("error: " + err + ".");
+        },
+        () => {
+          console.log("complete");
+        }
+      )
+    }
     viewJournal(uuid: string): void {
         this.sourceServiceNoAuth.getSourceByUUID(uuid).subscribe(
           response => {

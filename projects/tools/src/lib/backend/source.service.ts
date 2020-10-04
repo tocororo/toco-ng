@@ -135,6 +135,15 @@ export class SourceService {
     );
   }
 
+  makeSourceAsUnApproved(source: SourceVersion,uuid): Observable<Response<any>> {
+    const req = this.env.sceibaApi + this.prefix + "/" + uuid + "/unpublish";
+    return this.http.post<Response<any>>(
+      req,
+      this.adhocstringgify(source),
+      this.httpOptions
+    );
+  }
+
   newSource(source: SourceVersion, uuid, role): Observable<Response<any>> {
     let params = new HttpParams();
     params = params.set("pid", uuid.toString());
@@ -247,9 +256,16 @@ export class SourceServiceNoAuth {
     return this.http.get<SearchResponse<Source>>(req, options);
   }
 
-  getSourcesOrgAggregation(uuid): Observable<Response<any>> {
-    const req = this.env.sceibaApi + 'source/aggs/org/' + uuid;
-    return this.http.get<Response<any>>(req);
+  getSourcesStats(topOrgId): Observable<Response<any>> {
+    let params = new HttpParams();
+    params = params.set('org', topOrgId);
+
+    const options = {
+      params: params,
+      // headers: this.headers
+    };
+    const req = this.env.sceibaApi + 'source/stats';
+    return this.http.get<Response<any>>(req, options);
   }
 
 }

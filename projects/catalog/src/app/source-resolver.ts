@@ -23,7 +23,7 @@ export class SourceResolver implements Resolve<Source>
                 if (node) {
                     return node;
                 } else {
-                    this.router.navigate(['/sources']);
+                    this.router.navigate(['/']);
                 }
             })
         );

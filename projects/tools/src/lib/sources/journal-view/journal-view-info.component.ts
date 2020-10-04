@@ -25,6 +25,7 @@ import { SourceIndexesComponent } from '../source-edit/source-indexes/source-ind
 })
 export class JournalViewInfoComponent implements OnInit, OnChanges {
   @Input() public journalVersion: JournalVersion;
+  @Input() public showVersionLabel: boolean = true;
   public journalData: JournalData;
 
   public tipos = SourceTypes;
@@ -52,7 +53,7 @@ export class JournalViewInfoComponent implements OnInit, OnChanges {
 
   @ViewChild(SourceIndexesComponent, { static: false })
   indexes: SourceIndexesComponent;
-  
+
 
   constructor(
     private _sourveService: SourceService,

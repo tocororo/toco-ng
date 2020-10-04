@@ -85,7 +85,7 @@ export class CatalogComponent implements OnInit, OnChanges {
   loading = true;
   private hasErrors = false;
   dataSource = new MatTableDataSource<Journal>();
-  columnsToDisplay = ["title", "rnps", "p-issn", "url"];
+  columnsToDisplay = ["title", "rnps", "p-issn"];//, "url"];
   expandedElement: Journal;
   length = 0;
   pageSize = 5;
@@ -140,7 +140,7 @@ export class CatalogComponent implements OnInit, OnChanges {
     private orgService: OrganizationServiceNoAuth,
     private router: Router
   ) {
-    
+
   }
   // @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -384,14 +384,15 @@ export class CatalogComponent implements OnInit, OnChanges {
   viewJournal(uuid: string): void {
     this.sourceServiceNoAuth.getSourceByUUID(uuid).subscribe(
       (response: Hit<JournalData>) => {
+        console.log(response)
         if (response) {
-          let journalVersion = new JournalData();
+          let journalVersion = new JournalVersion();
 
-          journalVersion.deepcopy(response.metadata);
+          journalVersion.data.deepcopy(response.metadata);
+          journalVersion.id = uuid;
           const dialogRef = this.dialog.open(DialogCatalogJournalInfoDialog, {
             data: {
-              journalVersion: journalVersion,
-              journalUUID: uuid,
+              journalVersion: journalVersion
             },
           });
 
@@ -416,7 +417,10 @@ export class CatalogComponent implements OnInit, OnChanges {
   selector: "dialog-catalog-journal-info",
   template: `
     <mat-dialog-content class="height-auto">
-      <toco-journal-view-info [journalVersion]="data.journalVersion">
+      <toco-journal-view-info
+        [journalVersion]="data.journalVersion"
+        [showVersionLabel]="false"
+      >
       </toco-journal-view-info>
     </mat-dialog-content>
   `,

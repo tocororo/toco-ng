@@ -39,18 +39,20 @@ export class Entity extends EntityBase {
   }
 
   setIdentifierValue(idtype: IdentifierSchemas, value: string) {
-    let added = false;
-    for (let index = 0; index < this.identifiers.length; index++) {
-      if(this.identifiers[index].idtype == idtype){
-        this.identifiers[index].value = value;
-        added = true;
+    if(value != ''){
+      let added = false;
+      for (let index = 0; index < this.identifiers.length; index++) {
+        if(this.identifiers[index].idtype == idtype){
+          this.identifiers[index].value = value;
+          added = true;
+        }
       }
-    }
-    if (!added) {
-      const id = new Identifier();
-      id.idtype = idtype;
-      id.value = value;
-      this.identifiers.push(id)
+      if (!added) {
+        const id = new Identifier();
+        id.idtype = idtype;
+        id.value = value;
+        this.identifiers.push(id)
+      }
     }
   }
 

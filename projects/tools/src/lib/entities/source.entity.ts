@@ -9,6 +9,7 @@
 import { Entity, EntityBase } from './common';
 import { TermNode, Term } from './taxonomy.entity';
 import { Organization } from './organization.entity';
+import { UserProfile } from './person.entity';
 
 export const SourceSystems = {
   OJS: { label: 'Open Journal System', value: 'OJS' },
@@ -100,6 +101,8 @@ export class SourceVersion extends Entity {
     reviewed = false;
 
     data: SourceData = new SourceData();
+
+    userprofile: UserProfile = new UserProfile();
 }
 
 

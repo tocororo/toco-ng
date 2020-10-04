@@ -11,14 +11,14 @@
           class="mat-18 notification-position"
           color="accent"
           *ngIf="currentJournal.is_current"
-          matTooltip="Revisión Actual"
+          matTooltip="{{ currentJournal.comment }}"
           >star</mat-icon
         >
         <mat-icon
           class="mat-18 notification-position"
           color="accent"
           *ngIf="!currentJournal.reviewed"
-          matTooltip="Posee Cambios no Vistos"
+          matTooltip="{{ currentJournal.comment }}"
           >adjust</mat-icon
         >
       </div>
@@ -27,7 +27,7 @@
     <mat-card-subtitle>
       <mat-label> {{ currentJournal.created_at | date }}. </mat-label>
       <mat-label>
-        {{ currentJournal.comment }}
+        {{ currentJournal.userprofile.identify() }}
       </mat-label>
     </mat-card-subtitle>
   </mat-card-header>
