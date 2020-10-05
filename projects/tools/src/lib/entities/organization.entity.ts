@@ -24,7 +24,7 @@ export class LabelDiffLang extends EntityBase
  * Entity for `Relationship` based on schema `organization-v1.0.0.json`.
  * A relationship the institute has to other.
  */
-export class Relationship extends EntityBase
+export class Relationship extends Entity
 {
 	/**
 	 * Organization Identifiers, different from GRID mapping.
@@ -254,6 +254,4 @@ export class Organization extends Entity
 	 * An array of addresses associated with the institute.
 	 */
 	addresses: Array<Address> = new Array<Address>();
-
-
 }

@@ -4,8 +4,8 @@
 <fieldset class="static-geo-names-city-fieldset">
     <legend class="static-geo-names-city-fieldset-legend">{{ desc }}</legend>
 
-    <static-text *ngIf="value.id" [desc]="'GeoNames ID'" [value]="value.id"></static-text>
-    <static-text *ngIf="value.city" [desc]="'Name of the city'" [value]="value.city"></static-text>
+    <static-text *ngIf="value.id" [desc]="'Identificador GeoNames'" [value]="value.id"></static-text>
+    <static-text *ngIf="value.city" [desc]="'Nombre de la ciudad'" [value]="value.city"></static-text>
     <static-table *ngIf="value.geonames_admin1" [desc]="'geonames_admin1'" [value]="getGeoNamesAdmin1"
         [columnsObjectProperty]="['property', 'value']"
         [columnsHeaderText]="['Property', 'Value']"

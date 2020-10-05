@@ -10,12 +10,12 @@ export enum OrgViewAccordionType
 	/**
 	 * The `OrgViewAccordionComponent` is used to show relationships. 
 	 */
-	Relationships = 'Relationship',
+	Relationships = 'Relación'/*'Relationship'*/,
 
 	/**
 	 * The `OrgViewAccordionComponent` is used to show addresses. 
 	 */
-	Addresses = 'Address'
+	Addresses = 'Dirección'/*'Address'*/
 };
 
 @Component({
