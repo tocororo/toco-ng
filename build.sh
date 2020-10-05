@@ -9,3 +9,6 @@ ng build  $project --prod --aot --preserve-symlinks --build-optimizer=true  --ve
 
 
 # ng build  organizations --prod --aot --preserve-symlinks --build-optimizer=true  --verbose  --baseHref https://cuor-lab.upr.edu.cu --deploy-url https://cuor-lab.upr.edu.cu/
+
+
+# ng build  revistasmes --prod --aot --preserve-symlinks --build-optimizer=true  --verbose  --baseHref https://tocororo.upr.edu.cu/revistasmes --deploy-url https://tocororo.upr.edu.cu/revistasmes/

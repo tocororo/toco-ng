@@ -246,7 +246,7 @@ export class JournalViewComponent implements OnInit {
         return count;
     }
 
-    sourceEditDone() {
+    sourceEditDone(version: JournalVersion) {
         this.editVersion = false;
         console.log('AAaAAAAAAAAAAAAAAAAAA');
 
