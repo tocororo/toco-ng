@@ -2,12 +2,12 @@
 
       <mat-list>
         <mat-list-item *ngIf="node.parent && node.parent.parent">
-            {{node.parent.parent.term.name}}
+            {{node.parent.parent.term.description}}
         </mat-list-item>
         <mat-list-item *ngIf="node.parent">
-            {{node.parent.term.name}}
+            {{node.parent.term.description}}
         </mat-list-item>
-        <mat-list-item>{{ term.name }}</mat-list-item>
+        <mat-list-item>{{ term.description }}</mat-list-item>
 
       </mat-list>
 

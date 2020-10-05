@@ -24,7 +24,7 @@
       Unidad perteneciente a:
     </div>
     <div>
-      <strong> {{ level2.name }}</strong>
+      <strong> {{ level2.description }}</strong>
     </div>
   </mat-checkbox>
 
@@ -40,9 +40,9 @@
 </ng-container>
 </ng-container>
 <ng-template #elseTemplate>
-  <p *ngIf="level1">{{level1.name}}</p>
-  <p *ngIf="level2"> --> {{level2.name}}</p>
-  <p *ngIf="level3"> --> -->{{level3.name}}</p>
+  <p *ngIf="level1">{{level1.description}}</p>
+  <p *ngIf="level2"> --> {{level2.description}}</p>
+  <p *ngIf="level3"> --> -->{{level3.description}}</p>
 </ng-template>
 
 
