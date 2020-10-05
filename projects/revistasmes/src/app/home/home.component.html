@@ -1,5 +1,8 @@
 
-<toco-progress [loading]="!stats" [position]="'absolute'"></toco-progress>
+<toco-progress [loading]="!stats && !error" [position]="'absolute'"></toco-progress>
+<ng-container *ngIf="error">
+  <h1>ERROR</h1>
+</ng-container>
 
 <ng-container *ngIf="stats">
   <div class="m-1" fxLayout="row" fxLayoutAlign="center">

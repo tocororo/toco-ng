@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
     public lastSources: Array<Journal>;
 
     public stats = null;
+    public error = false;
 
     constructor(
         private env: EnvService,
@@ -120,6 +121,7 @@ export class HomeComponent implements OnInit {
         },
         (err: any) => {
           console.log("error: " + err + ".");
+          this.error = true;
         },
         () => {
           console.log("complete");
@@ -152,6 +154,7 @@ export class HomeComponent implements OnInit {
           },
           error => {
             console.log("error");
+            error = true;
           },
           () => {}
         );
