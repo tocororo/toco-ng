@@ -9,16 +9,17 @@ import {
   PanelContent_Depr
 } from "@toco/tools/forms";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
-import { CatalogService, SourceService, SourceServiceNoAuth } from "@toco/tools/backend";
+import { CatalogService, OrganizationServiceNoAuth, SourceService, SourceServiceNoAuth } from "@toco/tools/backend";
 import {
   Journal,
   SourcePersonRole,
-  JournalVersion, Source, SourceVersion, SourceTypes
+  JournalVersion, Source, SourceVersion, SourceTypes, Organization
 } from "@toco/tools/entities";
 import { FilterHttpMap } from "@toco/tools/filters";
 import { StatusCode, HandlerComponent, MessageHandler } from "@toco/tools/core";
 import { MatDialog, MatStep, MatStepper, MAT_DIALOG_DATA } from "@angular/material";
 import { Router } from '@angular/router';
+import { EnvService } from '@tocoenv/tools/env.service';
 
 @Component({
   selector: "toco-source-inclusion",
@@ -28,6 +29,10 @@ import { Router } from '@angular/router';
 export class SourceInclusionComponent implements OnInit {
   public source: Source = null;
   public versionToEdit: SourceVersion = null;
+
+  public topOrganizationPID = null;
+  public topMainOrganization: Organization = null;
+
 
   public sourceType = SourceTypes;
 
@@ -51,9 +56,26 @@ export class SourceInclusionComponent implements OnInit {
     private _formBuilder: FormBuilder,
     public dialog: MatDialog,
     private _router: Router,
+    private orgService: OrganizationServiceNoAuth,
+    private env: EnvService
   ) { }
 
   ngOnInit() {
+    if (this.env.extraArgs["topOrganizationPID"]) {
+      this.topOrganizationPID = this.env.extraArgs["topOrganizationPID"];
+      this.orgService
+        .getOrganizationByPID(this.topOrganizationPID)
+        .subscribe(
+          (response) => {
+            this.topMainOrganization = new Organization();
+            this.topMainOrganization.deepcopy(response.metadata);
+          },
+          (error) => {
+            console.log("error");
+          },
+          () => { }
+        );
+    }
     this.findFormGroup = this._formBuilder.group({});
     this.findPanel = [
       {
