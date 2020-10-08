@@ -6,7 +6,7 @@ import {
   HintValue,
   HintPosition,
   SelectOption,
-  PanelContent_Depr
+  PanelContent_Depr, InputTextComponent
 } from "@toco/tools/forms";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { CatalogService, OrganizationServiceNoAuth, SourceService, SourceServiceNoAuth } from "@toco/tools/backend";
@@ -86,8 +86,10 @@ export class SourceInclusionComponent implements OnInit {
         formSectionContent: [
           {
             name: "idenfifier",
+            formControl: InputTextComponent.getFormControlByDefault(),
             label: "Identificador",
             type: FormFieldType.text,
+            'controlType': InputTextComponent,
             required: true,
             startHint: new HintValue(
               HintPosition.start,

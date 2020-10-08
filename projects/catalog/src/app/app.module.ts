@@ -29,8 +29,8 @@ import { FiltersService } from '@toco/tools/filters';
 import { SourceViewReadComponent } from './catalog/source-view-read/source-view-read.component';
 import { MysourcesComponent } from './mysources/mysources.component';
 import { RoleComponent } from './mysources/role/role.component';
-import { SourceInclusionAcceptComponent, SourceInclusionComponent } from './source-inclusion/source-inclusion.component';
 
+import { SourceInclusionAcceptComponent, SourceInclusionComponent } from './source-inclusion/source-inclusion.component'
 @NgModule({
     declarations: [
         AppComponent,

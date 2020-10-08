@@ -11,7 +11,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthenticationService } from '@toco/tools/authentication/authentication.service';
 import { NotificationListComponent } from '@toco/tools/notification';
 
-
 import { SourceViewComponent } from './source-view/source-view.component';
 import { SourceResolver, SourceResolverAuth } from './source-resolver'
 import { SourcesComponent } from './sources/sources.component';

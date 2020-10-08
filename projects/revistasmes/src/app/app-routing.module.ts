@@ -9,10 +9,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthenticationService } from '@toco/tools/authentication/authentication.service';
 import { NotificationListComponent } from '@toco/tools/notification';
 
+
 import { SourceViewComponent } from 'projects/catalog/src/app/source-view/source-view.component';
 import { SourceResolver, SourceResolverAuth } from 'projects/catalog/src/app/source-resolver';
 import { SourceEditComponent } from 'projects/catalog/src/app/source-edit/source-edit.component';
-import { SourcesComponent } from 'projects/catalog/src/app/sources/sources.component';
 import { HomeComponent } from './home/home.component';
 import { StaticPagesComponent } from './static-pages/static-pages.component';
 import { CatalogComponent } from 'projects/catalog/src/app/catalog/catalog.component';
