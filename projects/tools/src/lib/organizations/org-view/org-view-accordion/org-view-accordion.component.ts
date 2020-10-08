@@ -10,12 +10,12 @@ export enum OrgViewAccordionType
 	/**
 	 * The `OrgViewAccordionComponent` is used to show relationships. 
 	 */
-	Relationships = 'Relationship',
+	Relationships = 'Relación'/*'Relationship'*/,
 
 	/**
 	 * The `OrgViewAccordionComponent` is used to show addresses. 
 	 */
-	Addresses = 'Address'
+	Addresses = 'Dirección'/*'Address'*/
 };
 
 @Component({
@@ -46,6 +46,7 @@ export class OrgViewAccordionComponent implements OnInit
 
 	/**
 	 * The array of data that should be rendered by the accordion, where each object represents one row. 
+	 * This array has the same length than the `panelsTitle` field. 
      * By default, its value is `[]`. 
 	 */
 	@Input()
@@ -58,10 +59,16 @@ export class OrgViewAccordionComponent implements OnInit
 	@Input()
 	public orgViewAccordionType: OrgViewAccordionType;
 
+	/**
+	 * The panels title. 
+	 * This array has the same length than the `value` field. 
+     * By default, its value is `[]`. 
+	 */
+	@Input()
+	public panelsTitle: string[];
+
 	@ViewChild(MatAccordion, { static: true })
 	private _accordion: MatAccordion;
-
-	private _panelsTitle: string[];
 
 	public constructor()
 	{
@@ -71,19 +78,11 @@ export class OrgViewAccordionComponent implements OnInit
 		this.desc = undefined;
 		this.value = [];
 		this.orgViewAccordionType = OrgViewAccordionType.Relationships;
-
-		this._panelsTitle = [];
+		this.panelsTitle = [];  /* This array has the same length than the `value` field. */
 	}
 
 	public ngOnInit(): void
 	{
-		const panelsTitleCount = this.value.length;
-
-		/* Initializae the `_panelsTitle` array. */
-		for (let i: number = 0; i < panelsTitleCount; )
-		{
-			this._panelsTitle.push(`${ this.orgViewAccordionType } (${ ++i }) of (${ panelsTitleCount })`);
-		}
 	}
 
 	/**
@@ -95,11 +94,24 @@ export class OrgViewAccordionComponent implements OnInit
 	}
 
 	/**
-	 * Returns the panel title for the specified panel position. 
-	 * @param pos The position of the panel. 
+	 * Returns true if the panel has element; otherwise, false. 
+	 * The panel always has element by default. 
+	 * @param pos The panel position. 
 	 */
-	public getPanelTitle(pos: number): string
+	public panelHasElement(pos: number): boolean
 	{
-		return this._panelsTitle[pos];
+		switch(this.orgViewAccordionType)
+		{
+			case this.orgViewAccordion_Type.Relationships:
+			{
+				return this.value[pos].links.length;
+			}
+
+			default:
+			{
+				/* The panel always has element by default. */
+				return true;
+			}
+		}
 	}
 }

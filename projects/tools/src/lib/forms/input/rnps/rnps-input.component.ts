@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
-import { ExtraValidators, emptyString } from '@toco/tools/core';
+import { ExtraValidators } from '@toco/tools/core';
 
 import { InputControl } from '../input.control';
 import { RnpsValue } from './rnps-value';
@@ -24,6 +24,18 @@ import { RnpsValue } from './rnps-value';
 })
 export class InputRnpsComponent extends InputControl implements OnInit
 {
+    /**
+     * Returns a `FormControl` by default. 
+     * It is used to initialized the `InputRnpsComponent`'s `content.formControl` value by default. 
+     */
+    public static getFormControlByDefault(): FormControl
+    {
+        return new FormControl('', [
+            ExtraValidators.equalLength(RnpsValue.codeLength),
+            Validators.pattern('^[0-9]*$')
+        ]);
+    }
+
 	/**
 	 * It is used by `handleSpecificInput` method. 
 	 */
@@ -36,12 +48,6 @@ export class InputRnpsComponent extends InputControl implements OnInit
 
     public ngOnInit(): void
     {
-        /* Sets this `content.formControl` by default. */
-        if (this.content.formControl == undefined) this.content.formControl = new FormControl(emptyString, [
-            ExtraValidators.equalLength(RnpsValue.codeLength),
-            Validators.pattern('^[0-9]*$')
-        ])
-
         this._codeOldValue = this.content.formControl.value;
 
         /* Sets the default values. */
@@ -53,7 +59,7 @@ export class InputRnpsComponent extends InputControl implements OnInit
      */
     public getErrorMessage(): string
     {
-        let result: string = emptyString;
+        let result: string = '';
         let result_alreadyHaveErrorInfo: boolean = false;
         let validationErrors: ValidationErrors = this.content.formControl.errors;
 

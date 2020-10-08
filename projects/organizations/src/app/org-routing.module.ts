@@ -57,6 +57,11 @@ const routes: Routes = [
         path: 'contact',
         component: StaticPagesComponent,
         data: {src: 'assets/markdown/contact.md', title: 'Contacto'}
+	},
+	{
+        path: 'inclussion',
+        component: StaticPagesComponent,
+        data: {src: 'assets/markdown/inclussion.md', title: '¿Nueva Organización?'}
     },
 	{
 		path: '**',

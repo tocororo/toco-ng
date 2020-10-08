@@ -1,12 +1,14 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormArray } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
-import { Organization } from '@toco/tools/entities';
-import { FormFieldType, TextInputAppearance, OperationAction, FormSection, PanelContent,
-	ContainerContent, HintValue, HintPosition, IconValue, IconSource, ContentPosition,
-	ActionControl, ActionContent } from '@toco/tools/forms';
+import { Organization, Identifier } from '@toco/tools/entities';
+import { TextInputAppearance, OperationAction, FormSection, PanelContent, 
+	ContainerContent, HintValue, HintPosition, IconValue, IconSource, ContentPosition, 
+	ActionControl, ActionContent, ContainerPanelComponent, 
+	InputTextComponent, InputSelectComponent, ContainerSimpleComponent, 
+	InputUrlComponent, InputEmailComponent, ActionButtonComponent } from '@toco/tools/forms';
 
 @Component({
 	selector: 'toco-org-edit',
@@ -23,6 +25,7 @@ export class OrgEditComponent implements OnInit
 	/**
 	 * Represents the current organization.
 	 */
+	//@Input()
 	private org: Organization;
 
 	/**
@@ -54,20 +57,6 @@ export class OrgEditComponent implements OnInit
 
 		/* Creates the panel's content. */
 		this.panelContent = this._initPanelContent();
-
-		// this.action = {
-		// 	doit(data: any): void
-		// 	{
-		// 		if (this.panelFormSection.valid)
-		// 		{
-		// 			/* Gets the result from `panelFormSection`. */
-		// 			// const result: Organization = new Organization();
-		// 			// result.deepcopy(this.panelFormSection.value);
-		// 		}
-		// 	}
-		// };
-
-		//this.actionLabel = 'Adicionar';
 	}
 
     /**
@@ -76,19 +65,18 @@ export class OrgEditComponent implements OnInit
     private _initPanelContent(): PanelContent
     {
 		return {
-			/* The 'label' and 'title' fields have the same values, but they are different fields with different functionalities. */
 			'formSection': this.panelFormSection,
 			'name': 'panel',
 			'label': 'Edita la organización seleccionada',
-			'type': FormFieldType.container_panel,
-			'title': 'Edita la organización seleccionada',
+			'controlType': ContainerPanelComponent,
 			'description': '',
 			'iconName': undefined /*''*/,
 			'formSectionContent': [
 				{
+					'formControl': InputTextComponent.getFormControlByDefault(),
 					'name': 'name',
 					'label': 'Name typically used to refer to the institute',
-					'type': FormFieldType.text,
+					'controlType': InputTextComponent,
 					'required': true,
 					'value': this.org.name,
 					'width': '100%',
@@ -96,9 +84,10 @@ export class OrgEditComponent implements OnInit
 					'ariaLabel': 'Name typically used to refer to the institute'
 				},
 				{
+					'formControl': InputSelectComponent.getFormControlByDefault(),
 					'name': 'status',
 					'label': 'Institute status',
-					'type': FormFieldType.select,
+					'controlType': InputSelectComponent,
 					'required': true,
 					'value': this.org.status,
 					'width': '45%',
@@ -121,12 +110,14 @@ export class OrgEditComponent implements OnInit
 					'multiple': false
 				},
 
-				this._initIdentifiersContent('Organization Identifiers, different from GRID mapping'),
+
+				this._initIdentifiersContent('Organization Identifiers, different from GRID mapping', this.org.identifiers, false),
 
 				{
+					'formControl': InputSelectComponent.getFormControlByDefault(),
 					'name': 'aliases',
 					'label': 'The list of other names the institute is known as',
-					'type': FormFieldType.select,
+					'controlType': InputSelectComponent,
 					'required': false,
 					'value': this.org.aliases,
 					'width': '100%',
@@ -136,9 +127,10 @@ export class OrgEditComponent implements OnInit
 					'multiple': true
 				},
 				{
+					'formControl': InputSelectComponent.getFormControlByDefault(),
 					'name': 'acronyms',
 					'label': 'The of short acronyms the institute is known as (e.g. MRC for the Medical Research Council)',
-					'type': FormFieldType.select,
+					'controlType': InputSelectComponent,
 					'required': false,
 					'value': this.org.acronyms,
 					'width': '100%',
@@ -148,9 +140,10 @@ export class OrgEditComponent implements OnInit
 					'multiple': true
 				},
 				{
+					'formControl': InputSelectComponent.getFormControlByDefault(),
 					'name': 'types',
 					'label': 'The list of types describing the institute',
-					'type': FormFieldType.select,
+					'controlType': InputSelectComponent,
 					'required': true,
 					'value': this.org.types,
 					'width': '100%',
@@ -193,9 +186,10 @@ export class OrgEditComponent implements OnInit
 					'multiple': true
 				},
 				{
+					'formControl': InputUrlComponent.getFormControlByDefault(),
 					'name': 'wikipedia_url',
 					'label': 'URL of the wikipedia page for the institute',
-					'type': FormFieldType.url,
+					'controlType': InputUrlComponent,
 					'required': false,
 					'value': this.org.wikipedia_url,
 					'width': '45%',
@@ -203,9 +197,10 @@ export class OrgEditComponent implements OnInit
 					'ariaLabel': 'URL of the wikipedia page for the institute'
 				},
 				{
+					'formControl': InputEmailComponent.getFormControlByDefault(),
 					'name': 'email_address',
 					'label': 'Contact email address for the institute',
-					'type': FormFieldType.email,
+					'controlType': InputEmailComponent,
 					'required': true,
 					'value': this.org.email_address,
 					'width': '45%',
@@ -213,9 +208,10 @@ export class OrgEditComponent implements OnInit
 					'ariaLabel': 'Contact email address for the institute'
 				},
 				{
+					'formControl': InputSelectComponent.getFormControlByDefault(),
 					'name': 'ip_addresses',
 					'label': 'The list of IP addresses known to belong to the institute',
-					'type': FormFieldType.select,
+					'controlType': InputSelectComponent,
 					'required': false,
 					'value': this.org.ip_addresses,
 					'width': '100%',
@@ -225,9 +221,10 @@ export class OrgEditComponent implements OnInit
 					'multiple': true
 				},
 				{
+					'formControl': InputTextComponent.getFormControlByDefault(),
 					'name': 'established',
 					'label': 'Year the institute opened, CE',
-					'type': FormFieldType.text,
+					'controlType': InputTextComponent,
 					'required': true,
 					'value': this.org.established,
 					'width': '45%',
@@ -235,9 +232,10 @@ export class OrgEditComponent implements OnInit
 					'ariaLabel': 'Year the institute opened, CE'
 				},
 				{
+					'formControl': InputSelectComponent.getFormControlByDefault(),
 					'name': 'links',
 					'label': 'The list of URLs linking to things like the homepage for the institute',
-					'type': FormFieldType.select,
+					'controlType': InputSelectComponent,
 					'required': false,
 					'value': this.org.links,
 					'width': '100%',
@@ -256,30 +254,95 @@ export class OrgEditComponent implements OnInit
 		};
 	}
 
+    /**
+     * Returns the identifiers' content. 
+     */
+    private _initIdentifiersContent(description: string, value: Identifier[], isDynamic: boolean): ContainerContent
+    {
+        let result: ContainerContent = {
+			'formSection': ContainerSimpleComponent.getFormArrayByDefault(),
+			'name': 'identifiers',
+			'label': description,
+			'controlType': ContainerSimpleComponent,
+			'value': value,
+			'width': '100%',
+//            'appearance': TextInputAppearance.outline,
+			'required': true,
+			'ariaLabel': description,
+			'isDynamic': isDynamic,
+            'formSectionContent': [
+				{
+					'formSection': ContainerSimpleComponent.getFormGroupByDefault(),
+					'name': '0',
+					'label': 'Organization Identifier',
+					'controlType': ContainerSimpleComponent,
+					'width': '100%',
+		//            'appearance': TextInputAppearance.outline,
+					'ariaLabel': 'Organization Identifier',
+					'formSectionContent': [
+						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
+							'name': 'idtype',
+							'label': 'Identifier type',
+							'controlType': InputTextComponent,
+							'required': true,
+							'width': '50%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'Identifier type',
+						},
+						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
+							'name': 'value',
+							'label': 'Identifier value',
+							'controlType': InputTextComponent,
+							'required': true,
+							'width': '50%',
+							'appearance': TextInputAppearance.outline,
+							'ariaLabel': 'Identifier value',
+							'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
+						}
+					]
+				}
+			]
+		};
+
+		if (isDynamic)
+		{
+			result.formSectionContent[0].formSectionContent.push(this._initRemoveButtonContent('Remove identifier'));
+		}
+
+		return result;
+	}
+
+    /**
+     * Returns the labels' content. 
+     */
     private _initLabelsSimpleContent(): ContainerContent
     {
 		return {
-			'formSection': new FormArray([ ], [ ]),
-			'name': 'labelsSimple',
+			'formSection': ContainerSimpleComponent.getFormArrayByDefault(),
+			'name': 'labels',
 			'label': 'Name of the institute in different languages',
-			'type': FormFieldType.container_simple,
+			'controlType': ContainerSimpleComponent,
 			'value': this.org.labels,
 			'width': '100%',
+//            'appearance': TextInputAppearance.outline,
+			'ariaLabel': 'Name of the institute in different languages',
 			'formSectionContent': [
 				{
-					'formSection': new FormGroup({ }, [ ]),
+					'formSection': ContainerSimpleComponent.getFormGroupByDefault(),
 					'name': '0',
-					'label': 'Label diff lang ',
-					'type': FormFieldType.container_label_diff_lang,
-					'required': true,
+					'label': 'Label diff lang',
+					'controlType': ContainerSimpleComponent,
 					'width': '100%',
 		//            'appearance': TextInputAppearance.outline,
-					'ariaLabel': 'Label diff lang ',
+					'ariaLabel': 'Label diff lang',
 					'formSectionContent': [
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'label',
 							'label': 'Institute name in a language variant',
-							'type': FormFieldType.text,
+							'controlType': InputTextComponent,
 							'required': true,
 							/* 'value': undefined, this is the default behavior. */
 							'width': '70%',
@@ -287,9 +350,10 @@ export class OrgEditComponent implements OnInit
 							'ariaLabel': 'Institute name in a language variant'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'iso639',
 							'label': 'ISO-639-1 language code',
-							'type': FormFieldType.text,
+							'controlType': InputTextComponent,
 							'required': true,
 							/* 'value': undefined, this is the default behavior. */
 							'width': '30%',
@@ -311,30 +375,34 @@ export class OrgEditComponent implements OnInit
     private _initRelationshipsSimpleContent(): ContainerContent
     {
 		return {
-			'formSection': new FormArray([ ], [ ]),
-			'name': 'relationshipsSimple',
+			'formSection': ContainerSimpleComponent.getFormArrayByDefault(),
+			'name': 'relationships',
 			'label': 'Any relationships the institute has to others',
-			'type': FormFieldType.container_simple,
+			'controlType': ContainerSimpleComponent,
 			'value': this.org.relationships,
+			'required': false,  /* The `relationships` can be empty by definition. */
 			'width': '100%',
+//            'appearance': TextInputAppearance.outline,
+			'ariaLabel': 'Any relationships the institute has to others',
 			'formSectionContent': [
 				{
-					'formSection': new FormGroup({ }, [ ]),
+					'formSection': ContainerSimpleComponent.getFormGroupByDefault(),
 					'name': '0',
 					'label': 'Relationship',
-					'type': FormFieldType.container_label_diff_lang,
-					'required': true,
+					'controlType': ContainerSimpleComponent,
 					'width': '100%',
 		//            'appearance': TextInputAppearance.outline,
 					'ariaLabel': 'Relationship',
 					'formSectionContent': [
 
-						this._initIdentifiersContent('Related Organization Identifiers'),
+						/* This `identifiers` value is `undefined` because it is inside a `FormArray`. */
+						this._initIdentifiersContent('Related Organization Identifiers', undefined, true),
 
 						{
+							'formControl': InputSelectComponent.getFormControlByDefault(),
 							'name': 'type',
 							'label': 'Relationship type',
-							'type': FormFieldType.select,
+							'controlType': InputSelectComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
@@ -356,9 +424,10 @@ export class OrgEditComponent implements OnInit
 							'multiple': false
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'label',
 							'label': 'Name of the related institute',
-							'type': FormFieldType.text,
+							'controlType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
@@ -378,99 +447,110 @@ export class OrgEditComponent implements OnInit
     private _initAddressesSimpleContent(): ContainerContent
     {
 		return {
-			'formSection': new FormArray([ ], [ ]),
-			'name': 'addressesSimple',
+			'formSection': ContainerSimpleComponent.getFormArrayByDefault(),
+			'name': 'addresses',
 			'label': 'An array of addresses associated with the institute',
-			'type': FormFieldType.container_simple,
+			'controlType': ContainerSimpleComponent,
 			'value': this.org.addresses,
+			'required': true,  /* The `addresses` can not be empty by definition. */
 			'width': '100%',
+//            'appearance': TextInputAppearance.outline,
+			'ariaLabel': 'An array of addresses associated with the institute',
 			'formSectionContent': [
 				{
-					'formSection': new FormGroup({ }, [ ]),
+					'formSection': ContainerSimpleComponent.getFormGroupByDefault(),
 					'name': '0',
 					'label': 'Address',
-					'type': FormFieldType.container_label_diff_lang,
-					'required': true,
+					'controlType': ContainerSimpleComponent,
 					'width': '100%',
 		//            'appearance': TextInputAppearance.outline,
 					'ariaLabel': 'Address',
 					'formSectionContent': [
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'city',
 							'label': 'Name of the city',
-							'type': FormFieldType.text,
+							'controlType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
 							'ariaLabel': 'Name of the city'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'country',
 							'label': 'Name of the country',
-							'type': FormFieldType.text,
+							'controlType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
 							'ariaLabel': 'Name of the country'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'country_code',
 							'label': 'ISO 3166-1 alpha-2 code of the country',
-							'type': FormFieldType.text,
+							'controlType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
 							'ariaLabel': 'ISO 3166-1 alpha-2 code of the country'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'lat',
 							'label': 'Latitute of the institute',
-							'type': FormFieldType.text,
+							'controlType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
 							'ariaLabel': 'Latitute of the institute'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'lng',
 							'label': 'Longitude of the institute',
-							'type': FormFieldType.text,
+							'controlType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
 							'ariaLabel': 'Longitude of the institute'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'line_1',
 							'label': 'First line of the address',
-							'type': FormFieldType.text,
+							'controlType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
 							'ariaLabel': 'First line of the address'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'line_2',
 							'label': 'Second line of the address',
-							'type': FormFieldType.text,
+							'controlType': InputTextComponent,
 							'required': false,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
 							'ariaLabel': 'Second line of the address'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'line_3',
 							'label': 'Third line of the address',
-							'type': FormFieldType.text,
+							'controlType': InputTextComponent,
 							'required': false,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
 							'ariaLabel': 'Third line of the address'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'postcode',
 							'label': 'Postcode/zipcode',
-							'type': FormFieldType.text,
+							'controlType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
@@ -481,18 +561,20 @@ export class OrgEditComponent implements OnInit
 						//This address identifies the main location
 
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'state',
 							'label': 'Name of the state/region',
-							'type': FormFieldType.text,
+							'controlType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
 							'ariaLabel': 'Name of the state/region'
 						},
 						{
+							'formControl': InputTextComponent.getFormControlByDefault(),
 							'name': 'state_code',
 							'label': 'ISO 3166-2 region code',
-							'type': FormFieldType.text,
+							'controlType': InputTextComponent,
 							'required': true,
 							'width': '45%',
 							'appearance': TextInputAppearance.outline,
@@ -508,90 +590,6 @@ export class OrgEditComponent implements OnInit
 		};
 	}
 
-    /**
-     * Returns the identifiers' content.
-     */
-    private _initIdentifiersContent(description: string): ContainerContent
-    {
-        return {
-            'formSection': new FormGroup({ }, [ ]),
-            'name': 'identifiers',
-            'label': description,
-            'type': FormFieldType.container_simple,
-            'required': true,
-            'width': '100%',
-//            'appearance': TextInputAppearance.outline,
-            'ariaLabel': description,
-            'formSectionContent': [
-                {
-                    'name': 'isni',   //idtype
-                    'label': 'isni',  //idtype
-                    'type': FormFieldType.identifier,
-                    'required': true,
-                    'value': 'Un_id_isni',
-                    'width': '50%',
-                    'appearance': TextInputAppearance.outline,
-                    'ariaLabel': 'Identificador isni',
-                    'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
-                },
-                {
-                    'name': 'grid',   //grid
-                    'label': 'grid',  //grid
-                    'type': FormFieldType.identifier,
-                    'required': true,
-                    'value': 'Un_id_grid',
-                    'width': '50%',
-                    'appearance': TextInputAppearance.outline,
-                    'ariaLabel': 'Identificador grid',
-                    'startHint': new HintValue(HintPosition.start, 'Un identificador es una secuencia de letras')
-                },
-            ]
-		};
-
-		// {
-		// 	name: 'identifiers',
-		// 	label: 'Organization Identifiers, different from GRID mapping',
-		// 	type: FormFieldType.container_simple,
-		// 	required: true,
-		// 	value: undefined,
-		// 	width: '100%',
-		// 	appearance: TextInputAppearance.outline,
-		// 	ariaLabel: 'Organization Identifiers, different from GRID mapping',
-		// 	extraContent: [
-		// 		{
-		// 			name: 'name1',
-		// 			label: 'Name typically used to refer to the institute',
-		// 			type: FormFieldType.text,
-		// 			required: true,
-		// 			value: this.org.identifiers[0],
-		// 			width: '100%',
-		// 			appearance: TextInputAppearance.outline,
-		// 			ariaLabel: 'Name typically used to refer to the institute'
-		// 		},
-		// 		{
-		// 			name: 'name2',
-		// 			label: 'Name typically used to refer to the institute',
-		// 			type: FormFieldType.text,
-		// 			required: true,
-		// 			value: this.org.identifiers[1],
-		// 			width: '100%',
-		// 			appearance: TextInputAppearance.outline,
-		// 			ariaLabel: 'Name typically used to refer to the institute'
-		// 		},
-		// 		{
-		// 			name: 'name3',
-		// 			label: 'Name typically used to refer to the institute',
-		// 			type: FormFieldType.text,
-		// 			required: true,
-		// 			value: this.org.identifiers[2],
-		// 			width: '100%',
-		// 			appearance: TextInputAppearance.outline,
-		// 			ariaLabel: 'Name typically used to refer to the institute'
-		// 		}
-		// 	]
-		// };
-	}
-
 	/**
 	 * Returns the remove button's content.
 	 * @param tooltip The tooltip to show.
@@ -599,8 +597,9 @@ export class OrgEditComponent implements OnInit
 	private _initRemoveButtonContent(tooltip: string): ActionContent
 	{
 		return {
+			'name': 'remove',
 			'label': 'Remove',
-			'type': FormFieldType.action_button,
+			'controlType': ActionButtonComponent,
 			'width': '30%',
 			// 'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'Remove',
@@ -608,6 +607,9 @@ export class OrgEditComponent implements OnInit
 			'tooltip': new HintValue(HintPosition.start, tooltip),
 			'click': (sender: ActionControl): void => {
 				sender.parentContainerControl.parentContainerControl.removeFromFormArray(+(sender.parentContainerControl.content.name));
+			},
+			'isDisabled': (sender: ActionControl): boolean => {
+				return !(sender.parentContainerControl.parentContainerControl.canRemoveFromFormArray);
 			}
 		};
 	}
@@ -618,10 +620,12 @@ export class OrgEditComponent implements OnInit
 	 */
 	public doOperationAction(op: OperationAction): void
 	{
-		// console.log('panelFormSection', this.panelFormSection);
+		console.log('panelContent: ', this.panelContent);
+		console.log('panelContent.parentFormSection: ', this.panelContent.parentFormSection);
+		console.log('panelContent.formSection', this.panelContent.formSection);
 		// console.log('addressesPanelFormSection', this.addressesPanelFormSection);
 		// console.log('labelsSimpleFormSection', this.labelsSimpleFormSection);
-		// return;
+		return;
 
 		if(op == OperationAction.submit)
 		{

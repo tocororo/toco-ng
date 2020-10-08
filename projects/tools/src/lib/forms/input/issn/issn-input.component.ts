@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { IssnType_Abbreviation, IssnValue } from './issn-value';
 
 import { InputControl } from '../input.control';
+import { FormControl } from '@angular/forms';
 
 /**
  * Represents a control that allows the writing of an ISSN. 
@@ -24,6 +25,16 @@ export class InputIssnComponent extends InputControl implements OnInit
 {
 	/* Note: this control works well with a 'width' = '310px' or '285px'. */
 
+    /**
+     * Returns a `FormControl` by default. 
+     * It is used to initialized the `InputIssnComponent`'s `content.formControl` value by default. 
+     */
+    public static getFormControlByDefault(): FormControl
+    {
+		//TODO: Maybe, it will change. 
+        return new FormControl('', [ ]);
+    }
+
 	public constructor()
 	{
 		super();
@@ -31,9 +42,6 @@ export class InputIssnComponent extends InputControl implements OnInit
 
 	public ngOnInit(): void
 	{
-        /* Sets this `content.formControl` by default. */
-		if (this.content.formControl == undefined) this.content.formControl = undefined;
-		
         /* Sets the default values. */
 		this.init(IssnType_Abbreviation.ISSN, true, true);
 	}

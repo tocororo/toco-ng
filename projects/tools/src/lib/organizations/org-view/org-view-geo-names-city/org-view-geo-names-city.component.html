@@ -1,0 +1,34 @@
+
+<!-- TODO: En dependencia del valor de `appearance`, se aplican las clases CSS para lograr la apariencia deseada. 
+     Actualmente, `appearance = 'outline'` es el único que está hecho. -->
+<fieldset class="static-geo-names-city-fieldset">
+    <legend class="static-geo-names-city-fieldset-legend">{{ desc }}</legend>
+
+    <static-text *ngIf="value.id" [desc]="'Identificador GeoNames'" [value]="value.id"></static-text>
+    <static-text *ngIf="value.city" [desc]="'Nombre de la ciudad'" [value]="value.city"></static-text>
+    <static-table *ngIf="value.geonames_admin1" [desc]="'geonames_admin1'" [value]="getGeoNamesAdmin1"
+        [columnsObjectProperty]="['property', 'value']"
+        [columnsHeaderText]="['Property', 'Value']"
+    >
+    </static-table>
+    <static-table *ngIf="value.geonames_admin2" [desc]="'geonames_admin2'" [value]="getGeoNamesAdmin2"
+        [columnsObjectProperty]="['property', 'value']"
+        [columnsHeaderText]="['Property', 'Value']"
+    >
+    </static-table>
+    <static-table *ngIf="value.nuts_level1" [desc]="'nuts_level1'" [value]="getNutsLevel1"
+        [columnsObjectProperty]="['property', 'value']"
+        [columnsHeaderText]="['Property', 'Value']"
+    >
+    </static-table>
+    <static-table *ngIf="value.nuts_level2" [desc]="'nuts_level2'" [value]="getNutsLevel2"
+        [columnsObjectProperty]="['property', 'value']"
+        [columnsHeaderText]="['Property', 'Value']"
+    >
+    </static-table>
+    <static-table *ngIf="value.nuts_level3" [desc]="'nuts_level3'" [value]="getNutsLevel3"
+        [columnsObjectProperty]="['property', 'value']"
+        [columnsHeaderText]="['Property', 'Value']"
+    >
+    </static-table>
+</fieldset>

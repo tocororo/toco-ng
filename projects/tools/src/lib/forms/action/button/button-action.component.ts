@@ -25,6 +25,6 @@ export class ActionButtonComponent extends ActionControl implements OnInit
     public ngOnInit(): void
     {
         /* Sets the default values. */
-        this.init(undefined, true);
+        this.init('', true);
     }
 }

@@ -1,8 +1,17 @@
 
-<static-table [desc]="'Organization Identifiers, different from GRID mapping'" [value]="value.identifiers"
+<a mat-button *ngFor="let link of value.links"
+    class="aling-left"
+    color="warn"
+    href="{{ link.url }}"
+    [ngStyle]="{'line-height': 'initial', 'padding': '10px 16px'}"
+>
+    {{ link.name }}
+</a>
+
+<!-- <static-table *ngIf="value.identifiers && value.identifiers.length" [desc]="'Identificadores de la organización'" [value]="value.identifiers"
     [columnsObjectProperty]="['idtype', 'value']"
     [columnsHeaderText]="['Identifier type', 'Identifier value']"
 >
 </static-table>
-<static-text [desc]="'Relationship type'" [value]="value.type"></static-text>
-<static-text [desc]="'Name of the related institute'" [value]="value.label"></static-text>
+<static-text *ngIf="value.type" [desc]="'Tipo de la relación'" [value]="value.type"></static-text>
+<static-text *ngIf="value.label" [desc]="'Nombre de la organización relacionada'" [value]="value.label"></static-text> -->

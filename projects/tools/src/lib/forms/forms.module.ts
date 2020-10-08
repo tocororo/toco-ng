@@ -8,11 +8,12 @@ import { SharedModule } from '@toco/tools/shared';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { IconService } from '@toco/tools/core';
+import { CoreModule, IconService } from '@toco/tools/core';
 
 import { ActionButtonComponent } from './action/button/button-action.component';
 
-import { ComponentFactory } from './container/component-factory/component-factory.component';
+import { ComponentFactory_Depr } from './component-factory-depr/component-factory-depr.component';
+
 import { FormContainerComponent } from './container/form-container/form-container.component';
 import { ContainerPanelComponent } from './container/panel/panel-container.component';
 import { ContainerSimpleComponent } from './container/simple/simple-container.component';
@@ -22,6 +23,7 @@ import { ContainerLabelDiffLangComponent } from './container-specific/label-diff
 
 import { InputTextComponent } from './input/text/text-input.component';
 import { InputEmailComponent } from './input/email/email-input.component';
+import { InputIdentifierComponent } from './input/identifier/identifier-input.component';
 import { InputIssnInternalComponent } from './input/issn/issn-internal/issn-input-internal.component';
 import { InputIssnComponent } from './input/issn/issn-input.component';
 import { InputRnpsComponent } from './input/rnps/rnps-input.component';
@@ -33,16 +35,18 @@ import { VocabularyTreeComponent } from './experimental/vocabulary-tree/vocabula
 import { TermParentComponent } from './experimental/term-parent/term-parent.component';
 import { SelectComponent } from './experimental/select/select.component';
 import { TextareaComponent } from './experimental/textarea/textarea.component';
-import { InputIdentifierComponent } from './input/identifier/identifier-input.component';
 import { SelectFilterComponent } from './experimental/select-filter/select-filter.component';
 import { SelectTreeComponent } from './experimental/select-tree/select-tree.component';
 import { DatepickerComponent } from './experimental/datepicker/datepicker.component';
 import { CheckboxComponent } from './experimental/checkbox/checkbox.component';
 
+/* Esta aquí temporalmente, quizás se hace un módulo para los test nada más. */
+import { TestContainerControlComponent } from './test/container/test-container-control/test-container-control.component';
+
 @NgModule({
   declarations: [
     ActionButtonComponent,
-    ComponentFactory,
+    ComponentFactory_Depr,
     FormContainerComponent,
     ContainerPanelComponent,
     ContainerSimpleComponent,
@@ -63,6 +67,7 @@ import { CheckboxComponent } from './experimental/checkbox/checkbox.component';
     SelectFilterComponent,
     TextareaComponent,
     SelectTreeComponent,
+    TestContainerControlComponent,
     DatepickerComponent,
     CheckboxComponent
   ],
@@ -70,12 +75,27 @@ import { CheckboxComponent } from './experimental/checkbox/checkbox.component';
   imports: [
     SharedModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CoreModule
+  ],
+
+  /* In order to ensure that the compiler still generates a factory for all dynamically loaded components. */
+  entryComponents: [
+    ActionButtonComponent,
+    ContainerPanelComponent,
+    ContainerSimpleComponent,
+    InputTextComponent,
+    InputEmailComponent,
+    InputIdentifierComponent,
+    InputIssnComponent,
+    InputRnpsComponent,
+    InputSelectComponent,
+    InputUrlComponent    
   ],
 
   exports: [
     ActionButtonComponent,
-    ComponentFactory,
+    ComponentFactory_Depr,
     FormContainerComponent,
     ContainerPanelComponent,
     ContainerSimpleComponent,
@@ -93,7 +113,10 @@ import { CheckboxComponent } from './experimental/checkbox/checkbox.component';
     TermParentComponent,
     SelectComponent,
     SelectFilterComponent, 
-    TextareaComponent
+    TextareaComponent,
+    TestContainerControlComponent,
+    DatepickerComponent,
+    CheckboxComponent
   ],
 
   providers: []

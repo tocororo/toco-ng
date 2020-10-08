@@ -12,7 +12,8 @@ export * from './forms.module';
 export * from './action/button/button-action.component';
 export * from './action/action.control';
 
-export * from './container/component-factory/component-factory.component';
+export * from './component-factory-depr/component-factory-depr.component';
+
 export * from './container/form-container/form-container.component';
 export * from './container/form-container/form-container.service';
 export * from './container/panel/panel-container.component';
@@ -28,6 +29,8 @@ export * from './experimental/select-tree/select-tree.component';
 export * from './experimental/term-parent/term-parent.component';
 export * from './experimental/textarea/textarea.component';
 export * from './experimental/vocabulary/vocabulary.component';
+export * from './experimental/datepicker/datepicker.component';
+export * from './experimental/checkbox/checkbox.component';
 
 export * from './input/email/email-value';
 export * from './input/email/email-input.component';
@@ -42,5 +45,7 @@ export * from './input/text/text-input.component';
 export * from './input/url/url-value';
 export * from './input/url/url-input.component';
 export * from './input/input.control';
+
+export * from './test/container/test-container-control/test-container-control.component';
 
 export * from './form-field.control';

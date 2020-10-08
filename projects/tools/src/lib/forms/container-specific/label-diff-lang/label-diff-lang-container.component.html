@@ -1,8 +1,10 @@
 
+<!-- TODO: En dependencia del valor de `appearance`, se aplican las clases CSS para lograr la apariencia deseada. 
+     Actualmente, `appearance = 'outline'` es el único que está hecho. -->
 <fieldset class="container-simple-form-field" [formGroup]="content.formSection" [attr.aria-label]="content.ariaLabel">
     <legend class="container-simple-form-field-legend">{{ content.label }}</legend>
 
-    <component-factory [fieldsContent]="content.formSectionContent"></component-factory>
+    <ng-template get-view-container></ng-template>
     <!-- <button mat-raised-button color="primary" (click)="content.parentFormSection.removeFromFormArray(content.name)">
         <mat-icon>remove_circle</mat-icon>
     </button> -->
