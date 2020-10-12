@@ -4,12 +4,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { UserService, SortDirection, PageRequest, Page } from '@toco/core';
-import { ENDPOINT_APIS, OrganizationService } from '@toco/backend';
-import { Organization } from '@toco/entities';
+import { UserService, SortDirection, PageRequest, Page } from '../../core';
+import { ENDPOINT_APIS, OrganizationService } from '../../backend';
+import { Organization } from '../../entities';
 import { TableContent, TableComponent, CellContentWrap, InputContent, TextAlign, 
     TextInputAppearance, IconValue, IconSource, HintPosition, HintValue, ContentPosition, 
-    ContainerContent, InputTextComponent } from '@toco/forms';
+    ContainerContent, InputTextComponent } from '../../forms';
 
 @Component({
   selector: 'toco-org-table-edit',

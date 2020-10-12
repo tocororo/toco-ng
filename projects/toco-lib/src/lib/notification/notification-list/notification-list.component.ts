@@ -4,8 +4,8 @@ import { MatTableDataSource, MatPaginator, MatSnackBar, MatPaginatorIntl } from 
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { NotificationService } from '@toco/backend';
-import { MessageHandler, StatusCode } from '@toco/core';
+import { NotificationService } from '../../backend';
+import { MessageHandler, StatusCode } from '../../core';
 import { NotificationInfo } from '../notification-button/notification-button.component';
 
 @Component({

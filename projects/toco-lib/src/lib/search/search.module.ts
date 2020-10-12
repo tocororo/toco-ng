@@ -1,6 +1,6 @@
 
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@toco/shared';
+import { SharedModule } from '../shared';
 
 import { RecordComponent } from './record/record.component';
 import { AggregationsComponent } from './aggregations/aggregations.component';

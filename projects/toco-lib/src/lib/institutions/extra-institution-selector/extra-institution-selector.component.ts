@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Term, VocabulariesInmutableNames } from '@toco/entities';
-import { TermHelper } from '@toco/taxonomy';
+import { Term, VocabulariesInmutableNames } from '../../entities';
+import { TermHelper } from '../../taxonomy';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { PanelContent_Depr, FormFieldType } from '@toco/forms';
+import { PanelContent_Depr, FormFieldType } from '../../forms';
 
 @Component({
   selector: 'toco-extra-institution-selector',

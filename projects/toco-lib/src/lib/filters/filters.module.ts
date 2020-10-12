@@ -1,6 +1,6 @@
 
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@toco/shared';
+import { SharedModule } from '../shared';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { BooleanFilterComponent } from './boolean-filter/boolean-filter.component';

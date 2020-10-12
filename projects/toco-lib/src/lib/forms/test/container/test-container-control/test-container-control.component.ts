@@ -12,8 +12,8 @@ import { InputTextComponent } from '../../../input/text/text-input.component';
 import { InputSelectComponent } from '../../../input/select/select-input.component';
 import { ActionButtonComponent } from '../../../action/button/button-action.component';
 
-import { Identifier } from '@toco/entities';
-import { Params } from '@toco/core';
+import { Identifier } from '../../../../entities';
+import { Params } from '../../../../core';
 
 const relationshipsExample_SimpleFormGroup: Params<any> = {	
 	'idtype': 'isni'

@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { Organization, SearchResponse, HitList, Aggr } from '@toco/entities';
+import { Organization, SearchResponse, HitList, Aggr } from '../../entities';
 import { FormControl } from '@angular/forms';
-import { SearchService, OrganizationServiceNoAuth } from '@toco/backend';
+import { SearchService, OrganizationServiceNoAuth } from '../../backend';
 import { HttpParams } from '@angular/common/http';
 
 @Component({

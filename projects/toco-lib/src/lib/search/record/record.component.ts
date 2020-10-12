@@ -1,5 +1,5 @@
 import { Component, OnInit, Input} from '@angular/core';
-import { Record } from '@toco/entities';
+import { Record } from '../../entities';
 
 @Component({
   selector: 'toco-record',

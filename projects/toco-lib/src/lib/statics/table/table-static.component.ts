@@ -1,7 +1,7 @@
 
 import { Component, Input } from '@angular/core';
 
-import { Params } from '@toco/core';
+import { Params } from '../../core';
 
 /* For testing. */
 export interface PeriodicElement

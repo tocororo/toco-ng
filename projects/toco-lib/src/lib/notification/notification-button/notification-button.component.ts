@@ -3,8 +3,8 @@ import { of as observableOf, timer, Subscription, PartialObserver } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
 
-import { NotificationService } from '@toco/backend';
-import { MessageHandler, StatusCode } from '@toco/core';
+import { NotificationService } from '../../backend';
+import { MessageHandler, StatusCode } from '../../core';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 
 @Component({

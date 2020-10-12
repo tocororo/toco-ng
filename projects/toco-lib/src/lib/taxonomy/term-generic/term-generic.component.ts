@@ -14,7 +14,7 @@ import {
 	HintPosition,
 	InputContent,
 	ActionContent
-} from "@toco/forms";
+} from "../../forms";
 import {
 	Term,
 	Vocabulary,
@@ -22,11 +22,11 @@ import {
 	EntityBase,
 	TermIndexData,
 	VocabulariesInmutableNames
-} from "@toco/entities";
+} from "../../entities";
 
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
-import { FormFieldContent_Experimental } from '@toco/forms/experimental/form-field.control.experimental';
+import { FormFieldContent_Experimental } from '../../forms/experimental/form-field.control.experimental';
 
 @Component({
 	selector: "toco-term-generic",

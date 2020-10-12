@@ -3,10 +3,10 @@ import {
   Term,
   TermNode,
   VocabulariesInmutableNames
-} from "@toco/entities";
-import { PanelContent_Depr, FormFieldType, SelectOption } from "@toco/forms";
+} from "../../entities";
+import { PanelContent_Depr, FormFieldType, SelectOption } from "../../forms";
 import { FormGroup, FormBuilder } from "@angular/forms";
-import { TaxonomyService } from "@toco/backend";
+import { TaxonomyService } from "../../backend";
 
 @Component({
   selector: "toco-institution-hierarchy-selector",

@@ -13,15 +13,15 @@ import {
 import { Observable } from "rxjs";
 import { OAuthStorage } from "angular-oauth2-oidc";
 
-import { EnvService } from "@toco/backend/env.service";
+import { EnvService } from "../backend/env.service";
 
-import { Response } from "@toco/core";
+import { Response } from "../core";
 import {
   SourceVersion,
   SearchResponse,
   SourceData,
   Hit, Source
-} from "@toco/entities";
+} from "../entities";
 import { stringToKeyValue } from "@angular/flex-layout/extended/typings/style/style-transforms";
 
 @Injectable()

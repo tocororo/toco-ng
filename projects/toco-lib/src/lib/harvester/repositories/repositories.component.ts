@@ -6,12 +6,12 @@ import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { CatalogService } from '@toco/backend';
-import { MetadataService } from '@toco/core';
-import { Journal, JournalData, ISSN } from '@toco/entities';
-import { FilterHttpMap, FiltersService } from '@toco/filters';
+import { CatalogService } from '../../backend';
+import { MetadataService } from '../../core';
+import { Journal, JournalData, ISSN } from '../../entities';
+import { FilterHttpMap, FiltersService } from '../../filters';
 
-import { EnvService } from '@toco/backend/env.service';
+import { EnvService } from '../../backend/env.service';
 
 import { HarvesterFiltersComponent } from '../harvester-filters/harvester-filters.component';
 

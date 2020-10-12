@@ -1,10 +1,10 @@
 
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@toco/shared';
+import { SharedModule } from '../shared';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { TocoFormsModule } from '@toco/forms';
-import { StaticsModule } from '@toco/statics';
+import { TocoFormsModule } from '../forms';
+import { StaticsModule } from '../statics';
 
 
 import { OrgViewComponent } from './org-view/org-view.component';

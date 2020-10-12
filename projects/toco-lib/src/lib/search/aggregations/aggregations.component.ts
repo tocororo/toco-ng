@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { Aggr, AggrBucket } from "@toco/entities";
+import { Aggr, AggrBucket } from "../../entities";
 
 export interface AggregationsSelection{
   [id: string]: string[] 

@@ -4,11 +4,11 @@
  */
 
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@toco/shared';
+import { SharedModule } from '../shared';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { CoreModule, IconService } from '@toco/core';
+import { CoreModule, IconService } from '../core';
 
 import { ActionButtonComponent } from './action/button/button-action.component';
 

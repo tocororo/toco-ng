@@ -9,10 +9,10 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, PartialObserver, Subject } from 'rxjs';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 
-import { EnvService } from '@toco/backend/env.service';
+import { EnvService } from '../backend/env.service';
 
-import { Response } from '@toco/core';
-import { Vocabulary, Term } from '@toco/entities';
+import { Response } from '../core';
+import { Vocabulary, Term } from '../entities';
 
 // TODO: Poner todos los tipos de datos de retorno de Response.
 // No puede haber en ningun servicio del backend un Response<any>

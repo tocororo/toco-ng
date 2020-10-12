@@ -13,13 +13,13 @@ import {
 import { Observable, PartialObserver } from "rxjs";
 import { startWith, map } from "rxjs/operators";
 
-import { Response } from "@toco/core";
+import { Response } from "../../../core";
 import {
   Term,
   TermNode,
   VocabulariesInmutableNames,
-} from "@toco/entities";
-import { TaxonomyService } from "@toco/backend";
+} from "../../../entities";
+import { TaxonomyService } from "../../../backend";
 
 import { FormFieldControl_Experimental } from "../form-field.control.experimental";
 

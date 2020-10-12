@@ -1,6 +1,6 @@
 
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { SharedModule } from '@toco/shared';
+import { SharedModule } from '../shared';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';

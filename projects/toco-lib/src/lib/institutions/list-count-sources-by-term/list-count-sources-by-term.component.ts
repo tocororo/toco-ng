@@ -5,7 +5,7 @@
 
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatPaginatorIntl, MatPaginator } from '@angular/material';
-import { SourceService } from '@toco/backend';
+import { SourceService } from '../../backend';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 

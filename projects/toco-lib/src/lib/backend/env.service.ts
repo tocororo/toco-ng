@@ -5,7 +5,7 @@
 
 import { Injectable } from '@angular/core';
 
-import { Params } from '@toco/core';
+import { Params } from '../core';
 
 @Injectable({
     providedIn: 'root'

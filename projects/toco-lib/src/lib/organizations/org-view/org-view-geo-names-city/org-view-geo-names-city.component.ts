@@ -1,8 +1,8 @@
 
 import { Component, Input } from '@angular/core';
 
-import { Params } from '@toco/core';
-import { GeoNamesCity } from '@toco/entities';
+import { Params } from '../../../core';
+import { GeoNamesCity } from '../../../entities';
 
 @Component({
 	selector: 'toco-org-view-geo-names-city',

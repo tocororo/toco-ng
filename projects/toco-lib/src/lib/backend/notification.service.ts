@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { HttpService, Response } from '@toco/core';
-import { EnvService } from '@toco/backend/env.service';
+import { HttpService, Response } from '../core';
+import { EnvService } from '../backend/env.service';
 
 @Injectable()
 export class NotificationService extends HttpService {

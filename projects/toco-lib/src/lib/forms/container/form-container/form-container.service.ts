@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { EnvService } from '@toco/backend/env.service';
+import { EnvService } from '../../../backend/env.service';
 
-import { Response } from '@toco/core';
+import { Response } from '../../../core';
 
 /**
  * This service is deprecated. 

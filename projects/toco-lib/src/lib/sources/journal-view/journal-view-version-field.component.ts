@@ -4,7 +4,7 @@
  */
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Journal, JournalData, IdentifierSchemas, JournalVersion } from '@toco/entities';
+import { Journal, JournalData, IdentifierSchemas, JournalVersion } from '../../entities';
 import { JournalDataType } from './journal-view.component';
 
 

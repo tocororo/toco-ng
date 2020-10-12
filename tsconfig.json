@@ -17,13 +17,7 @@
     "lib": [
       "es2018",
       "dom"
-    ],
-    "paths": {
-      "@toco-lib": ["dist/toco-lib"],
-      "@toco-lib/*": ["dist/toco-lib/*"],
-      "@toco*": ["./projects/toco-lib/src/lib"],
-      "@toco/*": ["./projects/toco-lib/src/lib/*"]
-    }
+    ]
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

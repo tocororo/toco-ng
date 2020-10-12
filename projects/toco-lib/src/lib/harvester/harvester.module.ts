@@ -1,10 +1,10 @@
 
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@toco/shared';
+import { SharedModule } from '../shared';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { FiltersModule } from '@toco/filters';
-import { CatalogService } from '@toco/backend';
+import { FiltersModule } from '../filters';
+import { CatalogService } from '../backend';
 
 import { HarvesterRoutingModule } from './harvester-routing.module';
 import { RepositoriesComponent } from './repositories/repositories.component';

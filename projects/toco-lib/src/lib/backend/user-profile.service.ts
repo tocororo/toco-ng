@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-import { EnvService } from '@toco/backend/env.service';
+import { EnvService } from '../backend/env.service';
 
-import { Response } from '@toco/core';
+import { Response } from '../core';
 
 @Injectable({
   providedIn: 'root'

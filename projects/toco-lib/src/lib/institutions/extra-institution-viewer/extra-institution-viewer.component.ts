@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Term, VocabulariesInmutableNames } from '@toco/entities';
+import { Term, VocabulariesInmutableNames } from '../../entities';
 
 @Component({
   selector: 'toco-extra-institution-viewer',

@@ -1,10 +1,10 @@
 
 
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@toco/shared';
+import { SharedModule } from '../shared';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { TocoFormsModule } from '@toco/forms';
+import { TocoFormsModule } from '../forms';
 
 import { VocabulariesComponent, VocabularyDialogComponent } from './vocabularies/vocabularies.component';
 import { TermsComponent } from './terms/terms.component';

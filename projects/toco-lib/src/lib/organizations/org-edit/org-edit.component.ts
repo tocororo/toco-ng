@@ -3,12 +3,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
-import { Organization, Identifier } from '@toco/entities';
+import { Organization, Identifier } from '../../entities';
 import { TextInputAppearance, OperationAction, FormSection, PanelContent, 
 	ContainerContent, HintValue, HintPosition, IconValue, IconSource, ContentPosition, 
 	ActionControl, ActionContent, ContainerPanelComponent, 
 	InputTextComponent, InputSelectComponent, ContainerSimpleComponent, 
-	InputUrlComponent, InputEmailComponent, ActionButtonComponent } from '@toco/forms';
+	InputUrlComponent, InputEmailComponent, ActionButtonComponent } from '../../forms';
 
 @Component({
 	selector: 'toco-org-edit',

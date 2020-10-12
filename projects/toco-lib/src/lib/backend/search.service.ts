@@ -8,9 +8,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpBackend } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
-import { Response } from '@toco/core';
-import { SearchResponse, Record, Source, Organization } from '@toco/entities';
-import { EnvService } from '@toco/backend/env.service';
+import { Response } from '../core';
+import { SearchResponse, Record, Source, Organization } from '../entities';
+import { EnvService } from '../backend/env.service';
 
 @Injectable()
 export class SearchService {

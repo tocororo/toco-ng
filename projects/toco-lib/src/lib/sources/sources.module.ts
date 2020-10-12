@@ -5,11 +5,11 @@
 
 
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@toco/shared';
+import { SharedModule } from '../shared';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { TocoFormsModule } from '@toco/forms';
-import { SourceService, TaxonomyService } from '@toco/backend';
+import { TocoFormsModule } from '../forms';
+import { SourceService, TaxonomyService } from '../backend';
 
 import { JournalViewComponent } from './journal-view/journal-view.component';
 import { JournalEditComponent } from './source-edit/journal-edit/journal-edit.component';

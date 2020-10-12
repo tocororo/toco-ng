@@ -9,7 +9,7 @@ import {
 } from "angular-oauth2-oidc";
 
 import { AuthenticationService } from "./authentication.service";
-import { EnvService } from "@toco/backend/env.service";
+import { EnvService } from "../backend/env.service";
 import { Router } from "@angular/router";
 import { UserProfileService } from "../backend";
 import { UserProfile } from "../entities";

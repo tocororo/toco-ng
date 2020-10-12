@@ -6,10 +6,11 @@
 
 import { Component, OnInit } from '@angular/core';
 import { FormControl, AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
+
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { Term, TermNode } from '../../../entities';
 
-import { Term, TermNode } from '@toco/entities';
 
 import { FormFieldControl_Experimental } from '../form-field.control.experimental';
 

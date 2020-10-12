@@ -13,9 +13,9 @@ import {
   VocabulariesInmutableNames,
   JournalVersion,
   SourceOrganization,
-} from "@toco/entities";
+} from "../../entities";
 import { MatSnackBar } from "@angular/material";
-import { MessageHandler, StatusCode } from "@toco/core";
+import { MessageHandler, StatusCode } from "../../core";
 import { JournalDataType } from "./journal-view.component";
 
 @Component({

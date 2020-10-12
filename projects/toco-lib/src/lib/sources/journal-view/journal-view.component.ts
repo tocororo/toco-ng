@@ -7,10 +7,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatSnackBar, MatDialog } from '@angular/material';
 
-import { EnvService } from '@toco/backend/env.service';
+import { EnvService } from '../../backend/env.service';
 
-import { MetadataService, MessageHandler, StatusCode } from '@toco/core';
-import { Journal, SourceClasification, JournalVersion, VocabulariesInmutableNames, JournalData, Organization } from '@toco/entities';
+import { MetadataService, MessageHandler, StatusCode } from '../../core';
+import { Journal, SourceClasification, JournalVersion, VocabulariesInmutableNames, JournalData, Organization } from '../../entities';
 
 export enum JournalDataType {
     /** is used by default, `Journal` have not that type of data. */

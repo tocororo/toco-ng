@@ -7,8 +7,8 @@ import {
   IdentifierSchemas,
   SourceTypes,
   SourceSystems,
-} from "@toco/entities";
-import { SourceService } from "@toco/backend";
+} from "../../entities";
+import { SourceService } from "../../backend";
 import { MatSnackBar } from "@angular/material";
 import { JournalInstitutionsComponent } from "../journal-institutions/journal-institutions.component";
 import { SourceOrganizationsComponent } from '../source-edit/source-organizations/source-organizations.component';

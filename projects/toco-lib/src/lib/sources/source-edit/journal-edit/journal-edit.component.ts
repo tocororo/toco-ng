@@ -16,13 +16,13 @@ import {
   CatalogService,
   TaxonomyService,
   SourceService,
-} from "@toco/backend";
+} from "../../../backend";
 import {
   MessageHandler,
   StatusCode,
   HandlerComponent,
   MetadataService,
-} from "@toco/core";
+} from "../../../core";
 import {
   Vocabulary,
   Journal,
@@ -37,8 +37,8 @@ import {
   JournalVersion,
   IdentifierSchemas,
   Organization,
-} from "@toco/entities";
-import { FilterHttpMap } from "@toco/filters";
+} from "../../../entities";
+import { FilterHttpMap } from "../../../filters";
 import {
   PanelContent_Depr,
   FormFieldType,
@@ -47,7 +47,7 @@ import {
   FormContainerAction,
   IssnValue,
   SelectOption,
-} from "@toco/forms";
+} from "../../../forms";
 import {
   FormBuilder,
   FormGroup,

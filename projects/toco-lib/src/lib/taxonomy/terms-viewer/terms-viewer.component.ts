@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TaxonomyService } from '@toco/backend';
-import { Term } from '@toco/entities';
+import { TaxonomyService } from '../../backend';
+import { Term } from '../../entities';
 
 @Component({
   selector: 'toco-terms-viewer',

@@ -4,8 +4,8 @@ import { HttpClient, HttpHeaders, HttpBackend, HttpParams } from '@angular/commo
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { MessageService } from '@toco/core';
-import { EnvService } from '@toco/backend/env.service';
+import { MessageService } from '../core';
+import { EnvService } from '../backend/env.service';
 import { Organization, Hit, SearchResponse } from '../entities';
 
 /**

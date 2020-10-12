@@ -8,10 +8,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { HttpService, Response } from '@toco/core';
-import { FilterHttpMap } from '@toco/filters';
+import { HttpService, Response } from '../core';
+import { FilterHttpMap } from '../filters';
 
-import { EnvService } from '@toco/backend/env.service';
+import { EnvService } from '../backend/env.service';
 
 @Injectable()
 export class CatalogService extends HttpService {

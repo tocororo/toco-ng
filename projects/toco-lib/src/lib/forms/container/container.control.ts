@@ -7,7 +7,7 @@
 import { Input, ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 
-import { GetViewContainerDirective, Params } from '@toco/core';
+import { GetViewContainerDirective, Params } from '../../core';
 
 import { FormSection, FormFieldContent, FormFieldControl, cloneFormControl, cloneFormSection } from '../form-field.control';
 

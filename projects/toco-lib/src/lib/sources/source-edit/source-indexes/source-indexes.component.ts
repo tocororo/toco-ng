@@ -6,7 +6,7 @@ import {
   HintValue,
   HintPosition,
   SelectOption,
-} from '@toco/forms';
+} from '../../../forms';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import {
@@ -15,8 +15,8 @@ import {
   Term,
   SourceData,
   TermNode,
-} from '@toco/entities';
-import { TaxonomyService } from '@toco/backend';
+} from '../../../entities';
+import { TaxonomyService } from '../../../backend';
 
 @Component({
   selector: "toco-source-indexes",

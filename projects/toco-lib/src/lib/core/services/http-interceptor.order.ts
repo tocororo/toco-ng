@@ -7,7 +7,7 @@
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
-// import { AuthenticationService } from '@toco/authentication';
+// import { AuthenticationService } from '../../authentication';
 
 import { CachingInterceptor } from './http.interceptor';
 

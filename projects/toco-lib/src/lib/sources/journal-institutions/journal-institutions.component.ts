@@ -7,17 +7,17 @@ import {
   VocabulariesInmutableNames,
   TermNode,
   SourceOrganizationRole
-} from "@toco/entities";
+} from "../../entities";
 import {
   PanelContent_Depr,
   FormContainerAction,
   FormFieldType
-} from "@toco/forms";
+} from "../../forms";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
-import { TaxonomyService } from "@toco/backend";
+import { TaxonomyService } from "../../backend";
 import { MAT_DIALOG_DATA, MatDialog, MAT_DIALOG_DEFAULT_OPTIONS } from "@angular/material";
-import { TermHelper } from "@toco/taxonomy";
-import { InstitutionHierarchySelectorComponent } from "@toco/institutions/institution-hierarchy-selector/institution-hierarchy-selector.component";
+import { TermHelper } from "../../taxonomy";
+import { InstitutionHierarchySelectorComponent } from "../../institutions/institution-hierarchy-selector/institution-hierarchy-selector.component";
 
 export interface JournalInstitutionsPanel {
   // open: boolean;
