@@ -1,0 +1,23 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <strong>
+            {{repostitory.source_type}} 
+            <!-- {{repostitory.harvest_type}} -->
+            </strong>
+        </mat-card-title>
+        <mat-card-subtitle>
+        <!-- {{repostitory.harvest_endpoint}} -->
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+            Informacion sobre el estado, la cantidad de elementos etc...
+    </mat-card-content>
+    <mat-card-actions>
+        
+        <button mat-fab-button (click)="onIdentify()">Identify</button>
+        <button mat-fab-button (click)="onHarvest()">Harvest</button>
+        <button mat-fab-button (click)="onRecord()">Record</button>
+    </mat-card-actions>
+      
+</mat-card>

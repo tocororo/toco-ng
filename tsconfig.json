@@ -18,17 +18,14 @@
       "es2018",
       "dom"
     ],
-    // "paths": {
-    //   "tools": ["dist/tools"],
-    //   "tools/*": ["dist/tools/*"]
-    // }
     "paths": {
-      "@toco/tools": ["./projects/tools/src/lib"],
-      "@toco/tools/*": ["./projects/tools/src/lib/*"],
-      "@tocoenv/tools": ["./projects/tools/src/environments"],
-      "@tocoenv/tools/*": ["./projects/tools/src/environments/*"]
+      "@toco-lib": ["dist/toco-lib"],
+      "@toco-lib/*": ["dist/toco-lib/*"],
+      "@toco*": ["./projects/toco-lib/src/lib"],
+      "@toco/*": ["./projects/toco-lib/src/lib/*"],
+      "@tocoenv": ["./projects/toco-lib/src/environments"],
+      "@tocoenv/*": ["./projects/toco-lib/src/environments/*"]
     }
-    
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
