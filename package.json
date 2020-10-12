@@ -1,6 +1,6 @@
 {
   "name": "toco-ng",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular-devkit/core": "^8.3.22",
     "@angular-devkit/schematics": "^8.3.22",
@@ -58,5 +58,9 @@
   },
   "optionalDependencies": {
     "fsevents": "^2.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tocororo/toco-ng.git"
   }
 }

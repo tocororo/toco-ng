@@ -11,7 +11,7 @@ import { MetadataService } from '@toco/core';
 import { Journal, JournalData, ISSN } from '@toco/entities';
 import { FilterHttpMap, FiltersService } from '@toco/filters';
 
-import { EnvService } from '@tocoenv/env.service';
+import { EnvService } from '@toco/backend/env.service';
 
 import { HarvesterFiltersComponent } from '../harvester-filters/harvester-filters.component';
 

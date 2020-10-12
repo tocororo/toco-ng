@@ -15,7 +15,7 @@ import { MetadataService, MessageHandler, StatusCode } from '@toco/core';
 import { Journal, JournalData, ISSN, JournalVersion } from '@toco/entities';
 import { FilterHttpMap, FiltersService } from '@toco/filters';
 
-import { EnvService } from '@tocoenv/env.service';
+import { EnvService } from '@toco/backend/env.service';
 
 import { CatalogService } from '@toco/backend';
 import { CatalogFiltersComponent } from '../catalog-filters/catalog-filters.component';

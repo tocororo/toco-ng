@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
 
-import { EnvService } from '@tocoenv/env.service'
+import { EnvService } from '@toco/backend/env.service'
 
 @Injectable({
     providedIn: 'root'

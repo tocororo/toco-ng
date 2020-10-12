@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { MessageService } from '@toco/core';
-import { EnvService } from '@tocoenv/env.service';
+import { EnvService } from '@toco/backend/env.service';
 import { Organization, Hit, SearchResponse } from '../entities';
 
 /**

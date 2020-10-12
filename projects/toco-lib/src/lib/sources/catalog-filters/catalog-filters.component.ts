@@ -17,7 +17,7 @@ import { FilterContainerComponent } from '@toco/filters';
 import { MessageHandler, StatusCode } from '@toco/core';
 
 import { CatalogService, TaxonomyService } from '@toco/backend';
-import { EnvService } from '@tocoenv/env.service';
+import { EnvService } from '@toco/backend/env.service';
 import { VocabulariesInmutableNames } from '@toco/entities';
 
 @Component({

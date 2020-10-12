@@ -13,7 +13,7 @@ import {
 import { Observable } from "rxjs";
 import { OAuthStorage } from "angular-oauth2-oidc";
 
-import { EnvService } from "@tocoenv/env.service";
+import { EnvService } from "@toco/backend/env.service";
 
 import { Response } from "@toco/core";
 import {

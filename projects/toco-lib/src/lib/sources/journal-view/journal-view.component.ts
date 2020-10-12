@@ -7,7 +7,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatSnackBar, MatDialog } from '@angular/material';
 
-import { EnvService } from '@tocoenv/env.service';
+import { EnvService } from '@toco/backend/env.service';
 
 import { MetadataService, MessageHandler, StatusCode } from '@toco/core';
 import { Journal, SourceClasification, JournalVersion, VocabulariesInmutableNames, JournalData, Organization } from '@toco/entities';

@@ -22,9 +22,7 @@
       "@toco-lib": ["dist/toco-lib"],
       "@toco-lib/*": ["dist/toco-lib/*"],
       "@toco*": ["./projects/toco-lib/src/lib"],
-      "@toco/*": ["./projects/toco-lib/src/lib/*"],
-      "@tocoenv": ["./projects/toco-lib/src/environments"],
-      "@tocoenv/*": ["./projects/toco-lib/src/environments/*"]
+      "@toco/*": ["./projects/toco-lib/src/lib/*"]
     }
   },
   "angularCompilerOptions": {

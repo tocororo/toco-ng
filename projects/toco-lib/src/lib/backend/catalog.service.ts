@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import { HttpService, Response } from '@toco/core';
 import { FilterHttpMap } from '@toco/filters';
 
-import { EnvService } from '@tocoenv/env.service';
+import { EnvService } from '@toco/backend/env.service';
 
 @Injectable()
 export class CatalogService extends HttpService {

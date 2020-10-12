@@ -10,7 +10,7 @@ import { Observable, of } from 'rxjs';
 
 import { Response } from '@toco/core';
 import { SearchResponse, Record, Source, Organization } from '@toco/entities';
-import { EnvService } from '@tocoenv/env.service';
+import { EnvService } from '@toco/backend/env.service';
 
 @Injectable()
 export class SearchService {

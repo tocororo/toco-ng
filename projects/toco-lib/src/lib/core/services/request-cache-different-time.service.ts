@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse } from '@angular/common/http';
 
-import { EnvService } from '@tocoenv/env.service';
+import { EnvService } from '@toco/backend/env.service';
 
 import { MessageService } from './message.service';
 import { Cachable, RequestCache } from './request-cache.service';
