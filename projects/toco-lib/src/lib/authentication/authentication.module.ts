@@ -5,7 +5,7 @@
 
 
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared';
+import { SharedModule } from '../shared/public-api';
 
 import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 

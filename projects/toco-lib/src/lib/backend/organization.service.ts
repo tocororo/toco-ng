@@ -4,9 +4,9 @@ import { HttpClient, HttpHeaders, HttpBackend, HttpParams } from '@angular/commo
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { MessageService } from '../core';
+import { MessageService } from '../core/public-api';
 import { EnvService } from '../backend/env.service';
-import { Organization, Hit, SearchResponse } from '../entities';
+import { Organization, Hit, SearchResponse } from '../entities/public-api';
 
 /**
  * The URL to the root api. 

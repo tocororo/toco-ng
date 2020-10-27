@@ -15,14 +15,15 @@ import { OAuthStorage } from "angular-oauth2-oidc";
 
 import { EnvService } from "../backend/env.service";
 
-import { Response } from "../core";
+
 import {
   SourceVersion,
   SearchResponse,
   SourceData,
   Hit, Source
-} from "../entities";
+} from "../entities/public-api";
 import { stringToKeyValue } from "@angular/flex-layout/extended/typings/style/style-transforms";
+import { Response } from '../core/public-api';
 
 @Injectable()
 export class SourceService {

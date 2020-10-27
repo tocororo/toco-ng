@@ -7,7 +7,7 @@
 import { Input, ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 
-import { GetViewContainerDirective, Params } from '../../core';
+import { GetViewContainerDirective, Params } from '../../core/public-api';
 
 import { FormSection, FormFieldContent, FormFieldControl, cloneFormControl, cloneFormSection } from '../form-field.control';
 

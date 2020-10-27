@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { AngularMaterialModule } from '../angular-material';
+import { AngularMaterialModule } from '../angular-material/public-api';
 
 /**
  * A module that contains all shared modules.

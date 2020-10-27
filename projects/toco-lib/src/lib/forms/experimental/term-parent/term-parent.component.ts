@@ -9,7 +9,7 @@ import { FormControl, AbstractControl, ValidationErrors, FormGroup } from '@angu
 
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { Term, TermNode } from '../../../entities';
+import { Term, TermNode } from '../../../entities/public-api';
 
 
 import { FormFieldControl_Experimental } from '../form-field.control.experimental';

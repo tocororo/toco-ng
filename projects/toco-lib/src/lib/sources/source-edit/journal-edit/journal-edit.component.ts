@@ -16,13 +16,13 @@ import {
   CatalogService,
   TaxonomyService,
   SourceService,
-} from "../../../backend";
+} from "../../../backend/public-api";
 import {
   MessageHandler,
   StatusCode,
   HandlerComponent,
   MetadataService,
-} from "../../../core";
+} from "../../../core/public-api";
 import {
   Vocabulary,
   Journal,
@@ -37,8 +37,8 @@ import {
   JournalVersion,
   IdentifierSchemas,
   Organization,
-} from "../../../entities";
-import { FilterHttpMap } from "../../../filters";
+} from "../../../entities/public-api";
+import { FilterHttpMap } from "../../../filters/public-api";
 import {
   PanelContent_Depr,
   FormFieldType,
@@ -47,7 +47,7 @@ import {
   FormContainerAction,
   IssnValue,
   SelectOption,
-} from "../../../forms";
+} from "../../../forms/public-api";
 import {
   FormBuilder,
   FormGroup,

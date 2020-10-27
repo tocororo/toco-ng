@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { MatButtonModule, MatMenuModule, MatIconModule, MatBadgeModule, MatTableModule, MatPaginatorModule, MatDividerModule, MatTooltipModule } from '@angular/material';
 
-import { NotificationService } from '../backend';
+import { NotificationService } from '../backend/public-api';
 
 import { NotificationButtonComponent } from './notification-button/notification-button.component';
 import { NotificationListComponent } from './notification-list/notification-list.component';

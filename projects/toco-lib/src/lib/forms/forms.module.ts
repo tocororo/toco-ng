@@ -4,11 +4,11 @@
  */
 
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared';
+import { SharedModule } from '../shared/public-api';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { CoreModule, IconService } from '../core';
+import { CoreModule, IconService } from '../core/public-api';
 
 import { ActionButtonComponent } from './action/button/button-action.component';
 

@@ -11,8 +11,8 @@ import {
 import { AuthenticationService } from "./authentication.service";
 import { EnvService } from "../backend/env.service";
 import { Router } from "@angular/router";
-import { UserProfileService } from "../backend";
-import { UserProfile } from "../entities";
+import { UserProfileService } from "../backend/public-api";
+import { UserProfile } from "../entities/public-api";
 
 // import { authConfig } from './auth-config';
 

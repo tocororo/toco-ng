@@ -1,10 +1,10 @@
 
-import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared';
-import { ReactiveFormsModule } from '@angular/forms';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { SharedModule } from '../shared/public-api';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { TocoFormsModule } from '../forms';
-import { StaticsModule } from '../statics';
+import { TocoFormsModule } from '../forms/public-api';
+import { StaticsModule } from '../statics/public-api';
 
 
 import { OrgViewComponent } from './org-view/org-view.component';
@@ -19,6 +19,10 @@ import { MatAutocompleteModule, MatChipsModule } from '@angular/material';
 import { OrgTableEditComponent } from './org-table-edit/org-table-edit.component';
 import { OrgFooterComponent } from './org-footer/org-footer.component';
 import { RouterModule } from '@angular/router';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { AngularMaterialModule } from '../angular-material/public-api';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
 	declarations: [
@@ -35,7 +39,13 @@ import { RouterModule } from '@angular/router';
 	],
 
 	imports: [
-		SharedModule,
+		// SharedModule,
+		FlexLayoutModule,
+		CommonModule,
+		FormsModule,
+		HttpClientModule,
+		AngularMaterialModule,
+
 		ReactiveFormsModule,
 		RouterModule,
 		TocoFormsModule,
@@ -50,7 +60,10 @@ import { RouterModule } from '@angular/router';
 		OrgAddComponent,
 		OrgSearchComponent,
 		OrgFooterComponent
-	]
+	],
+	schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+    ]
 })
 export class OrganizationsModule
 { }

@@ -1,8 +1,8 @@
 
 import { Component, ComponentFactoryResolver } from '@angular/core';
 
-import { CatalogService } from '../../backend';
-import { FilterContainerComponent, FilterContainerService } from '../../filters';
+import { CatalogService } from '../../backend/public-api';
+import { FilterContainerComponent, FilterContainerService } from '../../filters/public-api';
 
 @Component({
     selector: 'toco-harvester-filters-container',

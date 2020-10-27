@@ -125,6 +125,8 @@ export enum IdentifierSchemas {
   fudref = "fudref",
   orgref = "orgref",
   reup = "reup",
+  orgaid = "orgaid",
+  uniid = "uniid"
 }
 
 export class Links extends EntityBase {

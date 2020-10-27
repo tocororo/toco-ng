@@ -1,7 +1,7 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Organization, Address } from '../../entities';
+import { Organization, Address } from '../../entities/public-api';
 
 import { OrgViewAccordionType } from './org-view-accordion/org-view-accordion.component';
 

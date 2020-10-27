@@ -1,10 +1,10 @@
 
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared';
+import { SharedModule } from '../shared/public-api';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { FiltersModule } from '../filters';
-import { CatalogService } from '../backend';
+import { FiltersModule } from '../filters/public-api';
+import { CatalogService } from '../backend/public-api';
 
 import { HarvesterRoutingModule } from './harvester-routing.module';
 import { RepositoriesComponent } from './repositories/repositories.component';

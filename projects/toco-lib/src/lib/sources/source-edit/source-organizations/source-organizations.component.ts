@@ -8,11 +8,11 @@ import {
   SourceData,
   OrganizationRelationships,
   Relationship,
-} from "../../../entities";
+} from "../../../entities/public-api";
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material";
-import { OrganizationServiceNoAuth } from "../../../backend";
+import { OrganizationServiceNoAuth } from "../../../backend/public-api";
 import { FormArray } from "@angular/forms";
-import { MessageHandler, StatusCode, HandlerComponent } from "../../../core";
+import { MessageHandler, StatusCode, HandlerComponent } from "../../../core/public-api";
 
 @Component({
   selector: "toco-source-organizations",

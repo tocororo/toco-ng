@@ -1,7 +1,7 @@
 
 import { Component, Input } from '@angular/core';
 
-import { Address } from '../../../entities';
+import { Address } from '../../../entities/public-api';
 
 @Component({
 	selector: 'toco-org-view-address',

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { Term, TermNode, EntityBase } from "../../entities";
-import { TaxonomyService } from "../../backend";
+import { Term, TermNode, EntityBase } from "../../entities/public-api";
+import { TaxonomyService } from "../../backend/public-api";
 
 @Component({
   selector: "toco-institution-hierarchy-viewer",

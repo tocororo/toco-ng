@@ -1,7 +1,7 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Entity } from '../../entities';
+import { Entity } from '../../entities/public-api';
 
 @Component({
     selector: 'toco-info-card',

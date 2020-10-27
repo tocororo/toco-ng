@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
-import { Organization } from '../../entities';
-import { OperationAction, FormSection, PanelContent, ContainerPanelComponent } from '../../forms';
+import { Organization } from '../../entities/public-api';
+import { OperationAction, FormSection, PanelContent, ContainerPanelComponent } from '../../forms/public-api';
 
 @Component({
 	selector: 'toco-org-add',

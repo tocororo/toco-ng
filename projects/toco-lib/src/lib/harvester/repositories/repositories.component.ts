@@ -6,10 +6,10 @@ import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { CatalogService } from '../../backend';
-import { MetadataService } from '../../core';
-import { Journal, JournalData, ISSN } from '../../entities';
-import { FilterHttpMap, FiltersService } from '../../filters';
+import { CatalogService } from '../../backend/public-api';
+import { MetadataService } from '../../core/public-api';
+import { Journal, JournalData, ISSN } from '../../entities/public-api';
+import { FilterHttpMap, FiltersService } from '../../filters/public-api';
 
 import { EnvService } from '../../backend/env.service';
 

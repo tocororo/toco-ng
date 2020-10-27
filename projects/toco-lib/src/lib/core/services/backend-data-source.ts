@@ -3,7 +3,7 @@ import { _isNumberValue } from '@angular/cdk/coercion';
 import { Sort, PageEvent } from '@angular/material';
 import { Observable } from 'rxjs';
 
-import { InputControl } from '../../forms';
+import { InputControl } from '../../forms/public-api';
 
 import { MAX_SAFE_INTEGER, Params } from '../utils/helpers';
 

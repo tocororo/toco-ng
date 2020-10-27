@@ -8,8 +8,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpBackend } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
-import { Response } from '../core';
-import { SearchResponse, Record, Source, Organization } from '../entities';
+import { Response } from '../core/public-api';
+import { SearchResponse, Record, Source, Organization } from '../entities/public-api';
 import { EnvService } from '../backend/env.service';
 
 @Injectable()

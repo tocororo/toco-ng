@@ -9,7 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FilterComponent } from '../filter.component';
 import { FiltersService } from '../filters.service';
 import { FilterContainerService } from '../filter-container.service';
-import { TermNode, Term } from '../../entities';
+import { TermNode, Term } from '../../entities/public-api';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
 import { of, Observable } from 'rxjs';

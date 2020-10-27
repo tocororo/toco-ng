@@ -9,8 +9,8 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 
 import { EnvService } from '../../backend/env.service';
 
-import { MetadataService, MessageHandler, StatusCode } from '../../core';
-import { Journal, SourceClasification, JournalVersion, VocabulariesInmutableNames, JournalData, Organization } from '../../entities';
+import { MetadataService, MessageHandler, StatusCode } from '../../core/public-api';
+import { Journal, SourceClasification, JournalVersion, VocabulariesInmutableNames, JournalData, Organization } from '../../entities/public-api';
 
 export enum JournalDataType {
     /** is used by default, `Journal` have not that type of data. */

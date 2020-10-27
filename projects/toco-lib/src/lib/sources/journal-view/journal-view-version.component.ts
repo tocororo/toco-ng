@@ -13,9 +13,9 @@ import {
   VocabulariesInmutableNames,
   JournalVersion,
   SourceOrganization,
-} from "../../entities";
+} from "../../entities/public-api";
 import { MatSnackBar } from "@angular/material";
-import { MessageHandler, StatusCode } from "../../core";
+import { MessageHandler, StatusCode } from "../../core/public-api";
 import { JournalDataType } from "./journal-view.component";
 
 @Component({

@@ -7,7 +7,7 @@
 import { Input, Type } from '@angular/core';
 import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
 
-import { Params, IconService } from '../core';
+import { Params, IconService } from '../core/public-api';
 
 import { ContainerControl } from './container/container.control';
 

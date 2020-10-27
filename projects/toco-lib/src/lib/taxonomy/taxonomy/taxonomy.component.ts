@@ -24,7 +24,7 @@
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Vocabulary } from '../../entities';
+import { Vocabulary } from '../../entities/public-api';
 
 @Component({
     selector: 'toco-taxonomy',

@@ -11,13 +11,13 @@ import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { MetadataService, MessageHandler, StatusCode } from '../../core';
-import { Journal, JournalData, ISSN, JournalVersion } from '../../entities';
-import { FilterHttpMap, FiltersService } from '../../filters';
+import { MetadataService, MessageHandler, StatusCode } from '../../core/public-api';
+import { Journal, JournalData, ISSN, JournalVersion } from '../../entities/public-api';
+import { FilterHttpMap, FiltersService } from '../../filters/public-api';
 
 import { EnvService } from '../../backend/env.service';
 
-import { CatalogService } from '../../backend';
+import { CatalogService } from '../../backend/public-api';
 import { CatalogFiltersComponent } from '../catalog-filters/catalog-filters.component';
 import { MatSnackBar, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { JournalViewInfoComponent } from '../../sources/journal-view/journal-view-info.component';

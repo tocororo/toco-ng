@@ -7,10 +7,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { MessageHandler, StatusCode, Response } from '../../core';
-import { Vocabulary, Term, TermNode } from '../../entities';
+import { MessageHandler, StatusCode, Response } from '../../core/public-api';
+import { Vocabulary, Term, TermNode } from '../../entities/public-api';
 
-import { TaxonomyService } from '../../backend';
+import { TaxonomyService } from '../../backend/public-api';
 import { TermGenericComponent } from '../term-generic/term-generic.component';
 
 import { OAuthStorage } from 'angular-oauth2-oidc';

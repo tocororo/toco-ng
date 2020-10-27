@@ -62,5 +62,15 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/tocororo/toco-ng.git"
-  }
+  },
+  "contributors": [
+    {"name": "Edel Abreu Hernández", "email": "edelabreuhernandez@gmail.com"},
+    {"name": "Rafael Martinez Estévez", "email": "malayibiri@gmail.com"},
+    {"name": "Luis Enrique Cabezas Curbelo", "email": "edelabreuhernandez@gmail.com"},
+    {"name": "Eduardo Arencibia Cabeza", "email": "eduar2c@gmail.com"},
+    {"name": "Reinier Lorenzo Cabezas", "email": "reynil92@gmail.com"},
+    {"name": "Alejandro Cabrera Mena", "email": "alejandro97.acm@gmail.com"}
+
+  ],
+  "license": "MIT"
 }

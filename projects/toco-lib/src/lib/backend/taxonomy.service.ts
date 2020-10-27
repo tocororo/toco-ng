@@ -11,8 +11,8 @@ import { OAuthStorage } from 'angular-oauth2-oidc';
 
 import { EnvService } from '../backend/env.service';
 
-import { Response } from '../core';
-import { Vocabulary, Term } from '../entities';
+import { Response } from '../core/public-api';
+import { Vocabulary, Term } from '../entities/public-api';
 
 // TODO: Poner todos los tipos de datos de retorno de Response.
 // No puede haber en ningun servicio del backend un Response<any>

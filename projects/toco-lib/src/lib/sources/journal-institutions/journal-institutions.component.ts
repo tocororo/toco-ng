@@ -7,16 +7,16 @@ import {
   VocabulariesInmutableNames,
   TermNode,
   SourceOrganizationRole
-} from "../../entities";
+} from "../../entities/public-api";
 import {
   PanelContent_Depr,
   FormContainerAction,
   FormFieldType
-} from "../../forms";
+} from "../../forms/public-api";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
-import { TaxonomyService } from "../../backend";
+import { TaxonomyService } from "../../backend/public-api";
 import { MAT_DIALOG_DATA, MatDialog, MAT_DIALOG_DEFAULT_OPTIONS } from "@angular/material";
-import { TermHelper } from "../../taxonomy";
+import { TermHelper } from "../../taxonomy/public-api";
 import { InstitutionHierarchySelectorComponent } from "../../institutions/institution-hierarchy-selector/institution-hierarchy-selector.component";
 
 export interface JournalInstitutionsPanel {

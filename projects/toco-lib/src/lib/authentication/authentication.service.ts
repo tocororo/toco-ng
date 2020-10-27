@@ -11,7 +11,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { OAuthStorage, OAuthResourceServerErrorHandler, OAuthModuleConfig, OAuthService } from 'angular-oauth2-oidc';
 import { EnvService } from '../backend/env.service';
 import { catchError } from 'rxjs/operators';
-import { Response } from '../core';
+import { Response } from '../core/public-api';
 
 /**
  * This service handles the behavior when a user authentications and

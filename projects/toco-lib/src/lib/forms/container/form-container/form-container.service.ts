@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 import { EnvService } from '../../../backend/env.service';
 
-import { Response } from '../../../core';
+import { Response } from '../../../core/public-api';
 
 /**
  * This service is deprecated. 

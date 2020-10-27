@@ -13,13 +13,13 @@ import {
 import { Observable, PartialObserver } from "rxjs";
 import { startWith, map } from "rxjs/operators";
 
-import { Response } from "../../../core";
+import { Response } from "../../../core/public-api";
 import {
   Term,
   TermNode,
   VocabulariesInmutableNames,
-} from "../../../entities";
-import { TaxonomyService } from "../../../backend";
+} from "../../../entities/public-api";
+import { TaxonomyService } from "../../../backend/public-api";
 
 import { FormFieldControl_Experimental } from "../form-field.control.experimental";
 
