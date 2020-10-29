@@ -20,9 +20,6 @@ import { JournalViewFieldComponent } from './journal-view/journal-view-version-f
 import { JournalViewVersionComponent } from './journal-view/journal-view-version.component';
 import { CoreModule } from '../core/public-api';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { InstitutionsModule } from '../institutions/institutions.module';
-import { JournalInstitutionsComponent, JournalAddInstitutionComponent, JournalAddExtraInstitutionComponent } from './journal-institutions/journal-institutions.component';
-import { ExtraInstitutionSelectorComponent } from '../institutions/extra-institution-selector/extra-institution-selector.component';
 
 import { CatalogFiltersComponent } from './catalog-filters/catalog-filters.component';
 import { CatalogComponent, DialogCatalogJournalInfoDialog } from './catalog/catalog.component';
@@ -41,22 +38,17 @@ import { SourceIndexesComponent, SourceEditAddIndexComponent } from './source-ed
         JournalEditComponent,
         SourceEditAddIndexComponent,
         JournalViewVersionComponent,
-        JournalInstitutionsComponent,
-        JournalAddInstitutionComponent,
-        JournalAddExtraInstitutionComponent,
         CatalogComponent,
         CatalogFiltersComponent,
         SourcesListComponent,
         DialogCatalogJournalInfoDialog,
         SourceOrganizationsComponent,
         SourceOrganizationSelectDialog,
-        SourceOrganizationSelectTopDialog, 
+        SourceOrganizationSelectTopDialog,
         SourceIndexesComponent
     ],
     entryComponents: [
         SourceEditAddIndexComponent,
-        JournalAddInstitutionComponent,
-        JournalAddExtraInstitutionComponent,
         DialogCatalogJournalInfoDialog,
         SourceOrganizationSelectDialog,
         SourceOrganizationSelectTopDialog
@@ -66,7 +58,6 @@ import { SourceIndexesComponent, SourceEditAddIndexComponent } from './source-ed
         CoreModule,
         ReactiveFormsModule,
         TocoFormsModule,
-        InstitutionsModule,
         OrganizationsModule
     ],
 

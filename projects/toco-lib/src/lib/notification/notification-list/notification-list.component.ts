@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
 import { NotificationService } from '../../backend/public-api';
 import { MessageHandler, StatusCode } from '../../core/public-api';
 import { NotificationInfo } from '../notification-button/notification-button.component';
-import { customPaginatorLabel } from '../../institutions/list-count-sources-by-term/list-count-sources-by-term.component';
+
 
 @Component({
     selector: 'lib-notification-list',
@@ -19,9 +19,6 @@ import { customPaginatorLabel } from '../../institutions/list-count-sources-by-t
             state('expanded', style({ height: '*' })),
             transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
         ]),
-    ],
-    providers: [
-        { provide: MatPaginatorIntl, useValue: customPaginatorLabel() }
     ]
 })
 export class NotificationListComponent implements OnInit {
