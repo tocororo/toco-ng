@@ -12,17 +12,13 @@ import {
 } from "@angular/forms";
 import { Observable, PartialObserver } from "rxjs";
 import { startWith, map } from "rxjs/operators";
+import { TaxonomyService } from '../../../backend/public-api';
+import { VocabulariesInmutableNames, TermNode, Term } from '../../../entities/public-api';
 
-import { Response } from "@toco/tools/core";
-import {
-  Term,
-  TermNode,
-  VocabulariesInmutableNames,
-} from "@toco/tools/entities";
-import { TaxonomyService } from "@toco/tools/backend";
-
-import { FormFieldControl_Experimental } from "../form-field.control.experimental";
 import { InputControl } from '../../input/input.control';
+
+import { Response } from '../../../core/public-api';
+
 
 interface VocabularyComponentExtraContent {
   multiple: boolean;
