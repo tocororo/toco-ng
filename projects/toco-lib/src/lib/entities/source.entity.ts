@@ -78,11 +78,30 @@ export class SourceData extends Entity {
     source_status = '';
     organizations?: Array<SourceOrganization> = new Array<SourceOrganization>();
     classifications?: Array<SourceClasification> = new Array<SourceClasification>();
+
+
     _save_info: SavingInfoSchema = new SavingInfoSchema();
 
     reviewed = false;
 
     versions? : Array<SourceVersion>;
+
+    // public deepcopy(data: any, exclude: string[] = []): void {
+
+    //   if (data['organizations'] && data['organizations'].length > 0){
+    //     for (let index = 0; index < data['organizations'].length; index++) {
+    //       const element = data['organizations'][index];
+    //       this.organizations.push(new SourceOrganization());
+    //     }
+    //   }
+    //   if (data['classifications'] && data['classifications'].length > 0){
+    //     for (let index = 0; index < data['classifications'].length; index++) {
+    //       const element = data['classifications'][index];
+    //       this.classifications.push(new SourceClasification());
+    //     }
+    //   }
+    //   super.deepcopy(data, exclude);
+    // }
 }
 
 // export class TermSource extends EntityBase {

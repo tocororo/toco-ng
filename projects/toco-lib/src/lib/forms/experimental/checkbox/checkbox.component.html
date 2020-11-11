@@ -1,5 +1,4 @@
-<ng-container 
-[formGroup]="content.parentFormSection"
+<ng-container
 >
 <mat-checkbox
     [style.width]="content.width"
@@ -9,6 +8,7 @@
     name="{{ content.name }}"
     required="{{ content.required }}"
     [formControlName]="content.name"
+    [formControl]="content.formControl"
 >
     {{ content.label }}
 </mat-checkbox>

@@ -1,5 +1,4 @@
 <mat-form-field
-[formGroup]="content.parentFormSection"
 style="width: 100%;"
 >
 <input
@@ -10,7 +9,7 @@ style="width: 100%;"
     name="{{ content.name }}"
     placeholder="{{ content.label }}"
     required="{{ content.required }}"
-    [formControlName]="content.name"
+    [formControl]="content.formControl"
 >
 <mat-datepicker-toggle
     matSuffix [for]="picker"

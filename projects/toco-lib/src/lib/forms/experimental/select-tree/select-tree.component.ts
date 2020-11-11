@@ -12,6 +12,7 @@ import { of } from "rxjs";
 
 import { FormFieldControl_Experimental } from "../form-field.control.experimental";
 import { SelectOption } from '../../input/select/select-input.component';
+import { InputControl } from '../../input/input.control';
 
 export interface SelectOptionNode {
   element: SelectOption;
@@ -41,7 +42,7 @@ interface TreeFilterData {
   templateUrl: "./select-tree.component.html",
   styleUrls: ["./select-tree.component.scss"]
 })
-export class SelectTreeComponent extends FormFieldControl_Experimental
+export class SelectTreeComponent extends InputControl
   implements OnInit {
   data: SelectOptionNode[];
 
@@ -70,10 +71,10 @@ export class SelectTreeComponent extends FormFieldControl_Experimental
 
   ngOnInit() {
 
-    (this.content.parentFormSection as FormGroup).addControl(
-      this.content.name,
-      this.internalControl
-    );
+    // (this.content.parentFormSection as FormGroup).addControl(
+    //   this.content.name,
+    //   this.internalControl
+    // );
 
     if (this.content.extraContent){
       if (this.content.extraContent.observable) {
@@ -132,7 +133,7 @@ export class SelectTreeComponent extends FormFieldControl_Experimental
   }
 
   emitSelection() {
-    this.internalControl.setValue(this.checklistSelection.selected);
+    this.content.formControl.setValue(this.checklistSelection.selected);
 
     // this.content.extraContent.selectionChange(this.checklistSelection.selected)
     // var valueEmiter = "OR";

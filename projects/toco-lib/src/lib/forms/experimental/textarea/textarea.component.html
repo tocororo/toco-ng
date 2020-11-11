@@ -1,16 +1,15 @@
-<mat-form-field 
+<mat-form-field
 [style.width]="content.width"
 [style.minWidth]="content.minWidth"
-[formGroup]="content.parentFormSection"
 >
-<textarea 
-    [formControl]="internalControl" 
+<textarea
+    [formControl]="content.formControl"
     matInput [value]="content.value"
     (input)="$event.target.value"
     name="{{ content.name }}"
     placeholder="{{ content.label }}"
     required="{{ content.required }}"
-    [formControlName]="content.name"
+    [formControl]="content.formControl"
     matTextareaAutosize="true"
 ></textarea>
 </mat-form-field>
