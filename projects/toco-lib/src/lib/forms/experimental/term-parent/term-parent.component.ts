@@ -9,10 +9,10 @@ import { FormControl, AbstractControl, ValidationErrors, FormGroup } from '@angu
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
-import { Term, TermNode } from '@toco/tools/entities';
 
 import { FormFieldControl_Experimental } from '../form-field.control.experimental';
 import { InputControl } from '../../input/input.control';
+import { Term, TermNode } from '../../../entities/public-api';
 
 @Component({
     selector: 'toco-term-parent',

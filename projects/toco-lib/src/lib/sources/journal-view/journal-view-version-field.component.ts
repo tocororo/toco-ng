@@ -4,8 +4,9 @@
  */
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Journal, JournalData, IdentifierSchemas, JournalVersion } from '../../entities/public-api';
-import { JournalDataType } from './journal-view.component';
+import { IdentifierSchemas } from '../../entities/common';
+import { JournalVersion, JournalData } from '../../entities/public-api';
+import { JournalDataType } from '../public-api';
 
 
 /**
@@ -28,7 +29,7 @@ export class JournalViewFieldComponent implements OnInit {
     @Output()
     editingJournalChange = new EventEmitter<JournalVersion>();
 
-    
+
     public journalDataType = JournalDataType;
     public IdentifierSchemas = IdentifierSchemas;
 
@@ -80,35 +81,35 @@ export class JournalViewFieldComponent implements OnInit {
                 case JournalDataType.issnP:
                   concat ?
                   this.editingJournal.data.setIdentifierValue(
-                    IdentifierSchemas.pissn,
-                      this.editingJournal.data.getIdentifierValue(IdentifierSchemas.pissn) +
+                    IdentifierSchemas.issn_p,
+                      this.editingJournal.data.getIdentifierValue(IdentifierSchemas.issn_p) +
                       ' ' +
-                      this.currentJournal.data.getIdentifierValue(IdentifierSchemas.pissn)) :
+                      this.currentJournal.data.getIdentifierValue(IdentifierSchemas.issn_p)) :
                   this.editingJournal.data.setIdentifierValue(
-                    IdentifierSchemas.pissn,
-                    this.currentJournal.data.getIdentifierValue(IdentifierSchemas.pissn));
+                    IdentifierSchemas.issn_p,
+                    this.currentJournal.data.getIdentifierValue(IdentifierSchemas.issn_p));
                   break;
                 case JournalDataType.issnE:
                 concat ?
                     this.editingJournal.data.setIdentifierValue(
-                      IdentifierSchemas.eissn,
-                        this.editingJournal.data.getIdentifierValue(IdentifierSchemas.eissn) +
+                      IdentifierSchemas.issn_e,
+                        this.editingJournal.data.getIdentifierValue(IdentifierSchemas.issn_e) +
                         ' ' +
-                        this.currentJournal.data.getIdentifierValue(IdentifierSchemas.eissn)) :
+                        this.currentJournal.data.getIdentifierValue(IdentifierSchemas.issn_e)) :
                     this.editingJournal.data.setIdentifierValue(
-                      IdentifierSchemas.eissn,
-                      this.currentJournal.data.getIdentifierValue(IdentifierSchemas.eissn));
+                      IdentifierSchemas.issn_e,
+                      this.currentJournal.data.getIdentifierValue(IdentifierSchemas.issn_e));
                 break;
             case JournalDataType.issnL:
                 concat ?
                 this.editingJournal.data.setIdentifierValue(
-                  IdentifierSchemas.lissn,
-                    this.editingJournal.data.getIdentifierValue(IdentifierSchemas.lissn) +
+                  IdentifierSchemas.issn_l,
+                    this.editingJournal.data.getIdentifierValue(IdentifierSchemas.issn_l) +
                     ' ' +
-                    this.currentJournal.data.getIdentifierValue(IdentifierSchemas.lissn)) :
+                    this.currentJournal.data.getIdentifierValue(IdentifierSchemas.issn_l)) :
                 this.editingJournal.data.setIdentifierValue(
-                  IdentifierSchemas.lissn,
-                  this.currentJournal.data.getIdentifierValue(IdentifierSchemas.lissn));
+                  IdentifierSchemas.issn_l,
+                  this.currentJournal.data.getIdentifierValue(IdentifierSchemas.issn_l));
                 break;
                 case JournalDataType.rnpsP:
                   concat ?

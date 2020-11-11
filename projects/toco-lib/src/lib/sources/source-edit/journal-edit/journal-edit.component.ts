@@ -1,59 +1,12 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  Inject,
-  Output,
-  EventEmitter,
-  ViewChild,
-} from "@angular/core";
-import { HttpErrorResponse } from "@angular/common/http";
-import { of } from "rxjs";
-import { catchError, finalize } from "rxjs/operators";
-import { MatDialog, MatSnackBar, MAT_DIALOG_DATA } from "@angular/material";
-
-import {
-  CatalogService,
-  TaxonomyService,
-  SourceService,
-} from "../../../backend/public-api";
-import {
-  MessageHandler,
-  StatusCode,
-  HandlerComponent,
-  MetadataService,
-} from "../../../core/public-api";
-import {
-  Vocabulary,
-  Journal,
-  SourceTypes,
-  Term,
-  SourceClasification,
-  TermNode,
-  VocabulariesInmutableNames,
-  JournalData,
-  Source,
-  SourceSystems,
-  JournalVersion,
-  IdentifierSchemas,
-  Organization,
-} from "../../../entities/public-api";
-import { FilterHttpMap } from "../../../filters/public-api";
-import {
-  PanelContent_Depr,
-  FormFieldType,
-  HintValue,
-  HintPosition,
-  FormContainerAction,
-  IssnValue,
-  SelectOption,
-} from "../../../forms/public-api";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl,
-} from "@angular/forms";
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
+import { SourceService, CatalogService, TaxonomyService } from '../../../backend/public-api';
+import { MetadataService } from '../../../core/public-api';
+import { IdentifierSchemas } from '../../../entities/common';
+import { JournalData, JournalVersion, Organization, SourceClasification, SourceTypes, SourceSystems, VocabulariesInmutableNames, Term } from '../../../entities/public-api';
+import { VocabularyTreeComponent } from '../../../forms/experimental/vocabulary-tree/vocabulary-tree.component';
+import { PanelContent, FormContainerAction, ContainerPanelComponent, InputTextComponent, FormFieldType, HintValue, HintPosition, InputRnpsComponent, SelectComponent, TextareaComponent, InputUrlComponent, InputEmailComponent, VocabularyComponent, DatepickerComponent } from '../../../forms/public-api';
 
 @Component({
   selector: "toco-journal-edit",
@@ -84,11 +37,11 @@ export class JournalEditComponent implements OnInit {
   public showFinalStep = true;
 
   // journal identifiers variables for step 0
-  identifiersPanel: PanelContent_Depr[] = null;
+  identifiersPanel: PanelContent = null;
   identifiersFormGroup: FormGroup;
 
   // journal information variables for step 1
-  informationPanel: PanelContent_Depr[] = null;
+  informationPanel: PanelContent = null;
   informationFormGroup: FormGroup;
   informationSocialFormGroup: FormGroup;
 
@@ -104,7 +57,7 @@ export class JournalEditComponent implements OnInit {
 
   // indexes (databases), variables for step 3
 
-  finalPanel: PanelContent_Depr[] = null;
+  finalPanel: PanelContent = null;
   finalFormGroup: FormGroup;
 
   // actions, if needed
@@ -169,53 +122,63 @@ export class JournalEditComponent implements OnInit {
   initStep0Identifiers() {
     this.identifiersFormGroup = this.formBuilder.group({});
 
-    this.identifiersPanel = [
+    this.identifiersPanel =
       {
-        title: "Identificadores",
+        name: 'identifiersPanel',
+        label: 'Identificadores',
+        controlType: ContainerPanelComponent,
         description: "",
         iconName: "",
         formSection: this.identifiersFormGroup,
         formSectionContent: [
           {
-            name: "issn_p",
-            label: "ISSN Impreso",
-            type: FormFieldType.text,
-            required: false,
-            startHint: new HintValue(HintPosition.start, "XXXX-XXXX"),
-            width: "23%",
-            value: this.journalData
-              ? this.journalData.getIdentifierValue(IdentifierSchemas.pissn)
-              : "",
-            // value: this.journalVersion ? IssnValue.createIssnValueFromString(this.journalVersion.issn.p) : null
-          },
-          {
-            name: "issn_e",
-            label: "ISSN Electrónico",
-            type: FormFieldType.text,
-            required: false,
-            startHint: new HintValue(HintPosition.start, "XXXX-XXXX"),
-            width: "23%",
-            value: this.journalData
-              ? this.journalData.getIdentifierValue(IdentifierSchemas.eissn)
-              : "",
-            // value: this.journalVersion ? IssnValue.createIssnValueFromString(this.journalVersion.issn.e) : null
-          },
-          {
+            formControl: InputTextComponent.getFormControlByDefault(),
             name: "issn_l",
             label: "ISSN de Enlace",
             type: FormFieldType.text,
+            controlType: InputTextComponent,
             required: false,
             startHint: new HintValue(HintPosition.start, "XXXX-XXXX"),
             width: "23%",
             value: this.journalData
-              ? this.journalData.getIdentifierValue(IdentifierSchemas.lissn)
+              ? this.journalData.getIdentifierValue(IdentifierSchemas.issn_l)
               : "",
             // value: this.journalVersion ? IssnValue.createIssnValueFromString(this.journalVersion.issn.l) : null
           },
           {
+            formControl: InputTextComponent.getFormControlByDefault(),
+            name: "issn_p",
+            label: "ISSN Impreso",
+            type: FormFieldType.text,
+            controlType: InputTextComponent,
+            required: false,
+            startHint: new HintValue(HintPosition.start, "XXXX-XXXX"),
+            width: "23%",
+            value: this.journalData
+              ? this.journalData.getIdentifierValue(IdentifierSchemas.issn_p)
+              : "",
+            // value: this.journalVersion ? IssnValue.createIssnValueFromString(this.journalVersion.issn.p) : null
+          },
+          {
+            formControl: InputTextComponent.getFormControlByDefault(),
+            name: "issn_e",
+            label: "ISSN Electrónico",
+            type: FormFieldType.text,
+            controlType: InputTextComponent,
+            required: false,
+            startHint: new HintValue(HintPosition.start, "XXXX-XXXX"),
+            width: "23%",
+            value: this.journalData
+              ? this.journalData.getIdentifierValue(IdentifierSchemas.issn_e)
+              : "",
+            // value: this.journalVersion ? IssnValue.createIssnValueFromString(this.journalVersion.issn.e) : null
+          },
+          {
+            formControl: InputRnpsComponent.getFormControlByDefault(),
             name: "rnps_p",
             label: "RNPS Impreso",
             type: FormFieldType.rnps,
+            controlType: InputRnpsComponent,
             required: true,
             startHint: new HintValue(HintPosition.start, "XXXX."),
             width: "23%",
@@ -224,9 +187,11 @@ export class JournalEditComponent implements OnInit {
               : "",
           },
           {
+            formControl: InputRnpsComponent.getFormControlByDefault(),
             name: "rnps_e",
             label: "RNPS Electrónico",
             type: FormFieldType.rnps,
+            controlType: InputRnpsComponent,
             required: true,
             startHint: new HintValue(HintPosition.start, "XXXX."),
             width: "23%",
@@ -235,8 +200,7 @@ export class JournalEditComponent implements OnInit {
               : "",
           },
         ],
-      },
-    ];
+      };
   }
 
   initStep1(): void {
@@ -245,46 +209,56 @@ export class JournalEditComponent implements OnInit {
       start_year: new FormControl(""),
       end_year: new FormControl(""),
     });
-    
+
     this.informationSocialFormGroup = this.formBuilder.group({});
 
-    this.informationPanel = [
+    this.informationPanel =
       {
-        title: "Datos de la Revista",
+        name: 'informationPanel',
+        label: 'Datos de la Revista',
         description: "",
         iconName: "",
+        controlType: ContainerPanelComponent,
         formSection: this.informationFormGroup,
         formSectionContent: [
           {
+            formControl: InputTextComponent.getFormControlByDefault(),
             name: "title",
             label: "Título",
             type: FormFieldType.text,
+            controlType: InputTextComponent,
             required: true,
             width: "100%",
             value: this.journalData ? this.journalData.title : "",
           },
           {
+            formControl: InputTextComponent.getFormControlByDefault(),
             name: "subtitle",
             label: "Subtítulo",
             type: FormFieldType.text,
+            controlType: InputTextComponent,
             required: false,
             width: "30%",
             startHint: new HintValue(HintPosition.start, ""),
             value: this.journalData ? this.journalData.subtitle : "",
           },
           {
+            formControl: InputTextComponent.getFormControlByDefault(),
             name: "shortname",
             label: "Título abreviado",
             type: FormFieldType.text,
+            controlType: InputTextComponent,
             required: false,
             width: "30%",
             startHint: new HintValue(HintPosition.start, ""),
             value: this.journalData ? this.journalData.shortname : "",
           },
           {
+            formControl: InputTextComponent.getFormControlByDefault(),
             name: "source_type",
             label: "Tipo de Revista",
             type: FormFieldType.select_expr,
+            controlType: SelectComponent,
             required: true,
             width: "30%",
             value: this.journalData ? this.journalData.source_type : "",
@@ -309,9 +283,11 @@ export class JournalEditComponent implements OnInit {
             },
           },
           {
+            formControl: InputTextComponent.getFormControlByDefault(),
             name: "description",
             label: "Descripción",
             type: FormFieldType.textarea,
+            controlType: TextareaComponent,
             required: true,
             width: "100%",
             value: this.journalData ? this.journalData.description : "",
@@ -325,9 +301,11 @@ export class JournalEditComponent implements OnInit {
           //   value: this.journalVersion ? this.journalVersion.purpose : ''
           // },
           {
+            formControl: InputUrlComponent.getFormControlByDefault(),
             name: "url",
             label: "URL",
             type: FormFieldType.url,
+            controlType: InputUrlComponent,
             required: true,
             startHint: new HintValue(
               HintPosition.start,
@@ -339,9 +317,11 @@ export class JournalEditComponent implements OnInit {
               : "",
           },
           {
+            formControl: InputTextComponent.getFormControlByDefault(),
             name: "source_system",
             label: "Tipo de Sistema que soporta la revista",
             type: FormFieldType.select_expr,
+            controlType: SelectComponent,
             required: false,
             width: "35%",
             value: this.journalData ? this.journalData.source_system : "",
@@ -366,9 +346,11 @@ export class JournalEditComponent implements OnInit {
             },
           },
           {
+            formControl: InputUrlComponent.getFormControlByDefault(),
             name: "oaiurl",
             label: "OAI-PMH",
             type: FormFieldType.url,
+            controlType: InputUrlComponent,
             required: false,
             startHint: new HintValue(
               HintPosition.start,
@@ -390,9 +372,11 @@ export class JournalEditComponent implements OnInit {
           // },
 
           {
+            formControl: InputEmailComponent.getFormControlByDefault(),
             name: "email",
             label: "Correo Electrónico",
             type: FormFieldType.email,
+            controlType: InputEmailComponent,
             required: true,
             startHint: new HintValue(
               HintPosition.start,
@@ -402,9 +386,11 @@ export class JournalEditComponent implements OnInit {
             value: this.journalData ? this.journalData.email : "",
           },
           {
+            formControl: InputTextComponent.getFormControlByDefault(),
             name: "licence",
             label: "Licencia",
             type: FormFieldType.vocabulary,
+            controlType: VocabularyComponent,
             required: false,
             width: "45%",
             extraContent: {
@@ -419,25 +405,31 @@ export class JournalEditComponent implements OnInit {
             },
           },
           {
+            formControl: InputTextComponent.getFormControlByDefault(),
             name: "start_year",
             label: "Año de inicio",
             type: FormFieldType.datepicker,
+            controlType: DatepickerComponent,
             required: false,
             width: "30%",
             value: this.journalData ? this.journalData.start_year : "",
           },
           {
+            formControl: InputTextComponent.getFormControlByDefault(),
             name: "end_year",
             label: "Año final",
             type: FormFieldType.datepicker,
+            controlType: DatepickerComponent,
             required: false,
             width: "30%",
             value: this.journalData ? this.journalData.end_year : "",
           },
           {
+            formControl: InputTextComponent.getFormControlByDefault(),
             name: "frequency",
             label: "Frecuencia",
             type: FormFieldType.text,
+            controlType: InputTextComponent,
             required: false,
             startHint: new HintValue(HintPosition.start, ""),
             width: "30%",
@@ -476,9 +468,11 @@ export class JournalEditComponent implements OnInit {
           //   },
           // },
           {
+            formControl: InputTextComponent.getFormControlByDefault(),
             name: "subjects",
             label: "Materias",
             type: FormFieldType.vocabulary_tree,
+            controlType: VocabularyTreeComponent,
             required: false,
             width: "80%",
             extraContent: {
@@ -493,9 +487,11 @@ export class JournalEditComponent implements OnInit {
             },
           },
           {
+            formControl: InputUrlComponent.getFormControlByDefault(),
             name: "facebook",
             label: "Facebook",
             type: FormFieldType.url,
+            controlType: InputUrlComponent,
             required: false,
             width: "33%",
             value: this.journalData
@@ -503,9 +499,11 @@ export class JournalEditComponent implements OnInit {
               : "",
           },
           {
+            formControl: InputUrlComponent.getFormControlByDefault(),
             name: "twitter",
             label: "Twitter",
             type: FormFieldType.url,
+            controlType: InputUrlComponent,
             required: false,
             width: "33%",
             value: this.journalData
@@ -513,9 +511,11 @@ export class JournalEditComponent implements OnInit {
               : "",
           },
           {
+            formControl: InputUrlComponent.getFormControlByDefault(),
             name: "linkedin",
             label: "LinkedIN",
             type: FormFieldType.url,
+            controlType: InputUrlComponent,
             required: false,
             width: "33%",
             value: this.journalData
@@ -523,7 +523,7 @@ export class JournalEditComponent implements OnInit {
               : "",
           }
         ],
-      },
+      };
       // {
       //   title: "Redes Sociales",
       //   description: "",
@@ -562,7 +562,7 @@ export class JournalEditComponent implements OnInit {
       //     },
       //   ],
       // },
-    ];
+
   }
 
   initStep2() {
@@ -585,18 +585,21 @@ export class JournalEditComponent implements OnInit {
 
   initStepFinal() {
     this.finalFormGroup = this.formBuilder.group({});
-    this.finalPanel = [
+    this.finalPanel =
       {
-        title: "",
+        name: 'finalPanel',
+        label: '',
         description: "",
         iconName: "",
         formSection: this.finalFormGroup,
-
+        controlType: ContainerPanelComponent,
         formSectionContent: [
           {
+            formControl: InputTextComponent.getFormControlByDefault(),
             name: "comment",
             label: "Puede agregar aquí un comentario.",
             type: FormFieldType.textarea,
+            controlType: TextareaComponent,
             required: false,
             startHint: new HintValue(HintPosition.start, ""),
             width: "100%",
@@ -604,23 +607,22 @@ export class JournalEditComponent implements OnInit {
             value: this.journalData ? this.journalData._save_info.comment : "",
           },
         ],
-      },
-    ];
+      };
   }
 
   private fillJournalFields() {
     // this.journalVersion.source_type = this.informationFormGroup.value['source_type'];
 
     this.journalData.setIdentifierValue(
-      IdentifierSchemas.pissn,
+      IdentifierSchemas.issn_p,
       this.identifiersFormGroup.value.issn_p
     );
     this.journalData.setIdentifierValue(
-      IdentifierSchemas.eissn,
+      IdentifierSchemas.issn_e,
       this.identifiersFormGroup.value.issn_e
     );
     this.journalData.setIdentifierValue(
-      IdentifierSchemas.lissn,
+      IdentifierSchemas.issn_l,
       this.identifiersFormGroup.value.issn_l
     );
     this.journalData.setIdentifierValue(
@@ -651,7 +653,7 @@ export class JournalEditComponent implements OnInit {
       IdentifierSchemas.oaiurl,
       this.informationFormGroup.value.oaiurl
     );
-    
+
     this.journalData.source_type = this.informationFormGroup.value[
       "source_type"
     ];
