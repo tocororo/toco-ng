@@ -42,6 +42,7 @@ import { CheckboxComponent } from './experimental/checkbox/checkbox.component';
 
 /* Esta aquí temporalmente, quizás se hace un módulo para los test nada más. */
 import { TestContainerControlComponent } from './test/container/test-container-control/test-container-control.component';
+import { ContainerPanelActionComponent } from './public-api';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { TestContainerControlComponent } from './test/container/test-container-c
     ComponentFactory_Depr,
     FormContainerComponent,
     ContainerPanelComponent,
+    ContainerPanelActionComponent,
     ContainerSimpleComponent,
     TableComponent,
     ContainerLabelDiffLangComponent,
@@ -83,6 +85,7 @@ import { TestContainerControlComponent } from './test/container/test-container-c
   entryComponents: [
     ActionButtonComponent,
     ContainerPanelComponent,
+    ContainerPanelActionComponent,
     ContainerSimpleComponent,
     InputTextComponent,
     InputEmailComponent,
@@ -90,7 +93,7 @@ import { TestContainerControlComponent } from './test/container/test-container-c
     InputIssnComponent,
     InputRnpsComponent,
     InputSelectComponent,
-    InputUrlComponent    
+    InputUrlComponent
   ],
 
   exports: [
@@ -98,6 +101,7 @@ import { TestContainerControlComponent } from './test/container/test-container-c
     ComponentFactory_Depr,
     FormContainerComponent,
     ContainerPanelComponent,
+    ContainerPanelActionComponent,
     ContainerSimpleComponent,
     TableComponent,
     ContainerLabelDiffLangComponent,
@@ -112,7 +116,7 @@ import { TestContainerControlComponent } from './test/container/test-container-c
     VocabularyTreeComponent,
     TermParentComponent,
     SelectComponent,
-    SelectFilterComponent, 
+    SelectFilterComponent,
     TextareaComponent,
     TestContainerControlComponent,
     DatepickerComponent,

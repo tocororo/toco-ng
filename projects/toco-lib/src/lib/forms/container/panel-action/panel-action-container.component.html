@@ -18,7 +18,7 @@
       <button
         *ngIf="content.actionLabel"
         mat-button color="accent"
-        (click)="content.action.doit(newStep)"
+        (click)="doAction()"
       >
         {{ content.actionLabel }}
       </button>

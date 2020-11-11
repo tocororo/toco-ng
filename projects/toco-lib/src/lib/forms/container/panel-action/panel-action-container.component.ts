@@ -5,7 +5,7 @@ import { ContainerContent, ContainerControl } from '../container.control';
 
 
 
-export interface FormContainerAction {
+export interface PanelAction {
   doit(data: any): void;
 }
 
@@ -37,7 +37,7 @@ export interface PanelActionContent extends ContainerContent
       /**
      * Returns the action and action labels for each panel.
      */
-    action?: FormContainerAction;
+    action?: PanelAction;
     actionLabel?: string;
 }
 
