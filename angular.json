@@ -14,6 +14,14 @@
           "options": {
             "tsConfig": "projects/toco-lib/tsconfig.lib.json",
             "project": "projects/toco-lib/ng-package.json"
+          },
+          "configurations": {
+            "globaldev": {
+              "watch": true,
+              "tsConfig": "projects/toco-lib/tsconfig.lib.json",
+              "project": "projects/toco-lib/ng-package-global.json"
+            }
+
           }
         },
         "test": {
