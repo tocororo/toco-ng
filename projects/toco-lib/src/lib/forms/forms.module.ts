@@ -42,7 +42,7 @@ import { CheckboxComponent } from './experimental/checkbox/checkbox.component';
 
 /* Esta aquí temporalmente, quizás se hace un módulo para los test nada más. */
 import { TestContainerControlComponent } from './test/container/test-container-control/test-container-control.component';
-import { ContainerPanelActionComponent } from './public-api';
+import { ContainerPanelActionComponent } from './container/panel-action/panel-action-container.component';
 
 @NgModule({
   declarations: [
