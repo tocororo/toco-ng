@@ -24,14 +24,15 @@ export * from './container/container.control';
 
 export * from './container-specific/label-diff-lang/label-diff-lang-container.component';
 
+export * from './experimental/datepicker/datepicker.component';
+export * from './experimental/checkbox/checkbox.component';
 export * from './experimental/select/select.component';
 export * from './experimental/select-filter/select-filter.component';
 export * from './experimental/select-tree/select-tree.component';
 export * from './experimental/term-parent/term-parent.component';
 export * from './experimental/textarea/textarea.component';
 export * from './experimental/vocabulary/vocabulary.component';
-export * from './experimental/datepicker/datepicker.component';
-export * from './experimental/checkbox/checkbox.component';
+export * from './experimental/vocabulary-tree/vocabulary-tree.component';
 
 export * from './input/email/email-value';
 export * from './input/email/email-input.component';
