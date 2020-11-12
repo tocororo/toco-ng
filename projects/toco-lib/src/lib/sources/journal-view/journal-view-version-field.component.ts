@@ -6,7 +6,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IdentifierSchemas } from '../../entities/common';
 import { JournalVersion, JournalData } from '../../entities/public-api';
-import { JournalDataType } from '../public-api';
+import { JournalDataType } from './journal-view.component';
+
 
 
 /**

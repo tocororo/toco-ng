@@ -2,7 +2,6 @@
  * Public API Surface of toco-lib
  */
 
-import { from } from 'rxjs';
 
 export * from './lib/toco-lib.service';
 export * from './lib/toco-lib.component';
