@@ -145,14 +145,20 @@ export class OrganizationServiceNoAuth {
     return this.http.get<Hit<Organization>>(req);
   }
 
-  getOrganizationRelationships(uuid, relType): Observable<Array<Hit<Organization>>> {
-    let params = new HttpParams();
-    params = params.set('type', relType);
-    const options = {
-      params: params,
-    };
+  getOrganizationRelationships(uuid, relType=null): Observable<Array<Hit<Organization>>> {
     const req = this.env.cuorApi + this.path + '/' + uuid + '/relationships';
-    return this.http.get<Array<Hit<Organization>>>(req, options);
+
+    if (relType != null){
+      let params = new HttpParams();
+      params = params.set('type', relType);
+      const options = {
+        params: params,
+      };
+      return this.http.get<Array<Hit<Organization>>>(req, options);
+    } else {
+      return this.http.get<Array<Hit<Organization>>>(req);
+    }
+
   }
 
   getOrganizationByPID(pid): Observable<Hit<Organization>> {
