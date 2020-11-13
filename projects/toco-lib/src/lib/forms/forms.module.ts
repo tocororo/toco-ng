@@ -93,7 +93,16 @@ import { ContainerPanelActionComponent } from './container/panel-action/panel-ac
     InputIssnComponent,
     InputRnpsComponent,
     InputSelectComponent,
-    InputUrlComponent
+    InputUrlComponent,
+    VocabularyComponent,
+    VocabularyTreeComponent,
+    TermParentComponent,
+    SelectComponent,
+    SelectFilterComponent,
+    TextareaComponent,
+    SelectTreeComponent,
+    DatepickerComponent,
+    CheckboxComponent
   ],
 
   exports: [
