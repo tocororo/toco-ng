@@ -76,6 +76,7 @@ export class SelectTreeComponent extends InputControl
     //   this.internalControl
     // );
 
+    this.init('', false, true);
     if (this.content.extraContent){
       if (this.content.extraContent.observable) {
         this.content.extraContent.observable.subscribe(
