@@ -12,6 +12,7 @@ import { Organization, OrganizationRelationships } from '../../entities/public-a
 /** Flat node with expandable and level information */
 export class OrganizationFlatNode {
   constructor(public item: Hit<Organization>,
+              public parent: OrganizationFlatNode,
               public level = 1,
               public expandable = false,
               public isLoading = false) { }
@@ -66,12 +67,11 @@ export class OrganizationDataSource {
       return;
     }
     if (expand) {
-      console.log(this.orgRelationshipType, 'AAAAAAAAAA orgRelationshipType')
       this.orgService.getOrganizationRelationships(node.item.metadata.id, this.orgRelationshipType).subscribe(
         (response) => {
           const nodes = response.map(
             org =>
-              new OrganizationFlatNode(org, node.level + 1, org.metadata.relationships.length > 0)
+              new OrganizationFlatNode(org, node, node.level + 1, org.metadata.relationships.length > 0)
           );
 
           this.data.splice(index + 1, 0, ...nodes);
@@ -111,8 +111,10 @@ export class OrgTreeViewerComponent implements OnInit {
 
   @Input() labelAction = '';
 
+  @Input() ngStyle = null;
+
   @Output()
-  action = new EventEmitter<Hit<Organization>>();
+  action = new EventEmitter<OrganizationFlatNode>();
 
   public error = false;
 
@@ -137,7 +139,7 @@ export class OrgTreeViewerComponent implements OnInit {
 
     this.dataSource.data = this.organizations.map(
       org =>
-        new OrganizationFlatNode(org, 1, org.metadata.relationships.length > 0)
+        new OrganizationFlatNode(org, null,  1, org.metadata.relationships.length > 0)
     );
   }
 

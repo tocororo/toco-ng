@@ -1,6 +1,7 @@
 <mat-tree
   [dataSource]="dataSource"
   [treeControl]="treeControl"
+  [ngStyle]="ngStyle"
 >
   <mat-tree-node
     *matTreeNodeDef="let node"
@@ -10,9 +11,8 @@
     {{ node.item.metadata.name }}
     <button
         mat-icon-button
-        aria-label="labelAction"
         matTooltip="labelAction"
-        (click)="emitAction(node.item)"
+        (click)="emitAction(node)"
       >
         <mat-icon>{{iconAction}}</mat-icon>
       </button>
@@ -33,9 +33,8 @@
     {{ node.item.metadata.name }}
     <button
         mat-icon-button
-        aria-label="labelAction"
         matTooltip="labelAction"
-        (click)="emitAction(node.item)"
+        (click)="emitAction(node)"
       >
         <mat-icon>{{iconAction}}</mat-icon>
       </button>
