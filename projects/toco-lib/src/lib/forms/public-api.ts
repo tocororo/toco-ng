@@ -25,6 +25,7 @@ export * from './container/container.control';
 export * from './container-specific/label-diff-lang/label-diff-lang-container.component';
 
 export * from './experimental/datepicker/datepicker.component';
+export * from './experimental/datepicker-year/datepicker-year.component';
 export * from './experimental/checkbox/checkbox.component';
 export * from './experimental/select/select.component';
 export * from './experimental/select-filter/select-filter.component';

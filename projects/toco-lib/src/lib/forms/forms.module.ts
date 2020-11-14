@@ -43,6 +43,7 @@ import { CheckboxComponent } from './experimental/checkbox/checkbox.component';
 /* Esta aquí temporalmente, quizás se hace un módulo para los test nada más. */
 import { TestContainerControlComponent } from './test/container/test-container-control/test-container-control.component';
 import { ContainerPanelActionComponent } from './container/panel-action/panel-action-container.component';
+import { DatepickerYearComponent } from './experimental/datepicker-year/datepicker-year.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { ContainerPanelActionComponent } from './container/panel-action/panel-ac
     SelectTreeComponent,
     TestContainerControlComponent,
     DatepickerComponent,
-    CheckboxComponent
+    CheckboxComponent,
+    DatepickerYearComponent
   ],
 
   imports: [
@@ -102,6 +104,7 @@ import { ContainerPanelActionComponent } from './container/panel-action/panel-ac
     TextareaComponent,
     SelectTreeComponent,
     DatepickerComponent,
+    DatepickerYearComponent,
     CheckboxComponent
   ],
 
@@ -129,6 +132,7 @@ import { ContainerPanelActionComponent } from './container/panel-action/panel-ac
     TextareaComponent,
     TestContainerControlComponent,
     DatepickerComponent,
+    DatepickerYearComponent,
     CheckboxComponent
   ],
 
