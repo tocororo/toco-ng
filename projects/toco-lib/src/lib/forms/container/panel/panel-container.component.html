@@ -1,29 +1,44 @@
+<mat-card
+  class="container-panel-mat-card"
+  [formGroup]="content.formSection"
+  [attr.aria-label]="content.ariaLabel"
+>
+  <mat-card-header>
+    <mat-card-title *ngIf="content.label">
+      {{ content.label }}
+    </mat-card-title>
+    <mat-card-subtitle *ngIf="content.description">
+      {{ content.description }}
+      <mat-icon>{{ content.iconName }}</mat-icon>
+    </mat-card-subtitle>
+  </mat-card-header>
 
-<mat-card class="container-panel-mat-card" [formGroup]="content.formSection" [attr.aria-label]="content.ariaLabel">
-    <mat-card-header>
-        <mat-card-title *ngIf="content.label">
-            {{ content.label }}
-        </mat-card-title>
-        <mat-card-subtitle *ngIf="content.description">
-            {{ content.description }}
-            <mat-icon>{{ content.iconName }}</mat-icon>
-        </mat-card-subtitle>
-    </mat-card-header>
+  <mat-card-content
+    fxLayout="row wrap"
+    fxLayout.xs="column"
+    fxLayoutAlign="space-between end"
+    fxLayoutAlign.xs="space-between center"
+    fxLayoutGap="1em"
+    class="form-field-component"
+  >
+    <ng-template get-view-container></ng-template>
+  </mat-card-content>
 
-    <mat-card-content>
-        <ng-template get-view-container></ng-template>
-    </mat-card-content>
-
-    <mat-card-actions *ngIf="content.isDynamic">
-        <button mat-raised-button color="primary" (click)="addToFormArray()">
-            <!-- <mat-icon>add box</mat-icon> -->
-            <mat-icon>add_circle</mat-icon>
-            Add new item
-        </button>
-        <button mat-raised-button color="primary" [disabled]="!canRemoveFromFormArray" (click)="clearFormArray()">
-            <!-- <mat-icon>remove box</mat-icon> -->
-            <mat-icon>remove_circle</mat-icon>
-            Clear all
-        </button>
-    </mat-card-actions>
+  <mat-card-actions *ngIf="content.isDynamic">
+    <button mat-raised-button color="primary" (click)="addToFormArray()">
+      <!-- <mat-icon>add box</mat-icon> -->
+      <mat-icon>add_circle</mat-icon>
+      Add new item
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!canRemoveFromFormArray"
+      (click)="clearFormArray()"
+    >
+      <!-- <mat-icon>remove box</mat-icon> -->
+      <mat-icon>remove_circle</mat-icon>
+      Clear all
+    </button>
+  </mat-card-actions>
 </mat-card>

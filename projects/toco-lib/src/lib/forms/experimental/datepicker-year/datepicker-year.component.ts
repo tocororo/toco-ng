@@ -35,6 +35,10 @@ export const YEAR_MODE_FORMATS = {
       multi: true,
     },
   ],
+  host: {
+    "[style.minWidth]": "content.minWidth",
+    "[style.width]": "content.width",
+  },
 })
 export class DatepickerYearComponent  extends InputControl implements OnInit, ControlValueAccessor {
 
@@ -82,6 +86,11 @@ export class DatepickerYearComponent  extends InputControl implements OnInit, Co
     if (this.label == '') {
       this.label = this.content.label;
     }
+
+    this.min = this.content.extraContent.minYear;
+    this.max = this.content.extraContent.maxYear;
+    console.log(this.content.extraContent, 'DATEPICKER YEAR EXTRA CONTENT....', this._min, this._max)
+
     this.writeValue(new Date(this.content.value));
    }
    constructor() { super(); }

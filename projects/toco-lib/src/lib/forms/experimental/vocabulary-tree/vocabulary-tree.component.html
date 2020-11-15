@@ -3,7 +3,7 @@
 
     <mat-progress-bar *ngIf="!levelsOptions" mode="indeterminate"></mat-progress-bar>
 
-    <mat-card-subtitle *ngIf="levelsOptions" >
+    <ng-template *ngIf="levelsOptions" >
 
       <mat-form-field
       *ngFor="let level of levelsOptions; let i = index"
@@ -24,7 +24,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    </mat-card-subtitle>
+    </ng-template>
   </mat-card-header>
 
   <mat-card-content *ngIf="lastLevelTerm">
