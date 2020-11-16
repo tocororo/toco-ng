@@ -8,11 +8,25 @@ import { HttpClient, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpR
 import { Observable, Subject, throwError } from 'rxjs';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 
-import { OAuthStorage, OAuthResourceServerErrorHandler, OAuthModuleConfig, OAuthService } from 'angular-oauth2-oidc';
+import { OAuthStorage, OAuthResourceServerErrorHandler, OAuthModuleConfig, OAuthService, AuthConfig, JwksValidationHandler } from 'angular-oauth2-oidc';
 import { EnvService } from '../backend/env.service';
 import { catchError } from 'rxjs/operators';
 import { Response } from '../core/public-api';
 
+
+/**
+ * This enum handles the selected backend
+ */
+export enum AuthBackend{
+    /**
+     * `sceiba` represent the Sceiba's backend
+     */
+    sceiba = 'sceiba',
+    /**
+     * `cuor` represent the Cuor's backend, The Organizations System
+     */
+    cuor = 'cuor'
+}
 /**
  * This service handles the behavior when a user authentications and
  * gives information about it.
@@ -21,6 +35,8 @@ import { Response } from '../core/public-api';
     providedIn: 'root'
 })
 export class AuthenticationService implements CanActivate, HttpInterceptor {
+
+    public authBackend: AuthBackend =  AuthBackend.sceiba
 
     constructor(
         private env: EnvService,
@@ -48,8 +64,12 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
     /**
      * gives information about an user authenticated
      */
-    getUserInfo(): Observable<Response<any>> {
-        return this.http.get<Response<any>>(this.env.sceibaApi + 'me');
+    getUserInfo(): Observable<any> {
+        if (this.authBackend == AuthBackend.sceiba) {
+            return this.http.get<any>(this.env.sceibaApi + 'me');
+        } else if (this.authBackend == AuthBackend.cuor){
+            return this.http.get<any>(this.env.cuorApi + 'me');
+        }
     }
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
@@ -63,13 +83,6 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
             return false;
         }
 
-        // if (user.Role === next.data.role) {
-        //   return true;
-        // }
-
-        // // navigate to not found page
-        // this._router.navigate(['/404']);
-        // return false;
     }
 
 
@@ -89,8 +102,6 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
             console.log(req.url, req.headers);
         }
 
-
-        
         return next.handle(req).pipe(
             catchError((err: HttpErrorResponse) => {
 
@@ -103,20 +114,17 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
                 return throwError(err);
             })
         );
-        // return next.handle(req).pipe(
-        //     tap(
-        //         // Succeeds when there is a response; ignore other events
-        //         event => {
-        //             console.log('eventttttt', event);
-        //             event instanceof HttpResponse ? 'succeeded' : ''
-        //         },
-        //         // Operation failed; error is an HttpErrorResponse
-        //         error => {
-        //             console.log('errorrrrr', error);
-        //             'failed'
-        //         }
-        //     ),
-        //     finalize(() => console.log('finalize') )
-        // );
+    }
+
+    /**
+     * Configure, this function is necessary if you will implement your own logic
+     * @param authConfig: is the auth configuration.
+     * you have to call `oauthService.initImplicitFlow()` in you login function
+     * and `oauthService.logOut()` in you logout function
+     */
+    public configure(authConfig: AuthConfig): void {
+        this.oauthService.configure(authConfig);
+        this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+        this.oauthService.loadDiscoveryDocumentAndTryLogin();
     }
 }

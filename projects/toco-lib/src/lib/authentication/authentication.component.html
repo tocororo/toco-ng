@@ -23,8 +23,11 @@
 </div>
 
 <ng-template #template_buttonLogin>
-    <button  mat-raised-button color="primary" (click)="login()">
+    <button  mat-icon-button *ngIf="isButtonLoginIcon" (click)="login()" matTooltip="{{isButtonLoginText}}">
+        <mat-icon>lock_open</mat-icon>
+    </button>
+    <button  mat-raised-button *ngIf="!isButtonLoginIcon" color="primary" (click)="login()">
         {{isButtonLoginText}}
-        <mat-icon class="mat-18">lock</mat-icon>
+        <mat-icon class="mat-18">lock_open</mat-icon>
     </button>
 </ng-template>

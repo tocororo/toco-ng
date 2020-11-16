@@ -15,6 +15,7 @@ export class EnvService {
     public sceibaApi = '';
     public cuorApi = '';
     public sceibaHost = '';
+    public cuorHost = '';
     public appHost = '';
     public appName = '';
     public pagesApi = '';
