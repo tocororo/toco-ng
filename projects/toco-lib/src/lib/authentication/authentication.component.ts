@@ -8,7 +8,7 @@ import {
   AuthConfig,
 } from "angular-oauth2-oidc";
 
-import { AuthenticationService } from "./authentication.service";
+import { AuthBackend, AuthenticationService } from "./authentication.service";
 import { EnvService } from "../backend/env.service";
 import { Router } from "@angular/router";
 import { UserProfileService } from "../backend/public-api";
@@ -22,12 +22,18 @@ import { UserProfile } from "../entities/public-api";
   styleUrls: ["./authentication.component.scss"],
 })
 export class AuthenticationComponent implements OnInit, AfterViewInit {
+
   @Input()
   public isButtonLogin: boolean;
 
   @Input()
-  public isButtonLoginText: string = 'Login';
+  public isButtonLoginIcon: boolean;
 
+  @Input()
+  public isButtonLoginText: string;
+
+  @Input()
+  public authBackend: AuthBackend;
 
   public user: UserProfile;
 
@@ -62,6 +68,9 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     if (this.isButtonLogin == undefined) this.isButtonLogin = false;
+    if (this.isButtonLoginIcon == undefined) this.isButtonLoginIcon = false;
+    if (this.isButtonLoginText == undefined) this.isButtonLoginText = "Login";
+    if (this.authBackend == undefined) this.authBackend = AuthBackend.sceiba;
     this.configure();
   }
 
@@ -87,9 +96,9 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
       // Url of the Identity Provider
       //issuer: 'https://sceiba-lab.upr.edu.cu',
 
-      loginUrl: this.env.sceibaHost + "oauth/authorize",
+      loginUrl: this.authBackend == AuthBackend.cuor ? this.env.cuorHost + "oauth/authorize" : this.env.sceibaHost + "oauth/authorize",
 
-      tokenEndpoint: this.env.sceibaHost + "oauth/token",
+      tokenEndpoint: this.authBackend == AuthBackend.cuor ? this.env.cuorHost + "oauth/token" : this.env.sceibaHost + "oauth/token",
 
       // URL of the SPA to redirect the user to after login
       redirectUri: this.env.oauthRedirectUri,
@@ -119,10 +128,15 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     this.oauthService.tryLogin({
       onTokenReceived: (_) => {
         // gives information about user loggued
+        this.authenticationService.authBackend = this.authBackend
         this.authenticationService.getUserInfo().subscribe((response) => {
           // save email in storage
-          console.log(response)
-          this.oauthStorage.setItem("email", response.data.userprofile.user.email);
+          // console.log(response)
+          if (this.authBackend == AuthBackend.cuor){
+            this.oauthStorage.setItem("email", response.email);
+          }else{
+            this.oauthStorage.setItem("email", response.data.userprofile.user.email);
+          }
           // this.oauthStorage.setItem('userID', response.data.userprofile.id);
 
           // notifies user is logged
@@ -137,32 +151,6 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
         console.log("errorr in login", err);
       },
     });
-
-    this.oauthService.events.subscribe((e) => {
-      console.log(e);
-
-      switch (e.type) {
-        case "token_received":
-          console.log("token received");
-          break;
-        case "token_expires":
-          console.log("token expires");
-          this.oauthService.initImplicitFlow();
-          break;
-        case "invalid_nonce_in_state":
-          console.log("invalid_nonce_in_state", e);
-          break;
-        case "session_terminated":
-          console.log("session_terminated", e);
-          break;
-        case "logout":
-          console.log("logout");
-          this.router.navigate(["/"]);
-          break;
-        default:
-          break;
-      }
-    });
   }
 
   /**
@@ -170,6 +158,9 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
    */
   public login() {
     this.oauthService.initImplicitFlow();
+    this.authenticationService.authBackend = this.authBackend
+    // TODO: por que esto aqui, este modulo solo se encarga de la autenticacion y dar la informacion basica del usuario, 
+    // el perfil es manejado por otro componente
     this.user = new UserProfile();
     this.userProfileService.getUserInfo().subscribe({
       next: (response) => {

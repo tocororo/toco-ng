@@ -33,12 +33,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     providers: [
         { provide: OAuthStorage, useValue: localStorage },
         AuthenticationService,
-        /* This can not be set here. */
-        // {
-        //     provide: HTTP_INTERCEPTORS,
-        //     useClass: AuthenticationService,
-        //     multi: true
-        // }
+        /* TODO: This can not be set here. */
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthenticationService,
+            multi: true
+        }
       ]
 })
 export class AuthenticationModule
