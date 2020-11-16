@@ -12,7 +12,7 @@ export class EntityBase extends Object {
       if (data[key] && !exclude.includes(key)) {
         if (this[key] instanceof EntityBase) {
           this[key].deepcopy(data[key], exclude);
-        } else {
+        }  else {
           this[key] = data[key];
         }
       }
@@ -100,9 +100,11 @@ export enum IdentifierSchemas {
   ean13 = "ean13",
   handle = "handle",
   isbn = "isbn",
-  pissn = "pissn",
-  lissn = "lissn",
-  eissn = "eissn",
+  issn_p = "issn_p",
+  issn_l = "issn_l",
+  issn_e = "issn_e",
+  issn_c = "issn_c",
+  issn_o = "issn_o",
   istc = "istc",
   lsid = "lsid",
   pmid = "pmid",
@@ -125,8 +127,6 @@ export enum IdentifierSchemas {
   fudref = "fudref",
   orgref = "orgref",
   reup = "reup",
-  orgaid = "orgaid",
-  uniid = "uniid"
 }
 
 export class Links extends EntityBase {

@@ -8,13 +8,13 @@
     <mat-form-field style="width: 100%;">
 
       <mat-label> {{content.label}} <span *ngIf="content.required">*</span></mat-label>
-      <input 
-        matInput 
-        id="'inputId-'{{content.name}}" 
-        type="text" 
-        [formControl]="formControl" 
+      <input
+        matInput
+        id="'inputId-'{{content.name}}"
+        type="text"
+        [formControl]="chipsFormControl"
         [matAutocomplete]="auto"
-          aria-label="Number" 
+          aria-label="Number"
       />
 
       <mat-hint *ngIf="content.startHint" [align]="'start'">{{ content.startHint.label }}</mat-hint>

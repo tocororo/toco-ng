@@ -1,22 +1,9 @@
-import {
-  Component,
-  OnInit,
-  OnChanges,
-  Input,
-  Output,
-  EventEmitter,
-} from "@angular/core";
-import {
-  JournalData,
-  Journal,
-  SourceClasification,
-  VocabulariesInmutableNames,
-  JournalVersion,
-  SourceOrganization,
-} from "../../entities/public-api";
-import { MatSnackBar } from "@angular/material";
-import { MessageHandler, StatusCode } from "../../core/public-api";
-import { JournalDataType } from "./journal-view.component";
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+import { MessageHandler, StatusCode } from '../../core/public-api';
+import { JournalVersion, SourceClasification, VocabulariesInmutableNames, SourceOrganization } from '../../entities/public-api';
+import { JournalDataType } from './journal-view.component';
+
 
 @Component({
   selector: "toco-journal-view-version",

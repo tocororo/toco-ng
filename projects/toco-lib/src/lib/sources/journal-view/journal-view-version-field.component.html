@@ -53,7 +53,7 @@
       <toco-journal-view-info-field
         [label]="'Impreso'"
         [value]="
-          currentJournal.data.getIdentifierValue(IdentifierSchemas.pissn)
+          currentJournal.data.getIdentifierValue(IdentifierSchemas.issn_p)
         "
       ></toco-journal-view-info-field>
     </ng-container>
@@ -62,7 +62,7 @@
       <toco-journal-view-info-field
         [label]="'Electrónico'"
         [value]="
-          currentJournal.data.getIdentifierValue(IdentifierSchemas.eissn)
+          currentJournal.data.getIdentifierValue(IdentifierSchemas.issn_e)
         "
       ></toco-journal-view-info-field>
     </ng-container>
@@ -71,7 +71,7 @@
       <toco-journal-view-info-field
         [label]="'De enlace'"
         [value]="
-          currentJournal.data.getIdentifierValue(IdentifierSchemas.lissn)
+          currentJournal.data.getIdentifierValue(IdentifierSchemas.issn_l)
         "
       ></toco-journal-view-info-field>
     </ng-container>

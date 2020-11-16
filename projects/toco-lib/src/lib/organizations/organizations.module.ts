@@ -23,6 +23,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularMaterialModule } from '../angular-material/public-api';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { OrgTreeViewerComponent } from './org-tree-viewer/org-tree-viewer.component';
 
 @NgModule({
 	declarations: [
@@ -35,7 +36,8 @@ import { CommonModule } from '@angular/common';
 		OrgAddComponent,
 		OrgSearchComponent,
 		OrgTableEditComponent,
-		OrgFooterComponent
+		OrgFooterComponent,
+		OrgTreeViewerComponent
 	],
 
 	imports: [
@@ -51,7 +53,7 @@ import { CommonModule } from '@angular/common';
 		TocoFormsModule,
 		MatAutocompleteModule,
 		MatChipsModule,
-		StaticsModule		
+		StaticsModule
 	],
 
 	exports: [
@@ -59,7 +61,8 @@ import { CommonModule } from '@angular/common';
 		OrgEditComponent,
 		OrgAddComponent,
 		OrgSearchComponent,
-		OrgFooterComponent
+    OrgFooterComponent,
+    OrgTreeViewerComponent
 	],
 	schemas: [
         CUSTOM_ELEMENTS_SCHEMA

@@ -9,6 +9,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, PartialObserver, Subject } from 'rxjs';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 
+
 import { EnvService } from '../backend/env.service';
 
 import { Response } from '../core/public-api';
@@ -30,106 +31,13 @@ export class TaxonomyService {
   };
   private token = '';
 
-  // private currentVocabularyChangedSource = new Subject<Vocabulary>();
-  // currentVocabularyObservable = this.currentVocabularyChangedSource.asObservable();
-
-  // private vocabulariesChangeSource = new Subject<Response<any>>();
-  // vocabulariesChangeObservable = this.vocabulariesChangeSource.asObservable();
-
-  // private termChangeSource = new Subject<Response<any>>();
-  // termChangeObservable = this.termChangeSource.asObservable();
-
-  // private vocabulariesChangeObserver: PartialObserver<Response<any>> = {
-  //   next: (resp: Response<any>) => {
-  //     this.vocabulariesChange(resp);
-  //   },
-
-  //   error: (err: any) => {
-  //     console.log('The observable got an error notification: ' + err + '.');
-  //   },
-
-  //   complete: () => {
-  //     console.log('The observable got a complete notification.');
-  //   }
-  // };
-
-  // private termChangeObserver: PartialObserver<Response<any>> = {
-  //   next: (resp: Response<any>) => {
-  //     this.termChange(resp);
-  //   },
-
-  //   error: (err: any) => {
-  //     console.log('The observable got an error notification: ' + err.message + '.');
-  //   },
-
-  //   complete: () => {
-  //     console.log('The observable got a complete notification.');
-  //   }
-  // };
-
   constructor(private env: EnvService, private http: HttpClient, private oauthStorage: OAuthStorage) {
     this.token = this.oauthStorage.getItem('access_token');
   }
 
-  // vocabularyChanged(vocab: Vocabulary) {
-  //   this.currentVocabularyChangedSource.next(vocab);
-  // }
-  // vocabulariesChange(resp: Response<any>) {
-  //   this.vocabulariesChangeSource.next(resp);
-  // }
-
-  // termChange(resp: Response<any>) {
-  //   this.termChangeSource.next(resp);
-  // }
-
   getVocabulary(id): Observable<Response<any>> {
     let req = this.env.sceibaApi + this.prefix + '/vocabulary/' + id;
     return this.http.get<Response<any>>(req);
-  }
-
-  newVocabulary(vocab: Vocabulary): Observable<Response<any>> {
-    console.log(vocab)
-    // this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
-
-    // tslint:disable-next-line: max-line-length
-    return this.http.post<Response<any>>(
-      this.env.sceibaApi + this.prefix + '/vocabulary/new',
-      vocab.entitystringify());
-  }
-
-  editVocabulary(vocab: Vocabulary): Observable<Response<any>> {
-    console.log(vocab)
-    // this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
-
-    // tslint:disable-next-line: max-line-length
-    return this.http.post<Response<any>>(
-      this.env.sceibaApi + this.prefix + '/vocabulary/edit/' + vocab.id,
-      vocab.entitystringify());
-  }
-
-  getVocabularies(): Observable<Response<any>> {
-    return this.http.get<Response<any>>(this.env.sceibaApi + this.prefix + '/vocabulary/list');
-  }
-
-  newTerm(term: Term): Observable<Response<any>> {
-    // this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
-    let a = term.entitystringify()
-    console.log(a);
-    // tslint:disable-next-line: max-line-length
-    return this.http.post<Response<any>>(
-      this.env.sceibaApi + this.prefix + '/term/new',
-      term.entitystringify());
-      // ,
-      // this.httpOptions);
-  }
-
-  editTerm(term: Term): Observable<Response<any>> {
-    // this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
-    return this.http.post<Response<any>>(
-      this.env.sceibaApi + this.prefix + '/term/edit/' + term.uuid,
-      term.entitystringify());
-      // ,
-      // this.httpOptions);
   }
 
   getTermListByIDs(ids: number[]): Observable<Response<any>> {
@@ -169,6 +77,46 @@ export class TaxonomyService {
     };
     const req = this.env.sceibaApi + this.prefix + '/term/tree/' + vocabId;
     return this.http.get<Response<any>>(req, options);
+  }
+
+  newVocabulary(vocab: Vocabulary): Observable<Response<any>> {
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
+    return this.http.post<Response<any>>(
+      this.env.sceibaApi + this.prefix + '/vocabulary/new',
+      vocab.entitystringify()
+      ,
+      this.httpOptions);
+  }
+
+  editVocabulary(vocab: Vocabulary): Observable<Response<any>> {
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
+    return this.http.post<Response<any>>(
+      this.env.sceibaApi + this.prefix + '/vocabulary/edit/' + vocab.id,
+      vocab.entitystringify()
+      ,
+      this.httpOptions);
+  }
+
+  getVocabularies(): Observable<Response<any>> {
+    return this.http.get<Response<any>>(this.env.sceibaApi + this.prefix + '/vocabulary/list');
+  }
+
+  newTerm(term: Term): Observable<Response<any>> {
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
+    return this.http.post<Response<any>>(
+      this.env.sceibaApi + this.prefix + '/term/new',
+      term.entitystringify()
+      ,
+      this.httpOptions);
+  }
+
+  editTerm(term: Term): Observable<Response<any>> {
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + this.token);
+    return this.http.post<Response<any>>(
+      this.env.sceibaApi + this.prefix + '/term/edit/' + term.uuid,
+      term.entitystringify()
+      ,
+      this.httpOptions);
   }
 
   getCurrentUserPermissions(): Observable<Response<any>>{
