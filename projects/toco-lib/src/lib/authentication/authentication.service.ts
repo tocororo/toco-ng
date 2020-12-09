@@ -99,7 +99,6 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
             }
     
             req = req.clone({ headers });
-            console.log(req.url, req.headers);
         }
 
         return next.handle(req).pipe(
