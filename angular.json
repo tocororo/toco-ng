@@ -16,10 +16,15 @@
             "project": "projects/toco-lib/ng-package.json"
           },
           "configurations": {
-            "globaldev": {
+            "tocatalog": {
               "watch": true,
               "tsConfig": "projects/toco-lib/tsconfig.lib.json",
-              "project": "projects/toco-lib/ng-package-global.json"
+              "project": "projects/toco-lib/ng-package-catalog.json"
+            },
+            "tocuor": {
+              "watch": true,
+              "tsConfig": "projects/toco-lib/tsconfig.lib.json",
+              "project": "projects/toco-lib/ng-package-cuor.json"
             }
 
           }
