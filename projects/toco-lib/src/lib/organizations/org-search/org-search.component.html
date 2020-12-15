@@ -1,5 +1,6 @@
 
-<mat-form-field [ngStyle]="{'width': '100%'}" >
+<mat-form-field [ngStyle]="{'width': '100%'}" appearance="{{appearance}}">
+    <mat-label>{{label}}</mat-label>
     <input matInput placeholder="{{placeholder}}" aria-label="Buscar" [matAutocomplete]="auto" [formControl]="orgCtrl">
 
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">

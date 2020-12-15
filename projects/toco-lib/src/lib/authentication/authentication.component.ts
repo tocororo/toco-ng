@@ -131,7 +131,6 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
         this.authenticationService.authBackend = this.authBackend
         this.authenticationService.getUserInfo().subscribe((response) => {
           // save email in storage
-          // console.log(response)
           if (this.authBackend == AuthBackend.cuor){
             this.oauthStorage.setItem("email", response.email);
           }else{
@@ -144,7 +143,6 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
 
           this.userName = this.oauthStorage.getItem("email");
 
-          console.debug(this.oauthStorage.getItem("access_token"));
         });
       },
       onLoginError: (err) => {
@@ -164,10 +162,8 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     this.user = new UserProfile();
     this.userProfileService.getUserInfo().subscribe({
       next: (response) => {
-        console.log(response);
         if (response && response.data && response.data.userprofile) {
           this.user.deepcopy(response.data.userprofile);
-          console.log(this.user);
           this.oauthStorage.setItem("profile", this.user.entitystringify());
         }
       },

@@ -25,6 +25,16 @@
               "watch": true,
               "tsConfig": "projects/toco-lib/tsconfig.lib.json",
               "project": "projects/toco-lib/ng-package-cuor.json"
+            },
+            "tocuordev": {
+              "watch": true,
+              "tsConfig": "projects/toco-lib/tsconfig.lib.json",
+              "project": "projects/toco-lib/ng-package-cuor.json"
+            },
+            "tosceibadev": {
+              "watch": true,
+              "tsConfig": "projects/toco-lib/tsconfig.lib.json",
+              "project": "projects/toco-lib/ng-package-sceiba.json"
             }
 
           }
