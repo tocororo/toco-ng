@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 import { Organization, Address } from '../../entities/public-api';
 
@@ -21,7 +21,7 @@ export interface RelationshipsValue
 	templateUrl: './org-view.component.html',
 	styleUrls: ['./org-view.component.scss']
 })
-export class OrgViewComponent implements OnInit
+export class OrgViewComponent implements OnInit, OnChanges
 {
     /**
      * Represents the `OrgViewAccordionType` enum for internal use.
@@ -60,7 +60,10 @@ export class OrgViewComponent implements OnInit
 		// this._panelsTitle_Addresses = (this.org.addresses) ? this._createPanelsTitle_Generic(this.orgViewAccordionType.Addresses, this.org.addresses.length) : [ ];
 		this._panelsTitle_Addresses = this._createPanelsTitle_Addresses();
 	}
-
+  public ngOnChanges(): void
+  {
+    this.ngOnInit();
+  }
 	/**
 	 * Creates a generic array of panels title.
 	 * Usage example:
@@ -138,7 +141,8 @@ export class OrgViewComponent implements OnInit
 				}
 
 				result[pos].links.push({
-					'url': `${ item.id }/view`,
+          // 'url': `${ item.id }/view`,
+          'url': '/' + item.id  + '/view',
 					'name': item.label
 				});
 			}

@@ -8,7 +8,7 @@ import {
   AuthConfig,
 } from "angular-oauth2-oidc";
 
-import { AuthBackend, AuthenticationService } from "./authentication.service";
+import { AuthBackend, OauthAuthenticationService } from "./authentication.service";
 import { EnvService } from "../backend/env.service";
 import { Router } from "@angular/router";
 import { UserProfileService } from "../backend/public-api";
@@ -62,7 +62,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     private env: EnvService,
     private oauthService: OAuthService,
     private oauthStorage: OAuthStorage,
-    private authenticationService: AuthenticationService,
+    private authenticationService: OauthAuthenticationService,
     private router: Router
   ) {}
 
@@ -157,7 +157,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
   public login() {
     this.oauthService.initImplicitFlow();
     this.authenticationService.authBackend = this.authBackend
-    // TODO: por que esto aqui, este modulo solo se encarga de la autenticacion y dar la informacion basica del usuario, 
+    // TODO: por que esto aqui, este modulo solo se encarga de la autenticacion y dar la informacion basica del usuario,
     // el perfil es manejado por otro componente
     this.user = new UserProfile();
     this.userProfileService.getUserInfo().subscribe({

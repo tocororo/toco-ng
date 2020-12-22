@@ -11,7 +11,7 @@ import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 
 import { AuthenticationComponent } from './authentication.component'
 import { AuthenticateRoutingModule } from './authentication-routing.module'
-import { AuthenticationService } from './authentication.service'
+import { OauthAuthenticationService, SimpleAuthenticationService } from './authentication.service'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
@@ -32,11 +32,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     //TODO: esto se elimina de aquí y se pone en el fichero `core/services/http-interceptor.order.ts`.
     providers: [
         { provide: OAuthStorage, useValue: localStorage },
-        AuthenticationService,
+        OauthAuthenticationService,
+        SimpleAuthenticationService,
         /* TODO: This can not be set here. */
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: AuthenticationService,
+            useClass: OauthAuthenticationService,
             multi: true
         }
       ]

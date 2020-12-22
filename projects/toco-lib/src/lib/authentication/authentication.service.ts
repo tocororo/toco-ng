@@ -34,7 +34,7 @@ export enum AuthBackend{
 @Injectable({
     providedIn: 'root'
 })
-export class AuthenticationService implements CanActivate, HttpInterceptor {
+export class OauthAuthenticationService implements CanActivate, HttpInterceptor {
 
     public authBackend: AuthBackend =  AuthBackend.sceiba
 
@@ -92,12 +92,12 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
 
         if (token) {
             let headers = req.headers.set('Authorization', 'Bearer ' + token);
-            
+
             if (req.method != 'GET'){
                 headers = headers.set('Content-Type', 'application/json');
                 headers = headers.set('Access-Control-Allow-Origin', '*');
             }
-    
+
             req = req.clone({ headers });
         }
 
@@ -127,3 +127,57 @@ export class AuthenticationService implements CanActivate, HttpInterceptor {
         this.oauthService.loadDiscoveryDocumentAndTryLogin();
     }
 }
+
+@Injectable({
+    providedIn: 'root'
+})
+export class SimpleAuthenticationService implements CanActivate {
+
+  public authBackend: AuthBackend =  AuthBackend.sceiba
+
+  constructor(
+      private env: EnvService,
+      protected http: HttpClient,
+      private _router: Router) { }
+
+  private authenticationSubject: Subject<boolean> = new Subject();
+  /**
+   * Observer to handles the behavior when a user authenticates
+   */
+  public authenticationSubjectObservable = this.authenticationSubject.asObservable();
+
+  /**
+   * notifies by an observable if the user is authenticated
+   * for the knowledge of who uses it
+   * @param islogged 'true' is loggued or 'false' other way
+   */
+  logguedChange(islogged: boolean) {
+      this.authenticationSubject.next(islogged);
+  }
+  /**
+   * gives information about an user authenticated
+   */
+  getUserInfo(): Observable<any> {
+      if (this.authBackend == AuthBackend.sceiba) {
+          return this.http.get<any>(this.env.sceibaApi + 'me');
+      } else if (this.authBackend == AuthBackend.cuor){
+          return this.http.get<any>(this.env.cuorApi + 'me');
+      }
+  }
+
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    if(this.env.user != null){
+      return true;
+    }
+    else{
+        this._router.navigate(['/']);
+        return false;
+    }
+
+  }
+
+
+
+
+}
+

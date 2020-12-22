@@ -24,6 +24,7 @@ export class EnvService {
     public oauthScope = '';
     public topOrganizationPID = '';
     public extraArgs: any = null;
+    public user = null;
 
     /**
      * A collection of key/value elements, where the keys are cachable URLs,

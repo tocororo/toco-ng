@@ -2,13 +2,16 @@
 <a mat-button *ngFor="let link of value.links"
     class="aling-left"
     color="warn"
-    href="{{ link.url }}"
+    [routerLink]="link.url"
     [ngStyle]="{'line-height': 'initial', 'padding': '10px 16px'}"
 >
     {{ link.name }}
 </a>
 
-<!-- <static-table *ngIf="value.identifiers && value.identifiers.length" [desc]="'Identificadores de la organización'" [value]="value.identifiers"
+<!--
+  href="{{ link.url }}"
+
+  <static-table *ngIf="value.identifiers && value.identifiers.length" [desc]="'Identificadores de la organización'" [value]="value.identifiers"
     [columnsObjectProperty]="['idtype', 'value']"
     [columnsHeaderText]="['Identifier type', 'Identifier value']"
 >

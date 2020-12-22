@@ -10,15 +10,59 @@ export class EntityBase extends Object {
 
     for (const key of keys) {
       if (data[key] && !exclude.includes(key)) {
-        if (this[key] instanceof EntityBase) {
-          this[key].deepcopy(data[key], exclude);
-        }  else {
-          this[key] = data[key];
-        }
+        // console.log('DEEEPCOPY OF : ', key, data[key])
+        // if(this.toBoolean(data[key])){
+        //   console.log('TO BOOLEAN IS TRUE !!!!!! ');
+        //   this[key] = data[key].toLowerCase() === 'true';
+        // } else {
+          // if (this[key] instanceof EntityBaseList) {
+          //   console.log('RECUSIVE CALL ON EntityBaseList',  this[key]);
+          //   this[key].deepcopy(data[key], exclude);
+          // } else{
+            if (this[key] instanceof EntityBase) {
+              console.log('RECUSIVE CALL ON EntityBase',  this[key]);
+              this[key].deepcopy(data[key], exclude);
+            }  else {
+              this[key] = data[key];
+            }
+          // }
+
       }
     }
   }
+  private toBoolean(value){
+    if(typeof value === 'string' || value instanceof String){
+      console.log('DEEPCOPY ----------  TO BOOLEAN ------------ VAL=',value)
+      console.log(value.toLowerCase() === 'true' || value.toLowerCase() === 'false')
+      return value.toLowerCase() === 'true' || value.toLowerCase() === 'false';
+    }
+    return false;
+  }
 }
+
+// export class EntityBaseList<T extends EntityBase> extends Array<T> {
+
+//   constructor(private entityType: new () => T ){
+//     super();
+//   }
+
+//   getNew() : T {
+//     return new this.entityType();
+//   }
+
+//   public deepcopy(data: any[]): void {
+//     for (let i = 0; i < data.length; i++) {
+//       const element = data[i];
+//       let e  = this.getNew();
+//       e.deepcopy(element);
+//       this.push(e);
+//     }
+//   }
+//   public concat(list: EntityBaseList<T>){
+//     this.concat(list);
+//     return this;
+//   }
+// }
 
 /**
  * Created by Edel on 02/04/2018.
@@ -67,7 +111,7 @@ export class Entity extends EntityBase {
   entitystringify(): string {
     return JSON.stringify(this, (k, v) => {
       // if (k !== "id" && k !== "uuid" && k !== "isNew") {
-      if (k !== "isNew") {
+      if (k !== "isNew" && k !== "entityType" && (v != null && v != '' && v != undefined && v != [])) {
         return v;
       }
     });
