@@ -1,6 +1,6 @@
 
 /*
- * Public API surface of core. 
+ * Public API surface of core.
  */
 export * from './core.module';
 
@@ -12,6 +12,7 @@ export * from './info-card/info-card.component';
 export * from './journal-card/journal-card.component';
 export * from './nav/nav.component';
 export * from './page-header/page-header.component';
+export * from './sceiba-apps/sceiba-apps.component';
 
 export * from './services/backend-data-source';
 // export * from './services/browser-storage.service';

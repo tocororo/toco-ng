@@ -20,6 +20,7 @@ import { GetViewContainerDirective } from './utils/get-view-container.directive'
 import { EqualLengthDirective } from './utils/validator';
 import { DialogContentComponent } from './utils/message-handler';
 import { ProgressComponent } from './utils/progress';
+import { SceibaAppsComponent } from './sceiba-apps/sceiba-apps.component';
 
 @NgModule({
     declarations: [
@@ -34,7 +35,8 @@ import { ProgressComponent } from './utils/progress';
         GetViewContainerDirective,
         EqualLengthDirective,
         DialogContentComponent,
-        ProgressComponent
+        ProgressComponent,
+        SceibaAppsComponent
     ],
 
     imports: [
