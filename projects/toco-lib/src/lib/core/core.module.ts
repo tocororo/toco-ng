@@ -57,7 +57,8 @@ import { SceibaAppsComponent } from './sceiba-apps/sceiba-apps.component';
         GetViewContainerDirective,
         EqualLengthDirective,
         DialogContentComponent,
-        ProgressComponent
+        ProgressComponent,
+        SceibaAppsComponent
     ],
     entryComponents: [
         DialogContentComponent,
