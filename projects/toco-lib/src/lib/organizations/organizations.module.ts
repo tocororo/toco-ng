@@ -17,7 +17,7 @@ import { OrgAddComponent } from './org-add/org-add.component';
 import { OrgSearchComponent } from './org-search/org-search.component';
 import { MatAutocompleteModule, MatChipsModule } from '@angular/material';
 import { OrgTableEditComponent } from './org-table-edit/org-table-edit.component';
-import { OrgFooterComponent } from './org-footer/org-footer.component';
+// import { OrgFooterComponent } from './org-footer/org-footer.component';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularMaterialModule } from '../angular-material/public-api';
@@ -36,7 +36,7 @@ import { OrgTreeViewerComponent } from './org-tree-viewer/org-tree-viewer.compon
 		OrgAddComponent,
 		OrgSearchComponent,
 		OrgTableEditComponent,
-		OrgFooterComponent,
+		// OrgFooterComponent,
 		OrgTreeViewerComponent
 	],
 
@@ -61,7 +61,7 @@ import { OrgTreeViewerComponent } from './org-tree-viewer/org-tree-viewer.compon
 		OrgEditComponent,
 		OrgAddComponent,
 		OrgSearchComponent,
-    OrgFooterComponent,
+    // OrgFooterComponent,
     OrgTreeViewerComponent
 	],
 	schemas: [
