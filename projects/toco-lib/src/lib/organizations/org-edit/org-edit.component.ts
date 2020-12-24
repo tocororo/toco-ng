@@ -3,12 +3,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
-import { Organization, Identifier } from '../../entities';
+import { Organization, Identifier } from '../../entities/public-api';
 import { TextInputAppearance, OperationAction, FormSection, PanelContent, 
 	ContainerContent, HintValue, HintPosition, IconValue, IconSource, ContentPosition, 
 	ActionControl, ActionContent, ContainerPanelComponent, 
 	InputTextComponent, InputSelectComponent, ContainerSimpleComponent, 
-	InputUrlComponent, InputEmailComponent, ActionButtonComponent } from '../../forms';
+	InputUrlComponent, InputEmailComponent, ActionButtonComponent } from '../../forms/public-api';
 
 @Component({
 	selector: 'toco-org-edit',
@@ -25,8 +25,8 @@ export class OrgEditComponent implements OnInit
 	/**
 	 * Represents the current organization.
 	 */
-	//@Input()
-	private org: Organization;
+	@Input()
+	public org: Organization;
 
 	/**
 	 * Tracks the value and validity state of the internal child controls that contains this component.
@@ -46,14 +46,14 @@ export class OrgEditComponent implements OnInit
 
 	public ngOnInit(): void
 	{
-		/* Gets the `Organization` data. */
-		this._activatedRoute.data.subscribe(
-			(data: { 'org': Organization }) => {
-				this.org = data.org;
+		// /* Gets the `Organization` data. */
+		// this._activatedRoute.data.subscribe(
+		// 	(data: { 'org': Organization }) => {
+		// 		this.org = data.org;
 
-				console.log('Data got for editing: ', this.org);
-			}
-		)
+		// 		console.log('Data got for editing: ', this.org);
+		// 	}
+		// )
 
 		/* Creates the panel's content. */
 		this.panelContent = this._initPanelContent();

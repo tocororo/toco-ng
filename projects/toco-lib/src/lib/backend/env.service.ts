@@ -5,7 +5,7 @@
 
 import { Injectable } from '@angular/core';
 
-import { Params } from '../core';
+import { Params } from '../core/public-api';
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +15,7 @@ export class EnvService {
     public sceibaApi = '';
     public cuorApi = '';
     public sceibaHost = '';
+    public cuorHost = '';
     public appHost = '';
     public appName = '';
     public pagesApi = '';
@@ -23,6 +24,7 @@ export class EnvService {
     public oauthScope = '';
     public topOrganizationPID = '';
     public extraArgs: any = null;
+    public user = null;
 
     /**
      * A collection of key/value elements, where the keys are cachable URLs,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormFieldControl_Experimental } from "../form-field.control.experimental";
 import { FormControl, FormGroup } from "@angular/forms";
+import { InputControl } from '../../input/input.control';
 
 @Component({
   selector: "toco-textarea",
@@ -11,7 +12,7 @@ import { FormControl, FormGroup } from "@angular/forms";
     "[style.width]": "content.width",
   },
 })
-export class TextareaComponent extends FormFieldControl_Experimental
+export class TextareaComponent extends InputControl
   implements OnInit {
   // internalControl = new FormControl();
 
@@ -20,11 +21,12 @@ export class TextareaComponent extends FormFieldControl_Experimental
   }
 
   ngOnInit() {
-    (this.content.parentFormSection as FormGroup).addControl(
-      this.content.name,
-      this.internalControl
-    );
-    console.log(this.content);
-    this.internalControl.setValue(this.content.value);
+    this.init('', false, true);
+    // (this.content.parentFormSection as FormGroup).addControl(
+    //   this.content.name,
+    //   this.internalControl
+    // );
+    // console.log(this.content);
+    // this.content.formControl.setValue(this.content.value);
   }
 }

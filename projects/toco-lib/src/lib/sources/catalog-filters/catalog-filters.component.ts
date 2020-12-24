@@ -9,16 +9,16 @@ import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
 
-import { FilterComponent } from '../../filters';
-import { FilterItem } from '../../filters';
-import { BooleanFilterComponent } from '../../filters';
-import { FilterContainerService } from '../../filters';
-import { FilterContainerComponent } from '../../filters';
-import { MessageHandler, StatusCode } from '../../core';
+import { FilterComponent } from '../../filters/public-api';
+import { FilterItem } from '../../filters/public-api';
+import { BooleanFilterComponent } from '../../filters/public-api';
+import { FilterContainerService } from '../../filters/public-api';
+import { FilterContainerComponent } from '../../filters/public-api';
+import { MessageHandler, StatusCode } from '../../core/public-api';
 
-import { CatalogService, TaxonomyService } from '../../backend';
+import { CatalogService, TaxonomyService } from '../../backend/public-api';
 import { EnvService } from '../../backend/env.service';
-import { VocabulariesInmutableNames } from '../../entities';
+import { VocabulariesInmutableNames } from '../../entities/public-api';
 
 @Component({
   selector: 'toco-catalog-filters-container',

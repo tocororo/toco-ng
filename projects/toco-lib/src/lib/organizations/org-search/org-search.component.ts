@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { Organization, SearchResponse, HitList, Aggr } from '../../entities';
+import { Organization, SearchResponse, HitList, Aggr } from '../../entities/public-api';
 import { FormControl } from '@angular/forms';
-import { SearchService, OrganizationServiceNoAuth } from '../../backend';
+import { SearchService, OrganizationServiceNoAuth } from '../../backend/public-api';
 import { HttpParams } from '@angular/common/http';
 
 @Component({
@@ -11,27 +11,43 @@ import { HttpParams } from '@angular/common/http';
 })
 export class OrgSearchComponent implements OnInit {
 
+  /**
+   * Input `orgCtrl` is a FormControl
+   */
+  @Input()
   orgCtrl = new FormControl();
+
   filteredOrg = new  HitList<Organization>();
-  org : Organization[] = [];
 
   params= new HttpParams();
 
+  /**
+   * Input `orgFilter` is a dict with `type` and `value` to filter the organizations,
+   * @Example { type: 'country' , value: 'Cuba" }
+   */
   @Input()
   orgFilter: { type: string, value: string};
 
   @Input()
-  placeholder="Escriba al menos 3 letras" 
+  placeholder: string = "Escriba al menos 3 letras";
+
+  @Input()
+  label: string = "Busque una organización";
+
+  @Input()
+  appearance: string = "outline";
+
+  /**
+   * Input `cleaning` is a boolen, if true then clean the search
+   */
+  @Input()
+  cleaning: boolean = false;
 
   @Output()
   selectedOrg: EventEmitter<Organization> = new EventEmitter<Organization>();
 
   toSearch=0;
-  constructor( private _orgService: OrganizationServiceNoAuth) {
-
-    console.log(this.orgCtrl);
-
-  }
+  constructor( private _orgService: OrganizationServiceNoAuth) {  }
 
   ngOnInit() {
     this.params = this.params.set('size', '10');
@@ -49,18 +65,17 @@ export class OrgSearchComponent implements OnInit {
           this.params = this.params.set('q', orgValueChanges)
           this._orgService.getOrganizations(this.params).subscribe({
               next: (response) => {
-                console.log(response.hits);
                 this.filteredOrg = response.hits
               }
           });
         } else if (typeof orgValueChanges === 'object') {
           this.toSearch = 0;
-          console.log(orgValueChanges);
           this.selectedOrg.emit(orgValueChanges);
+          if (this.cleaning){
+            this.orgCtrl.setValue('');
+          }
         }
-
       }
-
     })
   }
   /* This function return the organization name

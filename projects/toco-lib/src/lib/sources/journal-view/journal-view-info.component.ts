@@ -1,18 +1,10 @@
 import { Component, OnInit, OnChanges, Input, ViewChild } from "@angular/core";
-import {
-  SourceClasification,
-  VocabulariesInmutableNames,
-  JournalVersion,
-  JournalData,
-  IdentifierSchemas,
-  SourceTypes,
-  SourceSystems,
-} from "../../entities";
-import { SourceService } from "../../backend";
-import { MatSnackBar } from "@angular/material";
-import { JournalInstitutionsComponent } from "../journal-institutions/journal-institutions.component";
-import { SourceOrganizationsComponent } from '../source-edit/source-organizations/source-organizations.component';
+import { MatSnackBar } from '@angular/material';
+import { SourceService } from '../../backend/public-api';
+import { IdentifierSchemas } from '../../entities/common';
+import { JournalVersion, JournalData, SourceTypes, SourceSystems, SourceClasification, VocabulariesInmutableNames } from '../../entities/public-api';
 import { SourceIndexesComponent } from '../source-edit/source-indexes/source-indexes.component';
+import { SourceOrganizationsComponent } from '../source-edit/source-organizations/source-organizations.component';
 
 /**
  * This component share the same scss that `JournalViewComponent`.

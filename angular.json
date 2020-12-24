@@ -14,6 +14,29 @@
           "options": {
             "tsConfig": "projects/toco-lib/tsconfig.lib.json",
             "project": "projects/toco-lib/ng-package.json"
+          },
+          "configurations": {
+            "tocatalog": {
+              "watch": true,
+              "tsConfig": "projects/toco-lib/tsconfig.lib.json",
+              "project": "projects/toco-lib/ng-package-catalog.json"
+            },
+            "tocuor": {
+              "watch": true,
+              "tsConfig": "projects/toco-lib/tsconfig.lib.json",
+              "project": "projects/toco-lib/ng-package-cuor.json"
+            },
+            "tocuordev": {
+              "watch": true,
+              "tsConfig": "projects/toco-lib/tsconfig.lib.json",
+              "project": "projects/toco-lib/ng-package-cuor.json"
+            },
+            "tosceibadev": {
+              "watch": true,
+              "tsConfig": "projects/toco-lib/tsconfig.lib.json",
+              "project": "projects/toco-lib/ng-package-sceiba.json"
+            }
+
           }
         },
         "test": {

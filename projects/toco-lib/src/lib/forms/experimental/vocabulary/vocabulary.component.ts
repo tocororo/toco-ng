@@ -12,12 +12,12 @@ import {
 } from "@angular/forms";
 import { Observable, PartialObserver } from "rxjs";
 import { startWith, map } from "rxjs/operators";
+import { TaxonomyService } from '../../../backend/public-api';
+import { VocabulariesInmutableNames, TermNode, Term } from '../../../entities/public-api';
 
-import { Response } from "../../../core";
-import { Term, TermNode, VocabulariesInmutableNames } from "../../../entities";
-import { TaxonomyService } from "../../../backend";
+import { InputControl } from '../../input/input.control';
 
-import { FormFieldControl_Experimental } from "../form-field.control.experimental";
+import { Response } from '../../../core/public-api';
 
 interface VocabularyComponentExtraContent{
   multiple: boolean;
@@ -41,13 +41,13 @@ interface VocabularyComponentExtraContent{
     "[style.width]": "content.width"
   }
 })
-export class VocabularyComponent extends FormFieldControl_Experimental
+export class VocabularyComponent extends InputControl
   implements OnInit {
 
   // internalControl = new FormControl();
 
   //this control is used by the chips,not necessary to expose it
-  formControl = new FormControl();
+  chipsFormControl = new FormControl();
   inputId: string;
   filteredOptions: Observable<TermNode[]>;
   chipsList: TermNode[] = [];
@@ -95,13 +95,14 @@ export class VocabularyComponent extends FormFieldControl_Experimental
 
   ngOnInit()
   {
-    (this.content.parentFormSection as FormGroup).addControl(
-      this.content.name,
-      this.internalControl
-    );
+    this.init('', false, true);
+    // (this.content.parentFormSection as FormGroup).addControl(
+    //   this.content.name,
+    //   this.internalControl
+    // );
 
     if (this.content.required) {
-      this.internalControl.setValidators(
+      this.content.formControl.setValidators(
         (control: AbstractControl): ValidationErrors | null => {
           return !this.content.value || this.content.value.length == 0
             ? { requiredTerms: "No Terms Selected" }
@@ -152,10 +153,10 @@ export class VocabularyComponent extends FormFieldControl_Experimental
   }
 
   private setValidation() {
-    if (this.internalControl.valid) {
-      this.formControl.setErrors(null);
+    if (this.content.formControl.valid) {
+      this.chipsFormControl.setErrors(null);
     } else {
-      this.formControl.setErrors({ requiered: true });
+      this.chipsFormControl.setErrors({ requiered: true });
     }
   }
   private addTermToValue(term: Term) {
@@ -164,7 +165,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
     } else {
       this.content.value = [term];
     }
-    this.internalControl.setValue(this.content.value);
+    this.content.formControl.setValue(this.content.value);
     this.setValidation();
   }
 
@@ -172,12 +173,12 @@ export class VocabularyComponent extends FormFieldControl_Experimental
     this.content.value = (this.content.value as []).filter(
       (e: Term) => e.id !== term.id
     );
-    this.internalControl.setValue(this.content.value);
+    this.content.formControl.setValue(this.content.value);
     this.setValidation();
   }
 
   private _updateFilteredOptions() {
-    this.filteredOptions = this.formControl.valueChanges.pipe<
+    this.filteredOptions = this.chipsFormControl.valueChanges.pipe<
       string,
       TermNode[]
     >(
@@ -241,7 +242,7 @@ export class VocabularyComponent extends FormFieldControl_Experimental
       option => option.term.id !== value.term.id
     );
 
-    this.formControl.setValue("");
+    this.chipsFormControl.setValue("");
     // document.getElementById(this.inputId).blur();
     this._updateFilteredOptions();
   }

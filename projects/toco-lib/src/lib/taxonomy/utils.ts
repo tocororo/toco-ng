@@ -1,5 +1,5 @@
-import { Term, VocabulariesInmutableNames } from "../entities";
-import { PanelContent, FormFieldType, HintValue, HintPosition } from "../forms";
+import { Term, VocabulariesInmutableNames } from "../entities/public-api";
+import { PanelContent, FormFieldType, HintValue, HintPosition } from "../forms/public-api";
 
 export class TermHelper {
   public static getPanelContentToEdit(term: Term) {

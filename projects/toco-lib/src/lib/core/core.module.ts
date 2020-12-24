@@ -1,6 +1,6 @@
 
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { SharedModule } from '../shared';
+import { SharedModule } from '../shared/public-api';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
@@ -23,6 +23,7 @@ import { GetViewContainerDirective } from './utils/get-view-container.directive'
 import { EqualLengthDirective } from './utils/validator';
 import { DialogContentComponent } from './utils/message-handler';
 import { ProgressComponent } from './utils/progress';
+import { SceibaAppsComponent } from './sceiba-apps/sceiba-apps.component';
 
 @NgModule({
     declarations: [
@@ -39,7 +40,8 @@ import { ProgressComponent } from './utils/progress';
         GetViewContainerDirective,
         EqualLengthDirective,
         DialogContentComponent,
-        ProgressComponent
+        ProgressComponent,
+        SceibaAppsComponent
     ],
 
     imports: [
@@ -63,7 +65,8 @@ import { ProgressComponent } from './utils/progress';
         GetViewContainerDirective,
         EqualLengthDirective,
         DialogContentComponent,
-        ProgressComponent
+        ProgressComponent,
+        SceibaAppsComponent
     ],
     entryComponents: [
         DialogContentComponent,

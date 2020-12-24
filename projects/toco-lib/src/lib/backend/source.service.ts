@@ -15,14 +15,15 @@ import { OAuthStorage } from "angular-oauth2-oidc";
 
 import { EnvService } from "../backend/env.service";
 
-import { Response } from "../core";
+
 import {
   SourceVersion,
   SearchResponse,
   SourceData,
   Hit, Source
-} from "../entities";
+} from "../entities/public-api";
 import { stringToKeyValue } from "@angular/flex-layout/extended/typings/style/style-transforms";
+import { Response } from '../core/public-api';
 
 @Injectable()
 export class SourceService {
@@ -181,8 +182,6 @@ export class SourceService {
     return this.http.get<Response<any>>(req, this.httpOptions);
   }
 
-
-
   countSourcesByTerm(uuid, level = 0): Observable<Response<any>> {
     let params = new HttpParams();
     const options = {
@@ -199,6 +198,61 @@ export class SourceService {
     return this.http.get<Response<SourceData>>(req);
   }
 
+  permissionGetSourceEditors(uuid): Observable<Response<any>> {
+    const req = this.env.sceibaApi  + this.prefix + '/permission/editor/' + uuid +'/users';
+    return this.http.get<Response<any>>(req);
+  }
+
+  permissionSetSourceEditor(uuid, user, allow= false): Observable<Response<any>> {
+    const req = this.env.sceibaApi  + this.prefix + '/permission/' + user + '/editor/' + uuid + ((allow) ? '/allow' : '/deny');
+    return this.http.post<Response<any>>(
+      req,
+      null,
+      this.httpOptions
+    );
+  }
+
+  permissionGetSourceManagers(uuid): Observable<Response<any>> {
+    const req = this.env.sceibaApi  + this.prefix + '/permission/manager/' + uuid +'/users';
+    return this.http.get<Response<any>>(req);
+  }
+
+  permissionSetSourceManager(uuid, user, allow= false): Observable<Response<any>> {
+    const req = this.env.sceibaApi  + this.prefix + '/permission/' + user + '/manager/' + uuid + ((allow) ? '/allow' : '/deny');
+    return this.http.post<Response<any>>(
+      req,
+      null,
+      this.httpOptions
+    );
+  }
+
+  permissionGetOrganizationManagers(uuid): Observable<Response<any>> {
+    const req = this.env.sceibaApi  + this.prefix + '/permission/organization/' + uuid +'/users';
+    return this.http.get<Response<any>>(req);
+  }
+
+  permissionSetOrganizationManager(uuid, user, allow= false): Observable<Response<any>> {
+    const req = this.env.sceibaApi  + this.prefix + '/permission/' + user + '/organization/' + uuid + ((allow) ? '/allow' : '/deny');
+    return this.http.post<Response<any>>(
+      req,
+      null,
+      this.httpOptions
+    );
+  }
+
+  permissionGetTermManagers(uuid): Observable<Response<any>> {
+    const req = this.env.sceibaApi  + this.prefix + '/permission/term/' + uuid +'/users';
+    return this.http.get<Response<any>>(req);
+  }
+
+  permissionSetTermManager(uuid, user, allow= false): Observable<Response<any>> {
+    const req = this.env.sceibaApi  + this.prefix + '/permission/' + user + '/term/' + uuid + ((allow) ? '/allow' : '/deny');
+    return this.http.post<Response<any>>(
+      req,
+      null,
+      this.httpOptions
+    );
+  }
 
 }
 

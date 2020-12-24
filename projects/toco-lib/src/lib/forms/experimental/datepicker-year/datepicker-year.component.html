@@ -1,0 +1,24 @@
+<mat-form-field style="width: 100%">
+  <!-- <mat-label>{{ label }}</mat-label> -->
+  <input
+    matInput
+    [matDatepicker]="datepicker"
+    [max]="_max"
+    [min]="_min"
+    [formControl]="content.formControl"
+    (click)="_openDatepickerOnClick(datepicker)"
+    (focus)="_openDatepickerOnFocus(datepicker)"
+    readonly
+    placeholder="{{ content.label }}"
+    required="{{ content.required }}"
+  />
+
+  <mat-datepicker
+    #datepicker
+    [touchUi]="touchUi"
+    startView="multi-year"
+    (yearSelected)="_yearSelectedHandler($event, datepicker)"
+    panelClass="year-picker"
+  >
+  </mat-datepicker>
+</mat-form-field>

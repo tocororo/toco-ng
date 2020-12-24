@@ -6,13 +6,13 @@
 
 import { Component, OnInit } from '@angular/core';
 import { FormControl, AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
-
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { Term, TermNode } from '../../../entities';
 
 
 import { FormFieldControl_Experimental } from '../form-field.control.experimental';
+import { InputControl } from '../../input/input.control';
+import { Term, TermNode } from '../../../entities/public-api';
 
 @Component({
     selector: 'toco-term-parent',
@@ -23,7 +23,7 @@ import { FormFieldControl_Experimental } from '../form-field.control.experimenta
         '[style.width]': 'content.width'
     }
 })
-export class TermParentComponent extends FormFieldControl_Experimental implements OnInit {
+export class TermParentComponent extends InputControl implements OnInit {
 
     // internalControl = new FormControl();
 
@@ -42,10 +42,11 @@ export class TermParentComponent extends FormFieldControl_Experimental implement
 
     ngOnInit() {
 
-        (this.content.parentFormSection as FormGroup).addControl(
-            this.content.name,
-            this.internalControl
-          );
+      this.init('', false, true);
+        // (this.content.parentFormSection as FormGroup).addControl(
+        //     this.content.name,
+        //     this.internalControl
+        //   );
 
         console.log(this.content.value)
         console.log(this.content.required);
@@ -53,7 +54,7 @@ export class TermParentComponent extends FormFieldControl_Experimental implement
         console.log(this.content.required && (this.content.value == 0 || this.content.value == null || this.content.value == undefined));
 
         if (this.content.required) {
-            this.internalControl.setValidators((control: AbstractControl): ValidationErrors | null => {
+            this.content.formControl.setValidators((control: AbstractControl): ValidationErrors | null => {
                 return (control.value == 0 || control.value == null || control.value == undefined)
                     ? { 'requiredTerms': 'No Terms Selected' }
                     : null;
@@ -130,13 +131,13 @@ export class TermParentComponent extends FormFieldControl_Experimental implement
     private setValueToInternalControl(){
         if( this.parentTerm == null){
             this.content.value = null;
-            this.internalControl.setValue(null);
+            this.content.formControl.setValue(null);
         }else{
             this.content.value = this.parentTerm.id;
-            this.internalControl.setValue(this.content.value);
+            this.content.formControl.setValue(this.content.value);
         }
 
-        if (this.internalControl.valid){
+        if (this.content.formControl.valid){
             this.formControl.setErrors(null);
         }else{
             this.formControl.setErrors({requiered:true});

@@ -1,6 +1,6 @@
 
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared';
+import { SharedModule } from '../shared/public-api';
 
 import { StaticChipsComponent } from './chips/chips-static.component';
 import { StaticTableComponent } from './table/table-static.component';

@@ -3,7 +3,7 @@
 
     <mat-progress-bar *ngIf="!levelsOptions" mode="indeterminate"></mat-progress-bar>
 
-    <mat-card-subtitle *ngIf="levelsOptions" >
+    <ng-template *ngIf="levelsOptions" >
 
       <mat-form-field
       *ngFor="let level of levelsOptions; let i = index"
@@ -12,7 +12,7 @@
       style="width: 100%;"
     >
       <mat-label>{{ content.label }}</mat-label>
-      <!-- <mat-select
+      <mat-select
         name="item"
         [required]="content.required"
         [multiple]="false"
@@ -22,9 +22,9 @@
         <mat-option *ngFor="let item of level" [value]="item.term">
           {{ item.term.description }}
         </mat-option>
-      </mat-select> -->
+      </mat-select>
     </mat-form-field>
-    </mat-card-subtitle>
+    </ng-template>
   </mat-card-header>
 
   <mat-card-content *ngIf="lastLevelTerm">
@@ -40,7 +40,7 @@
         matInput
         id="'inputId-'{{ content.name }}"
         type="text"
-        [formControl]="formControl"
+        [formControl]="chipsFormControl"
         [matAutocomplete]="auto"
         aria-label="Number"
       />

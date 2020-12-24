@@ -24,7 +24,11 @@
       <mat-step *ngIf="identifiersPanel" [stepControl]="identifiersFormGroup">
         <ng-template matStepLabel>Identificadores</ng-template>
         <form [formGroup]="identifiersFormGroup">
-          <toco-form-container
+          <container-panel
+            [content]="identifiersPanel"
+          >
+          </container-panel>
+          <!-- <toco-form-container
             #informationPanelContainer
             [panelsContent]="identifiersPanel"
             [useAccordion]="false"
@@ -32,7 +36,7 @@
             [formGroup]="identifiersFormGroup"
             [deleteValuesAfterAction]="false"
           >
-          </toco-form-container>
+          </toco-form-container> -->
         </form>
         <div fxLayout="row wrap" fxLayoutAlign="end center">
           <button mat-stroked-button color="primary" matStepperNext>
@@ -67,7 +71,11 @@
       <mat-step *ngIf="informationPanel" [stepControl]="informationFormGroup">
         <ng-template matStepLabel>Datos</ng-template>
         <form [formGroup]="informationFormGroup">
-          <toco-form-container
+          <container-panel
+            [content]="informationPanel"
+          >
+          </container-panel>
+          <!-- <toco-form-container
             #informationPanelContainer
             [panelsContent]="informationPanel"
             [useAccordion]="false"
@@ -75,7 +83,7 @@
             [formGroup]="informationFormGroup"
             [deleteValuesAfterAction]="false"
           >
-          </toco-form-container>
+          </toco-form-container> -->
         </form>
         <div fxLayout="row wrap" fxLayoutAlign="space-between center">
           <button mat-stroked-button color="accent" matStepperPrevious>
@@ -134,7 +142,11 @@
         <!-- <toco-journal-view-info [journal]="journal"></toco-journal-view-info> -->
 
         <form [formGroup]="finalFormGroup">
-          <toco-form-container
+          <container-panel
+            [content]="finalPanel"
+          >
+          </container-panel>
+          <!-- <toco-form-container
             #indexPanelContainer
             [panelsContent]="finalPanel"
             [useAccordion]="false"
@@ -143,7 +155,7 @@
             [deleteValuesAfterAction]="false"
             [ngStyle]="{ width: '100%' }"
           >
-          </toco-form-container>
+          </toco-form-container> -->
         </form>
 
         <div fxLayout="row wrap" fxLayoutAlign="space-between center">

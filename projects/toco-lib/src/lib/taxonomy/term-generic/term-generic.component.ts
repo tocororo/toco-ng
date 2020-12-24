@@ -14,7 +14,7 @@ import {
 	HintPosition,
 	InputContent,
 	ActionContent
-} from "../../forms";
+} from "../../forms/public-api";
 import {
 	Term,
 	Vocabulary,
@@ -22,7 +22,7 @@ import {
 	EntityBase,
 	TermIndexData,
 	VocabulariesInmutableNames
-} from "../../entities";
+} from "../../entities/public-api";
 
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";

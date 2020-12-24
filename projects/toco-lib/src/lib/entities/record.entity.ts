@@ -5,7 +5,7 @@ import { EntityBase } from './common';
 export class Record extends EntityBase {
   id = '';
   identifiers = new Object();
-  source = new Object();
+  source_repo = new Object();
   spec = new Object();
   title = '';
   creators = new Object();

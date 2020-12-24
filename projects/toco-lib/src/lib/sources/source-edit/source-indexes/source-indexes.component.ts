@@ -1,22 +1,10 @@
-import { Component, OnInit, Inject, Input, OnChanges } from '@angular/core';
-import {
-  PanelContent_Depr,
-  FormContainerAction,
-  FormFieldType,
-  HintValue,
-  HintPosition,
-  SelectOption,
-} from '../../../forms';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
-import {
-  VocabulariesInmutableNames,
-  SourceClasification,
-  Term,
-  SourceData,
-  TermNode,
-} from '../../../entities';
-import { TaxonomyService } from '../../../backend';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
+import { TaxonomyService } from '../../../backend/public-api';
+import { SourceData, TermNode, Term, SourceClasification, VocabulariesInmutableNames } from '../../../entities/public-api';
+import { PanelContent_Depr, FormContainerAction, InputTextComponent, FormFieldType, SelectComponent, SelectOption, InputUrlComponent, HintValue, HintPosition } from '../../../forms/public-api';
+
 
 @Component({
   selector: "toco-source-indexes",
@@ -24,7 +12,7 @@ import { TaxonomyService } from '../../../backend';
   styleUrls: ['./source-indexes.component.scss'],
 })
 export class SourceIndexesComponent implements OnInit {
-  
+
   @Input()
   public sourceData: SourceData;
   @Input()
@@ -82,7 +70,7 @@ export class SourceIndexesComponent implements OnInit {
   }
 
   public initIndexes(){
-    
+
     this.selectedDatabases = new Array(this.databases.length);
     this._setSelectedDatabses();
     this._setIndexesToSource();
@@ -285,9 +273,11 @@ export class SourceEditAddIndexComponent implements OnInit {
           formSection: this.indexFormGroup,
           formSectionContent: [
             {
+              formControl: InputTextComponent.getFormControlByDefault(),
               name: 'indexes',
               label: this.dbclass.description,
               type: FormFieldType.select_expr,
+              controlType: SelectComponent,
               required: true,
               width: '100%',
               value: (this.editing) ? this.editing.id : null,
@@ -309,9 +299,11 @@ export class SourceEditAddIndexComponent implements OnInit {
               }
             },
             {
+              formControl: InputUrlComponent.getFormControlByDefault(),
               name: 'url',
               label: 'URL',
               type: FormFieldType.url,
+              controlType: InputUrlComponent,
               required: false,
               startHint: new HintValue(
                 HintPosition.start,
@@ -321,18 +313,22 @@ export class SourceEditAddIndexComponent implements OnInit {
               value: (this.editing) ? [this.editing.data['url']] : '',
             },
             {
+              formControl: InputTextComponent.getFormControlByDefault(),
               name: 'initial_cover',
               label: 'Cobertura inicio',
               type: FormFieldType.text,
+              controlType: InputTextComponent,
               required: false,
               startHint: new HintValue(HintPosition.start, ''),
               width: '45%',
               value: (this.editing) ? [this.editing.data['initial_cover']] : '',
             },
             {
+              formControl: InputTextComponent.getFormControlByDefault(),
               name: 'end_cover',
               label: 'Cobertura',
               type: FormFieldType.text,
+              controlType: InputTextComponent,
               required: false,
               startHint: new HintValue(HintPosition.start, ''),
               width: '45%',

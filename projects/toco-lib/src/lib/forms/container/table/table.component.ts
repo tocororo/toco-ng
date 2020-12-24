@@ -5,7 +5,7 @@ import { MatTableDataSource, MatSort, MatPaginator, Sort, PageEvent } from '@ang
 import { Observable, Subscription, Subject, combineLatest } from 'rxjs';
 import { startWith, switchMap, finalize, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
-import { SortDirection, FilterControls, FilterValues, Page, Params, BackendDataSourceFunction } from '../../../core';
+import { SortDirection, FilterControls, FilterValues, Page, Params, BackendDataSourceFunction } from '../../../core/public-api';
 
 /**
  * A collection of CSS styles. 

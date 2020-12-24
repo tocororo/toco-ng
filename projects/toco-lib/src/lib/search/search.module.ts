@@ -1,6 +1,6 @@
 
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared';
+import { SharedModule } from '../shared/public-api';
 
 import { RecordComponent } from './record/record.component';
 import { AggregationsComponent } from './aggregations/aggregations.component';

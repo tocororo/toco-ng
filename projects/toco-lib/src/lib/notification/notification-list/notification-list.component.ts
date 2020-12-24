@@ -4,9 +4,10 @@ import { MatTableDataSource, MatPaginator, MatSnackBar, MatPaginatorIntl } from 
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { NotificationService } from '../../backend';
-import { MessageHandler, StatusCode } from '../../core';
+import { NotificationService } from '../../backend/public-api';
+import { MessageHandler, StatusCode } from '../../core/public-api';
 import { NotificationInfo } from '../notification-button/notification-button.component';
+
 
 @Component({
     selector: 'lib-notification-list',
@@ -18,9 +19,6 @@ import { NotificationInfo } from '../notification-button/notification-button.com
             state('expanded', style({ height: '*' })),
             transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
         ]),
-    ],
-    providers: [
-        { provide: MatPaginatorIntl, useValue: customPaginatorLabel() }
     ]
 })
 export class NotificationListComponent implements OnInit {
@@ -85,11 +83,4 @@ export class NotificationListComponent implements OnInit {
             }
         );
     }
-}
-export function customPaginatorLabel(): MatPaginatorIntl {
-    const customPaginatorIntl = new MatPaginatorIntl();
-
-    customPaginatorIntl.itemsPerPageLabel = 'Elementos por página:';
-
-    return customPaginatorIntl;
 }

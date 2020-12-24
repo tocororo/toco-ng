@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
-import { ExtraValidators } from '../../../core';
+import { ExtraValidators } from '../../../core/public-api';
 
 import { InputControl } from '../input.control';
 import { RnpsValue } from './rnps-value';

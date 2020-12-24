@@ -1,7 +1,7 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Journal } from '../../entities';
+import { Journal } from '../../entities/public-api';
 
 @Component({
     selector: 'toco-harvester-repository',

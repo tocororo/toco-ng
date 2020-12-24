@@ -3,14 +3,12 @@
  *   All rights reserved.
  */
 
-
 import { Component, OnInit, Input } from '@angular/core';
 import { MatSnackBar, MatDialog } from '@angular/material';
+import { EnvService } from '../../backend/public-api';
+import { MetadataService, MessageHandler, StatusCode } from '../../core/public-api';
+import { Organization, VocabulariesInmutableNames, JournalVersion } from '../../entities/public-api';
 
-import { EnvService } from '../../backend/env.service';
-
-import { MetadataService, MessageHandler, StatusCode } from '../../core';
-import { Journal, SourceClasification, JournalVersion, VocabulariesInmutableNames, JournalData, Organization } from '../../entities';
 
 export enum JournalDataType {
     /** is used by default, `Journal` have not that type of data. */
@@ -49,7 +47,7 @@ export class JournalViewComponent implements OnInit {
 
     @Input()
     public topMainOrganization: Organization = null;
-  
+
 
     /**************** auxiliary variables *******************/
 

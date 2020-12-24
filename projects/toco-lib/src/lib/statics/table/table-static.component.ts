@@ -1,7 +1,7 @@
 
 import { Component, Input } from '@angular/core';
 
-import { Params } from '../../core';
+import { Params } from '../../core/public-api';
 
 /* For testing. */
 export interface PeriodicElement

@@ -8,8 +8,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { HttpService, Response } from '../core';
-import { FilterHttpMap } from '../filters';
+import { HttpService, Response } from '../core/public-api';
+import { FilterHttpMap } from '../filters/public-api';
 
 import { EnvService } from '../backend/env.service';
 

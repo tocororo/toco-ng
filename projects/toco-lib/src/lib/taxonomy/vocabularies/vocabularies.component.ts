@@ -7,11 +7,11 @@ import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { MessageHandler, StatusCode, Response } from '../../core';
-import { Vocabulary } from '../../entities';
-import { FormContainerComponent, PanelContent_Depr, FormFieldType, FormContainerAction, HintValue, HintPosition } from '../../forms';
+import { MessageHandler, StatusCode, Response } from '../../core/public-api';
+import { Vocabulary } from '../../entities/public-api';
+import { FormContainerComponent, PanelContent_Depr, FormFieldType, FormContainerAction, HintValue, HintPosition } from '../../forms/public-api';
 
-import { TaxonomyService } from '../../backend';
+import { TaxonomyService } from '../../backend/public-api';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 
 
