@@ -34,6 +34,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatStepperModule } from '@angular/material/stepper'
 import { MatRippleModule } from '@angular/material/core';
+import { MatDividerModule } from '@angular/material/divider';
 
 /**
  * A module that contains all angular material modules that are needed. 
@@ -73,7 +74,8 @@ import { MatRippleModule } from '@angular/material/core';
         MatTreeModule,
         MatBadgeModule,
         MatStepperModule,
-        MatRippleModule
+        MatRippleModule,
+        MatDividerModule,
     ],
 
     exports: [
@@ -110,7 +112,8 @@ import { MatRippleModule } from '@angular/material/core';
         MatTreeModule,
         MatBadgeModule,
         MatStepperModule,
-        MatRippleModule
+        MatRippleModule,
+        MatDividerModule,
     ]
 })
 export class AngularMaterialModule

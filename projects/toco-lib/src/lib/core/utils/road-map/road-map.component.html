@@ -1,0 +1,354 @@
+
+<ng-container *ngIf="currentProducts_Internal.length; then thenTemplate_Products; else elseTemplate_WithoutProducts"></ng-container>
+
+<ng-template #thenTemplate_Products>
+
+    <mat-checkbox [(ngModel)]="isChartVertical" [color]="'primary'" [matTooltip]="'Visualizar el gráfico vertical / horizontal'" [matTooltipPosition]="'left'">Gráfico vertical</mat-checkbox>
+    <mat-checkbox class="checkbox-not-first" [(ngModel)]="isLegendRight" [color]="'primary'" [matTooltip]="'Visualizar la leyenda a la derecha / abajo'" [matTooltipPosition]="'right'">Leyenda a la derecha</mat-checkbox>
+
+    <mat-divider class="mat-divider-chart"></mat-divider>
+
+    <mat-tab-group mat-align-tabs="center" [animationDuration]="'1500ms'" (selectedIndexChange)="onSelectTab($event)">
+        <mat-tab [label]="tabLabel_CW">
+
+            <!---------------------------------------------------------------------------->
+            <!-- Displays the current products list. -->
+            <!---------------------------------------------------------------------------->
+
+            <h3>{{ chartTitle_P }}</h3>
+
+            <mat-grid-list [cols]="'1'" [rowHeight]="gridHeight">
+                <mat-grid-tile>
+                    <ng-container *ngIf="isChartVertical; then thenTempl_Ver_NormBarChart_CurProducts; else elseTempl_Hor_NormBarChart_CurProducts"></ng-container>
+                    <button mat-icon-button
+                        class="button-close-product"
+                        color="primary"
+                        [attr.aria-label]="'Cerrar el chart'"
+                        [matTooltip]="'Cerrar el chart'"        
+                        [matTooltipPosition]="'above'"
+                    >
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-grid-tile>
+            </mat-grid-list>
+
+            <ng-template #thenTempl_Ver_NormBarChart_CurProducts>
+                <ngx-charts-bar-vertical-normalized style="display: inline-block"
+                    [results]="currentProducts_Internal"
+                    [activeEntries]="activeEntries_P_CW"
+                    [view]="view"
+                    [scheme]="colorScheme_CW"
+                    [gradient]="gradient"
+                    [barPadding]="barPadding"
+
+                    [xAxis]="showXAxis"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [xAxisLabel]="xAxisLabel_P"
+                    [maxXAxisTickLength]="maxAxisTickLength"
+
+                    [yAxis]="showYAxis"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [yAxisLabel]="yAxisLabel_P"
+                    [maxYAxisTickLength]="maxAxisTickLength"
+
+                    [legend]="showLegend"
+                    [legendTitle]="legendTitle"
+                    [legendPosition]="legendPosition"
+
+                    (select)="onSelect($event)"
+                    (activate)="onActivate($event)"
+                    (deactivate)="onDeactivate($event)"
+                >
+                </ngx-charts-bar-vertical-normalized>
+            </ng-template>
+
+            <ng-template #elseTempl_Hor_NormBarChart_CurProducts>
+                <ngx-charts-bar-horizontal-normalized style="display: inline-block"
+                    [results]="currentProducts_Internal"
+                    [activeEntries]="activeEntries_P_CW"
+                    [view]="view"
+                    [scheme]="colorScheme_CW"
+                    [gradient]="gradient"
+                    [barPadding]="barPadding"
+
+                    [xAxis]="showXAxis"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [xAxisLabel]="xAxisLabel_P"
+                    [maxXAxisTickLength]="maxAxisTickLength"
+
+                    [yAxis]="showYAxis"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [yAxisLabel]="yAxisLabel_P"
+                    [maxYAxisTickLength]="maxAxisTickLength"
+
+                    [legend]="showLegend"
+                    [legendTitle]="legendTitle"
+                    [legendPosition]="legendPosition"
+
+                    (select)="onSelect($event)"
+                    (activate)="onActivate($event)"
+                    (deactivate)="onDeactivate($event)"
+                >
+                </ngx-charts-bar-horizontal-normalized>
+            </ng-template>
+
+
+            <!---------------------------------------------------------------------------->
+            <!-- Displays the current features list of a selected product. -->
+            <!---------------------------------------------------------------------------->
+
+            <ng-container *ngIf="selectedProductPos_CW != removeChart_PosFlag">
+
+                <mat-divider class="mat-divider-chart"></mat-divider>
+
+                <h3>{{ chartTitle_F_CW }}</h3>
+
+                <mat-grid-list [cols]="'1'" [rowHeight]="gridHeight">
+                    <mat-grid-tile>
+                        <ng-container *ngIf="isChartVertical; then thenTempl_Ver_NormBarChart_CurFeatures; else elseTempl_Hor_NormBarChart_CurFeatures"></ng-container>
+                        <button mat-icon-button
+                            class="button-close-feature"
+                            color="primary"
+                            [attr.aria-label]="'Cerrar el chart'"
+                            [matTooltip]="'Cerrar el chart'"        
+                            [matTooltipPosition]="'above'"
+                            (click)="click_RemoveChart()"
+                        >
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+            </ng-container>
+
+            <ng-template #thenTempl_Ver_NormBarChart_CurFeatures>
+                <ngx-charts-bar-vertical-normalized style="display: inline-block"
+                    [results]="currentFeatures_Internal"
+                    [view]="view"
+                    [scheme]="colorScheme_CW"
+                    [gradient]="gradient"
+                    [barPadding]="barPadding"
+
+                    [xAxis]="showXAxis"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [xAxisLabel]="xAxisLabel_F"
+                    [maxXAxisTickLength]="maxAxisTickLength"
+
+                    [yAxis]="showYAxis"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [yAxisLabel]="yAxisLabel_F"
+                    [maxYAxisTickLength]="maxAxisTickLength"
+
+                    [legend]="showLegend"
+                    [legendTitle]="legendTitle"
+                    [legendPosition]="legendPosition"
+                >
+                </ngx-charts-bar-vertical-normalized>
+            </ng-template>
+
+            <ng-template #elseTempl_Hor_NormBarChart_CurFeatures>
+                <ngx-charts-bar-horizontal-normalized style="display: inline-block"
+                    [results]="currentFeatures_Internal"
+                    [view]="view"
+                    [scheme]="colorScheme_CW"
+                    [gradient]="gradient"
+                    [barPadding]="barPadding"
+
+                    [xAxis]="showXAxis"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [xAxisLabel]="xAxisLabel_F"
+                    [maxXAxisTickLength]="maxAxisTickLength"
+
+                    [yAxis]="showYAxis"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [yAxisLabel]="yAxisLabel_F"
+                    [maxYAxisTickLength]="maxAxisTickLength"
+
+                    [legend]="showLegend"
+                    [legendTitle]="legendTitle"
+                    [legendPosition]="legendPosition"
+                >
+                </ngx-charts-bar-horizontal-normalized>
+            </ng-template>
+
+            <mat-divider class="mat-divider-chart"></mat-divider>
+
+        </mat-tab>
+
+        <mat-tab [label]="tabLabel_FW">
+
+            <!---------------------------------------------------------------------------->
+            <!-- Displays the future products list. -->
+            <!---------------------------------------------------------------------------->
+
+            <h3>{{ chartTitle_P }}</h3>
+
+            <mat-grid-list [cols]="'1'" [rowHeight]="gridHeight">
+                <mat-grid-tile>
+                    <ng-container *ngIf="isChartVertical; then thenTempl_Ver_NormBarChart_FutProducts; else elseTempl_Hor_NormBarChart_FutProducts"></ng-container>
+                    <button mat-icon-button
+                        class="button-close-product"
+                        color="primary"
+                        [attr.aria-label]="'Cerrar el chart'"
+                        [matTooltip]="'Cerrar el chart'"        
+                        [matTooltipPosition]="'above'"
+                    >
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-grid-tile>
+            </mat-grid-list>
+
+            <ng-template #thenTempl_Ver_NormBarChart_FutProducts>
+                <ngx-charts-bar-vertical-normalized style="display: inline-block"
+                    [results]="futureProducts_Internal"
+                    [activeEntries]="activeEntries_P_FW"
+                    [view]="view"
+                    [scheme]="colorScheme_FW"
+                    [gradient]="gradient"
+                    [barPadding]="barPadding"
+
+                    [xAxis]="showXAxis"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [xAxisLabel]="xAxisLabel_P"
+                    [maxXAxisTickLength]="maxAxisTickLength"
+
+                    [yAxis]="showYAxis"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [yAxisLabel]="yAxisLabel_P"
+                    [maxYAxisTickLength]="maxAxisTickLength"
+
+                    [legend]="showLegend"
+                    [legendTitle]="legendTitle"
+                    [legendPosition]="legendPosition"
+
+                    (select)="onSelect($event)"
+                    (activate)="onActivate($event)"
+                    (deactivate)="onDeactivate($event)"
+                >
+                </ngx-charts-bar-vertical-normalized>
+            </ng-template>
+
+            <ng-template #elseTempl_Hor_NormBarChart_FutProducts>
+                <ngx-charts-bar-horizontal-normalized style="display: inline-block"
+                    [results]="futureProducts_Internal"
+                    [activeEntries]="activeEntries_P_FW"
+                    [view]="view"
+                    [scheme]="colorScheme_FW"
+                    [gradient]="gradient"
+                    [barPadding]="barPadding"
+
+                    [xAxis]="showXAxis"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [xAxisLabel]="xAxisLabel_P"
+                    [maxXAxisTickLength]="maxAxisTickLength"
+
+                    [yAxis]="showYAxis"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [yAxisLabel]="yAxisLabel_P"
+                    [maxYAxisTickLength]="maxAxisTickLength"
+
+                    [legend]="showLegend"
+                    [legendTitle]="legendTitle"
+                    [legendPosition]="legendPosition"
+
+                    (select)="onSelect($event)"
+                    (activate)="onActivate($event)"
+                    (deactivate)="onDeactivate($event)"
+                >
+                </ngx-charts-bar-horizontal-normalized>
+            </ng-template>
+
+
+            <!---------------------------------------------------------------------------->
+            <!-- Displays the future features list of a selected product. -->
+            <!---------------------------------------------------------------------------->
+
+            <ng-container *ngIf="selectedProductPos_FW != removeChart_PosFlag">
+
+                <mat-divider class="mat-divider-chart"></mat-divider>
+
+                <h3>{{ chartTitle_F_FW }}</h3>
+
+                <mat-grid-list [cols]="'1'" [rowHeight]="gridHeight">
+                    <mat-grid-tile>
+                        <ng-container *ngIf="isChartVertical; then thenTempl_Ver_NormBarChart_FutFeatures; else elseTempl_Hor_NormBarChart_FutFeatures"></ng-container>
+                        <button mat-icon-button
+                            class="button-close-feature"
+                            color="primary"
+                            [attr.aria-label]="'Cerrar el chart'"
+                            [matTooltip]="'Cerrar el chart'"        
+                            [matTooltipPosition]="'above'"
+                            (click)="click_RemoveChart()"
+                        >
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+            </ng-container>
+
+            <ng-template #thenTempl_Ver_NormBarChart_FutFeatures>
+                <ngx-charts-bar-vertical-normalized style="display: inline-block"
+                    [results]="futureFeatures_Internal"
+                    [view]="view"
+                    [scheme]="colorScheme_FW"
+                    [gradient]="gradient"
+                    [barPadding]="barPadding"
+
+                    [xAxis]="showXAxis"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [xAxisLabel]="xAxisLabel_F"
+                    [maxXAxisTickLength]="maxAxisTickLength"
+
+                    [yAxis]="showYAxis"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [yAxisLabel]="yAxisLabel_F"
+                    [maxYAxisTickLength]="maxAxisTickLength"
+
+                    [legend]="showLegend"
+                    [legendTitle]="legendTitle"
+                    [legendPosition]="legendPosition"
+                >
+                </ngx-charts-bar-vertical-normalized>
+            </ng-template>
+
+            <ng-template #elseTempl_Hor_NormBarChart_FutFeatures>
+                <ngx-charts-bar-horizontal-normalized style="display: inline-block"
+                    [results]="futureFeatures_Internal"
+                    [view]="view"
+                    [scheme]="colorScheme_FW"
+                    [gradient]="gradient"
+                    [barPadding]="barPadding"
+
+                    [xAxis]="showXAxis"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [xAxisLabel]="xAxisLabel_F"
+                    [maxXAxisTickLength]="maxAxisTickLength"
+
+                    [yAxis]="showYAxis"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [yAxisLabel]="yAxisLabel_F"
+                    [maxYAxisTickLength]="maxAxisTickLength"
+
+                    [legend]="showLegend"
+                    [legendTitle]="legendTitle"
+                    [legendPosition]="legendPosition"
+                >
+                </ngx-charts-bar-horizontal-normalized>
+            </ng-template>
+
+            <mat-divider class="mat-divider-chart"></mat-divider>
+
+        </mat-tab>
+    </mat-tab-group>
+
+    <br />
+
+</ng-template>
+
+
+<ng-template #elseTemplate_WithoutProducts>
+
+    <div class="without-product">{{ withoutProductText }}</div>
+
+</ng-template>

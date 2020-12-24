@@ -1,0 +1,43 @@
+
+.mat-divider-chart
+{
+    margin: 1em 2em 0 2em;
+}
+
+.checkbox-not-first
+{
+    margin-left: 20px;
+}
+
+:host ::ng-deep .mat-grid-tile .mat-figure
+{
+    align-items: start;
+}
+
+.button-close-product
+{
+    visibility: hidden;
+    margin-top: 0.2em;
+}
+
+.button-close-feature
+{
+    visibility: visible;
+    margin-top: 0.2em;
+}
+
+:host ::ng-deep header.legend-title
+{
+    text-align: left;
+    font-weight: 400;
+}
+
+.without-product
+{
+    margin: 6em 0;
+    text-align: center;
+    cursor: default;
+    color: #444;
+    font-size: 1.5em;
+    font-weight: lighter;
+}

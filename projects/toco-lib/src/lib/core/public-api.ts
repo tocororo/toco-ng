@@ -24,6 +24,8 @@ export * from './services/request-cache-different-time.service';
 export * from './services/request-cache.service';
 export * from './services/test-backend-data-source.service';
 
+export * from './utils/road-map/road-map.component';
+export * from './utils/road-map-sceiba/road-map-sceiba.component';
 export * from './utils/get-view-container.directive';
 export * from './utils/helpers';
 export * from './utils/message-handler';

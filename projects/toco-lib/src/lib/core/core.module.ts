@@ -2,6 +2,7 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { SharedModule } from '../shared';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
 
@@ -16,6 +17,8 @@ import { PageHeaderComponent } from './page-header/page-header.component';
 
 import { CoreRoutingModule } from './core-routing.module';
 import { MetadataService } from './metadata.service';
+import { RoadMapComponent } from './utils/road-map/road-map.component';
+import { RoadMapSceibaComponent } from './utils/road-map-sceiba/road-map-sceiba.component';
 import { GetViewContainerDirective } from './utils/get-view-container.directive';
 import { EqualLengthDirective } from './utils/validator';
 import { DialogContentComponent } from './utils/message-handler';
@@ -31,6 +34,8 @@ import { ProgressComponent } from './utils/progress';
         JournalCardComponent,
         NavComponent,
         PageHeaderComponent,
+        RoadMapComponent,
+        RoadMapSceibaComponent,
         GetViewContainerDirective,
         EqualLengthDirective,
         DialogContentComponent,
@@ -40,6 +45,7 @@ import { ProgressComponent } from './utils/progress';
     imports: [
         SharedModule,
         ReactiveFormsModule,
+        NgxChartsModule,
         CoreRoutingModule
     ],
 
@@ -52,6 +58,8 @@ import { ProgressComponent } from './utils/progress';
         JournalCardComponent,
         NavComponent,
         PageHeaderComponent,
+        RoadMapComponent,
+        RoadMapSceibaComponent,
         GetViewContainerDirective,
         EqualLengthDirective,
         DialogContentComponent,
