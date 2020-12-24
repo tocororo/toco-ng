@@ -294,8 +294,8 @@ export class RoadMapComponent implements OnInit
 	 * By default, its value is the following object: 
 		`{
 	 		domain: [ 
-				'#a6a6a6',
-				'#555555'
+				'#6F6EE9',  // blue
+				'#6EBBE9'   // light blue
 			] 
 		}` 
 	 */
@@ -482,13 +482,11 @@ export class RoadMapComponent implements OnInit
 			//   '#302F6F',
 			//   '#2F466F'
 //			]
-		};
-		this.colorScheme_FW = {
-			domain: [  // all colors grey
-				'#a6a6a6',
+			// domain: [  // all colors grey
+			//	 '#a6a6a6',
 			//   '#828282',
 			//   '#686868',
-				'#555555',
+			//	 '#555555',
 			//   '#4d4d4d',
 			//   '#464646',
 			//   '#434343',
@@ -497,6 +495,12 @@ export class RoadMapComponent implements OnInit
 			//   '#262626',
 			//   '#252525',
 			//   '#000000'
+			// ]
+		};
+		this.colorScheme_FW = {
+			domain: [
+				'#6F6EE9',  // blue
+				'#6EBBE9'   // light blue
 			]
 		};
 		this.gradient = false;
