@@ -9,13 +9,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="13.229168mm"
-   height="12.398826mm"
+   width="50.000004"
+   height="46.861702"
    viewBox="0 0 13.229168 12.398826"
    version="1.1"
    id="svg2762"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="sceiba_whiter.svg">
+   sodipodi:docname="sceiba_white.svg">
   <defs
      id="defs2756" />
   <sodipodi:namedview
@@ -26,7 +26,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="7.9195959"
-     inkscape:cx="51.422603"
+     inkscape:cx="49.212894"
      inkscape:cy="15.87592"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
@@ -39,7 +39,8 @@
      inkscape:window-height="713"
      inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     units="px" />
   <metadata
      id="metadata2759">
     <rdf:RDF>
