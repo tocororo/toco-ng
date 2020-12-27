@@ -15,7 +15,17 @@ import { UserProfileService } from "../backend/public-api";
 import { UserProfile } from "../entities/public-api";
 
 // import { authConfig } from './auth-config';
-
+export interface OauthInfo{
+  serverHost: string;
+  loginUrl: string;
+  tokenEndpoint: string;
+  userInfoEndpoint: string,
+  appHost: string;
+  appName: string;
+  oauthRedirectUri: string;
+  oauthClientId: string;
+  oauthScope: string;
+}
 @Component({
   selector: "toco-authentication",
   templateUrl: "./authentication.component.html",
@@ -33,7 +43,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
   public isButtonLoginText: string;
 
   @Input()
-  public authBackend: AuthBackend;
+  public oauthInfo: OauthInfo;
 
   public user: UserProfile;
 
@@ -44,7 +54,15 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
       // console.log('next');
       // this.oauthService.setupAutomaticSilentRefresh();
       if (this.oauthStorage.getItem("access_token")) {
-        this.authenticationService.logguedChange(true);
+        this.authenticationService.getUserInfo().subscribe(
+          (response) => {
+            this.oauthStorage.setItem("user", JSON.stringify(response));
+            this.authenticationService.login(response);
+          },
+          error => console.log(error),
+          () => {}
+        )
+        // this.authenticationService.logguedChange(true);
       }
     },
 
@@ -70,7 +88,12 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     if (this.isButtonLogin == undefined) this.isButtonLogin = false;
     if (this.isButtonLoginIcon == undefined) this.isButtonLoginIcon = false;
     if (this.isButtonLoginText == undefined) this.isButtonLoginText = "Login";
-    if (this.authBackend == undefined) this.authBackend = AuthBackend.sceiba;
+    if (this.oauthInfo.loginUrl == undefined || this.oauthInfo.loginUrl == ''){
+      this.oauthInfo.loginUrl = this.oauthInfo.serverHost + "oauth/authorize";
+    }
+    if (this.oauthInfo.tokenEndpoint == undefined || this.oauthInfo.tokenEndpoint == ''){
+      this.oauthInfo.tokenEndpoint = this.oauthInfo.serverHost + "oauth/token";
+    }
     this.configure();
   }
 
@@ -96,26 +119,26 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
       // Url of the Identity Provider
       //issuer: 'https://sceiba-lab.upr.edu.cu',
 
-      loginUrl: this.authBackend == AuthBackend.cuor ? this.env.cuorHost + "oauth/authorize" : this.env.sceibaHost + "oauth/authorize",
+      loginUrl: this.oauthInfo.loginUrl,
 
-      tokenEndpoint: this.authBackend == AuthBackend.cuor ? this.env.cuorHost + "oauth/token" : this.env.sceibaHost + "oauth/token",
+      tokenEndpoint: this.oauthInfo.tokenEndpoint,
 
       // URL of the SPA to redirect the user to after login
-      redirectUri: this.env.oauthRedirectUri,
+      redirectUri: this.oauthInfo.oauthRedirectUri,
 
       // The SPA's id. The SPA is registered with this id at the auth-server
-      clientId: this.env.oauthClientId,
+      clientId: this.oauthInfo.oauthClientId,
 
       oidc: false,
 
-      // silentRefreshRedirectUri: this.env.sceibaHost + 'oauth/token',
+      // silentRefreshRedirectUri: this.oauthInfo.sceibaHost + 'oauth/token',
 
       // timeoutFactor: 0.75,
 
       sessionChecksEnabled: true,
       // set the scope for the permissions the client should request
       // The first three are defined by OIDC. The 4th is a usecase-specific one
-      scope: this.env.oauthScope, //'openid profile email voucher',
+      scope: this.oauthInfo.oauthScope, //'openid profile email voucher',
     };
     this.oauthService.configure(authConfig);
 
@@ -128,22 +151,34 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     this.oauthService.tryLogin({
       onTokenReceived: (_) => {
         // gives information about user loggued
-        this.authenticationService.authBackend = this.authBackend
-        this.authenticationService.getUserInfo().subscribe((response) => {
-          // save email in storage
-          if (this.authBackend == AuthBackend.cuor){
-            this.oauthStorage.setItem("email", response.email);
-          }else{
-            this.oauthStorage.setItem("email", response.data.userprofile.user.email);
-          }
-          // this.oauthStorage.setItem('userID', response.data.userprofile.id);
+        this.authenticationService.userInfoEndpoint = this.oauthInfo.userInfoEndpoint;
+        this.authenticationService.getUserInfo().subscribe(
 
-          // notifies user is logged
-          this.authenticationService.logguedChange(true);
+            (response) => {
+              this.oauthStorage.setItem("user", JSON.stringify(response));
+              this.authenticationService.login(response);
+            },
+            error => console.log(error),
+            () => {}
 
-          this.userName = this.oauthStorage.getItem("email");
 
-        });
+          // (response) => {
+          // this.oauthStorage.setItem("user", JSON.stringify(response));
+          // // // save email in storage
+          // // if (this.authBackend == AuthBackend.cuor){
+          // //   this.oauthStorage.setItem("email", response.email);
+          // // }else{
+          // //   this.oauthStorage.setItem("email", response.data.userprofile.user.email);
+          // // }
+          // // this.oauthStorage.setItem('userID', response.data.userprofile.id);
+
+          // // notifies user is logged
+          // this.authenticationService.logguedChange(true);
+
+          // this.userName = this.oauthStorage.getItem("email");
+
+        // }
+        );
       },
       onLoginError: (err) => {
         console.log("errorr in login", err);
@@ -156,7 +191,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
    */
   public login() {
     this.oauthService.initImplicitFlow();
-    this.authenticationService.authBackend = this.authBackend
+    // this.authenticationService.authBackend = this.authBackend
     // TODO: por que esto aqui, este modulo solo se encarga de la autenticacion y dar la informacion basica del usuario,
     // el perfil es manejado por otro componente
     this.user = new UserProfile();
@@ -179,7 +214,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
    */
   public logoff() {
     this.oauthService.logOut();
-    this.authenticationService.logguedChange(false);
+    this.authenticationService.logout();
   }
 
   /**

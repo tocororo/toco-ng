@@ -26,9 +26,17 @@ export class Person extends Entity
     country: String;
 }
 
+export class Role {
+  id = '';
+  name = '';
+  description = '';
+}
 export class User{
   id: string = '';
   email: string = '';
+  confirmed_at =  '';
+  last_login_at = '';
+  roles: Array<Role> = new Array<Role>();
 }
 export class UserSourcesRoles{
     source_uuid: string = '';

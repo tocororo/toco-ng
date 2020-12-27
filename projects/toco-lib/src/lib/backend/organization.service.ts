@@ -181,7 +181,7 @@ export class OrganizationServiceNoAuth {
       // headers: this.headers
     };
     console.log(params);
-    const req = this.env.cuorApi + this.path;
+    const req = this.env.cuorApi + this.path + '/';
     console.log(req);
 
     return this.http.get<SearchResponse<Organization>>(req, options);

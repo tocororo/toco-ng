@@ -12,6 +12,7 @@ import { OAuthStorage, OAuthResourceServerErrorHandler, OAuthModuleConfig, OAuth
 import { EnvService } from '../backend/env.service';
 import { catchError } from 'rxjs/operators';
 import { Response } from '../core/public-api';
+import { User } from '../../public-api';
 
 
 /**
@@ -36,10 +37,11 @@ export enum AuthBackend{
 })
 export class OauthAuthenticationService implements CanActivate, HttpInterceptor {
 
-    public authBackend: AuthBackend =  AuthBackend.sceiba
+    // public authBackend: AuthBackend =  AuthBackend.sceiba
+    public userInfoEndpoint: string;
 
     constructor(
-        private env: EnvService,
+        // private env: EnvService,
         private oauthStorage: OAuthStorage,
         protected http: HttpClient,
         private _router: Router,
@@ -47,7 +49,7 @@ export class OauthAuthenticationService implements CanActivate, HttpInterceptor 
         private errorHandler: OAuthResourceServerErrorHandler,
         @Optional() private moduleConfig: OAuthModuleConfig) { }
 
-    private authenticationSubject: Subject<boolean> = new Subject();
+    private authenticationSubject: Subject<User> = new Subject();
     /**
      * Observer to handles the behavior when a user authenticates
      */
@@ -58,22 +60,26 @@ export class OauthAuthenticationService implements CanActivate, HttpInterceptor 
      * for the knowledge of who uses it
      * @param islogged 'true' is loggued or 'false' other way
      */
-    logguedChange(islogged: boolean) {
-        this.authenticationSubject.next(islogged);
+    login(user: User) {
+        this.authenticationSubject.next(user);
     }
+    logout() {
+      this.authenticationSubject.next(null);
+  }
     /**
      * gives information about an user authenticated
      */
     getUserInfo(): Observable<any> {
-        if (this.authBackend == AuthBackend.sceiba) {
-            return this.http.get<any>(this.env.sceibaApi + 'me');
-        } else if (this.authBackend == AuthBackend.cuor){
-            return this.http.get<any>(this.env.cuorApi + 'me');
-        }
+      return this.http.get<any>(this.userInfoEndpoint);
+        // if (this.authBackend == AuthBackend.sceiba) {
+        //     return this.http.get<any>(this.env.sceibaApi + 'me');
+        // } else if (this.authBackend == AuthBackend.cuor){
+        //     return this.http.get<any>(this.env.cuorApi + 'me');
+        // }
     }
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        const user = this.oauthStorage.getItem('email')
+        const user = this.oauthStorage.getItem('user')
 
         if (user) {
             return true;
