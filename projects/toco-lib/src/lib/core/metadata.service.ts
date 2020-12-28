@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
 
-import { EnvService } from '../backend/env.service'
+import { Environment } from './env'
 
 @Injectable({
     providedIn: 'root'
 })
 export class MetadataService {
 
-    constructor(private bodyTitle: Title, private meta: Meta, private router: Router, private env: EnvService)
+    constructor(private bodyTitle: Title, private meta: Meta, private router: Router, private env: Environment)
     { }
 
     /**

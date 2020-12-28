@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { EnvService } from '../backend/env.service';
+import { Environment } from '../core/public-api';
 
 import { Response } from '../core/public-api';
 
@@ -12,7 +12,7 @@ import { Response } from '../core/public-api';
 export class UserProfileService {
 
   constructor(
-      private env: EnvService,
+      private env: Environment,
       protected http: HttpClient) { }
 
   /**

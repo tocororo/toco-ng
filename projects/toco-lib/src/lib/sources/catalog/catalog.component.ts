@@ -15,7 +15,7 @@ import { MetadataService, MessageHandler, StatusCode } from '../../core/public-a
 import { Journal, JournalData, ISSN, JournalVersion } from '../../entities/public-api';
 import { FilterHttpMap, FiltersService } from '../../filters/public-api';
 
-import { EnvService } from '../../backend/env.service';
+import { Environment } from '../../core/env';
 
 import { CatalogService } from '../../backend/public-api';
 import { CatalogFiltersComponent } from '../catalog-filters/catalog-filters.component';
@@ -82,7 +82,7 @@ export class CatalogComponent implements OnInit {
   constructor(private service: CatalogService,
     private metadata: MetadataService,
     private filterService: FiltersService,
-    private env: EnvService,
+    private env: Environment,
     private _snackBar: MatSnackBar,
     public dialog: MatDialog) {
     this.sceibaHost = env.sceibaHost + '/catalog';

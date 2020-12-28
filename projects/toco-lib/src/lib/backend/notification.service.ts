@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { HttpService, Response } from '../core/public-api';
-import { EnvService } from '../backend/env.service';
+import { Environment } from '../core/public-api';
 
 @Injectable()
 export class NotificationService extends HttpService {
 
 
-    constructor(private env: EnvService, protected http: HttpClient) {
+    constructor(private env: Environment, protected http: HttpClient) {
         super(http);
     }
 

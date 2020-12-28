@@ -9,7 +9,7 @@ import { Observable, Subject, throwError } from 'rxjs';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 
 import { OAuthStorage, OAuthResourceServerErrorHandler, OAuthModuleConfig, OAuthService, AuthConfig, JwksValidationHandler } from 'angular-oauth2-oidc';
-import { EnvService } from '../backend/env.service';
+import { Environment } from '../core/public-api';
 import { catchError } from 'rxjs/operators';
 import { Response } from '../core/public-api';
 import { User } from '../../public-api';
@@ -41,7 +41,7 @@ export class OauthAuthenticationService implements CanActivate, HttpInterceptor 
     public userInfoEndpoint: string;
 
     constructor(
-        // private env: EnvService,
+        // private env: Environment,
         private oauthStorage: OAuthStorage,
         protected http: HttpClient,
         private _router: Router,
@@ -137,12 +137,12 @@ export class OauthAuthenticationService implements CanActivate, HttpInterceptor 
 @Injectable({
     providedIn: 'root'
 })
-export class SimpleAuthenticationService implements CanActivate {
+export class SimpleAuthenticationService { //implements CanActivate {
 
   public authBackend: AuthBackend =  AuthBackend.sceiba
 
   constructor(
-      private env: EnvService,
+      private env: Environment,
       protected http: HttpClient,
       private _router: Router) { }
 
@@ -171,16 +171,16 @@ export class SimpleAuthenticationService implements CanActivate {
       }
   }
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if(this.env.user != null){
-      return true;
-    }
-    else{
-        this._router.navigate(['/']);
-        return false;
-    }
+  // canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+  //   if(this.env.user != null){
+  //     return true;
+  //   }
+  //   else{
+  //       this._router.navigate(['/']);
+  //       return false;
+  //   }
 
-  }
+  // }
 
 
 

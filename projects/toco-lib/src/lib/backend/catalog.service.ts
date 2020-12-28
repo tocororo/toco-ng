@@ -11,12 +11,12 @@ import { Observable } from 'rxjs';
 import { HttpService, Response } from '../core/public-api';
 import { FilterHttpMap } from '../filters/public-api';
 
-import { EnvService } from '../backend/env.service';
+import { Environment } from '../core/public-api';
 
 @Injectable()
 export class CatalogService extends HttpService {
 
-    constructor(private env: EnvService, protected http: HttpClient) {
+    constructor(private env: Environment, protected http: HttpClient) {
         super(http);
     }
 

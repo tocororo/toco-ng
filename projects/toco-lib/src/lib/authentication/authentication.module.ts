@@ -14,6 +14,9 @@ import { AuthenticateRoutingModule } from './authentication-routing.module'
 import { OauthAuthenticationService, SimpleAuthenticationService } from './authentication.service'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+export function storageFactory() : OAuthStorage {
+  return localStorage
+}
 @NgModule({
     declarations: [
         AuthenticationComponent
@@ -31,7 +34,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
     //TODO: esto se elimina de aquí y se pone en el fichero `core/services/http-interceptor.order.ts`.
     providers: [
-        { provide: OAuthStorage, useValue: localStorage },
+        { provide: OAuthStorage, useFactory: storageFactory },
         OauthAuthenticationService,
         SimpleAuthenticationService,
         /* TODO: This can not be set here. */

@@ -10,7 +10,7 @@ import { Observable, of } from 'rxjs';
 
 import { Response } from '../core/public-api';
 import { SearchResponse, Record, Source, Organization } from '../entities/public-api';
-import { EnvService } from '../backend/env.service';
+import { Environment } from '../core/public-api';
 
 @Injectable()
 export class SearchService {
@@ -25,7 +25,7 @@ export class SearchService {
   //     }
   // );
   http: HttpClient;
-  constructor(private env: EnvService, private handler: HttpBackend) {
+  constructor(private env: Environment, private handler: HttpBackend) {
 
     // TODO: hay una mejor manera de hacer esto, creando diferentes y propios HttpClients que
     // tengan un comportamiento especifico (eg: sin/con autenticacion)

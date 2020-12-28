@@ -11,7 +11,7 @@ import { MetadataService } from '../../core/public-api';
 import { Journal, JournalData, ISSN } from '../../entities/public-api';
 import { FilterHttpMap, FiltersService } from '../../filters/public-api';
 
-import { EnvService } from '../../backend/env.service';
+import { Environment } from '../../core/env';
 
 import { HarvesterFiltersComponent } from '../harvester-filters/harvester-filters.component';
 
@@ -51,7 +51,7 @@ export class RepositoriesComponent implements OnInit {
     constructor(private service: CatalogService,
         private metadata: MetadataService,
         private filterService : FiltersService,
-        private env: EnvService)
+        private env: Environment)
     {
         this.sceibaHost = env.sceibaHost + "/catalog"
     }

@@ -15,7 +15,7 @@ import { MetadataService } from '../../core/public-api';
 import { Journal, JournalData, ISSN } from '../../entities/public-api';
 import { FilterHttpMap, FiltersService } from '../../filters/public-api';
 
-import { EnvService } from '../../backend/env.service';
+import { Environment } from '../../core/env';
 
 import { CatalogService } from '../../backend/public-api';
 import { CatalogFiltersComponent } from '../catalog-filters/catalog-filters.component';
@@ -73,7 +73,7 @@ export class SourcesListComponent implements OnInit
     ];
     currentlayout = this.layoutPosition[1];
 
-    constructor(private service: CatalogService, private metadata: MetadataService, private filterService: FiltersService, private env: EnvService) {
+    constructor(private service: CatalogService, private metadata: MetadataService, private filterService: FiltersService, private env: Environment) {
         this.sceibaHost = env.sceibaHost + '/catalog';
     }
 

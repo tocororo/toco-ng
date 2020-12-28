@@ -13,7 +13,7 @@ import {
 import { Observable } from "rxjs";
 import { OAuthStorage } from "angular-oauth2-oidc";
 
-import { EnvService } from "../backend/env.service";
+import { Environment } from "../core/env";
 
 
 import {
@@ -39,7 +39,7 @@ export class SourceService {
   private token = "";
   httpSearch: HttpClient;
   constructor(
-    private env: EnvService,
+    private env: Environment,
     private http: HttpClient,
     private handler: HttpBackend,
     private oauthStorage: OAuthStorage
@@ -261,7 +261,7 @@ export class SourceService {
 export class SourceServiceNoAuth {
 
   http: HttpClient;
-  constructor(private env: EnvService, private handler: HttpBackend) {
+  constructor(private env: Environment, private handler: HttpBackend) {
 
     // TODO: hay una mejor manera de hacer esto, creando diferentes y propios HttpClients que
     // tengan un comportamiento especifico (eg: sin/con autenticacion)

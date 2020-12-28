@@ -9,7 +9,7 @@ import {
 } from "angular-oauth2-oidc";
 
 import { AuthBackend, OauthAuthenticationService } from "./authentication.service";
-import { EnvService } from "../backend/env.service";
+import { Environment } from "../core/env";
 import { Router } from "@angular/router";
 import { UserProfileService } from "../backend/public-api";
 import { UserProfile } from "../entities/public-api";
@@ -77,7 +77,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
 
   constructor(
     private userProfileService: UserProfileService,
-    private env: EnvService,
+    private env: Environment,
     private oauthService: OAuthService,
     private oauthStorage: OAuthStorage,
     private authenticationService: OauthAuthenticationService,

@@ -2,27 +2,27 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse } from '@angular/common/http';
 
-import { EnvService } from '../../backend/env.service';
+import { Environment } from '../env';
 
 import { MessageService } from './message.service';
 import { Cachable, RequestCache } from './request-cache.service';
 
 /**
- * A service that implements the cachable URL request. 
+ * A service that implements the cachable URL request.
  */
 @Injectable({
 	providedIn: 'root'
 })
 export class CachableUrl implements Cachable
 {
-	public constructor(private _env: EnvService)
+	public constructor(private _env: Environment)
 	{ }
 
     /**
-     * Returns a number greater than zero if the specified request is cachable; 
-	 * that number represents the maximum cache age in milliseconds. 
-	 * Return zero if the specified request is NOT cachable. 
-     * @param req The outgoing request object to handle. 
+     * Returns a number greater than zero if the specified request is cachable;
+	 * that number represents the maximum cache age in milliseconds.
+	 * Return zero if the specified request is NOT cachable.
+     * @param req The outgoing request object to handle.
      */
     public isCachable(req: HttpRequest<any>): number
     {
@@ -42,33 +42,33 @@ export class CachableUrl implements Cachable
 }
 
 /**
- * Represents the request cache entry. 
+ * Represents the request cache entry.
  */
 export interface RequestCacheEntry
 {
 	/**
-	 * Returns the request URL. 
+	 * Returns the request URL.
 	 */
 	url: string;
 
 	/**
-	 * Returns the request cache. 
+	 * Returns the request cache.
 	 */
 	response: HttpResponse<any>;
 
 	/**
-	 * Returns the maximum cache age in milliseconds. 
+	 * Returns the maximum cache age in milliseconds.
 	 */
 	maxAgeInCache: number;
 
 	/**
-	 * Returns the last read of the request URL. 
+	 * Returns the last read of the request URL.
 	 */
 	lastRead: number;
 }
 
 /**
- * A service that implements the request cache with the different time using `Map` collection. 
+ * A service that implements the request cache with the different time using `Map` collection.
  */
 @Injectable({
 	providedIn: 'root'
@@ -125,14 +125,14 @@ export class RequestCacheDifferentTimeWithMap implements RequestCache
 }
 
 /**
- * A provider for the cachable URL request. 
+ * A provider for the cachable URL request.
  */
 export const CACHABLE_URL_PROVIDER = [
     { 'provide': Cachable, 'useClass': CachableUrl, 'multi': false }
 ];
 
 /**
- * A provider for the request cache with the different time using `Map` collection. 
+ * A provider for the request cache with the different time using `Map` collection.
  */
 export const REQUEST_CACHE_DIFFERENT_TIME_WITH_MAP_PROVIDER = [
     { 'provide': RequestCache, 'useClass': RequestCacheDifferentTimeWithMap, 'multi': false }

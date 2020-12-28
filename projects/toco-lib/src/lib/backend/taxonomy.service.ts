@@ -10,7 +10,7 @@ import { Observable, PartialObserver, Subject } from 'rxjs';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 
 
-import { EnvService } from '../backend/env.service';
+import { Environment } from '../core/public-api';
 
 import { Response } from '../core/public-api';
 import { Vocabulary, Term } from '../entities/public-api';
@@ -31,7 +31,7 @@ export class TaxonomyService {
   };
   private token = '';
 
-  constructor(private env: EnvService, private http: HttpClient, private oauthStorage: OAuthStorage) {
+  constructor(private env: Environment, private http: HttpClient, private oauthStorage: OAuthStorage) {
     this.token = this.oauthStorage.getItem('access_token');
   }
 

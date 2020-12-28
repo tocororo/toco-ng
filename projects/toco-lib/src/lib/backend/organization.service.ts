@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { MessageService } from '../core/public-api';
-import { EnvService } from '../backend/env.service';
+import { Environment } from '../core/public-api';
 import { Organization, Hit, SearchResponse } from '../entities/public-api';
 
 /**
@@ -134,7 +134,7 @@ export class OrganizationServiceNoAuth {
 
   http: HttpClient;
   path = 'organizations'
-  constructor(private env: EnvService, private handler: HttpBackend) {
+  constructor(private env: Environment, private handler: HttpBackend) {
 
     this.http = new HttpClient(handler);
   }

@@ -5,8 +5,7 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 import { MatSnackBar, MatDialog } from '@angular/material';
-import { EnvService } from '../../backend/public-api';
-import { MetadataService, MessageHandler, StatusCode } from '../../core/public-api';
+import { MetadataService, MessageHandler, StatusCode, Environment } from '../../core/public-api';
 import { Organization, VocabulariesInmutableNames, JournalVersion } from '../../entities/public-api';
 
 
@@ -125,7 +124,7 @@ export class JournalViewComponent implements OnInit {
 
     constructor(
         private metadata: MetadataService,
-        private env: EnvService,
+        private env: Environment,
         private _snackBar: MatSnackBar,
         public dialog: MatDialog
     ) { }

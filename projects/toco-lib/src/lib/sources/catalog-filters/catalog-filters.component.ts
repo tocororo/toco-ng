@@ -17,7 +17,7 @@ import { FilterContainerComponent } from '../../filters/public-api';
 import { MessageHandler, StatusCode } from '../../core/public-api';
 
 import { CatalogService, TaxonomyService } from '../../backend/public-api';
-import { EnvService } from '../../backend/env.service';
+import { Environment } from '../../core/env';
 import { VocabulariesInmutableNames } from '../../entities/public-api';
 
 @Component({
@@ -32,7 +32,7 @@ export class CatalogFiltersComponent extends FilterContainerComponent {
     protected service: CatalogService,
     private taxonomyService: TaxonomyService,
     private _snackBar: MatSnackBar,
-    private env: EnvService) {
+    private env: Environment) {
     super(componentFactoryResolver, childrenService)
   }
 

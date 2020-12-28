@@ -33,4 +33,5 @@ export * from './utils/message-handler';
 export * from './utils/progress';
 export * from './utils/validator';
 
+export * from './env';
 export * from './metadata.service';
