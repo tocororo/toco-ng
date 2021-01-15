@@ -1,14 +1,15 @@
 import { EntityBase } from './common';
+import { Source } from './source.entity';
 
 
 
 export class Record extends EntityBase {
   id = '';
-  identifiers = new Object();
-  source_repo = new Object();
+  identifiers = new Array<Object>();
+  source_repo = new Source();
   spec = new Object();
   title = '';
-  creators = new Object();
+  creators = new Array<Object>();
   keywords = new Array<string>();
   description = '';
   publisher = '';
@@ -18,7 +19,7 @@ export class Record extends EntityBase {
   formats = new Array<string>();
   language = '';
   publication_date = '';
-  contributors = new Object();
+  contributors = new Array<Object>();
   references = new Object();
   iroko_terms = new Array<string>();
   status = '';

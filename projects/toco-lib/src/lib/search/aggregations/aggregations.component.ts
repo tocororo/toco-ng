@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Aggr, AggrBucket } from "../../entities/public-api";
 
 export interface AggregationsSelection{
-  [id: string]: string[] 
+  [id: string]: string[]
 }
 
 @Component({
@@ -50,26 +50,29 @@ export class AggregationsComponent implements OnInit {
 
   //aqui se agregan los casos que puedan haber en las agregaciones para q salgan siempre en español
   private _translate(key){
-    switch (key) 
+    switch (key)
     {
       case "status": {
-        return "Estado";        
+        return "Estado";
       }
       case "country": {
-        return "País";        
+        return "País";
       }
       case "state": {
-        return "Provincia (Estado)";        
+        return "Provincia (Estado)";
       }
       case "types": {
-        return "Tipos";        
+        return "Tipos";
       }
-      
+      default: {
+        return this.aggregations[key]['label'];
+
+      }
     }
-     
-    return key;   
+
+    return key;
   }
-    
+
 
   isSelected(aggrKey, bucket: AggrBucket) {
 
@@ -79,7 +82,7 @@ export class AggregationsComponent implements OnInit {
         if (element == bucket.key) {
           // console.log(this.selectedAggr, aggrKey, bucket);
           // console.log("--------------------");
-          
+
           return true;
         }
       }
@@ -87,13 +90,13 @@ export class AggregationsComponent implements OnInit {
       //   if (key == bucket.key) {
       //     console.log(this.selectedAggr, aggrKey, bucket);
       //     console.log("--------------------");
-          
+
       //     return true;
       //   }
       // });
     }
     // console.log("FALSE");
-    
+
     return false;
   }
 
@@ -101,13 +104,13 @@ export class AggregationsComponent implements OnInit {
     if (!this.selectedAggr.hasOwnProperty(aggrKey)){
       this.selectedAggr[aggrKey] = [];
     }
-    
+
       if (this.selectedAggr[aggrKey].find(k => k == bucket.key)){
         this.selectedAggr[aggrKey] = this.selectedAggr[aggrKey].filter(k => k != bucket.key);
       } else{
         this.selectedAggr[aggrKey].push(bucket.key)
       }
-     
+
 
     this.keySelect.emit(this.selectedAggr);
   }
