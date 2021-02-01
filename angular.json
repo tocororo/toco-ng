@@ -31,6 +31,11 @@
               "tsConfig": "projects/toco-lib/tsconfig.lib.json",
               "project": "projects/toco-lib/ng-package-cuor.json"
             },
+            "tocuoredel": {
+              "watch": true,
+              "tsConfig": "projects/toco-lib/tsconfig.lib.json",
+              "project": "projects/toco-lib/ng-package-cuor-edel.json"
+            },
             "tosceibadev": {
               "watch": true,
               "tsConfig": "projects/toco-lib/tsconfig.lib.json",
