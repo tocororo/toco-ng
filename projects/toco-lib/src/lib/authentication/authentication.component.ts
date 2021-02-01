@@ -55,8 +55,8 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
       if (this.oauthStorage.getItem("access_token")) {
         this.authenticationService.getUserInfo().subscribe(
           (response) => {
-            this.oauthStorage.setItem("user", JSON.stringify(response.data.userprofile));
-            this.authenticationService.login(response.data.userprofile);
+            this.oauthStorage.setItem("user", JSON.stringify(response));
+            this.authenticationService.login(response);
           },
           error => console.log(error),
           () => {}
@@ -154,7 +154,9 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
         this.authenticationService.getUserInfo().subscribe(
 
             (response) => {
-              this.oauthStorage.setItem("user", JSON.stringify(response.data.userprofile));
+              console.log(response);
+              
+              this.oauthStorage.setItem("user", JSON.stringify(response));
               this.authenticationService.login(response);
             },
             error => console.log(error),
