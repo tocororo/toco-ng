@@ -3,16 +3,15 @@
  *   All rights reserved.
  */
 
+import { HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable, Optional } from '@angular/core';
-import { HttpClient, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { AuthConfig, JwksValidationHandler, OAuthModuleConfig, OAuthResourceServerErrorHandler, OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { Observable, Subject, throwError } from 'rxjs';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-
-import { OAuthStorage, OAuthResourceServerErrorHandler, OAuthModuleConfig, OAuthService, AuthConfig, JwksValidationHandler } from 'angular-oauth2-oidc';
-import { Environment } from '../core/public-api';
 import { catchError } from 'rxjs/operators';
-import { Response } from '../core/public-api';
-import { User } from '../../public-api';
+import { UserProfile } from '../../public-api';
+import { Environment } from '../core/public-api';
+
 
 
 /**
@@ -49,7 +48,7 @@ export class OauthAuthenticationService implements CanActivate, HttpInterceptor 
         private errorHandler: OAuthResourceServerErrorHandler,
         @Optional() private moduleConfig: OAuthModuleConfig) { }
 
-    private authenticationSubject: Subject<User> = new Subject();
+    private authenticationSubject: Subject<UserProfile> = new Subject();
     /**
      * Observer to handles the behavior when a user authenticates
      */
@@ -60,8 +59,9 @@ export class OauthAuthenticationService implements CanActivate, HttpInterceptor 
      * for the knowledge of who uses it
      * @param islogged 'true' is loggued or 'false' other way
      */
-    login(user: User) {
-        this.authenticationSubject.next(user);
+    login(user: UserProfile) {
+      console.log('autentication service user:', user)
+      this.authenticationSubject.next(user);
     }
     logout() {
       this.authenticationSubject.next(null);

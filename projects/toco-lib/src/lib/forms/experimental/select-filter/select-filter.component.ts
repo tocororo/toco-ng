@@ -4,14 +4,13 @@
  */
 
 import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, AbstractControl, ValidationErrors } from "@angular/forms";
-import { Observable, PartialObserver } from "rxjs";
-import { startWith, map } from "rxjs/operators";
+import { AbstractControl, FormControl, ValidationErrors } from "@angular/forms";
+import { Observable } from "rxjs";
+import { map, startWith } from "rxjs/operators";
 import { isArray } from "util";
-
-import { FormFieldControl_Experimental } from "../form-field.control.experimental";
-import { SelectOption } from "../../input/select/select-input.component";
 import { InputControl } from '../../input/input.control';
+import { SelectOption } from "../../input/select/select-input.component";
+
 
 
 interface SelectFilterComponentExtraContent{
@@ -133,18 +132,26 @@ export class SelectFilterComponent extends InputControl
 
   private selectOptionsLoaded() {
     this.selectOptions.forEach((option) => {
-      if (this.extraContent.multiple) {
-        try {
-          const index = this.content.value.indexOf(option.value);
-          if (index >= 0) {
-            this.addChips(option);
-          }
-        } catch (error) {}
-      } else {
-        if (option.value == this.content.value) {
-          this.addChips(option);
-        }
+      if (
+        (this.extraContent.selectedTermsIds as []).some(
+          val => val === option.value
+        )
+      ){
+        this.addChips(option);
       }
+
+      // if (this.extraContent.multiple) {
+      //   try {
+      //     const index = this.content.value.indexOf(option.value);
+      //     if (index >= 0) {
+      //       this.addChips(option);
+      //     }
+      //   } catch (error) {}
+      // } else {
+      //   if (option.value == this.content.value) {
+      //     this.addChips(option);
+      //   }
+      // }
     });
     if (
       this.extraContent.multiple &&
