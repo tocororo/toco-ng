@@ -88,8 +88,8 @@ export class JournalEditComponent implements OnInit {
 
     this.pageTitle = this.journalData.isNew
       ? "Nueva Revista"
-      : "Editando : " + this.journalData.title;
-    this.metadata.setTitleDescription(this.pageTitle, "");
+      : "Editando: " + this.journalData.title;
+    this.metadata.setMeta_All(this.pageTitle, "");
 
     console.log("journal edit INIT");
     this.resetStepper();

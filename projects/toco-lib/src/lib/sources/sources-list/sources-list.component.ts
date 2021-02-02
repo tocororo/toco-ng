@@ -84,7 +84,7 @@ export class SourcesListComponent implements OnInit
     filter_component: CatalogFiltersComponent;
 
     ngOnInit() {
-        this.metadata.setTitleDescription('Catálogo de Revistas Científicas', '');
+        this.metadata.setMeta_All('Catálogo de Revistas Científicas', '');
         this.paginator.firstPage();
         this.paginator.pageSize = 5;
         this.service.getJournalsCount().subscribe(response => {

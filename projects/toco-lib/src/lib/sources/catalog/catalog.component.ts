@@ -94,7 +94,7 @@ export class CatalogComponent implements OnInit {
 
   ngOnInit() {
 
-    this.metadata.setTitleDescription('Catálogo de Revistas Científicas', '');
+    this.metadata.setMeta_All('Catálogo de Revistas Científicas', '');
     this.paginator.firstPage();
     this.paginator.pageSize = 5;
 
@@ -181,6 +181,7 @@ export class CatalogComponent implements OnInit {
   public onScrollUp() {
     // console.log("scrolled up!!");
   }
+
   public isEmpty() {
     if (this.dataSource.data.length === 0 && this.hasErrors) {
       //this.loading = false;
@@ -188,9 +189,11 @@ export class CatalogComponent implements OnInit {
     }
     return false;
   }
+
   public isLoading() {
     return this.loading;
   }
+
   public openme(): boolean {
     const a = navigator.userAgent.match(/Android/i);
     const b = navigator.userAgent.match(/BlackBerry/i);
