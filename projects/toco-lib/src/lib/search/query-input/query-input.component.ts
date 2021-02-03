@@ -19,6 +19,12 @@ export class QueryInputComponent implements OnInit {
   appearance: string = 'outline';
 
   @Input()
+  inputColor: string = '';
+
+  @Input()
+  buttonColor: string = 'primary';
+
+  @Input()
   showButton = true;
 
   @Input()

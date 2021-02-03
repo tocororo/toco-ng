@@ -1,18 +1,17 @@
-import { Component, OnInit, AfterViewInit, Input } from "@angular/core";
-import { Subscription, PartialObserver, timer } from "rxjs";
-
-import {
-  OAuthService,
-  JwksValidationHandler,
-  OAuthStorage,
-  AuthConfig,
-} from "angular-oauth2-oidc";
-
-import { AuthBackend, OauthAuthenticationService } from "./authentication.service";
-import { Environment } from "../core/env";
+import { AfterViewInit, Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import {
+  AuthConfig, JwksValidationHandler, OAuthService,
+
+  OAuthStorage
+} from "angular-oauth2-oidc";
+import { PartialObserver, Subscription, timer } from "rxjs";
 import { UserProfileService } from "../backend/public-api";
+import { Environment } from "../core/env";
 import { UserProfile } from "../entities/public-api";
+import { OauthAuthenticationService } from "./authentication.service";
+
+
 
 // import { authConfig } from './auth-config';
 export interface OauthInfo{
@@ -56,8 +55,8 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
       if (this.oauthStorage.getItem("access_token")) {
         this.authenticationService.getUserInfo().subscribe(
           (response) => {
-            this.oauthStorage.setItem("user", JSON.stringify(response));
-            this.authenticationService.login(response);
+            this.oauthStorage.setItem("user", JSON.stringify(response.data.userprofile));
+            this.authenticationService.login(response.data.userprofile);
           },
           error => console.log(error),
           () => {}
@@ -155,7 +154,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
         this.authenticationService.getUserInfo().subscribe(
 
             (response) => {
-              this.oauthStorage.setItem("user", JSON.stringify(response));
+              this.oauthStorage.setItem("user", JSON.stringify(response.data.userprofile));
               this.authenticationService.login(response);
             },
             error => console.log(error),
@@ -199,7 +198,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
       next: (response) => {
         if (response && response.data && response.data.userprofile) {
           this.user.deepcopy(response.data.userprofile);
-          this.oauthStorage.setItem("profile", this.user.entitystringify());
+          this.oauthStorage.setItem("user", this.user.entitystringify());
         }
       },
       error: (err) => {
