@@ -31,7 +31,8 @@ export class MetadataService
         /* The canonical URL for your page. This should be the undecorated URL, 
         without session variables, user identifying parameters, or counters. */
         let url: string = this.env.appHost + this._router.url;
-        console.log('The URL for metadata is: ', url);
+        //console.log('The URL for metadata is: ', url);
+        image = this.env.appHost + image;
 
         /* Primary metadata. */
 
