@@ -15,6 +15,9 @@ export abstract class Environment {
   abstract readonly appHost: string;
   abstract readonly appName: string;
 
+  abstract readonly websiteUsername_Twitter: string;
+  abstract readonly websiteUsername_Facebook: string;
+
   abstract readonly oauthRedirectUri: string;
   abstract readonly oauthClientId: string;
   abstract readonly oauthScope: string;

@@ -16,95 +16,69 @@ import { Environment } from './env'
 })
 export class MetadataService
 {
-    public constructor(private bodyTitle: Title, private meta: Meta, private router: Router, private env: Environment)
+    public constructor(public bodyTitle: Title, public meta: Meta, private _router: Router, public env: Environment)
     { }
 
     /**
-     * Sets metadata for general purpose. 
-     * @param title The title to set. 
-     * @param description The description to set. 
+     * Sets the page metadata for SEO and standard social networks. 
+     * @param title The title to set. Maximum length 60-70 characters. 
+     * @param description The description to set. Maximum length 155 characters. 
+     * @param image The image to set. If the value is empty, then the image is not set. 
+     * The image must be at least 280px in width and 150px in height; and must be less than 1Mb in size. 
      */
-    public setMeta_General(title: string, description: string): void
+    public setStandardMeta(title: string, description: string, image: string = ""): void
     {
-        this.bodyTitle.setTitle(title + ' | ' + this.env.appName);  /* Sets the title of the current HTML document. */
-        this.meta.updateTag({ name: 'description', content: description });
-    }
+        /* The canonical URL for your page. This should be the undecorated URL, 
+        without session variables, user identifying parameters, or counters. */
+        let url: string = this.env.appHost + this._router.url;
+        console.log('The URL for metadata is: ', url);
 
-    /**
-     * Sets metadata for social networks. 
-     * @param title The title to set. 
-     * @param description The description to set. 
-     */
-    public setMeta_Social(title: string, description: string): void
-    {
-        // let url: string = this.env.appHost + this.router.url;
+        /* Primary metadata. */
+
+        /* Maximum length 60-70 characters. */
+        this.bodyTitle.setTitle(title + " | " + this.env.appName);  /* Sets the title of the current HTML document. */
+        /* Maximum length 155 characters. */
+        this.meta.updateTag({ name: "description", content: description });
 
         /* Schema.org markup for Google+. */
-        // this.meta.updateTag({ itemprop: "name", title });
-        // this.meta.updateTag({ itemprop: "description", content: description });
 
-        /* Twitter */
-        this.meta.updateTag({ name: "twitter:site", content: this.env.appName });
+        this.meta.updateTag({ itemprop: "name", title });
+        this.meta.updateTag({ itemprop: "description", content: description });
+        if (image) this.meta.updateTag({ itemprop: "image", content: image });
+
+        /* Twitter Card data */
+
+        this.meta.updateTag({ name: "twitter:card", content:"summary_large_image" });
+        /* Non-Essential, but required for analytics tool. */
+        this.meta.updateTag({ name: "twitter:site", content: this.env.websiteUsername_Twitter });  /* @website-username */
         this.meta.updateTag({ name: "twitter:title", content: title });
         this.meta.updateTag({ name: "twitter:description", content: description });
-        this.meta.updateTag({ name: "twitter:card", content:"some image..." });
-        this.meta.updateTag({ name: "twitter:image:src", content:"some image..." });
+        /* Twitter summary card with large image must be at least 280px x 150px. */
+        if (image) this.meta.updateTag({ name: "twitter:image:src", content: image });
+//        this.meta.updateTag({ name: "twitter:image:alt", content: "Alt text for image..." });
 
-        /* Facebook */
-        // ...
+        /* Open Graph data, Twitter, Facebook, and Linkedin. */
 
-        /* Linkedin */
-        // ...
-
-        /* Telegram */
-        // ...
-    }
-
-    /**
-     * Sets metadata for repositories. 
-     * @param title The title to set. 
-     * @param description The description to set. 
-     */
-    public setMeta_Repo(title: string, description: string): void
-    {
-        let url: string = this.env.appHost + this.router.url;
-
-        /* Open Graph data */
         this.meta.updateTag({ property: "og:title", content: title });
-        this.meta.updateTag({ property: "og:type", content: "article" });
+        this.meta.updateTag({ property: "og:type", content: "website" });
         this.meta.updateTag({ property: "og:url", content: url });
+        if (image) this.meta.updateTag({ property: "og:image", content: image });
         this.meta.updateTag({ property: "og:description", content: description });
         this.meta.updateTag({ property: "og:site_name", content: this.env.appName });
-
-        /* GitHub */
-        // ...
-    }
-
-    /**
-     * Sets all metadata. It contains for general purpose, social networks, and repositories. 
-     * @param title The title to set. 
-     * @param description The description to set. 
-     */
-    public setMeta_All(title: string, description: string): void
-    {
-        this.setMeta_General(title, description);
-        this.setMeta_Social(title, description);
-        this.setMeta_Repo(title, description);
     }
 
     // public setTitleMetadataDrupal(node: any): void
     // {
     //     if (node)
     //     {
-    //         // let url: string = this.env.appHost + this.router.url;
-    //         // let title: string = node.title[0].value + ' - ' + this.env.appName;
+    //         // let url: string = this.env.appHost + this._router.url;
+    //         // let title: string = node.title[0].value + " - " + this.env.appName;
 
-    //         this.setMeta_General(node.title[0].value, node.body[0].summary);
-    //         this.setMeta_Social(node.title[0].value, node.body[0].summary);
+    //         this.setStandardMeta(node.title[0].value, node.body[0].summary);
 
     //         /*
     //         this.bodyTitle.setTitle(title);
-    //         this.meta.updateTag({ name: 'description', content: node.body[0].summary });
+    //         this.meta.updateTag({ name: "description", content: node.body[0].summary });
 
     //         if(node.field_main_image[0])
     //             //this.meta.updateTag({ name: "twitter:card", content: this.imageLinks(node.field_main_image[0], "medium") });

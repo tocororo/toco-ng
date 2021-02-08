@@ -15,6 +15,6 @@ export class HomeComponent implements OnInit
     
     ngOnInit()
     {
-        this.metadata.setMeta_All("Inicio", "");
+        this.metadata.setStandardMeta("Inicio", "", "");
     }
 }
