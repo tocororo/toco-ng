@@ -67,43 +67,4 @@ export class MetadataService
         this.meta.updateTag({ property: "og:description", content: description });
         this.meta.updateTag({ property: "og:site_name", content: this.env.appName });
     }
-
-    // public setTitleMetadataDrupal(node: any): void
-    // {
-    //     if (node)
-    //     {
-    //         // let url: string = this.env.appHost + this._router.url;
-    //         // let title: string = node.title[0].value + " - " + this.env.appName;
-
-    //         this.setStandardMeta(node.title[0].value, node.body[0].summary);
-
-    //         /*
-    //         this.bodyTitle.setTitle(title);
-    //         this.meta.updateTag({ name: "description", content: node.body[0].summary });
-
-    //         if(node.field_main_image[0])
-    //             //this.meta.updateTag({ name: "twitter:card", content: this.imageLinks(node.field_main_image[0], "medium") });
-    //         this.meta.updateTag({ name: "twitter:site", content: env.appName });
-    //         this.meta.updateTag({ name: "twitter:title", content: node.title[0].value });
-    //         this.meta.updateTag({ name: "twitter:description", content: node.metatag.value.description });
-    //         // this.meta.updateTag({ name: "twitter:creator", content: "@author_handle" });
-    //         /* //Twitter summary card with large image must be at least 280x150px. 
-    //         if(node.field_main_image[0])
-    //             //this.meta.updateTag({ name: "twitter:image:src", content: this.imageLinks(node.field_main_image[0], "extra_large") });
-
-    //         //<!-- Open Graph data --});
-    //         this.meta.updateTag({ property:"og:title", content:node.title[0].value });
-    //         this.meta.updateTag({ property:"og:type", content:"article" });
-    //         this.meta.updateTag({ property:"og:url", content:url });
-    //         if(node.field_main_image[0])
-    //             //this.meta.updateTag({ property: "og:image", content: this.imageLinks(node.field_main_image[0], "extra_large") });
-    //         this.meta.updateTag({ property: "og:description", content: node.metatag.value.description });
-    //         this.meta.updateTag({ property: "og:site_name", content: env.appName });
-    //         /* this.meta.updateTag({ property: "article:published_time", content: "2013-09-17T05:59:00+01:00" });
-    //         this.meta.updateTag({ property: "article:modified_time", content: "2013-09-16T19:08:47+01:00" });
-    //         this.meta.updateTag({ property: "article:section", content: "Article Section" });
-    //         this.meta.updateTag({ property: "article:tag", content: "Article Tag" });
-    //         this.meta.updateTag({ property: "fb:admins", content: "Facebook numberic ID" }); */
-    //     }
-    // }
 }
