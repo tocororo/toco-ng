@@ -27,7 +27,8 @@ export class ExtraValidators
     /**
      * @description
      * Validator that requires the length of the control's value to be equal to the 
-     * provided length. This validator is used with Reactive Forms; if you want to use 
+     * provided length. It assumes that the control's value is of string type. 
+     * This validator is used with Reactive Forms; if you want to use 
      * an equivalent validator with Template-driven Form you must use the `equalLength` attribute. 
      *
      * @usageNotes
@@ -49,14 +50,15 @@ export class ExtraValidators
      */
     public static equalLength(equalLength: number): ValidatorFn
     {
-        const rest = (control: AbstractControl): ValidationErrors | null => {
+        const res = (control: AbstractControl): ValidationErrors | null => {
             const len: number = control.value ? control.value.length : 0;
 
             return ((len != 0) && (len != equalLength)) 
                 ? { 'equalLength': { 'requiredLength': equalLength, 'actualLength': len } } 
                 : null;
         };
-        return rest
+
+        return res;
     }
 
     /**
@@ -89,7 +91,7 @@ export class ExtraValidators
      */
     public static requiredAndNotEmpty(requiredProperty: RequiredProperty, childControls: FormControl[]): ValidatorFn
     {
-        const rest = (control: AbstractControl): ValidationErrors | null => {
+        const res = (control: AbstractControl): ValidationErrors | null => {
             let i: number = 0;
             let controlsGroupLength: number = childControls.length;
 
@@ -130,14 +132,64 @@ export class ExtraValidators
                     : { 'requiredAndNotEmpty': { 'required': true, 'pos': minEmptyPos } };
             }
         };
-        return rest;
+
+        return res;
     }
 
     /**
      * @description
      * Validator that requires the control's value pass an ISSN validation test (confirm the check digit). 
+     * Assumes that the code (control's value) is a string of length 11, with the form 'XXXX – XXXX'. 
+     * The validator exists only as a function and not as a directive. 
+     *
+     * @usageNotes
+     *
+     * ### Validates that the field matches a valid ISSN pattern (confirms the check digit): 
+     *
+     * ```typescript 
+     * const control = new FormControl('2049 – 3635', ExtraValidators.issnConfirmCheckDigitOneField(11)); 
+     *
+     * console.log(control.errors); // { issnConfirmCheckDigitOneField: true } 
+     * ``` 
+     *
+     * @returns A validator function that returns an error map with the `issnConfirmCheckDigitOneField` 
+     * if the validation check fails, otherwise `null`. 
+     */
+    public static issnConfirmCheckDigitOneField(codeLength: number): ValidatorFn
+    {
+        const res = (control: AbstractControl): ValidationErrors | null => {
+            if (control.value.length == codeLength)
+            {
+                let code: string = control.value;
+
+                let result: number = (code.charCodeAt(0) - 48) * 8;
+                result += (code.charCodeAt(1) - 48) * 7;
+                result += (code.charCodeAt(2) - 48) * 6;
+                result += (code.charCodeAt(3) - 48) * 5;
+
+                /* code[4] = ' ', code[5] = '–', code[6] = ' '. */
+
+                result += (code.charCodeAt(7) - 48) * 4;
+                result += (code.charCodeAt(8) - 48) * 3;
+                result += (code.charCodeAt(9) - 48) * 2;
+                result += ((code[10] == 'x') || (code[10] == 'X')) ? 10 : code.charCodeAt(10) - 48;
+
+                return (result % 11) 
+                    ? { 'issnConfirmCheckDigitOneField': true } 
+                    : null;
+            }
+
+            return null;
+        };
+
+        return res;
+    }
+
+    /**
+     * @description
+     * Validator that requires the control's value passes an ISSN validation test (confirms the check digit). 
      * The ISSN value is divided in two groups, therefore the control has two child controls and they are 
-     * arguments of the validator method. 
+     * arguments of the validator method. It assumes that the control's value is of string type. 
      * The validator exists only as a function and not as a directive. 
      *
      * @usageNotes
@@ -148,17 +200,17 @@ export class ExtraValidators
      * const control = new FormGroup({
      *     'fg': (firstGroup = new FormControl('2049')), 
      *     'sg': (secondGroup = new FormControl('3635'))}, 
-     *     ExtraValidators.issnConfirmCheckDigit(firstGroup, secondGroup, 4)); 
+     *     ExtraValidators.issnConfirmCheckDigitTwoField(firstGroup, secondGroup, 4)); 
      *
-     * console.log(control.errors); // { issnConfirmCheckDigit: true } 
+     * console.log(control.errors); // { issnConfirmCheckDigitTwoField: true } 
      * ``` 
      *
-     * @returns A validator function that returns an error map with the `issnConfirmCheckDigit` 
+     * @returns A validator function that returns an error map with the `issnConfirmCheckDigitTwoField` 
      * if the validation check fails, otherwise `null`. 
      */
-    public static issnConfirmCheckDigit(firstGroup: FormControl, secondGroup: FormControl, groupLength: number): ValidatorFn
+    public static issnConfirmCheckDigitTwoField(firstGroup: FormControl, secondGroup: FormControl, groupLength: number): ValidatorFn
     {
-        const rest = (control: AbstractControl): ValidationErrors | null => {
+        const res = (control: AbstractControl): ValidationErrors | null => {
             if ((firstGroup.value.length == groupLength) && (secondGroup.value.length == groupLength))
             {
                 let groupValue: string = firstGroup.value;
@@ -174,23 +226,25 @@ export class ExtraValidators
                 result += ((groupValue[3] == 'x') || (groupValue[3] == 'X')) ? 10 : groupValue.charCodeAt(3) - 48;
 
                 return (result % 11) 
-                    ? { 'issnConfirmCheckDigit': true } 
+                    ? { 'issnConfirmCheckDigitTwoField': true } 
                     : null;
             }
 
             return null;
         };
-        return rest;
+
+        return res;
     }
 
     public static issnValidator(internalFormGroup: FormGroup): ValidatorFn
     {
-        const rest = (control: AbstractControl): ValidationErrors | null => {
+        const res = (control: AbstractControl): ValidationErrors | null => {
             return (!internalFormGroup.valid) 
                 ? { 'issnValidator': { 'requiredValid': internalFormGroup.valid } } 
                 : null;
         };
-        return rest;
+
+        return res;
     }
 }
 

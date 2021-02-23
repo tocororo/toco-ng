@@ -57,69 +57,171 @@ export enum IssnType_Label
 
 /**
  * Data structure for holding an ISSN. 
- * An ISSN (International Standard Serial Number) is an 8-digit code used to identify 
- * newspapers, journals, magazines and periodicals of all kinds and on all media–print 
- * and electronic. For more information follow the link: https://www.issn.org/understanding-the-issn/what-is-an-issn/. 
+ * An ISSN (International Standard Serial Number) is an 8-digit code. 
+ * This control stores the code as a string of length 11, with the form 'XXXX – XXXX'. 
+ * It is used to identify newspapers, journals, magazines and periodicals 
+ * of all kinds and on all media–print and electronic. For more information 
+ * follow the link: https://www.issn.org/understanding-the-issn/what-is-an-issn/. 
  */
 export class IssnValue
 {
 	/**
-	 * The amount of digits in a group. 
+	 * The amount of characters in the code. 
 	 */
-	public static readonly groupLength: number = 4;
+	public static readonly codeLength: number = 11;
 
 	/**
-	 * The amount of digits in a group as string value. 
+	 * The amount of characters in the code as string value. 
 	 */
-	public static readonly groupLengthAsString: string = IssnValue.groupLength.toString(10);
+	public static readonly codeLengthAsString: string = IssnValue.codeLength.toString(10);
 
 	/**
-	 * The default ISSN value. 
+	 * The character that represents the code group separator. 
 	 */
-	public static readonly defaultIssnValue: IssnValue = new IssnValue('', '');
-
-	public static createIssnValueFromString(value: string) {
-		try {
-			const parts = value.split('-');
-			return new IssnValue(parts[0].trim(), parts[1].trim());
-		} catch (error) {
-			return undefined;
-		}
-		
-	}
-	
-	/**
-	 * The first group of `IssnValue.groupLength` digits.
-	 */
-	public firstGroup: string;
+	public static readonly codeGroupSeparator: string = '–';
 
 	/**
-	 * The second group of `IssnValue.groupLength` digits.
+	 * The string that represents the code group separator with space. 
 	 */
-	public secondGroup: string;
+	public static readonly codeGroupSeparatorWithSpace: string = ' ' + IssnValue.codeGroupSeparator + ' ';
 
-	public constructor(fg: string, sg: string)
+	/**
+	 * The regular expression that matches an ISSN code as a string of length 11, with the form 'XXXX – XXXX'. 
+	 */
+	public static readonly regExpIssnWithLength_11: string = '^[0-9]{4} ' + IssnValue.codeGroupSeparator + ' [0-9]{3}[0-9xX]$';
+
+	/**
+	 * The regular expression that matches an ISSN code as a string of length 9, with the form 'XXXX–XXXX'. 
+	 */
+	public static readonly regExpIssnWithLength_9: string = '^[0-9]{4}' + IssnValue.codeGroupSeparator + '[0-9]{3}[0-9xX]$';
+
+	/**
+	 * The regular expression that matches an ISSN code as a string of length 8, with the form 'XXXXXXXX'. 
+	 */
+	public static readonly regExpIssnWithLength_8: string = '^[0-9]{7}[0-9xX]$';
+
+	/**
+	 * General purpose method. 
+	 * Converts the specified ISSN code to a code with length 11 with the form 'XXXX – XXXX'. 
+	 * @param code The code to convert. 
+	 */
+	public static convertIssnToLength_11(code: string): string
 	{
-		this.firstGroup = fg;
-		this.secondGroup = sg.replace('x', 'X');
+		let fg: string;
+		let sg: string;
+
+		if (code.length == 8)
+		{
+			fg = code.slice(0, 4);
+			sg = code.slice(4, 7);
+
+			return (fg + ' ' + IssnValue.codeGroupSeparator + ' ' + sg + ((code[7] == 'x') ? 'X' : code[7]));
+		}
+		else if (code.length == 9)
+		{
+			fg = code.slice(0, 4);
+			sg = code.slice(5, 8);
+
+			return (fg + ' ' + IssnValue.codeGroupSeparator + ' ' + sg + ((code[8] == 'x') ? 'X' : code[8]));
+		}
+		else  /* The code length is 11. */
+		{
+			fg = code.slice(0, 5);
+			sg = code.slice(6, 10);
+
+			return (fg + IssnValue.codeGroupSeparator + sg + ((code[10] == 'x') ? 'X' : code[10]));
+		}
+	}
+
+	/**
+	 * General purpose method. 
+	 * Converts the specified ISSN code to a code with length 9 with the form 'XXXX–XXXX'. 
+	 * @param code The code to convert. 
+	 */
+	public static convertIssnToLength_9(code: string): string
+	{
+		let fg: string;
+		let sg: string;
+
+		if (code.length == 8)
+		{
+			fg = code.slice(0, 4);
+			sg = code.slice(4, 7);
+
+			return (fg + IssnValue.codeGroupSeparator + sg + ((code[7] == 'x') ? 'X' : code[7]));
+		}
+		else if (code.length == 9)
+		{
+			fg = code.slice(0, 4);
+			sg = code.slice(5, 8);
+
+			return (fg + IssnValue.codeGroupSeparator + sg + ((code[8] == 'x') ? 'X' : code[8]));
+		}
+		else  /* The code length is 11. */
+		{
+			fg = code.slice(0, 4);
+			sg = code.slice(7, 10);
+
+			return (fg + IssnValue.codeGroupSeparator + sg + ((code[10] == 'x') ? 'X' : code[10]));
+		}
+	}
+
+	/**
+	 * General purpose method. 
+	 * Converts the specified ISSN code to a code with length 8 with the form 'XXXXXXXX'. 
+	 * @param code The code to convert. 
+	 */
+	public static convertIssnToLength_8(code: string): string
+	{
+		let fg: string;
+		let sg: string;
+
+		if (code.length == 9)
+		{
+			fg = code.slice(0, 4);
+			sg = code.slice(5, 8);
+
+			return (fg + sg + ((code[8] == 'x') ? 'X' : code[8]));
+		}
+		if (code.length == 11)
+		{
+			fg = code.slice(0, 4);
+			sg = code.slice(7, 10);
+
+			return (fg + sg + ((code[10] == 'x') ? 'X' : code[10]));
+		}
+		else  /* The code length is 8. */
+		{
+			return code;
+		}
+	}
+
+	/**
+	 * The code of `IssnValue.codeLength` characters. 
+	 */
+	public code: string;
+
+	public constructor(c: string)
+	{
+		this.code = IssnValue.convertIssnToLength_11(c);
 	}
 
 	/**
 	 * Returns true if the ISSN is complete; otherwise, false. 
-	 * It is complete if all group of digits have the correct length. It does not check if the ISSN has 
-	 * the correct check digit. 
+	 * It is complete if the code of characters has the correct length. It does not check if the ISSN has 
+	 * the correct digits. 
 	 */
 	public isComplete(): boolean
 	{
-		return ((this.firstGroup.length == IssnValue.groupLength) && (this.secondGroup.length == IssnValue.groupLength));
+		return (this.code.length == IssnValue.codeLength);
 	}
 
-	 /**
-	  * Returns a string representation of this `IssnValue` object. 
-	  * @param acronym The acronym to use. 
-	  */
-	 public toString(acronym: IssnType_Abbreviation | IssnType_Label): string
-	 {
-		return acronym + ' ' + this.firstGroup + '-' + this.secondGroup;
-	 }
+	/**
+	 * Returns a string representation of this `IssnValue` object. 
+	 * @param acronym The acronym to use. 
+	 */
+	public toString(acronym: IssnType_Abbreviation | IssnType_Label): string
+	{
+		return acronym + ' ' + this.code;
+	}
 }
