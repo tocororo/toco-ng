@@ -24,7 +24,6 @@ import { ContainerLabelDiffLangComponent } from './container-specific/label-diff
 import { InputTextComponent } from './input/text/text-input.component';
 import { InputEmailComponent } from './input/email/email-input.component';
 import { InputIdentifierComponent } from './input/identifier/identifier-input.component';
-import { InputIssnInternalComponent } from './input/issn/issn-internal/issn-input-internal.component';
 import { InputIssnComponent } from './input/issn/issn-input.component';
 import { InputRnpsComponent } from './input/rnps/rnps-input.component';
 import { InputSelectComponent } from './input/select/select-input.component';
@@ -58,7 +57,6 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     InputTextComponent,
     InputEmailComponent,
     InputIdentifierComponent,
-    InputIssnInternalComponent,
     InputIssnComponent,
     InputRnpsComponent,
     InputSelectComponent,

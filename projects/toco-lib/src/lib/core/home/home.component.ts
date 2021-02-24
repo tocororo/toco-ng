@@ -10,11 +10,11 @@ import { MetadataService } from '../metadata.service';
 })
 export class HomeComponent implements OnInit
 {
-    constructor(private metadata: MetadataService )
+    constructor(private metadata: MetadataService)
     { }
     
     ngOnInit()
     {
-        this.metadata.setTitleDescription("Inicio", "");
+        this.metadata.setStandardMeta("Inicio", "", "");
     }
 }

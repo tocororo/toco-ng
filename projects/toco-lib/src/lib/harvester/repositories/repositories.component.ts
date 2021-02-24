@@ -64,7 +64,7 @@ export class RepositoriesComponent implements OnInit {
 
     ngOnInit() {
 
-        this.metadata.setTitleDescription("Catálogo de Revistas Científicas", "");
+        this.metadata.setStandardMeta("Catálogo de Revistas Científicas", "", "");
         this.paginator.firstPage();
         this.paginator.pageSize = this.pageSize;
         this.service.getJournalsCount().subscribe(response =>{

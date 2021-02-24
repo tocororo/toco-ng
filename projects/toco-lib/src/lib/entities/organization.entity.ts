@@ -179,6 +179,16 @@ export class Address extends EntityBase
   state_code: string = '';
 
   /**
+   * Name of the municipality.
+   */
+  municipality: string = '';
+
+  /**
+   * dpa municipality code.
+   */
+  municipality_dpa: string = '';
+
+  /**
    * Linked GeoNames data.
    */
   geonames_city: GeoNamesCity = undefined;

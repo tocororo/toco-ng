@@ -143,7 +143,7 @@ export class JournalViewComponent implements OnInit {
 
         this.SelectJournalVersion();
 
-        this.metadata.setTitleDescription('Revista Científica ' + this.editingJournal.data.title, this.editingJournal.data.description);
+        this.metadata.setStandardMeta("Revista Científica " + this.editingJournal.data.title, this.editingJournal.data.description, "");
 
         // if (this.versions){
         //   this.versions.forEach((journalVersion: JournalVersion, index: number) => {
