@@ -25,6 +25,9 @@ export abstract class Environment {
   abstract readonly topOrganizationPID: string;
 
   abstract readonly cachableUrls: Array<string>;
+
+  abstract readonly matomoUrl : string;
+  abstract readonly matomoSiteId : number;
 }
 
 // import { Injectable } from '@angular/core';
