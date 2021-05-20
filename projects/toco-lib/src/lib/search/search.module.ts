@@ -6,6 +6,7 @@ import { RecordComponent } from './record/record.component';
 import { AggregationsComponent } from './aggregations/aggregations.component';
 import { QueryInputComponent } from './query-input/query-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { RecordListComponent } from './record-list/record-list.component';
 import { CommonModule } from '@angular/common';
@@ -22,6 +23,7 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     SharedModule,
     ReactiveFormsModule,
+    TranslateModule,
     SharedModule
   ],
 

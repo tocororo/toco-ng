@@ -1,6 +1,6 @@
+
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
-
 
 @Component({
   selector: 'toco-search-query-input',
@@ -32,12 +32,10 @@ export class QueryInputComponent implements OnInit {
 
   @Output()
   queryChange = new EventEmitter<string>();
-  
+
   queryCtrl = new FormControl();
-  
+
   constructor() { }
-  
-  placeholder = "Escriba un criterio y presione Enter"
 
   ngOnInit() {
     // this.queryCtrl.valueChanges
@@ -50,8 +48,8 @@ export class QueryInputComponent implements OnInit {
     //   }
     // })
   }
-  riseQuery(){
-    this.queryChange.emit(this.queryCtrl.value? this.queryCtrl.value :'');
-  }
 
+  riseQuery(){
+    this.queryChange.emit(this.queryCtrl.value ? this.queryCtrl.value : '');
+  }
 }
