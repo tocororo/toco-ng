@@ -21,7 +21,7 @@ import { RoadMapComponent } from './utils/road-map/road-map.component';
 import { RoadMapSceibaComponent } from './utils/road-map-sceiba/road-map-sceiba.component';
 import { GetViewContainerDirective } from './utils/get-view-container.directive';
 import { EqualLengthDirective } from './utils/validator';
-import { DialogContentComponent } from './utils/message-handler';
+import { DialogContentComponent, DialogDeleteConfirmComponent } from './utils/message-handler';
 import { ProgressComponent } from './utils/progress';
 import { SceibaAppsComponent } from './sceiba-apps/sceiba-apps.component';
 
@@ -40,6 +40,7 @@ import { SceibaAppsComponent } from './sceiba-apps/sceiba-apps.component';
         GetViewContainerDirective,
         EqualLengthDirective,
         DialogContentComponent,
+        DialogDeleteConfirmComponent,
         ProgressComponent,
         SceibaAppsComponent
     ],
@@ -65,11 +66,13 @@ import { SceibaAppsComponent } from './sceiba-apps/sceiba-apps.component';
         GetViewContainerDirective,
         EqualLengthDirective,
         DialogContentComponent,
+        DialogDeleteConfirmComponent,
         ProgressComponent,
         SceibaAppsComponent
     ],
     entryComponents: [
         DialogContentComponent,
+        DialogDeleteConfirmComponent
     ],
     providers: [
         MetadataService
