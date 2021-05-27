@@ -21,7 +21,7 @@ export type Params<T> = {
 
 /**
  * An object of paths that is used to get the child controls in a `FormGroup`/`FormArray` control. 
- * The value of its properties is a dot-delimited string value that define the path to a child control. 
+ * The value of its properties is a dot-delimited string value that defines the path to a child control. 
  */
 export type ChildControlsPath = {
     [key: string]: string;
