@@ -16,7 +16,7 @@ export enum StatusCode {
 
 /**
  * Object that is used with the `DialogContentComponent` component. 
- * It contains the data that are showed in the message. 
+ * It contains the different data that are showed in the message. 
  */
 export class DialogMessageData
 {
@@ -32,7 +32,7 @@ export class DialogMessageData
 
 /**
  * Object that is used with the `DialogDeleteConfirmComponent` component. 
- * It contains the data that are showed in the message. 
+ * It contains the different data that are showed in the message. 
  */
 export class DialogDeleteConfirmMessageData
 {
@@ -61,7 +61,7 @@ export class DialogDeleteConfirmMessageData
 		</h1>
 		<mat-dialog-content> {{ data.content }} </mat-dialog-content>
 		<mat-dialog-actions align="end">
-			<button mat-button mat-dialog-close>OK</button>
+			<button mat-stroked-button mat-dialog-close>OK</button>
 		</mat-dialog-actions>
 	`
 })
@@ -84,8 +84,8 @@ export class DialogContentComponent
 			Su valor es: <em>{{ data.delValue }}</em>
 		</mat-dialog-content>
 		<mat-dialog-actions align="end">
-			<button mat-button mat-dialog-close color="warning">Cancelar</button>
-			<button mat-button [mat-dialog-close]="true" color="warning" cdkFocusInitial>Eliminar</button>
+			<button mat-stroked-button mat-dialog-close color="warning">Cancelar</button>
+			<button mat-stroked-button [mat-dialog-close]="true" color="warning" cdkFocusInitial>Eliminar</button>
 		</mat-dialog-actions>
 	`
 })
