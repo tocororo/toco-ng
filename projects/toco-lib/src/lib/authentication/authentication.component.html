@@ -3,7 +3,7 @@
     <mat-card fxLayoutAlign="center center" fxLayout="column">
 
         <mat-card-header>
-            <mat-card-title *ngIf="!userName">Autenticación con</mat-card-title>
+            <mat-card-title *ngIf="!userName">{{ 'TOCO_AUTHENTICATION.MAT_CARD_TITLE_AUTH' | translate }}</mat-card-title>
         </mat-card-header>
 
         <mat-card-content fxLayoutAlign="center center" fxLayout="column">
@@ -12,9 +12,9 @@
             </button>
 
             <ng-template #templateName>
-                <h1>Hola {{userName}}</h1>
+                <h1>{{ 'TOCO_AUTHENTICATION.H1_HOLA' | translate }} {{ userName }}</h1>
                 <button mat-raised-button color="primary" style="width: 12em" (click)="logoff()">
-                    Salir
+                    {{ 'TOCO_AUTHENTICATION.BUTTON_SALIR' | translate }}
                 </button>
             </ng-template>
 
@@ -23,11 +23,11 @@
 </div>
 
 <ng-template #template_buttonLogin>
-    <button  mat-icon-button *ngIf="isButtonLoginIcon" (click)="login()" matTooltip="{{isButtonLoginText}}">
+    <button *ngIf="isButtonLoginIcon" mat-icon-button (click)="login()" matTooltip="{{ isButtonLoginText }}">
         <mat-icon>lock_open</mat-icon>
     </button>
-    <button  mat-raised-button *ngIf="!isButtonLoginIcon" color="primary" (click)="login()">
-        {{isButtonLoginText}}
+    <button *ngIf="!isButtonLoginIcon" mat-raised-button color="primary" (click)="login()">
+        {{ isButtonLoginText }}
         <mat-icon class="mat-18">lock_open</mat-icon>
     </button>
 </ng-template>

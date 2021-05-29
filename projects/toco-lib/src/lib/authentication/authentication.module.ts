@@ -6,13 +6,13 @@
 
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/public-api';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 
 import { AuthenticationComponent } from './authentication.component'
 import { AuthenticateRoutingModule } from './authentication-routing.module'
 import { OauthAuthenticationService, SimpleAuthenticationService } from './authentication.service'
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 export function storageFactory() : OAuthStorage {
   return localStorage
@@ -25,6 +25,7 @@ export function storageFactory() : OAuthStorage {
     imports: [
         SharedModule,
         HttpClientModule,
+        TranslateModule,
         OAuthModule.forRoot(),
         // AuthenticateRoutingModule
     ],
