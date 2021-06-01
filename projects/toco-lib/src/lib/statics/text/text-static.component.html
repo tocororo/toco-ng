@@ -1,5 +1,5 @@
 
 <mat-form-field class="text-mat-form-field control-without-interactivity" [appearance]="appearance">
     <mat-label>{{ desc }}</mat-label>
-    <input matInput [value]="value ? value : 'There is not any text to show!'" [style.textAlign]="textAlign" [attr.aria-label]="desc" />
+    <input matInput [value]="value ? value : valueByDefault" [style.textAlign]="textAlign" [attr.aria-label]="desc" />
 </mat-form-field>
