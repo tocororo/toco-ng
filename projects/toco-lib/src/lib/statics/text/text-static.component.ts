@@ -1,5 +1,6 @@
 
-import { Component, Input } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 /**
  * Represents a static control that shows a text. 
@@ -12,7 +13,7 @@ import { Component, Input } from '@angular/core';
         '[style.width]': 'width'
     }
 })
-export class StaticTextComponent
+export class StaticTextComponent implements OnInit
 {
     /**
      * The control's width. 
@@ -57,6 +58,13 @@ export class StaticTextComponent
 	@Input()
     public textAlign: string;
 
+	/**
+	 * Returns a reference to the `FormControl` that tracks the value and validity state 
+	 * of the internal control that contains the text input. 
+	 * For internal use only. 
+	 */
+	public input_static: FormControl;
+
 	public constructor()
 	{
 		this.width = '100%';
@@ -65,5 +73,25 @@ export class StaticTextComponent
 		this.value = undefined;
 		this.valueByDefault = 'There is not any text to show!';
 		this.textAlign = 'left';
+
+		this.input_static = undefined;
+	}
+
+    public ngOnInit(): void
+	{
+		if(this.value === undefined) this.value = this.valueByDefault;
+
+		this.input_static = new FormControl(this.value);
+	}
+
+	/**
+	 * Handler method that is called when the control's value changes in the UI. 
+	 * It is always used to set the `value` input field as the component value. 
+	 * For internal use only. 
+	 */
+	public handleInput(): void
+	{
+		/* It always sets the `value` input field as the component value. */
+		this.input_static.setValue(this.value);
 	}
 }
