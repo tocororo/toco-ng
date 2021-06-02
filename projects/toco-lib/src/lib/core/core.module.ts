@@ -82,6 +82,6 @@ export class CoreModule
 {
     public constructor(@Optional() @SkipSelf() parentModule: CoreModule)
     {
-        throwIfAlreadyLoaded(parentModule, 'CoreModule');
+        //throwIfAlreadyLoaded(parentModule, 'CoreModule');
     }
 }
