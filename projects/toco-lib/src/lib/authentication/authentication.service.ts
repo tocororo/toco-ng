@@ -12,8 +12,6 @@ import { catchError } from 'rxjs/operators';
 import { UserProfile } from '../../public-api';
 import { Environment } from '../core/public-api';
 
-
-
 /**
  * This enum handles the selected backend
  */
@@ -182,9 +180,4 @@ export class SimpleAuthenticationService { //implements CanActivate {
   //   }
 
   // }
-
-
-
-
 }
-

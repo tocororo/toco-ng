@@ -9,6 +9,7 @@
  */
 export * from './entities.module';
 export * from './common';
+export * from './inst-repo.entity';
 export * from './journal_reference.entity';
 export * from './journal.entity';
 export * from './organization.entity';
