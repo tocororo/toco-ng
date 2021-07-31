@@ -20,6 +20,7 @@ export const SourceSystems = {
 
 export const SourceTypes = {
     JOURNAL: { label: 'Revista Científica', value: 'JOURNAL' },
+    SERIAL: { label: 'Publicación Seriada', value: 'SERIAL' },
     STUDENT: { label: 'Revista Científico Estudiantil', value: 'STUDENT' },
     POPULARIZATION: { label: 'Revista de Divulgación', value: 'POPULARIZATION' },
     REPOSITORY: { label: 'Repositorio Institucional', value: 'REPOSITORY' },
