@@ -20,6 +20,15 @@ export type Params<T> = {
 };
 
 /**
+ * An object of paths that is used to get the child controls in a `FormGroup`/`FormArray` control. 
+ * The value of its properties is a dot-delimited string value or an array of string/number values 
+ * that define the path to a child control. 
+ */
+export type ChildControlsPath = {
+    [key: string]: Array<string | number> | string;
+};
+
+/**
  * Returns true if the specified `possDescendant` is descendant from the specified `ancestorName`; 
  * otherwise, false. 
  * @param possDescendant Possible descendant. 

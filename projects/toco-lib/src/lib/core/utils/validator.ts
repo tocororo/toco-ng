@@ -1,6 +1,6 @@
 
 import { Directive, OnChanges, Input, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormControl, ValidatorFn, ValidationErrors, Validator, NG_VALIDATORS, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, ValidatorFn, ValidationErrors, Validator, NG_VALIDATORS, FormGroup, FormArray } from '@angular/forms';
 
 /**
  * Represents a class that contains a boolean property named `required`. 
@@ -55,6 +55,38 @@ export class ExtraValidators
 
             return ((len != 0) && (len != equalLength)) 
                 ? { 'equalLength': { 'requiredLength': equalLength, 'actualLength': len } } 
+                : null;
+        };
+
+        return res;
+    }
+
+    /**
+     * @description
+     * Validator that is applied to `FormArray` controls. It requires that the amount of 
+	 * `FormArray`'s child controls to be greater than or equal to the provided minimum length. 
+	 * The validator exists only as a function and not as a directive. 
+     *
+     * @usageNotes
+     *
+     * ### Validates that the `FormArray` field has a minimum of 2 child controls: 
+     *
+     * ```typescript 
+     * const formArrayControl = new FormArray([new FormControl('ng')], ExtraValidators.minLength(2)); 
+     *
+	 * console.log(formArrayControl.errors); // { minLength: { requiredLength: 2, actualLength: 1 } } 
+     * ``` 
+     *
+     * @returns A validator function that returns an error map with the 
+     * `minLength` if the validation check fails, otherwise `null`. 
+     */
+    public static minLength(minLength: number): ValidatorFn
+    {
+        const res = (control: FormArray): ValidationErrors | null => {
+            const len: number = control.controls.length;
+
+            return (len < minLength) 
+                ? { 'minLength': { 'requiredLength': minLength, 'actualLength': len } } 
                 : null;
         };
 

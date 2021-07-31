@@ -1,20 +1,18 @@
+
 import { AfterViewInit, Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import {
-  AuthConfig, JwksValidationHandler, OAuthService,
-
-  OAuthStorage
-} from "angular-oauth2-oidc";
 import { PartialObserver, Subscription, timer } from "rxjs";
-import { UserProfileService } from "../backend/public-api";
+import { TranslateService } from "@ngx-translate/core";
+import { AuthConfig, JwksValidationHandler, OAuthService,OAuthStorage } from "angular-oauth2-oidc";
+
 import { Environment } from "../core/env";
-import { UserProfile } from "../entities/public-api";
+import { UserProfileService } from "../backend/user-profile.service";
+import { UserProfile } from "../entities/person.entity";
 import { OauthAuthenticationService } from "./authentication.service";
-
-
-
 // import { authConfig } from './auth-config';
-export interface OauthInfo{
+
+export interface OauthInfo
+{
   serverHost: string;
   loginUrl: string;
   tokenEndpoint: string;
@@ -25,6 +23,34 @@ export interface OauthInfo{
   oauthClientId: string;
   oauthScope: string;
 }
+
+/**
+ * Represents a component used to authenticate. 
+ * 
+ * In order to use this component with the correct i18n, you must include 
+ * (in your i18n translate files that are in the folder `assets\i18n`) 
+ * a translation key of name "TOCO_AUTHENTICATION" that contains 
+ * an object as value with the translation needed by this component. 
+ * 
+ * In the case of `es.json` file, you must include the following translation key: 
+    "TOCO_AUTHENTICATION": {
+        "MAT_CARD_TITLE_AUTH": "Autenticación con",
+        "AUTENTICARSE": "Autenticarse",
+        "H1_HOLA": "Hola",
+        "BUTTON_SALIR": "Salir"
+    }
+ * 
+ * In the case of `en.json` file, you must include the following translation key: 
+    "TOCO_AUTHENTICATION": {
+        "MAT_CARD_TITLE_AUTH": "Authentication with",
+        "AUTENTICARSE": "Log in",
+        "H1_HOLA": "Hello,",
+        "BUTTON_SALIR": "Exit"
+    }
+ * 
+ * If you have another language, then you have another `*.json` file, 
+ * and you must include the "TOCO_AUTHENTICATION" translation key with the correct translation values. 
+ */
 @Component({
   selector: "toco-authentication",
   templateUrl: "./authentication.component.html",
@@ -77,16 +103,24 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
   constructor(
     private userProfileService: UserProfileService,
     private env: Environment,
+    private router: Router,
     private oauthService: OAuthService,
     private oauthStorage: OAuthStorage,
     private authenticationService: OauthAuthenticationService,
-    private router: Router
-  ) {}
+    private _transServ: TranslateService
+  )
+  { }
 
-  ngOnInit() {
+  ngOnInit()
+  {
     if (this.isButtonLogin == undefined) this.isButtonLogin = false;
     if (this.isButtonLoginIcon == undefined) this.isButtonLoginIcon = false;
-    if (this.isButtonLoginText == undefined) this.isButtonLoginText = "Login";
+    if (this.isButtonLoginText == undefined)
+    {
+      this._transServ.get('TOCO_AUTHENTICATION.AUTENTICARSE').subscribe((res: string) => {
+        this.isButtonLoginText = res;
+      });
+    }
     if (this.oauthInfo.loginUrl == undefined || this.oauthInfo.loginUrl == ''){
       this.oauthInfo.loginUrl = this.oauthInfo.serverHost + "oauth/authorize";
     }
@@ -182,7 +216,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
         );
       },
       onLoginError: (err) => {
-        console.log("errorr in login", err);
+        console.log("error in login", err);
       },
     });
   }
