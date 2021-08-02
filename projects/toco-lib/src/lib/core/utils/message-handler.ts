@@ -15,43 +15,42 @@ export enum StatusCode {
 }
 
 /**
- * Object that is used with the `DialogContentComponent` component. 
- * It contains the different data that are showed in the message. 
+ * Object that is used with the `DialogContentComponent` component.
+ * It contains the different data that are showed in the message.
  */
-export class DialogMessageData
-{
+export class DialogMessageData {
     /**
-     * Message title. 
+     * Message title.
      */
 	title: string;
     /**
-     * Message content. 
+     * Message content.
      */
 	content: string;
 }
 
 /**
- * Object that is used with the `DialogDeleteConfirmComponent` component. 
- * It contains the different data that are showed in the message. 
+ * Object that is used with the `DialogDeleteConfirmComponent` component.
+ * It contains the different data that are showed in the message.
  */
 export class DialogDeleteConfirmMessageData
 {
     /**
-     * Article of the type to delete. 
+     * Article of the type to delete.
      */
 	delTypeArt: string;
     /**
-     * Type to delete. 
+     * Type to delete.
      */
 	delType: string;
     /**
-     * Value to delete. 
+     * Value to delete.
      */
 	delValue: string;
 }
 
 /**
- * Simple dialog message. 
+ * Simple dialog message.
  */
 @Component({
 	selector: 'toco-dialog-message',
@@ -72,7 +71,7 @@ export class DialogContentComponent
 }
 
 /**
- * Dialog confirm message used to delete something. 
+ * Dialog confirm message used to delete something.
  */
 @Component({
 	selector: 'toco-dialog-delete-confirm',
