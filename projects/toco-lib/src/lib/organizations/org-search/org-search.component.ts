@@ -1,4 +1,5 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { isArray } from 'util';
+import { Component, OnInit, Output, EventEmitter, Input, Type } from '@angular/core';
 import { Organization, SearchResponse, HitList, Aggr } from '../../entities/public-api';
 import { FormControl } from '@angular/forms';
 import { SearchService, OrganizationServiceNoAuth } from '../../backend/public-api';
@@ -26,7 +27,7 @@ export class OrgSearchComponent implements OnInit {
    * @Example { type: 'country' , value: 'Cuba" }
    */
   @Input()
-  orgFilter: { type: string, value: string};
+  orgFilter: { type: string, value: string} | Array<{ type: string, value: string}>;
 
   @Input()
   placeholder: string = "Escriba al menos 3 letras";
@@ -53,7 +54,17 @@ export class OrgSearchComponent implements OnInit {
     this.params = this.params.set('size', '10');
     this.params = this.params.set('page', '1');
     if (this.orgFilter != undefined) {
-      this.params = this.params.set(this.orgFilter.type, this.orgFilter.value);
+      if (isArray(this.orgFilter )){
+        const filter_array = (this.orgFilter as Array<{ type: string, value: string}>);
+        for(let filter of filter_array){
+          this.params = this.params.set(filter.type, filter.value);
+        }
+      }
+      else {
+        const type = (this.orgFilter as { type: string, value: string} ).type;
+        const value = (this.orgFilter as { type: string, value: string} ).value;
+        this.params = this.params.set(type, value);
+      }
     }
     this.orgCtrl.valueChanges
     .subscribe({
