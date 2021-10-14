@@ -167,6 +167,6 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
 			this.content.extraContent.selectionChange(this.content.formControl.value);
 		}
 
-		console.log('Select value: ', this.content.formControl.value);
+		// console.log('Select value: ', this.content.formControl.value);
 	}
 }

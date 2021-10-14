@@ -5,7 +5,7 @@
 >
 
   <mat-label>
-	{{ content.label }}
+	{{ content.label | translate }}
   </mat-label>
 
   <mat-select 
@@ -21,7 +21,7 @@
 	  *ngFor="let option of content.selectOptions" 
 	  [value]="option.value"
 	>
-	  {{ option.label }}
+	  {{ option.label | translate }}
 	</mat-option>
   </mat-select>
 

@@ -20,6 +20,27 @@ export type Params<T> = {
 };
 
 /**
+ * An enum that describes an action through a text. 
+ */
+export enum ActionText
+{
+    /**
+     * Viewing action. 
+     */
+    view = 'view',
+
+    /**
+     * Adding action. 
+     */
+    add = 'add',
+
+    /**
+     * Editing action. 
+     */
+    edit = 'edit'
+}
+
+/**
  * An object of paths that is used to get the child controls in a `FormGroup`/`FormArray` control. 
  * The value of its properties is a dot-delimited string value or an array of string/number values 
  * that define the path to a child control. 

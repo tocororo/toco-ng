@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/public-api';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { CoreModule, IconService } from '../core/public-api';
 
@@ -78,6 +79,7 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     SharedModule,
     RouterModule,
     ReactiveFormsModule,
+    TranslateModule,
     CoreModule
   ],
 
