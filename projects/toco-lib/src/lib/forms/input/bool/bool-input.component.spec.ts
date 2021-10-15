@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InputBooleanComponent } from './boolean-input.component';
+import { InputBoolComponent } from './bool-input.component';
 
-describe('InputBooleanComponent', () => {
-  let component: InputBooleanComponent;
-  let fixture: ComponentFixture<InputBooleanComponent>;
+describe('InputBoolComponent', () => {
+  let component: InputBoolComponent;
+  let fixture: ComponentFixture<InputBoolComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InputBooleanComponent ]
+      declarations: [ InputBoolComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InputBooleanComponent);
+    fixture = TestBed.createComponent(InputBoolComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

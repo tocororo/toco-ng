@@ -23,7 +23,7 @@ import { TableComponent } from './container/table/table.component';
 import { ContainerLabelDiffLangComponent } from './container-specific/label-diff-lang/label-diff-lang-container.component';
 
 import { InputTextComponent } from './input/text/text-input.component';
-import { InputBooleanComponent } from './input/boolean/boolean-input.component';
+import { InputBoolComponent } from './input/bool/bool-input.component';
 import { InputEmailComponent } from './input/email/email-input.component';
 import { InputIdentifierComponent } from './input/identifier/identifier-input.component';
 import { InputIssnComponent } from './input/issn/issn-input.component';
@@ -57,7 +57,7 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     TableComponent,
     ContainerLabelDiffLangComponent,
     InputTextComponent,
-    InputBooleanComponent,
+    InputBoolComponent,
     InputEmailComponent,
     InputIdentifierComponent,
     InputIssnComponent,
@@ -92,7 +92,7 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     ContainerPanelActionComponent,
     ContainerSimpleComponent,
     InputTextComponent,
-    InputBooleanComponent,
+    InputBoolComponent,
     InputEmailComponent,
     InputIdentifierComponent,
     InputIssnComponent,
@@ -121,7 +121,7 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     TableComponent,
     ContainerLabelDiffLangComponent,
     InputTextComponent,
-    InputBooleanComponent,
+    InputBoolComponent,
     InputEmailComponent,
     InputIdentifierComponent,
     InputIssnComponent,

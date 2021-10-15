@@ -7,15 +7,15 @@ import { InputControl } from '../input.control';
  * Represents a control that allows to select true or false value. 
  */
 @Component({
-	selector: 'input-boolean',
-	templateUrl: './boolean-input.component.html',
-	styleUrls: ['./boolean-input.component.scss'],
+	selector: 'input-bool',
+	templateUrl: './bool-input.component.html',
+	styleUrls: ['./bool-input.component.scss'],
 	host: {
 		'[style.minWidth]': 'content.minWidth',
 		'[style.width]': 'content.width'
 	}
 })
-export class InputBooleanComponent extends InputControl implements OnInit
+export class InputBoolComponent extends InputControl implements OnInit
 {
 	public constructor()
 	{

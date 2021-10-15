@@ -35,7 +35,7 @@ export * from './experimental/textarea/textarea.component';
 export * from './experimental/vocabulary/vocabulary.component';
 export * from './experimental/vocabulary-tree/vocabulary-tree.component';
 
-export * from './input/boolean/boolean-input.component';
+export * from './input/bool/bool-input.component';
 export * from './input/email/email-value';
 export * from './input/email/email-input.component';
 export * from './input/identifier/identifier-value';
