@@ -1,0 +1,28 @@
+
+<mat-form-field
+	class="select-mat-form-field"
+	[appearance]="content.appearance"
+>
+
+	<mat-label>
+		{{ content.label | translate }}
+	</mat-label>
+
+	<mat-select
+		[formControl]="content.formControl"
+		[required]="content.required"
+		[style.textAlign]="content.textAlign"
+		[attr.aria-label]="content.ariaLabel"
+		[(value)]="content.value"
+		[multiple]="'false'"
+		(selectionChange)="onSelectionChange()"
+	>
+		<mat-option [value]="true">
+			{{ 'VERDADERO' | translate }}
+		</mat-option>
+		<mat-option [value]="false">
+			{{ 'FALSO' | translate }}
+		</mat-option>
+	</mat-select>
+
+</mat-form-field>
