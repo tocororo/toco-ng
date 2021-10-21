@@ -22,9 +22,11 @@
     <static-chips *ngIf="org.acronyms && org.acronyms.length" [desc]="'Lista de los acrónimos con que se conoce la organización'" [value]="org.acronyms"></static-chips>
     <static-chips *ngIf="org.types && org.types.length" [desc]="'Lista de los tipos que describen la organización'" [value]="org.types"></static-chips>
     <static-text *ngIf="org.wikipedia_url" [desc]="'URL de la página de Wikipedia de la organización'" [value]="org.wikipedia_url"></static-text>
+    <static-text *ngIf="org.redirect" [desc]="'URL de la página originaria de la organización'" [value]="org.redirect.properties.value"></static-text>
     <static-text *ngIf="org.email_address" [desc]="'Correo electrónico de contacto de la organización'" [value]="org.email_address"></static-text>
     <!-- <static-chips *ngIf="org.ip_addresses && org.ip_addresses.length" [desc]="'Lista de direcciones IP conocidas que pertenecen a la organización'" [value]="org.ip_addresses"></static-chips> -->
     <static-text *ngIf="org.established" [desc]="'Año de fundada la organización'" [value]="org.established"></static-text>
+    <static-text *ngIf="org.onei_registry" [desc]="'Número de registro en la ONEI'" [value]="org.onei_registry"></static-text>
     <static-chips *ngIf="org.links && org.links.length" [desc]="'Lista de los enlaces conocidos de la organización'" [value]="org.links"></static-chips>
     <static-table *ngIf="org.labels && org.labels.length" [desc]="'Nombre de la organización en diferentes lenguajes'" [value]="org.labels"
       [columnsObjectProperty]="['label', 'iso639']"

@@ -37,7 +37,6 @@ export class OrgViewComponent implements OnInit, OnChanges
   @Input()
   public showContent: boolean = true;
 
-
   private _panelsTitle_Relationships: string[];
   private _relationshipsValue: RelationshipsValue[];
 
