@@ -1,5 +1,5 @@
 <ng-container [ngSwitch]="buttonType">
-    
+
     <button *ngSwitchCase="'mat-icon-button'" mat-icon-button [matBadge]="notificationsCount()" matBadgeColor="accent" [matMenuTriggerFor]="notificationsMenu" matTooltip="Notificaciones">
         <mat-icon>notifications</mat-icon>
     </button>
@@ -13,15 +13,29 @@
     </button>
 </ng-container>
 
-<mat-menu #notificationsMenu="matMenu">
-    <button mat-menu-item *ngFor="let notification of notifications">
-        {{notification.emiter}}
-        {{notification.description}}
-    </button>
+<mat-menu #notificationsMenu="matMenu" style="max-width: 400px !important;">
+  <button class="notification-item" mat-menu-item *ngFor="let notification of notifications">
+    <div class="notification-container" [ngStyle]="{'border-left-color': notification.classification.color}">
+      <div class="notification-header">
+        <span>{{notification.emiter.name}} {{notification.emiter.lastname}}</span>
+        <span>{{moment(notification.createdAt).startOf('day').fromNow()}}</span>
+      </div>
+      <span class="notification-description">
+        {{(notification.description.length>135) ?
+          (notification.description | slice:0:135)+' ...'
+          :(notification.description)
+        }}
+      </span>
+    </div>
+  </button>
+  <div *ngIf="count === 0" class="empty-notifications-container">
+    <mat-icon class="empty-notifications-icon">notifications</mat-icon>
+    <h1 style="color: gray; font-size: 25px">SIN NOTIFICACIONES</h1>
+  </div>
     <mat-divider></mat-divider>
     <a [routerLink]="['/notifications']" style="text-decoration: none;">
         <button mat-menu-item style="text-align: center;" color="accent">
             Ver todas
         </button>
-    </a> 
+    </a>
 </mat-menu>
