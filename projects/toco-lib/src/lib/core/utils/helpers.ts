@@ -50,6 +50,60 @@ export type ChildControlsPath = {
 };
 
 /**
+ * Converts the language representation from string to number. 
+ * If the string specified is not registered as a language, then returns -1 number value. 
+ * The Spanish language is: 0 as number, and 'es' as string. 
+ * The English language is: 1 as number, and 'en' as string. 
+ * @param lang The language representation as string. 
+ * @returns Returns the language as a number based on its representation as string. 
+ * If the string specified is not registered as a language, then returns -1 number value. 
+ */
+export function convertLangFromStringToNumber(lang: string): number
+{
+    switch (lang)
+    {
+        case 'es':  /* Spanish */
+            {
+                return 0;
+            }
+
+        case 'en':  /* English */
+            {
+                return 1;
+            }
+    }
+
+    return -1;
+}
+
+/**
+ * Converts the language representation from number to string. 
+ * If the number specified is not registered as a language, then returns empty string value. 
+ * The Spanish language is: 0 as number, and 'es' as string. 
+ * The English language is: 1 as number, and 'en' as string. 
+ * @param index The language representation as number. 
+ * @returns Returns the language as a string based on its representation as number. 
+ * If the number specified is not registered as a language, then returns empty string value. 
+ */
+export function convertLangFromNumberToString(index: number): string
+{
+    switch (index)
+    {
+        case 0:  /* Spanish */
+            {
+                return 'es';
+            }
+
+        case 1:  /* English */
+            {
+                return 'en';
+            }
+    }
+
+    return '';
+}
+
+/**
  * Returns true if the specified `possDescendant` is descendant from the specified `ancestorName`; 
  * otherwise, false. 
  * @param possDescendant Possible descendant. 
