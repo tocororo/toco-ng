@@ -2,10 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
-import { ExtraValidators } from '../../../core/public-api';
+import { ExtraValidators } from '../../../core/utils/validator';
 
-import { InputControl } from '../input.control';
 import { RnpsValue } from './rnps-value';
+import { InputControl } from '../input.control';
+import { ValidatorArguments } from '../../form-field.control';
 
 /**
  * Represents a control that allows the writing of an RNPS. 
@@ -27,8 +28,9 @@ export class InputRnpsComponent extends InputControl implements OnInit
     /**
      * Returns a `FormControl` by default. 
      * It is used to initialized the `InputRnpsComponent`'s `content.formControl` value by default. 
+     * In this case, the `validatorArguments` argument is always `undefined`. 
      */
-    public static getFormControlByDefault(): FormControl
+    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): FormControl
     {
         return new FormControl('', [
             ExtraValidators.equalLength(RnpsValue.codeLength),
@@ -44,14 +46,18 @@ export class InputRnpsComponent extends InputControl implements OnInit
     public constructor()
     {
         super();
+
+        this._codeOldValue = undefined;
     }
 
     public ngOnInit(): void
     {
-        this._codeOldValue = this.content.formControl.value;
-
         /* Sets the default values. */
+
         this.init(RnpsValue.rnps_Abbreviation, true, true);
+
+        /* The '_codeOldValue' must be set after the 'content.formControl.value' is set. */
+        this.handleSpecificInput();
     }
 
     /**

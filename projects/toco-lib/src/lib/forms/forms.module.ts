@@ -4,12 +4,13 @@
  */
 
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared/public-api';
+import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { CoreModule, IconService } from '../core/public-api';
+import { CoreModule } from '../core/core.module';
+import { IconService } from '../core/services/icon.service';
 
 import { ActionButtonComponent } from './action/button/button-action.component';
 
@@ -27,6 +28,7 @@ import { InputBoolComponent } from './input/bool/bool-input.component';
 import { InputEmailComponent } from './input/email/email-input.component';
 import { InputIdentifierComponent } from './input/identifier/identifier-input.component';
 import { InputIssnComponent } from './input/issn/issn-input.component';
+import { InputNumberComponent } from './input/number/number-input.component';
 import { InputRnpsComponent } from './input/rnps/rnps-input.component';
 import { InputSelectComponent } from './input/select/select-input.component';
 import { InputUrlComponent } from './input/url/url-input.component';
@@ -61,6 +63,7 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     InputEmailComponent,
     InputIdentifierComponent,
     InputIssnComponent,
+    InputNumberComponent,
     InputRnpsComponent,
     InputSelectComponent,
     InputUrlComponent,
@@ -96,6 +99,7 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     InputEmailComponent,
     InputIdentifierComponent,
     InputIssnComponent,
+    InputNumberComponent,
     InputRnpsComponent,
     InputSelectComponent,
     InputUrlComponent,
@@ -125,6 +129,7 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     InputEmailComponent,
     InputIdentifierComponent,
     InputIssnComponent,
+    InputNumberComponent,
     InputRnpsComponent,
     InputSelectComponent,
     InputUrlComponent,

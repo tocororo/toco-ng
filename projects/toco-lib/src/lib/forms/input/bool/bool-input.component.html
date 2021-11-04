@@ -12,7 +12,7 @@
 		[formControl]="content.formControl"
 		[required]="content.required"
 		[style.textAlign]="content.textAlign"
-		[attr.aria-label]="content.ariaLabel"
+		[attr.aria-label]="content.ariaLabel | translate"
 		[(value)]="content.value"
 		[multiple]="'false'"
 		(selectionChange)="onSelectionChange()"

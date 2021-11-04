@@ -2,10 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
-import { ExtraValidators } from '../../../core/public-api';
+import { ExtraValidators } from '../../../core/utils/validator';
 
 import { IssnType_Abbreviation, IssnValue } from './issn-value';
 import { InputControl } from '../input.control';
+import { ValidatorArguments } from '../../form-field.control';
 
 /**
  * Represents a control that allows the writing of an ISSN. 
@@ -31,8 +32,9 @@ export class InputIssnComponent extends InputControl implements OnInit
     /**
      * Returns a `FormControl` by default. 
      * It is used to initialized the `InputIssnComponent`'s `content.formControl` value by default. 
+     * In this case, the `validatorArguments` argument is always `undefined`. 
      */
-    public static getFormControlByDefault(): FormControl
+    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): FormControl
     {
         let res: FormControl = new FormControl('', [
             ExtraValidators.equalLength(IssnValue.codeLength),
@@ -51,6 +53,8 @@ export class InputIssnComponent extends InputControl implements OnInit
     public constructor()
     {
         super();
+
+        this._codeOldValue = undefined;
     }
 
     public ngOnInit(): void
@@ -59,13 +63,13 @@ export class InputIssnComponent extends InputControl implements OnInit
 
         this.init(IssnType_Abbreviation.ISSN, true, true);
 
-        if (typeof this.content.value !== 'string')
+        if ((typeof this.content.value !== 'string') && (typeof this.content.value !== 'undefined'))
         {
             throw new Error(`For the '${ this.content.name }' control, the 'content.value' value must be of string type.`);
         }
 
         /* The '_codeOldValue' must be set after the 'content.formControl.value' is set. */
-        this._codeOldValue = this.content.formControl.value;
+        this.handleSpecificInput();
     }
 
    /**

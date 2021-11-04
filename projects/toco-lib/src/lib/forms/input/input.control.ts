@@ -8,7 +8,7 @@ import { Input, ViewChild } from '@angular/core';
 import { Validators, ValidationErrors, FormControl } from '@angular/forms';
 
 import { ContentPosition, IconValue, HintPosition, HintValue,
-    FormFieldContent, FormFieldControl } from '../form-field.control';
+    FormFieldContent, FormFieldControl, ValidatorArguments } from '../form-field.control';
 
 /**
  * An enum that represents the appearance style of an `InputControl`. 
@@ -136,8 +136,10 @@ export abstract class InputControl extends FormFieldControl
     /**
      * Returns a `FormControl` by default. 
      * Its value is empty, and does not have validators. 
+     * @param validatorArguments A collection of key/value elements, where the key is the validator name 
+     * and the value is the value that the validator needs to check. 
      */
-    public static getFormControlByDefault(): FormControl
+    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): FormControl
     {
         return new FormControl('', [ ]);
     }

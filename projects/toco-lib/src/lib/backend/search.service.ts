@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders, HttpParams, HttpBackend } from '@angular/commo
 import { Observable, of } from 'rxjs';
 
 import { Response } from '../core/public-api';
-import { SearchResponse, Record, Source, Organization } from '../entities/public-api';
+import { SearchResponse, Record, Source, Organization, Evaluation } from '../entities/public-api';
 import { Environment } from '../core/public-api';
 
 @Injectable()
@@ -92,6 +92,14 @@ export class SearchService {
   getSourcesOrgAggregation(uuid): Observable<Response<any>> {
     const req = this.env.sceibaApi + 'source/aggs/org/' + uuid;
     return this.http.get<Response<any>>(req);
+  }
+
+  getEvaluationById(id: string, lang: string): Observable<SearchResponse<Evaluation>>
+  {
+    const req = this.env.cuorApi + 'organizations/' + id + '/';
+    // console.log(req);
+
+    return this.http.get<SearchResponse<Evaluation>>(req, { params: { 'lang': lang } });
   }
 
 }

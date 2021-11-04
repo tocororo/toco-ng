@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
 import { InputControl } from '../input.control';
+import { ValidatorArguments } from '../../form-field.control';
 import { IdentifierValue } from './identifier-value';
 
 /**
@@ -22,8 +23,9 @@ export class InputIdentifierComponent extends InputControl implements OnInit
     /**
      * Returns a `FormControl` by default. 
      * It is used to initialized the `InputIdentifierComponent`'s `content.formControl` value by default. 
+     * In this case, the `validatorArguments` argument is always `undefined`. 
      */
-    public static getFormControlByDefault(): FormControl
+    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): FormControl
     {
         return new FormControl('', [
             Validators.pattern('^[a-zA-Z\-\_]*$')

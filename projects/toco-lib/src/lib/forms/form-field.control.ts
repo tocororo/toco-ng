@@ -7,7 +7,8 @@
 import { Input, Type } from '@angular/core';
 import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
 
-import { Params, IconService } from '../core/public-api';
+import { Params } from '../core/utils/helpers';
+import { IconService } from '../core/services/icon.service';
 
 import { ContainerControl } from './container/container.control';
 
@@ -15,6 +16,12 @@ import { ContainerControl } from './container/container.control';
  * Defines a form section that represents the `FormGroup` or `FormArray` class. 
  */
 export type FormSection = FormGroup | FormArray;
+
+/**
+ * A collection of key/value elements, where the key is the validator name and the value is the value 
+ * that the validator needs to check. 
+ */
+ export type ValidatorArguments = Params<any>;
 
 /**
  * An enum that describes how inline contents of a block are horizontally aligned if the contents 

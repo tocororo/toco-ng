@@ -2,8 +2,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
-import { InputControl } from '../input.control';
 import { UrlValue } from './url-value';
+import { InputControl } from '../input.control';
+import { ValidatorArguments } from '../../form-field.control';
 
 /**
  * Represents a control that allows the writing of a url.
@@ -20,10 +21,11 @@ import { UrlValue } from './url-value';
 export class InputUrlComponent extends InputControl implements OnInit
 {
     /**
-     * Returns a `FormControl` by default.
-     * It is used to initialized the `InputUrlComponent`'s `content.formControl` value by default.
+     * Returns a `FormControl` by default. 
+     * It is used to initialized the `InputUrlComponent`'s `content.formControl` value by default. 
+     * In this case, the `validatorArguments` argument is always `undefined`. 
      */
-    public static getFormControlByDefault(): FormControl
+    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): FormControl
     {
         const reg = '/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi';
         const reg2 = '[a-z.]*';
