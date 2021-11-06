@@ -1,5 +1,5 @@
 
-import { isObject, isArray } from 'util';
+import { isArray, isRegExp, isDate, isError, isObject } from 'util';
 
 /**
  * A file with constants and functions that are helpers. 
@@ -123,6 +123,79 @@ export function isDescendant(possDescendant: any, ancestorName: string): boolean
 }
 
 /**
+ * Returns a new value that represents the clone of the specified `target` value. 
+ * Implementation notes: 
+ *  - If `target` is `undefined`, then returns `undefined`. 
+ *  - If `target` is an object, then returns a cloned object with all its properties cloned. 
+ *  - If `target` is an array, then returns a cloned array with all its values cloned. 
+ * @param target The target value to clone. 
+ */
+export function cloneValue(target: any): any
+{
+    if (isArray(target))
+    {
+        return _cloneValue(target, [ ]);
+    }
+    else if (isRegExp(target))
+    {
+        return target;  /* It can return `target` directly because all fields in a `RegExp` are read-only. */
+    }
+    else if (isDate(target))
+    {
+        return new Date(target);
+    }
+    else if (isError(target))
+    {
+        return target;  /* It can return `target` directly because an `Error` is extremely dependent of the place where it is created. */
+    }
+    else if (isObject(target))
+    {
+        return _cloneValue(target, { });
+    }
+    else
+    {
+        return target;
+    }
+}
+
+function _cloneValue(target: any, container: any): any
+{
+    let temp: any;
+
+    for (let prop in target)
+    {
+        temp = target[prop];
+
+        if (isArray(temp))
+        {
+            container[prop] = _cloneValue(temp, [ ]);
+        }
+        else if (isRegExp(temp))
+        {
+            container[prop] = temp;  /* It can return `temp` directly because all fields in a `RegExp` are read-only. */
+        }
+        else if (isDate(temp))
+        {
+            container[prop] = new Date(temp);
+        }
+        else if (isError(temp))
+        {
+            container[prop] = temp;  /* It can return `temp` directly because an `Error` is extremely dependent of the place where it is created. */
+        }
+        else if (isObject(temp))
+        {
+            container[prop] = _cloneValue(temp, { });
+        }
+        else
+        {
+            container[prop] = temp;
+        }
+    }
+
+    return container;
+}
+
+/**
  * Returns a new value that represents the clone of the specified `target` value, and 
  * sets all its properties/values of built-in type to `undefined`. 
  * Implementation notes: 
@@ -136,6 +209,18 @@ export function cloneValueToUndefined(target: any): any
     if (isArray(target))
     {
         return _cloneValueToUndefined(target, [ ]);
+    }
+    else if (isRegExp(target))
+    {
+        return undefined;
+    }
+    else if (isDate(target))
+    {
+        return undefined;
+    }
+    else if (isError(target))
+    {
+        return undefined;
     }
     else if (isObject(target))
     {
@@ -158,6 +243,18 @@ function _cloneValueToUndefined(target: any, container: any): any
         if (isArray(temp))
         {
             container[prop] = _cloneValueToUndefined(temp, [ ]);
+        }
+        else if (isRegExp(target))
+        {
+            container[prop] = undefined;
+        }
+        else if (isDate(target))
+        {
+            container[prop] = undefined;
+        }
+        else if (isError(target))
+        {
+            container[prop] = undefined;
         }
         else if (isObject(temp))
         {
