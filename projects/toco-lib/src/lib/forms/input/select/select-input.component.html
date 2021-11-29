@@ -1,28 +1,53 @@
 
 <mat-form-field
-  class="select-mat-form-field"
-  [appearance]="content.appearance"
+	class="select-mat-form-field"
+	[appearance]="content.appearance"
 >
 
-  <mat-label>
-	{{ content.label | translate }}
-  </mat-label>
+	<mat-label>
+		{{ content.label | translate }}
+	</mat-label>
 
-  <mat-select 
-	[formControl]="content.formControl"
-	[required]="content.required"
-	[style.textAlign]="content.textAlign"
-	[attr.aria-label]="content.ariaLabel | translate"
-	[(value)]="content.value"
-	[multiple]="content.multiple"
-	(selectionChange)="onSelectionChange()"
-  >
-	<mat-option 
-	  *ngFor="let option of content.selectOptions" 
-	  [value]="option.value"
-	>
-	  {{ option.label | translate }}
-	</mat-option>
-  </mat-select>
+	<ng-container *ngIf="content.showTooltip; then thenTemplate_Tooltip; else elseTemplate_WithoutTooltip"></ng-container>
+
+	<ng-template #thenTemplate_Tooltip>
+		<mat-select 
+			[formControl]="content.formControl"
+			[required]="content.required"
+			[style.textAlign]="content.textAlign"
+			[attr.aria-label]="content.ariaLabel | translate"
+			[(value)]="content.value"
+			[multiple]="content.multiple"
+			(selectionChange)="onSelectionChange()"
+			[matTooltip]="selectTooltip" [matTooltipPosition]="content.selectTooltipPosition" [matTooltipClass]="'tooltip-multiple-lines'"
+		>
+			<mat-option 
+				*ngFor="let option of content.selectOptions" 
+				[value]="option.value"
+				[matTooltip]="option.label | translate" [matTooltipPosition]="content.optionsTooltipPosition"
+			>
+				{{ option.label | translate }}
+			</mat-option>
+		</mat-select>
+	</ng-template>
+
+	<ng-template #elseTemplate_WithoutTooltip>
+		<mat-select 
+			[formControl]="content.formControl"
+			[required]="content.required"
+			[style.textAlign]="content.textAlign"
+			[attr.aria-label]="content.ariaLabel | translate"
+			[(value)]="content.value"
+			[multiple]="content.multiple"
+			(selectionChange)="onSelectionChange()"
+		>
+			<mat-option 
+				*ngFor="let option of content.selectOptions" 
+				[value]="option.value"
+			>
+				{{ option.label | translate }}
+			</mat-option>
+		</mat-select>
+	</ng-template>
 
 </mat-form-field>
