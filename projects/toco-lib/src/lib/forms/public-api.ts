@@ -53,5 +53,6 @@ export * from './input/input.control';
 
 export * from './test/container/test-container-control/test-container-control.component';
 export * from './test/input/test-select/test-select-input.component';
+export * from './test/input/test-url/test-url-input.component';
 
 export * from './form-field.control';
