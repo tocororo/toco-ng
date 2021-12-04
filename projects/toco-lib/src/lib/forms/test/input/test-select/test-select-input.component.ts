@@ -5,11 +5,11 @@ import { TextInputAppearance } from '../../../input/input.control';
 import { InputSelectComponent, SelectContent } from '../../../input/select/select-input.component';
 
 @Component({
-	selector: 'test-select-input',
+	selector: 'test-input-select',
 	templateUrl: './test-select-input.component.html',
 	styleUrls: ['./test-select-input.component.scss']
 })
-export class TestSelectInputComponent implements OnInit
+export class TestInputSelectComponent implements OnInit
 {
 	public selectContent_00: SelectContent;
 	public selectContent_01: SelectContent;
@@ -60,15 +60,15 @@ export class TestSelectInputComponent implements OnInit
 		/* `content.showTooltip = true` */
 		/*********************************************************************************/
 
-		this._Test_20();  //
+		this._Test_20();  // OK
 
-		this._Test_21();  //
+		this._Test_21();  // OK
 
-		this._Test_22();  //
+		this._Test_22();  // OK
 
-		this._Test_23();  //
+		this._Test_23();  // OK
 
-		this._Test_24();  //
+		this._Test_24();  // OK
 
 		// TODO: Hacer un test poniendo el campo `content.selectOptions` del select como un `Observable`. 
 

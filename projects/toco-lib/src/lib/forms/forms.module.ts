@@ -5,7 +5,6 @@
 
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
-import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -23,7 +22,6 @@ import { TableComponent } from './container/table/table.component';
 
 import { ContainerLabelDiffLangComponent } from './container-specific/label-diff-lang/label-diff-lang-container.component';
 
-import { InputTextComponent } from './input/text/text-input.component';
 import { InputBoolComponent } from './input/bool/bool-input.component';
 import { InputEmailComponent } from './input/email/email-input.component';
 import { InputIdentifierComponent } from './input/identifier/identifier-input.component';
@@ -31,6 +29,7 @@ import { InputIssnComponent } from './input/issn/issn-input.component';
 import { InputNumberComponent } from './input/number/number-input.component';
 import { InputRnpsComponent } from './input/rnps/rnps-input.component';
 import { InputSelectComponent } from './input/select/select-input.component';
+import { InputTextComponent } from './input/text/text-input.component';
 import { InputUrlComponent } from './input/url/url-input.component';
 
 import { VocabularyComponent } from './experimental/vocabulary/vocabulary.component';
@@ -59,7 +58,6 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     ContainerSimpleComponent,
     TableComponent,
     ContainerLabelDiffLangComponent,
-    InputTextComponent,
     InputBoolComponent,
     InputEmailComponent,
     InputIdentifierComponent,
@@ -67,6 +65,7 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     InputNumberComponent,
     InputRnpsComponent,
     InputSelectComponent,
+    InputTextComponent,
     InputUrlComponent,
     VocabularyComponent,
     VocabularyTreeComponent,
@@ -84,7 +83,6 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
 
   imports: [
     SharedModule,
-    RouterModule,
     ReactiveFormsModule,
     TranslateModule,
     CoreModule
@@ -96,7 +94,6 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     ContainerPanelComponent,
     ContainerPanelActionComponent,
     ContainerSimpleComponent,
-    InputTextComponent,
     InputBoolComponent,
     InputEmailComponent,
     InputIdentifierComponent,
@@ -104,6 +101,7 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     InputNumberComponent,
     InputRnpsComponent,
     InputSelectComponent,
+    InputTextComponent,
     InputUrlComponent,
     VocabularyComponent,
     VocabularyTreeComponent,
@@ -126,7 +124,6 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     ContainerSimpleComponent,
     TableComponent,
     ContainerLabelDiffLangComponent,
-    InputTextComponent,
     InputBoolComponent,
     InputEmailComponent,
     InputIdentifierComponent,
@@ -134,6 +131,7 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     InputNumberComponent,
     InputRnpsComponent,
     InputSelectComponent,
+    InputTextComponent,
     InputUrlComponent,
     VocabularyComponent,
     VocabularyTreeComponent,
