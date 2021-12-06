@@ -52,6 +52,7 @@ export * from './input/url/url-input.component';
 export * from './input/input.control';
 
 export * from './test/container/test-container-control/test-container-control.component';
+export * from './test/input/test-issn/test-issn-input.component';
 export * from './test/input/test-select/test-select-input.component';
 export * from './test/input/test-url/test-url-input.component';
 

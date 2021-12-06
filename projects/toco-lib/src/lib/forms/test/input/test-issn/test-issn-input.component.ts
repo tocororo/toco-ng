@@ -3,14 +3,14 @@ import { Component, OnInit } from '@angular/core';
 
 import { ContentPosition, IconSource, IconValue } from '../../../form-field.control';
 import { InputContent, TextInputAppearance } from '../../../input/input.control';
-import { InputUrlComponent } from '../../../input/url/url-input.component';
+import { InputIssnComponent } from '../../../input/issn/issn-input.component';
 
 @Component({
-	selector: 'test-input-url',
-	templateUrl: './test-url-input.component.html',
-	styleUrls: ['./test-url-input.component.scss']
+	selector: 'test-input-issn',
+	templateUrl: './test-issn-input.component.html',
+	styleUrls: ['./test-issn-input.component.scss']
 })
-export class TestInputUrlComponent implements OnInit
+export class TestInputIssnComponent implements OnInit
 {
 	public inputContent_00: InputContent;
 	public inputContent_01: InputContent;
@@ -54,15 +54,15 @@ export class TestInputUrlComponent implements OnInit
 		/* `content.value = undefined` */
 
 		this.inputContent_00 = {
-			'formControl': InputUrlComponent.getFormControlByDefault(),
-			'name': 'url_00',
+			'formControl': InputIssnComponent.getFormControlByDefault(),
+			'name': 'issn_00',
 			'label': undefined,
-			'controlType': InputUrlComponent,
+			'controlType': InputIssnComponent,
 			'value': undefined,
 			'required': true,
 			'width': '45%',
 			'appearance': TextInputAppearance.standard,
-			'ariaLabel': 'url_00'
+			'ariaLabel': 'issn_00'
 		};
 	}
 
@@ -72,17 +72,16 @@ export class TestInputUrlComponent implements OnInit
 		/* `content.value` is NOT `undefined`. */
 
 		this.inputContent_01 = {
-			'formControl': InputUrlComponent.getFormControlByDefault(),
-			'name': 'url_01',
+			'formControl': InputIssnComponent.getFormControlByDefault(),
+			'name': 'issn_01',
 			'label': undefined,
-			'controlType': InputUrlComponent,
-			'value': 'https://www.google.com',
+			'controlType': InputIssnComponent,
+			'value': '1234-124x',
 			'required': true,
 			'width': '45%',
 			'appearance': TextInputAppearance.standard,
-			'prefixIcon': new IconValue(),
-			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
-			'ariaLabel': 'url_01'
+			'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
+			'ariaLabel': 'issn_01'
 		};
 	}
 
@@ -92,15 +91,15 @@ export class TestInputUrlComponent implements OnInit
 		/* `content.value = undefined` */
 
 		this.inputContent_02 = {
-			'formControl': InputUrlComponent.getFormControlByDefault(),
-			'name': 'url_02',
-			'label': 'URL_02',
-			'controlType': InputUrlComponent,
+			'formControl': InputIssnComponent.getFormControlByDefault(),
+			'name': 'issn_02',
+			'label': 'ISSN_02',
+			'controlType': InputIssnComponent,
 			'value': undefined,
 			'required': true,
 			'width': '45%',
 			'appearance': TextInputAppearance.standard,
-			'ariaLabel': 'url_02'
+			'ariaLabel': 'issn_02'
 		};
 	}
 
@@ -110,17 +109,16 @@ export class TestInputUrlComponent implements OnInit
 		/* `content.value` is NOT `undefined`. */
 
 		this.inputContent_03 = {
-			'formControl': InputUrlComponent.getFormControlByDefault(),
-			'name': 'url_03',
-			'label': 'URL_03',
-			'controlType': InputUrlComponent,
-			'value': 'https://www.google.com',
+			'formControl': InputIssnComponent.getFormControlByDefault(),
+			'name': 'issn_03',
+			'label': 'ISSN_03',
+			'controlType': InputIssnComponent,
+			'value': '1234-124x',
 			'required': true,
 			'width': '45%',
 			'appearance': TextInputAppearance.standard,
-			'prefixIcon': new IconValue(),
-			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
-			'ariaLabel': 'url_03'
+			'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
+			'ariaLabel': 'issn_03'
 		};
 	}
 }
