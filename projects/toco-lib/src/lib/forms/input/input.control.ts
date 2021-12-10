@@ -177,14 +177,15 @@ export abstract class InputControl extends FormFieldControl
     /**
      * Initializes the `content` input property. 
      * @param label The default label to use. It is used if the `content.label` is not specified. 
+     * @param placeholder The default placeholder to use. It is used if the `content.placeholder` is not specified. 
      * @param isAbbreviation If it is true then the `label` argument represents an abbreviation; otherwise, false. 
      * @param alwaysHint If it is true then there is always at leat one hint start-aligned. 
      */
-    protected init(label: string, isAbbreviation: boolean = false, alwaysHint: boolean = true): void
+    protected init(label: string, placeholder: string = '', isAbbreviation: boolean = false, alwaysHint: boolean = true): void
     {
         /* Sets the default values. */
 
-        super.init(label);
+        super.init(label, placeholder);
 
         if (this.content.formControl == undefined)
         {
@@ -194,7 +195,7 @@ export abstract class InputControl extends FormFieldControl
         }
 
         let temp: string = (isAbbreviation) ? this.content.label : this.content.label.toLowerCase();
-        this.validationError_required = `You must write a valid ${ temp }.`;
+        this.validationError_required = `The ${ temp } can not be empty.`;
 
         /************************** Internal control properties. **************************/
         if (this.content.required == undefined) this.content.required = false;

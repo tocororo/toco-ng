@@ -1,4 +1,5 @@
 
+import { HttpEventType } from '@angular/common/http';
 import { isArray, isRegExp, isDate, isError, isObject } from 'util';
 
 /**
@@ -289,3 +290,41 @@ export function logComplete(operation: string, place: string): void
 {
     console.log(`The observable got a complete notification '${ operation }' in '${ place }'.`);
 }
+
+/**
+ * Returns a string representation of `HttpEventType` specified. 
+ * @param httpEventType Type enumeration for the different kinds of `HttpEvent`. 
+ */
+export function getHttpEventTypeToString(httpEventType: HttpEventType): string
+{
+    switch (httpEventType)
+    {
+        /* The request was sent out over the wire. */
+        case HttpEventType.Sent:
+            return "'Sent (0)'";
+
+        /* An upload progress event was received. */
+        case HttpEventType.UploadProgress:
+            return "'UploadProgress (1)'";
+
+        /* The response status code and headers were received. */
+        case HttpEventType.ResponseHeader:
+            return "'ResponseHeader (2)'";
+
+        /* A download progress event was received. */
+        case HttpEventType.DownloadProgress:
+            return "'DownloadProgress (3)'";
+
+        /* The full response including the body was received. */
+        case HttpEventType.Response:
+            return "'Response (4)'";
+
+        /* A custom event from an interceptor or a backend. */
+        case HttpEventType.User:
+            return "'User (5)'";
+
+        default:
+            return "'It does not know the code'";
+    }
+}
+     

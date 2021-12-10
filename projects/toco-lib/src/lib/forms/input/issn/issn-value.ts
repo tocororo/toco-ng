@@ -66,6 +66,11 @@ export enum IssnType_Label
 export class IssnValue
 {
 	/**
+	 * Represents the ISSN placeholder.
+	 */
+	public static readonly issn_Placeholder: string = 'XXXX – XXXX';
+
+	/**
 	 * The amount of characters in the code. 
 	 */
 	public static readonly codeLength: number = 11;

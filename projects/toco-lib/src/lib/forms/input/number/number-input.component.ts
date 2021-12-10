@@ -54,7 +54,7 @@ export class InputNumberComponent extends InputControl implements OnInit
     public ngOnInit(): void
     {
         /* Sets the default values. */
-        this.init('', false, false);
+        this.init('', '', false, false);
     }
 
     /**

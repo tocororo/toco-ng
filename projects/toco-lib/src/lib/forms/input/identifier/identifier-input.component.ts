@@ -8,6 +8,7 @@ import { IdentifierValue } from './identifier-value';
 
 /**
  * Represents a control that allows the writing of an identifier. 
+ * It uses the `IdentifierValue.identifier_Label` as a label if the `content.label` is not specified. 
  */
 @Component({
     selector: 'input-identifier',
@@ -45,7 +46,7 @@ export class InputIdentifierComponent extends InputControl implements OnInit
     public ngOnInit(): void
     {
         /* Sets the default values. */
-        this.init(IdentifierValue.identifier_Label, false, true);
+        this.init(IdentifierValue.identifier_Label, '', false, true);
     }
 
     /**

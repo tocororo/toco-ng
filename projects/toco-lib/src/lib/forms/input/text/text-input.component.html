@@ -4,8 +4,8 @@
 
     <mat-label>{{ content.label | translate }}</mat-label>
 
-    <input matInput [formControl]="content.formControl" [required]="content.required" [style.textAlign]="content.textAlign" [attr.aria-label]="content.ariaLabel | translate" (input)="handleInput()" />
-    <!-- <input matInput id="inputId-{{ content.name }}" class="input-text-element" [formControl]="content.formControl" [required]="content.required" [style.textAlign]="content.textAlign" [attr.aria-label]="content.ariaLabel | translate" (input)="handleInput()" [formControlName]="content.name" /> -->
+    <input matInput [formControl]="content.formControl" [required]="content.required" [placeholder]="content.placeholder | translate" [style.textAlign]="content.textAlign" [attr.aria-label]="content.ariaLabel | translate" (input)="handleInput()" />
+    <!-- <input matInput id="inputId-{{ content.name }}" class="input-text-element" [formControl]="content.formControl" [required]="content.required" [placeholder]="content.placeholder | translate" [style.textAlign]="content.textAlign" [attr.aria-label]="content.ariaLabel | translate" (input)="handleInput()" [formControlName]="content.name" /> -->
 
     <!-- At the moment of writing this code (2019-08-03), I think that there is an error in `ng-container` or 
         `mat-icon` or something related because I can not put the `mat-icon` tag within an `ng-container` tag 

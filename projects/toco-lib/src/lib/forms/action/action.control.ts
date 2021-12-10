@@ -87,13 +87,14 @@ export abstract class ActionControl extends FormFieldControl
     /**
      * Initializes the `content` input property. 
      * @param label The default label to use. It is used if the `content.label` is not specified. 
+     * @param placeholder It is NOT used here. Fix that. 
      * @param alwaysHint If it is true then there is always a hint start-aligned. 
      */
-    protected init(label: string, alwaysHint: boolean = true): void
+    protected init(label: string, placeholder: string = '', alwaysHint: boolean = true): void
     {
         /* Sets the default values. */
 
-        super.init(label);
+        super.init(label, placeholder);
 
         /***************************** `mat-icon` properties. *****************************/
         if (this.content.icon != undefined) this.content.icon.setDefaultValueIfUndefined_setPosition(ContentPosition.prefix);

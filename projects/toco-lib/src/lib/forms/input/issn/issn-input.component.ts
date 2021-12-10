@@ -15,6 +15,8 @@ import { ValidatorArguments } from '../../form-field.control';
  * It is used to identify newspapers, journals, magazines and periodicals 
  * of all kinds and on all media–print and electronic. For more information 
  * follow the link: https://www.issn.org/understanding-the-issn/what-is-an-issn/. 
+ * It uses the `IssnType_Abbreviation.ISSN` as a label if the `content.label` is not specified. 
+ * It uses the `IssnValue.issn_Placeholder` as a placeholder if the `content.placeholder` is not specified. 
  */
 @Component({
     selector: 'input-issn',
@@ -61,7 +63,7 @@ export class InputIssnComponent extends InputControl implements OnInit
     {
         /* Sets the default values. */
 
-        this.init(IssnType_Abbreviation.ISSN, true, true);
+        this.init(IssnType_Abbreviation.ISSN, IssnValue.issn_Placeholder, true, true);
 
         if ((typeof this.content.value !== 'string') && (typeof this.content.value !== 'undefined'))
         {

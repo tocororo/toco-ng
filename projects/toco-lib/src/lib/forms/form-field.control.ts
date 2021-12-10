@@ -348,6 +348,12 @@ export interface FormFieldContent
      */
     label?: string;
 
+    /**
+     * Returns the control's placeholder. 
+     * By default, its value is `''`. Each control sets its own placeholder. 
+     */
+    placeholder?: string;
+
 
 
     /**
@@ -489,8 +495,9 @@ export abstract class FormFieldControl
     /**
      * Initializes the `content` input property. 
      * @param label The default label to use. It is used if the `content.label` is not specified. 
+     * @param placeholder The default placeholder to use. It is used if the `content.placeholder` is not specified. 
      */
-    protected init(label: string): void
+    protected init(label: string, placeholder: string = ''): void
     {
         /* Sets the default values. */
 
@@ -535,6 +542,7 @@ export abstract class FormFieldControl
 
         /**************************** `mat-label` properties. *****************************/
         if (this.content.label == undefined) this.content.label = label;
+        if (this.content.placeholder == undefined) this.content.placeholder = placeholder;
 
         /************************** Internal control properties. **************************/
         if (this.content.textAlign == undefined) this.content.textAlign = TextAlign.left;

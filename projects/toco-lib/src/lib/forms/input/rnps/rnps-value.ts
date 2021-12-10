@@ -8,6 +8,11 @@
 export class RnpsValue
 {
 	/**
+	 * Represents the RNPS placeholder.
+	 */
+	public static readonly rnps_Placeholder: string = 'XXXX';
+
+	/**
 	 * The amount of digits in the code. 
 	 */
 	public static readonly codeLength: number = 4;

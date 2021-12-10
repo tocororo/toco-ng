@@ -41,7 +41,7 @@ export class InputTextComponent extends InputControl implements OnInit
     public ngOnInit(): void
     {
         /* Sets the default values. */
-        this.init('', false, true);
+        this.init('', '', false, true);
     }
 
     /**

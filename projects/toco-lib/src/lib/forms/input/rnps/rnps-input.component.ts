@@ -13,6 +13,8 @@ import { ValidatorArguments } from '../../form-field.control';
  * An RNPS (Registro Nacional de Publicaciones Seriadas) is an 4-digit code used to control 
  * las publicaciones seriadas autorizadas a editarse, imprimirse y circular en Cuba. 
  * For more information follow the link: http://www.seriadas.cult.cu/. 
+ * It uses the `RnpsValue.rnps_Abbreviation` as a label if the `content.label` is not specified. 
+ * It uses the `RnpsValue.rnps_Placeholder` as a placeholder if the `content.placeholder` is not specified. 
  */
 @Component({
     selector: 'input-rnps',
@@ -54,7 +56,7 @@ export class InputRnpsComponent extends InputControl implements OnInit
     {
         /* Sets the default values. */
 
-        this.init(RnpsValue.rnps_Abbreviation, true, true);
+        this.init(RnpsValue.rnps_Abbreviation, RnpsValue.rnps_Placeholder, true, true);
 
         /* The '_codeOldValue' must be set after the 'content.formControl.value' is set. */
         this.handleSpecificInput();

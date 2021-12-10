@@ -113,7 +113,7 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
 	public ngOnInit(): void
 	{
         /* Sets the default values. */
-		this.init('', false, false);
+		this.init('', '', false, false);
 
 		/* The `selectTooltip` value is set in `onSelectionChange` method when happening initialization or selection change. */
 		this.onSelectionChange();
@@ -128,10 +128,11 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
     /**
      * Initializes the `content` input property. 
      * @param label The default label to use. It is used if the `content.label` is not specified. 
+	 * @param placeholder The default placeholder to use. It is used if the `content.placeholder` is not specified. 
      * @param isAbbreviation If it is true then the `label` argument represents an abbreviation; otherwise, false. 
      * @param alwaysHint If it is true then there is always at leat one hint start-aligned. 
      */
-    protected init(label: string, isAbbreviation: boolean, alwaysHint: boolean): void
+    protected init(label: string, placeholder: string = '', isAbbreviation: boolean, alwaysHint: boolean): void
     {
 		/* Changes the translation when the language changes. */
 		this._transServ.onLangChange.subscribe((params: LangChangeEvent) => {
@@ -140,7 +141,7 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
 
         /* Sets the default values. */
 
-		super.init(label, isAbbreviation, alwaysHint);
+		super.init(label, placeholder, isAbbreviation, alwaysHint);
 
 		if (this.content.multiple == undefined) this.content.multiple = false;
 		if (this.content.showTooltip == undefined) this.content.showTooltip = false;

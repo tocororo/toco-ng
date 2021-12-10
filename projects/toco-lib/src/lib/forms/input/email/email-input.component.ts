@@ -8,6 +8,8 @@ import { EmailValue } from './email-value';
 
 /**
  * Represents a control that allows the writing of an email. 
+ * It uses the `EmailValue.email_Label` as a label if the `content.label` is not specified. 
+ * It uses the `EmailValue.email_Placeholder` as a placeholder if the `content.placeholder` is not specified. 
  */
 @Component({
     selector: 'input-email',
@@ -40,7 +42,7 @@ export class InputEmailComponent extends InputControl implements OnInit
     public ngOnInit(): void
     {
         /* Sets the default values. */
-        this.init(EmailValue.email_Label, false, true);
+        this.init(EmailValue.email_Label, EmailValue.email_Placeholder, false, true);
     }
 
     /**

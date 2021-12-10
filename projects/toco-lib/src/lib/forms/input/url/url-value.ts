@@ -10,6 +10,11 @@ export class UrlValue
 	public static readonly url_Label: string = 'Url';
 
 	/**
+	 * Represents the url placeholder.
+	 */
+	public static readonly url_Placeholder: string = 'https://www.google.com/';
+
+	/**
 	 * The url value.
 	 */
 	public url: string;
