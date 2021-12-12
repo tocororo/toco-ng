@@ -20,13 +20,13 @@ export class TestInputTextComponent implements OnInit
 	public inputContent_04: InputContent;
 	public inputContent_05: InputContent;
 
-	// public inputContent_20: InputContent;
-	// public inputContent_21: InputContent;
-	// public inputContent_22: InputContent;
+	public inputContent_20: InputContent;
+	public inputContent_21: InputContent;
+	public inputContent_22: InputContent;
 
-	// public inputContent_23: InputContent;
-	// public inputContent_24: InputContent;
-	// public inputContent_25: InputContent;
+	public inputContent_23: InputContent;
+	public inputContent_24: InputContent;
+	public inputContent_25: InputContent;
 
 	public constructor()
 	{
@@ -38,13 +38,13 @@ export class TestInputTextComponent implements OnInit
 		this.inputContent_04 = undefined;
 		this.inputContent_05 = undefined;
 
-		// this.inputContent_20 = undefined;
-		// this.inputContent_21 = undefined;
-		// this.inputContent_22 = undefined;
+		this.inputContent_20 = undefined;
+		this.inputContent_21 = undefined;
+		this.inputContent_22 = undefined;
 
-		// this.inputContent_23 = undefined;
-		// this.inputContent_24 = undefined;
-		// this.inputContent_25 = undefined;
+		this.inputContent_23 = undefined;
+		this.inputContent_24 = undefined;
+		this.inputContent_25 = undefined;
 	}
 
 	public ngOnInit(): void
@@ -73,21 +73,21 @@ export class TestInputTextComponent implements OnInit
 		/* `content.label = undefined` and `content.placeholder` is NOT `undefined` */
 		/*********************************************************************************/
 
-		// this._Test_20();  // OK
+		this._Test_20();  // OK
 
-		// this._Test_21();  // OK
+		this._Test_21();  // OK
 
-		// this._Test_22();  // OK
+		this._Test_22();  // OK
 
 		/*********************************************************************************/
 		/* `content.label` is NOT `undefined` and `content.placeholder` is NOT `undefined` */
 		/*********************************************************************************/
 
-		// this._Test_23();  // OK
+		this._Test_23();  // OK
 
-		// this._Test_24();  // OK
+		this._Test_24();  // OK
 
-		// this._Test_25();  // OK
+		this._Test_25();  // OK
 
 		/*********************************************************************************/
 	}
@@ -101,6 +101,7 @@ export class TestInputTextComponent implements OnInit
 			'formControl': InputTextComponent.getFormControlByDefault(),
 			'name': 'text_00',
 			'label': undefined,
+			'placeholder': undefined,
 			'controlType': InputTextComponent,
 			'value': undefined,
 			'required': true,
@@ -119,6 +120,7 @@ export class TestInputTextComponent implements OnInit
 			'formControl': InputTextComponent.getFormControlByDefault(),
 			'name': 'text_01',
 			'label': undefined,
+			'placeholder': undefined,
 			'controlType': InputTextComponent,
 			'value': 'Text value is NOT undefined',
 			'required': true,
@@ -139,6 +141,7 @@ export class TestInputTextComponent implements OnInit
 			'formControl': InputTextComponent.getFormControlByDefault({ 'pattern': '^[a-zA-Z\_áéíóúÁÉÍÓÚ][a-zA-Z\-\_áéíóúÁÉÍÓÚ\ 0-9]*$' }),
 			'name': 'text_02',
 			'label': undefined,
+			'placeholder': undefined,
 			'controlType': InputTextComponent,
 			'value': 'Test validator argument',
 			'required': true,
@@ -157,6 +160,7 @@ export class TestInputTextComponent implements OnInit
 			'formControl': InputTextComponent.getFormControlByDefault(),
 			'name': 'text_03',
 			'label': 'TEXT_03',
+			'placeholder': undefined,
 			'controlType': InputTextComponent,
 			'value': undefined,
 			'required': true,
@@ -175,6 +179,7 @@ export class TestInputTextComponent implements OnInit
 			'formControl': InputTextComponent.getFormControlByDefault(),
 			'name': 'text_04',
 			'label': 'TEXT_04',
+			'placeholder': undefined,
 			'controlType': InputTextComponent,
 			'value': 'Text value is NOT undefined',
 			'required': true,
@@ -195,6 +200,7 @@ export class TestInputTextComponent implements OnInit
 			'formControl': InputTextComponent.getFormControlByDefault({ 'pattern': '^[a-zA-Z\_áéíóúÁÉÍÓÚ][a-zA-Z\-\_áéíóúÁÉÍÓÚ\ 0-9]*$' }),
 			'name': 'text_05',
 			'label': 'TEXT_05',
+			'placeholder': undefined,
 			'controlType': InputTextComponent,
 			'value': 'Test validator argument',
 			'required': true,
@@ -204,75 +210,123 @@ export class TestInputTextComponent implements OnInit
 		};
 	}
 
-	// private _Test_20(): void
-	// {
-	// }
+/*******************************************************/
 
-	// private _Test_21(): void
-	// {
-	// 	/* `content.selectOptions = undefined` and `content.value` is an array of values. */
+	private _Test_20(): void
+	{
+		/* `content.label = undefined` and `content.placeholder` is NOT `undefined` */
+		/* `content.value = undefined` and `validatorArguments = undefined` for the `InputTextComponent.getFormControlByDefault`. */
 
-	// 	this.inputContent_21 = {
-	// 		'formControl': InputTextComponent.getFormControlByDefault(),
-	// 		'name': 'text_21',
-	// 		'label': undefined/*'_Test_21'*/,
-	// 		'controlType': InputTextComponent,
-	// 		'value': ['VALUE A', 'VALUE B', 'VALUE C'],
-	// 		'required': true,
-	// 		'width': '45%',
-	// 		'appearance': TextInputAppearance.standard,
-	// 		'ariaLabel': 'text_21'
-	// 	};
-	// }
+		this.inputContent_20 = {
+			'formControl': InputTextComponent.getFormControlByDefault(),
+			'name': 'text_20',
+			'label': undefined,
+			'placeholder': 'text_20 placeholder',
+			'controlType': InputTextComponent,
+			'value': undefined,
+			'required': true,
+			'width': '45%',
+			'appearance': TextInputAppearance.standard,
+			'ariaLabel': 'text_20'
+		};
+	}
 
-	// private _Test_22(): void
-	// {
-	// 	/* `content.selectOptions = undefined` and `content.value` is NOT an array of values. */
+	private _Test_21(): void
+	{
+		/* `content.label = undefined` and `content.placeholder` is NOT `undefined` */
+		/* `content.value` is NOT `undefined` and `validatorArguments = undefined` for the `InputTextComponent.getFormControlByDefault`. */
 
-	// 	this.inputContent_22 = {
-	// 		'formControl': InputTextComponent.getFormControlByDefault(),
-	// 		'name': 'text_22',
-	// 		'label': undefined/*'_Test_22'*/,
-	// 		'controlType': InputTextComponent,
-	// 		'value': 'VALUE B',
-	// 		'required': true,
-	// 		'width': '45%',
-	// 		'appearance': TextInputAppearance.standard,
-	// 		'ariaLabel': 'text_22'
-	// 	};
-	// }
+		this.inputContent_21 = {
+			'formControl': InputTextComponent.getFormControlByDefault(),
+			'name': 'text_21',
+			'label': undefined,
+			'placeholder': 'text_21 placeholder',
+			'controlType': InputTextComponent,
+			'value': 'Text value is NOT undefined',
+			'required': true,
+			'width': '45%',
+			'appearance': TextInputAppearance.standard,
+			'prefixIcon': new IconValue(),
+			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
+			'ariaLabel': 'text_21'
+		};
+	}
 
-	// private _Test_23(): void
-	// {
-    //     /* `content.selectOptions` is NOT `undefined` and `content.value = undefined`. */
+	private _Test_22(): void
+	{
+		/* `content.label = undefined` and `content.placeholder` is NOT `undefined` */
+		/* `content.value` is NOT `undefined` and `validatorArguments` for the `InputTextComponent.getFormControlByDefault` is NOT `undefined`. */
 
-	// 	this.inputContent_23 = {
-	// 		'formControl': InputTextComponent.getFormControlByDefault(),
-	// 		'name': 'text_23',
-	// 		'label': undefined/*'_Test_23'*/,
-	// 		'controlType': InputTextComponent,
-	// 		'value': undefined,
-	// 		'required': true,
-	// 		'width': '45%',
-	// 		'appearance': TextInputAppearance.standard,
-	// 		'ariaLabel': 'text_23'
-	// 	};
-	// }
+		this.inputContent_22 = {
+			'formControl': InputTextComponent.getFormControlByDefault({ 'pattern': '^[a-zA-Z\_áéíóúÁÉÍÓÚ][a-zA-Z\-\_áéíóúÁÉÍÓÚ\ 0-9]*$' }),
+			'name': 'text_22',
+			'label': undefined,
+			'placeholder': 'text_22 placeholder',
+			'controlType': InputTextComponent,
+			'value': 'Test validator argument',
+			'required': true,
+			'width': '45%',
+			'appearance': TextInputAppearance.standard,
+			'ariaLabel': 'text_22'
+		};
+	}
 
-	// private _Test_24(): void
-	// {
-	// 	/* `content.selectOptions` is NOT `undefined` and `content.value` is NOT `undefined`. */
+	private _Test_23(): void
+	{
+		/* `content.label` is NOT `undefined` and `content.placeholder` is NOT `undefined` */
+		/* `content.value = undefined` and `validatorArguments = undefined` for the `InputTextComponent.getFormControlByDefault`. */
 
-	// 	this.inputContent_24 = {
-	// 		'formControl': InputTextComponent.getFormControlByDefault(),
-	// 		'name': 'text_24',
-	// 		'label': undefined/*'_Test_24'*/,
-	// 		'controlType': InputTextComponent,
-	// 		'value': 'VALUE B',
-	// 		'required': true,
-	// 		'width': '45%',
-	// 		'appearance': TextInputAppearance.standard,
-	// 		'ariaLabel': 'text_24'
-	// 	};
-	// }
+		this.inputContent_23 = {
+			'formControl': InputTextComponent.getFormControlByDefault(),
+			'name': 'text_23',
+			'label': 'TEXT_23',
+			'placeholder': 'text_23 placeholder',
+			'controlType': InputTextComponent,
+			'value': undefined,
+			'required': true,
+			'width': '45%',
+			'appearance': TextInputAppearance.standard,
+			'ariaLabel': 'text_23'
+		};
+	}
+
+	private _Test_24(): void
+	{
+		/* `content.label` is NOT `undefined` and `content.placeholder` is NOT `undefined` */
+		/* `content.value` is NOT `undefined` and `validatorArguments = undefined` for the `InputTextComponent.getFormControlByDefault`. */
+
+		this.inputContent_24 = {
+			'formControl': InputTextComponent.getFormControlByDefault(),
+			'name': 'text_24',
+			'label': 'TEXT_24',
+			'placeholder': 'text_24 placeholder',
+			'controlType': InputTextComponent,
+			'value': 'Text value is NOT undefined',
+			'required': true,
+			'width': '45%',
+			'appearance': TextInputAppearance.standard,
+			'prefixIcon': new IconValue(),
+			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
+			'ariaLabel': 'text_24'
+		};
+	}
+
+	private _Test_25(): void
+	{
+		/* `content.label` is NOT `undefined` and `content.placeholder` is NOT `undefined` */
+		/* `content.value` is NOT `undefined` and `validatorArguments` for the `InputTextComponent.getFormControlByDefault` is NOT `undefined`. */
+
+		this.inputContent_25 = {
+			'formControl': InputTextComponent.getFormControlByDefault({ 'pattern': '^[a-zA-Z\_áéíóúÁÉÍÓÚ][a-zA-Z\-\_áéíóúÁÉÍÓÚ\ 0-9]*$' }),
+			'name': 'text_25',
+			'label': 'TEXT_25',
+			'placeholder': 'text_25 placeholder',
+			'controlType': InputTextComponent,
+			'value': 'Test validator argument',
+			'required': true,
+			'width': '45%',
+			'appearance': TextInputAppearance.standard,
+			'ariaLabel': 'text_25'
+		};
+	}
 }
