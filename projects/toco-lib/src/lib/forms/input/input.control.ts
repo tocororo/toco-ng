@@ -189,8 +189,8 @@ export abstract class InputControl extends FormFieldControl
 
         /* The `InputControl.currentLang` value is updated correctly in the parent class. */
 
-        transServ.get('TOCO_NG_ERROR_MSG_REQUERIDO').subscribe((res: any) => {
-            InputControl.toco_ng_Error_Msg_Requerido = res.TOCO_NG_ERROR_MSG_REQUERIDO;
+        transServ.get('TOCO_NG_ERROR_MSG_REQUERIDO').subscribe((res: string) => {
+            InputControl.toco_ng_Error_Msg_Requerido = res;
         });
     }
 

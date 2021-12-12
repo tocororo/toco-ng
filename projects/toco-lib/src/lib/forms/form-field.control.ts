@@ -8,8 +8,8 @@ import { Input, Type } from '@angular/core';
 import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
-import { Params } from '../utils/helpers';
-import { IconService } from '../services/icon.service';
+import { Params } from '../core/utils/helpers';
+import { IconService } from '../core/services/icon.service';
 
 import { ContainerControl } from './container/container.control';
 

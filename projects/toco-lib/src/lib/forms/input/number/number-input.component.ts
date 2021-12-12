@@ -55,13 +55,15 @@ export class InputNumberComponent extends InputControl implements OnInit
     {
         super();
 
-        this.setNewLanguage(this._transServ);
         /* The translation is built by the control. */
         this.isTranslationBuiltByControl = true;
     }
 
     public ngOnInit(): void
     {
+        /* This needs to be called at first. */
+        this.setNewLanguage(this._transServ);
+
         /* Sets the default values. */
         this.init('', '', false, false);
 
