@@ -6,6 +6,7 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { isArray } from 'util';
 
 import { InputControl, InputContent } from '../input.control';
+import { HintPosition, HintValue } from '../../form-field.control';
 
 /**
  * An interface that represents a selectable option. 
@@ -113,7 +114,7 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
 	public ngOnInit(): void
 	{
         /* Sets the default values. */
-		this.init('', '', false, false);
+		this.init('', '', false, true);
 
 		/* The `selectTooltip` value is set in `onSelectionChange` method when happening initialization or selection change. */
 		this.onSelectionChange();
@@ -142,6 +143,12 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
         /* Sets the default values. */
 
 		super.init(label, placeholder, isAbbreviation, alwaysHint);
+
+		if (this.content.startHint != undefined)
+		{
+			if (this.content.startHint.label == 'TOCO_NG_HINT_TEXTO_POR_DEFECTO') this.content.startHint.label = 'TOCO_NG_HINT_TEXTO_SELECC_POR_DEFECTO';
+		}
+		else this.content.startHint = new HintValue(HintPosition.start, 'TOCO_NG_HINT_TEXTO_SELECC_POR_DEFECTO');
 
 		if (this.content.multiple == undefined) this.content.multiple = false;
 		if (this.content.showTooltip == undefined) this.content.showTooltip = false;
