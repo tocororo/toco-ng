@@ -50,4 +50,12 @@
 		</mat-select>
 	</ng-template>
 
+    <mat-error *ngIf="errorState">
+        <ng-container *ngIf="isTranslationBuiltByControl; then thenTemplate_BuildTranslation; else elseTemplate_NotBuildTranslation"></ng-container>
+
+        <ng-template #thenTemplate_BuildTranslation>{{ getErrorMessage() }}</ng-template>
+
+        <ng-template #elseTemplate_NotBuildTranslation>{{ getErrorMessage() | translate }}</ng-template>
+    </mat-error>
+
 </mat-form-field>
