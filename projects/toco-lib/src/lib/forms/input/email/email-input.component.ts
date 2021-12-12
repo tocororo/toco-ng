@@ -62,7 +62,7 @@ export class InputEmailComponent extends InputControl implements OnInit
             else
             {
                 /* It is `validationErrors[Validators.email.name]`. */
-                return 'The email is wrong.';
+                return 'TOCO_NG_ERROR_MSG_CORREO_INVAL';
             }
         }
 

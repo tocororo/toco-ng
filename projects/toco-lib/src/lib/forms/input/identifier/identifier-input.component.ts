@@ -66,7 +66,7 @@ export class InputIdentifierComponent extends InputControl implements OnInit
             else
             {
                 /* It is `validationErrors[Validators.pattern.name]`. */
-                return 'The identifier is wrong.';
+                return 'TOCO_NG_ERROR_MSG_ID_INVAL';
             }
         }
 

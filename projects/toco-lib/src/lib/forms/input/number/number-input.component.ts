@@ -1,6 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 import { ValidatorArguments } from '../../form-field.control';
 
@@ -46,15 +47,49 @@ export class InputNumberComponent extends InputControl implements OnInit
         ]);
     }
 
-    public constructor()
+    protected static toco_ng_Error_Msg_Num_Inval: string = '';
+    protected static toco_ng_Error_Msg_Num_Minimo: string = '';
+    protected static toco_ng_Error_Msg_Num_Maximo: string = '';
+
+    public constructor(private _transServ: TranslateService)
     {
         super();
+
+        this.setNewLanguage(this._transServ);
+        /* The translation is built by the control. */
+        this.isTranslationBuiltByControl = true;
     }
 
     public ngOnInit(): void
     {
         /* Sets the default values. */
         this.init('', '', false, false);
+
+		/* Changes the translation when the language changes. */
+		this._transServ.onLangChange.subscribe((params: LangChangeEvent) => {
+			this.setNewLanguage(this._transServ);
+		});
+    }
+
+    /**
+     * Sets the new language. 
+     * @param transServ The `TranslateService` instance injected. 
+     */
+    protected setNewLanguage(transServ: TranslateService): void
+    {
+        /* First, do this test for optimization. */
+        if (InputNumberComponent.currentLang != transServ.currentLang)
+        {
+            super.setNewLanguage(transServ);
+
+            /* The `InputNumberComponent.currentLang` value is updated correctly in the parent class. */
+
+            transServ.get(['TOCO_NG_ERROR_MSG_NUM_INVAL', 'TOCO_NG_ERROR_MSG_NUM_MINIMO', 'TOCO_NG_ERROR_MSG_NUM_MAXIMO']).subscribe((res: any) => {
+                InputNumberComponent.toco_ng_Error_Msg_Num_Inval = res.TOCO_NG_ERROR_MSG_NUM_INVAL;
+                InputNumberComponent.toco_ng_Error_Msg_Num_Minimo = res.TOCO_NG_ERROR_MSG_NUM_MINIMO;
+                InputNumberComponent.toco_ng_Error_Msg_Num_Maximo = res.TOCO_NG_ERROR_MSG_NUM_MAXIMO;
+            });
+        }
     }
 
     /**
@@ -69,22 +104,22 @@ export class InputNumberComponent extends InputControl implements OnInit
         {
             if (validationErrors[Validators.required.name])
             {
-                return this.validationError_required;
+                return InputNumberComponent.toco_ng_Error_Msg_Requerido;
             }
 
             if (validationErrors[Validators.pattern.name])
             {
-                return 'The number is invalid.';
+                return InputNumberComponent.toco_ng_Error_Msg_Num_Inval;
             }
 
             if (validationErrors[Validators.min.name])
             {
-                return 'The minimum number that can hold is: ' + validationErrors[Validators.min.name].min + '.';
+                return InputNumberComponent.toco_ng_Error_Msg_Num_Minimo + validationErrors[Validators.min.name].min + '.';
             }
 
             if (validationErrors[Validators.max.name])
             {
-                return 'The maximum number that can hold is: ' + validationErrors[Validators.max.name].max + '.';
+                return InputNumberComponent.toco_ng_Error_Msg_Num_Maximo + validationErrors[Validators.max.name].max + '.';
             }
         }
 

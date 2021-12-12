@@ -201,7 +201,7 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
 		}
 		else
 		{
-			console.error('There is a configuration error with the `content.selectOptions` type because the programme does not know what to do with it!');
+			throw new Error(`For the '${ InputSelectComponent.name }' control, the 'content.selectOptions' type value has a configuration error because the programme does not know what to do with it!`);
 		}
 
 		/* The `selectTooltip` value is set in `onSelectionChange` method when happening initialization or selection change. */

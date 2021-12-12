@@ -30,7 +30,7 @@ export class RnpsValue
 	/**
 	 * Represents the RNPS label. 
 	 */
-	public static readonly rnps_Label: string = 'Registro Nacional de Publicaciones Seriadas';
+	public static readonly rnps_Label: string = 'TOCO_NG_RNPS';
 
 	/**
 	 * The code of `RnpsValue.codeLength` digits.

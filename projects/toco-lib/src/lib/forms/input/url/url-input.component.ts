@@ -67,7 +67,7 @@ export class InputUrlComponent extends InputControl implements OnInit
             else
             {
                 /* It is `validationErrors[Validators.pattern.name]`. */
-                return 'The url is wrong.';
+                return 'TOCO_NG_ERROR_MSG_URL_INVAL';
             }
         }
 

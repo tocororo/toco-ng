@@ -6,9 +6,10 @@
 
 import { Input, Type } from '@angular/core';
 import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
-import { Params } from '../core/utils/helpers';
-import { IconService } from '../core/services/icon.service';
+import { Params } from '../utils/helpers';
+import { IconService } from '../services/icon.service';
 
 import { ContainerControl } from './container/container.control';
 
@@ -481,6 +482,20 @@ export abstract class FormFieldControl
     public content: FormFieldContent;
 
     /**
+     * Returns the language currently used. 
+     * This is a static field. 
+     */
+    protected static currentLang: string = '';
+
+    /**
+     * Returns true if the translation is built by the control; otherwise, false. 
+     * It is used to select the way the translation is built for the control. 
+     * By default, its value is `false`. 
+     * As an example of usage for this field, the `InputNumberComponent` class implements the logic when this value is `true`. 
+     */
+    public isTranslationBuiltByControl: boolean;
+
+    /**
      * Constructs a new instance of this class. 
      */
     public constructor()
@@ -490,6 +505,19 @@ export abstract class FormFieldControl
 
         /* It must be initialize. */
         this.content = undefined;
+
+        this.isTranslationBuiltByControl = false;
+    }
+
+    /**
+     * Sets the new language. 
+     * @param transServ The `TranslateService` instance injected. 
+     */
+    protected setNewLanguage(transServ: TranslateService): void
+    {
+        /* The `FormFieldControl.currentLang != transServ.currentLang` test is NOT necessary here because it is done in the non-abstract child classes. */
+
+        FormFieldControl.currentLang = transServ.currentLang;
     }
 
     /**

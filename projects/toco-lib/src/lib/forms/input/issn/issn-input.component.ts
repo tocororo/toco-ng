@@ -89,7 +89,7 @@ export class InputIssnComponent extends InputControl implements OnInit
         {
             if ((validationErrors[ExtraValidators.equalLength.name]) || (validationErrors[Validators.required.name]))
             {
-                result += 'Its length must be ' + IssnValue.codeLengthAsString;
+                result = 'TOCO_NG_ERROR_MSG_ISSN_LONG_INVAL';
                 result_alreadyHaveErrorInfo = true;
             }
 
@@ -97,19 +97,14 @@ export class InputIssnComponent extends InputControl implements OnInit
             {
                 if (result_alreadyHaveErrorInfo)
                 {
-                    result += ', and all positions have digits (the last one can also have x or X)';
+                    result = 'TOCO_NG_ERROR_MSG_ISSN_LONG_Y_DIG_INVAL';
                 }
                 else
                 {
-                    result += 'All positions must have digits (the last one can also have x or X)';
+                    result = 'TOCO_NG_ERROR_MSG_ISSN_DIG_INVAL';
                 }
 
                 result_alreadyHaveErrorInfo = true;
-            }
-
-            if (result_alreadyHaveErrorInfo)
-            {
-                result += '.';
             }
         }
 
@@ -120,11 +115,9 @@ export class InputIssnComponent extends InputControl implements OnInit
 			{
 				if (validationErrors[ExtraValidators.issnConfirmCheckDigitOneField.name])
 				{
-					result += 'There is some wrong digit';
+					result = 'TOCO_NG_ERROR_MSG_ISSN_DIG_CHEQUEO_INVAL';
 					result_alreadyHaveErrorInfo = true;
 				}
-
-				result += '.';
 			}
 		}
 

@@ -1,16 +1,16 @@
 
-Values that are specified in the "assets/i18n/es.json" file:
+When you use the `InputBoolComponent`, these values must be specified in the `assets/i18n/es.json` file:
 
 {
-    "VERDADERO": "Verdadero",
-    "FALSO": "Falso"
+    "TOCO_NG_VERDADERO": "Verdadero",
+    "TOCO_NG_FALSO": "Falso"
 }
 
 
 
-Values that are specified in the "assets/i18n/en.json" file:
+When you use the `InputBoolComponent`, these values must be specified in the `assets/i18n/en.json` file:
 
 {
-    "VERDADERO": "True",
-    "FALSO": "False"
+    "TOCO_NG_VERDADERO": "True",
+    "TOCO_NG_FALSO": "False"
 }

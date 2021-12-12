@@ -25,6 +25,12 @@
 
     <mat-hint *ngIf="hintState && content.startHint" [align]="'start'">{{ content.startHint.label | translate }}</mat-hint>
     <mat-hint *ngIf="hintState && content.endHint" [align]="'end'">{{ content.endHint.label | translate }}</mat-hint>
-    <mat-error *ngIf="errorState">{{ getErrorMessage() | translate }}</mat-error>
+    <mat-error *ngIf="errorState">
+        <ng-container *ngIf="isTranslationBuiltByControl; then thenTemplate_BuildTranslation; else elseTemplate_NotBuildTranslation"></ng-container>
+
+        <ng-template #thenTemplate_BuildTranslation>{{ getErrorMessage() }}</ng-template>
+
+        <ng-template #elseTemplate_NotBuildTranslation>{{ getErrorMessage() | translate }}</ng-template>
+    </mat-error>
 
 </mat-form-field>

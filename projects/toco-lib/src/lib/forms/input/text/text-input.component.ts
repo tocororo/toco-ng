@@ -61,7 +61,7 @@ export class InputTextComponent extends InputControl implements OnInit
             else
             {
                 /* It is `validationErrors[Validators.pattern.name]`. */
-                return 'The text is wrong.';
+                return 'TOCO_NG_ERROR_MSG_TEXTO_INVAL';
             }
         }
 
