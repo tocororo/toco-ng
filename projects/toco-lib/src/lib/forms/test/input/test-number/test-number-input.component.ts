@@ -151,8 +151,6 @@ export class TestInputNumberComponent implements OnInit
 			'required': true,
 			'width': '45%',
 			'appearance': TextInputAppearance.standard,
-			'prefixIcon': new IconValue(),
-			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
 			'ariaLabel': 'number_04'
 		};
 	}
