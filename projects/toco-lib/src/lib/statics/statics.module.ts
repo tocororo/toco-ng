@@ -1,5 +1,6 @@
 
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/public-api';
 
 import { StaticChipsComponent } from './chips/chips-static.component';
@@ -14,7 +15,8 @@ import { StaticTextComponent } from './text/text-static.component';
 	],
 
 	imports: [
-		SharedModule
+		SharedModule,
+		ReactiveFormsModule
 	],
 
 	exports: [

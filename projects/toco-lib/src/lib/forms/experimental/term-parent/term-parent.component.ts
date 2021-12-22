@@ -42,7 +42,7 @@ export class TermParentComponent extends InputControl implements OnInit {
 
     ngOnInit() {
 
-      this.init('', false, true);
+      this.init('', '', false, true);
         // (this.content.parentFormSection as FormGroup).addControl(
         //     this.content.name,
         //     this.internalControl

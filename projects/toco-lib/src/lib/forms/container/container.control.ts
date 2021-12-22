@@ -7,7 +7,8 @@
 import { Input, ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 
-import { GetViewContainerDirective, Params } from '../../core/public-api';
+import { Params } from '../../core/utils/helpers';
+import { GetViewContainerDirective } from '../../core/utils/get-view-container.directive';
 
 import { FormSection, FormFieldContent, FormFieldControl, cloneFormControl, cloneFormSection } from '../form-field.control';
 
@@ -181,12 +182,13 @@ export abstract class ContainerControl extends FormFieldControl
     /**
      * Initializes the `content` input property. 
      * @param label The default label to use. It is used if the `content.label` is not specified. 
+     * @param placeholder It is NOT used here. Fix that. 
      */
-    protected init(label: string): void
+    protected init(label: string, placeholder: string = ''): void
     {
         /* Sets the default values. */
 
-        super.init(label);
+        super.init(label, placeholder);
 
         if (this.content.formSection == undefined)
         {
@@ -238,7 +240,7 @@ export abstract class ContainerControl extends FormFieldControl
         }
 
         // let temp: string = (isAbbreviation) ? this.content.label : this.content.label.toLowerCase();
-        // this.validationError_required = `You must write a valid ${ temp }.`;
+        // this.validationError_required = `The ${ temp } can not be empty.`;
 
         /************************** `mat-form-field` properties. **************************/
         // if (this.content.appearance == undefined) this.content.appearance = TextInputAppearance.standard;

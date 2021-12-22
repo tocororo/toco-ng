@@ -4,11 +4,12 @@
  */
 
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared/public-api';
-import { RouterModule } from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
-import { CoreModule, IconService } from '../core/public-api';
+import { CoreModule } from '../core/core.module';
+import { IconService } from '../core/services/icon.service';
 
 import { ActionButtonComponent } from './action/button/button-action.component';
 
@@ -21,12 +22,14 @@ import { TableComponent } from './container/table/table.component';
 
 import { ContainerLabelDiffLangComponent } from './container-specific/label-diff-lang/label-diff-lang-container.component';
 
-import { InputTextComponent } from './input/text/text-input.component';
+import { InputBoolComponent } from './input/bool/bool-input.component';
 import { InputEmailComponent } from './input/email/email-input.component';
 import { InputIdentifierComponent } from './input/identifier/identifier-input.component';
 import { InputIssnComponent } from './input/issn/issn-input.component';
+import { InputNumberComponent } from './input/number/number-input.component';
 import { InputRnpsComponent } from './input/rnps/rnps-input.component';
 import { InputSelectComponent } from './input/select/select-input.component';
+import { InputTextComponent } from './input/text/text-input.component';
 import { InputUrlComponent } from './input/url/url-input.component';
 
 import { VocabularyComponent } from './experimental/vocabulary/vocabulary.component';
@@ -41,6 +44,11 @@ import { CheckboxComponent } from './experimental/checkbox/checkbox.component';
 
 /* Esta aquí temporalmente, quizás se hace un módulo para los test nada más. */
 import { TestContainerControlComponent } from './test/container/test-container-control/test-container-control.component';
+import { TestInputIssnComponent } from './test/input/test-issn/test-issn-input.component';
+import { TestInputNumberComponent } from './test/input/test-number/test-number-input.component';
+import { TestInputSelectComponent } from './test/input/test-select/test-select-input.component';
+import { TestInputTextComponent } from './test/input/test-text/test-text-input.component';
+import { TestInputUrlComponent } from './test/input/test-url/test-url-input.component';
 import { ContainerPanelActionComponent } from './container/panel-action/panel-action-container.component';
 import { DatepickerYearComponent } from './experimental/datepicker-year/datepicker-year.component';
 
@@ -54,12 +62,14 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     ContainerSimpleComponent,
     TableComponent,
     ContainerLabelDiffLangComponent,
-    InputTextComponent,
+    InputBoolComponent,
     InputEmailComponent,
     InputIdentifierComponent,
     InputIssnComponent,
+    InputNumberComponent,
     InputRnpsComponent,
     InputSelectComponent,
+    InputTextComponent,
     InputUrlComponent,
     VocabularyComponent,
     VocabularyTreeComponent,
@@ -69,6 +79,11 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     TextareaComponent,
     SelectTreeComponent,
     TestContainerControlComponent,
+    TestInputIssnComponent,
+    TestInputNumberComponent,
+    TestInputSelectComponent,
+    TestInputTextComponent,
+    TestInputUrlComponent,
     DatepickerComponent,
     CheckboxComponent,
     DatepickerYearComponent
@@ -76,8 +91,8 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
 
   imports: [
     SharedModule,
-    RouterModule,
     ReactiveFormsModule,
+    TranslateModule,
     CoreModule
   ],
 
@@ -87,12 +102,14 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     ContainerPanelComponent,
     ContainerPanelActionComponent,
     ContainerSimpleComponent,
-    InputTextComponent,
+    InputBoolComponent,
     InputEmailComponent,
     InputIdentifierComponent,
     InputIssnComponent,
+    InputNumberComponent,
     InputRnpsComponent,
     InputSelectComponent,
+    InputTextComponent,
     InputUrlComponent,
     VocabularyComponent,
     VocabularyTreeComponent,
@@ -115,12 +132,14 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     ContainerSimpleComponent,
     TableComponent,
     ContainerLabelDiffLangComponent,
-    InputTextComponent,
+    InputBoolComponent,
     InputEmailComponent,
     InputIdentifierComponent,
     InputIssnComponent,
+    InputNumberComponent,
     InputRnpsComponent,
     InputSelectComponent,
+    InputTextComponent,
     InputUrlComponent,
     VocabularyComponent,
     VocabularyTreeComponent,
@@ -129,6 +148,11 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     SelectFilterComponent,
     TextareaComponent,
     TestContainerControlComponent,
+    TestInputIssnComponent,
+    TestInputNumberComponent,
+    TestInputSelectComponent,
+    TestInputTextComponent,
+    TestInputUrlComponent,
     DatepickerComponent,
     DatepickerYearComponent,
     CheckboxComponent

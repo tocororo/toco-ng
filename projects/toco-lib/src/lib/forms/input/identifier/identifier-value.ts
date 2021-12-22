@@ -7,7 +7,7 @@ export class IdentifierValue
 	/**
 	 * Represents the identifier label. 
 	 */
-	public static readonly identifier_Label: string = 'Identifier';
+	public static readonly identifier_Label: string = 'TOCO_NG_ID';
 
 	/**
 	 * The identifier value.

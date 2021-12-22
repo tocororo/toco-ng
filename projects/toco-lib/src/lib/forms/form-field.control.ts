@@ -6,8 +6,10 @@
 
 import { Input, Type } from '@angular/core';
 import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
-import { Params, IconService } from '../core/public-api';
+import { Params } from '../core/utils/helpers';
+import { IconService } from '../core/services/icon.service';
 
 import { ContainerControl } from './container/container.control';
 
@@ -15,6 +17,12 @@ import { ContainerControl } from './container/container.control';
  * Defines a form section that represents the `FormGroup` or `FormArray` class. 
  */
 export type FormSection = FormGroup | FormArray;
+
+/**
+ * A collection of key/value elements, where the key is the validator name and the value is the value 
+ * that the validator needs to check. 
+ */
+ export type ValidatorArguments = Params<any>;
 
 /**
  * An enum that describes how inline contents of a block are horizontally aligned if the contents 
@@ -341,6 +349,12 @@ export interface FormFieldContent
      */
     label?: string;
 
+    /**
+     * Returns the control's placeholder. 
+     * By default, its value is `''`. Each control sets its own placeholder. 
+     */
+    placeholder?: string;
+
 
 
     /**
@@ -468,6 +482,20 @@ export abstract class FormFieldControl
     public content: FormFieldContent;
 
     /**
+     * Returns the language currently used. 
+     * This is a static field. 
+     */
+    protected static currentLang: string = '';
+
+    /**
+     * Returns true if the translation is built by the control; otherwise, false. 
+     * It is used to select the way the translation is built for the control. 
+     * By default, its value is `false`. 
+     * As an example of usage for this field, the `InputNumberComponent` class implements the logic when this value is `true`. 
+     */
+    public isTranslationBuiltByControl: boolean;
+
+    /**
      * Constructs a new instance of this class. 
      */
     public constructor()
@@ -477,13 +505,27 @@ export abstract class FormFieldControl
 
         /* It must be initialize. */
         this.content = undefined;
+
+        this.isTranslationBuiltByControl = false;
+    }
+
+    /**
+     * Sets the new language. 
+     * @param transServ The `TranslateService` instance injected. 
+     */
+    protected setNewLanguage(transServ: TranslateService): void
+    {
+        /* The `FormFieldControl.currentLang != transServ.currentLang` test is NOT necessary here because it is done in the non-abstract child classes. */
+
+        FormFieldControl.currentLang = transServ.currentLang;
     }
 
     /**
      * Initializes the `content` input property. 
      * @param label The default label to use. It is used if the `content.label` is not specified. 
+     * @param placeholder The default placeholder to use. It is used if the `content.placeholder` is not specified. 
      */
-    protected init(label: string): void
+    protected init(label: string, placeholder: string = ''): void
     {
         /* Sets the default values. */
 
@@ -528,6 +570,7 @@ export abstract class FormFieldControl
 
         /**************************** `mat-label` properties. *****************************/
         if (this.content.label == undefined) this.content.label = label;
+        if (this.content.placeholder == undefined) this.content.placeholder = placeholder;
 
         /************************** Internal control properties. **************************/
         if (this.content.textAlign == undefined) this.content.textAlign = TextAlign.left;
