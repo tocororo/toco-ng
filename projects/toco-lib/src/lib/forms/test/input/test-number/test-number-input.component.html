@@ -1,0 +1,44 @@
+
+<div class="main-margin">
+    <h3>Number control</h3>
+    <div class="main-margin">
+        <h4>`content.label = undefined`</h4>
+        <div
+            fxLayout="row"
+            fxLayout.xs="row"
+            fxLayoutAlign="space-between center"
+        >
+        
+            <input-number [content]="inputContent_00"></input-number>
+        
+            <input-number [content]="inputContent_01"></input-number>
+        
+        </div>
+
+        <h4>`content.label` is NOT `undefined`</h4>
+        <div
+            fxLayout="row"
+            fxLayout.xs="row"
+            fxLayoutAlign="space-between center"
+        >
+
+            <input-number [content]="inputContent_02"></input-number>
+
+            <input-number [content]="inputContent_03"></input-number>
+
+        </div>
+
+        <h4>Input custom validation</h4>
+        <div
+            fxLayout="row"
+            fxLayout.xs="row"
+            fxLayoutAlign="space-between center"
+        >
+
+            <input-number [content]="inputContent_04"></input-number>
+
+            <input-number [content]="inputContent_05"></input-number>
+
+        </div>
+    </div>
+</div>

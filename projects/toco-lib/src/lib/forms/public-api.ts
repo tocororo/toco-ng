@@ -36,12 +36,14 @@ export * from './experimental/textarea/textarea.component';
 export * from './experimental/vocabulary/vocabulary.component';
 export * from './experimental/vocabulary-tree/vocabulary-tree.component';
 
+export * from './input/bool/bool-input.component';
 export * from './input/email/email-value';
 export * from './input/email/email-input.component';
 export * from './input/identifier/identifier-value';
 export * from './input/identifier/identifier-input.component';
 export * from './input/issn/issn-value';
 export * from './input/issn/issn-input.component';
+export * from './input/number/number-input.component';
 export * from './input/rnps/rnps-value';
 export * from './input/rnps/rnps-input.component';
 export * from './input/select/select-input.component';
@@ -51,5 +53,10 @@ export * from './input/url/url-input.component';
 export * from './input/input.control';
 
 export * from './test/container/test-container-control/test-container-control.component';
+export * from './test/input/test-issn/test-issn-input.component';
+export * from './test/input/test-number/test-number-input.component';
+export * from './test/input/test-select/test-select-input.component';
+export * from './test/input/test-text/test-text-input.component';
+export * from './test/input/test-url/test-url-input.component';
 
 export * from './form-field.control';

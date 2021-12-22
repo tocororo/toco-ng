@@ -37,22 +37,22 @@ export enum IssnType_Label
 	/**
 	 * The ISSN label. 
 	 */
-	ISSN = 'International Standard Serial Number',
+	ISSN = 'TOCO_NG_ISSN',
 
 	/**
 	 * The ISSN label for the print ISSN. 
 	 */
-	p_ISSN = 'Print ISSN',
+	p_ISSN = 'TOCO_NG_P_ISSN',
 
 	/**
 	 * The ISSN label for the electronic ISSN. 
 	 */
-	e_ISSN = 'Electronic ISSN',
+	e_ISSN = 'TOCO_NG_E_ISSN',
 
 	/**
 	 * The ISSN label for the linking ISSN. 
 	 */
-	ISSN_L = 'Linking ISSN'
+	ISSN_L = 'TOCO_NG_ISSN_L'
 }
 
 /**
@@ -65,6 +65,11 @@ export enum IssnType_Label
  */
 export class IssnValue
 {
+	/**
+	 * Represents the ISSN placeholder.
+	 */
+	public static readonly issn_Placeholder: string = 'XXXX – XXXX';
+
 	/**
 	 * The amount of characters in the code. 
 	 */
