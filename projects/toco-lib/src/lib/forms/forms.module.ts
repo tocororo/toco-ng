@@ -44,6 +44,7 @@ import { CheckboxComponent } from './experimental/checkbox/checkbox.component';
 
 /* Esta aquí temporalmente, quizás se hace un módulo para los test nada más. */
 import { TestContainerControlComponent } from './test/container/test-container-control/test-container-control.component';
+import { TestInputBoolComponent } from './test/input/test-bool/test-bool-input.component';
 import { TestInputIssnComponent } from './test/input/test-issn/test-issn-input.component';
 import { TestInputNumberComponent } from './test/input/test-number/test-number-input.component';
 import { TestInputSelectComponent } from './test/input/test-select/test-select-input.component';
@@ -79,6 +80,7 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     TextareaComponent,
     SelectTreeComponent,
     TestContainerControlComponent,
+    TestInputBoolComponent,
     TestInputIssnComponent,
     TestInputNumberComponent,
     TestInputSelectComponent,
@@ -148,6 +150,7 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     SelectFilterComponent,
     TextareaComponent,
     TestContainerControlComponent,
+    TestInputBoolComponent,
     TestInputIssnComponent,
     TestInputNumberComponent,
     TestInputSelectComponent,
