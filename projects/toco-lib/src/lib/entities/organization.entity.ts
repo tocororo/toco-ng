@@ -252,6 +252,16 @@ export class Organization extends Entity
   established: number = -1;
 
   /**
+   * Year the institute registered on ONEI.
+   */
+   onei_registry: number = -1;
+
+   /**
+    * If its able for exporting to international organizations systems.
+    */
+   exportable: boolean = false;
+
+  /**
    * The list of URLs linking to things like the homepage for the institute.
    */
   links: Array<string> = new Array<string>();

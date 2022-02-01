@@ -44,6 +44,7 @@ import { CheckboxComponent } from './experimental/checkbox/checkbox.component';
 
 import { ContainerPanelActionComponent } from './container/panel-action/panel-action-container.component';
 import { DatepickerYearComponent } from './experimental/datepicker-year/datepicker-year.component';
+import { SelectOrgsComponent } from './experimental/select-orgs/select-orgs.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     SelectTreeComponent,
     DatepickerComponent,
     CheckboxComponent,
-    DatepickerYearComponent
+    DatepickerYearComponent,
+    SelectOrgsComponent
   ],
 
   imports: [
@@ -107,7 +109,8 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     SelectTreeComponent,
     DatepickerComponent,
     DatepickerYearComponent,
-    CheckboxComponent
+    CheckboxComponent,
+    SelectOrgsComponent
   ],
 
   exports: [
@@ -136,7 +139,8 @@ import { DatepickerYearComponent } from './experimental/datepicker-year/datepick
     TextareaComponent,
     DatepickerComponent,
     DatepickerYearComponent,
-    CheckboxComponent
+    CheckboxComponent,
+    SelectOrgsComponent
   ],
 
   providers: []
