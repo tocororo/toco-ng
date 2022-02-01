@@ -1,9 +1,9 @@
 
 import { Component, OnInit } from '@angular/core';
 
-import { ContentPosition, IconSource, IconValue } from '../../../form-field.control';
-import { InputContent, TextInputAppearance } from '../../../input/input.control';
-import { InputTextComponent } from '../../../input/text/text-input.component';
+import { ContentPosition, IconSource, IconValue } from 'projects/toco-lib/src/lib/forms/form-field.control';
+import { InputContent, TextInputAppearance } from 'projects/toco-lib/src/lib/forms/input/input.control';
+import { InputTextComponent } from 'projects/toco-lib/src/lib/forms/input/text/text-input.component';
 
 @Component({
 	selector: 'test-input-text',

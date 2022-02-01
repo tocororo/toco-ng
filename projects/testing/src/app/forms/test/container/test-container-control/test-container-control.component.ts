@@ -2,18 +2,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { FormSection, HintValue, HintPosition, IconValue, IconSource, ContentPosition } from '../../../form-field.control';
-import { TextInputAppearance } from '../../../input/input.control';
-import { ContainerContent } from '../../../container/container.control';
-import { ActionControl, ActionContent } from '../../../action/action.control';
-import { PanelContent, ContainerPanelComponent } from '../../../container/panel/panel-container.component';
-import { ContainerSimpleComponent } from '../../../container/simple/simple-container.component';
-import { InputTextComponent } from '../../../input/text/text-input.component';
-import { InputSelectComponent } from '../../../input/select/select-input.component';
-import { ActionButtonComponent } from '../../../action/button/button-action.component';
+import { FormSection, HintValue, HintPosition, IconValue, IconSource, ContentPosition } from 'projects/toco-lib/src/lib/forms/form-field.control';
+import { TextInputAppearance } from 'projects/toco-lib/src/lib/forms/input/input.control';
+import { ContainerContent } from 'projects/toco-lib/src/lib/forms/container/container.control';
+import { ActionControl, ActionContent } from 'projects/toco-lib/src/lib/forms/action/action.control';
+import { PanelContent, ContainerPanelComponent } from 'projects/toco-lib/src/lib/forms/container/panel/panel-container.component';
+import { ContainerSimpleComponent } from 'projects/toco-lib/src/lib/forms/container/simple/simple-container.component';
+import { InputTextComponent } from 'projects/toco-lib/src/lib/forms/input/text/text-input.component';
+import { InputSelectComponent } from 'projects/toco-lib/src/lib/forms/input/select/select-input.component';
+import { ActionButtonComponent } from 'projects/toco-lib/src/lib/forms/action/button/button-action.component';
 
-import { Identifier } from '../../../../entities/public-api';
-import { Params } from '../../../../core/public-api';
+import { Identifier } from 'projects/toco-lib/src/lib/entities/common';
+import { Params } from 'projects/toco-lib/src/lib/core/utils/helpers';
 
 const relationshipsExample_SimpleFormGroup: Params<any> = {	
 	'idtype': 'isni'

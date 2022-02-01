@@ -1,8 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
 
-import { TextInputAppearance } from '../../../input/input.control';
-import { InputSelectComponent, SelectContent } from '../../../input/select/select-input.component';
+import { TextInputAppearance } from 'projects/toco-lib/src/lib/forms/input/input.control';
+import { InputSelectComponent, SelectContent } from 'projects/toco-lib/src/lib/forms/input/select/select-input.component';
 
 @Component({
 	selector: 'test-input-select',

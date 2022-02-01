@@ -1,16 +1,16 @@
 
 import { Component, OnInit } from '@angular/core';
 
-import { ContentPosition, IconSource, IconValue } from '../../../form-field.control';
-import { InputContent, TextInputAppearance } from '../../../input/input.control';
-import { InputIssnComponent } from '../../../input/issn/issn-input.component';
+import { ContentPosition, IconSource, IconValue } from 'projects/toco-lib/src/lib/forms/form-field.control';
+import { InputContent, TextInputAppearance } from 'projects/toco-lib/src/lib/forms/input/input.control';
+import { InputUrlComponent } from 'projects/toco-lib/src/lib/forms/input/url/url-input.component';
 
 @Component({
-	selector: 'test-input-issn',
-	templateUrl: './test-issn-input.component.html',
-	styleUrls: ['./test-issn-input.component.scss']
+	selector: 'test-input-url',
+	templateUrl: './test-url-input.component.html',
+	styleUrls: ['./test-url-input.component.scss']
 })
-export class TestInputIssnComponent implements OnInit
+export class TestInputUrlComponent implements OnInit
 {
 	public inputContent_00: InputContent;
 	public inputContent_01: InputContent;
@@ -54,15 +54,15 @@ export class TestInputIssnComponent implements OnInit
 		/* `content.value = undefined` */
 
 		this.inputContent_00 = {
-			'formControl': InputIssnComponent.getFormControlByDefault(),
-			'name': 'issn_00',
+			'formControl': InputUrlComponent.getFormControlByDefault(),
+			'name': 'url_00',
 			'label': undefined,
-			'controlType': InputIssnComponent,
+			'controlType': InputUrlComponent,
 			'value': undefined,
 			'required': true,
 			'width': '45%',
 			'appearance': TextInputAppearance.standard,
-			'ariaLabel': 'issn_00'
+			'ariaLabel': 'url_00'
 		};
 	}
 
@@ -72,16 +72,17 @@ export class TestInputIssnComponent implements OnInit
 		/* `content.value` is NOT `undefined`. */
 
 		this.inputContent_01 = {
-			'formControl': InputIssnComponent.getFormControlByDefault(),
-			'name': 'issn_01',
+			'formControl': InputUrlComponent.getFormControlByDefault(),
+			'name': 'url_01',
 			'label': undefined,
-			'controlType': InputIssnComponent,
-			'value': '1234-124x',
+			'controlType': InputUrlComponent,
+			'value': 'https://www.google.com/',
 			'required': true,
 			'width': '45%',
 			'appearance': TextInputAppearance.standard,
-			'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
-			'ariaLabel': 'issn_01'
+			'prefixIcon': new IconValue(),
+			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
+			'ariaLabel': 'url_01'
 		};
 	}
 
@@ -91,15 +92,15 @@ export class TestInputIssnComponent implements OnInit
 		/* `content.value = undefined` */
 
 		this.inputContent_02 = {
-			'formControl': InputIssnComponent.getFormControlByDefault(),
-			'name': 'issn_02',
-			'label': 'ISSN_02',
-			'controlType': InputIssnComponent,
+			'formControl': InputUrlComponent.getFormControlByDefault(),
+			'name': 'url_02',
+			'label': 'URL_02',
+			'controlType': InputUrlComponent,
 			'value': undefined,
 			'required': true,
 			'width': '45%',
 			'appearance': TextInputAppearance.standard,
-			'ariaLabel': 'issn_02'
+			'ariaLabel': 'url_02'
 		};
 	}
 
@@ -109,16 +110,17 @@ export class TestInputIssnComponent implements OnInit
 		/* `content.value` is NOT `undefined`. */
 
 		this.inputContent_03 = {
-			'formControl': InputIssnComponent.getFormControlByDefault(),
-			'name': 'issn_03',
-			'label': 'ISSN_03',
-			'controlType': InputIssnComponent,
-			'value': '1234-124x',
+			'formControl': InputUrlComponent.getFormControlByDefault(),
+			'name': 'url_03',
+			'label': 'URL_03',
+			'controlType': InputUrlComponent,
+			'value': 'https://www.google.com/',
 			'required': true,
 			'width': '45%',
 			'appearance': TextInputAppearance.standard,
-			'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
-			'ariaLabel': 'issn_03'
+			'prefixIcon': new IconValue(),
+			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
+			'ariaLabel': 'url_03'
 		};
 	}
 }

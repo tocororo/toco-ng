@@ -1,8 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
 
-import { InputContent, TextInputAppearance } from '../../../input/input.control';
-import { InputBoolComponent } from '../../../input/bool/bool-input.component';
+import { InputContent, TextInputAppearance } from 'projects/toco-lib/src/lib/forms/input/input.control';
+import { InputBoolComponent } from 'projects/toco-lib/src/lib/forms/input/bool/bool-input.component';
 
 @Component({
 	selector: 'test-input-bool',

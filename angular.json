@@ -41,7 +41,6 @@
               "tsConfig": "projects/toco-lib/tsconfig.lib.json",
               "project": "projects/toco-lib/ng-package-sceiba.json"
             }
-
           }
         },
         "test": {
@@ -91,6 +90,7 @@
               "projects/testing/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/testing/src/styles.scss"
             ],
             "scripts": []
@@ -156,6 +156,7 @@
               "projects/testing/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/testing/src/styles.scss"
             ],
             "scripts": []
@@ -187,6 +188,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "toco-lib"
 }
