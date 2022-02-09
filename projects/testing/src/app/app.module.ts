@@ -11,6 +11,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { TocoFormsModule } from 'projects/toco-lib/src/public-api';
 
+import { TestHelpers } from './core/test/utils/test-helpers';
 import { TestContainerControlComponent } from './forms/test/container/test-container-control/test-container-control.component';
 import { TestInputBoolComponent } from './forms/test/input/test-bool/test-bool-input.component';
 import { TestInputIssnComponent } from './forms/test/input/test-issn/test-issn-input.component';
@@ -30,6 +31,7 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader
 @NgModule({
     declarations: [
         AppComponent,
+        TestHelpers,
         TestContainerControlComponent,
         TestInputBoolComponent,
         TestInputIssnComponent,
