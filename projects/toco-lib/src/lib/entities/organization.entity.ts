@@ -25,6 +25,23 @@ export class LabelDiffLang extends EntityBase
   iso639: string = '';
 }
 
+/**
+ * Entity for `Redirected` based on schema `organization-v1.0.0.json`.
+ * Which organization redirects.
+ */
+ export class Redirected extends EntityBase
+ {
+    /**
+      * Institute name in a language variant.
+    */
+    idtype: string = '';
+ 
+    /**
+      * ISO-639-1 language code.
+    */
+    value: string = '';
+ }
+ 
 
 /**
  * Entity for `Relationship` based on schema `organization-v1.0.0.json`.
@@ -280,4 +297,9 @@ export class Organization extends Entity
    * An array of addresses associated with the institute.
    */
   addresses: Array <Address> = new Array<Address>();
+
+  /**
+   * Organization uuid will be redirected because this one is duplicated.
+   */
+  redirect: Redirected = undefined;
 }
