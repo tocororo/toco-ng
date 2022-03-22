@@ -14,6 +14,11 @@ import { isArray, isRegExp, isDate, isError, isObject } from 'util';
 export const MAX_SAFE_INTEGER: number = 9007199254740991;
 
 /**
+ * The markdown file extension. 
+ */
+export const MARKDOWN_FILE_EXTENSION: string = '.md';
+
+/**
  * A collection of key/value elements, where the keys are strings. 
  */
 export type Params<T> = {
@@ -51,24 +56,67 @@ export type ChildControlsPath = {
 };
 
 /**
+ * An enum that represents the language texts. 
+ */
+export enum LanguageTexts
+{
+    /**
+     * The Spanish language. 
+     */
+    Español = 'Español',
+
+    /**
+     * The English language. 
+     */
+    English = 'English',
+}
+
+/**
+ * An enum that represents the language text abbreviations. 
+ */
+export enum LanguageAbbrs
+{
+    /**
+     * The Spanish language abbreviation. 
+     */
+    es = 'es',
+
+    /**
+     * The English language abbreviation. 
+     */
+    en = 'en',
+}
+
+/**
+ * The list of language texts. 
+ */
+export const LANGUAGE_TEXTS_LIST: LanguageTexts[] = [LanguageTexts.Español, LanguageTexts.English];
+
+/**
+ * The list of language text abbreviations.
+ */
+export const LANGUAGE_ABBRS_LIST: LanguageAbbrs[] = [LanguageAbbrs.es, LanguageAbbrs.en];
+
+/**
  * Converts the language representation from string to number. 
  * If the string specified is not registered as a language, then returns -1 number value. 
  * The Spanish language is: 0 as number, and 'es' as string. 
  * The English language is: 1 as number, and 'en' as string. 
- * @param lang The language representation as string. 
+ * In other words, it follows the order of `LANGUAGE_TEXTS_LIST` and `LANGUAGE_ABBRS_LIST` enums. 
+ * @param lang The language text abbreviation to be used. 
  * @returns Returns the language as a number based on its representation as string. 
  * If the string specified is not registered as a language, then returns -1 number value. 
  */
-export function convertLangFromStringToNumber(lang: string): number
+export function convertLangFromStringToNumber(lang: string | LanguageAbbrs): number
 {
     switch (lang)
     {
-        case 'es':  /* Spanish */
+        case LanguageAbbrs.es:  /* Spanish */
             {
                 return 0;
             }
 
-        case 'en':  /* English */
+        case LanguageAbbrs.en:  /* English */
             {
                 return 1;
             }
@@ -82,6 +130,7 @@ export function convertLangFromStringToNumber(lang: string): number
  * If the number specified is not registered as a language, then returns empty string value. 
  * The Spanish language is: 0 as number, and 'es' as string. 
  * The English language is: 1 as number, and 'en' as string. 
+ * In other words, it follows the order of `LANGUAGE_TEXTS_LIST` and `LANGUAGE_ABBRS_LIST` enums. 
  * @param index The language representation as number. 
  * @returns Returns the language as a string based on its representation as number. 
  * If the number specified is not registered as a language, then returns empty string value. 
@@ -92,16 +141,28 @@ export function convertLangFromNumberToString(index: number): string
     {
         case 0:  /* Spanish */
             {
-                return 'es';
+                return LanguageAbbrs.es;
             }
 
         case 1:  /* English */
             {
-                return 'en';
+                return LanguageAbbrs.en;
             }
     }
 
     return '';
+}
+
+/**
+ * Returns a string that is the result of concatenating the specified `path` argument, 
+ * the language extension, and the markdown file extension. 
+ * @param path The path to markdown file without the language extension and the markdown file extension. 
+ * @param lang The language text abbreviation to be used. 
+ * @returns Returns the correct path to the markdown file. 
+ */
+export function getPathWithLangExtension(path: string, lang: string | LanguageAbbrs): string
+{
+    return (path + '.' + lang + MARKDOWN_FILE_EXTENSION);
 }
 
 /**
@@ -327,4 +388,3 @@ export function getHttpEventTypeToString(httpEventType: HttpEventType): string
             return "'It does not know the code'";
     }
 }
-     

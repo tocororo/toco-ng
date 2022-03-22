@@ -42,14 +42,6 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
 import { DatepickerComponent } from './experimental/datepicker/datepicker.component';
 import { CheckboxComponent } from './experimental/checkbox/checkbox.component';
 
-/* Esta aquí temporalmente, quizás se hace un módulo para los test nada más. */
-import { TestContainerControlComponent } from './test/container/test-container-control/test-container-control.component';
-import { TestInputBoolComponent } from './test/input/test-bool/test-bool-input.component';
-import { TestInputIssnComponent } from './test/input/test-issn/test-issn-input.component';
-import { TestInputNumberComponent } from './test/input/test-number/test-number-input.component';
-import { TestInputSelectComponent } from './test/input/test-select/test-select-input.component';
-import { TestInputTextComponent } from './test/input/test-text/test-text-input.component';
-import { TestInputUrlComponent } from './test/input/test-url/test-url-input.component';
 import { ContainerPanelActionComponent } from './container/panel-action/panel-action-container.component';
 import { DatepickerYearComponent } from './experimental/datepicker-year/datepicker-year.component';
 import { SelectOrgsComponent } from './experimental/select-orgs/select-orgs.component';
@@ -80,13 +72,6 @@ import { SelectOrgsComponent } from './experimental/select-orgs/select-orgs.comp
     SelectFilterComponent,
     TextareaComponent,
     SelectTreeComponent,
-    TestContainerControlComponent,
-    TestInputBoolComponent,
-    TestInputIssnComponent,
-    TestInputNumberComponent,
-    TestInputSelectComponent,
-    TestInputTextComponent,
-    TestInputUrlComponent,
     DatepickerComponent,
     CheckboxComponent,
     DatepickerYearComponent,
@@ -152,13 +137,6 @@ import { SelectOrgsComponent } from './experimental/select-orgs/select-orgs.comp
     SelectComponent,
     SelectFilterComponent,
     TextareaComponent,
-    TestContainerControlComponent,
-    TestInputBoolComponent,
-    TestInputIssnComponent,
-    TestInputNumberComponent,
-    TestInputSelectComponent,
-    TestInputTextComponent,
-    TestInputUrlComponent,
     DatepickerComponent,
     DatepickerYearComponent,
     CheckboxComponent,
