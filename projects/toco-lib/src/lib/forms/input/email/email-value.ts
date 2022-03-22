@@ -10,6 +10,11 @@ export class EmailValue
 	public static readonly email_Label: string = 'Email';
 
 	/**
+	 * Represents the email placeholder.
+	 */
+	public static readonly email_Placeholder: string = 'nick@gmail.com';
+
+	/**
 	 * The email value.
 	 */
 	public email: string;

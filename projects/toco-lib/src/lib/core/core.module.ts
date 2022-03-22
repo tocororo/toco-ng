@@ -2,6 +2,7 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { SharedModule } from '../shared/public-api';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // import { throwIfAlreadyLoaded } from './module-import-guard';
@@ -15,6 +16,7 @@ import { InfoCardComponent } from './info-card/info-card.component';
 import { JournalCardComponent } from './journal-card/journal-card.component';
 import { NavComponent } from './nav/nav.component';
 import { PageHeaderComponent } from './page-header/page-header.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 import { CoreRoutingModule } from './core-routing.module';
 import { MetadataService } from './metadata.service';
@@ -36,6 +38,7 @@ import { SceibaAppsComponent } from './sceiba-apps/sceiba-apps.component';
         JournalCardComponent,
         NavComponent,
         PageHeaderComponent,
+        PageNotFoundComponent,
         RoadMapComponent,
         RoadMapSceibaComponent,
         GetViewContainerDirective,
@@ -49,6 +52,7 @@ import { SceibaAppsComponent } from './sceiba-apps/sceiba-apps.component';
     imports: [
         SharedModule,
         ReactiveFormsModule,
+        TranslateModule,
         NgxChartsModule,
         CoreRoutingModule
     ],
@@ -62,6 +66,7 @@ import { SceibaAppsComponent } from './sceiba-apps/sceiba-apps.component';
         JournalCardComponent,
         NavComponent,
         PageHeaderComponent,
+        PageNotFoundComponent,
         RoadMapComponent,
         RoadMapSceibaComponent,
         GetViewContainerDirective,

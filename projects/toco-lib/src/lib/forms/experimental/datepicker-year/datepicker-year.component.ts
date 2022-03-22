@@ -81,7 +81,7 @@ export class DatepickerYearComponent  extends InputControl implements OnInit, Co
 
 
   ngOnInit() {
-    this.init('', false, true);
+    this.init('', '', false, true);
     // this.value = moment(this.value.toString()).format("YYYY")
     if (this.label == '') {
       this.label = this.content.label;

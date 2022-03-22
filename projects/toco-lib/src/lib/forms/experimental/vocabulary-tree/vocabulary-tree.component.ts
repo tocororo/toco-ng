@@ -74,7 +74,7 @@ export class VocabularyTreeComponent extends InputControl
   }
 
   ngOnInit() {
-    this.init('', false, true);
+    this.init('', '', false, true);
     // (this.content.parentFormSection as FormGroup).addControl(
     //   this.content.name,
     //   this.content.formControl

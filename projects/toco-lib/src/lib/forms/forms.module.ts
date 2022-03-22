@@ -4,11 +4,12 @@
  */
 
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared/public-api';
-import { RouterModule } from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
-import { CoreModule, IconService } from '../core/public-api';
+import { CoreModule } from '../core/core.module';
+import { IconService } from '../core/services/icon.service';
 
 import { ActionButtonComponent } from './action/button/button-action.component';
 
@@ -21,12 +22,14 @@ import { TableComponent } from './container/table/table.component';
 
 import { ContainerLabelDiffLangComponent } from './container-specific/label-diff-lang/label-diff-lang-container.component';
 
-import { InputTextComponent } from './input/text/text-input.component';
+import { InputBoolComponent } from './input/bool/bool-input.component';
 import { InputEmailComponent } from './input/email/email-input.component';
 import { InputIdentifierComponent } from './input/identifier/identifier-input.component';
 import { InputIssnComponent } from './input/issn/issn-input.component';
+import { InputNumberComponent } from './input/number/number-input.component';
 import { InputRnpsComponent } from './input/rnps/rnps-input.component';
 import { InputSelectComponent } from './input/select/select-input.component';
+import { InputTextComponent } from './input/text/text-input.component';
 import { InputUrlComponent } from './input/url/url-input.component';
 
 import { VocabularyComponent } from './experimental/vocabulary/vocabulary.component';
@@ -39,8 +42,6 @@ import { SelectTreeComponent } from './experimental/select-tree/select-tree.comp
 import { DatepickerComponent } from './experimental/datepicker/datepicker.component';
 import { CheckboxComponent } from './experimental/checkbox/checkbox.component';
 
-/* Esta aquí temporalmente, quizás se hace un módulo para los test nada más. */
-import { TestContainerControlComponent } from './test/container/test-container-control/test-container-control.component';
 import { ContainerPanelActionComponent } from './container/panel-action/panel-action-container.component';
 import { DatepickerYearComponent } from './experimental/datepicker-year/datepicker-year.component';
 import { SelectOrgsComponent } from './experimental/select-orgs/select-orgs.component';
@@ -55,12 +56,14 @@ import { SelectOrgsComponent } from './experimental/select-orgs/select-orgs.comp
     ContainerSimpleComponent,
     TableComponent,
     ContainerLabelDiffLangComponent,
-    InputTextComponent,
+    InputBoolComponent,
     InputEmailComponent,
     InputIdentifierComponent,
     InputIssnComponent,
+    InputNumberComponent,
     InputRnpsComponent,
     InputSelectComponent,
+    InputTextComponent,
     InputUrlComponent,
     VocabularyComponent,
     VocabularyTreeComponent,
@@ -69,7 +72,6 @@ import { SelectOrgsComponent } from './experimental/select-orgs/select-orgs.comp
     SelectFilterComponent,
     TextareaComponent,
     SelectTreeComponent,
-    TestContainerControlComponent,
     DatepickerComponent,
     CheckboxComponent,
     DatepickerYearComponent,
@@ -78,8 +80,8 @@ import { SelectOrgsComponent } from './experimental/select-orgs/select-orgs.comp
 
   imports: [
     SharedModule,
-    RouterModule,
     ReactiveFormsModule,
+    TranslateModule,
     CoreModule
   ],
 
@@ -89,12 +91,14 @@ import { SelectOrgsComponent } from './experimental/select-orgs/select-orgs.comp
     ContainerPanelComponent,
     ContainerPanelActionComponent,
     ContainerSimpleComponent,
-    InputTextComponent,
+    InputBoolComponent,
     InputEmailComponent,
     InputIdentifierComponent,
     InputIssnComponent,
+    InputNumberComponent,
     InputRnpsComponent,
     InputSelectComponent,
+    InputTextComponent,
     InputUrlComponent,
     VocabularyComponent,
     VocabularyTreeComponent,
@@ -118,12 +122,14 @@ import { SelectOrgsComponent } from './experimental/select-orgs/select-orgs.comp
     ContainerSimpleComponent,
     TableComponent,
     ContainerLabelDiffLangComponent,
-    InputTextComponent,
+    InputBoolComponent,
     InputEmailComponent,
     InputIdentifierComponent,
     InputIssnComponent,
+    InputNumberComponent,
     InputRnpsComponent,
     InputSelectComponent,
+    InputTextComponent,
     InputUrlComponent,
     VocabularyComponent,
     VocabularyTreeComponent,
@@ -131,7 +137,6 @@ import { SelectOrgsComponent } from './experimental/select-orgs/select-orgs.comp
     SelectComponent,
     SelectFilterComponent,
     TextareaComponent,
-    TestContainerControlComponent,
     DatepickerComponent,
     DatepickerYearComponent,
     CheckboxComponent,

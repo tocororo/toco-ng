@@ -2,16 +2,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
-import { ExtraValidators } from '../../../core/public-api';
+import { ExtraValidators } from '../../../core/utils/validator';
 
-import { InputControl } from '../input.control';
 import { RnpsValue } from './rnps-value';
+import { InputControl } from '../input.control';
+import { ValidatorArguments } from '../../form-field.control';
 
 /**
  * Represents a control that allows the writing of an RNPS. 
  * An RNPS (Registro Nacional de Publicaciones Seriadas) is an 4-digit code used to control 
- * las publicaciones seriadas autorizadas a editarse, imprimirse y circular en Cuba. 
+ * the serial publications authorized to be edited, printed and circulated in Cuba. 
  * For more information follow the link: http://www.seriadas.cult.cu/. 
+ * It uses the `RnpsValue.rnps_Abbreviation` as a label if the `content.label` is not specified. 
+ * It uses the `RnpsValue.rnps_Placeholder` as a placeholder if the `content.placeholder` is not specified. 
  */
 @Component({
     selector: 'input-rnps',
@@ -27,8 +30,9 @@ export class InputRnpsComponent extends InputControl implements OnInit
     /**
      * Returns a `FormControl` by default. 
      * It is used to initialized the `InputRnpsComponent`'s `content.formControl` value by default. 
+     * In this case, the `validatorArguments` argument is always `undefined`. 
      */
-    public static getFormControlByDefault(): FormControl
+    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): FormControl
     {
         return new FormControl('', [
             ExtraValidators.equalLength(RnpsValue.codeLength),
@@ -44,14 +48,18 @@ export class InputRnpsComponent extends InputControl implements OnInit
     public constructor()
     {
         super();
+
+        this._codeOldValue = undefined;
     }
 
     public ngOnInit(): void
     {
-        this._codeOldValue = this.content.formControl.value;
-
         /* Sets the default values. */
-        this.init(RnpsValue.rnps_Abbreviation, true, true);
+
+        this.init(RnpsValue.rnps_Abbreviation, RnpsValue.rnps_Placeholder, true, true);
+
+        /* The '_codeOldValue' must be set after the 'content.formControl.value' is set. */
+        this.handleSpecificInput();
     }
 
     /**
@@ -68,7 +76,7 @@ export class InputRnpsComponent extends InputControl implements OnInit
         {
             if ((validationErrors[ExtraValidators.equalLength.name]) || (validationErrors[Validators.required.name]))
             {
-                result += 'Its length must be ' + RnpsValue.codeLengthAsString;
+                result = 'TOCO_NG_ERROR_MSG_RNPS_LONG_INVAL';
                 result_alreadyHaveErrorInfo = true;
             }
 
@@ -76,17 +84,15 @@ export class InputRnpsComponent extends InputControl implements OnInit
             {
                 if (result_alreadyHaveErrorInfo)
                 {
-                    result += ', and all positions have digits';
+                    result = 'TOCO_NG_ERROR_MSG_RNPS_LONG_Y_DIG_INVAL';
                 }
                 else
                 {
-                    result += 'All positions must have digits';
+                    result = 'TOCO_NG_ERROR_MSG_RNPS_DIG_INVAL';
                 }
 
                 result_alreadyHaveErrorInfo = true;
             }
-
-            result += '.';
         }
 
         return result;

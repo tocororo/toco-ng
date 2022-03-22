@@ -3,3 +3,8 @@
 {
 	width: 100%;
 }
+
+::ng-deep .tooltip-multiple-lines
+{
+    white-space: pre-line !important;
+}

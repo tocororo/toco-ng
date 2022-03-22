@@ -2,10 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
-import { ExtraValidators } from '../../../core/public-api';
+import { ExtraValidators } from '../../../core/utils/validator';
 
 import { IssnType_Abbreviation, IssnValue } from './issn-value';
 import { InputControl } from '../input.control';
+import { ValidatorArguments } from '../../form-field.control';
 
 /**
  * Represents a control that allows the writing of an ISSN. 
@@ -14,6 +15,8 @@ import { InputControl } from '../input.control';
  * It is used to identify newspapers, journals, magazines and periodicals 
  * of all kinds and on all media–print and electronic. For more information 
  * follow the link: https://www.issn.org/understanding-the-issn/what-is-an-issn/. 
+ * It uses the `IssnType_Abbreviation.ISSN` as a label if the `content.label` is not specified. 
+ * It uses the `IssnValue.issn_Placeholder` as a placeholder if the `content.placeholder` is not specified. 
  */
 @Component({
     selector: 'input-issn',
@@ -31,8 +34,9 @@ export class InputIssnComponent extends InputControl implements OnInit
     /**
      * Returns a `FormControl` by default. 
      * It is used to initialized the `InputIssnComponent`'s `content.formControl` value by default. 
+     * In this case, the `validatorArguments` argument is always `undefined`. 
      */
-    public static getFormControlByDefault(): FormControl
+    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): FormControl
     {
         let res: FormControl = new FormControl('', [
             ExtraValidators.equalLength(IssnValue.codeLength),
@@ -51,21 +55,23 @@ export class InputIssnComponent extends InputControl implements OnInit
     public constructor()
     {
         super();
+
+        this._codeOldValue = undefined;
     }
 
     public ngOnInit(): void
     {
         /* Sets the default values. */
 
-        this.init(IssnType_Abbreviation.ISSN, true, true);
+        this.init(IssnType_Abbreviation.ISSN, IssnValue.issn_Placeholder, true, true);
 
-        if (typeof this.content.value !== 'string')
+        if ((typeof this.content.value !== 'string') && (typeof this.content.value !== 'undefined'))
         {
             throw new Error(`For the '${ this.content.name }' control, the 'content.value' value must be of string type.`);
         }
 
         /* The '_codeOldValue' must be set after the 'content.formControl.value' is set. */
-        this._codeOldValue = this.content.formControl.value;
+        this.handleSpecificInput();
     }
 
    /**
@@ -83,7 +89,7 @@ export class InputIssnComponent extends InputControl implements OnInit
         {
             if ((validationErrors[ExtraValidators.equalLength.name]) || (validationErrors[Validators.required.name]))
             {
-                result += 'Its length must be ' + IssnValue.codeLengthAsString;
+                result = 'TOCO_NG_ERROR_MSG_ISSN_LONG_INVAL';
                 result_alreadyHaveErrorInfo = true;
             }
 
@@ -91,19 +97,14 @@ export class InputIssnComponent extends InputControl implements OnInit
             {
                 if (result_alreadyHaveErrorInfo)
                 {
-                    result += ', and all positions have digits (the last one can also have x or X)';
+                    result = 'TOCO_NG_ERROR_MSG_ISSN_LONG_Y_DIG_INVAL';
                 }
                 else
                 {
-                    result += 'All positions must have digits (the last one can also have x or X)';
+                    result = 'TOCO_NG_ERROR_MSG_ISSN_DIG_INVAL';
                 }
 
                 result_alreadyHaveErrorInfo = true;
-            }
-
-            if (result_alreadyHaveErrorInfo)
-            {
-                result += '.';
             }
         }
 
@@ -114,11 +115,9 @@ export class InputIssnComponent extends InputControl implements OnInit
 			{
 				if (validationErrors[ExtraValidators.issnConfirmCheckDigitOneField.name])
 				{
-					result += 'There is some wrong digit';
+					result = 'TOCO_NG_ERROR_MSG_ISSN_DIG_CHEQUEO_INVAL';
 					result_alreadyHaveErrorInfo = true;
 				}
-
-				result += '.';
 			}
 		}
 

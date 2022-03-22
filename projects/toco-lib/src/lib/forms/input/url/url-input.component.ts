@@ -2,11 +2,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
-import { InputControl } from '../input.control';
 import { UrlValue } from './url-value';
+import { InputControl } from '../input.control';
+import { ValidatorArguments } from '../../form-field.control';
 
 /**
  * Represents a control that allows the writing of a url.
+ * It uses the `UrlValue.url_Label` as a label if the `content.label` is not specified. 
+ * It uses the `UrlValue.url_Placeholder` as a placeholder if the `content.placeholder` is not specified. 
  */
 @Component({
     selector: 'input-url',
@@ -20,18 +23,19 @@ import { UrlValue } from './url-value';
 export class InputUrlComponent extends InputControl implements OnInit
 {
     /**
-     * Returns a `FormControl` by default.
-     * It is used to initialized the `InputUrlComponent`'s `content.formControl` value by default.
+     * Returns a `FormControl` by default. 
+     * It is used to initialized the `InputUrlComponent`'s `content.formControl` value by default. 
+     * In this case, the `validatorArguments` argument is always `undefined`. 
      */
-    public static getFormControlByDefault(): FormControl
+    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): FormControl
     {
-        const reg = '/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi';
-        const reg2 = '[a-z.]*';
+        // const reg = '/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi';
+        // const reg2 = '[a-z.]*';
         const reg3 = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
         return new FormControl('', [
             Validators.pattern(reg3)
             // Validators.pattern('/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/i')
-            //Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/i)
+            // Validators.pattern(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/i)
         ]);
     }
 
@@ -43,7 +47,7 @@ export class InputUrlComponent extends InputControl implements OnInit
     public ngOnInit(): void
     {
         /* Sets the default values. */
-        this.init(UrlValue.url_Label, false, true);
+        this.init(UrlValue.url_Label, UrlValue.url_Placeholder, false, true);
     }
 
     /**
@@ -63,7 +67,7 @@ export class InputUrlComponent extends InputControl implements OnInit
             else
             {
                 /* It is `validationErrors[Validators.pattern.name]`. */
-                return 'The url is wrong.';
+                return 'TOCO_NG_ERROR_MSG_URL_INVAL';
             }
         }
 

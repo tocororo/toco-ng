@@ -3,10 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, ValidationErrors } from '@angular/forms';
 
 import { InputControl } from '../input.control';
+import { ValidatorArguments } from '../../form-field.control';
 import { EmailValue } from './email-value';
 
 /**
  * Represents a control that allows the writing of an email. 
+ * It uses the `EmailValue.email_Label` as a label if the `content.label` is not specified. 
+ * It uses the `EmailValue.email_Placeholder` as a placeholder if the `content.placeholder` is not specified. 
  */
 @Component({
     selector: 'input-email',
@@ -22,8 +25,9 @@ export class InputEmailComponent extends InputControl implements OnInit
     /**
      * Returns a `FormControl` by default. 
      * It is used to initialized the `InputEmailComponent`'s `content.formControl` value by default. 
+     * In this case, the `validatorArguments` argument is always `undefined`. 
      */
-    public static getFormControlByDefault(): FormControl
+    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): FormControl
     {
         return new FormControl('', [
             Validators.email
@@ -38,7 +42,7 @@ export class InputEmailComponent extends InputControl implements OnInit
     public ngOnInit(): void
     {
         /* Sets the default values. */
-        this.init(EmailValue.email_Label, false, true);
+        this.init(EmailValue.email_Label, EmailValue.email_Placeholder, false, true);
     }
 
     /**
@@ -58,7 +62,7 @@ export class InputEmailComponent extends InputControl implements OnInit
             else
             {
                 /* It is `validationErrors[Validators.email.name]`. */
-                return 'The email is wrong.';
+                return 'TOCO_NG_ERROR_MSG_CORREO_INVAL';
             }
         }
 

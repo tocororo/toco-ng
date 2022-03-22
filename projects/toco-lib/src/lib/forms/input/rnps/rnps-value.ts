@@ -8,6 +8,11 @@
 export class RnpsValue
 {
 	/**
+	 * Represents the RNPS placeholder.
+	 */
+	public static readonly rnps_Placeholder: string = 'XXXX';
+
+	/**
 	 * The amount of digits in the code. 
 	 */
 	public static readonly codeLength: number = 4;
@@ -25,7 +30,7 @@ export class RnpsValue
 	/**
 	 * Represents the RNPS label. 
 	 */
-	public static readonly rnps_Label: string = 'Registro Nacional de Publicaciones Seriadas';
+	public static readonly rnps_Label: string = 'TOCO_NG_RNPS';
 
 	/**
 	 * The code of `RnpsValue.codeLength` digits.

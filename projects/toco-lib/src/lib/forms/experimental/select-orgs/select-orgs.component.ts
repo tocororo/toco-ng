@@ -67,7 +67,7 @@ implements OnInit {
    constructor( private _orgService: OrganizationServiceNoAuth) {  super();}
 
    ngOnInit() {
-    this.init('', false, false);
+    this.init('', '', false, false);
     this.extraContent = this.content.extraContent;
     this.content.value = [];
 

@@ -24,8 +24,9 @@ export class SearchService {
   //       'Access-Control-Allow-Origin': '*'
   //     }
   // );
-  http: HttpClient;
-  constructor(private env: Environment, private handler: HttpBackend) {
+  public http: HttpClient;
+
+  public constructor(private env: Environment, private handler: HttpBackend) {
 
     // TODO: hay una mejor manera de hacer esto, creando diferentes y propios HttpClients que
     // tengan un comportamiento especifico (eg: sin/con autenticacion)
@@ -37,7 +38,7 @@ export class SearchService {
     this.http = new HttpClient(handler);
   }
 
-  getAggregation(field, size = 10): Observable<Response<any>> {
+  public getAggregation(field, size = 10): Observable<Response<any>> {
     let params = new HttpParams();
     const options = {
       params: params.set('size', size.toString(10))
@@ -46,7 +47,7 @@ export class SearchService {
     return this.http.get<Response<any>>(req, options);
   }
 
-  getRecords(params: HttpParams): Observable<SearchResponse<Record>> {
+  public getRecords(params: HttpParams): Observable<SearchResponse<Record>> {
     const options = {
       params: params,
       // headers: this.headers
@@ -56,7 +57,7 @@ export class SearchService {
     return this.http.get<SearchResponse<Record>>(req, options);
   }
 
-  getSources(params: HttpParams): Observable<SearchResponse<Source>> {
+  public getSources(params: HttpParams): Observable<SearchResponse<Source>> {
     const options = {
       params: params,
       // headers: this.headers
@@ -66,7 +67,7 @@ export class SearchService {
     return this.http.get<SearchResponse<Source>>(req, options);
   }
 
-  getOrganizations(params: HttpParams): Observable<SearchResponse<Organization>> {
+  public getOrganizations(params: HttpParams): Observable<SearchResponse<Organization>> {
     const options = {
       params: params,
       // headers: this.headers
@@ -78,20 +79,19 @@ export class SearchService {
     return this.http.get<SearchResponse<Organization>>(req, options);
   }
 
-  getOrganizationById(id: string): Observable<SearchResponse<Organization>> {
+  public getOrganizationById(id: string): Observable<SearchResponse<Organization>> {
     const req = this.env.cuorApi + 'organizations/' + id + '/';
     // console.log(req);
 
     return this.http.get<SearchResponse<Organization>>(req);
   }
-  updateOrganizations(data: Organization): Observable<Organization> {
+  public updateOrganizations(data: Organization): Observable<Organization> {
     //TODO: Do this method...
     return of(null);
   }
 
-  getSourcesOrgAggregation(uuid): Observable<Response<any>> {
+  public getSourcesOrgAggregation(uuid): Observable<Response<any>> {
     const req = this.env.sceibaApi + 'source/aggs/org/' + uuid;
     return this.http.get<Response<any>>(req);
   }
-
 }

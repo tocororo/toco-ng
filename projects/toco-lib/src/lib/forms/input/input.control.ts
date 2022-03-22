@@ -6,9 +6,11 @@
 
 import { Input, ViewChild } from '@angular/core';
 import { Validators, ValidationErrors, FormControl } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { isNullOrUndefined } from 'util';
 
 import { ContentPosition, IconValue, HintPosition, HintValue,
-    FormFieldContent, FormFieldControl } from '../form-field.control';
+    FormFieldContent, FormFieldControl, ValidatorArguments } from '../form-field.control';
 
 /**
  * An enum that represents the appearance style of an `InputControl`. 
@@ -114,6 +116,7 @@ export interface IInternalComponent
 
 	/**
 	 * Returns true if the control is empty; otherwise, false. 
+     * A control is empty if its value is `undefined` or empty string. 
 	 */
 	readonly empty: boolean;
 
@@ -136,8 +139,10 @@ export abstract class InputControl extends FormFieldControl
     /**
      * Returns a `FormControl` by default. 
      * Its value is empty, and does not have validators. 
+     * @param validatorArguments A collection of key/value elements, where the key is the validator name 
+     * and the value is the value that the validator needs to check. 
      */
-    public static getFormControlByDefault(): FormControl
+    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): FormControl
     {
         return new FormControl('', [ ]);
     }
@@ -157,6 +162,8 @@ export abstract class InputControl extends FormFieldControl
 	@ViewChild('internalComponent', { static: true })
     protected readonly internalComponent: IInternalComponent;
 
+    protected static toco_ng_Error_Msg_Requerido: string = '';
+
     /**
      * Represents the validation error of required. Its default value can be overwritten. 
      */
@@ -173,16 +180,34 @@ export abstract class InputControl extends FormFieldControl
     }
 
     /**
+     * Sets the new language. 
+     * @param transServ The `TranslateService` instance injected. 
+     */
+    protected setNewLanguage(transServ: TranslateService): void
+    {
+        /* The `InputControl.currentLang != transServ.currentLang` test is NOT necessary here because it is done in the non-abstract child classes. */
+
+        super.setNewLanguage(transServ);
+
+        /* The `InputControl.currentLang` value is updated correctly in the parent class. */
+
+        transServ.get('TOCO_NG_ERROR_MSG_REQUERIDO').subscribe((res: string) => {
+            InputControl.toco_ng_Error_Msg_Requerido = res;
+        });
+    }
+
+    /**
      * Initializes the `content` input property. 
      * @param label The default label to use. It is used if the `content.label` is not specified. 
+     * @param placeholder The default placeholder to use. It is used if the `content.placeholder` is not specified. 
      * @param isAbbreviation If it is true then the `label` argument represents an abbreviation; otherwise, false. 
      * @param alwaysHint If it is true then there is always at leat one hint start-aligned. 
      */
-    protected init(label: string, isAbbreviation: boolean = false, alwaysHint: boolean = true): void
+    protected init(label: string, placeholder: string = '', isAbbreviation: boolean = false, alwaysHint: boolean = true): void
     {
         /* Sets the default values. */
 
-        super.init(label);
+        super.init(label, placeholder);
 
         if (this.content.formControl == undefined)
         {
@@ -191,8 +216,8 @@ export abstract class InputControl extends FormFieldControl
             this.content.formControl = this.internalComponent.formControl;
         }
 
-        let temp: string = (isAbbreviation) ? this.content.label : this.content.label.toLowerCase();
-        this.validationError_required = `You must write a valid ${ temp }.`;
+        // let temp: string = (isAbbreviation) ? this.content.label : this.content.label.toLowerCase();
+        this.validationError_required = 'TOCO_NG_ERROR_MSG_REQUERIDO';
 
         /************************** Internal control properties. **************************/
         if (this.content.required == undefined) this.content.required = false;
@@ -207,7 +232,7 @@ export abstract class InputControl extends FormFieldControl
         /***************************** `mat-hint` properties. *****************************/
         if (alwaysHint && (this.content.startHint == undefined) && (this.content.endHint == undefined))
         {
-            this.content.startHint = new HintValue(HintPosition.start, `Write a valid ${ temp }.`);
+            this.content.startHint = new HintValue(HintPosition.start, 'TOCO_NG_HINT_TEXTO_POR_DEFECTO');
         }
         else
         {
@@ -250,10 +275,11 @@ export abstract class InputControl extends FormFieldControl
 
 	/**
 	 * Returns true if the control is empty; otherwise, false. 
+     * A control is empty if its value is `undefined` or empty string. 
 	 */
 	public get empty(): boolean
 	{
-        if (this.internalComponent == undefined) return (!this.content.formControl.value);
+        if (this.internalComponent == undefined) return ((isNullOrUndefined(this.content.formControl.value)) || (this.content.formControl.value === ''));
         return this.internalComponent.empty;
     }
 
@@ -340,7 +366,7 @@ export abstract class InputControl extends FormFieldControl
         {
             if (validationErrors[Validators.required.name])
             {
-                return this.validationError_required;
+                return ((this.isTranslationBuiltByControl) ? InputControl.toco_ng_Error_Msg_Requerido : this.validationError_required);
             }
         }
 
