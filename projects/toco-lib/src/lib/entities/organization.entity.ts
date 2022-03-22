@@ -212,12 +212,69 @@ export class Address extends EntityBase
 }
 
 /**
+ * Entity for `RedirectPropertiesIdtype` based on schema `organization-v1.0.0.json`.
+ * An address associated with the institute.
+ */
+export class RedirectPropertiesIdtype extends EntityBase {
+  /**
+   * description for RedirectPropertiesIdtype.
+   */
+  description: string = '';
+
+  /**
+   * type of RedirectPropertiesIdtype.
+   */
+  type: string = '';
+
+  /**
+   * enum for RedirectPropertiesIdtype.
+   */
+  enum: Array<string> = new Array<string>();
+}
+
+/**
+ * Entity for `RedirectProperties` based on schema `organization-v1.0.0.json`.
+ * An address associated with the institute.
+ */
+export class RedirectProperties extends EntityBase {
+  /**
+   * Name of the city.
+   */
+  idtype: RedirectPropertiesIdtype = undefined;
+
+  /**
+   * Name of the country.
+   */
+  value: { type: string } = undefined;
+}
+
+/**
+ * Entity for `Redirect` based on schema `organization-v1.0.0.json`.
+ * An address associated with the institute.
+ */
+export class Redirect extends EntityBase
+{
+  /**
+   * Type of redirect.
+   */
+  type: string = '';
+
+  /**
+   * Show additional properties for redirect if true.
+   */
+  additionalProperties: boolean = false;
+
+  /**
+   * Properties for redirect.
+   */
+  properties: RedirectProperties = undefined;
+}
+
+/**
  * Entity for `Organizations` based on schema `organization-v1.0.0.json`.
  */
 export class Organization extends Entity
 {
-
-
   /**
    * Organization Identifiers, different from GRID mapping.
    */
@@ -299,7 +356,7 @@ export class Organization extends Entity
   addresses: Array <Address> = new Array<Address>();
 
   /**
-   * Organization uuid will be redirected because this one is duplicated.
+   * An array of addresses associated with the institute.
    */
-  redirect: Redirected = undefined;
+  redirect: Redirect = undefined;
 }
