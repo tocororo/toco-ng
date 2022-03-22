@@ -1,5 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
+import { isBoolean, isNullOrUndefined } from 'util';
 
 import { InputControl } from '../input.control';
 import { HintPosition, HintValue } from '../../form-field.control';
@@ -40,15 +41,17 @@ export class InputBoolComponent extends InputControl implements OnInit
      */
 	 protected init(label: string, placeholder: string = '', isAbbreviation: boolean, alwaysHint: boolean): void
 	 {
-		 /* Sets the default values. */
- 
-		 super.init(label, placeholder, isAbbreviation, alwaysHint);
- 
-		 if (this.content.startHint != undefined)
-		 {
-			 if (this.content.startHint.label == 'TOCO_NG_HINT_TEXTO_POR_DEFECTO') this.content.startHint.label = 'TOCO_NG_HINT_TEXTO_SELECC_POR_DEFECTO';
-		 }
-		 else this.content.startHint = new HintValue(HintPosition.start, 'TOCO_NG_HINT_TEXTO_SELECC_POR_DEFECTO');
+		/* Sets the default values. */
+
+		super.init(label, placeholder, isAbbreviation, alwaysHint);
+
+		if (!isBoolean(this.content.value) && !isNullOrUndefined(this.content.value)) throw new Error(`For the '${ this.content.name }' control, the 'content.value' value must have a boolean type.`);
+
+		if (this.content.startHint != undefined)
+		{
+			if (this.content.startHint.label == 'TOCO_NG_HINT_TEXTO_POR_DEFECTO') this.content.startHint.label = 'TOCO_NG_HINT_TEXTO_SELECC_POR_DEFECTO';
+		}
+		else this.content.startHint = new HintValue(HintPosition.start, 'TOCO_NG_HINT_TEXTO_SELECC_POR_DEFECTO');
 	 }
 
 	public onSelectionChange(): void

@@ -7,6 +7,7 @@
 import { Input, ViewChild } from '@angular/core';
 import { Validators, ValidationErrors, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { isNullOrUndefined } from 'util';
 
 import { ContentPosition, IconValue, HintPosition, HintValue,
     FormFieldContent, FormFieldControl, ValidatorArguments } from '../form-field.control';
@@ -115,6 +116,7 @@ export interface IInternalComponent
 
 	/**
 	 * Returns true if the control is empty; otherwise, false. 
+     * A control is empty if its value is `undefined` or empty string. 
 	 */
 	readonly empty: boolean;
 
@@ -273,10 +275,11 @@ export abstract class InputControl extends FormFieldControl
 
 	/**
 	 * Returns true if the control is empty; otherwise, false. 
+     * A control is empty if its value is `undefined` or empty string. 
 	 */
 	public get empty(): boolean
 	{
-        if (this.internalComponent == undefined) return (!this.content.formControl.value);
+        if (this.internalComponent == undefined) return ((isNullOrUndefined(this.content.formControl.value)) || (this.content.formControl.value === ''));
         return this.internalComponent.empty;
     }
 

@@ -1,0 +1,91 @@
+
+<div style="margin: auto 2em;">
+    <h3 style="margin: 2em auto;">Boolean control</h3>
+    <div style="margin: auto 2em;">
+        <div
+            fxLayout="row"
+            fxLayout.xs="row"
+            fxLayoutAlign="space-between center"
+            style="margin: 2em auto auto;"
+        >
+
+            <div
+                fxLayout="column"
+                fxLayout.xs="column"
+                fxLayoutAlign="space-between center"
+                style="width: 100%; margin: auto 0.5em;"
+            >
+                <h4 style="margin: auto auto auto 0;">`content.label = undefined`</h4>
+                <h4 style="margin: auto auto auto 0;">`content.value = undefined`</h4>
+
+                <input-bool [content]="inputContent_00"></input-bool>
+            </div>
+            <div
+                fxLayout="column"
+                fxLayout.xs="column"
+                fxLayoutAlign="space-between center"
+                style="width: 100%; margin: auto 0.5em;"
+            >
+                <h4 style="margin: auto auto auto 0;">`content.label = undefined`</h4>
+                <h4 style="margin: auto auto auto 0;">`content.value` is `true`</h4>
+
+                <input-bool [content]="inputContent_01"></input-bool>
+            </div>
+        
+        </div>
+
+        <div
+            fxLayout="row"
+            fxLayout.xs="row"
+            fxLayoutAlign="space-between center"
+            style="margin: 2em auto auto;"
+        >
+
+            <div
+                fxLayout="column"
+                fxLayout.xs="column"
+                fxLayoutAlign="space-between center"
+                style="width: 100%; margin: auto 0.5em;"
+            >
+                <h4 style="margin: auto auto auto 0;">`content.label` is NOT `undefined`</h4>
+                <h4 style="margin: auto auto auto 0;">`content.value = undefined`</h4>
+
+                <input-bool [content]="inputContent_02"></input-bool>
+            </div>
+            <div
+                fxLayout="column"
+                fxLayout.xs="column"
+                fxLayoutAlign="space-between center"
+                style="width: 100%; margin: auto 0.5em;"
+            >
+                <h4 style="margin: auto auto auto 0;">`content.label` is NOT `undefined`</h4>
+                <h4 style="margin: auto auto auto 0;">`content.value` is `false`</h4>
+
+                <input-bool [content]="inputContent_03"></input-bool>
+            </div>
+
+        </div>
+
+        <div
+            fxLayout="row"
+            fxLayout.xs="row"
+            fxLayoutAlign="space-between center"
+            style="margin: 2em auto auto;"
+        >
+
+            <div
+                fxLayout="column"
+                fxLayout.xs="column"
+                fxLayoutAlign="space-between center"
+                style="width: 100%; margin: auto 0.5em;"
+            >
+                <h4 style="margin: auto auto auto 0;">`content.label` is NOT `undefined`</h4>
+                <h4 style="margin: auto auto auto 0;">`content.value` value type is NOT boolean type</h4>
+                <h4 style="margin: auto auto auto 0;">This test case throws an exception</h4>
+
+                <input-bool [content]="inputContent_04"></input-bool>
+            </div>
+
+        </div>
+    </div>
+</div>
