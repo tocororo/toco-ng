@@ -21,8 +21,26 @@ tr.element-row:not(.expanded-row):active {
 .element-detail {
     overflow: hidden;
     display: flex;
+    background-color: #f4f4f4;
+    border-radius: 10px 10px 0 0;
+}
+.element-tag {
+  display: flex;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 15px;
+  width: 60%;
 }
 
+.element-row-header:hover {
+}
+
+.element-description-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px 25px 10px 10px;
+}
 
 .element-description {
     padding: 16px;
@@ -30,4 +48,49 @@ tr.element-row:not(.expanded-row):active {
 
 .element-description-attribution {
     opacity: 0.5;
+}
+
+.empty-notifications-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.empty-notifications-icon {
+  color: grey;
+  font-size: 6em;
+  height: 100px;
+  width: 100px
+}
+
+@media only screen and (max-width: 768px) {
+  #description-th{
+    padding-left: 34px !important;
+  }
+
+  #emiter-th{
+    display: none !important;
+  }
+
+  #emiter-td{
+    display: none !important;
+  }
+  #emiterEmail-th{
+    padding-left: 20px !important;
+  }
+
+  #emiterEmail-td{
+    padding-left: 20px !important;
+  }
+
+  #createdAt-th{
+    padding-left: 20px !important;
+  }
+
+  #createdAt-td{
+    min-width: 120px !important;
+    padding-left: 20px !important;
+  }
 }

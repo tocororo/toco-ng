@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { of as observableOf, timer, Subscription, PartialObserver } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
-
+import moment from 'moment';
 import { NotificationService } from '../../backend/public-api';
 import { MessageHandler, StatusCode } from '../../core/public-api';
 import { OAuthStorage } from 'angular-oauth2-oidc';
@@ -18,14 +18,15 @@ export class NotificationButtonComponent implements OnInit {
 
     @Input() public buttonType: string;
 
-    private count: number;
-    public notifications : Array<NotificationInfo>;
+    public count: number = 0;
+    public notifications: Array<NotificationInfo>;
+    public moment: any = moment;
 
     private timerSuscription: Subscription = null;
     private timerObserver: PartialObserver<number> = {
         next: (_) => {
 
-            if (this.oauthStorage.getItem('access_token')){
+            // if (this.oauthStorage.getItem('access_token')){
                 this.service.getNotificationsList(5,0).pipe(
                     catchError(error => {
                         const m = new MessageHandler(this._snackBar);
@@ -34,10 +35,14 @@ export class NotificationButtonComponent implements OnInit {
                     })
                 )
                 .subscribe(response => {
-
-                    if (response && response.status == "success"){
-                        this.count = response.data.notifications.total_not_view;
-                        const arr : NotificationInfo[] = response.data.notifications.data;
+                    if (response && response.status === "success"){
+                        this.count = response.data.total_not_view;
+                        const arr: NotificationInfo[] = response.data.notifications
+                          .map( n => ({...n, classification: {
+                            label: n.classification,
+                            color: n.classification === 'INFO' ? '#2196F3' : n.classification === 'ALERT' ? '#FF5722' : '#d32f2f'
+                          }}))
+                            .filter(n => !n.viewed);
                         this.notifications = arr;
                     }
                     else if(response){
@@ -48,7 +53,7 @@ export class NotificationButtonComponent implements OnInit {
                         m.showMessage(StatusCode.serverError, 'Notificaciones no encontradas');
                     }
                 });
-            }
+            // }
         },
 
         error: (err: any) => {
@@ -80,10 +85,22 @@ export class NotificationButtonComponent implements OnInit {
     }
 
 }
-export class NotificationInfo{
-    emiter: string;
-    description: string;
-    classification: string;
-    viewed: boolean;
-    id: number;
+
+class  UserNotification {
+  id: string;
+  name: string;
+  lastname: string;
+  email: string;
+}
+
+export class NotificationInfo {
+  classification: { label: string, color: string };
+  receiver_id: UserNotification;
+  viewed: boolean;
+  viewed_date: string;
+  description: string;
+  createdAt: string;
+  emiter: UserNotification;
+  app: string;
+  data: {};
 }

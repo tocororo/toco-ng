@@ -3,7 +3,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { MatTableDataSource, MatPaginator, MatSnackBar, MatPaginatorIntl } from '@angular/material';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
+import moment from 'moment';
 import { NotificationService } from '../../backend/public-api';
 import { MessageHandler, StatusCode } from '../../core/public-api';
 import { NotificationInfo } from '../notification-button/notification-button.component';
@@ -21,12 +21,14 @@ import { NotificationInfo } from '../notification-button/notification-button.com
         ]),
     ]
 })
+
 export class NotificationListComponent implements OnInit {
 
     dataSource = new MatTableDataSource<NotificationInfo>();
-    columnsToDisplay = ['emiter', 'classification', 'action'];
-    columnsLabels = ['Emisor', 'Clasificación', ''];
+    columnsToDisplay = ['action', 'description', 'classification', 'emiter', 'emiterEmail', 'createdAt' ];
+    columnsLabels = ['', 'Descripción', 'Clasificación', 'Emisor', 'Correo del emisor', 'Creada'];
     expandedElement: Notification;
+    public moment: any = moment;
 
     pageSizeOptions: number[] = [5, 10, 15, 20];
 
@@ -39,7 +41,7 @@ export class NotificationListComponent implements OnInit {
         this.paginator.pageSize = 5;
         this.getNotificationsListData();
     }
-    getNotificationsListData(){
+    getNotificationsListData() {
         this.service.getNotificationsList(this.paginator.pageSize, this.paginator.pageIndex)
             .pipe(
                 catchError(error => {
@@ -48,39 +50,44 @@ export class NotificationListComponent implements OnInit {
                     return of(null);
                 })
             )
-            .subscribe(response =>{
-                if (response){
-                    this.paginator.length = response.data.notifications.total;
-                    this.dataSource.data = response.data.notifications.data
-                }
-                else {
+            .subscribe(response => {
+                if (response) {
+                    this.paginator.length = response.data.total_not_view;
+                    const arr: NotificationInfo[] = response.data.notifications
+                    .map( n => ({...n, classification: {
+                        label: n.classification,
+                        color: n.classification === 'INFO' ? '#2196F3' : n.classification === 'ALERT' ? '#FF5722' : '#d32f2f'
+                      }}));
+                    this.dataSource.data = arr;
+                } else {
                     this.paginator.length = 0;
-                    this.dataSource.data = null
+                    this.dataSource.data = null;
                 }
 
             });
     }
-    setnotificationViewed(id: number){
+    setnotificationViewed(id: number) {
         console.log(id);
-
-        this.service.setNotificationViewed(id)
+        if (id) {
+          this.service.setNotificationViewed(id)
             .pipe(
-                catchError(error => {
-                    const m = new MessageHandler(this._snackBar);
-                    m.showMessage(StatusCode.serverError, error.message);
-                    return of(null);
-                })
+              catchError(error => {
+                const m = new MessageHandler(this._snackBar);
+                m.showMessage(StatusCode.serverError, error.message);
+                return of(null);
+              })
             )
-            .subscribe(response =>{
-                if (response.status == "success"){
-                    this.getNotificationsListData();
-                    const m = new MessageHandler(this._snackBar);
-                    m.showMessage(StatusCode.OK, "La notificación fue marcada como leída");
+            .subscribe(response => {
+                if (response.status === 'success') {
+                  this.getNotificationsListData();
+                  const m = new MessageHandler(this._snackBar);
+                  m.showMessage(StatusCode.OK, 'La notificación fue marcada como leída');
                 } else {
-                    const m = new MessageHandler(this._snackBar);
-                    m.showMessage(StatusCode.serverError, response.message);
+                  const m = new MessageHandler(this._snackBar);
+                  m.showMessage(StatusCode.serverError, response.message);
                 }
-            }
-        );
+              }
+            );
+        }
     }
 }
