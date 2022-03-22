@@ -1,11 +1,10 @@
 
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule } from '@angular/forms';
 
-import { AngularMaterialModule } from '../angular-material/public-api';
 
 /**
  * A module that contains all shared modules.
@@ -18,16 +17,14 @@ import { AngularMaterialModule } from '../angular-material/public-api';
         CommonModule,
         HttpClientModule,
         FormsModule,
-        FlexLayoutModule,
-        AngularMaterialModule
+        FlexLayoutModule
     ],
 
     exports: [
         CommonModule,
         HttpClientModule,
         FormsModule,
-        FlexLayoutModule,
-        AngularMaterialModule
+        FlexLayoutModule
     ],
 
     schemas: [
