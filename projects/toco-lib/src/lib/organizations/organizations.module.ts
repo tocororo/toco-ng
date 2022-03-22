@@ -4,7 +4,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule, MatChipsModule } from '@angular/material';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTreeModule } from '@angular/material/tree';
 // import { OrgFooterComponent } from './org-footer/org-footer.component';
 import { RouterModule } from '@angular/router';
 import { TocoFormsModule } from '../forms/public-api';
@@ -51,6 +58,12 @@ import { OrgViewComponent } from './org-view/org-view.component';
 		TocoFormsModule,
 		MatAutocompleteModule,
 		MatChipsModule,
+    MatExpansionModule,
+    MatTooltipModule,
+    MatTreeModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatButtonModule,
 		StaticsModule
 	],
 

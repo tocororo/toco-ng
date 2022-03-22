@@ -1,17 +1,26 @@
 
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared/public-api';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTreeModule } from '@angular/material/tree';
+import { SharedModule } from '../shared/public-api';
 import { BooleanFilterComponent } from './boolean-filter/boolean-filter.component';
+import { FilterContainerService } from './filter-container.service';
 import { FilterContainerComponent } from './filter-container/filter-container.component';
+import { FilterDirective } from './filter.directive';
+import { FiltersService } from './filters.service';
 import { SelectAutocompleteFilterComponent } from './select-autocomplete-filter/select-autocomplete-filter.component';
 import { SelectFilterOldComponent } from './select-filter/select-filter.component';
 import { TitleFilterComponent } from './title-filter/title-filter.component';
-import { FilterContainerService } from './filter-container.service';
-import { FiltersService } from './filters.service';
-import { FilterDirective } from './filter.directive';
 import { TreeFilterComponent } from './tree-filter/tree-filter.component';
+
 
 @NgModule({
     declarations: [
@@ -34,6 +43,15 @@ import { TreeFilterComponent } from './tree-filter/tree-filter.component';
 
     imports: [
         SharedModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatCheckboxModule,
+        MatMenuModule,
+        MatChipsModule,
+        MatAutocompleteModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatTreeModule,
         // InfiniteScrollModule,
         ReactiveFormsModule
     ],

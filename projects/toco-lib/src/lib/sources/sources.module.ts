@@ -4,29 +4,49 @@
  */
 
 
-import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared/public-api';
-import { ReactiveFormsModule } from '@angular/forms';
-
-import { TocoFormsModule } from '../forms/public-api';
-import { SourceService, TaxonomyService } from '../backend/public-api';
-
-import { JournalViewComponent } from './journal-view/journal-view.component';
-import { JournalEditComponent } from './source-edit/journal-edit/journal-edit.component';
-
-import { JournalViewTermComponent } from './journal-view/journal-view-version-term.component';
-import { JournalViewInfoComponent, JournalViewInfoFieldComponent } from './journal-view/journal-view-info.component';
-import { JournalViewFieldComponent } from './journal-view/journal-view-version-field.component';
-import { JournalViewVersionComponent } from './journal-view/journal-view-version.component';
-import { CoreModule } from '../core/public-api';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { SourceService, TaxonomyService } from '../backend/public-api';
+import { CoreModule } from '../core/public-api';
+import { TocoFormsModule } from '../forms/public-api';
+import { OrganizationsModule } from '../organizations/public-api';
+import { SharedModule } from '../shared/public-api';
 import { CatalogFiltersComponent } from './catalog-filters/catalog-filters.component';
 import { CatalogComponent, DialogCatalogJournalInfoDialog } from './catalog/catalog.component';
-import { SourcesListComponent } from './sources-list/sources-list.component';
+import { JournalViewInfoComponent, JournalViewInfoFieldComponent } from './journal-view/journal-view-info.component';
+import { JournalViewFieldComponent } from './journal-view/journal-view-version-field.component';
+import { JournalViewTermComponent } from './journal-view/journal-view-version-term.component';
+import { JournalViewVersionComponent } from './journal-view/journal-view-version.component';
+import { JournalViewComponent } from './journal-view/journal-view.component';
+import { JournalEditComponent } from './source-edit/journal-edit/journal-edit.component';
+import { SourceEditAddIndexComponent, SourceIndexesComponent } from './source-edit/source-indexes/source-indexes.component';
 import { SourceOrganizationsComponent, SourceOrganizationSelectDialog, SourceOrganizationSelectTopDialog } from './source-edit/source-organizations/source-organizations.component';
-import { OrganizationsModule } from '../organizations/public-api';
-import { SourceIndexesComponent, SourceEditAddIndexComponent } from './source-edit/source-indexes/source-indexes.component';
+import { SourcesListComponent } from './sources-list/sources-list.component';
+
+
+
+
+
 
 @NgModule({
     declarations: [
@@ -58,6 +78,25 @@ import { SourceIndexesComponent, SourceEditAddIndexComponent } from './source-ed
         CoreModule,
         ReactiveFormsModule,
         TocoFormsModule,
+        MatCardModule,
+        MatIconModule,
+        MatTabsModule,
+        MatDividerModule,
+        MatTooltipModule,
+        MatToolbarModule,
+        MatCheckboxModule,
+        MatDialogModule,
+        MatExpansionModule,
+        MatPaginatorModule,
+        MatMenuModule,
+        MatChipsModule,
+        MatSelectModule,
+        MatTableModule,
+        MatButtonModule,
+        MatProgressBarModule,
+        MatStepperModule,
+        MatFormFieldModule,
+        MatProgressSpinnerModule,
         OrganizationsModule
     ],
 
