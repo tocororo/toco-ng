@@ -15,15 +15,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-// import { throwIfAlreadyLoaded } from './module-import-guard';
-import { BodyComponent } from './body/body.component';
 import { Error404Component } from './error404/error404.component';
-import { HomeComponent } from './home/home.component';
-import { JournalCardComponent } from './journal-card/journal-card.component';
 import { MetadataService } from './metadata.service';
-import { NavComponent } from './nav/nav.component';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SceibaAppsComponent } from './sceiba-apps/sceiba-apps.component';
@@ -42,11 +38,7 @@ import { EqualLengthDirective } from './utils/validator';
 
 @NgModule({
     declarations: [
-        BodyComponent,
         Error404Component,
-        HomeComponent,
-        JournalCardComponent,
-        NavComponent,
         PageHeaderComponent,
         PageNotFoundComponent,
         RoadMapComponent,
@@ -62,6 +54,7 @@ import { EqualLengthDirective } from './utils/validator';
     imports: [
         CommonModule,
         ReactiveFormsModule,
+        RouterModule,
         TranslateModule,
         NgxChartsModule,
         FlexLayoutModule,
@@ -81,11 +74,7 @@ import { EqualLengthDirective } from './utils/validator';
     ],
 
     exports: [
-        BodyComponent,
         Error404Component,
-        HomeComponent,
-        JournalCardComponent,
-        NavComponent,
         PageHeaderComponent,
         PageNotFoundComponent,
         RoadMapComponent,
