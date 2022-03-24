@@ -5,8 +5,10 @@
 
 
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -30,7 +32,6 @@ import { SourceService, TaxonomyService } from '../backend/public-api';
 import { CoreModule } from '../core/public-api';
 import { TocoFormsModule } from '../forms/public-api';
 import { OrganizationsModule } from '../organizations/public-api';
-import { SharedModule } from '../shared/public-api';
 import { CatalogFiltersComponent } from './catalog-filters/catalog-filters.component';
 import { CatalogComponent, DialogCatalogJournalInfoDialog } from './catalog/catalog.component';
 import { JournalViewInfoComponent, JournalViewInfoFieldComponent } from './journal-view/journal-view-info.component';
@@ -42,6 +43,7 @@ import { JournalEditComponent } from './source-edit/journal-edit/journal-edit.co
 import { SourceEditAddIndexComponent, SourceIndexesComponent } from './source-edit/source-indexes/source-indexes.component';
 import { SourceOrganizationsComponent, SourceOrganizationSelectDialog, SourceOrganizationSelectTopDialog } from './source-edit/source-organizations/source-organizations.component';
 import { SourcesListComponent } from './sources-list/sources-list.component';
+
 
 
 
@@ -74,10 +76,12 @@ import { SourcesListComponent } from './sources-list/sources-list.component';
         SourceOrganizationSelectTopDialog
     ],
     imports: [
-        SharedModule,
+        CommonModule,
         CoreModule,
         ReactiveFormsModule,
         TocoFormsModule,
+        FormsModule,
+        FlexLayoutModule,
         MatCardModule,
         MatIconModule,
         MatTabsModule,

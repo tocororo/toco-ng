@@ -13,7 +13,6 @@ export * from './lib/notification/public-api';
 export * from './lib/organizations/public-api';
 export * from './lib/person/public-api';
 export * from './lib/search/public-api';
-export * from './lib/shared/public-api';
 export * from './lib/sources/public-api';
 export * from './lib/statics/public-api';
 export * from './lib/toco-lib.component';

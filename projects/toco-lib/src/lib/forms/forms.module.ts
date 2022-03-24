@@ -3,7 +3,9 @@
  *   All rights reserved.
  */
 
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,7 +27,6 @@ import { MatTreeModule } from '@angular/material/tree';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../core/core.module';
 import { IconService } from '../core/services/icon.service';
-import { SharedModule } from '../shared/shared.module';
 import { ActionButtonComponent } from './action/button/button-action.component';
 import { ComponentFactory_Depr } from './component-factory-depr/component-factory-depr.component';
 import { ContainerLabelDiffLangComponent } from './container-specific/label-diff-lang/label-diff-lang-container.component';
@@ -97,7 +98,8 @@ import { InputUrlComponent } from './input/url/url-input.component';
   ],
 
   imports: [
-    SharedModule,
+    CommonModule,
+    FlexLayoutModule,
     ReactiveFormsModule,
     TranslateModule,
     MatCardModule,

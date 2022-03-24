@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -9,11 +10,11 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedModule } from '../shared/public-api';
 import { AggregationsComponent } from './aggregations/aggregations.component';
 import { QueryInputComponent } from './query-input/query-input.component';
 import { RecordListComponent } from './record-list/record-list.component';
 import { RecordComponent } from './record/record.component';
+
 
 
 
@@ -27,7 +28,7 @@ import { RecordComponent } from './record/record.component';
 
   imports: [
     CommonModule,
-    SharedModule,
+    FlexLayoutModule,
     ReactiveFormsModule,
     TranslateModule,
     MatDividerModule,
@@ -35,8 +36,7 @@ import { RecordComponent } from './record/record.component';
     MatChipsModule,
     MatCardModule,
     MatFormFieldModule,
-    MatButtonModule,
-    SharedModule
+    MatButtonModule
   ],
 
   exports: [

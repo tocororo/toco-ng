@@ -1,9 +1,10 @@
 
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared/public-api';
-
-import { PersonComponent } from './person/person.component';
 import { PersonViewComponent } from './person-view/person-view.component';
+import { PersonComponent } from './person/person.component';
+
+
 
 @NgModule({
     declarations: [
@@ -12,7 +13,7 @@ import { PersonViewComponent } from './person-view/person-view.component';
     ],
 
     imports: [
-        SharedModule
+      CommonModule,
     ],
 
     exports: [

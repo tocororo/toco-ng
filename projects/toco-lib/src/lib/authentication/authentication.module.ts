@@ -2,17 +2,19 @@
  *   Copyright (c) 2020 Universidad de Pinar del Río "Hermanos Saíz Montes de Oca"
  *   All rights reserved.
  */
+import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
-import { SharedModule } from '../shared/public-api';
 import { AuthenticationComponent } from './authentication.component';
 import { OauthAuthenticationService, SimpleAuthenticationService } from './authentication.service';
+
 
 
 
@@ -25,7 +27,8 @@ export function storageFactory() : OAuthStorage {
     ],
 
     imports: [
-        SharedModule,
+        CommonModule,
+        FlexLayoutModule,
         HttpClientModule,
         MatCardModule,
         MatIconModule,

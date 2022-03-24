@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -23,6 +24,7 @@ import { NotificationListComponent } from './notification-list/notification-list
         NotificationListComponent
     ],
     imports: [
+        FlexLayoutModule,
         CommonModule,
         RouterModule,
         MatButtonModule,

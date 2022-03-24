@@ -47,7 +47,7 @@ import { OrgViewComponent } from './org-view/org-view.component';
 	],
 
 	imports: [
-		// SharedModule,
+		//
 		FlexLayoutModule,
 		CommonModule,
 		FormsModule,

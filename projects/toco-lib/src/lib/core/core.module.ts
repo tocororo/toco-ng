@@ -1,6 +1,8 @@
 
+import { CommonModule } from '@angular/common';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -15,14 +17,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { SharedModule } from '../shared/public-api';
 // import { throwIfAlreadyLoaded } from './module-import-guard';
 import { BodyComponent } from './body/body.component';
-import { CoreRoutingModule } from './core-routing.module';
 import { Error404Component } from './error404/error404.component';
-import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
-import { InfoCardComponent } from './info-card/info-card.component';
 import { JournalCardComponent } from './journal-card/journal-card.component';
 import { MetadataService } from './metadata.service';
 import { NavComponent } from './nav/nav.component';
@@ -41,13 +39,12 @@ import { EqualLengthDirective } from './utils/validator';
 
 
 
+
 @NgModule({
     declarations: [
         BodyComponent,
         Error404Component,
-        FooterComponent,
         HomeComponent,
-        InfoCardComponent,
         JournalCardComponent,
         NavComponent,
         PageHeaderComponent,
@@ -63,9 +60,12 @@ import { EqualLengthDirective } from './utils/validator';
     ],
 
     imports: [
+        CommonModule,
         ReactiveFormsModule,
         TranslateModule,
         NgxChartsModule,
+        FlexLayoutModule,
+        FormsModule,
         MatToolbarModule,
         MatCardModule,
         MatIconModule,
@@ -77,17 +77,13 @@ import { EqualLengthDirective } from './utils/validator';
         MatProgressBarModule,
         MatButtonModule,
         MatDialogModule,
-        MatMenuModule,
-        SharedModule,
-        CoreRoutingModule
+        MatMenuModule
     ],
 
     exports: [
         BodyComponent,
         Error404Component,
-        FooterComponent,
         HomeComponent,
-        InfoCardComponent,
         JournalCardComponent,
         NavComponent,
         PageHeaderComponent,
