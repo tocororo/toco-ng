@@ -8,10 +8,11 @@ import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 
-import { TocoFormsModule } from 'projects/toco-lib/src/public-api';
+import { CoreModule, TocoFormsModule, Environment } from 'projects/toco-lib/src/public-api';
+import { allowedURLS, environment } from '../environments/environment';
 
-import { TestHelpers } from './core/test/utils/test-helpers';
 import { TestContainerControlComponent } from './forms/test/container/test-container-control/test-container-control.component';
 import { TestInputBoolComponent } from './forms/test/input/test-bool/test-bool-input.component';
 import { TestInputIssnComponent } from './forms/test/input/test-issn/test-issn-input.component';
@@ -28,11 +29,15 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader
 	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+export function storageFactory(): OAuthStorage
+{
+    return sessionStorage
+}
+
 @NgModule({
     declarations: [
         AppComponent,
-        TestHelpers,
-        TestContainerControlComponent,
+        TestContainerControlComponent,  
         TestInputBoolComponent,
         TestInputIssnComponent,
         TestInputNumberComponent,
@@ -42,7 +47,6 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader
     ],
     imports: [
         BrowserModule,
-
 		CommonModule,
 		BrowserAnimationsModule,
 		HttpClientModule,
@@ -55,10 +59,21 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader
 				deps: [HttpClient]
 			}
 		}),
+        OAuthModule.forRoot({
+            resourceServer: {
+                allowedUrls: allowedURLS,
+                sendAccessToken: true
+            }
+        }),
+
         TocoFormsModule,
+        CoreModule,
         AppRoutingModule
     ],
-    providers: [],
+    providers: [
+        { provide: Environment, useValue: environment },
+        { provide: OAuthStorage, useFactory: storageFactory }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule
