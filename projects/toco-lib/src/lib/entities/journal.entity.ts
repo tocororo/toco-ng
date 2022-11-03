@@ -3,9 +3,8 @@
  *   All rights reserved.
  */
 
-import { Entity, EntityBase } from './common';
-import { Term } from './taxonomy.entity';
-import { SourceData, Source, SourceVersion } from './source.entity';
+import { EntityBase } from './common';
+import { Source, SourceData, SourceVersion } from './source.entity';
 
 
 export class SocialNetworks  extends EntityBase {

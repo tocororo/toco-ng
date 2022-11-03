@@ -1,12 +1,11 @@
 
+import { HttpBackend, HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpBackend, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Environment, MessageService } from '../core/public-api';
+import { Hit, Organization, SearchResponse } from '../entities/public-api';
 
-import { MessageService } from '../core/public-api';
-import { Environment } from '../core/public-api';
-import { Organization, Hit, SearchResponse } from '../entities/public-api';
 
 /**
  * The URL to the root api.
@@ -141,12 +140,12 @@ export class OrganizationServiceNoAuth {
 
   getOrganizationByUUID(uuid): Observable<Hit<Organization>> {
     // const req = this.env.sceibaApi + this.prefix + "/" + uuid;
-    const req = this.env.cuorApi + this.path + "/" + uuid;
+    const req = this.env.sceibaApi + "/pid/organization/" + uuid;
     return this.http.get<Hit<Organization>>(req);
   }
 
   getOrganizationRelationships(uuid, relType=null): Observable<Array<Hit<Organization>>> {
-    const req = this.env.cuorApi + this.path + '/' + uuid + '/relationships';
+    const req = this.env.sceibaApi + this.path + '/' + uuid + '/relationships';
 
     if (relType != null){
       let params = new HttpParams();
@@ -171,7 +170,7 @@ export class OrganizationServiceNoAuth {
       // headers: this.headers
     };
 
-    const req = this.env.cuorApi + this.path + '/pid';
+    const req = this.env.sceibaApi + this.path + '/pid';
     return this.http.get<Hit<Organization>>(req, options);
   }
 
@@ -181,7 +180,7 @@ export class OrganizationServiceNoAuth {
       // headers: this.headers
     };
     console.log(params);
-    const req = this.env.cuorApi + this.path + '/';
+    const req = this.env.sceibaApi + 'search/' + this.path;
     console.log(req);
 
     return this.http.get<SearchResponse<Organization>>(req, options);

@@ -3,27 +3,22 @@
  *   All rights reserved.
  */
 
-import { Injectable } from "@angular/core";
 import {
-  HttpClient,
+  HttpBackend, HttpClient,
   HttpHeaders,
-  HttpParams,
-  HttpBackend,
+  HttpParams
 } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Injectable } from "@angular/core";
 import { OAuthStorage } from "angular-oauth2-oidc";
-
+import { Observable } from "rxjs";
 import { Environment } from "../core/env";
-
-
-import {
-  SourceVersion,
-  SearchResponse,
-  SourceData,
-  Hit, Source
-} from "../entities/public-api";
-import { stringToKeyValue } from "@angular/flex-layout/extended/typings/style/style-transforms";
 import { Response } from '../core/public-api';
+import {
+  Hit, SearchResponse, Source, SourceData, SourceVersion
+} from "../entities/public-api";
+
+
+
 
 @Injectable()
 export class SourceService {
@@ -275,7 +270,7 @@ export class SourceServiceNoAuth {
 
   getSourceByUUID(uuid): Observable<Hit<SourceData>> {
     // const req = this.env.sceibaApi + this.prefix + "/" + uuid;
-    const req = this.env.sceibaApi + "sources" + "/" + uuid;
+    const req = this.env.sceibaApi + "/pid/source/" + uuid;
     return this.http.get<Hit<SourceData>>(req);
   }
 
@@ -306,7 +301,7 @@ export class SourceServiceNoAuth {
       // headers: this.headers
     };
     console.log(params);
-    const req = this.env.sceibaApi + 'sources';
+    const req = this.env.sceibaApi + 'search/sources';
     return this.http.get<SearchResponse<Source>>(req, options);
   }
 

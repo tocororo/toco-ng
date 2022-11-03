@@ -7,7 +7,6 @@
 
 
 import { Entity, EntityBase } from './common';
-import { TermNode, Term } from './taxonomy.entity';
 import { Organization } from './organization.entity';
 import { UserProfile } from './person.entity';
 
@@ -132,6 +131,9 @@ export class Source extends Entity {
     name = '';
 
     clasifications?: Array<SourceClasification> = new Array<SourceClasification>(0);
+    organizations?: Array<SourceOrganization> = new Array<SourceOrganization>();
+
+    aliases: Array<string> = new Array<string>();
 
     source_type = '';
     source_status = '';

@@ -4,18 +4,17 @@
  */
 
 
+import { HttpBackend, HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpBackend } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { Environment, Response } from '../core/public-api';
+import { Organization, Record, SearchResponse, Source } from '../entities/public-api';
 
-import { Response } from '../core/public-api';
-import { SearchResponse, Record, Source, Organization } from '../entities/public-api';
-import { Environment } from '../core/public-api';
 
 @Injectable()
 export class SearchService {
 
-  private prefix = 'records';
+  private prefix = 'search';
 
   // private headers = new HttpHeaders(
   //     {
@@ -53,7 +52,7 @@ export class SearchService {
       // headers: this.headers
     };
     console.log(params)
-    const req = this.env.sceibaApi + 'records/';
+    const req = this.env.sceibaApi + this.prefix + '/records/';
     return this.http.get<SearchResponse<Record>>(req, options);
   }
 
@@ -63,7 +62,7 @@ export class SearchService {
       // headers: this.headers
     };
     console.log(params);
-    const req = this.env.sceibaApi + 'sources';
+    const req = this.env.sceibaApi + this.prefix + '/sources';
     return this.http.get<SearchResponse<Source>>(req, options);
   }
 
@@ -73,7 +72,7 @@ export class SearchService {
       // headers: this.headers
     };
     // console.log(params);
-    const req = this.env.cuorApi + 'organizations/';
+    const req = this.env.sceibaApi + this.prefix + '/organizations/';
     // console.log(req);
 
     return this.http.get<SearchResponse<Organization>>(req, options);
