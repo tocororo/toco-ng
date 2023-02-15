@@ -123,13 +123,14 @@ is_open:boolean
     this.keySelect.emit(this.selectedAggr);
   }
 /**
- *  the key parameter is used to comunicate with the father component what kind of data have to display
- * by carlosmonterrey
+ *
+ * @param key  is used to comunicate with the father component what kind of data have to display
+ * by carlomonterrey
  */
   btnOpenModal(key){
-    console.log("event",key);
+
     this.modal_open.emit(key)
- 
-    
+
+
   }
 }
