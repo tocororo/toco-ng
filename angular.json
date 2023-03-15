@@ -41,10 +41,10 @@
               "tsConfig": "projects/toco-lib/tsconfig.lib.json",
               "project": "projects/toco-lib/ng-package-sceiba.json"
             },
-            "tocuoralejandrowin": {
+            "toalejandrodev": {
               "watch": true,
               "tsConfig": "projects/toco-lib/tsconfig.lib.json",
-              "project": "projects/toco-lib/ng-package-cuor-win-alejandro.json"
+              "project": "projects/toco-lib/ng-package-alejandro.json"
             }
           }
         },

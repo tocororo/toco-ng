@@ -1,0 +1,176 @@
+<toco-progress [loading]="loading"></toco-progress>
+
+<h2>{{ data.title }}</h2>
+
+<mat-drawer-container autosize style="background-color: white">
+  <mat-drawer #drawer mode="side" opened position="start">
+    <toco-search-aggregations
+      *ngIf="sr"
+      [aggregations]="sr.aggregations"
+      [selectedAggr]="aggrsSelection"
+      (keySelect)="aggrChange($event)"
+    ></toco-search-aggregations>
+  </mat-drawer>
+  <!-- templatefor search list -->
+
+  <div class="m-1" *ngIf="sr">
+    <div
+      fxLayout="row nowrap"
+      fxLayout.xs="column"
+      fxLayoutAlign="space-between center"
+    >
+      <button
+        mat-icon-button
+        (click)="drawer.toggle()"
+        matTooltip="Filtros avanzados"
+      >
+        <mat-icon>filter_list</mat-icon>
+      </button>
+      <toco-search-query-input
+        [query]="query"
+        class="p-1"
+        (queryChange)="queryChange($event)"
+        style="width: 100%"
+      ></toco-search-query-input>
+    </div>
+
+    <mat-card
+      class="mat-elevation-z0 search-list"
+      *ngIf="sr.hits && sr.hits.hits.length > 0; else templateNotInfo"
+    >
+      <mat-card-header> </mat-card-header>
+      <mat-card-content>
+        <div
+          *ngFor="let hit of sr.hits.hits; let pos = index"
+          style="margin: 1em 8px; display: flex"
+        >
+          <div style="padding-top: 25px; margin-right: 25px">
+            <mat-checkbox
+              *ngIf="multipleSelection; else single"
+              (change)="checkMultiple($event, hit.metadata)"
+            ></mat-checkbox>
+            <ng-template #single
+              ><mat-checkbox
+                [checked]="selectedOrgs && selectedOrgs.id === hit.metadata.id"
+                (change)="checkSingle($event, hit.metadata)"
+              ></mat-checkbox
+            ></ng-template>
+          </div>
+          <div>
+            <h2>
+              <span
+                routerLink="/{{ hit.metadata.id }}/view"
+                style="cursor: pointer"
+              >
+                {{ hit.metadata.name }}
+              </span>
+            </h2>
+
+            <span *ngIf="hit.metadata.established != -1" class="p-40"
+              >Fundada en: {{ hit.metadata.established }}</span
+            >
+
+            <ul
+              fxLayout="row wrap"
+              *ngIf="hit.metadata.types && hit.metadata.types.length > 0"
+            >
+              <span>Tipos:</span>
+              <li
+                *ngFor="let type of hit.metadata.types; let i = index"
+                class="li-margin-style"
+              >
+                {{ type }}
+                <ng-container *ngIf="i < hit.metadata.types.length - 1">
+                  |
+                </ng-container>
+              </li>
+            </ul>
+
+            <ul
+              fxLayout="row wrap"
+              *ngIf="hit.metadata.acronyms && hit.metadata.acronyms.length > 0"
+            >
+              <span>Acrónimos:</span>
+              <li
+                *ngFor="let acronym of hit.metadata.acronyms; let i = index"
+                class="li-margin-style"
+              >
+                {{ acronym }}
+                <ng-container *ngIf="i < hit.metadata.acronyms.length - 1">
+                  |
+                </ng-container>
+              </li>
+            </ul>
+
+            <ul
+              fxLayout="row wrap"
+              *ngIf="hit.metadata.aliases && hit.metadata.aliases.length > 0"
+            >
+              <span>Conocida como:</span>
+              <li
+                *ngFor="let alias of hit.metadata.aliases; let i = index"
+                class="li-margin-style"
+              >
+                {{ alias }}
+                <ng-container *ngIf="i < hit.metadata.aliases.length - 1">
+                  |
+                </ng-container>
+              </li>
+            </ul>
+
+            <ul
+              fxLayout="row wrap"
+              *ngIf="
+                hit.metadata.identifiers && hit.metadata.identifiers.length > 0
+              "
+            >
+              <span>Identificadores:</span>
+              <li
+                *ngFor="
+                  let identifier of hit.metadata.identifiers;
+                  let i = index
+                "
+                class="li-margin-style"
+              >
+                {{ identifier.idtype }}: {{ identifier.value }}
+                <ng-container *ngIf="i < hit.metadata.identifiers.length - 1">
+                  |
+                </ng-container>
+              </li>
+            </ul>
+            <hr class="hr-grey-ligth" *ngIf="pos < sr.hits.hits.length - 1" />
+            <!-- <toco-org-view [org]="hit.metadata"></toco-org-view> -->
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <ng-template #templateNotInfo>
+      <mat-card>
+        <mat-card-content>
+          <h2>No hay resultados para su búsqueda...</h2>
+        </mat-card-content>
+      </mat-card>
+    </ng-template>
+
+    <mat-paginator
+      [length]="sr.hits.total"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="pageChange($event)"
+    >
+    </mat-paginator>
+  </div>
+
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button
+    style="margin-left: 8px"
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="selectedOrgs"
+    cdkFocusInitial
+  >
+    Ok
+  </button>
+</mat-drawer-container>

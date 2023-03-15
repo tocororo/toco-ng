@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../../cuor-ng/node_modules/toco-lib",
+  "dest": "/home/alejandro/PersonalData/CRAI/people-ng/node_modules/toco-lib",
   "lib": {
     "entryFile": "src/public-api.ts"
   }
