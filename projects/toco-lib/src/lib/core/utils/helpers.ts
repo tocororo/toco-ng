@@ -43,7 +43,17 @@ export enum ActionText
     /**
      * Editing action. 
      */
-    edit = 'edit'
+    edit = 'edit',
+
+    /**
+     * New action. 
+     */
+     new = 'new',
+
+    /**
+     * Clone action. 
+     */
+     clone = 'clone',
 }
 
 /**
