@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SourceService, CatalogService, TaxonomyService } from '../../../backend/public-api';
 import { MetadataService } from '../../../core/public-api';
 import { IdentifierSchemas } from '../../../entities/common';

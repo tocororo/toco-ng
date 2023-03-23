@@ -6,7 +6,7 @@ import {
   SimpleChanges,
   Output,
 } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { Params } from "@angular/router";
 import { OrgDialogComponent } from "./org-dialog/org-dialog.component";
 

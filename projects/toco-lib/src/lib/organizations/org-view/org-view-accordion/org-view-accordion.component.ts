@@ -1,19 +1,19 @@
 
 import { Component, Input, ViewChild, OnInit } from '@angular/core';
-import { MatAccordion } from '@angular/material';
+import { MatAccordion } from '@angular/material/expansion';
 
 /**
- * The `OrgViewAccordionComponent` type. 
+ * The `OrgViewAccordionComponent` type.
  */
 export enum OrgViewAccordionType
 {
 	/**
-	 * The `OrgViewAccordionComponent` is used to show relationships. 
+	 * The `OrgViewAccordionComponent` is used to show relationships.
 	 */
 	Relationships = 'Relación'/*'Relationship'*/,
 
 	/**
-	 * The `OrgViewAccordionComponent` is used to show addresses. 
+	 * The `OrgViewAccordionComponent` is used to show addresses.
 	 */
 	Addresses = 'Dirección'/*'Address'*/
 };
@@ -26,43 +26,43 @@ export enum OrgViewAccordionType
 export class OrgViewAccordionComponent implements OnInit
 {
     /**
-     * Represents the `OrgViewAccordionType` enum for internal use. 
+     * Represents the `OrgViewAccordionType` enum for internal use.
      */
 	public readonly orgViewAccordion_Type: typeof OrgViewAccordionType;
 
     /**
-     * The control's appearance. 
-     * By default, its value is `'outline'`. 
+     * The control's appearance.
+     * By default, its value is `'outline'`.
      */
 	@Input()
 	public appearance: string;
 
 	/**
-	 * The control's description. 
-	 * By default, its value is `undefined` and it is not showed. 
+	 * The control's description.
+	 * By default, its value is `undefined` and it is not showed.
 	 */
 	@Input()
 	public desc: string;
 
 	/**
-	 * The array of data that should be rendered by the accordion, where each object represents one row. 
-	 * This array has the same length than the `panelsTitle` field. 
-     * By default, its value is `[]`. 
+	 * The array of data that should be rendered by the accordion, where each object represents one row.
+	 * This array has the same length than the `panelsTitle` field.
+     * By default, its value is `[]`.
 	 */
 	@Input()
 	public value: any[];
 
 	/**
-	 * The `OrgViewAccordionComponent` type. 
-     * By default, its value is `OrgViewAccordionType.Relationships`. 
+	 * The `OrgViewAccordionComponent` type.
+     * By default, its value is `OrgViewAccordionType.Relationships`.
 	 */
 	@Input()
 	public orgViewAccordionType: OrgViewAccordionType;
 
 	/**
-	 * The panels title. 
-	 * This array has the same length than the `value` field. 
-     * By default, its value is `[]`. 
+	 * The panels title.
+	 * This array has the same length than the `value` field.
+     * By default, its value is `[]`.
 	 */
 	@Input()
 	public panelsTitle: string[];
@@ -86,7 +86,7 @@ export class OrgViewAccordionComponent implements OnInit
 	}
 
 	/**
-	 * Returns the `MatAccordion` control. 
+	 * Returns the `MatAccordion` control.
 	 */
 	public get getAccordion(): MatAccordion
 	{
@@ -94,9 +94,9 @@ export class OrgViewAccordionComponent implements OnInit
 	}
 
 	/**
-	 * Returns true if the panel has element; otherwise, false. 
-	 * The panel always has element by default. 
-	 * @param pos The panel position. 
+	 * Returns true if the panel has element; otherwise, false.
+	 * The panel always has element by default.
+	 * @param pos The panel position.
 	 */
 	public panelHasElement(pos: number): boolean
 	{

@@ -25,7 +25,7 @@ import {
 } from "../../entities/public-api";
 
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { MatSnackBar } from "@angular/material";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { FormFieldContent_Experimental } from '../../forms/experimental/form-field.control.experimental';
 
 @Component({

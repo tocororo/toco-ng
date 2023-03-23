@@ -11,7 +11,7 @@ import { FiltersService } from '../filters.service';
 import { FilterContainerService } from '../filter-container.service';
 import { TermNode, Term } from '../../entities/public-api';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
+import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
 import { of, Observable } from 'rxjs';
 import { SelectionModel, CollectionViewer } from '@angular/cdk/collections';
 import { FormControl } from '@angular/forms';

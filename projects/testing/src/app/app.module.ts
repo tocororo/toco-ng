@@ -31,7 +31,7 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader
 @NgModule({
     declarations: [
         AppComponent,
-        TestHelpers,
+        // TestHelpers,
         TestContainerControlComponent,
         TestInputBoolComponent,
         TestInputIssnComponent,
