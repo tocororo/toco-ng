@@ -11,6 +11,7 @@
   },
   "private": false,
   "dependencies": {
+    "@angular/cli": "15.2.0",
     "@angular-devkit/core": "^8.3.22",
     "@angular-devkit/schematics": "^8.3.22",
     "@angular/animations": "^8.2.14",
