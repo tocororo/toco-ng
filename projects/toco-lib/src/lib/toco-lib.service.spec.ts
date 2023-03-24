@@ -6,7 +6,7 @@ describe('TocoLibService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: TocoLibService = TestBed.get(TocoLibService);
+    const service: TocoLibService = TestBed.inject(TocoLibService);
     expect(service).toBeTruthy();
   });
 });
