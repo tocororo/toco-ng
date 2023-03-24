@@ -3,7 +3,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { SharedModule } from '../shared/public-api';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxChartsModule } from '@swimlane/ngx-charts'
 
 // import { throwIfAlreadyLoaded } from './module-import-guard';
 

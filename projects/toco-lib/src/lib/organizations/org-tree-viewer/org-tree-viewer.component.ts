@@ -37,7 +37,7 @@ export class OrganizationDataSource {
 
 
   connect(collectionViewer: CollectionViewer): Observable<OrganizationFlatNode[]> {
-    this._treeControl.expansionModel.onChange.subscribe(change => {
+    this._treeControl.expansionModel.changed.subscribe(change => {
       if ((change as SelectionChange<OrganizationFlatNode>).added ||
         (change as SelectionChange<OrganizationFlatNode>).removed) {
         this.handleTreeControl(change as SelectionChange<OrganizationFlatNode>);
