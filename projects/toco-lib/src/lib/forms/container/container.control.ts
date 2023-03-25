@@ -4,7 +4,7 @@
  */
 
 
-import { Input, ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef } from '@angular/core';
+import { Input, ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef, Directive } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 
 import { Params } from '../../core/utils/helpers';
@@ -77,6 +77,7 @@ export interface ContainerContent extends FormFieldContent
 /**
  * Represents the base abstract class for a control that contains one or more controls. 
  */
+@Directive()
 export abstract class ContainerControl extends FormFieldControl
 {
     /**

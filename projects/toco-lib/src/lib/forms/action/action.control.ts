@@ -1,5 +1,5 @@
 
-import { Input } from '@angular/core';
+import { Input, Directive } from '@angular/core';
 
 import { IconValue, HintValue, FormFieldContent, FormFieldControl, ContentPosition, HintPosition } from '../form-field.control';
 
@@ -68,6 +68,7 @@ export interface ActionContent extends FormFieldContent
 /**
  * Represents the base abstract class for a control that executes actions. 
  */
+@Directive()
 export abstract class ActionControl extends FormFieldControl
 {
     /**

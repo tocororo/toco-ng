@@ -1,4 +1,4 @@
-import { Input, OnInit } from "@angular/core";
+import { Input, OnInit, Directive } from "@angular/core";
 
 import { InputContent } from "../input/input.control";
 import { FormFieldControl } from "../form-field.control";
@@ -12,6 +12,7 @@ export interface FormFieldContent_Experimental extends InputContent {}
 /**
  * Represents the base abstract class for a control that is treated as a form field.
  */
+@Directive()
 export abstract class FormFieldControl_Experimental {
   /**
    * Input field that contains the content of this class.

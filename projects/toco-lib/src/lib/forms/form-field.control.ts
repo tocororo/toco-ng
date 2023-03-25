@@ -4,7 +4,7 @@
  */
 
 
-import { Input, Type } from '@angular/core';
+import { Input, Type, Directive } from '@angular/core';
 import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -463,6 +463,7 @@ export function cloneFormSection(target: FormSection): FormSection
 /**
  * Represents the base abstract class for a control that is treated as a form field. 
  */
+@Directive()
 export abstract class FormFieldControl
 {
     /**

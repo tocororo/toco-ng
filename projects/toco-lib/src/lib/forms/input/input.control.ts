@@ -4,7 +4,7 @@
  */
 
 
-import { Input, ViewChild } from '@angular/core';
+import { Input, ViewChild, Directive } from '@angular/core';
 import { Validators, ValidationErrors, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { isNullOrUndefined } from 'util';
@@ -134,6 +134,7 @@ export interface IInternalComponent
 /**
  * Represents the base abstract class for a control that allows the writing/selection of a text. 
  */
+@Directive()
 export abstract class InputControl extends FormFieldControl
 {
     /**
