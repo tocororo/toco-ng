@@ -48,7 +48,6 @@ import { SceibaAppsComponent } from './sceiba-apps/sceiba-apps.component';
         ProgressComponent,
         SceibaAppsComponent
     ],
-
     imports: [
         SharedModule,
         ReactiveFormsModule,
@@ -56,7 +55,6 @@ import { SceibaAppsComponent } from './sceiba-apps/sceiba-apps.component';
         NgxChartsModule,
         CoreRoutingModule
     ],
-
     exports: [
         BodyComponent,
         Error404Component,
@@ -75,10 +73,6 @@ import { SceibaAppsComponent } from './sceiba-apps/sceiba-apps.component';
         DialogDeleteConfirmComponent,
         ProgressComponent,
         SceibaAppsComponent
-    ],
-    entryComponents: [
-        DialogContentComponent,
-        DialogDeleteConfirmComponent
     ],
     providers: [
         MetadataService

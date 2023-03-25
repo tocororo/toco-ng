@@ -23,21 +23,11 @@ import { TreeFilterComponent } from './tree-filter/tree-filter.component';
         FilterDirective,
         TreeFilterComponent
     ],
-
-    entryComponents:[
-        BooleanFilterComponent,
-        SelectAutocompleteFilterComponent,
-        SelectFilterOldComponent,
-        TitleFilterComponent,
-        TreeFilterComponent
-    ],
-
     imports: [
         SharedModule,
         // InfiniteScrollModule,
         ReactiveFormsModule
     ],
-
     exports: [
         BooleanFilterComponent,
         FilterContainerComponent,
@@ -47,7 +37,6 @@ import { TreeFilterComponent } from './tree-filter/tree-filter.component';
         FilterDirective,
         TreeFilterComponent
     ],
-
     providers: [
         FiltersService,
         FilterContainerService

@@ -21,26 +21,17 @@ import { TermsViewerComponent } from './terms-viewer/terms-viewer.component';
         TermGenericComponent,
         TermsViewerComponent
     ],
-
-    entryComponents: [
-        VocabularyDialogComponent,
-        TermGenericComponent
-    ],
-
     imports: [
         SharedModule,
         ReactiveFormsModule,
         TocoFormsModule
     ],
-
     exports: [
         TaxonomyComponent,
         VocabulariesComponent,
         TermsViewerComponent
     ],
-
-    providers: [
-    ]
+    providers: []
 })
 export class TaxonomyModule
 { }
