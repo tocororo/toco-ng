@@ -5,7 +5,7 @@
 
 import { Component, OnInit } from "@angular/core";
 import {
-  FormControl,
+  UntypedFormControl,
   AbstractControl,
   ValidationErrors,
   FormGroup
@@ -47,7 +47,7 @@ export class VocabularyComponent extends InputControl
   // internalControl = new FormControl();
 
   //this control is used by the chips,not necessary to expose it
-  chipsFormControl = new FormControl();
+  chipsFormControl = new UntypedFormControl();
   inputId: string;
   filteredOptions: Observable<TermNode[]>;
   chipsList: TermNode[] = [];

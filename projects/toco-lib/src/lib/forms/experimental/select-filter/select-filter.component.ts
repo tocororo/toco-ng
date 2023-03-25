@@ -4,7 +4,7 @@
  */
 
 import { Component, OnInit } from "@angular/core";
-import { AbstractControl, FormControl, ValidationErrors } from "@angular/forms";
+import { AbstractControl, UntypedFormControl, ValidationErrors } from "@angular/forms";
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import { isArray } from "util";
@@ -38,7 +38,7 @@ export class SelectFilterComponent extends InputControl
   // internalControl = new FormControl();
 
   //this control is used by the chips,not necessary to expose it
-  chipsFormControl = new FormControl();
+  chipsFormControl = new UntypedFormControl();
   inputId: string;
   filteredOptions: Observable<SelectOption[]>;
   chipsList: SelectOption[] = [];

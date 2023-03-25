@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { UntypedFormControl, Validators, ValidationErrors } from '@angular/forms';
 
 import { ExtraValidators } from '../../../core/utils/validator';
 
@@ -36,9 +36,9 @@ export class InputIssnComponent extends InputControl implements OnInit
      * It is used to initialized the `InputIssnComponent`'s `content.formControl` value by default. 
      * In this case, the `validatorArguments` argument is always `undefined`. 
      */
-    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): FormControl
+    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): UntypedFormControl
     {
-        let res: FormControl = new FormControl('', [
+        let res: UntypedFormControl = new UntypedFormControl('', [
             ExtraValidators.equalLength(IssnValue.codeLength),
             Validators.pattern(IssnValue.regExpIssnWithLength_11),
             ExtraValidators.issnConfirmCheckDigitOneField(IssnValue.codeLength)

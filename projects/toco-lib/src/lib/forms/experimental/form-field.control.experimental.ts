@@ -2,7 +2,7 @@ import { Input, OnInit, Directive } from "@angular/core";
 
 import { InputContent } from "../input/input.control";
 import { FormFieldControl } from "../form-field.control";
-import { FormControl, FormGroup } from "@angular/forms";
+import { UntypedFormControl, FormGroup } from "@angular/forms";
 
 /**
  * A interface that represents the content of a `FormFieldControl_Experimental`.
@@ -20,7 +20,7 @@ export abstract class FormFieldControl_Experimental {
   @Input()
   public content: FormFieldContent_Experimental;
 
-  internalControl = new FormControl();
+  internalControl = new UntypedFormControl();
   constructor() { 
     // (this.content.parentFormSection as FormGroup).addControl(
     //     this.content.name,

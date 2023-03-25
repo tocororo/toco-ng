@@ -1,6 +1,6 @@
 
 import { Component, OnInit, Input} from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 /**
  * Represents a static control that shows a text. 
@@ -63,7 +63,7 @@ export class StaticTextComponent implements OnInit
 	 * of the internal control that contains the text input. 
 	 * For internal use only. 
 	 */
-	public input_static: FormControl;
+	public input_static: UntypedFormControl;
 
 	public constructor()
 	{
@@ -81,7 +81,7 @@ export class StaticTextComponent implements OnInit
 	{
 		if(this.value === undefined) this.value = this.valueByDefault;
 
-		this.input_static = new FormControl(this.value);
+		this.input_static = new UntypedFormControl(this.value);
 	}
 
 	/**

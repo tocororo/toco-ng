@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { FormSection, HintValue, HintPosition, IconValue, IconSource, ContentPosition } from 'projects/toco-lib/src/lib/forms/form-field.control';
 import { TextInputAppearance } from 'projects/toco-lib/src/lib/forms/input/input.control';
@@ -184,7 +184,7 @@ export class TestContainerControlComponent implements OnInit
 
 	public constructor()
 	{
-		this.panelFormSection = new FormGroup({ }, [ ]);
+		this.panelFormSection = new UntypedFormGroup({ }, [ ]);
 	}
 
 	public ngOnInit(): void

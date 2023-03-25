@@ -5,7 +5,7 @@
 
 import { Component, OnInit } from "@angular/core";
 import {
-  FormControl,
+  UntypedFormControl,
   AbstractControl,
   ValidationErrors,
   FormGroup,
@@ -47,7 +47,7 @@ export class VocabularyTreeComponent extends InputControl
   // internalControl = new FormControl();
 
   //this control is used by the chips,not necessary to expose it
-  chipsFormControl = new FormControl();
+  chipsFormControl = new UntypedFormControl();
 
   levelsOptions: Array<TermNode[]> = null;
   levelsSelection: Array<Term> = new Array<Term>();

@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { UntypedFormControl, Validators, ValidationErrors } from '@angular/forms';
 
 import { InputControl } from '../input.control';
 import { ValidatorArguments } from '../../form-field.control';
@@ -28,9 +28,9 @@ export class InputTextComponent extends InputControl implements OnInit
      * InputTextComponent.getFormControlByDefault({ 'pattern': '^[a-zA-Z][a-zA-Z\-\_\ 0-9]*$' });
      * If this argument is not specified, by default its value is `undefined`. 
      */
-    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): FormControl
+    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): UntypedFormControl
     {
-        return new FormControl('', (((validatorArguments) && (validatorArguments.pattern)) ? [Validators.pattern(validatorArguments.pattern)] : [ ]));
+        return new UntypedFormControl('', (((validatorArguments) && (validatorArguments.pattern)) ? [Validators.pattern(validatorArguments.pattern)] : [ ]));
     }
 
     public constructor()

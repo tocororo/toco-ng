@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TaxonomyService } from '../../../backend/public-api';
 import { SourceData, TermNode, Term, SourceClasification, VocabulariesInmutableNames } from '../../../entities/public-api';
@@ -236,7 +236,7 @@ export class SourceIndexesComponent implements OnInit {
 })
 export class SourceEditAddIndexComponent implements OnInit {
   indexPanel: PanelContent_Depr[] = null;
-  indexFormGroup: FormGroup;
+  indexFormGroup: UntypedFormGroup;
 
   addIndexAction: FormContainerAction;
 
@@ -247,7 +247,7 @@ export class SourceEditAddIndexComponent implements OnInit {
 
   constructor(
     private service: TaxonomyService,
-    private _formBuilder: FormBuilder,
+    private _formBuilder: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     // console.log(data);

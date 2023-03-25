@@ -5,7 +5,7 @@
 
 
 import { Input, ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef, Directive } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormGroup } from '@angular/forms';
 
 import { Params } from '../../core/utils/helpers';
 import { GetViewContainerDirective } from '../../core/utils/get-view-container.directive';
@@ -84,18 +84,18 @@ export abstract class ContainerControl extends FormFieldControl
      * Returns a `FormGroup` by default. 
      * Its value is empty object, and does not have validators. 
      */
-    public static getFormGroupByDefault(): FormGroup
+    public static getFormGroupByDefault(): UntypedFormGroup
     {
-        return new FormGroup({ }, [ ]);
+        return new UntypedFormGroup({ }, [ ]);
     }
 
     /**
      * Returns a `FormArray` by default. 
      * Its value is empty array, and does not have validators. 
      */
-    public static getFormArrayByDefault(): FormArray
+    public static getFormArrayByDefault(): UntypedFormArray
     {
-        return new FormArray([ ], [ ]);
+        return new UntypedFormArray([ ], [ ]);
     }
 
     /**
@@ -201,7 +201,7 @@ export abstract class ContainerControl extends FormFieldControl
             throw new Error(`For the '${ this.content.name }' control, the 'content.formSectionContent' array can not be undefined, and must have at least one element.`);
         }
 
-        this._isFormArray = this.content.formSection instanceof FormArray;
+        this._isFormArray = this.content.formSection instanceof UntypedFormArray;
         if (this._isFormArray)
         {
             if (this.content.isDynamic == undefined) this.content.isDynamic = true;  /* By default, its value is `true`. */
@@ -366,7 +366,7 @@ export abstract class ContainerControl extends FormFieldControl
 
     private _createValueToUndefined(target: Params<any>): any
     {
-        if (target.formSection instanceof FormArray)
+        if (target.formSection instanceof UntypedFormArray)
         {
             return [ ];
         }
@@ -400,7 +400,7 @@ export abstract class ContainerControl extends FormFieldControl
         for(let content of this._formArrayPatternContent)
         {
             /* Clones in deep until the next `FormArray`, then the next `FormArray` clones in deep until the next `FormArray`, and so on. */
-            if (content.formSection instanceof FormArray)
+            if (content.formSection instanceof UntypedFormArray)
             {
                 /* This `content.formSectionContent` will not be cloned because it belongs to a `FormArray` and it will be cloned when the `FormArray` is analyzed in the `ContainerControl` class. */
                 refContent = this._cloneContent(content, undefined/* It is not used in this case. */, false);
@@ -478,7 +478,7 @@ export abstract class ContainerControl extends FormFieldControl
 
                         for(let content of target.formSectionContent)
                         {
-                            if (content.formSection instanceof FormArray)
+                            if (content.formSection instanceof UntypedFormArray)
                             {
                                 content.value = value[content.name];
                                 /* This `content.formSectionContent` will not be cloned because it belongs to a `FormArray` and it will be cloned when the `FormArray` is analyzed in the `ContainerControl` class. */
@@ -682,7 +682,7 @@ export abstract class ContainerControl extends FormFieldControl
 
             this.content.containerControlChildren.splice(index, 1);
             this.content.formSectionContent.splice((index * formArrayPatternContentLength), formArrayPatternContentLength);
-            (this.content.formSection as FormArray).removeAt(index);
+            (this.content.formSection as UntypedFormArray).removeAt(index);
             for (i = formArrayPatternContentLength, j = index * formArrayPatternContentLength; i != 0; i--)
             { this._viewContainerRef.remove(j); }
             this._formArrayLength--;
@@ -714,7 +714,7 @@ export abstract class ContainerControl extends FormFieldControl
         {
             this.content.containerControlChildren = [ ];
             this.content.formSectionContent = [ ];
-            (this.content.formSection as FormArray).clear();
+            (this.content.formSection as UntypedFormArray).clear();
             this._viewContainerRef.clear();
             this._formArrayLength = 0;
 

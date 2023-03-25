@@ -24,7 +24,7 @@ import {
 	VocabulariesInmutableNames
 } from "../../entities/public-api";
 
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { FormFieldContent_Experimental } from '../../forms/experimental/form-field.control.experimental';
 
@@ -35,7 +35,7 @@ import { FormFieldContent_Experimental } from '../../forms/experimental/form-fie
 })
 export class TermGenericComponent implements OnInit {
 	public panels: PanelContent_Depr[] = [];
-	public formGroup: FormGroup;
+	public formGroup: UntypedFormGroup;
 	public action: FormContainerAction;
 	public actionLabel = "Adicionar";
 	// term: Term;
@@ -44,7 +44,7 @@ export class TermGenericComponent implements OnInit {
 	vocab: Vocabulary;
 
 	public constructor(
-		private _formBuilder: FormBuilder,
+		private _formBuilder: UntypedFormBuilder,
 		public _snackBar: MatSnackBar,
 		@Inject(MAT_DIALOG_DATA) private data: any
 	)

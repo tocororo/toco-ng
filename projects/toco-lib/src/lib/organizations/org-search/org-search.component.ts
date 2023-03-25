@@ -1,7 +1,7 @@
 import { isArray } from 'util';
 import { Component, OnInit, Output, EventEmitter, Input, Type } from '@angular/core';
 import { Organization, SearchResponse, HitList, Aggr } from '../../entities/public-api';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { SearchService, OrganizationServiceNoAuth } from '../../backend/public-api';
 import { HttpParams } from '@angular/common/http';
 
@@ -16,7 +16,7 @@ export class OrgSearchComponent implements OnInit {
    * Input `orgCtrl` is a FormControl
    */
   @Input()
-  orgCtrl = new FormControl();
+  orgCtrl = new UntypedFormControl();
 
   filteredOrg = new  HitList<Organization>();
 

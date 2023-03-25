@@ -5,7 +5,7 @@
 
 
 import { Input, ViewChild, Directive } from '@angular/core';
-import { Validators, ValidationErrors, FormControl } from '@angular/forms';
+import { Validators, ValidationErrors, UntypedFormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { isNullOrUndefined } from 'util';
 
@@ -45,7 +45,7 @@ export interface InputContent extends FormFieldContent
      *  - You have the `content.formControl` and `InputControl.internalComponent` fields as the `InputIssnComponent` class.
      *  - It must be specified; otherwise, an exception is thrown.
 	 */
-    formControl?: FormControl;
+    formControl?: UntypedFormControl;
 
 
 
@@ -107,7 +107,7 @@ export interface IInternalComponent
 	/**
 	 * Tracks the value and validity state of the internal control that contains the text input.
 	 */
-    readonly formControl: FormControl;
+    readonly formControl: UntypedFormControl;
 
 	/**
 	 * Returns or sets the value of the control.
@@ -143,9 +143,9 @@ export abstract class InputControl extends FormFieldControl
      * @param validatorArguments A collection of key/value elements, where the key is the validator name
      * and the value is the value that the validator needs to check.
      */
-    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): FormControl
+    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): UntypedFormControl
     {
-        return new FormControl('', [ ]);
+        return new UntypedFormControl('', [ ]);
     }
 
     /**
