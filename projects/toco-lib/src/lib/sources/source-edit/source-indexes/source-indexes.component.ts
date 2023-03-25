@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 import { TaxonomyService } from '../../../backend/public-api';
 import { SourceData, TermNode, Term, SourceClasification, VocabulariesInmutableNames } from '../../../entities/public-api';
 import { PanelContent_Depr, FormContainerAction, InputTextComponent, FormFieldType, SelectComponent, SelectOption, InputUrlComponent, HintValue, HintPosition } from '../../../forms/public-api';

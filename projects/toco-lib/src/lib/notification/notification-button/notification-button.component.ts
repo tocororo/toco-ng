@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { of as observableOf, timer, Subscription, PartialObserver } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import moment from 'moment';
 import { NotificationService } from '../../backend/public-api';
 import { MessageHandler, StatusCode } from '../../core/public-api';

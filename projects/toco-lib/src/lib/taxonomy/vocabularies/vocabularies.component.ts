@@ -4,8 +4,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { of, PartialObserver, Observable } from 'rxjs';
 import { catchError, finalize, startWith, map } from 'rxjs/operators';
 import { UntypedFormControl, UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 
 import { MessageHandler, StatusCode, Response } from '../../core/public-api';
 import { Vocabulary } from '../../entities/public-api';

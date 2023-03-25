@@ -111,7 +111,7 @@ export class Entity extends EntityBase {
   entitystringify(): string {
     return JSON.stringify(this, (k, v) => {
       // if (k !== "id" && k !== "uuid" && k !== "isNew") {
-      if (k !== "isNew" && k !== "entityType" && (v != null && v != '' && v != undefined && v != [])) {
+      if (k !== "isNew" && k !== "entityType" && (v != null && v != '' && v != undefined && !Array.isArray(v))) {
         return v;
       }
     });

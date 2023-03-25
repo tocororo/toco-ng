@@ -1,7 +1,7 @@
 
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { TooltipPosition } from '@angular/material/tooltip';
+import { LegacyTooltipPosition as TooltipPosition } from '@angular/material/legacy-tooltip';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { isArray } from 'util';
 
