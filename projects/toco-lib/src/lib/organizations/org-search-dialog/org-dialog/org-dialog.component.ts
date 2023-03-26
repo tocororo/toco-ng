@@ -6,8 +6,8 @@ import {
   Inject,
   ViewChild,
 } from "@angular/core";
-import { LegacyPageEvent as PageEvent } from "@angular/material/legacy-paginator";
-import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from "@angular/material/legacy-dialog";
+import { PageEvent } from "@angular/material/paginator";
+import { MatDialogRef, MAT_DIALOG_DATA as MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatDrawer } from "@angular/material/sidenav";
 import { NavigationExtras, Params } from "@angular/router";
 import { SearchResponse } from "../../../entities/common";

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, Input, ViewChild } from "@angular/core";
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SourceService } from '../../backend/public-api';
 import { IdentifierSchemas } from '../../entities/common';
 import { JournalVersion, JournalData, SourceTypes, SourceSystems, SourceClasification, VocabulariesInmutableNames } from '../../entities/public-api';

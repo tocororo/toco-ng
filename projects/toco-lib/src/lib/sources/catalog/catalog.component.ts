@@ -8,8 +8,8 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { merge, of as observableOf } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
-import { MatLegacyPaginator as MatPaginator, LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { MetadataService, MessageHandler, StatusCode } from '../../core/public-api';
 import { Journal, JournalData, ISSN, JournalVersion } from '../../entities/public-api';
@@ -19,8 +19,8 @@ import { Environment } from '../../core/env';
 
 import { CatalogService } from '../../backend/public-api';
 import { CatalogFiltersComponent } from '../catalog-filters/catalog-filters.component';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { JournalViewInfoComponent } from '../../sources/journal-view/journal-view-info.component';
 import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 

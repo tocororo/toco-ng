@@ -3,14 +3,14 @@
   <mat-form-field style="width: 100%;">
 
       <mat-label> {{content.label}} <span *ngIf="content.required">*</span></mat-label>
-    <input 
-        matInput 
-        id="'inputId-'{{content.name}}" 
-        type="text" 
+    <input
+        matInput
+        id="'inputId-'{{content.name}}"
+        type="text"
         [formControl]="formControl"
         [placeholder]="content.label"
-        [matAutocomplete]="auto" 
-        aria-label="Number" 
+        [matAutocomplete]="auto"
+        aria-label="Number"
       />
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option.identifier" (click)="addParent(option)"
@@ -21,8 +21,8 @@
 
   </mat-form-field>
 
-  <mat-chip-list fxLayout="row" fxLayoutAlign="start center" style="margin-bottom: .5em" id="chiplist">
-    <mat-chip (click)="removeParent()" *ngIf="parentTerm">{{ parentTerm.description }}</mat-chip>
-  </mat-chip-list>
+  <mat-chip-listbox fxLayout="row" fxLayoutAlign="start center" style="margin-bottom: .5em" id="chiplist">
+    <mat-chip-option (click)="removeParent()" *ngIf="parentTerm">{{ parentTerm.description }}</mat-chip-option>
+  </mat-chip-listbox>
 
 </div>

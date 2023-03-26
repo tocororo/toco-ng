@@ -1,7 +1,7 @@
 
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { LegacyTooltipPosition as TooltipPosition } from '@angular/material/legacy-tooltip';
+import { TooltipPosition } from '@angular/material/tooltip';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { isArray } from 'util';
 
@@ -9,75 +9,75 @@ import { InputControl, InputContent } from '../input.control';
 import { HintPosition, HintValue } from '../../form-field.control';
 
 /**
- * An interface that represents a selectable option. 
+ * An interface that represents a selectable option.
  */
 export interface SelectOption
 {
 	/**
-	 * Returns the label that is showed. 
+	 * Returns the label that is showed.
 	 */
 	label: string;
 
 	/**
-	 * Returns the value that is stored internally. 
+	 * Returns the value that is stored internally.
 	 */
 	value: any;
 
 	/**
-	 * Returns true if this option is selected; otherwise, false. 
+	 * Returns true if this option is selected; otherwise, false.
 	 */
 	// selected?: boolean;
 }
 
 /**
- * An interface that represents the content of a select control. 
+ * An interface that represents the content of a select control.
  */
 export interface SelectContent extends InputContent
 {
 	/**
-	 * Returns the options list that can be selected. 
-	 * This field can be set using three ways: 
-	 *  - Its value is `undefined`, then it takes the options from the `content.value` field. 
-	 *  - Its value is a `SelectOption[]`, then it already contains the options. 
-	 *  - Its value is an `Observable<SelectOption[]>`, then it takes the options when the observable emits values. 
-	 * By default, its value is `[]`. 
+	 * Returns the options list that can be selected.
+	 * This field can be set using three ways:
+	 *  - Its value is `undefined`, then it takes the options from the `content.value` field.
+	 *  - Its value is a `SelectOption[]`, then it already contains the options.
+	 *  - Its value is an `Observable<SelectOption[]>`, then it takes the options when the observable emits values.
+	 * By default, its value is `[]`.
 	 */
 	selectOptions?: SelectOption[] | Observable<SelectOption[]>;
 
 	/**
-	 * Returns true if the selection can be multiple; otherwise, false. 
-	 * By default, its value is `false`. 
+	 * Returns true if the selection can be multiple; otherwise, false.
+	 * By default, its value is `false`.
 	 */
 	multiple?: boolean;
 
 	/**
-	 * Returns true if the tooltip is showed; otherwise, false. 
-	 * By default, its value is `false`. 
+	 * Returns true if the tooltip is showed; otherwise, false.
+	 * By default, its value is `false`.
 	 */
 	showTooltip?: boolean;
 
 	/**
-	 * Returns a value that allows the user to define the position of the tooltip for the select control. 
-	 * It is used if the `showTooltip` field value is `true`. 
-	 * By default, its value is `'below'`. 
-	 * Its value can be one of these values: 'left', 'right', 'above', 'below', 'after', 'before' 
+	 * Returns a value that allows the user to define the position of the tooltip for the select control.
+	 * It is used if the `showTooltip` field value is `true`.
+	 * By default, its value is `'below'`.
+	 * Its value can be one of these values: 'left', 'right', 'above', 'below', 'after', 'before'
 	 */
 	selectTooltipPosition?: TooltipPosition;
 
 	/**
-	 * Returns a value that allows the user to define the position of the tooltip for the select control's options. 
-	 * It is used if the `showTooltip` field value is `true`. 
-	 * By default, its value is `'right'`. 
-	 * Its value can be one of these values: 'left', 'right', 'above', 'below', 'after', 'before' 
+	 * Returns a value that allows the user to define the position of the tooltip for the select control's options.
+	 * It is used if the `showTooltip` field value is `true`.
+	 * By default, its value is `'right'`.
+	 * Its value can be one of these values: 'left', 'right', 'above', 'below', 'after', 'before'
 	 */
 	optionsTooltipPosition?: TooltipPosition;
 }
 
 /**
- * Represents a control that allows to select one value or multiple values. 
- * Implementation notes: 
- * The `extraContent` recibe una funcion llamada getOptions() que se encarga de contruir un SelectOption[]. 
- * Si es multiple, entonces el `value` es un array de valores. 
+ * Represents a control that allows to select one value or multiple values.
+ * Implementation notes:
+ * The `extraContent` recibe una funcion llamada getOptions() que se encarga de contruir un SelectOption[].
+ * Si es multiple, entonces el `value` es un array de valores.
  */
 @Component({
 	selector: 'input-select',
@@ -91,14 +91,14 @@ export interface SelectContent extends InputContent
 export class InputSelectComponent extends InputControl implements OnInit, OnDestroy
 {
 	/**
-     * Input field that contains the content of this class. 
+     * Input field that contains the content of this class.
      */
     @Input()
 	public content: SelectContent;
 
 	/**
-	 * Returns the current selected option tooltip. 
-	 * If nothing is selected, then its value is `''`. 
+	 * Returns the current selected option tooltip.
+	 * If nothing is selected, then its value is `''`.
 	 */
 	public selectTooltip: string;
 
@@ -127,11 +127,11 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
 	}
 
     /**
-     * Initializes the `content` input property. 
-     * @param label The default label to use. It is used if the `content.label` is not specified. 
-	 * @param placeholder The default placeholder to use. It is used if the `content.placeholder` is not specified. 
-     * @param isAbbreviation If it is true then the `label` argument represents an abbreviation; otherwise, false. 
-     * @param alwaysHint If it is true then there is always at leat one hint start-aligned. 
+     * Initializes the `content` input property.
+     * @param label The default label to use. It is used if the `content.label` is not specified.
+	 * @param placeholder The default placeholder to use. It is used if the `content.placeholder` is not specified.
+     * @param isAbbreviation If it is true then the `label` argument represents an abbreviation; otherwise, false.
+     * @param alwaysHint If it is true then there is always at leat one hint start-aligned.
      */
     protected init(label: string, placeholder: string = '', isAbbreviation: boolean, alwaysHint: boolean): void
     {
@@ -213,7 +213,7 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
 
 		/* The `selectTooltip` value is set in `onSelectionChange` method when happening initialization or selection change. */
 	}
-	
+
 	private _selectOptions_Unsubscription(): void
 	{
 		/* Disposes the resources held by the subscription. */
@@ -236,8 +236,8 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
 	}
 
 	/**
-	 * Does the translation for a key (or an array of keys). 
-	 * @param key The key (or an array of keys) to translate. 
+	 * Does the translation for a key (or an array of keys).
+	 * @param key The key (or an array of keys) to translate.
 	 */
 	private _doTranslation(key: string | Array<string>): void
 	{
@@ -276,9 +276,9 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
 	}
 
 	/**
-	 * Finds the label for a value (or an array of values). 
-	 * @param value The value (or an array of values) to find the label. 
-	 * @returns Returns a label (or an array of labels). 
+	 * Finds the label for a value (or an array of values).
+	 * @param value The value (or an array of values) to find the label.
+	 * @returns Returns a label (or an array of labels).
 	 */
 	private _findLabel(value: string | Array<string>): string | Array<string>
 	{
@@ -318,7 +318,7 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
 	}
 
 	/**
-	 * Sets the `selectTooltip` field value. 
+	 * Sets the `selectTooltip` field value.
 	 */
 	private _setSelectTooltip(): void
 	{

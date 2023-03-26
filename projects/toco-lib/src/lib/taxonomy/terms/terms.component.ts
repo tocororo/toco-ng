@@ -3,9 +3,9 @@ import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
 import { of as observableOf, PartialObserver, Subscription, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { MessageHandler, StatusCode, Response } from '../../core/public-api';
 import { Vocabulary, Term, TermNode } from '../../entities/public-api';

@@ -13,8 +13,8 @@ import { OrgViewRelationshipComponent } from "./org-view/org-view-relationship/o
 import { OrgEditComponent } from "./org-edit/org-edit.component";
 import { OrgAddComponent } from "./org-add/org-add.component";
 import { OrgSearchComponent } from "./org-search/org-search.component";
-import { MatLegacyAutocompleteModule as MatAutocompleteModule } from "@angular/material/legacy-autocomplete";
-import { MatLegacyChipsModule as MatChipsModule } from "@angular/material/legacy-chips";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatChipsModule } from "@angular/material/chips";
 import { OrgTableEditComponent } from "./org-table-edit/org-table-edit.component";
 // import { OrgFooterComponent } from './org-footer/org-footer.component';
 import { RouterModule } from "@angular/router";

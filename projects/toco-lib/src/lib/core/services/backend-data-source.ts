@@ -1,6 +1,6 @@
 
 import { _isNumberValue } from '@angular/cdk/coercion';
-import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
+import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 

@@ -114,6 +114,8 @@ import { SelectOrgsComponent } from './experimental/select-orgs/select-orgs.comp
     ],
     providers: []
 })
+
+  
 export class TocoFormsModule {
   public constructor(private _iconService: IconService) {
     //console.log('Icon Service: registers icons.');

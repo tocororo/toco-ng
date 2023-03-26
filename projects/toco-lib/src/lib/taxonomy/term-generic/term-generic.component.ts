@@ -4,7 +4,7 @@
  */
 
 import { Component, OnInit, Inject } from "@angular/core";
-import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from "@angular/material/legacy-dialog";
+import { MAT_DIALOG_DATA as MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 import {
 	PanelContent_Depr,
@@ -25,7 +25,7 @@ import {
 } from "../../entities/public-api";
 
 import { UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { FormFieldContent_Experimental } from '../../forms/experimental/form-field.control.experimental';
 
 @Component({
