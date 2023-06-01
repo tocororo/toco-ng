@@ -17,10 +17,15 @@
     "strictMetadataEmit": true,
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    "enableResourceInlining": true
+    "enableResourceInlining": true,
+    "allowSyntheticDefaultImports": true
   },
   "exclude": [
     "src/test.ts",
     "**/*.spec.ts"
+  ],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.js"
   ]
 }
