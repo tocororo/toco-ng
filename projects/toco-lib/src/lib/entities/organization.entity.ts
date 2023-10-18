@@ -1,4 +1,4 @@
-import { Entity, EntityBase, Identifier } from './common';
+import { Entity, EntityBase } from './common';
 
 
 export const OrganizationRelationships = {
@@ -49,11 +49,6 @@ export class LabelDiffLang extends EntityBase
  */
 export class Relationship extends Entity
 {
-  /**
-   * Organization Identifiers, different from GRID mapping.
-   */
-  identifiers: Array<Identifier> = new Array<Identifier>();
-
   /**
    * Relationship type.
    */
@@ -266,11 +261,6 @@ export class Redirect
  */
 export class Organization extends Entity
 {
-  /**
-   * Organization Identifiers, different from GRID mapping.
-   */
-  identifiers: Array <Identifier> = new Array <Identifier>();
-
   /**
    * The name typically used to refer to the institute.
    */

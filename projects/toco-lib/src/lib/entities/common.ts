@@ -22,7 +22,11 @@ export class EntityBase extends Object {
             if (this[key] instanceof EntityBase) {
               console.log('RECUSIVE CALL ON EntityBase',  this[key]);
               this[key].deepcopy(data[key], exclude);
-            }  else {
+            }
+            // else if (this[key] instanceof Array<EntityBase>){
+
+            // }
+            else {
               this[key] = data[key];
             }
           // }
@@ -111,7 +115,10 @@ export class Entity extends EntityBase {
   entitystringify(): string {
     return JSON.stringify(this, (k, v) => {
       // if (k !== "id" && k !== "uuid" && k !== "isNew") {
-      if (k !== "isNew" && k !== "entityType" && (v != null && v != '' && v != undefined && !Array.isArray(v))) {
+      // if (k !== "isNew" && k !== "entityType" && (v != null && v != '' && v != undefined && !Array.isArray(v))) {
+      if (k !== "isNew" && k !== "entityType" && (v != null && v != '' && v != undefined)) {
+        console.log("entitystringify call")
+        console.log(k,v)
         return v;
       }
     });
