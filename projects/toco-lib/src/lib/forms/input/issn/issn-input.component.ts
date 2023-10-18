@@ -4,19 +4,19 @@ import { UntypedFormControl, Validators, ValidationErrors } from '@angular/forms
 
 import { ExtraValidators } from '../../../core/utils/validator';
 
-import { IssnType_Abbreviation, IssnValue } from './issn-value';
-import { InputControl } from '../input.control';
 import { ValidatorArguments } from '../../form-field.control';
+import { InputControl } from '../input.control';
+import { IssnType_Abbreviation, IssnValue } from './issn-value';
 
 /**
- * Represents a control that allows the writing of an ISSN. 
- * An ISSN (International Standard Serial Number) is an 8-digit code. 
- * This control stores the code as a string of length 11, with the form 'XXXX – XXXX'. 
- * It is used to identify newspapers, journals, magazines and periodicals 
- * of all kinds and on all media–print and electronic. For more information 
- * follow the link: https://www.issn.org/understanding-the-issn/what-is-an-issn/. 
- * It uses the `IssnType_Abbreviation.ISSN` as a label if the `content.label` is not specified. 
- * It uses the `IssnValue.issn_Placeholder` as a placeholder if the `content.placeholder` is not specified. 
+ * Represents a control that allows the writing of an ISSN.
+ * An ISSN (International Standard Serial Number) is an 8-digit code.
+ * This control stores the code as a string of length 11, with the form 'XXXX – XXXX'.
+ * It is used to identify newspapers, journals, magazines and periodicals
+ * of all kinds and on all media–print and electronic. For more information
+ * follow the link: https://www.issn.org/understanding-the-issn/what-is-an-issn/.
+ * It uses the `IssnType_Abbreviation.ISSN` as a label if the `content.label` is not specified.
+ * It uses the `IssnValue.issn_Placeholder` as a placeholder if the `content.placeholder` is not specified.
  */
 @Component({
     selector: 'input-issn',
@@ -32,9 +32,9 @@ export class InputIssnComponent extends InputControl implements OnInit
     /* Note: Before, this control worked well with a 'width' = '310px' or '285px'. */
 
     /**
-     * Returns a `FormControl` by default. 
-     * It is used to initialized the `InputIssnComponent`'s `content.formControl` value by default. 
-     * In this case, the `validatorArguments` argument is always `undefined`. 
+     * Returns a `FormControl` by default.
+     * It is used to initialized the `InputIssnComponent`'s `content.formControl` value by default.
+     * In this case, the `validatorArguments` argument is always `undefined`.
      */
     public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): UntypedFormControl
     {
@@ -48,7 +48,7 @@ export class InputIssnComponent extends InputControl implements OnInit
     }
 
 	/**
-	 * It is used by `handleSpecificInput` method. 
+	 * It is used by `handleSpecificInput` method.
 	 */
     private _codeOldValue: string;
 
@@ -65,7 +65,7 @@ export class InputIssnComponent extends InputControl implements OnInit
 
         this.init(IssnType_Abbreviation.ISSN, IssnValue.issn_Placeholder, true, true);
 
-        if ((typeof this.content.value !== 'string') && (typeof this.content.value !== 'undefined'))
+        if (this.content.value !== null && (typeof this.content.value !== 'string') && (typeof this.content.value !== 'undefined') )
         {
             throw new Error(`For the '${ this.content.name }' control, the 'content.value' value must be of string type.`);
         }
@@ -75,7 +75,7 @@ export class InputIssnComponent extends InputControl implements OnInit
     }
 
    /**
-     * Returns an error string if the control is in an error state; otherwise, empty string. 
+     * Returns an error string if the control is in an error state; otherwise, empty string.
      */
     public getErrorMessage(): string
     {
@@ -125,27 +125,27 @@ export class InputIssnComponent extends InputControl implements OnInit
     }
 
 	/**
-	 * Handler method that is called by the internal logic when the control's value changes in the UI. 
-     * This method contains the specific handling of the input that the derived class wants to do. 
+	 * Handler method that is called by the internal logic when the control's value changes in the UI.
+     * This method contains the specific handling of the input that the derived class wants to do.
 	 */
 	public handleSpecificInput(): void
 	{
-        /* Forma de entrada del código ISSN por parte del usuario: 
-         * El control ISSN permite copiar códigos ISSN con el separador de menos (-) o con 
-         * el separador de raya (–), y son copiados correctamente para un código ISSN 
-         * con el separador de raya (–); es decir, los siguientes ejemplos muestran 
-         * el resultado de copiar una forma de código en particular. 
+        /* Forma de entrada del código ISSN por parte del usuario:
+         * El control ISSN permite copiar códigos ISSN con el separador de menos (-) o con
+         * el separador de raya (–), y son copiados correctamente para un código ISSN
+         * con el separador de raya (–); es decir, los siguientes ejemplos muestran
+         * el resultado de copiar una forma de código en particular.
          *  - Si se copia 01234560, entonces se muestra 0123 – 4560
          *  - Si se copia 0123-4560, entonces se muestra 0123 – 4560
          *  - Si se copia 0123 - 4560, entonces se muestra 0123 – 4560
          *  - Si se copia 0123–4560, entonces se muestra 0123 – 4560
          *  - Si se copia 0123 – 4560, entonces se muestra 0123 – 4560
          *  - Si se copia 0123 – 45601, entonces se muestra 0123 – 4560
-         *  - Si se copia un código ISSN con más de 8 dígitos en la forma que sea, 
-         *    entonces no se copia y se sigue mostrando el código anterior. 
-         * Recuerde que el caracter 'x' or 'X' puede aparecer solamente en la última 
-         * posición del código ISSN. Además, aunque los dos caracteres significan lo mismo, 
-         * siempre se trata de mostrar el caracter 'X' en mayúscula. 
+         *  - Si se copia un código ISSN con más de 8 dígitos en la forma que sea,
+         *    entonces no se copia y se sigue mostrando el código anterior.
+         * Recuerde que el caracter 'x' or 'X' puede aparecer solamente en la última
+         * posición del código ISSN. Además, aunque los dos caracteres significan lo mismo,
+         * siempre se trata de mostrar el caracter 'X' en mayúscula.
          */
 
         let tempCode: string = this.content.formControl.value;

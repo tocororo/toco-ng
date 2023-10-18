@@ -41,18 +41,42 @@ import { Component, Input } from '@angular/core';
   @Component({
     selector: 'toco-progress',
     template: `
+    <div [ngSwitch]="position">
+    <div *ngSwitchCase="'1'" >
+      <div class="overlay-fixed" *ngIf="loading">
+      <div class="spinner " >
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+      </div>
+      </div>
+
+
+    </div>
+    <div *ngSwitchCase="'2'">
+    <div class="overlay-absolute" *ngIf="loading">
+      <div class="spinner " >
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+      </div>
+      </div>
+    </div>
+    <div *ngSwitchDefault>
     <div class="spinner" *ngIf="loading">
       <div class="bounce1"></div>
       <div class="bounce2"></div>
       <div class="bounce3"></div>
     </div>
+    </div>
+    </div>
+
  `,
 
     styles: [
 `
 .overlay-fixed {
-      opacity:    0.4;
-      background: #000;
+      background: rgba(0, 0, 0, 0.2);
       width:      100%;
       height:     100%;
       z-index:    1000;
@@ -61,8 +85,7 @@ import { Component, Input } from '@angular/core';
       position:   fixed;
     }
     .overlay-absolute {
-      opacity:    0.4;
-      background: #000;
+      background: rgba(0, 0, 0, 0.2);
       width:      100%;
       height:     100%;
       z-index:    1000;
@@ -72,9 +95,11 @@ import { Component, Input } from '@angular/core';
     }
 
 .spinner {
-margin: 5px auto 0;
-width: 70px;
+top: 50%;
+left: 50%;
+position:   fixed;
 text-align: center;
+z-index:    2000;
 }
 
 .spinner > div {
@@ -126,7 +151,7 @@ background-color: #0f6684;
         @Input()
         public loading = false;
         @Input()
-        public position = 'fixed';
+        public position = 1;
         constructor() { }
   }
 
