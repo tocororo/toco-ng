@@ -5,7 +5,7 @@
 
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable, Optional } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthConfig, JwksValidationHandler, OAuthModuleConfig, OAuthResourceServerErrorHandler, OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -32,7 +32,7 @@ export enum AuthBackend{
 @Injectable({
     providedIn: 'root'
 })
-export class OauthAuthenticationService implements CanActivate, HttpInterceptor {
+export class OauthAuthenticationService  implements HttpInterceptor {
 
     // public authBackend: AuthBackend =  AuthBackend.sceiba
     public userInfoEndpoint: string;
