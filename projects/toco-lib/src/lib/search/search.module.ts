@@ -1,15 +1,22 @@
 
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared/public-api';
-
-import { RecordComponent } from './record/record.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TranslateModule } from '@ngx-translate/core';
 import { AggregationsComponent } from './aggregations/aggregations.component';
 import { QueryInputComponent } from './query-input/query-input.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
-
 import { RecordListComponent } from './record-list/record-list.component';
-import { CommonModule } from '@angular/common';
+import { RecordComponent } from './record/record.component';
+
+
+
 
 @NgModule({
   declarations: [
@@ -21,10 +28,15 @@ import { CommonModule } from '@angular/common';
 
   imports: [
     CommonModule,
-    SharedModule,
+    FlexLayoutModule,
     ReactiveFormsModule,
     TranslateModule,
-    SharedModule
+    MatDividerModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatButtonModule
   ],
 
   exports: [
