@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, Validators, ValidationErrors } from '@angular/forms';
+import { UntypedFormControl, ValidationErrors, Validators } from '@angular/forms';
 
 import { ExtraValidators } from '../../../core/utils/validator';
 
