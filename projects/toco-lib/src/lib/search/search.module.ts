@@ -9,6 +9,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { AggregationsComponent } from './aggregations/aggregations.component';
 import { QueryInputComponent } from './query-input/query-input.component';
@@ -36,7 +37,8 @@ import { RecordComponent } from './record/record.component';
     MatChipsModule,
     MatCardModule,
     MatFormFieldModule,
-    MatButtonModule
+    MatButtonModule,
+    MatInputModule
   ],
 
   exports: [

@@ -18,6 +18,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -41,7 +42,7 @@ import { JournalViewVersionComponent } from './journal-view/journal-view-version
 import { JournalViewComponent } from './journal-view/journal-view.component';
 import { JournalEditComponent } from './source-edit/journal-edit/journal-edit.component';
 import { SourceEditAddIndexComponent, SourceIndexesComponent } from './source-edit/source-indexes/source-indexes.component';
-import { SourceOrganizationsComponent, SourceOrganizationSelectDialog, SourceOrganizationSelectTopDialog } from './source-edit/source-organizations/source-organizations.component';
+import { SourceOrganizationSelectDialog, SourceOrganizationSelectTopDialog, SourceOrganizationsComponent } from './source-edit/source-organizations/source-organizations.component';
 import { SourcesListComponent } from './sources-list/sources-list.component';
 
 
@@ -95,7 +96,8 @@ import { SourcesListComponent } from './sources-list/sources-list.component';
         MatStepperModule,
         MatFormFieldModule,
         MatProgressSpinnerModule,
-        OrganizationsModule
+        OrganizationsModule,
+        MatInputModule
     ],
     exports: [
         JournalViewComponent,

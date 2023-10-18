@@ -1,12 +1,14 @@
 
 import { AfterViewInit, Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { PartialObserver, Subscription, timer } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
-import { AuthConfig, JwksValidationHandler, OAuthService,OAuthStorage } from "angular-oauth2-oidc";
+import { AuthConfig, OAuthService, OAuthStorage } from "angular-oauth2-oidc";
+import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
+import { PartialObserver, Subscription, timer } from "rxjs";
 
-import { Environment } from "../core/env";
+
 import { UserProfileService } from "../backend/user-profile.service";
+import { Environment } from "../core/env";
 import { UserProfile } from "../entities/person.entity";
 import { OauthAuthenticationService } from "./authentication.service";
 // import { authConfig } from './auth-config';
@@ -25,31 +27,31 @@ export interface OauthInfo
 }
 
 /**
- * Represents a component used to authenticate. 
- * 
- * In order to use this component with the correct i18n, you must include 
- * (in your i18n translate files that are in the folder `assets\i18n`) 
- * a translation key of name "TOCO_AUTHENTICATION" that contains 
- * an object as value with the translation needed by this component. 
- * 
- * In the case of `es.json` file, you must include the following translation key: 
+ * Represents a component used to authenticate.
+ *
+ * In order to use this component with the correct i18n, you must include
+ * (in your i18n translate files that are in the folder `assets\i18n`)
+ * a translation key of name "TOCO_AUTHENTICATION" that contains
+ * an object as value with the translation needed by this component.
+ *
+ * In the case of `es.json` file, you must include the following translation key:
     "TOCO_AUTHENTICATION": {
         "MAT_CARD_TITLE_AUTH": "Autenticación con",
         "AUTENTICARSE": "Autenticarse",
         "H1_HOLA": "Hola",
         "BUTTON_SALIR": "Salir"
     }
- * 
- * In the case of `en.json` file, you must include the following translation key: 
+ *
+ * In the case of `en.json` file, you must include the following translation key:
     "TOCO_AUTHENTICATION": {
         "MAT_CARD_TITLE_AUTH": "Authentication with",
         "AUTENTICARSE": "Log in",
         "H1_HOLA": "Hello,",
         "BUTTON_SALIR": "Exit"
     }
- * 
- * If you have another language, then you have another `*.json` file, 
- * and you must include the "TOCO_AUTHENTICATION" translation key with the correct translation values. 
+ *
+ * If you have another language, then you have another `*.json` file,
+ * and you must include the "TOCO_AUTHENTICATION" translation key with the correct translation values.
  */
 @Component({
   selector: "toco-authentication",
@@ -189,7 +191,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
 
             (response) => {
               console.log(response);
-              
+
               this.oauthStorage.setItem("user", JSON.stringify(response));
               this.authenticationService.login(response);
             },

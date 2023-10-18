@@ -12,6 +12,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 
 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { NotificationService } from '../backend/public-api';
 import { NotificationButtonComponent } from './notification-button/notification-button.component';
 import { NotificationListComponent } from './notification-list/notification-list.component';
@@ -36,7 +38,9 @@ import { NotificationListComponent } from './notification-list/notification-list
         MatTableModule,
         MatPaginatorModule,
         MatDividerModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatFormFieldModule,
+        MatInputModule
     ],
     exports: [
         MatDividerModule,

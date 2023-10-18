@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { StaticChipsComponent } from './chips/chips-static.component';
@@ -25,7 +26,7 @@ import { StaticTextComponent } from './text/text-static.component';
     MatChipsModule,
     MatFormFieldModule,
     MatTableModule,
-
+    MatInputModule,
 		ReactiveFormsModule
 	],
 

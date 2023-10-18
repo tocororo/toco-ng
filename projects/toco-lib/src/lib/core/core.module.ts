@@ -22,6 +22,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 // import { throwIfAlreadyLoaded } from './module-import-guard';
 
 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { Error404Component } from './error404/error404.component';
 import { MetadataService } from './metadata.service';
 import { PageHeaderComponent } from './page-header/page-header.component';
@@ -73,7 +75,9 @@ import { EqualLengthDirective } from './utils/validator';
         MatProgressBarModule,
         MatButtonModule,
         MatDialogModule,
-        MatMenuModule
+        MatMenuModule,
+        MatFormFieldModule,
+        MatInputModule
     ],
     exports: [
         Error404Component,
