@@ -4,8 +4,8 @@
  */
 
 
-import { Input, Type } from '@angular/core';
-import { FormGroup, FormArray, AbstractControl, FormControl } from '@angular/forms';
+import { Input, Type, Directive } from '@angular/core';
+import { UntypedFormGroup, UntypedFormArray, AbstractControl, UntypedFormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Params } from '../core/utils/helpers';
@@ -16,7 +16,7 @@ import { ContainerControl } from './container/container.control';
 /**
  * Defines a form section that represents the `FormGroup` or `FormArray` class. 
  */
-export type FormSection = FormGroup | FormArray;
+export type FormSection = UntypedFormGroup | UntypedFormArray;
 
 /**
  * A collection of key/value elements, where the key is the validator name and the value is the value 
@@ -419,9 +419,9 @@ export interface FormFieldContent
  * Returns a new object that represents the clone of the specified `FormControl` target. 
  * @param target The `FormControl` object to clone. 
  */
-export function cloneFormControl(target: FormControl): FormControl
+export function cloneFormControl(target: UntypedFormControl): UntypedFormControl
 {
-    return new FormControl(target.value, target.validator, target.asyncValidator);
+    return new UntypedFormControl(target.value, target.validator, target.asyncValidator);
 }
 
 /**
@@ -430,15 +430,15 @@ export function cloneFormControl(target: FormControl): FormControl
  */
 export function cloneFormSection(target: FormSection): FormSection
 {
-    if (target instanceof FormGroup)
+    if (target instanceof UntypedFormGroup)
     {
         /* Creates an empty `FormGroup` with its validators. */
-        let result: FormGroup = new FormGroup({ }, target.validator, target.asyncValidator);
+        let result: UntypedFormGroup = new UntypedFormGroup({ }, target.validator, target.asyncValidator);
 
         /* Adds the controls to `FormGroup`. */
         for(let ctr in target.controls)
         {
-            if((target.controls[ctr]) instanceof FormControl) result.addControl(ctr, cloneFormControl((target.controls[ctr]) as FormControl));
+            if((target.controls[ctr]) instanceof UntypedFormControl) result.addControl(ctr, cloneFormControl((target.controls[ctr]) as UntypedFormControl));
             else result.addControl(ctr, cloneFormSection((target.controls[ctr]) as FormSection));
         }
 
@@ -447,12 +447,12 @@ export function cloneFormSection(target: FormSection): FormSection
     else
     {
         /* Creates an empty `FormArray` with its validators. */
-        let result: FormArray = new FormArray([ ], target.validator, target.asyncValidator);
+        let result: UntypedFormArray = new UntypedFormArray([ ], target.validator, target.asyncValidator);
 
         /* Adds the controls to the `FormArray`. */
         for(let ctr of target.controls)
         {
-            if(ctr instanceof FormControl) result.push(cloneFormControl(ctr));
+            if(ctr instanceof UntypedFormControl) result.push(cloneFormControl(ctr));
             else result.push(cloneFormSection(ctr as FormSection));
         }
 
@@ -463,6 +463,7 @@ export function cloneFormSection(target: FormSection): FormSection
 /**
  * Represents the base abstract class for a control that is treated as a form field. 
  */
+@Directive()
 export abstract class FormFieldControl
 {
     /**
@@ -624,11 +625,11 @@ export abstract class FormFieldControl
             `content.name` equals the `content.parentFormSection`'s last position 
             (because the `internalControl` has a `FormArray` as its parent). */
 
-            (this.content.parentFormSection as FormArray).push(internalControl);
+            (this.content.parentFormSection as UntypedFormArray).push(internalControl);
         }
         else  /* `content.parentFormSection` is an instance of `FormGroup`. */
         {
-            (this.content.parentFormSection as FormGroup).addControl(this.content.name, internalControl);
+            (this.content.parentFormSection as UntypedFormGroup).addControl(this.content.name, internalControl);
         }
 	}
 

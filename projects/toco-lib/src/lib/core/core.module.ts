@@ -3,7 +3,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { SharedModule } from '../shared/public-api';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxChartsModule } from '@swimlane/ngx-charts'
 
 // import { throwIfAlreadyLoaded } from './module-import-guard';
 
@@ -48,7 +48,6 @@ import { SceibaAppsComponent } from './sceiba-apps/sceiba-apps.component';
         ProgressComponent,
         SceibaAppsComponent
     ],
-
     imports: [
         SharedModule,
         ReactiveFormsModule,
@@ -56,7 +55,6 @@ import { SceibaAppsComponent } from './sceiba-apps/sceiba-apps.component';
         NgxChartsModule,
         CoreRoutingModule
     ],
-
     exports: [
         BodyComponent,
         Error404Component,
@@ -75,10 +73,6 @@ import { SceibaAppsComponent } from './sceiba-apps/sceiba-apps.component';
         DialogDeleteConfirmComponent,
         ProgressComponent,
         SceibaAppsComponent
-    ],
-    entryComponents: [
-        DialogContentComponent,
-        DialogDeleteConfirmComponent
     ],
     providers: [
         MetadataService

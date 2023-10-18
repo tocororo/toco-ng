@@ -1,8 +1,24 @@
+<mat-form-field
+  *ngIf="value.length && value.length > 0"
+  class="chips-mat-form-field control-without-interactivity"
+  [appearance]="appearance"
+>
+  <mat-label>{{ desc }}</mat-label>
+  <mat-chip-grid #chipGrid [attr.aria-label]="desc">
+    <mat-chip-row *ngFor="let item of value" [disableRipple]="'true'">{{
+      item
+    }}</mat-chip-row>
+  </mat-chip-grid>
+  <input
+    [matChipInputFor]="chipGrid"
+    [attr.aria-label]="desc"
+  />
+</mat-form-field>
 
-<mat-form-field class="chips-mat-form-field control-without-interactivity" [appearance]="appearance">
-	<mat-label>{{ desc }}</mat-label>
-	<mat-chip-list *ngIf="value.length" [selectable]="'false'" [attr.aria-label]="desc">
-    <mat-chip *ngFor="let item of value" [selectable]="'false'" [disableRipple]="'true'">{{ item }}</mat-chip>
-  </mat-chip-list>
-  <input *ngIf="!value.length" matInput [value]="'There is not any item to show!'" [attr.aria-label]="desc" />
+<mat-form-field
+  *ngIf="!value.length || value.length === 0"
+  class="chips-mat-form-field control-without-interactivity"
+  [appearance]="appearance"
+>
+  <input [value]="'There is not any item to show!'" [attr.aria-label]="desc" />
 </mat-form-field>

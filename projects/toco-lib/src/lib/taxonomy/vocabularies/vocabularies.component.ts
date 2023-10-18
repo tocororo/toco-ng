@@ -3,8 +3,8 @@ import { Component, OnInit, Inject, Output, OnDestroy, EventEmitter } from '@ang
 import { HttpErrorResponse } from '@angular/common/http';
 import { of, PartialObserver, Observable } from 'rxjs';
 import { catchError, finalize, startWith, map } from 'rxjs/operators';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { UntypedFormControl, UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { MessageHandler, StatusCode, Response } from '../../core/public-api';
@@ -23,7 +23,7 @@ import { OAuthStorage } from 'angular-oauth2-oidc';
 export class VocabularyDialogComponent implements OnInit {
 
     public panels: PanelContent_Depr[];
-    public formGroup: FormGroup;
+    public formGroup: UntypedFormGroup;
     public action: FormContainerAction;
     public actionLabel = 'Aceptar';
     public hasService = false;
@@ -32,7 +32,7 @@ export class VocabularyDialogComponent implements OnInit {
 
     constructor(
         private service: TaxonomyService,
-        private _formBuilder: FormBuilder,
+        private _formBuilder: UntypedFormBuilder,
         public dialogRef: MatDialogRef<FormContainerComponent>,
         public _snackBar: MatSnackBar,
         @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -147,7 +147,7 @@ export class VocabulariesComponent implements OnInit, OnDestroy {
         }
     };
 
-    public vocabCtrl = new FormControl();
+    public vocabCtrl = new UntypedFormControl();
     public filteredVocabularies: Observable<Vocabulary[]>;
 
     @Output()

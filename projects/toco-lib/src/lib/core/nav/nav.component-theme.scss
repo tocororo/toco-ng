@@ -1,5 +1,5 @@
+@use '@angular/material' as mat;
 
-@import '~@angular/material/theming';
 
 
 
@@ -15,15 +15,15 @@
             .nav-menu-items{
                 button{
                     &:hover{
-                        background-color: mat-color($accent) !important;
+                        background-color: mat.get-color-from-palette($accent) !important;
                     }
                     &.active{
-                        background-color: mat-color($accent) !important;
+                        background-color: mat.get-color-from-palette($accent) !important;
                     }
                 }
             }
             .nav-heder{
-                background: mat-color($primary);
+                background: mat.get-color-from-palette($primary);
                 padding: 1em;
             }
         }

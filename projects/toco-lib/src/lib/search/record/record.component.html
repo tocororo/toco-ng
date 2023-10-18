@@ -8,9 +8,9 @@
         {{record.description}}
     </mat-card-content>
     <mat-card-actions>
-        <mat-chip-list>
-            <mat-chip *ngFor="let keyword of record.keywords">{{keyword}}</mat-chip>
-        </mat-chip-list>
+        <mat-chip-listbox>
+            <mat-chip-option *ngFor="let keyword of record.keywords">{{keyword}}</mat-chip-option>
+        </mat-chip-listbox>
     </mat-card-actions>
 </mat-card>
 <mat-divider>

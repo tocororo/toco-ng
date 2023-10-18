@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { UntypedFormControl, Validators, ValidationErrors } from '@angular/forms';
 
 import { ExtraValidators } from '../../../core/utils/validator';
 
@@ -32,9 +32,9 @@ export class InputRnpsComponent extends InputControl implements OnInit
      * It is used to initialized the `InputRnpsComponent`'s `content.formControl` value by default. 
      * In this case, the `validatorArguments` argument is always `undefined`. 
      */
-    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): FormControl
+    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): UntypedFormControl
     {
-        return new FormControl('', [
+        return new UntypedFormControl('', [
             ExtraValidators.equalLength(RnpsValue.codeLength),
             Validators.pattern('^[0-9]*$')
         ]);

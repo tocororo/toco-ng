@@ -47,12 +47,6 @@ import { SourceIndexesComponent, SourceEditAddIndexComponent } from './source-ed
         SourceOrganizationSelectTopDialog,
         SourceIndexesComponent
     ],
-    entryComponents: [
-        SourceEditAddIndexComponent,
-        DialogCatalogJournalInfoDialog,
-        SourceOrganizationSelectDialog,
-        SourceOrganizationSelectTopDialog
-    ],
     imports: [
         SharedModule,
         CoreModule,
@@ -60,7 +54,6 @@ import { SourceIndexesComponent, SourceEditAddIndexComponent } from './source-ed
         TocoFormsModule,
         OrganizationsModule
     ],
-
     exports: [
         JournalViewComponent,
         JournalEditComponent,
@@ -68,14 +61,13 @@ import { SourceIndexesComponent, SourceEditAddIndexComponent } from './source-ed
         CatalogComponent,
         SourcesListComponent
     ],
-
     providers: [
         SourceService,
         TaxonomyService,
         {
             provide: STEPPER_GLOBAL_OPTIONS,
             useValue: { displayDefaultIndicatorType: false }
-          }
+        }
     ]
 })
 export class SourcesModule

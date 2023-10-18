@@ -35,5 +35,8 @@
       "email": "alejandro97.acm@gmail.com"
     }
   ],
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
   "license": "MIT"
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SourceService, CatalogService, TaxonomyService } from '../../../backend/public-api';
 import { MetadataService } from '../../../core/public-api';
 import { IdentifierSchemas } from '../../../entities/common';
@@ -38,19 +38,19 @@ export class JournalEditComponent implements OnInit {
 
   // journal identifiers variables for step 0
   identifiersPanel: PanelContent = null;
-  identifiersFormGroup: FormGroup;
+  identifiersFormGroup: UntypedFormGroup;
 
   // journal information variables for step 1
   informationPanel: PanelContent = null;
-  informationFormGroup: FormGroup;
-  informationSocialFormGroup: FormGroup;
+  informationFormGroup: UntypedFormGroup;
+  informationSocialFormGroup: UntypedFormGroup;
 
   journalCover: SourceClasification;
 
-  organizationFormGroup: FormGroup;
+  organizationFormGroup: UntypedFormGroup;
 
   // indexes: SourceClasification[] = [];
-  indexesFormGroup: FormGroup;
+  indexesFormGroup: UntypedFormGroup;
 
   // institutions: SourceClasification[] = [];
   // entityFormGroup: FormGroup;
@@ -58,7 +58,7 @@ export class JournalEditComponent implements OnInit {
   // indexes (databases), variables for step 3
 
   finalPanel: PanelContent = null;
-  finalFormGroup: FormGroup;
+  finalFormGroup: UntypedFormGroup;
 
   // actions, if needed
   stepAction1: FormContainerAction;
@@ -79,7 +79,7 @@ export class JournalEditComponent implements OnInit {
     private catalogService: CatalogService,
     private taxonomyService: TaxonomyService,
     public snackBar: MatSnackBar,
-    private formBuilder: FormBuilder
+    private formBuilder: UntypedFormBuilder
   ) {}
 
   ngOnInit() {
@@ -206,8 +206,8 @@ export class JournalEditComponent implements OnInit {
   initStep1(): void {
     this.informationFormGroup = this.formBuilder.group({
       // 'description': descriptionControl,
-      start_year: new FormControl(""),
-      end_year: new FormControl(""),
+      start_year: new UntypedFormControl(""),
+      end_year: new UntypedFormControl(""),
     });
 
     this.informationSocialFormGroup = this.formBuilder.group({});
@@ -567,7 +567,7 @@ export class JournalEditComponent implements OnInit {
 
   initStep2() {
     this.organizationFormGroup = this.formBuilder.group({
-      institutions: new FormControl(""),
+      institutions: new UntypedFormControl(""),
     });
   }
 

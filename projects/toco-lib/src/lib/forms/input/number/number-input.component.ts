@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { UntypedFormControl, Validators, ValidationErrors } from '@angular/forms';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 import { ValidatorArguments } from '../../form-field.control';
@@ -38,9 +38,9 @@ export class InputNumberComponent extends InputControl implements OnInit
      * method in this way: 
      * InputNumberComponent.getFormControlByDefault({ 'min': 0, 'max': 50 });
      */
-    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): FormControl
+    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): UntypedFormControl
     {
-        return new FormControl(0, [
+        return new UntypedFormControl(0, [
             Validators.pattern('^-?[0-9]+$'),
             Validators.min(((validatorArguments) && (validatorArguments.min != undefined)) ? validatorArguments.min : Number.MIN_SAFE_INTEGER),
             Validators.max(((validatorArguments) && (validatorArguments.max != undefined)) ? validatorArguments.max : Number.MAX_SAFE_INTEGER),

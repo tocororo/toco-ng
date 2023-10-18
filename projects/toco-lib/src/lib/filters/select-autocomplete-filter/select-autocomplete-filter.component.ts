@@ -1,6 +1,6 @@
 
 import { Component, OnInit, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
@@ -21,7 +21,7 @@ export class SelectAutocompleteFilterComponent implements OnInit, FilterComponen
     multiple = false;
     selectValue:string
     selectOptions: ValueInformation[] = [];
-    myControl = new FormControl();
+    myControl = new UntypedFormControl();
     filteredOptions: Observable<ValueInformation[]>;
     chipsList: ValueInformation[] = [];
     inputId: string;

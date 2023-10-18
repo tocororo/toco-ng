@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { UntypedFormControl, Validators, ValidationErrors } from '@angular/forms';
 
 import { InputControl } from '../input.control';
 import { ValidatorArguments } from '../../form-field.control';
@@ -27,9 +27,9 @@ export class InputEmailComponent extends InputControl implements OnInit
      * It is used to initialized the `InputEmailComponent`'s `content.formControl` value by default. 
      * In this case, the `validatorArguments` argument is always `undefined`. 
      */
-    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): FormControl
+    public static getFormControlByDefault(validatorArguments: ValidatorArguments = undefined): UntypedFormControl
     {
-        return new FormControl('', [
+        return new UntypedFormControl('', [
             Validators.email
         ]);
     }

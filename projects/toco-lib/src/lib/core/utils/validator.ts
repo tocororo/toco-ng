@@ -1,6 +1,6 @@
 
 import { Directive, OnChanges, Input, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormControl, ValidatorFn, ValidationErrors, Validator, NG_VALIDATORS, FormGroup, FormArray } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, ValidatorFn, ValidationErrors, Validator, NG_VALIDATORS, UntypedFormGroup, UntypedFormArray } from '@angular/forms';
 
 /**
  * Represents a class that contains a boolean property named `required`. 
@@ -82,7 +82,7 @@ export class ExtraValidators
      */
     public static minLength(minLength: number): ValidatorFn
     {
-        const res = (control: FormArray): ValidationErrors | null => {
+        const res = (control: UntypedFormArray): ValidationErrors | null => {
             const len: number = control.controls.length;
 
             return (len < minLength) 
@@ -121,7 +121,7 @@ export class ExtraValidators
      * @returns A validator function that returns an error map with the `requiredAndNotEmpty` 
      * if the validation check fails, otherwise `null`. 
      */
-    public static requiredAndNotEmpty(requiredProperty: RequiredProperty, childControls: FormControl[]): ValidatorFn
+    public static requiredAndNotEmpty(requiredProperty: RequiredProperty, childControls: UntypedFormControl[]): ValidatorFn
     {
         const res = (control: AbstractControl): ValidationErrors | null => {
             let i: number = 0;
@@ -240,7 +240,7 @@ export class ExtraValidators
      * @returns A validator function that returns an error map with the `issnConfirmCheckDigitTwoField` 
      * if the validation check fails, otherwise `null`. 
      */
-    public static issnConfirmCheckDigitTwoField(firstGroup: FormControl, secondGroup: FormControl, groupLength: number): ValidatorFn
+    public static issnConfirmCheckDigitTwoField(firstGroup: UntypedFormControl, secondGroup: UntypedFormControl, groupLength: number): ValidatorFn
     {
         const res = (control: AbstractControl): ValidationErrors | null => {
             if ((firstGroup.value.length == groupLength) && (secondGroup.value.length == groupLength))
@@ -268,7 +268,7 @@ export class ExtraValidators
         return res;
     }
 
-    public static issnValidator(internalFormGroup: FormGroup): ValidatorFn
+    public static issnValidator(internalFormGroup: UntypedFormGroup): ValidatorFn
     {
         const res = (control: AbstractControl): ValidationErrors | null => {
             return (!internalFormGroup.valid) 

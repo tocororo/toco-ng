@@ -10,17 +10,17 @@
 
     <mat-card-content>
 
-        <mat-chip-list class="mat-chip-list-stacked" fxLayout="row" fxLayoutAlign="start center">
+        <mat-chip-listbox class="mat-chip-listbox-stacked" fxLayout="row" fxLayoutAlign="start center">
 
             <ng-container *ngFor="let termSource of terms">
 
-                <mat-chip>
+                <mat-chip-option>
                     {{ termSource.description }}
-                </mat-chip>
+                </mat-chip-option>
 
             </ng-container>
 
-        </mat-chip-list>
+        </mat-chip-listbox>
     </mat-card-content>
 
 </mat-card>

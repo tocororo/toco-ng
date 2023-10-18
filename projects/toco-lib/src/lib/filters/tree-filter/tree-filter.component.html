@@ -68,16 +68,16 @@
     <mat-icon>close</mat-icon>
   </button>
 
-  <mat-chip-list
+  <mat-chip-listbox
     fxLayout="row"
     fxLayoutAlign="start center"
     style="margin-bottom: .5em"
     id="chiplist"
   >
-    <mat-chip
+    <mat-chip-option
       *ngFor="let item of chipsList; let i = index"
       (click)="removeChip(i)"
-      >{{ item.name }}</mat-chip
+      >{{ item.name }}</mat-chip-option
     >
-  </mat-chip-list>
+  </mat-chip-listbox>
 </div>

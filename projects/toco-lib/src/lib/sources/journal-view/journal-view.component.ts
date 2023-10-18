@@ -4,7 +4,8 @@
  */
 
 import { Component, OnInit, Input } from '@angular/core';
-import { MatSnackBar, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MetadataService, MessageHandler, StatusCode, Environment } from '../../core/public-api';
 import { Organization, VocabulariesInmutableNames, JournalVersion } from '../../entities/public-api';
 

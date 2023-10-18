@@ -1,6 +1,6 @@
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 /**
  * Represents a component used to search a query. 
@@ -58,7 +58,7 @@ export class QueryInputComponent implements OnInit {
   @Output()
   queryChange = new EventEmitter<string>();
 
-  queryCtrl = new FormControl();
+  queryCtrl = new UntypedFormControl();
 
   constructor() { }
 

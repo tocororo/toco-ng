@@ -1,4 +1,4 @@
-import { EntityBase, Entity, Identifier } from './common';
+import { Entity, EntityBase } from './common';
 
 
 export const OrganizationRelationships = {
@@ -35,13 +35,13 @@ export class LabelDiffLang extends EntityBase
       * Institute name in a language variant.
     */
     idtype: string = '';
- 
+
     /**
       * ISO-639-1 language code.
     */
     value: string = '';
  }
- 
+
 
 /**
  * Entity for `Relationship` based on schema `organization-v1.0.0.json`.
@@ -49,11 +49,6 @@ export class LabelDiffLang extends EntityBase
  */
 export class Relationship extends Entity
 {
-  /**
-   * Organization Identifiers, different from GRID mapping.
-   */
-  identifiers: Array<Identifier> = new Array<Identifier>();
-
   /**
    * Relationship type.
    */
@@ -252,22 +247,13 @@ export class RedirectProperties extends EntityBase {
  * Entity for `Redirect` based on schema `organization-v1.0.0.json`.
  * An address associated with the institute.
  */
-export class Redirect extends EntityBase
+export class Redirect
 {
-  /**
-   * Type of redirect.
-   */
-  type: string = '';
 
-  /**
-   * Show additional properties for redirect if true.
-   */
-  additionalProperties: boolean = false;
+  idtype: string = "";
 
-  /**
-   * Properties for redirect.
-   */
-  properties: RedirectProperties = undefined;
+  value: string  = "";
+
 }
 
 /**
@@ -275,11 +261,6 @@ export class Redirect extends EntityBase
  */
 export class Organization extends Entity
 {
-  /**
-   * Organization Identifiers, different from GRID mapping.
-   */
-  identifiers: Array <Identifier> = new Array <Identifier>();
-
   /**
    * The name typically used to refer to the institute.
    */

@@ -1,7 +1,7 @@
 
 import { Component, Inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export enum HandlerComponent {
 	snackBar = 'snackBar',

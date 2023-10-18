@@ -5,7 +5,7 @@
 
 
 import { Component, OnInit } from '@angular/core';
-import { FormControl, AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
+import { UntypedFormControl, AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
@@ -28,7 +28,7 @@ export class TermParentComponent extends InputControl implements OnInit {
     // internalControl = new FormControl();
 
 
-    formControl = new FormControl();
+    formControl = new UntypedFormControl();
     inputId: string;
     filteredOptions: Observable<Term[]>;
     selectOptions: Term[] = [];

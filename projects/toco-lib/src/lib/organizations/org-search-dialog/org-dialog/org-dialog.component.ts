@@ -6,13 +6,14 @@ import {
   Inject,
   ViewChild,
 } from "@angular/core";
-import { MatDrawer, MatDialogRef, PageEvent } from "@angular/material";
+import { PageEvent } from "@angular/material/paginator";
+import { MatDialogRef, MAT_DIALOG_DATA as MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatDrawer } from "@angular/material/sidenav";
 import { NavigationExtras, Params } from "@angular/router";
 import { SearchResponse } from "../../../entities/common";
 import { Organization } from "../../../entities/organization.entity";
 import { AggregationsSelection } from "../../../search/public-api";
 import { OrganizationServiceNoAuth } from "../../../backend/organization.service";
-import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 interface DialogData {
   title: string;

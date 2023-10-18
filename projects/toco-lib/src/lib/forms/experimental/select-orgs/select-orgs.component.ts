@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
+import { UntypedFormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 
 import { InputControl } from '../../input/input.control';
 import { OrganizationServiceNoAuth } from '../../../backend/organization.service';
@@ -34,7 +34,7 @@ implements OnInit {
    * Input `orgCtrl` is a FormControl
    */
    @Input()
-   orgCtrl = new FormControl();
+   orgCtrl = new UntypedFormControl();
 
    filteredOrg = new  HitList<Organization>();
 

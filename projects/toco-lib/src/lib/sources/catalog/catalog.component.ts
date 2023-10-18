@@ -19,7 +19,8 @@ import { Environment } from '../../core/env';
 
 import { CatalogService } from '../../backend/public-api';
 import { CatalogFiltersComponent } from '../catalog-filters/catalog-filters.component';
-import { MatSnackBar, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { JournalViewInfoComponent } from '../../sources/journal-view/journal-view-info.component';
 import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 

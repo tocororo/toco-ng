@@ -1,7 +1,7 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { Organization, Identifier } from '../../entities/public-api';
 import { TextInputAppearance, OperationAction, FormSection, PanelContent, 
@@ -41,7 +41,7 @@ export class OrgEditComponent implements OnInit
 	public constructor(private _router: Router, private _activatedRoute: ActivatedRoute)
 	{
 		this.operationAction = OperationAction;
-		this.panelFormSection = new FormGroup({ }, [ ]);
+		this.panelFormSection = new UntypedFormGroup({ }, [ ]);
 	}
 
 	public ngOnInit(): void

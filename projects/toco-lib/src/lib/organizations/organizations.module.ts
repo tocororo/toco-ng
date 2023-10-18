@@ -13,7 +13,8 @@ import { OrgViewRelationshipComponent } from "./org-view/org-view-relationship/o
 import { OrgEditComponent } from "./org-edit/org-edit.component";
 import { OrgAddComponent } from "./org-add/org-add.component";
 import { OrgSearchComponent } from "./org-search/org-search.component";
-import { MatAutocompleteModule, MatChipsModule } from "@angular/material";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatChipsModule } from "@angular/material/chips";
 import { OrgTableEditComponent } from "./org-table-edit/org-table-edit.component";
 // import { OrgFooterComponent } from './org-footer/org-footer.component';
 import { RouterModule } from "@angular/router";
@@ -27,48 +28,44 @@ import { OrgSearchDialogComponent } from "./org-search-dialog/org-search-dialog.
 import { SearchModule } from "../search/search.module";
 
 @NgModule({
-  entryComponents: [OrgDialogComponent],
-  declarations: [
-    OrgViewComponent,
-    OrgViewAccordionComponent,
-    OrgViewAddressComponent,
-    OrgViewGeoNamesCityComponent,
-    OrgViewRelationshipComponent,
-    OrgEditComponent,
-    OrgAddComponent,
-    OrgDialogComponent,
-    OrgSearchComponent,
-    OrgTableEditComponent,
-    // OrgFooterComponent,
-    OrgTreeViewerComponent,
-    OrgSearchDialogComponent,
-  ],
-
-  imports: [
-    FlexLayoutModule,
-    CommonModule,
-    FormsModule,
-    HttpClientModule,
-    AngularMaterialModule,
-
-    ReactiveFormsModule,
-    RouterModule,
-    TocoFormsModule,
-    MatAutocompleteModule,
-    MatChipsModule,
-    StaticsModule,
-    SearchModule,
-  ],
-
-  exports: [
-    OrgViewComponent,
-    OrgEditComponent,
-    OrgAddComponent,
-    OrgSearchComponent,
-    OrgSearchDialogComponent,
-    // OrgFooterComponent,
-    OrgTreeViewerComponent,
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    declarations: [
+        OrgViewComponent,
+        OrgViewAccordionComponent,
+        OrgViewAddressComponent,
+        OrgViewGeoNamesCityComponent,
+        OrgViewRelationshipComponent,
+        OrgEditComponent,
+        OrgAddComponent,
+        OrgDialogComponent,
+        OrgSearchComponent,
+        OrgTableEditComponent,
+        // OrgFooterComponent,
+        OrgTreeViewerComponent,
+        OrgSearchDialogComponent,
+    ],
+    imports: [
+        FlexLayoutModule,
+        CommonModule,
+        FormsModule,
+        HttpClientModule,
+        AngularMaterialModule,
+        ReactiveFormsModule,
+        RouterModule,
+        TocoFormsModule,
+        MatAutocompleteModule,
+        MatChipsModule,
+        StaticsModule,
+        SearchModule,
+    ],
+    exports: [
+        OrgViewComponent,
+        OrgEditComponent,
+        OrgAddComponent,
+        OrgSearchComponent,
+        OrgSearchDialogComponent,
+        // OrgFooterComponent,
+        OrgTreeViewerComponent,
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class OrganizationsModule {}

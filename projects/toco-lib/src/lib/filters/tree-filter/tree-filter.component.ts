@@ -11,10 +11,10 @@ import { FiltersService } from '../filters.service';
 import { FilterContainerService } from '../filter-container.service';
 import { TermNode, Term } from '../../entities/public-api';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
+import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
 import { of, Observable } from 'rxjs';
 import { SelectionModel, CollectionViewer } from '@angular/cdk/collections';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 
 export interface FlatTreeNodeFilter {
@@ -49,7 +49,7 @@ export class TreeFilterComponent implements OnInit, FilterComponent {
   dataSource: MatTreeFlatDataSource<TermNode, FlatTreeNodeFilter>;
   checklistSelection = new SelectionModel<FlatTreeNodeFilter>(true /* multiple */);
 
-  myControl = new FormControl();
+  myControl = new UntypedFormControl();
 
   inputId: string;
 
