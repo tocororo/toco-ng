@@ -19,6 +19,7 @@ import { OrgViewComponent } from "./org-view/org-view.component";
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { MatDialogModule } from "@angular/material/dialog";
 import { RouterModule } from "@angular/router";
 import { SearchModule } from "../search/search.module";
 import { OrgDialogComponent } from "./org-search-dialog/org-dialog/org-dialog.component";
@@ -51,6 +52,7 @@ import { OrgTreeViewerComponent } from "./org-tree-viewer/org-tree-viewer.compon
         TocoFormsModule,
         MatAutocompleteModule,
         MatChipsModule,
+        MatDialogModule,
         StaticsModule,
         SearchModule,
     ],
