@@ -1,12 +1,12 @@
 
 import { Component, OnInit } from '@angular/core';
-import { isBoolean, isNullOrUndefined } from 'util';
+import { isBoolean, isNullOrUndefined } from 'is-what';
 
-import { InputControl } from '../input.control';
 import { HintPosition, HintValue } from '../../form-field.control';
+import { InputControl } from '../input.control';
 
 /**
- * Represents a control that allows to select true or false value. 
+ * Represents a control that allows to select true or false value.
  */
 @Component({
 	selector: 'input-bool',
@@ -33,11 +33,11 @@ export class InputBoolComponent extends InputControl implements OnInit
 	}
 
     /**
-     * Initializes the `content` input property. 
-     * @param label The default label to use. It is used if the `content.label` is not specified. 
-	 * @param placeholder The default placeholder to use. It is used if the `content.placeholder` is not specified. 
-     * @param isAbbreviation If it is true then the `label` argument represents an abbreviation; otherwise, false. 
-     * @param alwaysHint If it is true then there is always at leat one hint start-aligned. 
+     * Initializes the `content` input property.
+     * @param label The default label to use. It is used if the `content.label` is not specified.
+	 * @param placeholder The default placeholder to use. It is used if the `content.placeholder` is not specified.
+     * @param isAbbreviation If it is true then the `label` argument represents an abbreviation; otherwise, false.
+     * @param alwaysHint If it is true then there is always at leat one hint start-aligned.
      */
 	 protected init(label: string, placeholder: string = '', isAbbreviation: boolean, alwaysHint: boolean): void
 	 {

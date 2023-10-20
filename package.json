@@ -1,6 +1,7 @@
 {
   "name": "toco-ng",
   "version": "0.0.8",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -32,11 +33,11 @@
     "@swimlane/ngx-charts": "^20.4.1",
     "angular-oauth2-oidc": "^15.0.1",
     "angular-oauth2-oidc-jwks": "^15.0.1",
+    "is-what": "^4.1.15",
     "moment": "^2.22.2",
     "ngx-translate": "^0.0.1-security",
     "rxjs": "~6.6.7",
     "tslib": "^2.0.0",
-    "util": "^0.12.5",
     "zone.js": "~0.13.3"
   },
   "devDependencies": {

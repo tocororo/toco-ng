@@ -1,104 +1,104 @@
 
 import { HttpEventType } from '@angular/common/http';
-import { isArray, isRegExp, isDate, isError, isObject } from 'util';
+import { isArray, isDate, isError, isObject, isRegExp } from 'is-what';
 
 /**
- * A file with constants and functions that are helpers. 
+ * A file with constants and functions that are helpers.
  */
 
 
 /**
- * Corresponds to `Number.MAX_SAFE_INTEGER`. Moved out into a variable here due to 
- * flaky browser support and the value not being defined in Closure's typings. 
+ * Corresponds to `Number.MAX_SAFE_INTEGER`. Moved out into a variable here due to
+ * flaky browser support and the value not being defined in Closure's typings.
  */
 export const MAX_SAFE_INTEGER: number = 9007199254740991;
 
 /**
- * The markdown file extension. 
+ * The markdown file extension.
  */
 export const MARKDOWN_FILE_EXTENSION: string = '.md';
 
 /**
- * A collection of key/value elements, where the keys are strings. 
+ * A collection of key/value elements, where the keys are strings.
  */
 export type Params<T> = {
     [key: string]: T;
 };
 
 /**
- * An enum that describes an action through a text. 
+ * An enum that describes an action through a text.
  */
 export enum ActionText
 {
     /**
-     * Viewing action. 
+     * Viewing action.
      */
     view = 'view',
 
     /**
-     * Adding action. 
+     * Adding action.
      */
     add = 'add',
 
     /**
-     * Editing action. 
+     * Editing action.
      */
     edit = 'edit',
 
     /**
-     * New action. 
+     * New action.
      */
      new = 'new',
 
     /**
-     * Clone action. 
+     * Clone action.
      */
      clone = 'clone',
 }
 
 /**
- * An object of paths that is used to get the child controls in a `FormGroup`/`FormArray` control. 
- * The value of its properties is a dot-delimited string value or an array of string/number values 
- * that define the path to a child control. 
+ * An object of paths that is used to get the child controls in a `FormGroup`/`FormArray` control.
+ * The value of its properties is a dot-delimited string value or an array of string/number values
+ * that define the path to a child control.
  */
 export type ChildControlsPath = {
     [key: string]: Array<string | number> | string;
 };
 
 /**
- * An enum that represents the language texts. 
+ * An enum that represents the language texts.
  */
 export enum LanguageTexts
 {
     /**
-     * The Spanish language. 
+     * The Spanish language.
      */
     Español = 'Español',
 
     /**
-     * The English language. 
+     * The English language.
      */
     English = 'English',
 }
 
 /**
- * An enum that represents the language text abbreviations. 
+ * An enum that represents the language text abbreviations.
  */
 export enum LanguageAbbrs
 {
     /**
-     * The Spanish language abbreviation. 
+     * The Spanish language abbreviation.
      */
     es = 'es',
 
     /**
-     * The English language abbreviation. 
+     * The English language abbreviation.
      */
     en = 'en',
 }
 
 /**
- * The list of language texts. 
+ * The list of language texts.
  */
 export const LANGUAGE_TEXTS_LIST: LanguageTexts[] = [LanguageTexts.Español, LanguageTexts.English];
 
@@ -108,14 +108,14 @@ export const LANGUAGE_TEXTS_LIST: LanguageTexts[] = [LanguageTexts.Español, Lan
 export const LANGUAGE_ABBRS_LIST: LanguageAbbrs[] = [LanguageAbbrs.es, LanguageAbbrs.en];
 
 /**
- * Converts the language representation from string to number. 
- * If the string specified is not registered as a language, then returns -1 number value. 
- * The Spanish language is: 0 as number, and 'es' as string. 
- * The English language is: 1 as number, and 'en' as string. 
- * In other words, it follows the order of `LANGUAGE_TEXTS_LIST` and `LANGUAGE_ABBRS_LIST` enums. 
- * @param lang The language text abbreviation to be used. 
- * @returns Returns the language as a number based on its representation as string. 
- * If the string specified is not registered as a language, then returns -1 number value. 
+ * Converts the language representation from string to number.
+ * If the string specified is not registered as a language, then returns -1 number value.
+ * The Spanish language is: 0 as number, and 'es' as string.
+ * The English language is: 1 as number, and 'en' as string.
+ * In other words, it follows the order of `LANGUAGE_TEXTS_LIST` and `LANGUAGE_ABBRS_LIST` enums.
+ * @param lang The language text abbreviation to be used.
+ * @returns Returns the language as a number based on its representation as string.
+ * If the string specified is not registered as a language, then returns -1 number value.
  */
 export function convertLangFromStringToNumber(lang: string | LanguageAbbrs): number
 {
@@ -136,14 +136,14 @@ export function convertLangFromStringToNumber(lang: string | LanguageAbbrs): num
 }
 
 /**
- * Converts the language representation from number to string. 
- * If the number specified is not registered as a language, then returns empty string value. 
- * The Spanish language is: 0 as number, and 'es' as string. 
- * The English language is: 1 as number, and 'en' as string. 
- * In other words, it follows the order of `LANGUAGE_TEXTS_LIST` and `LANGUAGE_ABBRS_LIST` enums. 
- * @param index The language representation as number. 
- * @returns Returns the language as a string based on its representation as number. 
- * If the number specified is not registered as a language, then returns empty string value. 
+ * Converts the language representation from number to string.
+ * If the number specified is not registered as a language, then returns empty string value.
+ * The Spanish language is: 0 as number, and 'es' as string.
+ * The English language is: 1 as number, and 'en' as string.
+ * In other words, it follows the order of `LANGUAGE_TEXTS_LIST` and `LANGUAGE_ABBRS_LIST` enums.
+ * @param index The language representation as number.
+ * @returns Returns the language as a string based on its representation as number.
+ * If the number specified is not registered as a language, then returns empty string value.
  */
 export function convertLangFromNumberToString(index: number): string
 {
@@ -164,11 +164,11 @@ export function convertLangFromNumberToString(index: number): string
 }
 
 /**
- * Returns a string that is the result of concatenating the specified `path` argument, 
- * the language extension, and the markdown file extension. 
- * @param path The path to markdown file without the language extension and the markdown file extension. 
- * @param lang The language text abbreviation to be used. 
- * @returns Returns the correct path to the markdown file. 
+ * Returns a string that is the result of concatenating the specified `path` argument,
+ * the language extension, and the markdown file extension.
+ * @param path The path to markdown file without the language extension and the markdown file extension.
+ * @param lang The language text abbreviation to be used.
+ * @returns Returns the correct path to the markdown file.
  */
 export function getPathWithLangExtension(path: string, lang: string | LanguageAbbrs): string
 {
@@ -176,11 +176,11 @@ export function getPathWithLangExtension(path: string, lang: string | LanguageAb
 }
 
 /**
- * Returns true if the specified `possDescendant` is descendant from the specified `ancestorName`; 
- * otherwise, false. 
- * @param possDescendant Possible descendant. 
- * @param ancestorName Ancestor name. 
- * Example in usage: 
+ * Returns true if the specified `possDescendant` is descendant from the specified `ancestorName`;
+ * otherwise, false.
+ * @param possDescendant Possible descendant.
+ * @param ancestorName Ancestor name.
+ * Example in usage:
  *  if (isDescendant(target.controlType.__proto__, InputControl.name)) { ... }
  */
 export function isDescendant(possDescendant: any, ancestorName: string): boolean
@@ -195,12 +195,12 @@ export function isDescendant(possDescendant: any, ancestorName: string): boolean
 }
 
 /**
- * Returns a new value that represents the clone of the specified `target` value. 
- * Implementation notes: 
- *  - If `target` is `undefined`, then returns `undefined`. 
- *  - If `target` is an object, then returns a cloned object with all its properties cloned. 
- *  - If `target` is an array, then returns a cloned array with all its values cloned. 
- * @param target The target value to clone. 
+ * Returns a new value that represents the clone of the specified `target` value.
+ * Implementation notes:
+ *  - If `target` is `undefined`, then returns `undefined`.
+ *  - If `target` is an object, then returns a cloned object with all its properties cloned.
+ *  - If `target` is an array, then returns a cloned array with all its values cloned.
+ * @param target The target value to clone.
  */
 export function cloneValue(target: any): any
 {
@@ -268,13 +268,13 @@ function _cloneValue(target: any, container: any): any
 }
 
 /**
- * Returns a new value that represents the clone of the specified `target` value, and 
- * sets all its properties/values of built-in type to `undefined`. 
- * Implementation notes: 
- *  - If `target` is `undefined`, then returns `undefined`. 
- *  - If `target` is an object, then returns an object with all its properties of built-in type to `undefined`. 
- *  - If `target` is an array, then returns an array with all its values of built-in type to `undefined`. 
- * @param target The target value to clone. 
+ * Returns a new value that represents the clone of the specified `target` value, and
+ * sets all its properties/values of built-in type to `undefined`.
+ * Implementation notes:
+ *  - If `target` is `undefined`, then returns `undefined`.
+ *  - If `target` is an object, then returns an object with all its properties of built-in type to `undefined`.
+ *  - If `target` is an array, then returns an array with all its values of built-in type to `undefined`.
+ * @param target The target value to clone.
  */
 export function cloneValueToUndefined(target: any): any
 {
@@ -342,10 +342,10 @@ function _cloneValueToUndefined(target: any, container: any): any
 }
 
 /**
- * Logs an error notification message to the console. 
- * @param operation The operation during the error occurs. 
- * @param place The place where the error occurs. 
- * @param err The error that occurs. 
+ * Logs an error notification message to the console.
+ * @param operation The operation during the error occurs.
+ * @param place The place where the error occurs.
+ * @param err The error that occurs.
  */
 export function logError(operation: string, place: string, err: any): void
 {
@@ -353,9 +353,9 @@ export function logError(operation: string, place: string, err: any): void
 }
 
 /**
- * Logs a complete notification message to the console. 
- * @param operation The operation during the complete occurs. 
- * @param place The place where the complete occurs. 
+ * Logs a complete notification message to the console.
+ * @param operation The operation during the complete occurs.
+ * @param place The place where the complete occurs.
  */
 export function logComplete(operation: string, place: string): void
 {
@@ -363,8 +363,8 @@ export function logComplete(operation: string, place: string): void
 }
 
 /**
- * Returns a string representation of `HttpEventType` specified. 
- * @param httpEventType Type enumeration for the different kinds of `HttpEvent`. 
+ * Returns a string representation of `HttpEventType` specified.
+ * @param httpEventType Type enumeration for the different kinds of `HttpEvent`.
  */
 export function getHttpEventTypeToString(httpEventType: HttpEventType): string
 {

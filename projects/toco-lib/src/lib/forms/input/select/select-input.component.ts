@@ -1,12 +1,12 @@
 
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { isArray } from 'util';
+import { isArray } from 'is-what';
+import { Observable, Subscription } from 'rxjs';
 
-import { InputControl, InputContent } from '../input.control';
 import { HintPosition, HintValue } from '../../form-field.control';
+import { InputContent, InputControl } from '../input.control';
 
 /**
  * An interface that represents a selectable option.

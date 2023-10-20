@@ -1,9 +1,9 @@
-import { isArray } from 'util';
-import { Component, OnInit, Output, EventEmitter, Input, Type } from '@angular/core';
-import { Organization, SearchResponse, HitList, Aggr } from '../../entities/public-api';
-import { UntypedFormControl } from '@angular/forms';
-import { SearchService, OrganizationServiceNoAuth } from '../../backend/public-api';
 import { HttpParams } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { UntypedFormControl } from '@angular/forms';
+import { isArray } from 'is-what';
+import { OrganizationServiceNoAuth } from '../../backend/public-api';
+import { HitList, Organization } from '../../entities/public-api';
 
 @Component({
   selector: 'toco-org-search',

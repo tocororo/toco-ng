@@ -5,9 +5,9 @@
 
 import { Component, OnInit } from "@angular/core";
 import { AbstractControl, UntypedFormControl, ValidationErrors } from "@angular/forms";
+import { isArray } from "is-what";
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
-import { isArray } from "util";
 import { InputControl } from '../../input/input.control';
 import { SelectOption } from "../../input/select/select-input.component";
 

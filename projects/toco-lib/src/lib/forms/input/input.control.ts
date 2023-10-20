@@ -4,13 +4,18 @@
  */
 
 
-import { Input, ViewChild, Directive } from '@angular/core';
-import { Validators, ValidationErrors, UntypedFormControl } from '@angular/forms';
+import { Directive, Input, ViewChild } from '@angular/core';
+import { UntypedFormControl, ValidationErrors, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined } from 'is-what';
 
-import { ContentPosition, IconValue, HintPosition, HintValue,
-    FormFieldContent, FormFieldControl, ValidatorArguments } from '../form-field.control';
+import {
+  ContentPosition,
+  FormFieldContent, FormFieldControl,
+  HintPosition, HintValue,
+  IconValue,
+  ValidatorArguments
+} from '../form-field.control';
 
 /**
  * An enum that represents the appearance style of an `InputControl`.

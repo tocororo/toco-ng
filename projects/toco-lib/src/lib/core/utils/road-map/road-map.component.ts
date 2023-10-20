@@ -1,63 +1,63 @@
 
-import { Component, OnInit, Input } from '@angular/core';
-import { isObject } from 'util';
+import { Component, Input, OnInit } from '@angular/core';
+import { isObject } from 'is-what';
 
 const seriesName_English: string[] = ['achieved', 'unresolved'];
 const seriesName_Spanish: string[] = ['realizado', 'pendiente'];
 
 /**
- * An interface that represents the content of a feature object. 
+ * An interface that represents the content of a feature object.
  */
 export interface Feature
 {
 	/**
-	 * The feature's name. 
+	 * The feature's name.
 	 */
 	name: string;
 
 	/**
-	 * The feature's achieved percentage. 
+	 * The feature's achieved percentage.
 	 */
 	achieved: number;
 }
 
 /**
- * An interface that represents the content of a product object. 
- * Its achieved percentage value is calculated from its `features` array field. 
+ * An interface that represents the content of a product object.
+ * Its achieved percentage value is calculated from its `features` array field.
  */
 export interface Product
 {
 	/**
-	 * The product's name. 
+	 * The product's name.
 	 */
 	name: string;
 
 	/**
-	 * The product's features array. 
+	 * The product's features array.
 	 */
 	features: Feature[];
 }
 
 /**
- * An interface that represents the content of a result object. 
+ * An interface that represents the content of a result object.
  */
 export interface Result
 {
 	/**
-	 * The result's name. 
+	 * The result's name.
 	 */
 	name: string;
 
 	/**
-	 * The result's value. 
+	 * The result's value.
 	 */
 	value: number;
 }
 
 /**
- * An interface that represents the content of a chart bar object. 
- * Its `series` field is an array of length 2 that contains 
- * the achieved/unresolved results; for example, 
+ * An interface that represents the content of a chart bar object.
+ * Its `series` field is an array of length 2 that contains
+ * the achieved/unresolved results; for example,
 	`'series': [
   		{
   			'name': 'achieved',
@@ -67,23 +67,23 @@ export interface Result
  			'name': 'unresolved',
  			'value': 80
  		}
- 	]` 
+ 	]`
  */
 export interface ChartBar
 {
 	/**
-	 * The chart's bar name. 
+	 * The chart's bar name.
 	 */
 	name: string;
 
 	/**
-	 * The results array that makes up the chart's bar. 
+	 * The results array that makes up the chart's bar.
 	 */
 	series: Result[];
 }
 
 /**
- * An interface that represents the content of an entry element object. 
+ * An interface that represents the content of an entry element object.
  */
 export interface EntryElement
 {
@@ -94,10 +94,10 @@ export interface EntryElement
 }
 
 /**
- * Component for displaying a roadmap. It basically displays the products 
- * that we are currently working, and the products that we will work in the future. 
- * Besides, when a product is selected, its features are displayed. 
- * It always shows the achieved/unresolved work in percentage. 
+ * Component for displaying a roadmap. It basically displays the products
+ * that we are currently working, and the products that we will work in the future.
+ * Besides, when a product is selected, its features are displayed.
+ * It always shows the achieved/unresolved work in percentage.
  */
 @Component({
 	selector: 'toco-road-map',
@@ -107,321 +107,321 @@ export interface EntryElement
 export class RoadMapComponent implements OnInit
 {
 	/**
-	 * Returns the -1 value that is used to remove a chart. 
+	 * Returns the -1 value that is used to remove a chart.
 	 */
 	public readonly removeChart_PosFlag = -1;
 
 	/**************************************************************************
 	 **************************************************************************
-	 * Options for displaying the products list. 
+	 * Options for displaying the products list.
 	 **************************************************************************
 	 *************************************************************************/
 
 	/**
-	 * Input field that contains the text that is displayed when there is not any product. 
-	 * By default, its value is `'¡No hay ningún producto!'`. 
+	 * Input field that contains the text that is displayed when there is not any product.
+	 * By default, its value is `'¡No hay ningún producto!'`.
 	 */
 	@Input()
 	public withoutProductText: string;
 
 	/**
-	 * Returns the chart's visualization direction. 
-	 * It is true if the chart is visualized vertically; otherwise, false (horizontally). 
-	 * By default, its value is `true`. 
+	 * Returns the chart's visualization direction.
+	 * It is true if the chart is visualized vertically; otherwise, false (horizontally).
+	 * By default, its value is `true`.
 	 */
 	private _isChartVertical: boolean;
 
 	/**
-	 * Input field that contains the tab's label of current works. 
-	 * By default, its value is `'Trabajos Actuales'`. 
+	 * Input field that contains the tab's label of current works.
+	 * By default, its value is `'Trabajos Actuales'`.
 	 */
 	@Input()
 	public tabLabel_CW: string;
 	/**
-	 * Input field that contains the tab's label of future works. 
-	 * By default, its value is `'Trabajos Futuros o Pendientes'`. 
+	 * Input field that contains the tab's label of future works.
+	 * By default, its value is `'Trabajos Futuros o Pendientes'`.
 	 */
 	@Input()
 	public tabLabel_FW: string;
 
 	/**
-	 * Returns the selected tab position. Its value is set internally. 
+	 * Returns the selected tab position. Its value is set internally.
 	 */
 	private _selectedTabPos: number;
 
 	/**
-	 * Returns the grid height. 
-	 * Its value is set depending on the `legendPosition` value. 
+	 * Returns the grid height.
+	 * Its value is set depending on the `legendPosition` value.
 	 */
 	private _gridHeight: number;
 
 	/**
-	 * Input field that contains the chart's title of products. 
-	 * By default, its value is `'Lista de productos'`. 
+	 * Input field that contains the chart's title of products.
+	 * By default, its value is `'Lista de productos'`.
 	 */
 	@Input()
 	public chartTitle_P: string;
 
 	/**
-	 * Returns true if it is using a trick to obligate repainting the chart; otherwise, false. 
+	 * Returns true if it is using a trick to obligate repainting the chart; otherwise, false.
 	 */
 	private _isUsingTrick_RepaintChart: boolean;
 	/**
-	 * Returns the working products array introduced by the user. 
-	 * It references the `_currentProducts` or `_futureProducts` array. 
-	 * By default, its value is `[]`. 
+	 * Returns the working products array introduced by the user.
+	 * It references the `_currentProducts` or `_futureProducts` array.
+	 * By default, its value is `[]`.
 	 */
 	private _products: Product[];
 	/**
-	 * Returns the current products array introduced by the user. 
-	 * From this array is created the `_currentProducts_Internal` and `_currentFeatures_Internal` arrays. 
-	 * By default, its value is `[]`. 
+	 * Returns the current products array introduced by the user.
+	 * From this array is created the `_currentProducts_Internal` and `_currentFeatures_Internal` arrays.
+	 * By default, its value is `[]`.
 	 */
 	private _currentProducts: Product[];
 	/**
-	 * Returns the future products array introduced by the user. 
-	 * From this array is created the `_futureProducts_Internal` and `_futureFeatures_Internal` arrays. 
-	 * By default, its value is `[]`. 
+	 * Returns the future products array introduced by the user.
+	 * From this array is created the `_futureProducts_Internal` and `_futureFeatures_Internal` arrays.
+	 * By default, its value is `[]`.
 	 */
 	private _futureProducts: Product[];
 
 	/**
-	 * Returns the working products array displayed in the chart. 
-	 * It references the `_currentProducts_Internal` or `_futureProducts_Internal` array. 
-	 * It is created from the `_products` array. 
-	 * By default, its value is `[]`. 
+	 * Returns the working products array displayed in the chart.
+	 * It references the `_currentProducts_Internal` or `_futureProducts_Internal` array.
+	 * It is created from the `_products` array.
+	 * By default, its value is `[]`.
 	 */
 	private _products_Internal: ChartBar[];
 	/**
-	 * Returns the current products array displayed in the chart. 
-	 * It is created from the `_currentProducts` array. 
-	 * By default, its value is `[]`. 
+	 * Returns the current products array displayed in the chart.
+	 * It is created from the `_currentProducts` array.
+	 * By default, its value is `[]`.
 	 */
 	private _currentProducts_Internal: ChartBar[];
 	/**
-	 * Returns the future products array displayed in the chart. 
-	 * It is created from the `_futureProducts` array. 
-	 * By default, its value is `[]`. 
+	 * Returns the future products array displayed in the chart.
+	 * It is created from the `_futureProducts` array.
+	 * By default, its value is `[]`.
 	 */
 	private _futureProducts_Internal: ChartBar[];
 
 	/**
-	 * Returns the array that contains all working features arrays that can be displayed in the chart. 
-	 * This array contains the same length than `_products_Internal` array because 
-	 * each position contains the working features array for a product. 
-	 * It references the `_currentFeaturesTotal_Internal` or `_futureFeaturesTotal_Internal` array. 
-	 * It is created from the `_products` array. 
-	 * This array is for internal use only. 
-	 * By default, its value is `[]`. 
+	 * Returns the array that contains all working features arrays that can be displayed in the chart.
+	 * This array contains the same length than `_products_Internal` array because
+	 * each position contains the working features array for a product.
+	 * It references the `_currentFeaturesTotal_Internal` or `_futureFeaturesTotal_Internal` array.
+	 * It is created from the `_products` array.
+	 * This array is for internal use only.
+	 * By default, its value is `[]`.
 	 */
 	private _featuresTotal_Internal: ChartBar[][];
 	/**
-	 * Returns the array that contains all current features arrays that can be displayed in the chart. 
-	 * This array contains the same length than `_currentProducts_Internal` array because 
-	 * each position contains the current features array for a product. 
-	 * It is created from the `_currentProducts` array. 
-	 * This array is for internal use only. 
-	 * By default, its value is `[]`. 
+	 * Returns the array that contains all current features arrays that can be displayed in the chart.
+	 * This array contains the same length than `_currentProducts_Internal` array because
+	 * each position contains the current features array for a product.
+	 * It is created from the `_currentProducts` array.
+	 * This array is for internal use only.
+	 * By default, its value is `[]`.
 	 */
 	private _currentFeaturesTotal_Internal: ChartBar[][];
 	/**
-	 * Returns the array that contains all future features arrays that can be displayed in the chart. 
-	 * This array contains the same length than `_futureProducts_Internal` array because 
-	 * each position contains the future features array for a product. 
-	 * It is created from the `_futureProducts` array. 
-	 * This array is for internal use only. 
-	 * By default, its value is `[]`. 
+	 * Returns the array that contains all future features arrays that can be displayed in the chart.
+	 * This array contains the same length than `_futureProducts_Internal` array because
+	 * each position contains the future features array for a product.
+	 * It is created from the `_futureProducts` array.
+	 * This array is for internal use only.
+	 * By default, its value is `[]`.
 	 */
 	private _futureFeaturesTotal_Internal: ChartBar[][];
 
 	/**
-	 * Returns the working features array of a selected product displayed in the chart. 
-	 * It references an element in the `_featuresTotal_Internal` array. This element 
-	 * represents the features of a selected product in the `_products_Internal` array. 
-	 * It references the `_currentFeatures_Internal` or `_futureFeatures_Internal` array. 
-	 * By default, its value is `[]`. 
+	 * Returns the working features array of a selected product displayed in the chart.
+	 * It references an element in the `_featuresTotal_Internal` array. This element
+	 * represents the features of a selected product in the `_products_Internal` array.
+	 * It references the `_currentFeatures_Internal` or `_futureFeatures_Internal` array.
+	 * By default, its value is `[]`.
 	 */
 	private _features_Internal: ChartBar[];
 	/**
-	 * Returns the current features array of a selected product displayed in the chart. 
-	 * It references an element in the `_currentFeaturesTotal_Internal` array. This element 
-	 * represents the features of a selected product in the `_currentProducts_Internal` array. 
-	 * By default, its value is `[]`. 
+	 * Returns the current features array of a selected product displayed in the chart.
+	 * It references an element in the `_currentFeaturesTotal_Internal` array. This element
+	 * represents the features of a selected product in the `_currentProducts_Internal` array.
+	 * By default, its value is `[]`.
 	 */
 	private _currentFeatures_Internal: ChartBar[];
 	/**
-	 * Returns the future features array of a selected product displayed in the chart. 
-	 * It references an element in the `_futureFeaturesTotal_Internal` array. This element 
-	 * represents the features of a selected product in the `_futureProducts_Internal` array. 
-	 * By default, its value is `[]`. 
+	 * Returns the future features array of a selected product displayed in the chart.
+	 * It references an element in the `_futureFeaturesTotal_Internal` array. This element
+	 * represents the features of a selected product in the `_futureProducts_Internal` array.
+	 * By default, its value is `[]`.
 	 */
 	private _futureFeatures_Internal: ChartBar[];
 
 	/**
-	 * Returns the current product elements array to highlight displayed in the chart. 
-	 * It is modified dynamically. 
-	 * By default, its value is `[]`. 
+	 * Returns the current product elements array to highlight displayed in the chart.
+	 * It is modified dynamically.
+	 * By default, its value is `[]`.
 	 */
 	private _activeEntries_P_CW: EntryElement[];
 	/**
-	 * Returns the future product elements array to highlight displayed in the chart. 
-	 * It is modified dynamically. 
-	 * By default, its value is `[]`. 
+	 * Returns the future product elements array to highlight displayed in the chart.
+	 * It is modified dynamically.
+	 * By default, its value is `[]`.
 	 */
 	private _activeEntries_P_FW: EntryElement[];
 
 	/**
-	 * Input field that contains the chart's dimensions [width, height]. 
-	 * By default, its value is `[900, 350]`. 
+	 * Input field that contains the chart's dimensions [width, height].
+	 * By default, its value is `[900, 350]`.
 	 */
 	@Input()
 	public view: number[];
 
 	/**
-	 * Input field that contains the chart's color scheme of current works. 
-	 * By default, its value is the following object: 
+	 * Input field that contains the chart's color scheme of current works.
+	 * By default, its value is the following object:
 		`{
-	 		domain: [ 
-				'#6EE9B5',  // light green 
+	 		domain: [
+				'#6EE9B5',  // light green
 				'#E96E70'   // red
-			] 
-		}` 
+			]
+		}`
 	 */
 	@Input()
 	public colorScheme_CW: any;
 	/**
-	 * Input field that contains the chart's color scheme of future works. 
-	 * By default, its value is the following object: 
+	 * Input field that contains the chart's color scheme of future works.
+	 * By default, its value is the following object:
 		`{
-	 		domain: [ 
+	 		domain: [
 				'#6F6EE9',  // blue
 				'#6EBBE9'   // light blue
-			] 
-		}` 
+			]
+		}`
 	 */
 	@Input()
 	public colorScheme_FW: any;
 
 	/**
-	 * Input field that indicates to fill chart's elements with a gradient or a solid color. 
-	 * It is true if the chart's elements are filled with a gradient color; otherwise, false (filled with a solid color). 
-	 * By default, its value is `false`. 
+	 * Input field that indicates to fill chart's elements with a gradient or a solid color.
+	 * It is true if the chart's elements are filled with a gradient color; otherwise, false (filled with a solid color).
+	 * By default, its value is `false`.
 	 */
 	@Input()
 	public gradient: boolean;
 
 	/**
-	 * Input field that contains the chart's padding between bars in px. 
-	 * By default, its value is `12`. 
+	 * Input field that contains the chart's padding between bars in px.
+	 * By default, its value is `12`.
 	 */
 	@Input()
 	public barPadding: number;
 
 	/**
-	 * Shows the chart's x axis. 
+	 * Shows the chart's x axis.
 	 */
 	public readonly showXAxis: boolean;
 	/**
-	 * Shows the chart's x axis label. 
+	 * Shows the chart's x axis label.
 	 */
 	public readonly showXAxisLabel: boolean;
 	/**
-	 * Input field that contains the chart's x axis label text of products. 
-	 * By default, its value is `'Producto'`. 
+	 * Input field that contains the chart's x axis label text of products.
+	 * By default, its value is `'Producto'`.
 	 */
 	@Input()
 	public xAxisLabel_P: string;
 
 	/**
-	 * Input field that contains the chart's max length of the ticks (ticks over this length will be trimmed). 
-	 * By default, its value is `16`. 
+	 * Input field that contains the chart's max length of the ticks (ticks over this length will be trimmed).
+	 * By default, its value is `16`.
 	 */
 	@Input()
 	public maxAxisTickLength: number;
 
 	/**
-	 * Shows the chart's y axis. 
+	 * Shows the chart's y axis.
 	 */
 	public readonly showYAxis: boolean;
 	/**
-	 * Shows the chart's y axis label. 
+	 * Shows the chart's y axis label.
 	 */
 	public readonly showYAxisLabel: boolean;
 	/**
-	 * Input field that contains the chart's y axis label text of products. 
-	 * By default, its value is `'Realizado / Pendiente En Por Ciento'`. 
+	 * Input field that contains the chart's y axis label text of products.
+	 * By default, its value is `'Realizado / Pendiente En Por Ciento'`.
 	 */
 	@Input()
 	public yAxisLabel_P: string;
 
 	/**
-	 * Shows the chart's legend. 
+	 * Shows the chart's legend.
 	 */
 	public readonly showLegend: boolean;
 	/**
-	 * Input field that contains the chart's legend title. 
-	 * By default, its value is `'Leyenda'`. 
+	 * Input field that contains the chart's legend title.
+	 * By default, its value is `'Leyenda'`.
 	 */
 	@Input()
 	public legendTitle: string;
 	/**
-	 * Input field that contains the chart's legend position. Its value is `'right'` or `'below'`. 
-	 * By default, its value is `'right'`. 
+	 * Input field that contains the chart's legend position. Its value is `'right'` or `'below'`.
+	 * By default, its value is `'right'`.
 	 */
 	private _legendPosition: string;
 
 	/**************************************************************************
 	 **************************************************************************
-	 * Options for displaying the features list of a selected product. 
+	 * Options for displaying the features list of a selected product.
 	 **************************************************************************
 	 *************************************************************************/
 
 	/**
-	 * Returns the working product position. Contains the `removeChart_PosFlag` value when 
-	 * there is not any selected working product position. 
-	 * It has the `_selectedProductPos_CW` or `_selectedProductPos_FW` value. 
+	 * Returns the working product position. Contains the `removeChart_PosFlag` value when
+	 * there is not any selected working product position.
+	 * It has the `_selectedProductPos_CW` or `_selectedProductPos_FW` value.
 	 */
 	private _selectedProductPos: number;
 	/**
-	 * Returns the selected current product position. Contains the `removeChart_PosFlag` value when 
-	 * there is not any selected current product position. 
+	 * Returns the selected current product position. Contains the `removeChart_PosFlag` value when
+	 * there is not any selected current product position.
 	 */
 	private _selectedProductPos_CW: number;
 	/**
-	 * Returns the selected future product position. Contains the `removeChart_PosFlag` value when 
-	 * there is not any selected future product position. 
+	 * Returns the selected future product position. Contains the `removeChart_PosFlag` value when
+	 * there is not any selected future product position.
 	 */
 	private _selectedProductPos_FW: number;
 
 	/**
-	 * Returns the chart's title of features. 
-	 * This field is updated a little different. 
-	 * By default, its value is `'Lista de características del producto seleccionado'`. 
+	 * Returns the chart's title of features.
+	 * This field is updated a little different.
+	 * By default, its value is `'Lista de características del producto seleccionado'`.
 	 */
 	private _chartTitle_F: string;
 	/**
-	 * Returns the chart's title of working current features. 
-	 * This field is updated a little different. 
-	 * By default, its value is `'Lista de características del producto seleccionado'`. 
+	 * Returns the chart's title of working current features.
+	 * This field is updated a little different.
+	 * By default, its value is `'Lista de características del producto seleccionado'`.
 	 */
 	private _chartTitle_F_CW: string;
 	/**
-	 * Returns the chart's title of working future features. 
-	 * This field is updated a little different. 
-	 * By default, its value is `'Lista de características del producto seleccionado'`. 
+	 * Returns the chart's title of working future features.
+	 * This field is updated a little different.
+	 * By default, its value is `'Lista de características del producto seleccionado'`.
 	 */
 	private _chartTitle_F_FW: string;
 
 	/**
-	 * Input field that contains the chart's x axis label text of features. 
-	 * By default, its value is `'Característica'`. 
+	 * Input field that contains the chart's x axis label text of features.
+	 * By default, its value is `'Característica'`.
 	 */
 	@Input()
 	public xAxisLabel_F: string;
 
 	/**
-	 * Input field that contains the chart's y axis label text of features. 
-	 * By default, its value is `'Realizado / Pendiente En Por Ciento'`. 
+	 * Input field that contains the chart's y axis label text of features.
+	 * By default, its value is `'Realizado / Pendiente En Por Ciento'`.
 	 */
 	@Input()
 	public yAxisLabel_F: string;
@@ -460,7 +460,7 @@ export class RoadMapComponent implements OnInit
 				'#E96E70',  // red
 				// '#6F6EE9',  // blue
 				// '#6EBBE9',  // light blue
-	
+
 				// '#A9A9A9',
 				// '#85E96E',
 				// '#E3E96E',
@@ -507,7 +507,7 @@ export class RoadMapComponent implements OnInit
 		this.barPadding = 12;
 
 		this.showXAxis = true;
-		this.showXAxisLabel = true;	
+		this.showXAxisLabel = true;
 		this.xAxisLabel_P = 'Producto';
 		this.maxAxisTickLength = 16;
 
@@ -531,10 +531,10 @@ export class RoadMapComponent implements OnInit
 	{ }
 
 	/**
-	 * Returns the input field that contains the chart's visualization direction. 
-	 * It is true if the chart is visualized vertically; otherwise, false (horizontally). 
-	 * When this value is set, the `xAxisLabel_P`/`yAxisLabel_P` and `xAxisLabel_F`/`yAxisLabel_F` values are set accordingly. 
-	 * By default, its value is `true`. 
+	 * Returns the input field that contains the chart's visualization direction.
+	 * It is true if the chart is visualized vertically; otherwise, false (horizontally).
+	 * When this value is set, the `xAxisLabel_P`/`yAxisLabel_P` and `xAxisLabel_F`/`yAxisLabel_F` values are set accordingly.
+	 * By default, its value is `true`.
 	 */
 	@Input()
 	public get isChartVertical(): boolean
@@ -543,11 +543,11 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Sets the input field that contains the chart's visualization direction. 
-	 * It is true if the chart is visualized vertically; otherwise, false (horizontally). 
-	 * When this value is set, the `xAxisLabel_P`/`yAxisLabel_P` and `xAxisLabel_F`/`yAxisLabel_F` values are set accordingly. 
-	 * By default, its value is `true`. 
-	 * @param value The new chart's visualization direction to set. 
+	 * Sets the input field that contains the chart's visualization direction.
+	 * It is true if the chart is visualized vertically; otherwise, false (horizontally).
+	 * When this value is set, the `xAxisLabel_P`/`yAxisLabel_P` and `xAxisLabel_F`/`yAxisLabel_F` values are set accordingly.
+	 * By default, its value is `true`.
+	 * @param value The new chart's visualization direction to set.
 	 */
 	public set isChartVertical(value: boolean)
 	{
@@ -566,8 +566,8 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Returns the grid height. 
-	 * Its value is set depending on the `legendPosition` value. 
+	 * Returns the grid height.
+	 * Its value is set depending on the `legendPosition` value.
 	 */
 	public get gridHeight(): number
 	{
@@ -575,9 +575,9 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Returns the input field that contains the current products array introduced by the user. 
-	 * From this array is created the `currentProducts_Internal` and `currentFeatures_Internal` arrays. 
-	 * By default, its value is `[]`. 
+	 * Returns the input field that contains the current products array introduced by the user.
+	 * From this array is created the `currentProducts_Internal` and `currentFeatures_Internal` arrays.
+	 * By default, its value is `[]`.
 	 */
 	@Input()
 	public get currentProducts(): Product[]
@@ -586,9 +586,9 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Sets the input field that contains the current products array. 
-	 * By default, its value is `[]`. 
-	 * @param value The new current products array to set. 
+	 * Sets the input field that contains the current products array.
+	 * By default, its value is `[]`.
+	 * @param value The new current products array to set.
 	 */
 	public set currentProducts(value: Product[])
 	{
@@ -608,10 +608,10 @@ export class RoadMapComponent implements OnInit
 			this._currentProducts_Internal = [ ];
 			this._currentFeaturesTotal_Internal = [ ];
 
-			/* Creates the internal arrays that are going to be passed in the template; 
-			`_currentProducts_Internal` and `_currentFeaturesTotal_Internal` arrays. 
-			The `_currentFeatures_Internal` array references an element in 
-			the `_currentFeaturesTotal_Internal` array. This element represents the features 
+			/* Creates the internal arrays that are going to be passed in the template;
+			`_currentProducts_Internal` and `_currentFeaturesTotal_Internal` arrays.
+			The `_currentFeatures_Internal` array references an element in
+			the `_currentFeaturesTotal_Internal` array. This element represents the features
 			of a selected product in the `_currentProducts_Internal` array. */
 			this._createsInternalArrays(this._currentProducts, this._currentProducts_Internal, this._currentFeaturesTotal_Internal);
 		}
@@ -627,8 +627,8 @@ export class RoadMapComponent implements OnInit
 				/* The `_selectedProductPos_CW` value is already correct. */
 				this._currentFeatures_Internal = this._currentFeaturesTotal_Internal[this._selectedProductPos_CW];
 				this._set_activeEntries_P_CW(false);
-				this._chartTitle_F_CW = this._chartTitle_F 
-					+ ((this._chartTitle_F.length == 0) ? '' : ' ') 
+				this._chartTitle_F_CW = this._chartTitle_F
+					+ ((this._chartTitle_F.length == 0) ? '' : ' ')
 					+ `“${ this._currentProducts_Internal[this._selectedProductPos_CW].name }”`;
 			}
 			else
@@ -650,9 +650,9 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Returns the current products array displayed in the chart. 
-	 * It is created from the `currentProducts` array. 
-	 * By default, its value is `[]`. 
+	 * Returns the current products array displayed in the chart.
+	 * It is created from the `currentProducts` array.
+	 * By default, its value is `[]`.
 	 */
 	public get currentProducts_Internal(): ChartBar[]
 	{
@@ -660,9 +660,9 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Returns the current features array of a selected product displayed in the chart. 
-	 * It is created from the `currentProducts` array. 
-	 * By default, its value is `[]`. 
+	 * Returns the current features array of a selected product displayed in the chart.
+	 * It is created from the `currentProducts` array.
+	 * By default, its value is `[]`.
 	 */
 	public get currentFeatures_Internal(): ChartBar[]
 	{
@@ -670,9 +670,9 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Returns the input field that contains the future products array introduced by the user. 
-	 * From this array is created the `futureProducts_Internal` and `futureFeatures_Internal` arrays. 
-	 * By default, its value is `[]`. 
+	 * Returns the input field that contains the future products array introduced by the user.
+	 * From this array is created the `futureProducts_Internal` and `futureFeatures_Internal` arrays.
+	 * By default, its value is `[]`.
 	 */
 	@Input()
 	public get futureProducts(): Product[]
@@ -681,9 +681,9 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Sets the input field that contains the future products array. 
-	 * By default, its value is `[]`. 
-	 * @param value The new future products array to set. 
+	 * Sets the input field that contains the future products array.
+	 * By default, its value is `[]`.
+	 * @param value The new future products array to set.
 	 */
 	public set futureProducts(value: Product[])
 	{
@@ -703,10 +703,10 @@ export class RoadMapComponent implements OnInit
 			this._futureProducts_Internal = [ ];
 			this._futureFeaturesTotal_Internal = [ ];
 
-			/* Creates the internal arrays that are going to be passed in the template; 
-			`_futureProducts_Internal` and `_futureFeaturesTotal_Internal` arrays. 
-			The `_futureFeatures_Internal` array references an element in 
-			the `_futureFeaturesTotal_Internal` array. This element represents the features 
+			/* Creates the internal arrays that are going to be passed in the template;
+			`_futureProducts_Internal` and `_futureFeaturesTotal_Internal` arrays.
+			The `_futureFeatures_Internal` array references an element in
+			the `_futureFeaturesTotal_Internal` array. This element represents the features
 			of a selected product in the `_futureProducts_Internal` array. */
 			this._createsInternalArrays(this._futureProducts, this._futureProducts_Internal, this._futureFeaturesTotal_Internal);
 		}
@@ -722,8 +722,8 @@ export class RoadMapComponent implements OnInit
 				/* The `_selectedProductPos_FW` value is already correct. */
 				this._futureFeatures_Internal = this._futureFeaturesTotal_Internal[this._selectedProductPos_FW];
 				this._set_activeEntries_P_FW(false);
-				this._chartTitle_F_FW = this._chartTitle_F 
-					+ ((this._chartTitle_F.length == 0) ? '' : ' ') 
+				this._chartTitle_F_FW = this._chartTitle_F
+					+ ((this._chartTitle_F.length == 0) ? '' : ' ')
 					+ `“${ this._futureProducts_Internal[this._selectedProductPos_FW].name }”`;
 			}
 			else
@@ -745,9 +745,9 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Returns the future products array displayed in the chart. 
-	 * It is created from the `futureProducts` array. 
-	 * By default, its value is `[]`. 
+	 * Returns the future products array displayed in the chart.
+	 * It is created from the `futureProducts` array.
+	 * By default, its value is `[]`.
 	 */
 	public get futureProducts_Internal(): ChartBar[]
 	{
@@ -755,9 +755,9 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Returns the future features array of a selected product displayed in the chart. 
-	 * It is created from the `futureProducts` array. 
-	 * By default, its value is `[]`. 
+	 * Returns the future features array of a selected product displayed in the chart.
+	 * It is created from the `futureProducts` array.
+	 * By default, its value is `[]`.
 	 */
 	public get futureFeatures_Internal(): ChartBar[]
 	{
@@ -765,9 +765,9 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Returns the current product elements array to highlight displayed in the chart. 
-	 * It is modified dynamically. 
-	 * By default, its value is `[]`. 
+	 * Returns the current product elements array to highlight displayed in the chart.
+	 * It is modified dynamically.
+	 * By default, its value is `[]`.
 	 */
 	public get activeEntries_P_CW(): EntryElement[]
 	{
@@ -775,8 +775,8 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Sets the current product elements array to highlight displayed in the chart. 
-	 * @param setEmpty If it is true, then sets the `_activeEntries_P_CW` array to empty. 
+	 * Sets the current product elements array to highlight displayed in the chart.
+	 * @param setEmpty If it is true, then sets the `_activeEntries_P_CW` array to empty.
 	 */
 	private _set_activeEntries_P_CW(setEmpty: boolean): void
 	{
@@ -808,9 +808,9 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Returns the future product elements array to highlight displayed in the chart. 
-	 * It is modified dynamically. 
-	 * By default, its value is `[]`. 
+	 * Returns the future product elements array to highlight displayed in the chart.
+	 * It is modified dynamically.
+	 * By default, its value is `[]`.
 	 */
 	public get activeEntries_P_FW(): EntryElement[]
 	{
@@ -818,8 +818,8 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Sets the future product elements array to highlight displayed in the chart. 
-	 * @param setEmpty If it is true, then sets the `_activeEntries_P_FW` array to empty. 
+	 * Sets the future product elements array to highlight displayed in the chart.
+	 * @param setEmpty If it is true, then sets the `_activeEntries_P_FW` array to empty.
 	 */
 	private _set_activeEntries_P_FW(setEmpty: boolean): void
 	{
@@ -851,8 +851,8 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Returns the input field that contains the chart's legend position. Its value is `'right'` or `'below'`. 
-	 * By default, its value is `'right'`. 
+	 * Returns the input field that contains the chart's legend position. Its value is `'right'` or `'below'`.
+	 * By default, its value is `'right'`.
 	 */
 	@Input()
 	public get legendPosition(): string
@@ -861,9 +861,9 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Sets the input field that contains the chart's legend position. Its value is `'right'` or `'below'`. 
-	 * By default, its value is `'right'`. 
-	 * @param value The new chart's legend position to set. 
+	 * Sets the input field that contains the chart's legend position. Its value is `'right'` or `'below'`.
+	 * By default, its value is `'right'`.
+	 * @param value The new chart's legend position to set.
 	 */
 	public set legendPosition(value: string)
 	{
@@ -880,9 +880,9 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Returns a boolean value that indicates the legend position. 
-	 * It is true if the legend position is `'right'`; otherwise, false (`'below'`). 
-	 * By default, its value is `true`. 
+	 * Returns a boolean value that indicates the legend position.
+	 * It is true if the legend position is `'right'`; otherwise, false (`'below'`).
+	 * By default, its value is `true`.
 	 */
 	public get isLegendRight(): boolean
 	{
@@ -890,10 +890,10 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Sets a boolean value that indicates the legend position. 
-	 * It is true if the legend position is `'right'`; otherwise, false (`'below'`). 
-	 * By default, its value is `true`. 
-	 * @param value The new boolean value to set. 
+	 * Sets a boolean value that indicates the legend position.
+	 * It is true if the legend position is `'right'`; otherwise, false (`'below'`).
+	 * By default, its value is `true`.
+	 * @param value The new boolean value to set.
 	 */
 	public set isLegendRight(value: boolean)
 	{
@@ -901,8 +901,8 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Returns the selected current product position. Contains the `removeChart_PosFlag` value when 
-	 * there is not any selected current product position. 
+	 * Returns the selected current product position. Contains the `removeChart_PosFlag` value when
+	 * there is not any selected current product position.
 	 */
 	public get selectedProductPos_CW(): number
 	{
@@ -910,8 +910,8 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Returns the selected future product position. Contains the `removeChart_PosFlag` value when 
-	 * there is not any selected future product position. 
+	 * Returns the selected future product position. Contains the `removeChart_PosFlag` value when
+	 * there is not any selected future product position.
 	 */
 	public get selectedProductPos_FW(): number
 	{
@@ -919,8 +919,8 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Returns the input field that contains the chart's title of features. 
-	 * By default, its value is `'Lista de características del producto seleccionado'`. 
+	 * Returns the input field that contains the chart's title of features.
+	 * By default, its value is `'Lista de características del producto seleccionado'`.
 	 */
 	@Input()
 	public get chartTitle_F(): string
@@ -929,9 +929,9 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Sets the input field that contains the chart's title of features. 
-	 * By default, its value is `'Lista de características del producto seleccionado'`. 
-	 * @param value The new chart's title of features to set. 
+	 * Sets the input field that contains the chart's title of features.
+	 * By default, its value is `'Lista de características del producto seleccionado'`.
+	 * @param value The new chart's title of features to set.
 	 */
 	public set chartTitle_F(value: string)
 	{
@@ -939,22 +939,22 @@ export class RoadMapComponent implements OnInit
 
 		/* Updates all chart's titles of features. */
 
-		this._chartTitle_F_CW = (this._selectedProductPos_CW == this.removeChart_PosFlag) 
+		this._chartTitle_F_CW = (this._selectedProductPos_CW == this.removeChart_PosFlag)
 			? (this._chartTitle_F)
-			: (this._chartTitle_F 
-				+ ((this._chartTitle_F.length == 0) ? '' : ' ') 
+			: (this._chartTitle_F
+				+ ((this._chartTitle_F.length == 0) ? '' : ' ')
 				+ `“${ this._currentProducts_Internal[this._selectedProductPos_CW].name }”`);
 
-		this._chartTitle_F_FW = (this._selectedProductPos_FW == this.removeChart_PosFlag) 
+		this._chartTitle_F_FW = (this._selectedProductPos_FW == this.removeChart_PosFlag)
 			? (this._chartTitle_F)
-			: (this._chartTitle_F 
-				+ ((this._chartTitle_F.length == 0) ? '' : ' ') 
+			: (this._chartTitle_F
+				+ ((this._chartTitle_F.length == 0) ? '' : ' ')
 				+ `“${ this._futureProducts_Internal[this._selectedProductPos_FW].name }”`);
 	}
 
 	/**
-	 * Returns the chart's title of working current features. 
-	 * By default, its value is `'Lista de características del producto seleccionado'`. 
+	 * Returns the chart's title of working current features.
+	 * By default, its value is `'Lista de características del producto seleccionado'`.
 	 */
 	public get chartTitle_F_CW(): string
 	{
@@ -962,8 +962,8 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Returns the chart's title of working future features. 
-	 * By default, its value is `'Lista de características del producto seleccionado'`. 
+	 * Returns the chart's title of working future features.
+	 * By default, its value is `'Lista de características del producto seleccionado'`.
 	 */
 	public get chartTitle_F_FW(): string
 	{
@@ -1007,8 +1007,8 @@ export class RoadMapComponent implements OnInit
 				if (this._products_Internal[tempPos].name == posAsString) break;
 			}
 
-			/* Updates the `_selectedProductPos_CW`/`_selectedProductPos_FW`. If the new selected 
-			 * position equals the current selected position, then the chart for displaying 
+			/* Updates the `_selectedProductPos_CW`/`_selectedProductPos_FW`. If the new selected
+			 * position equals the current selected position, then the chart for displaying
 			 * the features list of the selected product will be removed. */
 			this._updateProductPos(tempPos);
 		}
@@ -1037,7 +1037,7 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Sets the data of current works. 
+	 * Sets the data of current works.
 	 */
 	private _setData_CW(): void
 	{
@@ -1050,7 +1050,7 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Sets the data of future works. 
+	 * Sets the data of future works.
 	 */
 	private _setData_FW(): void
 	{
@@ -1063,7 +1063,7 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Returns true if the features chart is showed; otherwise, false. 
+	 * Returns true if the features chart is showed; otherwise, false.
 	 */
 	private get _isFeaturesChartShowed(): boolean
 	{
@@ -1071,15 +1071,15 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Updates the `selectedProductPos`. If the new selected position equals the current 
-	 * selected position, then the chart for displaying the features list of the selected product 
-	 * will be removed. 
-	 * @param newSelectedPosition The new selected position. 
+	 * Updates the `selectedProductPos`. If the new selected position equals the current
+	 * selected position, then the chart for displaying the features list of the selected product
+	 * will be removed.
+	 * @param newSelectedPosition The new selected position.
 	 */
 	private _updateProductPos(newSelectedPosition: number): void
 	{
-		/* Updates the `selectedProductPos`. If the new selected position equals the current 
-		 * selected position, then the chart for displaying the features list of the selected product 
+		/* Updates the `selectedProductPos`. If the new selected position equals the current
+		 * selected position, then the chart for displaying the features list of the selected product
 		 * will be removed. */
 		if (newSelectedPosition == this._selectedProductPos)
 		{
@@ -1105,8 +1105,8 @@ export class RoadMapComponent implements OnInit
 				this._selectedProductPos = this._selectedProductPos_CW = newSelectedPosition;
 				this._features_Internal = this._currentFeatures_Internal = this._featuresTotal_Internal[newSelectedPosition];
 				this._set_activeEntries_P_CW(false);
-				this._chartTitle_F_CW = this._chartTitle_F 
-					+ ((this._chartTitle_F.length == 0) ? '' : ' ') 
+				this._chartTitle_F_CW = this._chartTitle_F
+					+ ((this._chartTitle_F.length == 0) ? '' : ' ')
 					+ `“${ this._products_Internal[newSelectedPosition].name }”`;
 			}
 			else
@@ -1114,26 +1114,26 @@ export class RoadMapComponent implements OnInit
 				this._selectedProductPos = this._selectedProductPos_FW = newSelectedPosition;
 				this._features_Internal = this._futureFeatures_Internal = this._featuresTotal_Internal[newSelectedPosition];
 				this._set_activeEntries_P_FW(false);
-				this._chartTitle_F_FW = this._chartTitle_F 
-					+ ((this._chartTitle_F.length == 0) ? '' : ' ') 
+				this._chartTitle_F_FW = this._chartTitle_F
+					+ ((this._chartTitle_F.length == 0) ? '' : ' ')
 					+ `“${ this._products_Internal[newSelectedPosition].name }”`;
 			}
 		}
 	}
 
 	/**
-	 * Creates the internal arrays that are going to be passed in the template 
-	 * for the current/future products/features accordingly. 
-	 * @param products The current/future products array introduced by the user. 
-	 * @param products_Internal The current/future products array displayed in the chart. 
-	 * @param featuresTotal_Internal The array that contains all current/future features arrays that can be displayed in the chart. 
+	 * Creates the internal arrays that are going to be passed in the template
+	 * for the current/future products/features accordingly.
+	 * @param products The current/future products array introduced by the user.
+	 * @param products_Internal The current/future products array displayed in the chart.
+	 * @param featuresTotal_Internal The array that contains all current/future features arrays that can be displayed in the chart.
 	 */
 	private _createsInternalArrays(products: Product[], products_Internal: ChartBar[], featuresTotal_Internal: ChartBar[][]): void
 	{
-		/* Creates the internal arrays that are going to be passed in the template; 
-		`_currentProducts_Internal`/`_futureProducts_Internal` and `_currentFeaturesTotal_Internal`/`_futureFeaturesTotal_Internal` arrays. 
-		The `_currentFeatures_Internal`/`_futureFeatures_Internal` array references an element in 
-		the `_currentFeaturesTotal_Internal`/`_futureFeaturesTotal_Internal` array. This element represents the features 
+		/* Creates the internal arrays that are going to be passed in the template;
+		`_currentProducts_Internal`/`_futureProducts_Internal` and `_currentFeaturesTotal_Internal`/`_futureFeaturesTotal_Internal` arrays.
+		The `_currentFeatures_Internal`/`_futureFeatures_Internal` array references an element in
+		the `_currentFeaturesTotal_Internal`/`_futureFeaturesTotal_Internal` array. This element represents the features
 		of a selected product in the `_currentProducts_Internal`/`_futureProducts_Internal` array. */
 
 		let i: number, j: number;
@@ -1165,11 +1165,11 @@ export class RoadMapComponent implements OnInit
 					'name': tempFeatures[j].name,
 					'series': [
 						{
-							'name': 'realizado',  // TODO: Use the `seriesName_English` and `seriesName_Spanish` constants depending on the language selected. 
+							'name': 'realizado',  // TODO: Use the `seriesName_English` and `seriesName_Spanish` constants depending on the language selected.
 							'value': tempAchieved
 						},
 						{
-							'name': 'pendiente',  // TODO: Use the `seriesName_English` and `seriesName_Spanish` constants depending on the language selected. 
+							'name': 'pendiente',  // TODO: Use the `seriesName_English` and `seriesName_Spanish` constants depending on the language selected.
 							'value': 100.00 - tempAchieved
 						}
 					]
@@ -1185,11 +1185,11 @@ export class RoadMapComponent implements OnInit
 				'name': products[i].name,
 				'series': [
 					{
-						'name': 'realizado',  // TODO: Use the `seriesName_English` and `seriesName_Spanish` constants depending on the language selected. 
+						'name': 'realizado',  // TODO: Use the `seriesName_English` and `seriesName_Spanish` constants depending on the language selected.
 						'value': achievedPercentage_P
 					},
 					{
-						'name': 'pendiente',  // TODO: Use the `seriesName_English` and `seriesName_Spanish` constants depending on the language selected. 
+						'name': 'pendiente',  // TODO: Use the `seriesName_English` and `seriesName_Spanish` constants depending on the language selected.
 						'value': 100.00 - achievedPercentage_P
 					}
 				]
@@ -1201,7 +1201,7 @@ export class RoadMapComponent implements OnInit
 	}
 
 	/**
-	 * Removes the chart for displaying the features list of the selected product. 
+	 * Removes the chart for displaying the features list of the selected product.
 	 */
 	public click_RemoveChart(): void
 	{
