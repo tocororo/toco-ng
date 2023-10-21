@@ -27,7 +27,7 @@
     "preserveWhitespaces": false,
     "buildOptimizer": true,
     "sourceMap": true,
-    "polyfills": "./polyfills.ts",
+    // "polyfills": "./polyfills.ts",
     "browserTarget": "app:build:production"
   },
   "include": [

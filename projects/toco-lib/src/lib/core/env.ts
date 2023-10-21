@@ -28,6 +28,19 @@ export abstract class Environment {
 
   abstract readonly matomoUrl : string;
   abstract readonly matomoSiteId : number;
+
+  abstract readonly sceiba  : string;
+  abstract readonly discover  : string;
+  abstract readonly catalog  : string;
+  abstract readonly revistasmes  : string;
+  abstract readonly organizations  : string;
+  abstract readonly persons  : string;
+  abstract readonly vocabularies  : string;
+  abstract readonly moodle  : string;
+  abstract readonly evaluations  : string;
+  abstract readonly oauthInfo : any;
+
+
 }
 
 // import { Injectable } from '@angular/core';
