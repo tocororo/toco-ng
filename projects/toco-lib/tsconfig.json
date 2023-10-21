@@ -28,7 +28,7 @@
     "buildOptimizer": true,
     "sourceMap": true,
     // "polyfills": "./polyfills.ts",
-    "browserTarget": "app:build:production"
+    "browserTarget": "app:build:production",
   },
   "include": [
     "src/**/*.ts",

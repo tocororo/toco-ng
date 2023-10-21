@@ -5,19 +5,18 @@
 
 import { Component, OnInit } from "@angular/core";
 import {
-  UntypedFormControl,
   AbstractControl,
-  ValidationErrors,
-  FormGroup
+  UntypedFormControl,
+  ValidationErrors
 } from "@angular/forms";
 import { Observable, PartialObserver } from "rxjs";
-import { startWith, map } from "rxjs/operators";
-import { TaxonomyService } from '../../../backend/public-api';
-import { VocabulariesInmutableNames, TermNode, Term } from '../../../entities/public-api';
+import { map, startWith } from "rxjs/operators";
+import { TaxonomyService } from '../../../backend/taxonomy.service';
+import { Term, TermNode, VocabulariesInmutableNames } from '../../../entities/taxonomy.entity';
 
 import { InputControl } from '../../input/input.control';
 
-import { Response } from '../../../core/public-api';
+import { Response } from '../../../core/services/http.service';
 
 interface VocabularyComponentExtraContent{
   multiple: boolean;
