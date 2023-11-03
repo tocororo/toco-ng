@@ -14,8 +14,6 @@ export * from './lib/organizations/public-api';
 export * from './lib/search/public-api';
 export * from './lib/sources/public-api';
 export * from './lib/statics/public-api';
-export * from './lib/toco-lib.component';
-export * from './lib/toco-lib.module';
-export * from './lib/toco-lib.service';
+
 
 

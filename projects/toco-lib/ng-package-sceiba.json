@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "/home/malayo/dev/sceiba-ng/node_modules/toco-lib",
+  "dest": "/home/malayo/dev/sceiba-app/sceiba-ui/node_modules/toco-lib",
   "lib": {
     "entryFile": "src/public-api.ts"
   }
