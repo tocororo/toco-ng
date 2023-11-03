@@ -1,7 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 
-import { ContentPosition, IconSource, IconValue } from 'projects/toco-lib/src/lib/forms/form-field.control';
+import { IconValue } from 'projects/toco-lib/src/lib/forms/form-field.control';
 import { InputContent, TextInputAppearance } from 'projects/toco-lib/src/lib/forms/input/input.control';
 import { InputUrlComponent } from 'projects/toco-lib/src/lib/forms/input/url/url-input.component';
 
@@ -61,7 +61,7 @@ export class TestInputUrlComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.standard,
+			'appearance': TextInputAppearance.fill,
 			'ariaLabel': 'url_00'
 		};
 	}
@@ -79,7 +79,7 @@ export class TestInputUrlComponent implements OnInit
 			'value': 'https://www.google.com/',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.standard,
+			'appearance': TextInputAppearance.fill,
 			'prefixIcon': new IconValue(),
 			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
 			'ariaLabel': 'url_01'
@@ -99,7 +99,7 @@ export class TestInputUrlComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.standard,
+			'appearance': TextInputAppearance.fill,
 			'ariaLabel': 'url_02'
 		};
 	}
@@ -117,7 +117,7 @@ export class TestInputUrlComponent implements OnInit
 			'value': 'https://www.google.com/',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.standard,
+			'appearance': TextInputAppearance.fill,
 			'prefixIcon': new IconValue(),
 			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
 			'ariaLabel': 'url_03'

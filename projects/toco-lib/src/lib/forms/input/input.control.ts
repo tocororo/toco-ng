@@ -25,7 +25,8 @@ export enum TextInputAppearance
     /**
      * The `standard` appearance is the default style. It shows the input box with an underline underneath it.
      */
-    standard = 'standard',
+    //deprecated in angular 15
+    // standard = 'standard',
 
     /**
      * The `fill` appearance displays the form field with a filled background box in addition to the underline.
@@ -56,7 +57,7 @@ export interface InputContent extends FormFieldContent
 
     /**
      * Returns the control's appearance.
-     * By default, its value is `TextInputAppearance.standard`.
+     * By default, its value is `TextInputAppearance.fill`.
      */
     appearance?: TextInputAppearance;
 
@@ -229,7 +230,7 @@ export abstract class InputControl extends FormFieldControl
         if (this.content.required == undefined) this.content.required = false;
 
         /************************** `mat-form-field` properties. **************************/
-        if (this.content.appearance == undefined) this.content.appearance = TextInputAppearance.standard;
+        if (this.content.appearance == undefined) this.content.appearance = TextInputAppearance.fill;
 
         /***************************** `mat-icon` properties. *****************************/
         if (this.content.prefixIcon != undefined) this.content.prefixIcon.setDefaultValueIfUndefined_setPosition(ContentPosition.prefix);

@@ -61,7 +61,7 @@ export class TestInputIssnComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.standard,
+			'appearance': TextInputAppearance.fill,
 			'ariaLabel': 'issn_00'
 		};
 	}
@@ -79,7 +79,7 @@ export class TestInputIssnComponent implements OnInit
 			'value': '1234-124x',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.standard,
+			'appearance': TextInputAppearance.fill,
 			'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
 			'ariaLabel': 'issn_01'
 		};
@@ -98,7 +98,7 @@ export class TestInputIssnComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.standard,
+			'appearance': TextInputAppearance.fill,
 			'ariaLabel': 'issn_02'
 		};
 	}
@@ -116,7 +116,7 @@ export class TestInputIssnComponent implements OnInit
 			'value': '1234-124x',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.standard,
+			'appearance': TextInputAppearance.fill,
 			'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
 			'ariaLabel': 'issn_03'
 		};

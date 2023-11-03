@@ -1,8 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
 
-import { InputContent, TextInputAppearance } from 'projects/toco-lib/src/lib/forms/input/input.control';
 import { InputBoolComponent } from 'projects/toco-lib/src/lib/forms/input/bool/bool-input.component';
+import { InputContent, TextInputAppearance } from 'projects/toco-lib/src/lib/forms/input/input.control';
 
 @Component({
 	selector: 'test-input-bool',
@@ -71,7 +71,7 @@ export class TestInputBoolComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '100%',
-			'appearance': TextInputAppearance.standard,
+			'appearance': TextInputAppearance.fill,
 			'ariaLabel': 'bool_00'
 		};
 
@@ -91,7 +91,7 @@ export class TestInputBoolComponent implements OnInit
 			'value': true,
 			'required': true,
 			'width': '100%',
-			'appearance': TextInputAppearance.standard,
+			'appearance': TextInputAppearance.fill,
 			'ariaLabel': 'bool_01'
 		};
 
@@ -111,7 +111,7 @@ export class TestInputBoolComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '100%',
-			'appearance': TextInputAppearance.standard,
+			'appearance': TextInputAppearance.fill,
 			'ariaLabel': 'bool_02'
 		};
 
@@ -131,7 +131,7 @@ export class TestInputBoolComponent implements OnInit
 			'value': false,
 			'required': true,
 			'width': '100%',
-			'appearance': TextInputAppearance.standard,
+			'appearance': TextInputAppearance.fill,
 			'ariaLabel': 'bool_03'
 		};
 
@@ -152,7 +152,7 @@ export class TestInputBoolComponent implements OnInit
 			'value': 'TOCO_NG_VERDADERO',
 			'required': true,
 			'width': '100%',
-			'appearance': TextInputAppearance.standard,
+			'appearance': TextInputAppearance.fill,
 			'ariaLabel': 'bool_04'
 		};
 
