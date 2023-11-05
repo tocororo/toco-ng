@@ -75,7 +75,7 @@ export class TestInputNumberComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'number_00'
 		};
 	}
@@ -93,7 +93,7 @@ export class TestInputNumberComponent implements OnInit
 			'value': 12345,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'prefixIcon': new IconValue(),
 			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
 			'ariaLabel': 'number_01'
@@ -113,7 +113,7 @@ export class TestInputNumberComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'number_02'
 		};
 	}
@@ -131,7 +131,7 @@ export class TestInputNumberComponent implements OnInit
 			'value': 12345,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'prefixIcon': new IconValue(),
 			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
 			'ariaLabel': 'number_03'
@@ -150,7 +150,7 @@ export class TestInputNumberComponent implements OnInit
 			'value': 0,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'number_04'
 		};
 	}
@@ -167,7 +167,7 @@ export class TestInputNumberComponent implements OnInit
 			'value': 0,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'prefixIcon': new IconValue(),
 			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
 			'ariaLabel': 'number_05'

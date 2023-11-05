@@ -106,7 +106,7 @@ export class TestInputTextComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'text_00'
 		};
 	}
@@ -125,7 +125,7 @@ export class TestInputTextComponent implements OnInit
 			'value': 'Text value is NOT undefined',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'prefixIcon': new IconValue(),
 			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
 			'ariaLabel': 'text_01'
@@ -146,7 +146,7 @@ export class TestInputTextComponent implements OnInit
 			'value': 'Test validator argument',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'text_02'
 		};
 	}
@@ -165,7 +165,7 @@ export class TestInputTextComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'text_03'
 		};
 	}
@@ -184,7 +184,7 @@ export class TestInputTextComponent implements OnInit
 			'value': 'Text value is NOT undefined',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'prefixIcon': new IconValue(),
 			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
 			'ariaLabel': 'text_04'
@@ -205,7 +205,7 @@ export class TestInputTextComponent implements OnInit
 			'value': 'Test validator argument',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'text_05'
 		};
 	}
@@ -226,7 +226,7 @@ export class TestInputTextComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'text_20'
 		};
 	}
@@ -245,7 +245,7 @@ export class TestInputTextComponent implements OnInit
 			'value': 'Text value is NOT undefined',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'prefixIcon': new IconValue(),
 			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
 			'ariaLabel': 'text_21'
@@ -266,7 +266,7 @@ export class TestInputTextComponent implements OnInit
 			'value': 'Test validator argument',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'text_22'
 		};
 	}
@@ -285,7 +285,7 @@ export class TestInputTextComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'text_23'
 		};
 	}
@@ -304,7 +304,7 @@ export class TestInputTextComponent implements OnInit
 			'value': 'Text value is NOT undefined',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'prefixIcon': new IconValue(),
 			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
 			'ariaLabel': 'text_24'
@@ -325,7 +325,7 @@ export class TestInputTextComponent implements OnInit
 			'value': 'Test validator argument',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'text_25'
 		};
 	}

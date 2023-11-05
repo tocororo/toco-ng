@@ -71,7 +71,7 @@ export class TestInputBoolComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '100%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'bool_00'
 		};
 
@@ -91,7 +91,7 @@ export class TestInputBoolComponent implements OnInit
 			'value': true,
 			'required': true,
 			'width': '100%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'bool_01'
 		};
 
@@ -111,7 +111,7 @@ export class TestInputBoolComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '100%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'bool_02'
 		};
 
@@ -131,7 +131,7 @@ export class TestInputBoolComponent implements OnInit
 			'value': false,
 			'required': true,
 			'width': '100%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'bool_03'
 		};
 
@@ -152,7 +152,7 @@ export class TestInputBoolComponent implements OnInit
 			'value': 'TOCO_NG_VERDADERO',
 			'required': true,
 			'width': '100%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'bool_04'
 		};
 

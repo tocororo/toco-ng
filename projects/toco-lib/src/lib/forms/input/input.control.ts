@@ -57,7 +57,7 @@ export interface InputContent extends FormFieldContent
 
     /**
      * Returns the control's appearance.
-     * By default, its value is `TextInputAppearance.fill`.
+     * By default, its value is `TextInputAppearance.outline`.
      */
     appearance?: TextInputAppearance;
 
@@ -230,7 +230,7 @@ export abstract class InputControl extends FormFieldControl
         if (this.content.required == undefined) this.content.required = false;
 
         /************************** `mat-form-field` properties. **************************/
-        if (this.content.appearance == undefined) this.content.appearance = TextInputAppearance.fill;
+        if (this.content.appearance == undefined) this.content.appearance = TextInputAppearance.outline;
 
         /***************************** `mat-icon` properties. *****************************/
         if (this.content.prefixIcon != undefined) this.content.prefixIcon.setDefaultValueIfUndefined_setPosition(ContentPosition.prefix);

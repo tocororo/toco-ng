@@ -101,7 +101,7 @@ export abstract class ActionControl extends FormFieldControl
         if (this.content.icon != undefined) this.content.icon.setDefaultValueIfUndefined_setPosition(ContentPosition.prefix);
 
         /************************** `mat-form-field` properties. **************************/
-        // if (this.content.appearance == undefined) this.content.appearance = TextInputAppearance.fill;
+        // if (this.content.appearance == undefined) this.content.appearance = TextInputAppearance.outline;
 
         /**************************** `matTooltip` properties. ****************************/
         if (alwaysHint && (this.content.tooltip == undefined))

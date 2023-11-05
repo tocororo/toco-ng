@@ -244,7 +244,7 @@ export abstract class ContainerControl extends FormFieldControl
         // this.validationError_required = `The ${ temp } can not be empty.`;
 
         /************************** `mat-form-field` properties. **************************/
-        // if (this.content.appearance == undefined) this.content.appearance = TextInputAppearance.fill;
+        // if (this.content.appearance == undefined) this.content.appearance = TextInputAppearance.outline;
 
         /***************************** `mat-hint` properties. *****************************/
         // if (alwaysHint && (this.content.startHint == undefined) && (this.content.endHint == undefined))

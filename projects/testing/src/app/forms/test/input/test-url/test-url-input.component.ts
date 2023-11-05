@@ -61,7 +61,7 @@ export class TestInputUrlComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'url_00'
 		};
 	}
@@ -79,7 +79,7 @@ export class TestInputUrlComponent implements OnInit
 			'value': 'https://www.google.com/',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'prefixIcon': new IconValue(),
 			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
 			'ariaLabel': 'url_01'
@@ -99,7 +99,7 @@ export class TestInputUrlComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'url_02'
 		};
 	}
@@ -117,7 +117,7 @@ export class TestInputUrlComponent implements OnInit
 			'value': 'https://www.google.com/',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'prefixIcon': new IconValue(),
 			// 'prefixIcon': new IconValue(IconSource.internal, ContentPosition.prefix, 'outlined-bar_code-24px'),
 			'ariaLabel': 'url_03'

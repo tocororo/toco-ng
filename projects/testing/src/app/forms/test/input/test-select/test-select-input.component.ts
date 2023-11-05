@@ -88,7 +88,7 @@ export class TestInputSelectComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'select_00',
 			'selectOptions': undefined,
 			'multiple': false,
@@ -109,7 +109,7 @@ export class TestInputSelectComponent implements OnInit
 			'value': ['VALUE A', 'VALUE B', 'VALUE C'],
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'select_01',
 			'selectOptions': undefined,
 			'multiple': true,
@@ -130,7 +130,7 @@ export class TestInputSelectComponent implements OnInit
 			'value': 'VALUE B',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'select_02',
 			'selectOptions': undefined,
 			'multiple': false,
@@ -151,7 +151,7 @@ export class TestInputSelectComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'select_03',
 			'selectOptions': [
 				{
@@ -185,7 +185,7 @@ export class TestInputSelectComponent implements OnInit
 			'value': 'VALUE B',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'select_04',
 			'selectOptions': [
 				{
@@ -219,7 +219,7 @@ export class TestInputSelectComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'select_20',
 			'selectOptions': undefined,
 			'multiple': false,
@@ -240,7 +240,7 @@ export class TestInputSelectComponent implements OnInit
 			'value': ['VALUE A', 'VALUE B', 'VALUE C'],
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'select_21',
 			'selectOptions': undefined,
 			'multiple': true,
@@ -261,7 +261,7 @@ export class TestInputSelectComponent implements OnInit
 			'value': 'VALUE B',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'select_22',
 			'selectOptions': undefined,
 			'multiple': false,
@@ -282,7 +282,7 @@ export class TestInputSelectComponent implements OnInit
 			'value': undefined,
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'select_23',
 			'selectOptions': [
 				{
@@ -316,7 +316,7 @@ export class TestInputSelectComponent implements OnInit
 			'value': 'VALUE B',
 			'required': true,
 			'width': '45%',
-			'appearance': TextInputAppearance.fill,
+			'appearance': TextInputAppearance.outline,
 			'ariaLabel': 'select_24',
 			'selectOptions': [
 				{
