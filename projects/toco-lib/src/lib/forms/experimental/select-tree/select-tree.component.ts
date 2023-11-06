@@ -3,15 +3,14 @@
  *   All rights reserved.
  */
 
-import { Component, OnInit } from "@angular/core";
-import { FlatTreeControl } from "@angular/cdk/tree";
-import { MatTreeFlattener, MatTreeFlatDataSource } from "@angular/material/tree";
 import { SelectionModel } from "@angular/cdk/collections";
+import { FlatTreeControl } from "@angular/cdk/tree";
+import { Component, OnInit } from "@angular/core";
+import { MatTreeFlatDataSource, MatTreeFlattener } from "@angular/material/tree";
 import { of } from "rxjs";
 
-import { FormFieldControl_Experimental } from "../form-field.control.experimental";
-import { SelectOption } from '../../input/select/select-input.component';
 import { InputControl } from '../../input/input.control';
+import { SelectOption } from '../../input/select/select-input.component';
 
 export interface SelectOptionNode {
   element: SelectOption;
@@ -81,20 +80,20 @@ export class SelectTreeComponent extends InputControl
         this.content.extraContent.observable.subscribe(
           // next
           (response: any) => {
-            console.log(response);
+            // console.log(response);
 
             this.data = this.content.extraContent.getOptions(response);
-            console.log(this.data);
+            // console.log(this.data);
             this.dataSource.data = this.data;
-            console.log(this.dataSource);
+            // console.log(this.dataSource);
             this.content.extraContent.selectedTermsIds.forEach((uuid:string) => {
-              console.log(uuid);
+              // console.log(uuid);
 
               this.treeControl.dataNodes.forEach(node => {
 
 
                 if (node.element.value == uuid){
-                  console.log(node);
+                  // console.log(node);
 
                   if(node.expandable){
                     this.itemSelectionToggle(node);
@@ -108,7 +107,7 @@ export class SelectTreeComponent extends InputControl
 
           // error
           (error: any) => {
-            console.log(error);
+            // console.log(error);
           },
           // complete
           () => {}
@@ -129,7 +128,7 @@ export class SelectTreeComponent extends InputControl
   remove_component() {}
 
   onChange() {
-    console.log("ttree change");
+    // console.log("ttree change");
   }
 
   emitSelection() {

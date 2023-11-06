@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HitList, Record } from '../../entities/public-api';
 
 @Component({
@@ -14,7 +14,7 @@ export class RecordListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.hitList);
+    // console.log(this.hitList);
   }
 
 }

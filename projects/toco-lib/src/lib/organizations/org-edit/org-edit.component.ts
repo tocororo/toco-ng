@@ -1,14 +1,30 @@
 
-import { Component, OnInit, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { Organization, Identifier } from '../../entities/public-api';
-import { TextInputAppearance, OperationAction, FormSection, PanelContent, 
-	ContainerContent, HintValue, HintPosition, IconValue, IconSource, ContentPosition, 
-	ActionControl, ActionContent, ContainerPanelComponent, 
-	InputTextComponent, InputSelectComponent, ContainerSimpleComponent, 
-	InputUrlComponent, InputEmailComponent, ActionButtonComponent } from '../../forms/public-api';
+import { Identifier, Organization } from '../../entities/public-api';
+import {
+    ActionButtonComponent,
+    ActionContent,
+    ActionControl,
+    ContainerContent,
+    ContainerPanelComponent,
+    ContainerSimpleComponent,
+    ContentPosition,
+    FormSection,
+    HintPosition,
+    HintValue,
+    IconSource,
+    IconValue,
+    InputEmailComponent,
+    InputSelectComponent,
+    InputTextComponent,
+    InputUrlComponent,
+    OperationAction,
+    PanelContent,
+    TextInputAppearance
+} from '../../forms/public-api';
 
 @Component({
 	selector: 'toco-org-edit',
@@ -51,7 +67,7 @@ export class OrgEditComponent implements OnInit
 		// 	(data: { 'org': Organization }) => {
 		// 		this.org = data.org;
 
-		// 		console.log('Data got for editing: ', this.org);
+		// 		// console.log('Data got for editing: ', this.org);
 		// 	}
 		// )
 
@@ -255,7 +271,7 @@ export class OrgEditComponent implements OnInit
 	}
 
     /**
-     * Returns the identifiers' content. 
+     * Returns the identifiers' content.
      */
     private _initIdentifiersContent(description: string, value: Identifier[], isDynamic: boolean): ContainerContent
     {
@@ -315,7 +331,7 @@ export class OrgEditComponent implements OnInit
 	}
 
     /**
-     * Returns the labels' content. 
+     * Returns the labels' content.
      */
     private _initLabelsSimpleContent(): ContainerContent
     {
@@ -620,11 +636,11 @@ export class OrgEditComponent implements OnInit
 	 */
 	public doOperationAction(op: OperationAction): void
 	{
-		console.log('panelContent: ', this.panelContent);
-		console.log('panelContent.parentFormSection: ', this.panelContent.parentFormSection);
-		console.log('panelContent.formSection', this.panelContent.formSection);
-		// console.log('addressesPanelFormSection', this.addressesPanelFormSection);
-		// console.log('labelsSimpleFormSection', this.labelsSimpleFormSection);
+		// console.log('panelContent: ', this.panelContent);
+		// console.log('panelContent.parentFormSection: ', this.panelContent.parentFormSection);
+		// console.log('panelContent.formSection', this.panelContent.formSection);
+		// // console.log('addressesPanelFormSection', this.addressesPanelFormSection);
+		// // console.log('labelsSimpleFormSection', this.labelsSimpleFormSection);
 		return;
 
 		if(op == OperationAction.submit)

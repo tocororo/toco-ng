@@ -1,8 +1,8 @@
-import { Component, OnInit, OnChanges, Input, ViewChild } from "@angular/core";
+import { Component, Input, OnChanges, OnInit, ViewChild } from "@angular/core";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SourceService } from '../../backend/public-api';
 import { IdentifierSchemas } from '../../entities/common';
-import { JournalVersion, JournalData, SourceTypes, SourceSystems, SourceClasification, VocabulariesInmutableNames } from '../../entities/public-api';
+import { JournalData, JournalVersion, SourceClasification, SourceSystems, SourceTypes, VocabulariesInmutableNames } from '../../entities/public-api';
 import { SourceIndexesComponent } from '../source-edit/source-indexes/source-indexes.component';
 import { SourceOrganizationsComponent } from '../source-edit/source-organizations/source-organizations.component';
 
@@ -56,7 +56,7 @@ export class JournalViewInfoComponent implements OnInit, OnChanges {
     this.loadJournalData();
   }
   ngOnChanges(): void {
-    console.log("changes....");
+    // console.log("changes....");
     this.loadJournalData();
   }
   loadJournalData() {
@@ -113,7 +113,7 @@ export class JournalViewInfoComponent implements OnInit, OnChanges {
   }
 
   editingJournalChange(newVersion: JournalVersion): void {
-    console.log("*****llego....", newVersion, this.journalData);
+    // console.log("*****llego....", newVersion, this.journalData);
 
     this.loadJournalData();
     this.orgs.ngOnInit();

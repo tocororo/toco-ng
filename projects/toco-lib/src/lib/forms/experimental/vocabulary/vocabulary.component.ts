@@ -5,9 +5,9 @@
 
 import { Component, OnInit } from "@angular/core";
 import {
-  AbstractControl,
-  UntypedFormControl,
-  ValidationErrors
+    AbstractControl,
+    UntypedFormControl,
+    ValidationErrors
 } from "@angular/forms";
 import { Observable, PartialObserver } from "rxjs";
 import { map, startWith } from "rxjs/operators";
@@ -64,8 +64,8 @@ export class VocabularyComponent extends InputControl
 
   private termsTreeObserver: PartialObserver<Response<any>> = {
     next: (response: Response<any>) => {
-      console.log("VOCABULARY COMPONENT RESPONSE ",response)
-      console.log(response.data.tree);
+      // console.log("VOCABULARY COMPONENT RESPONSE ",response)
+      // console.log(response.data.tree);
 
       this.terms = response.data.tree.term_node;
 
@@ -78,11 +78,11 @@ export class VocabularyComponent extends InputControl
     },
 
     error: (err: any) => {
-      console.log("The observable got an error notification: " + err + ".");
+      // console.log("The observable got an error notification: " + err + ".");
     },
 
     complete: () => {
-      console.log("The observable got a complete notification.");
+      // console.log("The observable got a complete notification.");
       this.loading = !this.loading;
     }
   };
@@ -184,9 +184,9 @@ export class VocabularyComponent extends InputControl
       startWith(""),
       map(value => {
         const filterValue = value ? value.toLowerCase() : "";
-        console.log('************************************')
-        console.log(this.selectOptions);
-        console.log('************************************')
+        // console.log('************************************')
+        // console.log(this.selectOptions);
+        // console.log('************************************')
 
         return this.selectOptions.filter(option =>
           option.term.identifier.toLowerCase().includes(filterValue)

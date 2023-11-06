@@ -7,11 +7,11 @@
     [min]="_min"
     [formControl]="content.formControl"
     (click)="_openDatepickerOnClick(datepicker)"
-    (focus)="_openDatepickerOnFocus(datepicker)"
     readonly
     placeholder="{{ content.label }}"
     required="{{ content.required }}"
   />
+  <!-- (focus)="_openDatepickerOnFocus(datepicker)" -->
 
   <mat-datepicker
     #datepicker

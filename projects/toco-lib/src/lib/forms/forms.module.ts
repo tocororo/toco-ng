@@ -193,7 +193,7 @@ import { InputUrlComponent } from './input/url/url-input.component';
 
 export class TocoFormsModule {
   public constructor(private _iconService: IconService) {
-    //console.log('Icon Service: registers icons.');
+    //// console.log('Icon Service: registers icons.');
 
     this._iconService.registerIcons(
       [

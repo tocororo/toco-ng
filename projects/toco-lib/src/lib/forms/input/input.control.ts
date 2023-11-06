@@ -10,11 +10,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { isNullOrUndefined } from 'is-what';
 
 import {
-  ContentPosition,
-  FormFieldContent, FormFieldControl,
-  HintPosition, HintValue,
-  IconValue,
-  ValidatorArguments
+    ContentPosition,
+    FormFieldContent, FormFieldControl,
+    HintPosition, HintValue,
+    IconValue,
+    ValidatorArguments
 } from '../form-field.control';
 
 /**
@@ -251,7 +251,7 @@ export abstract class InputControl extends FormFieldControl
         It must be called at the end. */
         if (this.content.parentFormSection != undefined)
         {
-            console.log('addAsChildControl(this.content.formControl)');
+            // console.log('addAsChildControl(this.content.formControl)');
 
             this.addAsChildControl(this, this.content.formControl);
         }

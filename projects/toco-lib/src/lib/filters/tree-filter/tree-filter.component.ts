@@ -4,18 +4,17 @@
  */
 
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
+import { SelectionModel } from '@angular/cdk/collections';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { UntypedFormControl } from '@angular/forms';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { of } from 'rxjs';
+import { Term, TermNode } from '../../entities/public-api';
+import { FilterContainerService } from '../filter-container.service';
 import { FilterComponent } from '../filter.component';
 import { FiltersService } from '../filters.service';
-import { FilterContainerService } from '../filter-container.service';
-import { TermNode, Term } from '../../entities/public-api';
-import { FlatTreeControl } from '@angular/cdk/tree';
-import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
-import { of, Observable } from 'rxjs';
-import { SelectionModel, CollectionViewer } from '@angular/cdk/collections';
-import { UntypedFormControl } from '@angular/forms';
-import { startWith, map } from 'rxjs/operators';
 
 export interface FlatTreeNodeFilter {
   name: string;
@@ -82,7 +81,7 @@ export class TreeFilterComponent implements OnInit, FilterComponent {
 
   private _filter(value: string): void {
     const filterValue = value.toLowerCase();
-    console.log(filterValue);
+    // console.log(filterValue);
 
     const newData = this.data.selectOptions.filter(node => this._include_node(filterValue, node));
 
@@ -107,7 +106,7 @@ export class TreeFilterComponent implements OnInit, FilterComponent {
 
   private _fix_selection() {
     for (const node of this.treeControl.dataNodes) {
-      console.log(node);
+      // console.log(node);
     }
 
     // if (this.checklistSelection.selected) {
@@ -130,7 +129,7 @@ export class TreeFilterComponent implements OnInit, FilterComponent {
   }
 
   emitSelection() {
-    console.log(this.checklistSelection.selected);
+    // console.log(this.checklistSelection.selected);
     var valueEmiter = 'OR';
     this.checklistSelection.selected.forEach(node => {
       valueEmiter = valueEmiter + ',' + node.term.id;
@@ -253,6 +252,6 @@ export class TreeFilterComponent implements OnInit, FilterComponent {
     return null;
   }
   removeChip(i){
-    console.log(i);
+    // console.log(i);
   }
 }

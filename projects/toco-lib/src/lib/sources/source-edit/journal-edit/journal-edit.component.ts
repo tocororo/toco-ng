@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SourceService, CatalogService, TaxonomyService } from '../../../backend/public-api';
+import { CatalogService, SourceService, TaxonomyService } from '../../../backend/public-api';
 import { MetadataService } from '../../../core/public-api';
 import { IdentifierSchemas } from '../../../entities/common';
-import { JournalData, JournalVersion, Organization, SourceClasification, SourceTypes, SourceSystems, VocabulariesInmutableNames, Term } from '../../../entities/public-api';
+import { JournalData, JournalVersion, Organization, SourceClasification, SourceSystems, SourceTypes, Term, VocabulariesInmutableNames } from '../../../entities/public-api';
 import { VocabularyTreeComponent } from '../../../forms/experimental/vocabulary-tree/vocabulary-tree.component';
-import { PanelContent, FormContainerAction, ContainerPanelComponent, InputTextComponent, FormFieldType, HintValue, HintPosition, InputRnpsComponent, SelectComponent, TextareaComponent, InputUrlComponent, InputEmailComponent, VocabularyComponent, DatepickerComponent } from '../../../forms/public-api';
+import { ContainerPanelComponent, DatepickerComponent, FormContainerAction, FormFieldType, HintPosition, HintValue, InputEmailComponent, InputRnpsComponent, InputTextComponent, InputUrlComponent, PanelContent, SelectComponent, TextareaComponent, VocabularyComponent } from '../../../forms/public-api';
 
 @Component({
   selector: "toco-journal-edit",
@@ -91,7 +91,7 @@ export class JournalEditComponent implements OnInit {
       : "Editando: " + this.journalData.title;
     this.metadata.setStandardMeta(this.pageTitle, "", "");
 
-    console.log("journal edit INIT");
+    // console.log("journal edit INIT");
     this.resetStepper();
     this.initStep2();
     this.initStep0Identifiers();
@@ -575,12 +575,12 @@ export class JournalEditComponent implements OnInit {
     this.indexesFormGroup = this.formBuilder.group({});
   }
   indexerStepper() {
-    // console.log(this.journalData);
+    // // console.log(this.journalData);
 
     // this.indexes = this.journalData.classifications.filter(
     //   (value) => value.vocabulary == VocabulariesInmutableNames.INDEXES
     // );
-    // console.log(this.indexes);
+    // // console.log(this.indexes);
   }
 
   initStepFinal() {
@@ -641,7 +641,7 @@ export class JournalEditComponent implements OnInit {
     //   this.identifiersFormGroup.value
     // );
 
-    console.log(this.informationFormGroup)
+    // console.log(this.informationFormGroup)
     this.journalData.deepcopy(this.informationFormGroup.value);
     this.journalData.socialNetworks.deepcopy(this.informationFormGroup.value);
 
@@ -691,7 +691,7 @@ export class JournalEditComponent implements OnInit {
 
     }
 
-    console.log(indexes);
+    // console.log(indexes);
     this.journalData.classifications = this.journalData.classifications.concat(
       indexes
     );
@@ -712,7 +712,7 @@ export class JournalEditComponent implements OnInit {
     // this.institutions.forEach(inst => {
     //   this.journalVersion.classifications.push(inst);
     // });
-    // console.log(this.indexesPanel);
+    // // console.log(this.indexesPanel);
     // this.indexesPanel.forEach(panel => {
     //   const ts = new SourceClasification();
     //   const term: Term = panel.value;
@@ -733,19 +733,19 @@ export class JournalEditComponent implements OnInit {
     this.journalVersion.comment = this.finalFormGroup.value["comment"];
     this.journalVersion.data.deepcopy(this.journalData);
 
-    console.log(this.identifiersFormGroup);
-    console.log(this.informationFormGroup);
-    console.log(this.organizationFormGroup);
-    console.log(this.indexesFormGroup);
-    console.log(this.journalData);
+    // console.log(this.identifiersFormGroup);
+    // console.log(this.informationFormGroup);
+    // console.log(this.organizationFormGroup);
+    // console.log(this.indexesFormGroup);
+    // console.log(this.journalData);
   }
 
   public finishStepper() {
-    console.log(this.journalData);
-    // console.log(this.journalVersion, this)
+    // console.log(this.journalData);
+    // // console.log(this.journalVersion, this)
     this.fillJournalFields();
 
-    console.log(this.journalData);
+    // console.log(this.journalData);
     this.journalEditDone.emit(this.journalVersion);
   }
   public cancelStepper() {

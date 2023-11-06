@@ -1,24 +1,24 @@
 
-import { Directive, OnChanges, Input, SimpleChanges } from '@angular/core';
-import { AbstractControl, UntypedFormControl, ValidatorFn, ValidationErrors, Validator, NG_VALIDATORS, UntypedFormGroup, UntypedFormArray } from '@angular/forms';
+import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { AbstractControl, NG_VALIDATORS, UntypedFormArray, UntypedFormControl, UntypedFormGroup, ValidationErrors, Validator, ValidatorFn } from '@angular/forms';
 
 /**
- * Represents a class that contains a boolean property named `required`. 
+ * Represents a class that contains a boolean property named `required`.
  */
 export interface RequiredProperty
 {
     /**
-     * Returns true if the control is required; otherwise, false. 
+     * Returns true if the control is required; otherwise, false.
      */
     readonly required: boolean;
 }
 
 /**
  * @description
- * Provides a set of extra validators that can be used by form controls. 
+ * Provides a set of extra validators that can be used by form controls.
  *
- * A validator is a function that processes a `FormControl` or collection of 
- * controls and returns an error map or `null`. A `null` map means that validation has passed. 
+ * A validator is a function that processes a `FormControl` or collection of
+ * controls and returns an error map or `null`. A `null` map means that validation has passed.
  *
  * @see [Form Validation](/guide/form-validation)
  */
@@ -26,35 +26,35 @@ export class ExtraValidators
 {
     /**
      * @description
-     * Validator that requires the length of the control's value to be equal to the 
-     * provided length. It assumes that the control's value is of string type. 
-     * This validator is used with Reactive Forms; if you want to use 
-     * an equivalent validator with Template-driven Form you must use the `equalLength` attribute. 
+     * Validator that requires the length of the control's value to be equal to the
+     * provided length. It assumes that the control's value is of string type.
+     * This validator is used with Reactive Forms; if you want to use
+     * an equivalent validator with Template-driven Form you must use the `equalLength` attribute.
      *
      * @usageNotes
      *
-     * ### Validates that the field has a length of 4 characters: 
+     * ### Validates that the field has a length of 4 characters:
      *
-     * ```typescript 
-     * const control = new FormControl('ng', ExtraValidators.equalLength(4)); 
+     * ```typescript
+     * const control = new FormControl('ng', ExtraValidators.equalLength(4));
      *
-     * console.log(control.errors); // { equalLength: { requiredLength: 4, actualLength: 2 } } 
-     * ``` 
+     * // console.log(control.errors); // { equalLength: { requiredLength: 4, actualLength: 2 } }
+     * ```
      *
-     * ```html 
-     * <input name="firstName" ngModel equallength="4"> 
-     * ``` 
+     * ```html
+     * <input name="firstName" ngModel equallength="4">
+     * ```
      *
-     * @returns A validator function that returns an error map with the `equalLength` 
-     * if the validation check fails, otherwise `null`. 
+     * @returns A validator function that returns an error map with the `equalLength`
+     * if the validation check fails, otherwise `null`.
      */
     public static equalLength(equalLength: number): ValidatorFn
     {
         const res = (control: AbstractControl): ValidationErrors | null => {
             const len: number = control.value ? control.value.length : 0;
 
-            return ((len != 0) && (len != equalLength)) 
-                ? { 'equalLength': { 'requiredLength': equalLength, 'actualLength': len } } 
+            return ((len != 0) && (len != equalLength))
+                ? { 'equalLength': { 'requiredLength': equalLength, 'actualLength': len } }
                 : null;
         };
 
@@ -63,30 +63,30 @@ export class ExtraValidators
 
     /**
      * @description
-     * Validator that is applied to `FormArray` controls. It requires that the amount of 
-	 * `FormArray`'s child controls to be greater than or equal to the provided minimum length. 
-	 * The validator exists only as a function and not as a directive. 
+     * Validator that is applied to `FormArray` controls. It requires that the amount of
+	 * `FormArray`'s child controls to be greater than or equal to the provided minimum length.
+	 * The validator exists only as a function and not as a directive.
      *
      * @usageNotes
      *
-     * ### Validates that the `FormArray` field has a minimum of 2 child controls: 
+     * ### Validates that the `FormArray` field has a minimum of 2 child controls:
      *
-     * ```typescript 
-     * const formArrayControl = new FormArray([new FormControl('ng')], ExtraValidators.minLength(2)); 
+     * ```typescript
+     * const formArrayControl = new FormArray([new FormControl('ng')], ExtraValidators.minLength(2));
      *
-	 * console.log(formArrayControl.errors); // { minLength: { requiredLength: 2, actualLength: 1 } } 
-     * ``` 
+	 * // console.log(formArrayControl.errors); // { minLength: { requiredLength: 2, actualLength: 1 } }
+     * ```
      *
-     * @returns A validator function that returns an error map with the 
-     * `minLength` if the validation check fails, otherwise `null`. 
+     * @returns A validator function that returns an error map with the
+     * `minLength` if the validation check fails, otherwise `null`.
      */
     public static minLength(minLength: number): ValidatorFn
     {
         const res = (control: UntypedFormArray): ValidationErrors | null => {
             const len: number = control.controls.length;
 
-            return (len < minLength) 
-                ? { 'minLength': { 'requiredLength': minLength, 'actualLength': len } } 
+            return (len < minLength)
+                ? { 'minLength': { 'requiredLength': minLength, 'actualLength': len } }
                 : null;
         };
 
@@ -95,31 +95,31 @@ export class ExtraValidators
 
     /**
      * @description
-     * Validator that is applied to a control that has an array of child controls. 
-     * It receives an object that fits the `RequiredProperty` interface and an array of child controls. 
-     * The behavior of the validator is the following: 
-     * If the control's value is required, then 
-     *   - all child controls must be different of empty. 
-     * If the control's value is not required, then 
-     *   - all child controls can be empty. 
-     *   - if there is at least one child control not empty, then all child controls must be different of empty. 
-     * The validator exists only as a function and not as a directive. 
+     * Validator that is applied to a control that has an array of child controls.
+     * It receives an object that fits the `RequiredProperty` interface and an array of child controls.
+     * The behavior of the validator is the following:
+     * If the control's value is required, then
+     *   - all child controls must be different of empty.
+     * If the control's value is not required, then
+     *   - all child controls can be empty.
+     *   - if there is at least one child control not empty, then all child controls must be different of empty.
+     * The validator exists only as a function and not as a directive.
      *
      * @usageNotes
      *
-     * ### Validates that the control does not have an empty child control: 
+     * ### Validates that the control does not have an empty child control:
      *
-     * ```typescript 
+     * ```typescript
      * const control = new FormGroup({
-     *     'fg': (firstGroup = new FormControl('2049')), 
-     *     'sg': (secondGroup = new FormControl(''))}, 
-     *     ExtraValidators.requiredAndNotEmpty(this, [firstGroup, secondGroup])); 
+     *     'fg': (firstGroup = new FormControl('2049')),
+     *     'sg': (secondGroup = new FormControl(''))},
+     *     ExtraValidators.requiredAndNotEmpty(this, [firstGroup, secondGroup]));
      *
-     * console.log(control.errors); // { requiredAndNotEmpty: { required: true, pos: 1 } } 
-     * ``` 
+     * // console.log(control.errors); // { requiredAndNotEmpty: { required: true, pos: 1 } }
+     * ```
      *
-     * @returns A validator function that returns an error map with the `requiredAndNotEmpty` 
-     * if the validation check fails, otherwise `null`. 
+     * @returns A validator function that returns an error map with the `requiredAndNotEmpty`
+     * if the validation check fails, otherwise `null`.
      */
     public static requiredAndNotEmpty(requiredProperty: RequiredProperty, childControls: UntypedFormControl[]): ValidatorFn
     {
@@ -135,8 +135,8 @@ export class ExtraValidators
                     if (!childControls[i].value) break;
                 }
 
-                return (i == controlsGroupLength) 
-                    ? null 
+                return (i == controlsGroupLength)
+                    ? null
                     : { 'requiredAndNotEmpty': { 'required': true, 'pos': i } };
             }
             else
@@ -170,22 +170,22 @@ export class ExtraValidators
 
     /**
      * @description
-     * Validator that requires the control's value pass an ISSN validation test (confirm the check digit). 
-     * Assumes that the code (control's value) is a string of length 11, with the form 'XXXX – XXXX'. 
-     * The validator exists only as a function and not as a directive. 
+     * Validator that requires the control's value pass an ISSN validation test (confirm the check digit).
+     * Assumes that the code (control's value) is a string of length 11, with the form 'XXXX – XXXX'.
+     * The validator exists only as a function and not as a directive.
      *
      * @usageNotes
      *
-     * ### Validates that the field matches a valid ISSN pattern (confirms the check digit): 
+     * ### Validates that the field matches a valid ISSN pattern (confirms the check digit):
      *
-     * ```typescript 
-     * const control = new FormControl('2049 – 3635', ExtraValidators.issnConfirmCheckDigitOneField(11)); 
+     * ```typescript
+     * const control = new FormControl('2049 – 3635', ExtraValidators.issnConfirmCheckDigitOneField(11));
      *
-     * console.log(control.errors); // { issnConfirmCheckDigitOneField: true } 
-     * ``` 
+     * // console.log(control.errors); // { issnConfirmCheckDigitOneField: true }
+     * ```
      *
-     * @returns A validator function that returns an error map with the `issnConfirmCheckDigitOneField` 
-     * if the validation check fails, otherwise `null`. 
+     * @returns A validator function that returns an error map with the `issnConfirmCheckDigitOneField`
+     * if the validation check fails, otherwise `null`.
      */
     public static issnConfirmCheckDigitOneField(codeLength: number): ValidatorFn
     {
@@ -206,8 +206,8 @@ export class ExtraValidators
                 result += (code.charCodeAt(9) - 48) * 2;
                 result += ((code[10] == 'x') || (code[10] == 'X')) ? 10 : code.charCodeAt(10) - 48;
 
-                return (result % 11) 
-                    ? { 'issnConfirmCheckDigitOneField': true } 
+                return (result % 11)
+                    ? { 'issnConfirmCheckDigitOneField': true }
                     : null;
             }
 
@@ -219,26 +219,26 @@ export class ExtraValidators
 
     /**
      * @description
-     * Validator that requires the control's value passes an ISSN validation test (confirms the check digit). 
-     * The ISSN value is divided in two groups, therefore the control has two child controls and they are 
-     * arguments of the validator method. It assumes that the control's value is of string type. 
-     * The validator exists only as a function and not as a directive. 
+     * Validator that requires the control's value passes an ISSN validation test (confirms the check digit).
+     * The ISSN value is divided in two groups, therefore the control has two child controls and they are
+     * arguments of the validator method. It assumes that the control's value is of string type.
+     * The validator exists only as a function and not as a directive.
      *
      * @usageNotes
      *
-     * ### Validates that the field matches a valid ISSN pattern (confirms the check digit): 
+     * ### Validates that the field matches a valid ISSN pattern (confirms the check digit):
      *
-     * ```typescript 
+     * ```typescript
      * const control = new FormGroup({
-     *     'fg': (firstGroup = new FormControl('2049')), 
-     *     'sg': (secondGroup = new FormControl('3635'))}, 
-     *     ExtraValidators.issnConfirmCheckDigitTwoField(firstGroup, secondGroup, 4)); 
+     *     'fg': (firstGroup = new FormControl('2049')),
+     *     'sg': (secondGroup = new FormControl('3635'))},
+     *     ExtraValidators.issnConfirmCheckDigitTwoField(firstGroup, secondGroup, 4));
      *
-     * console.log(control.errors); // { issnConfirmCheckDigitTwoField: true } 
-     * ``` 
+     * // console.log(control.errors); // { issnConfirmCheckDigitTwoField: true }
+     * ```
      *
-     * @returns A validator function that returns an error map with the `issnConfirmCheckDigitTwoField` 
-     * if the validation check fails, otherwise `null`. 
+     * @returns A validator function that returns an error map with the `issnConfirmCheckDigitTwoField`
+     * if the validation check fails, otherwise `null`.
      */
     public static issnConfirmCheckDigitTwoField(firstGroup: UntypedFormControl, secondGroup: UntypedFormControl, groupLength: number): ValidatorFn
     {
@@ -257,8 +257,8 @@ export class ExtraValidators
                 result += (groupValue.charCodeAt(2) - 48) * 2;
                 result += ((groupValue[3] == 'x') || (groupValue[3] == 'X')) ? 10 : groupValue.charCodeAt(3) - 48;
 
-                return (result % 11) 
-                    ? { 'issnConfirmCheckDigitTwoField': true } 
+                return (result % 11)
+                    ? { 'issnConfirmCheckDigitTwoField': true }
                     : null;
             }
 
@@ -271,8 +271,8 @@ export class ExtraValidators
     public static issnValidator(internalFormGroup: UntypedFormGroup): ValidatorFn
     {
         const res = (control: AbstractControl): ValidationErrors | null => {
-            return (!internalFormGroup.valid) 
-                ? { 'issnValidator': { 'requiredValid': internalFormGroup.valid } } 
+            return (!internalFormGroup.valid)
+                ? { 'issnValidator': { 'requiredValid': internalFormGroup.valid } }
                 : null;
         };
 
@@ -282,28 +282,28 @@ export class ExtraValidators
 
 /**
  * @description
- * A directive that represents a validator that requires the length of the control's value 
- * to be equal to the provided length. The control must be marked with the `equalLength` attribute. 
- * The directive is provided with the `NG_VALIDATORS` mult-provider list. 
- * This validator is used with Template-driven Form; if you want to use an equivalent validator 
- * with Reactive Forms you must use the `ExtraValidators.equalLength` method. 
+ * A directive that represents a validator that requires the length of the control's value
+ * to be equal to the provided length. The control must be marked with the `equalLength` attribute.
+ * The directive is provided with the `NG_VALIDATORS` mult-provider list.
+ * This validator is used with Template-driven Form; if you want to use an equivalent validator
+ * with Reactive Forms you must use the `ExtraValidators.equalLength` method.
  *
  * @usageNotes
  *
- * ### Validates that the field has a length of 4 characters: 
+ * ### Validates that the field has a length of 4 characters:
  *
- * The following example shows how to add an equal length validator to an input attached to an 
- * ngModel binding. 
+ * The following example shows how to add an equal length validator to an input attached to an
+ * ngModel binding.
  *
- * ```html 
- * <input name="firstName" ngModel equallength="4"> 
- * ``` 
+ * ```html
+ * <input name="firstName" ngModel equallength="4">
+ * ```
  */
 @Directive({
     selector: '[equalLength]',
-    providers: [{ 
-        provide: NG_VALIDATORS, 
-        useExisting: EqualLengthDirective, 
+    providers: [{
+        provide: NG_VALIDATORS,
+        useExisting: EqualLengthDirective,
         multi: true
     }]
 })
@@ -311,7 +311,7 @@ export class EqualLengthDirective implements OnChanges, Validator
 {
     /**
      * @description
-     * Input variable that contains the length to check. 
+     * Input variable that contains the length to check.
      */
     @Input()
     public equalLength: string;
@@ -321,9 +321,9 @@ export class EqualLengthDirective implements OnChanges, Validator
 
     /**
      * @description
-     * A lifecycle hook method that is called when the directive's inputs change. For internal use only. 
+     * A lifecycle hook method that is called when the directive's inputs change. For internal use only.
      *
-     * @param changes An object of key/value pairs for the set of changed inputs. 
+     * @param changes An object of key/value pairs for the set of changed inputs.
      */
     public ngOnChanges(changes: SimpleChanges): void
     {
@@ -333,29 +333,29 @@ export class EqualLengthDirective implements OnChanges, Validator
 
             if(this._onChange) this._onChange();
         }
-    }    
+    }
 
     /**
      * @description
-     * Method that performs synchronous validation against the provided control. It requires the length 
-     * of the control's value to be equal to the provided `equalLength`. 
+     * Method that performs synchronous validation against the provided control. It requires the length
+     * of the control's value to be equal to the provided `equalLength`.
      *
-     * @param control The control to validate against. 
+     * @param control The control to validate against.
      *
-     * @returns A map of validation errors if validation fails; otherwise, `null`. 
-     */    
+     * @returns A map of validation errors if validation fails; otherwise, `null`.
+     */
     public validate(control: AbstractControl): ValidationErrors | null
     {
-        return (this.equalLength) 
-            ? this._validator(control) 
+        return (this.equalLength)
+            ? this._validator(control)
             : null;
     }
 
     /**
      * @description
-     * Registers a callback function to call when the validator inputs change. 
+     * Registers a callback function to call when the validator inputs change.
      *
-     * @param fn The callback function to register. 
+     * @param fn The callback function to register.
      */
     public registerOnValidatorChange(fn: () => void): void
     {

@@ -5,15 +5,14 @@
 
 import { Component, OnInit } from "@angular/core";
 import {
-  UntypedFormControl,
   AbstractControl,
-  ValidationErrors,
-  FormGroup,
+  UntypedFormControl,
+  ValidationErrors
 } from "@angular/forms";
-import { Observable, PartialObserver } from "rxjs";
-import { startWith, map } from "rxjs/operators";
+import { Observable } from "rxjs";
+import { map, startWith } from "rxjs/operators";
 import { TaxonomyService } from '../../../backend/public-api';
-import { VocabulariesInmutableNames, TermNode, Term } from '../../../entities/public-api';
+import { Term, TermNode, VocabulariesInmutableNames } from '../../../entities/public-api';
 
 import { InputControl } from '../../input/input.control';
 
@@ -131,7 +130,7 @@ export class VocabularyTreeComponent extends InputControl
           },
 
           () => {
-            console.log("The observable got a complete notification.");
+            // console.log("The observable got a complete notification.");
             this.loading = !this.loading;
           }
         );
@@ -143,8 +142,8 @@ export class VocabularyTreeComponent extends InputControl
     }
   }
   private _setLevelsOptions(nextLevel: TermNode[], level: number) {
-    console.log('VOCABULARY TREE *****')
-    console.log(this.extraContent.selectedTermsIds, nextLevel)
+    // console.log('VOCABULARY TREE *****')
+    // console.log(this.extraContent.selectedTermsIds, nextLevel)
     let result: TermNode[] = [];
     nextLevel.forEach((node) => {
       if (
@@ -171,7 +170,7 @@ export class VocabularyTreeComponent extends InputControl
     this.levelsOptions.push(result);
   }
   onSelectionChange(level, item: Term) {
-    console.log(level, item);
+    // console.log(level, item);
     this.leafsOptions = null;
     this.chipsList = [];
     this.loading = true;
@@ -192,7 +191,7 @@ export class VocabularyTreeComponent extends InputControl
 
     this.service.getTermByUUID(item.uuid, 1).subscribe(
       (response: Response<any>) => {
-        console.log(response);
+        // console.log(response);
         this.loading = false;
         const nextLevel = response.data.term_node.children;
         if (this.extraContent.level > level + 1) {
@@ -204,11 +203,11 @@ export class VocabularyTreeComponent extends InputControl
       },
 
       (err: any) => {
-        console.log("The observable got an error notification: " + err + ".");
+         console.log("The observable got an error notification: " + err + ".");
       },
 
       () => {
-        console.log("The observable got a complete notification.");
+         console.log("The observable got a complete notification.");
         this.loading = !this.loading;
       }
     );
@@ -233,10 +232,10 @@ export class VocabularyTreeComponent extends InputControl
       });
       this.content.value.unshift(term);
     }
-    console.log(this.content.value)
+    // console.log(this.content.value)
     this.content.formControl.setValue(this.content.value);
     this.setValidation();
-    console.log(this.content.formControl);
+    // console.log(this.content.formControl);
 
   }
 
@@ -246,7 +245,7 @@ export class VocabularyTreeComponent extends InputControl
     );
     this.content.formControl.setValue(this.content.value);
     this.setValidation();
-    console.log(this.content.formControl);
+    // console.log(this.content.formControl);
   }
 
   private _updateFilteredOptions() {
@@ -300,7 +299,7 @@ export class VocabularyTreeComponent extends InputControl
       }
       this.chipsList = [value];
     }
-    console.log(value, this.chipsList);
+    // console.log(value, this.chipsList);
     this.addTermToValue(value.term);
     this.leafsOptions = this.leafsOptions.filter(
       (option) => option.term.id !== value.term.id

@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { of as observableOf, timer, Subscription, PartialObserver } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { OAuthStorage } from 'angular-oauth2-oidc';
 import moment from 'moment';
+import { PartialObserver, Subscription, of as observableOf, timer } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { NotificationService } from '../../backend/public-api';
 import { MessageHandler, StatusCode } from '../../core/public-api';
-import { OAuthStorage } from 'angular-oauth2-oidc';
 
 @Component({
     selector: 'toco-notification-button',
@@ -61,7 +61,7 @@ export class NotificationButtonComponent implements OnInit {
         },
 
         complete: () => {
-            console.log('The observable got a complete notification.');
+            // console.log('The observable got a complete notification.');
         }
     };
 

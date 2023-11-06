@@ -1,11 +1,11 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
-import { MatTableDataSource} from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
+import moment from 'moment';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import moment from 'moment';
 import { NotificationService } from '../../backend/public-api';
 import { MessageHandler, StatusCode } from '../../core/public-api';
 import { NotificationInfo } from '../notification-button/notification-button.component';
@@ -69,7 +69,7 @@ export class NotificationListComponent implements OnInit {
             });
     }
     setnotificationViewed(id: number) {
-        console.log(id);
+        // console.log(id);
         if (id) {
           this.service.setNotificationViewed(id)
             .pipe(

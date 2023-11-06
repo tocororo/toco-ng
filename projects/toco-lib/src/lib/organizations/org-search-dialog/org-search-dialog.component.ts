@@ -3,8 +3,8 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  SimpleChanges,
   Output,
+  SimpleChanges,
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Params } from "@angular/router";
@@ -26,10 +26,10 @@ export class OrgSearchDialogComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     const _open = changes["open"];
-    console.log(
-      "🚀 ~ file: org-search-dialog.component.ts:22 ~ OrgSearchDialogComponent ~ ngOnChanges ~ _open:",
-      _open
-    );
+    // console.log(
+    //   "🚀 ~ file: org-search-dialog.component.ts:22 ~ OrgSearchDialogComponent ~ ngOnChanges ~ _open:",
+    //   _open
+    // );
     const curOpen = _open.currentValue;
     const prevOpen = JSON.stringify(_open.previousValue);
 
@@ -39,7 +39,7 @@ export class OrgSearchDialogComponent implements OnChanges {
   }
 
   filtersChange(values: Params) {
-    console.log(values.organizations);
+    // console.log(values.organizations);
   }
 
   openDialog(): void {
@@ -50,7 +50,7 @@ export class OrgSearchDialogComponent implements OnChanges {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log("The dialog was closed");
+      // console.log("The dialog was closed");
       this.afterClosed.emit(result);
     });
   }

@@ -650,7 +650,7 @@ export abstract class ContainerControl extends FormFieldControl
      */
 	public addToFormArray(): void
 	{
-        console.log('addToFormArray');
+        // console.log('addToFormArray');
 
         if (this._isFormArray)
         {
@@ -672,7 +672,7 @@ export abstract class ContainerControl extends FormFieldControl
      */
 	public removeFromFormArray(index: number): void
 	{
-        console.log('removeFromFormArray', index);
+        // console.log('removeFromFormArray', index);
 
         if (this._isFormArray)
         {
@@ -708,7 +708,7 @@ export abstract class ContainerControl extends FormFieldControl
      */
 	public clearFormArray(): void
 	{
-        console.log('clearFormArray');
+        // console.log('clearFormArray');
 
         if (this._isFormArray)
         {

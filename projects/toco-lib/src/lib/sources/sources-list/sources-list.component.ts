@@ -4,15 +4,15 @@
  */
 
 
-import { Component, OnInit, ViewChild } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { merge, of as observableOf } from 'rxjs';
-import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { merge, of as observableOf } from 'rxjs';
+import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
 import { MetadataService } from '../../core/public-api';
-import { Journal, JournalData, ISSN } from '../../entities/public-api';
+import { ISSN, Journal, JournalData } from '../../entities/public-api';
 import { FilterHttpMap, FiltersService } from '../../filters/public-api';
 
 import { Environment } from '../../core/env';
@@ -144,7 +144,7 @@ export class SourcesListComponent implements OnInit
         }),
         catchError(error => {
             this.loading = false;
-            console.log('ERRORRR ' + error);
+            // console.log('ERRORRR ' + error);
             // Catch if the GitHub API has reached its rate limit. Return empty data.
             // this.isRateLimitReached = true;
             return observableOf([]);
@@ -153,7 +153,7 @@ export class SourcesListComponent implements OnInit
     }
 
     onScrollUp() {
-        // console.log("scrolled up!!");
+        // // console.log("scrolled up!!");
     }
 
     isEmpty() {

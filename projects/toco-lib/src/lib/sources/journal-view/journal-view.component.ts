@@ -3,11 +3,11 @@
  *   All rights reserved.
  */
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MetadataService, MessageHandler, StatusCode, Environment } from '../../core/public-api';
-import { Organization, VocabulariesInmutableNames, JournalVersion } from '../../entities/public-api';
+import { Environment, MessageHandler, MetadataService, StatusCode } from '../../core/public-api';
+import { JournalVersion, Organization, VocabulariesInmutableNames } from '../../entities/public-api';
 
 
 export enum JournalDataType {
@@ -246,7 +246,7 @@ export class JournalViewComponent implements OnInit {
 
     sourceEditDone(version: JournalVersion) {
         this.editVersion = false;
-        console.log('AAaAAAAAAAAAAAAAAAAAA');
+        // console.log('AAaAAAAAAAAAAAAAAAAAA');
 
     }
 

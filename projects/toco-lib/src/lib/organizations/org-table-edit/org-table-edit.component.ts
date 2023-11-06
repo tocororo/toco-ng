@@ -1,15 +1,26 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { UserService, SortDirection, PageRequest, Page } from '../../core/public-api';
 import { ENDPOINT_APIS, OrganizationService } from '../../backend/public-api';
+import { Page, PageRequest, SortDirection } from '../../core/public-api';
 import { Organization } from '../../entities/public-api';
-import { TableContent, TableComponent, CellContentWrap, InputContent, TextAlign, 
-    TextInputAppearance, IconValue, IconSource, HintPosition, HintValue, ContentPosition, 
-    ContainerContent, InputTextComponent } from '../../forms/public-api';
+import {
+    CellContentWrap,
+    ContainerContent,
+    ContentPosition,
+    HintPosition, HintValue,
+    IconSource,
+    IconValue,
+    InputContent,
+    InputTextComponent,
+    TableComponent,
+    TableContent,
+    TextAlign,
+    TextInputAppearance
+} from '../../forms/public-api';
 
 @Component({
   selector: 'toco-org-table-edit',
@@ -19,13 +30,13 @@ import { TableContent, TableComponent, CellContentWrap, InputContent, TextAlign,
 export class OrgTableEditComponent implements OnInit {
 
     /**
-     * Contains the content of the identifiers section. 
+     * Contains the content of the identifiers section.
      */
     public identifiersContent: ContainerContent;
     // public identifiersContent_Complex: ContainerContent;
 
     /**
-     * The search filter. 
+     * The search filter.
      */
 	// public searchContent: InputContent;
 
@@ -57,7 +68,7 @@ export class OrgTableEditComponent implements OnInit {
 
         /***************************/
 
-        // this._tableControl.page.subscribe((value) => console.log('page', value));
+        // this._tableControl.page.subscribe((value) => // console.log('page', value));
     }
 
     private _initSearchContent(): InputContent
@@ -68,14 +79,14 @@ export class OrgTableEditComponent implements OnInit {
 
             'label': 'Write a text to search',
             'controlType': InputTextComponent,
-    
+
             'textAlign': TextAlign.left,
             'ariaLabel': 'Search',
-    
+
             'appearance': TextInputAppearance.outline,
-    
+
             'prefixIcon': new IconValue(IconSource.external, ContentPosition.prefix, 'search'),
-    
+
             'startHint': new HintValue(HintPosition.start, 'Searches when typing stops.')
         };
     }
@@ -126,7 +137,7 @@ export class OrgTableEditComponent implements OnInit {
     {
         return this._organizationService.get<Organization[]>(ENDPOINT_APIS.organizations, []).pipe(
             map((response: Organization[]): Page<Organization> => {
-                console.log('Organizations Response: ', response);
+                // console.log('Organizations Response: ', response);
                 // if (response && response.status != ResponseStatus.ERROR){
                     return {
                         'data': response,
@@ -135,11 +146,11 @@ export class OrgTableEditComponent implements OnInit {
                         'pageSize': pageRequest.paginator.pageSize
                     };
                 // }
-                
+
             })
         );
 	}
-	
+
 	public doOperation(): void
 	{
 		this._router.navigate(['organizaciones/adicionar']);

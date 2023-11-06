@@ -225,7 +225,7 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
 
 	public onSelectionChange(): void
 	{
-		// console.log('Call `onSelectionChange` - ', 'Select value: ', this.content.formControl.value);
+		// // console.log('Call `onSelectionChange` - ', 'Select value: ', this.content.formControl.value);
 
 		this._setSelectTooltip();
 
@@ -248,7 +248,7 @@ export class InputSelectComponent extends InputControl implements OnInit, OnDest
 		}
 
 		this._transServ.get(key).subscribe((res: any) => {
-			// console.log(key, ' --> ', res);
+			// // console.log(key, ' --> ', res);
 
 			if (this.content.multiple)
 			{

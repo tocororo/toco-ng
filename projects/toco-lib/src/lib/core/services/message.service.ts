@@ -15,17 +15,17 @@ export class MessageService
 	{ }
 
 	/**
-	 * Adds the specified message. 
-	 * @param msg The message to add. 
+	 * Adds the specified message.
+	 * @param msg The message to add.
 	 */
 	public add(msg: string): void
 	{
-		console.log(msg);
+		// console.log(msg);
 		this.messages.push(msg);
 	}
 
 	/**
-	 * Deletes all messages. 
+	 * Deletes all messages.
 	 */
 	public clear(): void
 	{

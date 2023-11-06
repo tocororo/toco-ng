@@ -74,24 +74,24 @@ export class SourceService {
 
   private adhocstringgify(source: SourceVersion) {
     let orgs: string = JSON.stringify(source.data.organizations);
-    console.log("-------------------", orgs);
+    // console.log("-------------------", orgs);
 
     let all = source.entitystringify();
-    console.log("-------------------", all);
+    // console.log("-------------------", all);
 
     let from = all.search('"organizations"') + 16;
 
     let p1 = all.substr(0, from);
-    console.log(p1);
+    // console.log(p1);
 
     let p2 = all.substr(from);
-    console.log(p2);
+    // console.log(p2);
 
     let len = this.count_to_len(p2);
-    console.log(len);
+    // console.log(len);
 
     let p3 = all.substr(from + len);
-    console.log(p3);
+    // console.log(p3);
 
     return p1 + orgs + p3;
   }
@@ -110,9 +110,9 @@ export class SourceService {
   }
   editSource(source: SourceVersion, uuid: any): Observable<Response<any>> {
     // this.adhocstringgify(source)
-    // console.log(source)
+    // // console.log(source)
     // let valu = source.entitystringify();
-    // console.log("s: ", valu)
+    // // console.log("s: ", valu)
 
     const req = this.env.sceibaApi + this.prefix + "/" + uuid + "/edit";
     return this.http.post<Response<any>>(
@@ -300,7 +300,7 @@ export class SourceServiceNoAuth {
       params: params,
       // headers: this.headers
     };
-    console.log(params);
+    // console.log(params);
     const req = this.env.sceibaApi + 'search/sources';
     return this.http.get<SearchResponse<Source>>(req, options);
   }

@@ -1,6 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { FormFieldControl_Experimental } from "../form-field.control.experimental";
-import { FormControl, FormGroup } from "@angular/forms";
 import { InputControl } from '../../input/input.control';
 
 @Component({
@@ -26,7 +24,7 @@ export class TextareaComponent extends InputControl
     //   this.content.name,
     //   this.internalControl
     // );
-    // console.log(this.content);
+    // // console.log(this.content);
     // this.content.formControl.setValue(this.content.value);
   }
 }

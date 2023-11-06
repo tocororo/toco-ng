@@ -179,9 +179,9 @@ export class OrganizationServiceNoAuth {
       params: params,
       // headers: this.headers
     };
-    console.log(params);
+    // console.log(params);
     const req = this.env.sceibaApi + 'search/' + this.path;
-    console.log(req);
+    // console.log(req);
 
     return this.http.get<SearchResponse<Organization>>(req, options);
   }

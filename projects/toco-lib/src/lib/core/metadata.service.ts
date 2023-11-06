@@ -1,15 +1,15 @@
 
 import { Injectable } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Title, Meta } from '@angular/platform-browser';
 
-import { Environment } from './env'
+import { Environment } from './env';
 
 /**
- * A service that is used to set the title and metadata of a route. 
- * This service is important for things like configuring a Content Security Policy, 
- * defining browser compatibility and security settings, setting HTTP Headers, 
- * defining rich content for social sharing, and Search Engine Optimization (SEO). 
+ * A service that is used to set the title and metadata of a route.
+ * This service is important for things like configuring a Content Security Policy,
+ * defining browser compatibility and security settings, setting HTTP Headers,
+ * defining rich content for social sharing, and Search Engine Optimization (SEO).
  */
 @Injectable({
     providedIn: 'root'
@@ -20,18 +20,18 @@ export class MetadataService
     { }
 
     /**
-     * Sets the page metadata for SEO and standard social networks. 
-     * @param title The title to set. Maximum length 60-70 characters. 
-     * @param description The description to set. Maximum length 155 characters. 
-     * @param image The image to set. If the value is empty, then the image is not set. 
-     * The image must be at least 280px in width and 150px in height; and must be less than 1Mb in size. 
+     * Sets the page metadata for SEO and standard social networks.
+     * @param title The title to set. Maximum length 60-70 characters.
+     * @param description The description to set. Maximum length 155 characters.
+     * @param image The image to set. If the value is empty, then the image is not set.
+     * The image must be at least 280px in width and 150px in height; and must be less than 1Mb in size.
      */
     public setStandardMeta(title: string, description: string, image: string = ""): void
     {
-        /* The canonical URL for your page. This should be the undecorated URL, 
+        /* The canonical URL for your page. This should be the undecorated URL,
         without session variables, user identifying parameters, or counters. */
         let url: string = this.env.appHost + this._router.url;
-        //console.log('The URL for metadata is: ', url);
+        //// console.log('The URL for metadata is: ', url);
         image = this.env.appHost + image;
 
         /* Primary metadata. */

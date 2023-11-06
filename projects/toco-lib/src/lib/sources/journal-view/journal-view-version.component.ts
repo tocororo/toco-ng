@@ -1,7 +1,7 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageHandler, StatusCode } from '../../core/public-api';
-import { JournalVersion, SourceClasification, VocabulariesInmutableNames, SourceOrganization } from '../../entities/public-api';
+import { JournalVersion, SourceClasification, SourceOrganization, VocabulariesInmutableNames } from '../../entities/public-api';
 import { JournalDataType } from './journal-view.component';
 
 
@@ -46,7 +46,7 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    console.log("***////****////***///");
+    // console.log("***////****////***///");
     this.ngOnInit();
   }
 
@@ -115,7 +115,7 @@ export class JournalViewVersionComponent implements OnInit, OnChanges {
     // //     this.editingJournal.data.classifications.push(termSource);
 
     // // });
-    console.log("editingJournal remplazado", this.editingJournal);
+    // console.log("editingJournal remplazado", this.editingJournal);
   }
 
   /**

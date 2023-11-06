@@ -61,6 +61,6 @@ export class InputBoolComponent extends InputControl implements OnInit
 			this.content.extraContent.selectionChange(this.content.formControl.value);
 		}
 
-		// console.log('Select value: ', this.content.formControl.value);
+		// // console.log('Select value: ', this.content.formControl.value);
 	}
 }

@@ -51,7 +51,7 @@ export class SearchService {
       params: params,
       // headers: this.headers
     };
-    console.log(params)
+    // console.log(params)
     const req = this.env.sceibaApi + this.prefix + '/records/';
     return this.http.get<SearchResponse<Record>>(req, options);
   }
@@ -61,7 +61,7 @@ export class SearchService {
       params: params,
       // headers: this.headers
     };
-    console.log(params);
+    // console.log(params);
     const req = this.env.sceibaApi + this.prefix + '/sources';
     return this.http.get<SearchResponse<Source>>(req, options);
   }
@@ -71,16 +71,16 @@ export class SearchService {
       params: params,
       // headers: this.headers
     };
-    // console.log(params);
+    // // console.log(params);
     const req = this.env.sceibaApi + this.prefix + '/organizations/';
-    // console.log(req);
+    // // console.log(req);
 
     return this.http.get<SearchResponse<Organization>>(req, options);
   }
 
   public getOrganizationById(id: string): Observable<SearchResponse<Organization>> {
     const req = this.env.cuorApi + 'organizations/' + id + '/';
-    // console.log(req);
+    // // console.log(req);
 
     return this.http.get<SearchResponse<Organization>>(req);
   }

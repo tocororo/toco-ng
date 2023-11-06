@@ -1,13 +1,15 @@
 import { InputControl } from '../../input/input.control';
 
-import { Component, Input, forwardRef, ViewChild, OnInit } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import {  MatDatepicker } from '@angular/material/datepicker';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDatepicker } from '@angular/material/datepicker';
+
 
 import moment from 'moment';
-import { defaultFormat as _rollupMoment, Moment } from 'moment';
+
+import { Moment } from 'moment';
 // const moment = _rollupMoment || _moment;
 
 
@@ -90,7 +92,7 @@ export class DatepickerYearComponent  extends InputControl implements OnInit, Co
 
     this.min = this.content.extraContent.minYear;
     this.max = this.content.extraContent.maxYear;
-    console.log(this.content.extraContent, 'DATEPICKER YEAR EXTRA CONTENT....', this._min, this._max)
+    // console.log(this.content.extraContent, 'DATEPICKER YEAR EXTRA CONTENT....', this._min, this._max)
 
     this.writeValue(new Date(this.content.value));
    }

@@ -5,16 +5,12 @@
 
 
 import { Component, ComponentFactoryResolver } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { FilterComponent } from '../../filters/public-api';
-import { FilterItem } from '../../filters/public-api';
-import { BooleanFilterComponent } from '../../filters/public-api';
-import { FilterContainerService } from '../../filters/public-api';
-import { FilterContainerComponent } from '../../filters/public-api';
 import { MessageHandler, StatusCode } from '../../core/public-api';
+import { BooleanFilterComponent, FilterComponent, FilterContainerComponent, FilterContainerService, FilterItem } from '../../filters/public-api';
 
 import { CatalogService, TaxonomyService } from '../../backend/public-api';
 import { Environment } from '../../core/env';
@@ -58,7 +54,7 @@ export class CatalogFiltersComponent extends FilterContainerComponent {
           response.data.vocabularies.forEach(vocab => {
             if (VocabulariesInmutableNames.CUBAN_INTITUTIONS === vocab.id
               && this.env.topOrganizationPID !== '') {
-              console.log(this.env.topOrganizationPID);
+              // console.log(this.env.topOrganizationPID);
               this.taxonomyService.getTermByUUID(this.env.topOrganizationPID).subscribe(termsResponse => {
                 this.filters_data.push(
                   {

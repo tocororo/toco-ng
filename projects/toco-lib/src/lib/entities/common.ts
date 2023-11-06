@@ -10,17 +10,17 @@ export class EntityBase extends Object {
 
     for (const key of keys) {
       if (data[key] && !exclude.includes(key)) {
-        // console.log('DEEEPCOPY OF : ', key, data[key])
+        // // console.log('DEEEPCOPY OF : ', key, data[key])
         // if(this.toBoolean(data[key])){
-        //   console.log('TO BOOLEAN IS TRUE !!!!!! ');
+        //   // console.log('TO BOOLEAN IS TRUE !!!!!! ');
         //   this[key] = data[key].toLowerCase() === 'true';
         // } else {
           // if (this[key] instanceof EntityBaseList) {
-          //   console.log('RECUSIVE CALL ON EntityBaseList',  this[key]);
+          //   // console.log('RECUSIVE CALL ON EntityBaseList',  this[key]);
           //   this[key].deepcopy(data[key], exclude);
           // } else{
             if (this[key] instanceof EntityBase) {
-              console.log('RECUSIVE CALL ON EntityBase',  this[key]);
+              // console.log('RECUSIVE CALL ON EntityBase',  this[key]);
               this[key].deepcopy(data[key], exclude);
             }
             // else if (this[key] instanceof Array<EntityBase>){
@@ -36,8 +36,8 @@ export class EntityBase extends Object {
   }
   private toBoolean(value){
     if(typeof value === 'string' || value instanceof String){
-      console.log('DEEPCOPY ----------  TO BOOLEAN ------------ VAL=',value)
-      console.log(value.toLowerCase() === 'true' || value.toLowerCase() === 'false')
+      // console.log('DEEPCOPY ----------  TO BOOLEAN ------------ VAL=',value)
+      // console.log(value.toLowerCase() === 'true' || value.toLowerCase() === 'false')
       return value.toLowerCase() === 'true' || value.toLowerCase() === 'false';
     }
     return false;
@@ -117,8 +117,8 @@ export class Entity extends EntityBase {
       // if (k !== "id" && k !== "uuid" && k !== "isNew") {
       // if (k !== "isNew" && k !== "entityType" && (v != null && v != '' && v != undefined && !Array.isArray(v))) {
       if (k !== "isNew" && k !== "entityType" && (v != null && v != '' && v != undefined)) {
-        console.log("entitystringify call")
-        console.log(k,v)
+        // console.log("entitystringify call")
+        // console.log(k,v)
         return v;
       }
     });

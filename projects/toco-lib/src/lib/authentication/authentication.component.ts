@@ -78,7 +78,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
   private timerAuthenticateSuscription: Subscription = null;
   private timerAuthenticateObserver: PartialObserver<number> = {
     next: (_) => {
-      // console.log('next');
+      // // console.log('next');
       // this.oauthService.setupAutomaticSilentRefresh();
       if (this.oauthStorage.getItem("access_token")) {
         this.authenticationService.getUserInfo().subscribe(
@@ -86,7 +86,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
             this.oauthStorage.setItem("user", JSON.stringify(response));
             this.authenticationService.login(response);
           },
-          error => console.log(error),
+          error => // console.log(error),
           () => {}
         )
         // this.authenticationService.logguedChange(true);
@@ -94,11 +94,11 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     },
 
     error: (err: any) => {
-      console.log("The observable got an error notification: " + err + ".");
+       console.log("The observable got an error notification: " + err + ".");
     },
 
     complete: () => {
-      console.log("The observable got a complete notification.");
+     console.log("The observable got a complete notification.");
     },
   };
 
@@ -190,12 +190,12 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
         this.authenticationService.getUserInfo().subscribe(
 
             (response) => {
-              console.log(response);
+              // console.log(response);
 
               this.oauthStorage.setItem("user", JSON.stringify(response));
               this.authenticationService.login(response);
             },
-            error => console.log(error),
+            error => // console.log(error),
             () => {}
 
 
@@ -218,7 +218,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
         );
       },
       onLoginError: (err) => {
-        console.log("error in login", err);
+        // console.log("error in login", err);
       },
     });
   }
@@ -240,7 +240,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
         }
       },
       error: (err) => {
-        console.log(err);
+        // console.log(err);
       },
       complete: () => {},
     });

@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
-import { MatDialog, MAT_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { TaxonomyService } from '../../../backend/public-api';
-import { SourceData, TermNode, Term, SourceClasification, VocabulariesInmutableNames } from '../../../entities/public-api';
-import { PanelContent_Depr, FormContainerAction, InputTextComponent, FormFieldType, SelectComponent, SelectOption, InputUrlComponent, HintValue, HintPosition } from '../../../forms/public-api';
+import { SourceClasification, SourceData, Term, TermNode, VocabulariesInmutableNames } from '../../../entities/public-api';
+import { FormContainerAction, FormFieldType, HintPosition, HintValue, InputTextComponent, InputUrlComponent, PanelContent_Depr, SelectComponent, SelectOption } from '../../../forms/public-api';
 
 
 @Component({
@@ -59,7 +59,7 @@ export class SourceIndexesComponent implements OnInit {
         }
       },
       (err: any) => {
-        console.log(
+         console.log(
           'ERROR: ' + err + '.'
         );
       },
@@ -74,7 +74,7 @@ export class SourceIndexesComponent implements OnInit {
     this.selectedDatabases = new Array(this.databases.length);
     this._setSelectedDatabses();
     this._setIndexesToSource();
-    console.log('******* complete process');
+    // console.log('******* complete process');
   }
 
   /**
@@ -138,7 +138,7 @@ export class SourceIndexesComponent implements OnInit {
 
       }
     });
-    console.log(this.sourceData);
+    // console.log(this.sourceData);
 
   }
 
@@ -187,7 +187,7 @@ export class SourceIndexesComponent implements OnInit {
             editing: editing,
             addIndex: (result: SourceClasification) => {
               this.dialog.closeAll();
-              // console.log('----------------------------',this.selectedDatabases[dbclassIndex].dblist);
+              // // console.log('----------------------------',this.selectedDatabases[dbclassIndex].dblist);
 
               const newSelected = [];
               this.selectedDatabases[dbclassIndex].dblist.forEach(element => {
@@ -199,10 +199,10 @@ export class SourceIndexesComponent implements OnInit {
               // this.selectedDatabases[dbclassIndex].dblist = this.selectedDatabases[dbclassIndex].dblist.filter(
               //   value => (value.id == result.id && value.id == editing.id));
 
-              // console.log('++++++++++++++++++++++',this.selectedDatabases[dbclassIndex].dblist);
+              // // console.log('++++++++++++++++++++++',this.selectedDatabases[dbclassIndex].dblist);
 
               this.selectedDatabases[dbclassIndex].dblist.push(result);
-              // console.log('*********************',this.selectedDatabases[dbclassIndex].dblist);
+              // // console.log('*********************',this.selectedDatabases[dbclassIndex].dblist);
               this._setIndexesToSource();
             },
           },
@@ -211,7 +211,7 @@ export class SourceIndexesComponent implements OnInit {
     }
   }
   deleteIndexAction(dbclassIndex: number, toDelete: SourceClasification) {
-    // console.log('DELETE', toDelete);
+    // // console.log('DELETE', toDelete);
 
     this.selectedDatabases[dbclassIndex].dblist = this.selectedDatabases[dbclassIndex].dblist.filter(value => value.id != toDelete.id);
     this._setIndexesToSource();
@@ -250,7 +250,7 @@ export class SourceEditAddIndexComponent implements OnInit {
     private _formBuilder: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    // console.log(data);
+    // // console.log(data);
 
     this.dbclass = data.dbclass;
     this.options = data.options;
@@ -294,7 +294,7 @@ export class SourceEditAddIndexComponent implements OnInit {
                   return opts;
                 },
                 selectionChange: (value) => {
-                  console.log(value);
+                  // console.log(value);
                 }
               }
             },
@@ -344,7 +344,7 @@ export class SourceEditAddIndexComponent implements OnInit {
       doit: (data: any) => {
         if (this.indexFormGroup.valid) {
           const result = new SourceClasification();
-          // console.log(this.indexFormGroup);
+          // // console.log(this.indexFormGroup);
 
           if (this.indexFormGroup.controls['indexes'].value) {
             const node = this.options.find(value => value.term.uuid == this.indexFormGroup.controls['indexes'].value);

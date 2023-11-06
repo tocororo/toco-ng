@@ -112,7 +112,7 @@ export class SelectFilterComponent extends InputControl
 
           // error
           (error: any) => {
-            console.log(error);
+            // console.log(error);
           },
           // complete
           () => {}
@@ -199,9 +199,9 @@ export class SelectFilterComponent extends InputControl
       startWith(""),
       map(value => {
         const filterValue = value ? value.toLowerCase() : "";
-        console.log('************************************')
-        console.log(this.selectOptions);
-        console.log('************************************')
+        // console.log('************************************')
+        // console.log(this.selectOptions);
+        // console.log('************************************')
 
         return this.selectOptions.filter(option =>
           option.label.toLowerCase().includes(filterValue)
@@ -223,11 +223,11 @@ export class SelectFilterComponent extends InputControl
       this.chipsList = [value];
     }
     this.addTermToValue(value);
-    // console.log(this.selectOptions);
+    // // console.log(this.selectOptions);
     this.selectOptions = this.selectOptions.filter(
       option => option.value !== value.value
     );
-    // console.log(this.selectOptions);
+    // // console.log(this.selectOptions);
 
     this.chipsFormControl.setValue("");
     // document.getElementById(this.inputId).blur();
@@ -235,10 +235,10 @@ export class SelectFilterComponent extends InputControl
   }
 
   removeChip(index: number) {
-    // console.log(this.selectOptions);
+    // // console.log(this.selectOptions);
 
     this.selectOptions.push(this.chipsList[index]);
-    // console.log(this.selectOptions);
+    // // console.log(this.selectOptions);
     this.removeTermFromValue(this.chipsList[index]);
     this.chipsList.splice(index, 1);
     this._updateFilteredOptions();

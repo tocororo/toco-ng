@@ -4,25 +4,23 @@
  */
 
 
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { merge, of as observableOf } from 'rxjs';
-import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { merge, of as observableOf } from 'rxjs';
+import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
-import { MetadataService, MessageHandler, StatusCode } from '../../core/public-api';
-import { Journal, JournalData, ISSN, JournalVersion } from '../../entities/public-api';
+import { MessageHandler, MetadataService, StatusCode } from '../../core/public-api';
+import { ISSN, Journal, JournalData, JournalVersion } from '../../entities/public-api';
 import { FilterHttpMap, FiltersService } from '../../filters/public-api';
 
 import { Environment } from '../../core/env';
 
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CatalogService } from '../../backend/public-api';
 import { CatalogFiltersComponent } from '../catalog-filters/catalog-filters.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { JournalViewInfoComponent } from '../../sources/journal-view/journal-view-info.component';
-import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'toco-catalog',
@@ -180,7 +178,7 @@ export class CatalogComponent implements OnInit {
   }
 
   public onScrollUp() {
-    // console.log("scrolled up!!");
+    // // console.log("scrolled up!!");
   }
 
   public isEmpty() {
@@ -213,7 +211,7 @@ export class CatalogComponent implements OnInit {
 
     this.service.getSourceByUUID(uuid).subscribe(
       (response) => {
-        console.log(response);
+        // console.log(response);
         if (response.status == "success") {
           let journalVersion = new JournalVersion();
           journalVersion.deepcopy(response.data.sources);
@@ -231,7 +229,7 @@ export class CatalogComponent implements OnInit {
         }
       },
       (error) => {
-        console.log('error');
+        // console.log('error');
       },
       () => { }
     );
@@ -257,7 +255,7 @@ export class DialogCatalogJournalInfoDialog implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    console.log(this.data);
+    // console.log(this.data);
 
   }
   onNoClick(): void {

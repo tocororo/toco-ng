@@ -592,7 +592,7 @@ export class RoadMapComponent implements OnInit
 	 */
 	public set currentProducts(value: Product[])
 	{
-		// console.log('currentProducts: ', value);
+		// // console.log('currentProducts: ', value);
 
 		/* Updates the current products/features arrays. */
 		this._currentProducts = value || [ ];
@@ -687,7 +687,7 @@ export class RoadMapComponent implements OnInit
 	 */
 	public set futureProducts(value: Product[])
 	{
-		// console.log('futureProducts: ', value);
+		// // console.log('futureProducts: ', value);
 
 		/* Updates the future products/features arrays. */
 		this._futureProducts = value || [ ];
@@ -780,7 +780,7 @@ export class RoadMapComponent implements OnInit
 	 */
 	private _set_activeEntries_P_CW(setEmpty: boolean): void
 	{
-		// console.log('Called "_set_activeEntries_P_CW": setEmpty = ', setEmpty);
+		// // console.log('Called "_set_activeEntries_P_CW": setEmpty = ', setEmpty);
 
 		if (setEmpty)
 		{
@@ -823,7 +823,7 @@ export class RoadMapComponent implements OnInit
 	 */
 	private _set_activeEntries_P_FW(setEmpty: boolean): void
 	{
-		// console.log('Called "_set_activeEntries_P_FW": setEmpty = ', setEmpty);
+		// // console.log('Called "_set_activeEntries_P_FW": setEmpty = ', setEmpty);
 
 		if (setEmpty)
 		{
@@ -972,7 +972,7 @@ export class RoadMapComponent implements OnInit
 
 	public onSelectTab(newPos: number): void
 	{
-		// console.log('onSelectTab pos: ', newPos);
+		// // console.log('onSelectTab pos: ', newPos);
 
 		/* Uses this trick to obligate repainting the chart. */
 		this._isUsingTrick_RepaintChart = true;
@@ -993,7 +993,7 @@ export class RoadMapComponent implements OnInit
 
 	public onSelect(eventInfo: any): void
 	{
-		// console.log('onSelect: ', eventInfo);
+		// // console.log('onSelect: ', eventInfo);
 
 		if (isObject(eventInfo))  /* It has not clicked a legend item. */
 		{
@@ -1016,12 +1016,12 @@ export class RoadMapComponent implements OnInit
 
 	public onActivate(eventInfo: any): void
 	{
-		// console.log('onActivate: ', eventInfo);
+		// // console.log('onActivate: ', eventInfo);
 	}
 
 	public onDeactivate(eventInfo: any): void
 	{
-		// console.log('onDeactivate: ', eventInfo, ', _activeEntries_P_CW = ', this._activeEntries_P_CW, ', _activeEntries_P_FW = ', this._activeEntries_P_FW);
+		// // console.log('onDeactivate: ', eventInfo, ', _activeEntries_P_CW = ', this._activeEntries_P_CW, ', _activeEntries_P_FW = ', this._activeEntries_P_FW);
 
 		if (this._isFeaturesChartShowed)
 		{

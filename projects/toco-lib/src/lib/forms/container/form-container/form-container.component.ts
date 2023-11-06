@@ -1,17 +1,17 @@
 
-import { Component, OnInit, Input, OnChanges } from "@angular/core";
+import { Component, Input, OnChanges, OnInit } from "@angular/core";
 
 import { ContainerContent, ContainerControl } from "../container.control";
 
 /**
- * This interface is deprecated. 
+ * This interface is deprecated.
  */
 export interface FormContainerAction {
   doit(data: any): void;
 }
 
 /**
- * This interface is deprecated. 
+ * This interface is deprecated.
  * An interface that represents the content of an expansion control.
  */
 export interface PanelContent_Depr extends ContainerContent {
@@ -43,7 +43,7 @@ export interface PanelContent_Depr extends ContainerContent {
 }
 
 /**
- * This component is deprecated. 
+ * This component is deprecated.
  * Represents a control that contains a list of panels and sends that information to the server.
  */
 @Component({
@@ -99,7 +99,7 @@ export class FormContainerComponent extends ContainerControl
   }
 
   public ngOnInit(): void {
-    console.log("on INIT call", this.panelsContent);
+    // console.log("on INIT call", this.panelsContent);
 
     /* Sets the default values. */
     if (this.panelsContent.length > 0) {
@@ -123,7 +123,7 @@ export class FormContainerComponent extends ContainerControl
   }
 
   public ngOnChanges(): void {
-    console.log("on CHANGES call", this.panelsContent);
+    // console.log("on CHANGES call", this.panelsContent);
     this.ngOnInit();
 
     // this.init(this.content.label, false, false);

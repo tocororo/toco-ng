@@ -1,13 +1,13 @@
 
-import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
-import { Observable, Subscription, Subject, combineLatest } from 'rxjs';
-import { startWith, switchMap, finalize, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subject, Subscription, combineLatest } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, startWith, switchMap } from 'rxjs/operators';
 
-import { SortDirection, FilterControls, FilterValues, Page, Params, BackendDataSourceFunction } from '../../../core/public-api';
+import { BackendDataSourceFunction, FilterControls, FilterValues, Page, Params, SortDirection } from '../../../core/public-api';
 
 /**
  * A collection of CSS styles.
@@ -454,7 +454,7 @@ export class TableComponent implements OnInit, OnDestroy
                 /* Adds the new backend subscription. It begins/continues the loading of the data.
                  * In this way, it shows the loading progress control. */
                 this._countBackendSubscriptions++;
-                console.log('Call _countBackendSubscriptions: ', this._countBackendSubscriptions);
+                // console.log('Call _countBackendSubscriptions: ', this._countBackendSubscriptions);
 
                 /* Erases the data from the table. */
                 this._setDataBeforeCallEndpoint(sortEvent, pageEvent);
@@ -472,7 +472,7 @@ export class TableComponent implements OnInit, OnDestroy
                 );
             })
         ).subscribe((response: Page<any>): void => {
-            //console.log('Endpoint Response: ', response);
+            //// console.log('Endpoint Response: ', response);
 
             /* Sets the new data on the table. */
             this._setDataAfterCallEndpoint(response);

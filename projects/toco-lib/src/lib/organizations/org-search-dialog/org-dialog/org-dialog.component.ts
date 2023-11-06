@@ -2,18 +2,18 @@ import { HttpParams } from "@angular/common/http";
 import {
   Component,
   HostListener,
-  Input,
   Inject,
+  Input,
   ViewChild,
 } from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { PageEvent } from "@angular/material/paginator";
-import { MatDialogRef, MAT_DIALOG_DATA as MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatDrawer } from "@angular/material/sidenav";
 import { NavigationExtras, Params } from "@angular/router";
+import { OrganizationServiceNoAuth } from "../../../backend/organization.service";
 import { SearchResponse } from "../../../entities/common";
 import { Organization } from "../../../entities/organization.entity";
 import { AggregationsSelection } from "../../../search/public-api";
-import { OrganizationServiceNoAuth } from "../../../backend/organization.service";
 
 interface DialogData {
   title: string;
@@ -125,10 +125,10 @@ export class OrgDialogComponent {
       (response: SearchResponse<Organization>) => {
         // this.pageEvent.length = response.hits.total;
         this.sr = response;
-        console.log(
-          "🚀 ~ file: org-dialog.component.ts:115 ~ OrgDialogComponent ~ fetchSearchRequest ~ this.sr",
-          this.sr
-        );
+        // console.log(
+        //   "🚀 ~ file: org-dialog.component.ts:115 ~ OrgDialogComponent ~ fetchSearchRequest ~ this.sr",
+        //   this.sr
+        // );
         delete this.sr.aggregations["country"];
         this.aggr_keys = [
           //{value: this.sr.aggregations.country, key: 'País'},
@@ -138,10 +138,10 @@ export class OrgDialogComponent {
         ];
       },
       (error: any) => {
-        console.log("ERROPR");
+         console.log("ERROPR");
       },
       () => {
-        console.log("END...");
+         console.log("END...");
         this.loading = false;
       }
     );
@@ -162,7 +162,7 @@ export class OrgDialogComponent {
 
   @HostListener("window:resize", ["$event"])
   onResize(event: Event) {
-    // console.log("window:resize", window.innerWidth);
+    // // console.log("window:resize", window.innerWidth);
     if (window.innerWidth <= 740) {
       this.drawer.opened = false;
     } else {
@@ -187,7 +187,7 @@ export class OrgDialogComponent {
       this.selectedOrgs = this.selectedOrgs.filter((ele) => ele.id !== org.id);
     }
 
-    console.log(this.selectedOrgs);
+    // console.log(this.selectedOrgs);
   }
 
   checkSingle(e, org) {

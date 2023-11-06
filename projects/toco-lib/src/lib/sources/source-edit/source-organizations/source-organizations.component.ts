@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, Inject } from "@angular/core";
+import { Component, Inject, Input, OnInit } from "@angular/core";
 
-import { MatDialogRef, MAT_DIALOG_DATA as MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { OrganizationServiceNoAuth } from '../../../backend/public-api';
-import { MessageHandler, StatusCode, HandlerComponent } from '../../../core/public-api';
-import { SourceData, Organization, SourceOrganizationRole, SourceOrganization, OrganizationRelationships, Relationship } from '../../../entities/public-api';
+import { HandlerComponent, MessageHandler, StatusCode } from '../../../core/public-api';
+import { Organization, OrganizationRelationships, Relationship, SourceData, SourceOrganization, SourceOrganizationRole } from '../../../entities/public-api';
 
 
 @Component({
@@ -28,11 +28,11 @@ export class SourceOrganizationsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.sourceData.organizations);
+    // console.log(this.sourceData.organizations);
     this.sourceData.organizations = this.sourceData.organizations.filter(
       (element) => element && element.role
     );
-    console.log(this.sourceData.organizations);
+    // console.log(this.sourceData.organizations);
   }
 
   addOrg(cuban = true, topMain = false) {
@@ -110,7 +110,7 @@ export class SourceOrganizationsComponent implements OnInit {
         msg += this.sourceData.organizations[element].name + ", ";
       }
       toDelete.push(organization);
-      console.log(toDelete);
+      // console.log(toDelete);
       if(toDelete.length>0){
         m.showMessage(
           StatusCode.OK,
@@ -128,7 +128,7 @@ export class SourceOrganizationsComponent implements OnInit {
           orgs.push(this.sourceData.organizations[i]);
         }
       }
-      console.log(orgs);
+      // console.log(orgs);
       this.sourceData.organizations = orgs;
       // this.sourceData.organizations = this.sourceData.organizations.filter(
       //   (o) => o.id != organization.id
@@ -201,9 +201,9 @@ export class SourceOrganizationsComponent implements OnInit {
         pidindex++
       ) {
         const identifier = element.identifiers[pidindex];
-        console.log(identifier.value + "==" + pid);
+        // console.log(identifier.value + "==" + pid);
         if (identifier.value == pid) {
-          console.log(identifier.value + "==" + pid + "  iguales!!!");
+          // console.log(identifier.value + "==" + pid + "  iguales!!!");
           return index;
         }
       }
@@ -258,7 +258,7 @@ export class SourceOrganizationSelectTopDialog implements OnInit {
         this.toSelect.push(element);
       }
     });
-    console.log(this.toSelect);
+    // console.log(this.toSelect);
   }
   onNoClick(): void {
     this.dialogRef.close();
@@ -269,7 +269,7 @@ export class SourceOrganizationSelectTopDialog implements OnInit {
     // selected.organization = org;
     // selected.role = SourceOrganizationRole.MAIN.value;
     if (this.selected >= 0) {
-      console.log(this.toSelect[this.selected]);
+      // console.log(this.toSelect[this.selected]);
       this.orgService
         .getOrganizationByPID(this.toSelect[this.selected].identifiers[0].value)
         .subscribe({
@@ -336,7 +336,7 @@ export class SourceOrganizationSelectDialog implements OnInit {
   public canSelectRole = true;
 
   ngOnInit(): void {
-    console.log(this.data);
+    // console.log(this.data);
     this.canSelectRole = this.data.canSelectRole;
     if (this.data.filter) {
       this.placeholder = "Buscar una organización cubana";
@@ -347,7 +347,7 @@ export class SourceOrganizationSelectDialog implements OnInit {
   }
 
   public selectedOrg(org?: Organization): void {
-    console.log(org);
+    // console.log(org);
     this.org = org;
     this.addParent(this.org);
   }
@@ -359,7 +359,7 @@ export class SourceOrganizationSelectDialog implements OnInit {
             .getOrganizationByPID(p.identifiers[0].value)
             .subscribe({
               next: (response) => {
-                console.log(response);
+                // console.log(response);
                 this.parents.push(response.metadata);
                 this.addParent(response.metadata);
               },

@@ -349,7 +349,7 @@ function _cloneValueToUndefined(target: any, container: any): any
  */
 export function logError(operation: string, place: string, err: any): void
 {
-    console.log(`The observable got an error '${ operation }' in '${ place }': ${ err }.`);
+    // console.log(`The observable got an error '${ operation }' in '${ place }': ${ err }.`);
 }
 
 /**
@@ -359,7 +359,7 @@ export function logError(operation: string, place: string, err: any): void
  */
 export function logComplete(operation: string, place: string): void
 {
-    console.log(`The observable got a complete notification '${ operation }' in '${ place }'.`);
+    // console.log(`The observable got a complete notification '${ operation }' in '${ place }'.`);
 }
 
 /**

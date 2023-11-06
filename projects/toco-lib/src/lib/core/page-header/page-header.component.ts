@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
     selector: 'toco-page-header',
@@ -11,7 +11,7 @@ export class PageHeaderComponent implements OnInit {
     @Input() drawer;
     @Input() info:String[] = [];
     is_show_icon:Boolean = false;
-    
+
     constructor() { }
 
     ngOnInit() {
@@ -21,9 +21,9 @@ export class PageHeaderComponent implements OnInit {
     function(){
         this.drawer.toggle();
     }
-    
+
     change_icon_show(){
         this.is_show_icon = false;
-        console.log(this.is_show_icon);
+        // console.log(this.is_show_icon);
     }
 }

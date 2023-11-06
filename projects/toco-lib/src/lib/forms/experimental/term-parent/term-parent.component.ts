@@ -5,14 +5,13 @@
 
 
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, ValidationErrors } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 
 
-import { FormFieldControl_Experimental } from '../form-field.control.experimental';
-import { InputControl } from '../../input/input.control';
 import { Term, TermNode } from '../../../entities/public-api';
+import { InputControl } from '../../input/input.control';
 
 @Component({
     selector: 'toco-term-parent',
@@ -48,10 +47,10 @@ export class TermParentComponent extends InputControl implements OnInit {
         //     this.internalControl
         //   );
 
-        console.log(this.content.value)
-        console.log(this.content.required);
+        // console.log(this.content.value)
+        // console.log(this.content.required);
 
-        console.log(this.content.required && (this.content.value == 0 || this.content.value == null || this.content.value == undefined));
+        // console.log(this.content.required && (this.content.value == 0 || this.content.value == null || this.content.value == undefined));
 
         if (this.content.required) {
             this.content.formControl.setValidators((control: AbstractControl): ValidationErrors | null => {

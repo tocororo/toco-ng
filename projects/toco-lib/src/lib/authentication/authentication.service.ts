@@ -60,7 +60,7 @@ export class OauthAuthenticationService  implements HttpInterceptor {
      * @param islogged 'true' is loggued or 'false' other way
      */
     login(user) {
-      console.log('autentication service user:', user)
+      // console.log('autentication service user:', user)
       this.authenticationSubject.next(user);
     }
     logout() {
