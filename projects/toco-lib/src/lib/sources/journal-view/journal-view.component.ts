@@ -35,6 +35,7 @@ export enum JournalDataType {
     description = 19,
     term = 20,
     oaiurl = 22,
+    source_type = 23,
 }
 
 @Component({

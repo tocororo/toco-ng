@@ -1,15 +1,18 @@
+<div *ngIf="org" fxLayout="column wrap" style="padding: 0px 16px;">
+  <span class="mat-headline-6"> {{  org.name }}</span>
+  <span class="mat-caption" color="primary">
+    SceibaID: {{ org.id }}
+  </span>
+  <span class="mat-caption">
+    Tipo: Organización
+  </span>
+  <span *ngIf="org.status"  class="mat-caption">
+    Estatus de la organización: {{ org.status }}
+  </span>
+</div>
+
 
 <mat-card *ngIf="org" [attr.aria-label]="'Muestra la organización seleccionada'">
-  <mat-card-header>
-
-    <!-- <div mat-card-avatar class="example-header-image"></div> -->
-    <mat-card-title >{{ org.name }}</mat-card-title>
-    <mat-card-subtitle>SceibaID: {{ org.id }}</mat-card-subtitle>
-    <mat-card-subtitle *ngIf="org.status" class="cursor-default title-padding">
-      Estatus de la organización: {{ org.status }}
-    </mat-card-subtitle>
-
-  </mat-card-header>
 
   <mat-card-content *ngIf="showContent">
 

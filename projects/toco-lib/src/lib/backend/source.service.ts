@@ -73,27 +73,33 @@ export class SourceService {
 
 
   private adhocstringgify(source: SourceVersion) {
-    let orgs: string = JSON.stringify(source.data.organizations);
-    // console.log("-------------------", orgs);
 
-    let all = source.entitystringify();
-    // console.log("-------------------", all);
+    if(source.data.organizations.length > 0){
+      let orgs: string = JSON.stringify(source.data.organizations);
+      console.log("orgs: ", orgs);
 
-    let from = all.search('"organizations"') + 16;
+      let all = source.entitystringify();
+      console.log("source: ", all);
 
-    let p1 = all.substr(0, from);
-    // console.log(p1);
+      let from = all.search('"organizations"') + 16;
 
-    let p2 = all.substr(from);
-    // console.log(p2);
+      let p1 = all.substr(0, from);
+      console.log("p1: ", p1);
 
-    let len = this.count_to_len(p2);
-    // console.log(len);
+      let p2 = all.substr(from);
+      console.log("p2: ", p2);
 
-    let p3 = all.substr(from + len);
-    // console.log(p3);
+      let len = this.count_to_len(p2);
+      console.log("len: ", len);
 
-    return p1 + orgs + p3;
+      let p3 = all.substr(from + len);
+      console.log("p3: ", p3);
+
+      return p1 + orgs + p3;
+    } else {
+      return source.entitystringify();
+    }
+
   }
   private count_to_len(p2: string) {
     if (p2[0] == "[") {
@@ -149,6 +155,11 @@ export class SourceService {
       params: params,
       // headers: this.headers
     };
+
+    console.log('++++++++++++++++++++++++++++++++++++++++');
+    console.log(this.adhocstringgify(source));
+    console.log('++++++++++++++++++++++++++++++++++++++++');
+
 
     const req = this.env.sceibaApi + this.prefix + "/new";
     return this.http.post<Response<any>>(
