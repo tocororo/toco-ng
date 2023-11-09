@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
 import { Aggr, AggrBucket } from "../../entities/public-api";
 
-export interface AggregationsSelection{
-  [id: string]: string[]
+export interface AggregationsSelection {
+  [id: string]: string[];
 }
 
 @Component({
@@ -37,29 +37,27 @@ export class AggregationsComponent implements OnInit {
   @Output()
   modal_open = new EventEmitter<boolean>();
 
-is_open:boolean
+  is_open: boolean;
   keys = [];
-  value: any
+  value: any;
 
-  constructor( ) {}
+  constructor() {}
 
   ngOnInit() {
     for (const key in this.aggregations) {
       if (this.aggregations.hasOwnProperty(key)) {
         const element = this.aggregations[key];
         //this.keys.push(key);
-        this.keys.push({"key":key, "sp":this._translate(key)});
+        this.keys.push({ key: key, sp: this._translate(key) });
       }
     }
     // console.log("cola");
     // console.log(this.keys);
-
   }
 
   //aqui se agregan los casos que puedan haber en las agregaciones para q salgan siempre en español
-  private _translate(key){
-    switch (key)
-    {
+  private _translate(key) {
+    switch (key) {
       case "status": {
         return "Estado";
       }
@@ -73,17 +71,14 @@ is_open:boolean
         return "Tipos";
       }
       default: {
-        return this.aggregations[key]['label'];
-
+        return this.aggregations[key]["label"];
       }
     }
 
     return key;
   }
 
-
   isSelected(aggrKey, bucket: AggrBucket) {
-
     if (this.selectedAggr.hasOwnProperty(aggrKey)) {
       for (let index = 0; index < this.selectedAggr[aggrKey].length; index++) {
         const element = this.selectedAggr[aggrKey][index];
@@ -109,28 +104,26 @@ is_open:boolean
   }
 
   selectionChange(aggrKey, bucket: AggrBucket) {
-    if (!this.selectedAggr.hasOwnProperty(aggrKey)){
+    if (!this.selectedAggr.hasOwnProperty(aggrKey)) {
       this.selectedAggr[aggrKey] = [];
     }
 
-      if (this.selectedAggr[aggrKey].find(k => k == bucket.key)){
-        this.selectedAggr[aggrKey] = this.selectedAggr[aggrKey].filter(k => k != bucket.key);
-      } else{
-        this.selectedAggr[aggrKey].push(bucket.key)
-      }
-
+    if (this.selectedAggr[aggrKey].find((k) => k == bucket.key)) {
+      this.selectedAggr[aggrKey] = this.selectedAggr[aggrKey].filter(
+        (k) => k != bucket.key
+      );
+    } else {
+      this.selectedAggr[aggrKey].push(bucket.key);
+    }
 
     this.keySelect.emit(this.selectedAggr);
   }
-/**
- *
- * @param key  is used to comunicate with the father component what kind of data have to display
- * by carlomonterrey
- */
-  btnOpenModal(key){
-
-    this.modal_open.emit(key)
-
-
+  /**
+   *
+   * @param key  is used to comunicate with the father component what kind of data have to display
+   * by carlomonterrey
+   */
+  btnOpenModal(key) {
+    this.modal_open.emit(key);
   }
 }
