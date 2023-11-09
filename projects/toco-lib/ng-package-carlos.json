@@ -1,0 +1,7 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "/home/carlosalfredo/Trabajo/Sceiba/sceiba-ng/node_modules/toco-lib",
+  "lib": {
+    "entryFile": "src/public-api.ts"
+  }
+}

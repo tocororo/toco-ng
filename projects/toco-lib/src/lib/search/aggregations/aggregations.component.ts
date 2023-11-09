@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+
 import { Aggr, AggrBucket } from "../../entities/public-api";
 
 export interface AggregationsSelection{
@@ -30,10 +31,17 @@ export class AggregationsComponent implements OnInit {
 
   @Output()
   keySelect = new EventEmitter<AggregationsSelection>();
+  /**
+   * that variable is used for comunicate the state and the key of the modal to the father component search
+   */
+  @Output()
+  modal_open = new EventEmitter<boolean>();
 
+is_open:boolean
   keys = [];
+  value: any
 
-  constructor() {}
+  constructor( ) {}
 
   ngOnInit() {
     for (const key in this.aggregations) {
@@ -113,5 +121,16 @@ export class AggregationsComponent implements OnInit {
 
 
     this.keySelect.emit(this.selectedAggr);
+  }
+/**
+ *
+ * @param key  is used to comunicate with the father component what kind of data have to display
+ * by carlomonterrey
+ */
+  btnOpenModal(key){
+
+    this.modal_open.emit(key)
+
+
   }
 }
