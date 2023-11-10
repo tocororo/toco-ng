@@ -3,18 +3,25 @@
  *   All rights reserved.
  */
 
-
-import { HttpBackend, HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Environment, Response } from '../core/public-api';
-import { Organization, Record, SearchResponse, Source } from '../entities/public-api';
-
+import {
+  HttpBackend,
+  HttpClient,
+  HttpHeaders,
+  HttpParams,
+} from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable, of } from "rxjs";
+import { Environment, Response } from "../core/public-api";
+import {
+  Organization,
+  Record,
+  SearchResponse,
+  Source
+} from "../entities/public-api";
 
 @Injectable()
 export class SearchService {
-
-  private prefix = 'search';
+  private prefix = "search";
 
   // private headers = new HttpHeaders(
   //     {
@@ -26,7 +33,6 @@ export class SearchService {
   public http: HttpClient;
 
   public constructor(private env: Environment, private handler: HttpBackend) {
-
     // TODO: hay una mejor manera de hacer esto, creando diferentes y propios HttpClients que
     // tengan un comportamiento especifico (eg: sin/con autenticacion)
     // ver: https://github.com/angular/angular/issues/20203#issuecomment-369754776
@@ -37,13 +43,16 @@ export class SearchService {
     this.http = new HttpClient(handler);
   }
 
-  public getAggregation(field, size = 10): Observable<Response<any>> {
-    let params = new HttpParams();
-    const options = {
-      params: params.set('size', size.toString(10))
-    };
-    const req = this.env.sceibaApi + this.prefix + '/aggs/' + field;
-    return this.http.get<Response<any>>(req, options);
+  public getAggregationTerms(query): Observable<Response<any>> {
+    const req = this.env.sceibaApi + "utils/agg/terms";
+    let _query = JSON.stringify(query);
+    console.log(_query);
+
+    return this.http.post<Response<any>>(req, _query, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+      }),
+    });
   }
 
   public getRecords(params: HttpParams): Observable<SearchResponse<Record>> {
@@ -52,7 +61,7 @@ export class SearchService {
       // headers: this.headers
     };
     // console.log(params)
-    const req = this.env.sceibaApi + this.prefix + '/records/';
+    const req = this.env.sceibaApi + this.prefix + "/records/";
     return this.http.get<SearchResponse<Record>>(req, options);
   }
 
@@ -62,24 +71,28 @@ export class SearchService {
       // headers: this.headers
     };
     // console.log(params);
-    const req = this.env.sceibaApi + this.prefix + '/sources';
+    const req = this.env.sceibaApi + this.prefix + "/sources";
     return this.http.get<SearchResponse<Source>>(req, options);
   }
 
-  public getOrganizations(params: HttpParams): Observable<SearchResponse<Organization>> {
+  public getOrganizations(
+    params: HttpParams
+  ): Observable<SearchResponse<Organization>> {
     const options = {
       params: params,
       // headers: this.headers
     };
     // // console.log(params);
-    const req = this.env.sceibaApi + this.prefix + '/organizations/';
+    const req = this.env.sceibaApi + this.prefix + "/organizations/";
     // // console.log(req);
 
     return this.http.get<SearchResponse<Organization>>(req, options);
   }
 
-  public getOrganizationById(id: string): Observable<SearchResponse<Organization>> {
-    const req = this.env.cuorApi + 'organizations/' + id + '/';
+  public getOrganizationById(
+    id: string
+  ): Observable<SearchResponse<Organization>> {
+    const req = this.env.cuorApi + "organizations/" + id + "/";
     // // console.log(req);
 
     return this.http.get<SearchResponse<Organization>>(req);
@@ -90,7 +103,7 @@ export class SearchService {
   }
 
   public getSourcesOrgAggregation(uuid): Observable<Response<any>> {
-    const req = this.env.sceibaApi + 'source/aggs/org/' + uuid;
+    const req = this.env.sceibaApi + "source/aggs/org/" + uuid;
     return this.http.get<Response<any>>(req);
   }
 }

@@ -126,4 +126,24 @@ export class AggregationsComponent implements OnInit {
   btnOpenModal(key) {
     this.modal_open.emit(key);
   }
+
+  moreAggPage(key){
+    for (const k in this.aggregations) {
+      console.log(key, k, this.aggregations[k]);
+
+      if (key.key == k){
+        let b: Array<AggrBucket> = new Array<AggrBucket> (3);
+        b.push(new AggrBucket({doc_count:0,key:"eee"}))
+        b.push(new AggrBucket({doc_count:4,key:"543242sd"}))
+        b.push(new AggrBucket({doc_count:5,key:"sadads"}))
+        let nb = this.aggregations[k].buckets.concat(b)
+        this.aggregations[k].buckets = nb;
+        console.log(this.aggregations[k].buckets);
+        console.log(this.aggregations[k]);
+
+      }
+    }
+    console.log(this.aggregations, this.selectedAggr);
+
+  }
 }
