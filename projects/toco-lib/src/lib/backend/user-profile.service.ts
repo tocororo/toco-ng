@@ -1,6 +1,6 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Environment } from '../core/public-api';
 
@@ -30,7 +30,7 @@ export class UserProfileService {
     const options = {
       params: params
     };
-    return this.http.get<Response<any>>(this.env.sceibaApi + 'users/search', options);
+    return this.http.get<Response<any>>(this.env.sceibaApi + 'profile/search', options);
   }
 
 
