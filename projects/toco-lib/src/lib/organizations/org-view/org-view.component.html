@@ -1,4 +1,15 @@
-<div *ngIf="org" fxLayout="column wrap" style="padding: 0px 16px;">
+<mat-toolbar
+fxLayout="row wrap"
+fxLayoutAlign="space-between center"
+[ngStyle]="{
+  width: '100%',
+  height: 'auto',
+  padding: '16px',
+  'min-height': '56px'
+}"
+>
+
+<div *ngIf="org" fxLayout="column wrap" style="padding: 0px 16px;white-space: normal;">
   <span class="mat-headline-6"> {{  org.name }}</span>
   <span class="mat-caption" color="primary">
     SceibaID: {{ org.id }}
@@ -10,6 +21,7 @@
     Estatus de la organización: {{ org.status }}
   </span>
 </div>
+</mat-toolbar>
 
 
 <mat-card *ngIf="org" [attr.aria-label]="'Muestra la organización seleccionada'">

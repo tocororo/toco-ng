@@ -12,10 +12,14 @@ import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Environment } from '../core/public-api';
+import { UserProfile } from '../entities/person.entity';
 
 /**
  * This enum handles the selected backend
  */
+
+export const USER_STORAGE_VAR: string = "user";
+
 export enum AuthBackend{
     /**
      * `sceiba` represent the Sceiba's backend
@@ -59,9 +63,9 @@ export class OauthAuthenticationService  implements HttpInterceptor {
      * for the knowledge of who uses it
      * @param islogged 'true' is loggued or 'false' other way
      */
-    login(user) {
-      // console.log('autentication service user:', user)
-      this.authenticationSubject.next(user);
+    login(userProfile) {
+      console.log('autentication service user:', userProfile)
+      this.authenticationSubject.next(userProfile);
     }
     logout() {
       this.authenticationSubject.next(null);
@@ -131,6 +135,32 @@ export class OauthAuthenticationService  implements HttpInterceptor {
         this.oauthService.configure(authConfig);
         this.oauthService.tokenValidationHandler = new JwksValidationHandler();
         this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    }
+
+    public getUserFromStorage(): UserProfile{
+      try {
+
+        let userProfile = new UserProfile();
+        let request = JSON.parse(this.oauthStorage.getItem('user'));
+        userProfile.deepcopy(request.data.userprofile);
+        return userProfile;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    public saveResponseUserToStorage(responseUser): UserProfile{
+      try {
+
+        this.oauthStorage.setItem("user", JSON.stringify(responseUser));
+        let userProfile = new UserProfile();
+        userProfile = new UserProfile();
+        userProfile.deepcopy(responseUser.data.userprofile);
+        return userProfile;
+
+      } catch (error) {
+        return null;
+      }
     }
 }
 

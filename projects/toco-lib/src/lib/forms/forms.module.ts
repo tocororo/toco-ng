@@ -54,7 +54,7 @@ import { CheckboxComponent } from './experimental/checkbox/checkbox.component';
 import { DatepickerYearComponent } from './experimental/datepicker-year/datepicker-year.component';
 import { DatepickerComponent } from './experimental/datepicker/datepicker.component';
 import { SelectFilterComponent } from './experimental/select-filter/select-filter.component';
-import { SelectOrgsComponent } from './experimental/select-orgs/select-orgs.component';
+import { SelectOrgDirective, SelectOrgsComponent } from './experimental/select-orgs/select-orgs.component';
 import { SelectTreeComponent } from './experimental/select-tree/select-tree.component';
 import { SelectComponent } from './experimental/select/select.component';
 import { TermParentComponent } from './experimental/term-parent/term-parent.component';
@@ -109,7 +109,8 @@ import { InputUrlComponent } from './input/url/url-input.component';
         DatepickerComponent,
         CheckboxComponent,
         DatepickerYearComponent,
-        SelectOrgsComponent
+        SelectOrgsComponent,
+        SelectOrgDirective
     ],
     imports: [
 
@@ -185,7 +186,8 @@ import { InputUrlComponent } from './input/url/url-input.component';
         DatepickerComponent,
         DatepickerYearComponent,
         CheckboxComponent,
-        SelectOrgsComponent
+        SelectOrgsComponent,
+        SelectOrgDirective
     ],
     providers: []
 })

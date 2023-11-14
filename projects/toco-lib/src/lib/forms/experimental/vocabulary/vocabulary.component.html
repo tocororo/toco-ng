@@ -1,28 +1,34 @@
 <mat-card>
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"> </mat-progress-bar>
 
-  <mat-progress-bar *ngIf="loading"
-    mode="indeterminate">
-  </mat-progress-bar>
-
-    <mat-card-subtitle *ngIf="!loading">
-    <mat-form-field style="width: 100%;">
-
-      <mat-label> {{content.label}} <span *ngIf="content.required">*</span></mat-label>
+  <mat-card-subtitle *ngIf="!loading">
+    <mat-form-field style="width: 100%">
+      <mat-label>
+        {{ content.label }} <span *ngIf="content.required">*</span></mat-label
+      >
       <input
         matInput
-        id="'inputId-'{{content.name}}"
+        id="'inputId-'{{ content.name }}"
         type="text"
         [formControl]="chipsFormControl"
         [matAutocomplete]="auto"
-          aria-label="Number"
+        aria-label="Number"
       />
 
-      <mat-hint *ngIf="content.startHint" [align]="'start'">{{ content.startHint.label }}</mat-hint>
-      <mat-hint *ngIf="!content.startHint" [align]="'start'">{{ searchText }}</mat-hint>
+      <mat-hint *ngIf="content.startHint" [align]="'start'">{{
+        content.startHint.label
+      }}</mat-hint>
+      <mat-hint *ngIf="!content.startHint" [align]="'start'">{{
+        searchText
+      }}</mat-hint>
 
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.term.description" (click)="addChips(option)"
-          [title]="option.term.description">
+        <mat-option
+          *ngFor="let option of filteredOptions | async"
+          [value]="option.term.description"
+          (click)="addChips(option)"
+          [title]="option.term.description"
+        >
           {{ option.term.description }}
         </mat-option>
       </mat-autocomplete>
@@ -33,13 +39,23 @@
     </mat-form-field>
   </mat-card-subtitle>
   <mat-card-content *ngIf="!loading">
-    <mat-chip-listbox class="mat-chip-listbox-stacked" fxLayout="row" fxLayoutAlign="start center" style="margin-bottom: .5em"
-      id="chiplist-{{extraContent.vocab}}">
-      <mat-chip-option *ngFor="let item of chipsList; let i=index" (removed)="removeChip(i)" [removable]="true" style="width: 100%;height: 100%;">
-        {{ getTermNameInATree(item) }}
-        <mat-icon matChipRemove>cancel</mat-icon>
-      </mat-chip-option>
-    </mat-chip-listbox>
-  </mat-card-content>
+    <mat-chip-listbox
+      class="mat-mdc-chip-set-stacked"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      style="margin-bottom: 0.5em; width: 250px;"
+      id="chiplist-{{ extraContent.vocab }}"
+    >
+      <mat-chip-row
+        *ngFor="let item of chipsList; let i = index"
+        (removed)="removeChip(i)"
+        [removable]="true"
+        matTooltip="{{ getTermNameInATree(item) }}"
+        >
+          <span class="clip-text">{{ getTermNameInATree(item) }}</span>
 
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip-row>
+    </mat-chip-listbox >
+  </mat-card-content>
 </mat-card>

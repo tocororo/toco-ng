@@ -1,11 +1,9 @@
-
 import { AfterViewInit, Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { AuthConfig, OAuthService, OAuthStorage } from "angular-oauth2-oidc";
-import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
+import { JwksValidationHandler } from "angular-oauth2-oidc-jwks";
 import { PartialObserver, Subscription, timer } from "rxjs";
-
 
 import { UserProfileService } from "../backend/user-profile.service";
 import { Environment } from "../core/env";
@@ -13,12 +11,11 @@ import { UserProfile } from "../entities/person.entity";
 import { OauthAuthenticationService } from "./authentication.service";
 // import { authConfig } from './auth-config';
 
-export interface OauthInfo
-{
+export interface OauthInfo {
   serverHost: string;
   loginUrl: string;
   tokenEndpoint: string;
-  userInfoEndpoint: string,
+  userInfoEndpoint: string;
   appHost: string;
   appName: string;
   oauthRedirectUri: string;
@@ -59,7 +56,6 @@ export interface OauthInfo
   styleUrls: ["./authentication.component.scss"],
 })
 export class AuthenticationComponent implements OnInit, AfterViewInit {
-
   @Input()
   public isButtonLogin: boolean;
 
@@ -72,33 +68,28 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
   @Input()
   public oauthInfo: OauthInfo;
 
-  public user: UserProfile;
+  public userProfile: UserProfile;
 
   public userName: string;
   private timerAuthenticateSuscription: Subscription = null;
   private timerAuthenticateObserver: PartialObserver<number> = {
+
     next: (_) => {
-      // // console.log('next');
+      console.log('next Timer');
       // this.oauthService.setupAutomaticSilentRefresh();
       if (this.oauthStorage.getItem("access_token")) {
-        this.authenticationService.getUserInfo().subscribe(
-          (response) => {
-            this.oauthStorage.setItem("user", JSON.stringify(response));
-            this.authenticationService.login(response);
-          },
-          error => // console.log(error),
-          () => {}
-        )
-        // this.authenticationService.logguedChange(true);
+        console.log("access_token: ", this.oauthStorage.getItem("access_token"));
+
+        this.getUserInfo();
       }
     },
 
     error: (err: any) => {
-       console.log("The observable got an error notification: " + err + ".");
+      console.log("The observable got an error notification: " + err + ".");
     },
 
     complete: () => {
-     console.log("The observable got a complete notification.");
+      console.log("The observable got a complete notification.");
     },
   };
 
@@ -110,23 +101,25 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     private oauthStorage: OAuthStorage,
     private authenticationService: OauthAuthenticationService,
     private _transServ: TranslateService
-  )
-  { }
+  ) {}
 
-  ngOnInit()
-  {
+  ngOnInit() {
     if (this.isButtonLogin == undefined) this.isButtonLogin = false;
     if (this.isButtonLoginIcon == undefined) this.isButtonLoginIcon = false;
-    if (this.isButtonLoginText == undefined)
-    {
-      this._transServ.get('TOCO_AUTHENTICATION.AUTENTICARSE').subscribe((res: string) => {
-        this.isButtonLoginText = res;
-      });
+    if (this.isButtonLoginText == undefined) {
+      this._transServ
+        .get("TOCO_AUTHENTICATION.AUTENTICARSE")
+        .subscribe((res: string) => {
+          this.isButtonLoginText = res;
+        });
     }
-    if (this.oauthInfo.loginUrl == undefined || this.oauthInfo.loginUrl == ''){
+    if (this.oauthInfo.loginUrl == undefined || this.oauthInfo.loginUrl == "") {
       this.oauthInfo.loginUrl = this.oauthInfo.serverHost + "oauth/authorize";
     }
-    if (this.oauthInfo.tokenEndpoint == undefined || this.oauthInfo.tokenEndpoint == ''){
+    if (
+      this.oauthInfo.tokenEndpoint == undefined ||
+      this.oauthInfo.tokenEndpoint == ""
+    ) {
       this.oauthInfo.tokenEndpoint = this.oauthInfo.serverHost + "oauth/token";
     }
     this.configure();
@@ -185,37 +178,7 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     // Try to login and if a token was received, request user information
     this.oauthService.tryLogin({
       onTokenReceived: (_) => {
-        // gives information about user loggued
-        this.authenticationService.userInfoEndpoint = this.oauthInfo.userInfoEndpoint;
-        this.authenticationService.getUserInfo().subscribe(
-
-            (response) => {
-              // console.log(response);
-
-              this.oauthStorage.setItem("user", JSON.stringify(response));
-              this.authenticationService.login(response);
-            },
-            error => // console.log(error),
-            () => {}
-
-
-          // (response) => {
-          // this.oauthStorage.setItem("user", JSON.stringify(response));
-          // // // save email in storage
-          // // if (this.authBackend == AuthBackend.cuor){
-          // //   this.oauthStorage.setItem("email", response.email);
-          // // }else{
-          // //   this.oauthStorage.setItem("email", response.data.userprofile.user.email);
-          // // }
-          // // this.oauthStorage.setItem('userID', response.data.userprofile.id);
-
-          // // notifies user is logged
-          // this.authenticationService.logguedChange(true);
-
-          // this.userName = this.oauthStorage.getItem("email");
-
-        // }
-        );
+        this.getUserInfo();
       },
       onLoginError: (err) => {
         // console.log("error in login", err);
@@ -223,27 +186,53 @@ export class AuthenticationComponent implements OnInit, AfterViewInit {
     });
   }
 
+  private getUserInfo() {
+    this.authenticationService.userInfoEndpoint =
+      this.oauthInfo.userInfoEndpoint;
+    this.authenticationService.getUserInfo().subscribe(
+      (responseUser) => {
+        // this.oauthStorage.setItem("user", JSON.stringify(responseUser));
+        this.authenticationService.saveResponseUserToStorage(responseUser)
+        this.authenticationService.login(responseUser);
+
+        // this.userProfileService.getUserInfo().subscribe({
+        //   next: (responseProfile) => {
+        //     console.log("    this.userProfileService.getUserInfo().subscribe(....",responseProfile);
+
+        //     if (responseProfile && responseProfile.data && responseProfile.data.userprofile) {
+        //       this.userProfile.deepcopy(responseProfile.data.userprofile);
+        //       console.log(
+        //         "this.authenticationService.getUserInfo()*********************",
+        //         responseProfile
+        //       );
+
+        //     }
+        //   },
+        //   error: (err) => {
+        //     // console.log(err);
+        //   },
+        //   complete: () => {
+        //   },
+        // });
+
+      },
+      (
+          error // console.log(error),
+        ) =>
+        () => {}
+    );
+  }
+
   /**
    * Starts the login flow
    */
   public login() {
+    console.log(
+      "login *****************initImplicitFlow ****   ",
+    );
+
     this.oauthService.initImplicitFlow();
-    // this.authenticationService.authBackend = this.authBackend
-    // TODO: por que esto aqui, este modulo solo se encarga de la autenticacion y dar la informacion basica del usuario,
-    // el perfil es manejado por otro componente
-    this.user = new UserProfile();
-    this.userProfileService.getUserInfo().subscribe({
-      next: (response) => {
-        if (response && response.data && response.data.userprofile) {
-          this.user.deepcopy(response.data.userprofile);
-          this.oauthStorage.setItem("user", this.user.entitystringify());
-        }
-      },
-      error: (err) => {
-        // console.log(err);
-      },
-      complete: () => {},
-    });
+    this.getUserInfo();
   }
 
   /**
