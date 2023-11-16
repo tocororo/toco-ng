@@ -33,6 +33,7 @@ export class SearchService {
   public http: HttpClient;
 
   public constructor(private env: Environment, private handler: HttpBackend) {
+
     // TODO: hay una mejor manera de hacer esto, creando diferentes y propios HttpClients que
     // tengan un comportamiento especifico (eg: sin/con autenticacion)
     // ver: https://github.com/angular/angular/issues/20203#issuecomment-369754776
