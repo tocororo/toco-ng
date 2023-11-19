@@ -5,6 +5,7 @@ export const OrganizationRelationships = {
   PARENT: { label: 'Padre', value: 'parent' },
   CHILD: { label: 'Hija', value: 'child' },
   RELATED: { label: 'Relacionada', value: 'related' },
+  OTHER: { label: 'Otra', value: 'other' },
   };
 
 
