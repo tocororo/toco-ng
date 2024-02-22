@@ -3,12 +3,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import {moment} from 'moment';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { NotificationService } from '../../backend/public-api';
 import { MessageHandler, StatusCode } from '../../core/public-api';
 import { NotificationInfo } from '../notification-button/notification-button.component';
+import * as moment from 'moment';
 
 
 @Component({
