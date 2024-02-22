@@ -27,6 +27,7 @@
     "preserveWhitespaces": false,
     "buildOptimizer": true,
     "sourceMap": true,
+    "allowSyntheticDefaultImports": true ,//add this because without this the import moment throug an error
     "polyfills": "./polyfills.ts",
     "browserTarget": "app:build:production",
   },
